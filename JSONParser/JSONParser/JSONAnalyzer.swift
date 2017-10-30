@@ -12,7 +12,7 @@ import Foundation
 
 struct JSONAnalyzer {
     
-    static func makeData(with jsonString: String) throws -> JSONObject {
+    static func makeObject(with jsonString: String) throws -> JSONObject {
         guard jsonString.isArray() else {
             throw InputError.invalidInput
         }
