@@ -14,7 +14,7 @@ struct JSONAnalyzer {
     
     static func makeObject(with jsonString: String) throws -> JSONObject {
         guard jsonString.isArray() else {
-            throw InputError.invalidInput
+            throw FormatError.notFormatted
         }
         let stringWithoutSquareBracket = jsonString.stripAwayOutLayer()
         
@@ -35,11 +35,19 @@ struct JSONAnalyzer {
             else if let convertStringToInteger = Int(contents) {
                 intArray.append(convertStringToInteger)
             }
-            else { throw InputError.invalidInput }
+            else { throw FormatError.invalidDataType }
             
         }
         return JSONObject(stringArray: stringArray, intArray: intArray, boolArray: boolArray)
     }
+}
+
+extension JSONAnalyzer {
+    enum FormatError: String, Error {
+        case notFormatted = "데이터 형식이 올바르지 않습니다."
+        case invalidDataType = "지원하지 않는 데이터 타입 입니다."
+    }
+
 }
 
 extension String {
