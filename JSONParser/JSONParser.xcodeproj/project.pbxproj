@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		C94C7B131FA6C984008F6A0A /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B121FA6C984008F6A0A /* InputView.swift */; };
+		C94C7B151FA6CD26008F6A0A /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B141FA6CD26008F6A0A /* JSONObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,6 +28,7 @@
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C94C7B121FA6C984008F6A0A /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		C94C7B141FA6CD26008F6A0A /* JSONObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				C94C7B121FA6C984008F6A0A /* InputView.swift */,
+				C94C7B141FA6CD26008F6A0A /* JSONObject.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -124,6 +127,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				C94C7B151FA6CD26008F6A0A /* JSONObject.swift in Sources */,
 				C94C7B131FA6C984008F6A0A /* InputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
