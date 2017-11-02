@@ -12,6 +12,7 @@
 		C94C7B151FA6CD26008F6A0A /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B141FA6CD26008F6A0A /* JSONObject.swift */; };
 		C94C7B171FA6CEDE008F6A0A /* JSONAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B161FA6CEDE008F6A0A /* JSONAnalyzer.swift */; };
 		C94C7B191FA6D0D2008F6A0A /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B181FA6D0D2008F6A0A /* OutputView.swift */; };
+		C94C7B451FAAAC6C008F6A0A /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B441FAAAC6C008F6A0A /* JSONData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,7 @@
 		C94C7B141FA6CD26008F6A0A /* JSONObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONObject.swift; sourceTree = "<group>"; };
 		C94C7B161FA6CEDE008F6A0A /* JSONAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAnalyzer.swift; sourceTree = "<group>"; };
 		C94C7B181FA6D0D2008F6A0A /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
+		C94C7B441FAAAC6C008F6A0A /* JSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				C94C7B121FA6C984008F6A0A /* InputView.swift */,
 				C94C7B141FA6CD26008F6A0A /* JSONObject.swift */,
+				C94C7B441FAAAC6C008F6A0A /* JSONData.swift */,
 				C94C7B161FA6CEDE008F6A0A /* JSONAnalyzer.swift */,
 				C94C7B181FA6D0D2008F6A0A /* OutputView.swift */,
 			);
@@ -137,6 +140,7 @@
 				C94C7B171FA6CEDE008F6A0A /* JSONAnalyzer.swift in Sources */,
 				C94C7B151FA6CD26008F6A0A /* JSONObject.swift in Sources */,
 				C94C7B131FA6C984008F6A0A /* InputView.swift in Sources */,
+				C94C7B451FAAAC6C008F6A0A /* JSONData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
