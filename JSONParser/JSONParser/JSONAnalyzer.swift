@@ -36,8 +36,8 @@ struct JSONAnalyzer {
             }
         case ("{", "}"):
             // json Object 일 때
-            let contentsOutOfObject = jsonString.stripAwayParenthesis().splitNoEmpty(with: ",")
-            guard let jsonObject = convertStringsToJSONObject(contentsOutOfObject) else {
+            let contentsOutOfJSONObject = jsonString.stripAwayParenthesis().trimmingWhiteSpaceAfterSplit(with: ",")
+            guard let jsonObject = convertStringsToJSONObject(contentsOutOfJSONObject) else {
                 throw FormatError.invalidDataType
             }
             return JSONData(object: jsonObject)
@@ -48,24 +48,24 @@ struct JSONAnalyzer {
     
     // Dictionay 형태의 스트링 배열을 JSON Object로 변경
     private static func convertStringsToJSONObject(_ dictionaryStrings: [String]) -> JSONObject? {
-        var contentsDictionary = [String : value]()
-        for dictionary in dictionaryStrings {
-            let contentsOfdictionary = dictionary.split(separator: ":").map{
+        var dictionaryForResult = [String : Value]()
+        for dictionaryString in dictionaryStrings {
+            let splitDictionaryStringIntoKeyAndValue = dictionaryString.split(separator: ":").map{
                 $0.trimmingCharacters(in: .whitespaces)
             }
-            let keyString = contentsOfdictionary[0]
-            let valueString = contentsOfdictionary[1]
+            let keyString = splitDictionaryStringIntoKeyAndValue[0]
+            let valueString = splitDictionaryStringIntoKeyAndValue[1]
             guard let key = keyString.convertStringToKey else { return nil }
             guard let value = valueString.convertStringToValue else { return nil }
-            contentsDictionary[key] = value
+            dictionaryForResult[key] = value
         }
-        return JSONObject(dictionary: contentsDictionary)
+        return JSONObject(dictionary: dictionaryForResult)
     }
     
     // "{"key":value...}, {"key":value...}, ..." 형태의 스트링을 json object 배열로 변경
     private static func convertStringToJSONObjects(_ objectsString: String) -> [JSONObject]? {
         var remainObjectString = objectsString
-        var resultDictionary = [JSONObject]()
+        var jsonObjectsForResult = [JSONObject]()
         while (true) {
             guard let indexOfOpenParenthesis = remainObjectString.index(of: "{"),
                 let indexOfCloseParenthesis = remainObjectString.index(of: "}") else { break }
@@ -78,7 +78,7 @@ struct JSONAnalyzer {
             guard let jsonObject = convertStringsToJSONObject(sliceDictionaryStrings) else {
                 return nil
             }
-            resultDictionary.append(jsonObject)
+            jsonObjectsForResult.append(jsonObject)
             guard remainObjectString.index(of: "}") != remainObjectString.index(before: remainObjectString.endIndex) else {
                 break
             }
@@ -86,19 +86,19 @@ struct JSONAnalyzer {
                 .index(after:indexOfCloseParenthesis)...remainObjectString
                     .index(before: remainObjectString.endIndex)])
         }
-        return resultDictionary
+        return jsonObjectsForResult
     }
     
-    private static func convertStringToDatas(_ datasString: String) -> [Any]? {
-        var resultArray = [value]()
-        let splitStrings = datasString.splitNoEmpty(with: ",")
+    private static func convertStringToDatas(_ datasString: String) -> [Value]? {
+        var valuesForResult = [Value]()
+        let splitStrings = datasString.trimmingWhiteSpaceAfterSplit(with: ",")
         for contents in splitStrings {
             guard let value = contents.convertStringToValue else {
                 return nil
             }
-            resultArray.append(value)
+            valuesForResult.append(value)
         }
-        return resultArray
+        return valuesForResult
     }
     
 }
@@ -130,7 +130,7 @@ extension String {
         return self.hasParenthesis(head: "{", tail: "}")
     }
     
-    func splitNoEmpty(with separator: Character) -> [String] {
+    func trimmingWhiteSpaceAfterSplit(with separator: Character) -> [String] {
         return self.split(separator: separator).map{$0.trimmingCharacters(in: .whitespaces)}
     }
     
@@ -148,7 +148,7 @@ extension String {
         return stripAwayOutLayerString
     }
     
-    var convertStringToValue: value? {
+    var convertStringToValue: Value? {
         get {
             if self.hasParenthesis(head: "\"", tail: "\"") {
                 let value = self.stripAwayParenthesis()

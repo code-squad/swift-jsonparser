@@ -10,14 +10,14 @@ import Foundation
 
 struct JSONData {
     
-    private(set) var array: [value]?
+    private(set) var array: [Value]?
     private(set) var object: JSONObject?
     
     var isArray: Bool {
         return self.array == nil ? false : true
     }
     
-    init(array: [value]) {
+    init(array: [Value]) {
         self.array = array
         self.object = nil
     }

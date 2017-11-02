@@ -8,13 +8,13 @@
 
 import Foundation
 
-typealias value = Any
+typealias Value = Any
 
 struct JSONObject {
     
-    private(set) var dictionary: [String:value]
+    private(set) var dictionary: [String : Value]
     
-    init(dictionary: [String:value]) {
+    init(dictionary: [String : Value]) {
         self.dictionary = dictionary
     }
 }
