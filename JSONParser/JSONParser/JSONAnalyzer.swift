@@ -8,7 +8,7 @@
 
 import Foundation
 
-// JSON String -> JSONObject
+// JSON String -> JSONData
 
 struct JSONAnalyzer {
     
@@ -111,13 +111,15 @@ extension JSONAnalyzer {
     
 }
 
-extension Substring {
+extension StringProtocol {
     func trimmingWhiteSpaceAfterSplit(with separator: Character) -> [String] {
-        return self.split(separator: separator).map{$0.trimmingCharacters(in: .whitespaces)}
+        return self.split(separator: separator).map({ (subSequence: SubSequence) -> String in
+            guard let subSequenceToString = subSequence as? NSString else { return " " }
+            return subSequenceToString.trimmingCharacters(in: .whitespaces)
+        })
     }
 
 }
-
 extension String {
     var head: Character {
         return self[self.startIndex]
@@ -129,10 +131,6 @@ extension String {
     
     var isObject: Bool {
         return self.hasParenthesis(head: "{", tail: "}")
-    }
-    
-    func trimmingWhiteSpaceAfterSplit(with separator: Character) -> [String] {
-        return self.split(separator: separator).map{$0.trimmingCharacters(in: .whitespaces)}
     }
     
     func hasParenthesis(head: Character, tail: Character) -> Bool {
