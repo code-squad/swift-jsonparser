@@ -73,7 +73,7 @@ struct JSONAnalyzer {
             let sliceStringArray = remainObjectString[remainObjectString
                 .index(after: indexOfOpenParenthesis)...remainObjectString
                     .index(before: indexOfCloseParenthesis)]
-            let sliceDictionaryStrings = sliceStringArray.splitNoEmpty(with: ",")
+            let sliceDictionaryStrings = sliceStringArray.trimmingWhiteSpaceAfterSplit(with: ",")
             
             guard let jsonObject = convertStringsToJSONObject(sliceDictionaryStrings) else {
                 return nil
@@ -112,9 +112,10 @@ extension JSONAnalyzer {
 }
 
 extension Substring {
-    func splitNoEmpty(with separator: Character) -> [String] {
+    func trimmingWhiteSpaceAfterSplit(with separator: Character) -> [String] {
         return self.split(separator: separator).map{$0.trimmingCharacters(in: .whitespaces)}
     }
+
 }
 
 extension String {
