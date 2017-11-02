@@ -40,7 +40,7 @@ struct JSONAnalyzer {
             guard let jsonObject = convertStringsToJSONObject(contentsOutOfJSONObject) else {
                 throw FormatError.invalidDataType
             }
-            return JSONData(object: jsonObject)
+            return JSONData(array: [jsonObject])
         default: break
         }
         throw FormatError.notFormatted

@@ -9,20 +9,21 @@
 import Foundation
 
 struct OutputView {
-    
+    //총 7개의 배열 데이터 중에 문자열 3개, 숫자 3개, 부울 1개가 포함되어 있습니다.
+    //총 2개의 배열 데이터 중에 객체 2개가 포함되어 있습니다.
+    //총 4개의 객체 데이터 중에 문자열 3개, 숫자 1개, 부울 1개가 포함되어 있습니다.
     typealias NumberOfType = (jsonObject: Int, string: Int, int: Int, bool: Int)
     
     static func printAnalyzeResult(_ jsonData: JSONData) {
         var typeCount: NumberOfType = (0,0,0,0)
         
-        if jsonData.isArray {
-            guard let array = jsonData.array else { return }
-            print("총 \(array.count) 개의 배열 데이터 중에", terminator: "")
-            typeCount = countTypeOfValue(array)
-        } else {
-            guard let object = jsonData.object else { return }
+        typeCount = countTypeOfValue(jsonData.array)
+        if typeCount.jsonObject == 1 {
+            guard let object = jsonData.array[0] as? JSONObject else { return }
             print("총 \(object.dictionary.count) 개의 객체 데이터 중에", terminator: "")
             typeCount = countTypeOfValue(Array(object.dictionary.values))
+        } else {
+            print("총 \(jsonData.array.count) 개의 배열 데이터 중에", terminator: "")
         }
         if typeCount.jsonObject != 0  { print(" 객체 \(typeCount.jsonObject) 개", terminator: "") }
         if typeCount.string != 0  { print(" 문자열 \(typeCount.string) 개", terminator: "") }
