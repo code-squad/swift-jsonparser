@@ -92,23 +92,13 @@ extension StringProtocol {
 
 }
 extension String {
-    var head: Character {
-        return self[self.startIndex]
-    }
-    
-    var tail: Character {
-        return self[self.index(before: self.endIndex)]
-    }
-    
-    var isObject: Bool {
-        return self.hasParenthesis(head: "{", tail: "}")
-    }
-    
+
     func hasParenthesis(head: Character, tail: Character) -> Bool {
         guard self[self.startIndex] == head
             && self[self.index(before: self.endIndex)] == tail else { return false }
         return true
     }
+    
     func stripAwayParenthesis(withoutSpace: Bool = true) -> String {
         let stripAwayOutLayerString = String(
             self[self.index(after: self.startIndex)..<self.index(before: self.endIndex)])

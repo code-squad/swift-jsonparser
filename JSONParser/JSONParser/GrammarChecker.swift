@@ -19,8 +19,6 @@ struct GrammarChecker {
     static let dictionaryRegularExpression = "((\"[0-9a-zA-Z]+\") \\: ([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\"))+"
     
     static let valueRegularExpression = "([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\")+"
-
-    static let stringRegularExpression = "(\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\")+"
     
     static func isJSONObjectArray(_ jsonString: String) -> Bool {
                 return jsonString.isValidAllString(with: jsonObjectsRegularExpression)
