@@ -59,27 +59,15 @@ struct JSONAnalyzer {
     
     // "{"key":value...}, {"key":value...}, ..." 형태의 스트링을 json object 배열로 변경
     private static func convertStringToJSONObjects(_ objectsString: String) -> [JSONObject]? {
-        var remainObjectString = objectsString
         var jsonObjectsForResult = [JSONObject]()
-        while (true) {
-            guard let indexOfOpenParenthesis = remainObjectString.index(of: "{"),
-                let indexOfCloseParenthesis = remainObjectString.index(of: "}") else { break }
-            
-            let sliceStringArray = remainObjectString[remainObjectString
-                .index(after: indexOfOpenParenthesis)...remainObjectString
-                    .index(before: indexOfCloseParenthesis)]
-            let sliceDictionaryStrings = sliceStringArray.trimmingWhiteSpaceAfterSplit(with: ",")
-            
-            guard let jsonObject = convertStringsToJSONObject(sliceDictionaryStrings) else {
-                return nil
+        guard let splitIntoJSONObjects = objectsString.findMatchedStrings(with: GrammarChecker.jsonObjectRegularExpression) else {return nil}
+        
+        for jsonObjectFormatString in splitIntoJSONObjects {
+            guard let splitJSONObjectIntoDictionary = jsonObjectFormatString.findMatchedStrings(with: GrammarChecker.dictionaryRegularExpression) else { break }
+            guard let jsonObject = convertStringsToJSONObject(splitJSONObjectIntoDictionary) else {
+                                return nil
             }
             jsonObjectsForResult.append(jsonObject)
-            guard remainObjectString.index(of: "}") != remainObjectString.index(before: remainObjectString.endIndex) else {
-                break
-            }
-            remainObjectString = String(remainObjectString[remainObjectString
-                .index(after:indexOfCloseParenthesis)...remainObjectString
-                    .index(before: remainObjectString.endIndex)])
         }
         return jsonObjectsForResult
     }
