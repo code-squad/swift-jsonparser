@@ -9,7 +9,6 @@
 import Foundation
 
 struct GrammarChecker {
-    
     static let jsonObjectsRegularExpression = "\\[ (\\{ (((\"[0-9a-zA-Z]+\") \\: ([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\"))\\, )*((\"[0-9a-zA-Z]+\") \\: ([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\"))* \\}\\, )*\\{ (((\"[0-9a-zA-Z]+\") \\: ([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\"))\\, )*((\"[0-9a-zA-Z]+\") \\: ([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\"))* \\} \\]"
     
     static let jsonObjectRegularExpression = "\\{ (((\"[0-9a-zA-Z]+\") \\: ([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\"))\\, )*((\"[0-9a-zA-Z]+\") \\: ([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\"))* \\}"
@@ -31,6 +30,7 @@ struct GrammarChecker {
     static func isDataArray(_ jsonString: String) -> Bool {
                 return jsonString.isValidAllString(with: datasRegularExpression)
     }
+    
 }
 
 extension GrammarChecker {
@@ -39,6 +39,7 @@ extension GrammarChecker {
         case invalidDataType = "지원하지 않는 데이터 타입 입니다."
     }
 }
+
 extension String{
     
     func isValidAllString(with regularExpression: String) -> Bool {
@@ -54,17 +55,12 @@ extension String{
             let regex = try NSRegularExpression(pattern: regularExpression)
             // 현재 문자열(self)에서 패턴에 매칭되는 결과 반환. (NSTextCheckingResult 배열타입)
             let nsTextResults = regex.matches(in: self, range: NSRange(self.startIndex..., in: self))
-            let results = nsTextResults.map({
-                // NSTextCheckingResult 타입에는 패턴이 매칭되는 문자열 범위 등의 정보가 들어있음.
-                // 현재 문자열(self)에서 해당 범위 만큼(Substring)을 String으로 반환.
-                return String(self[Range($0.range, in: self)!])
-            })
+            let results = nsTextResults.map({ return String(self[Range($0.range, in: self)!])})
             return results
         } catch let error {
             print(error.localizedDescription)
             return nil
         }
     }
-
 }
 
