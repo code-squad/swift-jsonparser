@@ -16,24 +16,21 @@ struct JSONAnalyzer {
 
         if GrammarChecker.isDataArray(jsonString) {
             // 기본 타입 배열 일 때
-            let contentsOutOfArray = jsonString.stripAwayParenthesis()
-            guard let datas = convertStringToDatas(contentsOutOfArray) else {
+            guard let datas = convertStringToDatas(jsonString) else {
                 throw FormatError.invalidDataType
             }
             return JSONData(array: datas)
         }
         if GrammarChecker.isJSONObject(jsonString) {
             // json Object 일 때
-            let contentsOutOfJSONObject = jsonString.stripAwayParenthesis().trimmingWhiteSpaceAfterSplit(with: ",")
-            guard let jsonObject = convertStringsToJSONObject(contentsOutOfJSONObject) else {
+            guard let jsonObject = convertStringToJSONObject(jsonString) else {
                 throw FormatError.invalidDataType
             }
             return JSONData(array: [jsonObject])
         }
         if GrammarChecker.isJSONObjectArray(jsonString) {
             // json Object 타입 배열 일 때
-            let contentsOutOfArray = jsonString.stripAwayParenthesis()
-            guard let jsonObjects = convertStringToJSONObjects(contentsOutOfArray) else {
+            guard let jsonObjects = convertStringToJSONObjects(jsonString) else {
                 throw FormatError.invalidDataType
             }
             return JSONData(array: jsonObjects)
@@ -41,10 +38,12 @@ struct JSONAnalyzer {
         throw FormatError.notFormatted
     }
     
-    // Dictionay 형태의 스트링 배열을 JSON Object로 변경
-    private static func convertStringsToJSONObject(_ dictionaryStrings: [String]) -> JSONObject? {
+    // Dictionay ({"key":value...})형태의 스트링을 JSON Object로 변경
+    private static func convertStringToJSONObject(_ objectsString: String) -> JSONObject? {
         var dictionaryForResult = [String : Value]()
-        for dictionaryString in dictionaryStrings {
+        guard let splitJSONObjectIntoDictionary = objectsString.findMatchedStrings(with: GrammarChecker.dictionaryRegularExpression) else { return nil }
+        
+        for dictionaryString in splitJSONObjectIntoDictionary {
             let splitDictionaryStringIntoKeyAndValue = dictionaryString.split(separator: ":").map{
                 $0.trimmingCharacters(in: .whitespaces)
             }
@@ -60,13 +59,9 @@ struct JSONAnalyzer {
     // "{"key":value...}, {"key":value...}, ..." 형태의 스트링을 json object 배열로 변경
     private static func convertStringToJSONObjects(_ objectsString: String) -> [JSONObject]? {
         var jsonObjectsForResult = [JSONObject]()
-        guard let splitIntoJSONObjects = objectsString.findMatchedStrings(with: GrammarChecker.jsonObjectRegularExpression) else {return nil}
-        
+        guard let splitIntoJSONObjects = objectsString.findMatchedStrings(with: GrammarChecker.jsonObjectRegularExpression) else { return nil }
         for jsonObjectFormatString in splitIntoJSONObjects {
-            guard let splitJSONObjectIntoDictionary = jsonObjectFormatString.findMatchedStrings(with: GrammarChecker.dictionaryRegularExpression) else { break }
-            guard let jsonObject = convertStringsToJSONObject(splitJSONObjectIntoDictionary) else {
-                                return nil
-            }
+            guard let jsonObject = convertStringToJSONObject(jsonObjectFormatString) else { return nil }
             jsonObjectsForResult.append(jsonObject)
         }
         return jsonObjectsForResult
@@ -74,7 +69,7 @@ struct JSONAnalyzer {
     
     private static func convertStringToDatas(_ datasString: String) -> [Value]? {
         var valuesForResult = [Value]()
-        let splitStrings = datasString.trimmingWhiteSpaceAfterSplit(with: ",")
+        guard let splitStrings = datasString.findMatchedStrings(with: GrammarChecker.valueRegularExpression) else { return nil }
         for contents in splitStrings {
             guard let value = contents.convertStringToValue else {
                 return nil
@@ -88,7 +83,7 @@ struct JSONAnalyzer {
 
 extension JSONAnalyzer {
     enum FormatError: String, Error {
-        case notFormatted = "데이터 형식이 올바르지 않습니다."
+        case notFormatted = "지원하지 않는 형식을 포함하고 있습니다."
         case invalidDataType = "지원하지 않는 데이터 타입 입니다."
     }
     
