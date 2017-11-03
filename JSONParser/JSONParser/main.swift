@@ -19,10 +19,10 @@ while(true) {
         // 분석한 결과 출력
         OutputView.printAnalyzeResult(analyzedArray)
         
-    } catch JSONAnalyzer.FormatError.notFormatted{
-        print(JSONAnalyzer.FormatError.notFormatted.rawValue)
-    } catch JSONAnalyzer.FormatError.invalidDataType{
-        print(JSONAnalyzer.FormatError.invalidDataType.rawValue)
+    } catch GrammarChecker.FormatError.notFormatted{
+        print(GrammarChecker.FormatError.notFormatted.rawValue)
+    } catch GrammarChecker.FormatError.invalidDataType{
+        print(GrammarChecker.FormatError.invalidDataType.rawValue)
     }
 }
 

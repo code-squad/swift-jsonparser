@@ -17,25 +17,25 @@ struct JSONAnalyzer {
         if GrammarChecker.isDataArray(jsonString) {
             // 기본 타입 배열 일 때
             guard let datas = convertStringToDatas(jsonString) else {
-                throw FormatError.invalidDataType
+                throw GrammarChecker.FormatError.invalidDataType
             }
             return JSONData(array: datas)
         }
         if GrammarChecker.isJSONObject(jsonString) {
             // json Object 일 때
             guard let jsonObject = convertStringToJSONObject(jsonString) else {
-                throw FormatError.invalidDataType
+                throw GrammarChecker.FormatError.invalidDataType
             }
             return JSONData(array: [jsonObject])
         }
         if GrammarChecker.isJSONObjectArray(jsonString) {
             // json Object 타입 배열 일 때
             guard let jsonObjects = convertStringToJSONObjects(jsonString) else {
-                throw FormatError.invalidDataType
+                throw GrammarChecker.FormatError.invalidDataType
             }
             return JSONData(array: jsonObjects)
         }
-        throw FormatError.notFormatted
+        throw GrammarChecker.FormatError.notFormatted
     }
     
     // Dictionay ({"key":value...})형태의 스트링을 JSON Object로 변경
@@ -81,13 +81,6 @@ struct JSONAnalyzer {
     
 }
 
-extension JSONAnalyzer {
-    enum FormatError: String, Error {
-        case notFormatted = "지원하지 않는 형식을 포함하고 있습니다."
-        case invalidDataType = "지원하지 않는 데이터 타입 입니다."
-    }
-    
-}
 
 extension StringProtocol {
     func trimmingWhiteSpaceAfterSplit(with separator: Character) -> [String] {

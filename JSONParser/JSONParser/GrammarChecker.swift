@@ -35,6 +35,12 @@ struct GrammarChecker {
     }
 }
 
+extension GrammarChecker {
+    enum FormatError: String, Error {
+        case notFormatted = "지원하지 않는 형식을 포함하고 있습니다."
+        case invalidDataType = "지원하지 않는 데이터 타입 입니다."
+    }
+}
 extension String{
     
     func isValidAllString(with regularExpression: String) -> Bool {
