@@ -161,7 +161,6 @@ extension String {
                 return value
             } else { return nil }
         }
-    }
-    
+    }    
 }
 

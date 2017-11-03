@@ -10,25 +10,35 @@ import Foundation
 
 struct GrammarChecker {
     
+    static let jsonObjectsRegularExpression = "\\[ (\\{ (((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))\\, )*((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))* \\}\\, )*\\{ (((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))\\, )*((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))* \\} \\]"
+    
+    static let jsonObjectRegularExpression = "\\{ (((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))\\, )*((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))* \\}"
+    
+    static let datasRegularExpression = "\\[ (([0-9]*|true|false|\"[0-9a-zA-Z]*\")*\\, )*([0-9]+|false|true|\"[0-9a-zA-Z]+\") \\]"
+
     static func isJSONObjectArray(_ jsonString: String) -> Bool {
-        let jsonObjectsRegularExpression = "\\[ (\\{ (((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))\\, )*((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))* \\}\\, )*\\{ (((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))\\, )*((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))* \\} \\]"
-        return jsonString.isValidAllString(with: jsonObjectsRegularExpression)
+                return jsonString.isValidAllString(with: jsonObjectsRegularExpression)
     }
     
     static func isJSONObject(_ jsonString: String) -> Bool {
-        let jsonObjectRegularExpression = "\\{ (((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))\\, )*((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))* \\}"
-        return jsonString.isValidAllString(with: jsonObjectRegularExpression)
+                return jsonString.isValidAllString(with: jsonObjectRegularExpression)
     }
     
     static func isDataArray(_ jsonString: String) -> Bool {
-        let datasRegularExpression = "\\[ (([0-9]*|true|false|\"[0-9a-zA-Z]*\")*\\, )*([0-9]+|false|true|\"[0-9a-zA-Z]+\") \\]"
-        return jsonString.isValidAllString(with: datasRegularExpression)
+                return jsonString.isValidAllString(with: datasRegularExpression)
     }
 }
 
 extension String{
     
     func isValidAllString(with regularExpression: String) -> Bool {
+        guard let results = findMatchedStrings(with: regularExpression) else {
+            return false
+        }
+        return results == [self]
+    }
+    
+    func findMatchedStrings(with regularExpression: String) -> [String]? {
         do {
             // 파라미터로 받은 패턴으로 RegExp 객체 생성.
             let regex = try NSRegularExpression(pattern: regularExpression)
@@ -39,10 +49,10 @@ extension String{
                 // 현재 문자열(self)에서 해당 범위 만큼(Substring)을 String으로 반환.
                 return String(self[Range($0.range, in: self)!])
             })
-            return [self] == results
-     } catch let error {
+            return results
+        } catch let error {
             print(error.localizedDescription)
-            return false
+            return nil
         }
     }
 
