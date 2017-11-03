@@ -15,7 +15,6 @@ struct JSONAnalyzer {
     static func makeObject(with jsonString: String) throws -> JSONData {
         
         let parenthesis = (jsonString.head, jsonString.tail)
-        
         switch parenthesis {
         case ("[", "]"):
             // Array 일 때
