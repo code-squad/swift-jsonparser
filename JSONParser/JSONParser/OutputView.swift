@@ -44,4 +44,6 @@ struct OutputView {
             }
         }
         return (jsonObjectCount, stringCount, intCount, boolCount)
-    }}
+    }
+    
+}

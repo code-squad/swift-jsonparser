@@ -120,6 +120,7 @@ extension String {
             } else { return nil }
         }
     }
+    
     var convertStringToKey: String? {
         get {
             if self.hasParenthesis(head: "\"", tail: "\"") {
@@ -127,6 +128,7 @@ extension String {
                 return value
             } else { return nil }
         }
-    }    
+    }
+    
 }
 

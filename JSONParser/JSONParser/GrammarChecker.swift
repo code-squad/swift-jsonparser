@@ -10,13 +10,9 @@ import Foundation
 
 struct GrammarChecker {
     static let jsonObjectsRegularExpression = "\\[ (\\{ (((\"[0-9a-zA-Z]+\") \\: ([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\"))\\, )*((\"[0-9a-zA-Z]+\") \\: ([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\"))* \\}\\, )*\\{ (((\"[0-9a-zA-Z]+\") \\: ([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\"))\\, )*((\"[0-9a-zA-Z]+\") \\: ([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\"))* \\} \\]"
-    
     static let jsonObjectRegularExpression = "\\{ (((\"[0-9a-zA-Z]+\") \\: ([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\"))\\, )*((\"[0-9a-zA-Z]+\") \\: ([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\"))* \\}"
-    
     static let datasRegularExpression = "\\[ (([0-9]*|true|false|\"[0-9a-zA-Z]*\")*\\, )*([0-9]+|false|true|\"[0-9a-zA-Z]+\") \\]"
-    
     static let dictionaryRegularExpression = "((\"[0-9a-zA-Z]+\") \\: ([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\"))+"
-    
     static let valueRegularExpression = "([0-9]+|false|true|\"([0-9a-zA-Z]+\\s)*[0-9a-zA-Z]+\")+"
     
     static func isJSONObjectArray(_ jsonString: String) -> Bool {
@@ -40,7 +36,7 @@ extension GrammarChecker {
     }
 }
 
-extension String{
+extension String {
     
     func isValidAllString(with regularExpression: String) -> Bool {
         guard let results = findMatchedStrings(with: regularExpression) else {
@@ -55,12 +51,12 @@ extension String{
             let regex = try NSRegularExpression(pattern: regularExpression)
             // 현재 문자열(self)에서 패턴에 매칭되는 결과 반환. (NSTextCheckingResult 배열타입)
             let nsTextResults = regex.matches(in: self, range: NSRange(self.startIndex..., in: self))
-            let results = nsTextResults.map({ return String(self[Range($0.range, in: self)!])})
+            let results = nsTextResults.map{String(self[Range($0.range, in: self)!])}
             return results
         } catch let error {
             print(error.localizedDescription)
             return nil
         }
     }
+    
 }
-
