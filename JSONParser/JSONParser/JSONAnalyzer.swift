@@ -13,34 +13,30 @@ import Foundation
 struct JSONAnalyzer {
     
     static func makeObject(with jsonString: String) throws -> JSONData {
-        
-        let parenthesis = (jsonString.head, jsonString.tail)
-        switch parenthesis {
-        case ("[", "]"):
-            // Array 일 때
+
+        if GrammarChecker.isDataArray(jsonString) {
+            // 기본 타입 배열 일 때
             let contentsOutOfArray = jsonString.stripAwayParenthesis()
-            if contentsOutOfArray.isObject {
-                // Array에 담긴 데이터가 json Object일 때
-                guard let jsonObjects = convertStringToJSONObjects(contentsOutOfArray) else {
-                    throw FormatError.invalidDataType
-                }
-                return JSONData(array: jsonObjects)
+            guard let datas = convertStringToDatas(contentsOutOfArray) else {
+                throw FormatError.invalidDataType
             }
-            else {
-                // Array에 담긴 데이터가 Number, Bool, String (datas) 일 때
-                guard let datas = convertStringToDatas(contentsOutOfArray) else {
-                    throw FormatError.invalidDataType
-                }
-                return JSONData(array: datas)
-            }
-        case ("{", "}"):
+            return JSONData(array: datas)
+        }
+        if GrammarChecker.isJSONObject(jsonString) {
             // json Object 일 때
             let contentsOutOfJSONObject = jsonString.stripAwayParenthesis().trimmingWhiteSpaceAfterSplit(with: ",")
             guard let jsonObject = convertStringsToJSONObject(contentsOutOfJSONObject) else {
                 throw FormatError.invalidDataType
             }
             return JSONData(array: [jsonObject])
-        default: break
+        }
+        if GrammarChecker.isJSONObjectArray(jsonString) {
+            // json Object 타입 배열 일 때
+            let contentsOutOfArray = jsonString.stripAwayParenthesis()
+            guard let jsonObjects = convertStringToJSONObjects(contentsOutOfArray) else {
+                throw FormatError.invalidDataType
+            }
+            return JSONData(array: jsonObjects)
         }
         throw FormatError.notFormatted
     }
