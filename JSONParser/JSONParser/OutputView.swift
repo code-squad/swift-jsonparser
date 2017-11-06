@@ -12,7 +12,7 @@ struct OutputView {
     private(set) var typeCounter : TypeCounter
     
     func printResult() {
-        var result : String = "총 \(typeCounter.getTotal())개의 데이터 중에 "
+        var result : String = "총 \(typeCounter.totalCounter)개의 데이터 중에 "
         result += getStringCounter()
         if (typeCounter.intCounter > 0) && (typeCounter.stringCounter > 0) {
             result += ", "

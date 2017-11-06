@@ -27,8 +27,7 @@ class TypeCounterTest: XCTestCase {
     }
 
     func testCountType() {
-        let tester : String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let testers = tester.trimmingCharacters(in: ["[","]"]).split(separator: ",").map({$0.trimmingCharacters(in: .whitespaces)})
+        let testers : JsonData = [ 10, "jk", 4, "314", 99, "crong", false]
         typeCounter?.countTypes(items: testers)
         XCTAssertEqual(typeCounter?.boolCounter, 1)
         XCTAssertEqual(typeCounter?.intCounter, 3)

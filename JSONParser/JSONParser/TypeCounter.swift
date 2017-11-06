@@ -12,24 +12,22 @@ struct TypeCounter {
     private(set) var stringCounter : Int = 0
     private(set) var intCounter : Int = 0
     private(set) var boolCounter : Int = 0
+    private(set) var totalCounter : Int = 0
     
-    mutating func countTypes(items: Array<String>) {
+    mutating func countTypes(items: JsonData) {
         for item in items {
             countType(item: item)
         }
+        totalCounter = items.count
     }
     
-    private mutating func countType(item: String) {
-        if item.contains("\"") {
+    private mutating func countType(item: Any) {
+        if item is String {
             self.stringCounter += 1
-        } else if Int(item) != nil {
+        } else if item is Int {
             self.intCounter += 1
-        } else if item.contains("false") || item.contains("true") {
+        } else if item is Bool {
             self.boolCounter += 1
         }
-    }
-    
-    func getTotal() -> Int {
-        return stringCounter + intCounter + boolCounter
     }
 }

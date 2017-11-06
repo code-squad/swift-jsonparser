@@ -15,6 +15,6 @@ struct InputView {
     }
     
     private func getElements(readInput: String) -> Array<String> {
-        return readInput.trimmingCharacters(in: ["[","]"]).split(separator: ",").map({$0.trimmingCharacters(in: .whitespaces)})
+        return readInput.trimmingCharacters(in: ["[","]"]).split(separator: ",").flatMap({$0.trimmingCharacters(in: .whitespaces)})
     }
 }
