@@ -37,4 +37,16 @@ extension JSONData {
     }
 }
 
-
+extension String {
+    func split(by rxPattern: String) throws -> [String] {
+        do {
+            let expression = try NSRegularExpression(pattern: rxPattern)
+            let matchedRange = expression.matches(in: self, options: .init(rawValue: 0), range: NSRange.init(self.startIndex..., in: self))
+            return matchedRange.map({
+                return String(self[Range($0.range, in: self)!])
+            })
+        } catch {
+            throw error
+        }
+    }
+}
