@@ -9,30 +9,23 @@
 import Foundation
 
 struct GrammarChecker {
-    static let jsonObjectsRegularExpression = "\\[ (\\{ (((\"\\w+\") \\: (\\d+|false|true|\"(\\w+\\s)*\\w+\"))\\, )*((\"\\w+\") \\: (\\d+|false|true|\"(\\w+\\s)*\\w+\"))* \\}\\, )*\\{ (((\"\\w+\") \\: (\\d+|false|true|\"(\\w+\\s)*\\w+\"))\\, )*((\"\\w+\") \\: (\\d+|false|true|\"(\\w+\\s)*\\w+\"))* \\} \\]"
     static let nestedJSONObjectRegularExpression = "\\{ (((\"\\w+\") \\: (\\d+|false|true|\"(\\w+\\s)*\\w+\"|\\{ (((\"\\w+\") \\: (\\d+|false|true|\"(\\w+\\s)*\\w+\"))\\, )*((\"\\w+\") \\: (\\d+|false|true|\"(\\w+\\s)*\\w+\"))* \\}|\\[ ((\\d*|true|false|\"\\w*\")*\\, )*(\\d+|false|true|\"\\w+\") \\]))\\, )*((\"\\w+\") \\: (\\d+|false|true|\"(\\w+\\s)*\\w+\"|\\{ (((\"\\w+\") \\: (\\d+|false|true|\"(\\w+\\s)*\\w+\"))\\, )*((\"\\w+\") \\: (\\d+|false|true|\"(\\w+\\s)*\\w+\"))* \\}|\\[ ((\\d*|true|false|\"\\w*\")*\\, )*(\\d+|false|true|\"\\w*\") \\]))* \\}"
-    static let datasRegularExpression = "\\[ ((\\d*|true|false|\"\\w*\")*\\, )*(\\d+|false|true|\"\\w+\") \\]"
-    static let jsonObjectRegularExpression = "\\{ (((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))\\, )*((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))* \\}"
-    //static let dictionaryRegularExpression = "((\"\\w+\") \\: (\\d+|false|true|\"(\\w+\\s)*\\w+\"))+"
+    static let nestedArrayRegularExpression = "\\[ ((\\d*|true|false|\"\\w*\"|\\[ ((\\d*|true|false|\"\\w*\")*\\, )*(\\d+|false|true|\"\\w+\") \\]|\\{ (((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))\\, )*((\"[a-zA-Z]+\") \\: (\\d*|false|true|\"([a-zA-Z]*\\s)*[a-zA-Z]*\"))* \\})*\\, )*(\\d+|false|true|\"\\w+\"|\\[ ((\\d*|true|false|\"\\w*\")*\\, )*(\\d+|false|true|\"\\w+\") \\]|\\{ (((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))\\, )*((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))* \\}) \\]"
     static let dictionaryRegularExpression = "((\"\\w+\") \\: (\\d+|false|true|\"(\\w+\\s)*\\w+\"|\\{ (((\"\\w+\") \\: (\\d+|false|true|\"(\\w+\\s)*\\w+\"))\\, )*((\"\\w+\") \\: (\\d+|false|true|\"(\\w+\\s)*\\w+\"))* \\}|\\[ ((\\d*|true|false|\"\\w*\")*\\, )*(\\d+|false|true|\"\\w+\") \\]))+"
-    static let valueRegularExpression = "(\\d+|false|true|\"(\\w+\\s)*\\w+\")+"
-    
-    static func isJSONObjectArray(_ jsonString: String) -> Bool {
-        return jsonString.isValidAllString(with: jsonObjectsRegularExpression)
+    static let valueRegularExpression = "\\d+|false|true|\"\\w+\"|\\[ ((\\d*|true|false|\"\\w*\")*\\, )*(\\d+|false|true|\"\\w+\") \\]|\\{ (((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))\\, )*((\"[a-zA-Z]+\") \\: ([0-9]+|false|true|\"([a-zA-Z]+\\s)*[a-zA-Z]+\"))* \\}"
+    static let innerArrayRegularExpression = "\\[ ((\\d*|true|false|\"\\w*\")*\\, )*(\\d+|false|true|\"\\w+\") \\]"
+    static let innerValueRegularExpression = "\\d+|false|true|\"\\w+\""
+    static func isNestedJSONArray(_ jsonString: String) -> Bool {
+        return jsonString.isValidAllString(with: nestedArrayRegularExpression)
     }
     
     static func isNestedJSONObject(_ jsonString: String) -> Bool {
         return jsonString.isValidAllString(with: nestedJSONObjectRegularExpression)
     }
     
-    static func isJSONObject(_ jsonString: String) -> Bool {
-        return jsonString.isValidAllString(with: jsonObjectRegularExpression)
+    static func isInnerArray(_ jsonString: String) -> Bool {
+        return jsonString.isValidAllString(with: innerArrayRegularExpression)
     }
-    
-    static func isDataArray(_ jsonString: String) -> Bool {
-        return jsonString.isValidAllString(with: datasRegularExpression)
-    }
-    
 }
 
 extension GrammarChecker {

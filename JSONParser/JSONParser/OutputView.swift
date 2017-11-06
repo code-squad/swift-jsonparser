@@ -13,14 +13,13 @@ struct OutputView {
     
     static func printAnalyzeResult(_ jsonData: JSONData) {
         var typeCount: NumberOfType = (0,0,0,0,0)
-        
-        typeCount = countTypeOfValue(jsonData.array)
-        if typeCount.jsonObject == 1 {
+        if jsonData.array.count == 1 {
             guard let object = jsonData.array[0] as? JSONObject else { return }
             print("총 \(object.dictionary.count) 개의 객체 데이터 중에", terminator: "")
             typeCount = countTypeOfValue(Array(object.dictionary.values))
         } else {
             print("총 \(jsonData.array.count) 개의 배열 데이터 중에", terminator: "")
+            typeCount = countTypeOfValue(jsonData.array)
         }
         if typeCount.jsonObject != 0  { print(" 객체 \(typeCount.jsonObject) 개", terminator: "") }
         if typeCount.string != 0  { print(" 문자열 \(typeCount.string) 개", terminator: "") }
