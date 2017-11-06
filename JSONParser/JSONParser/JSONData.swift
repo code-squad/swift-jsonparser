@@ -21,11 +21,11 @@ struct JSONData {
 }
 
 extension JSONData {
-    init?(data: String) {
-        
+    init?(parsedData: [Any]) {
+        return nil
     }
     
-    static func parse(from stringData: String) -> [Any] {
-        
+    static func parse(from rawData: String) -> [Any] {
+        return []
     }
 }
