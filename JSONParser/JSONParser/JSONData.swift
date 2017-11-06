@@ -15,8 +15,8 @@ struct JSONData {
         case Float
         case Double
     }
-    var string: [String]?
     var number: [Number]?
+    var string: [String]?
     var bool: [Bool]?
 }
 
@@ -32,8 +32,16 @@ extension JSONData {
         }
     }
     
-    static func parse(from rawData: String) -> [Any] {
-        return []
+    static let numberPattern = "((?!\")[0-9]+(?!\"))\\b"
+    static let stringPattern = "[a-zA-B가-힣0-9]+"
+    static let boolPattern = "true|false"
+    
+    static func parse(from rawData: String) throws -> [Any] {
+        var splitData: [Any] = []
+        splitData.append(try rawData.split(by: numberPattern))
+        splitData.append(try rawData.split(by: stringPattern))
+        splitData.append(try rawData.split(by: boolPattern))
+        return splitData
     }
 }
 
