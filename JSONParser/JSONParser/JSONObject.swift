@@ -10,6 +10,7 @@ import Foundation
 
 typealias Value = Any
 
+// Value Types: Array, Object, String, Number, Bool
 struct JSONObject {
     
     private(set) var dictionary: [String : Value]

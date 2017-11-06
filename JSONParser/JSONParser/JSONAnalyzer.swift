@@ -13,7 +13,6 @@ import Foundation
 struct JSONAnalyzer {
     
     static func makeObject(with jsonString: String) throws -> JSONData {
-
         if GrammarChecker.isDataArray(jsonString) {
             // 기본 타입 배열 일 때
             guard let datas = convertStringToDatas(jsonString) else {
@@ -21,7 +20,7 @@ struct JSONAnalyzer {
             }
             return JSONData(array: datas)
         }
-        if GrammarChecker.isJSONObject(jsonString) {
+        if GrammarChecker.isNestedJSONObject(jsonString) {
             // json Object 일 때
             guard let jsonObject = convertStringToJSONObject(jsonString) else {
                 throw GrammarChecker.FormatError.invalidDataType
@@ -36,10 +35,12 @@ struct JSONAnalyzer {
             return JSONData(array: jsonObjects)
         }
         throw GrammarChecker.FormatError.notFormatted
+        
     }
     
     // Dictionay ({"key":value...})형태의 스트링을 JSON Object로 변경
-    private static func convertStringToJSONObject(_ objectsString: String) -> JSONObject? {
+    fileprivate static func convertStringToJSONObject(_ objectsString: String) -> JSONObject? {
+        
         var dictionaryForResult = [String : Value]()
         guard let splitJSONObjectIntoDictionary = objectsString.findMatchedStrings(with: GrammarChecker.dictionaryRegularExpression) else { return nil }
         
@@ -51,7 +52,11 @@ struct JSONAnalyzer {
             let valueString = splitDictionaryStringIntoKeyAndValue[1]
             guard let key = keyString.convertStringToKey else { return nil }
             guard let value = valueString.convertStringToValue else { return nil }
-            dictionaryForResult[key] = value
+            if value.count > 1 {
+                dictionaryForResult[key] = value
+            } else {
+                dictionaryForResult[key] = value[0]
+            }
         }
         return JSONObject(dictionary: dictionaryForResult)
     }
@@ -61,15 +66,20 @@ struct JSONAnalyzer {
         var jsonObjectsForResult = [JSONObject]()
         guard let splitIntoJSONObjects = objectsString.findMatchedStrings(with: GrammarChecker.jsonObjectRegularExpression) else { return nil }
         for jsonObjectFormatString in splitIntoJSONObjects {
-            guard let jsonObject = convertStringToJSONObject(jsonObjectFormatString) else { return nil }
+            guard let jsonObject = convertStringToJSONObject(jsonObjectFormatString) else {
+                return nil
+            }
             jsonObjectsForResult.append(jsonObject)
         }
         return jsonObjectsForResult
     }
     
-    private static func convertStringToDatas(_ datasString: String) -> [Value]? {
+    fileprivate static func convertStringToDatas(_ datasString: String) -> [Value]? {
         var valuesForResult = [Value]()
-        guard let splitStrings = datasString.findMatchedStrings(with: GrammarChecker.valueRegularExpression) else { return nil }
+        guard let splitStrings = datasString
+            .findMatchedStrings(with: GrammarChecker.valueRegularExpression) else {
+                return nil
+        }
         for contents in splitStrings {
             guard let value = contents.convertStringToValue else {
                 return nil
@@ -91,6 +101,7 @@ extension StringProtocol {
     }
 
 }
+
 extension String {
 
     func hasParenthesis(head: Character, tail: Character) -> Bool {
@@ -108,16 +119,27 @@ extension String {
         return stripAwayOutLayerString
     }
     
-    var convertStringToValue: Value? {
+    var convertStringToValue: [Value]? {
         get {
             if self.hasParenthesis(head: "\"", tail: "\"") {
                 let value = self.stripAwayParenthesis()
-                return value
-            } else if let valueBool = Bool(self) {
-                return valueBool
-            } else if let valueInt = Int(self) {
-                return valueInt
-            } else { return nil }
+                return [value]
+            }
+            if let valueBool = Bool(self) {
+                return [valueBool]
+            }
+            if let valueInt = Int(self) {
+                return [valueInt]
+            }
+            if self.hasParenthesis(head: "{", tail: "}") {
+                let valueObject = JSONAnalyzer.convertStringToJSONObject(self)
+                return [valueObject ?? " "]
+            }
+            if self.hasParenthesis(head: "[", tail: "]") {
+                let valueArray = JSONAnalyzer.convertStringToDatas(self)
+                return valueArray ?? []
+            }
+            return nil
         }
     }
     
