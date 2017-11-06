@@ -28,8 +28,8 @@ class TypeCounterTest: XCTestCase {
 
     func testCountType() {
         let tester : String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let testers = inputView?.getElements(readInput: tester)
-        typeCounter?.countTypes(items: testers!)
+        let testers = tester.trimmingCharacters(in: ["[","]"]).split(separator: ",").map({$0.trimmingCharacters(in: .whitespaces)})
+        typeCounter?.countTypes(items: testers)
         XCTAssertEqual(typeCounter?.boolCounter, 1)
         XCTAssertEqual(typeCounter?.intCounter, 3)
         XCTAssertEqual(typeCounter?.stringCounter, 3)

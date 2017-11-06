@@ -13,8 +13,8 @@ struct InputView {
         let readInput = readLine() ?? "[]"
         return getElements(readInput: readInput)
     }
-    func getElements(readInput: String) -> Array<String> {
-        print(readInput)
+    
+    private func getElements(readInput: String) -> Array<String> {
         return readInput.trimmingCharacters(in: ["[","]"]).split(separator: ",").map({$0.trimmingCharacters(in: .whitespaces)})
     }
 }
