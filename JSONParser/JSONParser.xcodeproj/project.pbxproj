@@ -14,6 +14,7 @@
 		C94C7B191FA6D0D2008F6A0A /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B181FA6D0D2008F6A0A /* OutputView.swift */; };
 		C94C7B451FAAAC6C008F6A0A /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B441FAAAC6C008F6A0A /* JSONData.swift */; };
 		C94C7B471FAB14F2008F6A0A /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B461FAB14F2008F6A0A /* GrammarChecker.swift */; };
+		C9BAD5081FAFFDFD0007F169 /* UnitTestJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BAD5071FAFFDFD0007F169 /* UnitTestJSONParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,10 +38,20 @@
 		C94C7B181FA6D0D2008F6A0A /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		C94C7B441FAAAC6C008F6A0A /* JSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
 		C94C7B461FAB14F2008F6A0A /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
+		C9BAD5051FAFFDFD0007F169 /* UnitTestJSONParser.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTestJSONParser.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9BAD5071FAFFDFD0007F169 /* UnitTestJSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestJSONParser.swift; sourceTree = "<group>"; };
+		C9BAD5091FAFFDFD0007F169 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		83AE2E091F8CAC2800F38CC9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9BAD5021FAFFDFD0007F169 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -54,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0E1F8CAC2800F38CC9 /* JSONParser */,
+				C9BAD5061FAFFDFD0007F169 /* UnitTestJSONParser */,
 				83AE2E0D1F8CAC2800F38CC9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0C1F8CAC2800F38CC9 /* JSONParser */,
+				C9BAD5051FAFFDFD0007F169 /* UnitTestJSONParser.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -78,6 +91,15 @@
 				C94C7B181FA6D0D2008F6A0A /* OutputView.swift */,
 			);
 			path = JSONParser;
+			sourceTree = "<group>";
+		};
+		C9BAD5061FAFFDFD0007F169 /* UnitTestJSONParser */ = {
+			isa = PBXGroup;
+			children = (
+				C9BAD5071FAFFDFD0007F169 /* UnitTestJSONParser.swift */,
+				C9BAD5091FAFFDFD0007F169 /* Info.plist */,
+			);
+			path = UnitTestJSONParser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -100,6 +122,23 @@
 			productReference = 83AE2E0C1F8CAC2800F38CC9 /* JSONParser */;
 			productType = "com.apple.product-type.tool";
 		};
+		C9BAD5041FAFFDFD0007F169 /* UnitTestJSONParser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9BAD50C1FAFFDFD0007F169 /* Build configuration list for PBXNativeTarget "UnitTestJSONParser" */;
+			buildPhases = (
+				C9BAD5011FAFFDFD0007F169 /* Sources */,
+				C9BAD5021FAFFDFD0007F169 /* Frameworks */,
+				C9BAD5031FAFFDFD0007F169 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UnitTestJSONParser;
+			productName = UnitTestJSONParser;
+			productReference = C9BAD5051FAFFDFD0007F169 /* UnitTestJSONParser.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -112,6 +151,10 @@
 				TargetAttributes = {
 					83AE2E0B1F8CAC2800F38CC9 = {
 						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
+					C9BAD5041FAFFDFD0007F169 = {
+						CreatedOnToolsVersion = 9.0.1;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -129,9 +172,20 @@
 			projectRoot = "";
 			targets = (
 				83AE2E0B1F8CAC2800F38CC9 /* JSONParser */,
+				C9BAD5041FAFFDFD0007F169 /* UnitTestJSONParser */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C9BAD5031FAFFDFD0007F169 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		83AE2E081F8CAC2800F38CC9 /* Sources */ = {
@@ -145,6 +199,14 @@
 				C94C7B151FA6CD26008F6A0A /* JSONObject.swift in Sources */,
 				C94C7B131FA6C984008F6A0A /* InputView.swift in Sources */,
 				C94C7B451FAAAC6C008F6A0A /* JSONData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9BAD5011FAFFDFD0007F169 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9BAD5081FAFFDFD0007F169 /* UnitTestJSONParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +339,38 @@
 			};
 			name = Release;
 		};
+		C9BAD50A1FAFFDFD0007F169 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = V9TZ6H4V4N;
+				INFOPLIST_FILE = UnitTestJSONParser/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompony.UnitTestJSONParser;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		C9BAD50B1FAFFDFD0007F169 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = V9TZ6H4V4N;
+				INFOPLIST_FILE = UnitTestJSONParser/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompony.UnitTestJSONParser;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -294,6 +388,15 @@
 			buildConfigurations = (
 				83AE2E141F8CAC2800F38CC9 /* Debug */,
 				83AE2E151F8CAC2800F38CC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9BAD50C1FAFFDFD0007F169 /* Build configuration list for PBXNativeTarget "UnitTestJSONParser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9BAD50A1FAFFDFD0007F169 /* Debug */,
+				C9BAD50B1FAFFDFD0007F169 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
