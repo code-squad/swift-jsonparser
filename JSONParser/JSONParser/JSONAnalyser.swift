@@ -9,8 +9,8 @@
 import Foundation
 
 struct JSONAnalyser {
-    func getJsonData(items: Array<String>) -> JsonData {
-        var typedArray : JsonData = []
+    func getJSONData(items: Array<String>) -> JSONData {
+        var typedArray : JSONData = []
         for item in items {
             typedArray.append(setEachType(item: item) ?? "")
         }

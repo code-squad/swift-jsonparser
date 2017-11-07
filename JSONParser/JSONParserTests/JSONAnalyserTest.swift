@@ -25,8 +25,7 @@ class JSONAnalyserTest: XCTestCase {
 
     func testGetJsonData() {
         let tester : String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let testers = tester.trimmingCharacters(in: ["[","]"]).split(separator: ",").map({$0.trimmingCharacters(in: .whitespaces)})
-        let jsonData = jsonAnalyser.getJsonData(items: testers)
+        let jsonData = jsonAnalyser.getJSONData(items: tester.getElements())
         XCTAssertTrue(jsonData[0] is Int)
         XCTAssertTrue(jsonData[1] is String)
         XCTAssertTrue(jsonData[2] is Int)

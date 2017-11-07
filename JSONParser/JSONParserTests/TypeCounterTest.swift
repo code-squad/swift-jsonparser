@@ -12,22 +12,19 @@ import XCTest
 
 class TypeCounterTest: XCTestCase {
     var typeCounter : TypeCounter?
-    var inputView : InputView?
     
     override func setUp() {
         super.setUp()
         typeCounter = TypeCounter()
-        inputView = InputView()
     }
     
     override func tearDown() {
         super.tearDown()
         typeCounter = nil
-        inputView = nil
     }
 
     func testCountType() {
-        let testers : JsonData = [ 10, "jk", 4, "314", 99, "crong", false]
+        let testers : JSONData = [ 10, "jk", 4, "314", 99, "crong", false]
         typeCounter?.countTypes(items: testers)
         XCTAssertEqual(typeCounter?.boolCounter, 1)
         XCTAssertEqual(typeCounter?.intCounter, 3)

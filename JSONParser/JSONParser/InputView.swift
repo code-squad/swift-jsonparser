@@ -11,10 +11,12 @@ import Foundation
 struct InputView {
     func readInput() -> Array<String> {
         let readInput = readLine() ?? "[]"
-        return getElements(readInput: readInput)
+        return readInput.getElements()
     }
-    
-    private func getElements(readInput: String) -> Array<String> {
-        return readInput.trimmingCharacters(in: ["[","]"]).split(separator: ",").flatMap({$0.trimmingCharacters(in: .whitespaces)})
+}
+
+extension String {
+    func getElements() -> Array<String> {
+        return self.trimmingCharacters(in: ["[","]"]).split(separator: ",").flatMap({$0.trimmingCharacters(in: .whitespaces)})
     }
 }

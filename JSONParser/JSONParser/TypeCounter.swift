@@ -14,7 +14,7 @@ struct TypeCounter {
     private(set) var boolCounter : Int = 0
     private(set) var totalCounter : Int = 0
     
-    mutating func countTypes(items: JsonData) {
+    mutating func countTypes(items: JSONData) {
         for item in items {
             countType(item: item)
         }
