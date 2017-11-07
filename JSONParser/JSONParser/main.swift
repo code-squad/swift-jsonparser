@@ -8,15 +8,17 @@
 
 import Foundation
 
-func main() {
-    do {
-        while let userInput = try InputView.askFor(message: "분석할 JSON 데이터를 입력하세요: ") {
-            let jsonData = try JSONParser.parse(from: userInput)
+func main() throws {
+    while true {
+        do {
+            guard let userInput = try InputView.askFor(message: "분석할 JSON 데이터를 입력하세요: ") else { return }
+            let jsonData = JSONParser.parse(from: userInput)
             OutputView.printDataReport(of: jsonData)
+        }catch let e as JSONParser.JsonError {
+            OutputView.printError(e)
+            continue
         }
-    }catch {
-        print(error.localizedDescription)
     }
 }
 
-main()
+try main()

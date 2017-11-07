@@ -30,7 +30,7 @@ struct JSONParser {
         return JSONData(string: stringData, number: numberData, bool: boolData)
     }
     
-    static func searchJsonData(from rawData: String) -> [String] {
+    private static func searchJsonData(from rawData: String) -> [String] {
         return rawData.trimmingCharacters(in: ["[", "]"]).split(separator: ",").map{ $0.trimmingCharacters(in: .whitespaces) }
     }
     
