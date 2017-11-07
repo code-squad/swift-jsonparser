@@ -8,18 +8,28 @@
 
 import Foundation
 
-typealias NumberOfType = (jsonObject:Int, string:Int, int:Int, bool:Int, array:Int)
-
 struct JSONTypeCount {
-    private(set) var dictionary: [String:Int]
-    init() {
-        dictionary = [ "객체":0, "문자열":0, "숫자":0, "부울":0, "배열":0 ]
+    static func calculateNumberOfType(_ values: [Value]) -> Dictionary<String, Int> {
+        var arrayCount = 0
+        var jsonObjectCount = 0
+        var stringCount = 0
+        var intCount = 0
+        var boolCount = 0
+        for value in values {
+            switch value {
+            case is JSONObject: jsonObjectCount += 1
+            case is String: stringCount += 1
+            case is Int: intCount += 1
+            case is Bool: boolCount += 1
+            case is [Value]: arrayCount += 1
+            default: break
+            }
+        }
+        return ["객체": jsonObjectCount,
+                "문자열": stringCount,
+                "숫자": intCount,
+                "부울": boolCount,
+                "배열": arrayCount]
     }
-    mutating func calculateNumberOfType(_ count: NumberOfType) {
-        dictionary["객체"] = count.jsonObject
-        dictionary["문자열"] = count.string
-        dictionary["숫자"] = count.int
-        dictionary["부울"] = count.bool
-        dictionary["배열"] = count.array
-    }
+
 }
