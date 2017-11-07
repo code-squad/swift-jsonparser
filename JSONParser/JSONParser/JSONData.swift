@@ -10,9 +10,9 @@ import Foundation
 
 struct JSONData {
     typealias Number = Int
-    var number: [Number] = []
-    var string: [String] = []
-    var bool: [Bool] = []
+    var string: [String]
+    var number: [Number]
+    var bool: [Bool]
     var count: Int {
         return self.number.count + self.string.count + self.bool.count
     }
