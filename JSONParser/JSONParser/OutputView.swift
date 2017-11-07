@@ -9,8 +9,6 @@
 import Foundation
 
 struct OutputView {
-    typealias NumberOfType = (jsonObject: Int, string: Int, int: Int, bool: Int, array: Int)
-    
     static func printAnalyzeResult(_ jsonData: JSONData) {
         var typeCount: NumberOfType = (0,0,0,0,0)
         if jsonData.array.count == 1 {
@@ -21,15 +19,15 @@ struct OutputView {
             print("총 \(jsonData.array.count) 개의 배열 데이터 중에", terminator: "")
             typeCount = countTypeOfValue(jsonData.array)
         }
-        if typeCount.jsonObject != 0  { print(" 객체 \(typeCount.jsonObject) 개", terminator: "") }
-        if typeCount.string != 0  { print(" 문자열 \(typeCount.string) 개", terminator: "") }
-        if typeCount.int != 0  { print(" 숫자 \(typeCount.int) 개", terminator: "") }
-        if typeCount.bool != 0 { print(" 부울 \( typeCount.bool) 개", terminator: "") }
-        if typeCount.array != 0 { print(" 배열 \( typeCount.array) 개", terminator: "") }
+        var typeDictionaryCount = JSONTypeCount()
+        typeDictionaryCount.calculateNumberOfType(typeCount)
+        for (type,count) in typeDictionaryCount.dictionary where count != 0 {
+            print(" \(type) \(count)개", terminator: "")
+        }
         print("가 포함되어 있습니다.")
     }
     
-    private static func countTypeOfValue(_ values: [Any]) -> NumberOfType {
+    private static func countTypeOfValue(_ values: [Value]) -> NumberOfType {
         var arrayCount = 0
         var jsonObjectCount = 0
         var stringCount = 0
@@ -45,7 +43,10 @@ struct OutputView {
             default: break
             }
         }
-        return (jsonObjectCount, stringCount, intCount, boolCount, arrayCount)
+        return (jsonObjectCount,stringCount,intCount, boolCount, arrayCount)
     }
     
 }
+
+
+

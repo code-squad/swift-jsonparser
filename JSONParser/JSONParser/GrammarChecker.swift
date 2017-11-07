@@ -42,9 +42,6 @@ extension String {
         guard let results = findMatchedStrings(with: regularExpression) else {
             return false
         }
-        for i in results {
-            print(i)
-        }
         return results == [self]
     }
     
