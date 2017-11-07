@@ -9,11 +9,10 @@
 import Foundation
 
 struct GrammarChecker {
-    static let nestedJSONObjectRegularExpression = "\\{\\s*(((\"\\w+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"|\\{\\s*(((\"\\w+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))\\,\\s*)*((\"\\w+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))*\\s*\\}|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]))\\,\\s*)*((\"\\w+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"|\\{\\s*(((\"\\w+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))\\,\\s*)*((\"\\w+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))*\\s*\\}|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]))*\\s*\\}"
-    static let nestedArrayRegularExpression = "\\[\\s*((\\d*|true|false|\"[^\"]*\"|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]|\\{\\s*(((\"\\w+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))\\,\\s*)*((\"\\w+\")\\s*\\:\\s*(\\d*|false|true|\"[^\"]\"))*\\s*\\})*\\,\\s*)*(\\d+|false|true|\"[^\"]*\"|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]|\\{\\s*(((\"\\w+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))\\,\\s*)*((\"\\w+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))*\\s*\\})\\s*\\]"
-    static let dictionaryRegularExpression = "((\"\\w+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"|\\{\\s*(((\"\\w+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))\\,\\s*)*((\"\\w+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))*\\s*\\}|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]))+"
-    static let valueRegularExpression = "\\d+|false|true|\"[^\"]*\"|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]|\\{\\s*(((\"\\w+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))\\,\\s*)*((\"\\w+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))*\\s*\\}"
-
+    static let nestedJSONObjectRegularExpression = "\\{\\s*((((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))*\\s*\\}|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))*\\s*\\}|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\])*)*)*\\s*\\}"
+    static let nestedArrayRegularExpression = "\\[\\s*((\\d*|true|false|\"[^\"]*\"|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d*|false|true|\"[^\"]\"))*\\s*\\})*\\,\\s*)*(\\d+|false|true|\"[^\"]*\"|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))*\\s*\\})\\s*\\]"
+    static let dictionaryRegularExpression = "(\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))*\\s*\\}|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\])"
+    static let valueRegularExpression = "\\d+|false|true|\"[^\"]*\"|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))*\\s*\\}"
     static let innerArrayRegularExpression = "\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]"
     static let innerValueRegularExpression = "\\d+|false|true|\"[^\"]*\""
 
@@ -42,6 +41,9 @@ extension String {
     func isValidAllString(with regularExpression: String) -> Bool {
         guard let results = findMatchedStrings(with: regularExpression) else {
             return false
+        }
+        for i in results {
+            print(i)
         }
         return results == [self]
     }

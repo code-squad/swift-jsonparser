@@ -9,7 +9,6 @@
 import Foundation
 
 struct InputView {
-    
     static func read() -> String? {
         print("분석할 JSON 데이터를 입력하세요.")
         let input = readLine() ?? ""

@@ -35,9 +35,7 @@ struct JSONAnalyzer {
         var dictionaryForResult = [String : Value]()
         guard let splitJSONObjectIntoDictionary = objectsString.findMatchedStrings(with: GrammarChecker.dictionaryRegularExpression) else { return nil }
         for dictionaryString in splitJSONObjectIntoDictionary {
-            let splitDictionaryStringIntoKeyAndValue = dictionaryString.split(separator: ":").map{
-                $0.trimmingCharacters(in: .whitespaces)
-            }
+            guard let splitDictionaryStringIntoKeyAndValue = dictionaryString.findMatchedStrings(with: GrammarChecker.valueRegularExpression) else { return nil }
             let keyString = splitDictionaryStringIntoKeyAndValue[0]
             let valueString = splitDictionaryStringIntoKeyAndValue[1]
             guard let key = keyString.convertStringToKey else { return nil }
@@ -88,17 +86,6 @@ struct JSONAnalyzer {
 
 }
 
-
-extension StringProtocol {
-    func trimmingWhiteSpaceAfterSplit(with separator: Character) -> [String] {
-        return self.split(separator: separator).map({ (subSequence: SubSequence) -> String in
-            guard let subSequenceToString = subSequence as? NSString else { return " " }
-            return subSequenceToString.trimmingCharacters(in: .whitespaces)
-        })
-    }
-
-}
-
 extension String {
 
     func hasParenthesis(head: Character, tail: Character) -> Bool {
@@ -129,8 +116,10 @@ extension String {
                 return valueInt
             }
             if self.hasParenthesis(head: "{", tail: "}") {
-                let valueObject = JSONAnalyzer.convertStringToJSONObject(self)
-                return valueObject ?? " "
+                guard let valueObject = JSONAnalyzer.convertStringToJSONObject(self) else {
+                    return nil
+                }
+                return valueObject
             }
             return nil
         }

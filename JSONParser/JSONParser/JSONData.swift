@@ -9,7 +9,6 @@
 import Foundation
 
 struct JSONData {
-    
     private(set) var array: [Value]
     
     init(array: [Value]) {

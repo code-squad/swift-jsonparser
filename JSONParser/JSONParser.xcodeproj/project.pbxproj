@@ -15,6 +15,10 @@
 		C94C7B451FAAAC6C008F6A0A /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B441FAAAC6C008F6A0A /* JSONData.swift */; };
 		C94C7B471FAB14F2008F6A0A /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B461FAB14F2008F6A0A /* GrammarChecker.swift */; };
 		C9BAD5081FAFFDFD0007F169 /* UnitTestJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BAD5071FAFFDFD0007F169 /* UnitTestJSONParser.swift */; };
+		C9BAD50D1FB17D8E0007F169 /* JSONAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B161FA6CEDE008F6A0A /* JSONAnalyzer.swift */; };
+		C9BAD50E1FB17D9C0007F169 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B441FAAAC6C008F6A0A /* JSONData.swift */; };
+		C9BAD50F1FB17DA00007F169 /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B141FA6CD26008F6A0A /* JSONObject.swift */; };
+		C9BAD5101FB17DBC0007F169 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B461FAB14F2008F6A0A /* GrammarChecker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -206,7 +210,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9BAD50F1FB17DA00007F169 /* JSONObject.swift in Sources */,
 				C9BAD5081FAFFDFD0007F169 /* UnitTestJSONParser.swift in Sources */,
+				C9BAD50D1FB17D8E0007F169 /* JSONAnalyzer.swift in Sources */,
+				C9BAD50E1FB17D9C0007F169 /* JSONData.swift in Sources */,
+				C9BAD5101FB17DBC0007F169 /* GrammarChecker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
