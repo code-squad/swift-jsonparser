@@ -19,7 +19,6 @@
 		C9BAD50E1FB17D9C0007F169 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B441FAAAC6C008F6A0A /* JSONData.swift */; };
 		C9BAD50F1FB17DA00007F169 /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B141FA6CD26008F6A0A /* JSONObject.swift */; };
 		C9BAD5101FB17DBC0007F169 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94C7B461FAB14F2008F6A0A /* GrammarChecker.swift */; };
-		C9BAD5121FB19B790007F169 /* JSONTypeCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BAD5111FB19B790007F169 /* JSONTypeCount.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,7 +45,6 @@
 		C9BAD5051FAFFDFD0007F169 /* UnitTestJSONParser.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTestJSONParser.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9BAD5071FAFFDFD0007F169 /* UnitTestJSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestJSONParser.swift; sourceTree = "<group>"; };
 		C9BAD5091FAFFDFD0007F169 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C9BAD5111FB19B790007F169 /* JSONTypeCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTypeCount.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +92,6 @@
 				C94C7B441FAAAC6C008F6A0A /* JSONData.swift */,
 				C94C7B161FA6CEDE008F6A0A /* JSONAnalyzer.swift */,
 				C94C7B461FAB14F2008F6A0A /* GrammarChecker.swift */,
-				C9BAD5111FB19B790007F169 /* JSONTypeCount.swift */,
 				C94C7B181FA6D0D2008F6A0A /* OutputView.swift */,
 			);
 			path = JSONParser;
@@ -202,7 +199,6 @@
 				C94C7B471FAB14F2008F6A0A /* GrammarChecker.swift in Sources */,
 				C94C7B191FA6D0D2008F6A0A /* OutputView.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
-				C9BAD5121FB19B790007F169 /* JSONTypeCount.swift in Sources */,
 				C94C7B171FA6CEDE008F6A0A /* JSONAnalyzer.swift in Sources */,
 				C94C7B151FA6CD26008F6A0A /* JSONObject.swift in Sources */,
 				C94C7B131FA6C984008F6A0A /* InputView.swift in Sources */,
