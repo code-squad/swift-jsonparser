@@ -9,6 +9,7 @@
 import Foundation
 
 struct OutputView {
+    
     static func printDataReport(of data: JSONData) {
         var result = "총 \(data.count)개의 데이터 중에"
         if data.string.count > 0 {
@@ -24,4 +25,5 @@ struct OutputView {
         result += "가 포함되어 있습니다."
         print(result)
     }
+    
 }

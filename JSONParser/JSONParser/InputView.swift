@@ -9,7 +9,6 @@
 import Foundation
 
 struct InputView {
-    
     private(set) static var jsonPattern = "\\[{1}(.+[^\\[\\]\\s,]),*\\]{1}?"
     
     // 사용자 입력 메뉴 출력.
@@ -25,7 +24,7 @@ struct InputView {
     
     // 사용자 입력 문자열이 JSON 규격인지 검사.
     private static func isJSONPattern(_ message: String) throws -> Bool {
-        guard try message.split(by: jsonPattern).count > 0 else { return false }
+        guard try message.matches(by: jsonPattern).count > 0 else { return false }
         return true
     }
     

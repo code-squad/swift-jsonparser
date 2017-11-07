@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
+		EE3649CE1FB1DE3200850A70 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3649CD1FB1DE3200850A70 /* JSONParser.swift */; };
+		EE3649CF1FB1DE3200850A70 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3649CD1FB1DE3200850A70 /* JSONParser.swift */; };
 		EE92F09F1FB04108000AA183 /* JSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE92F09E1FB04108000AA183 /* JSONParserTests.swift */; };
 		EE92F0A51FB04136000AA183 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE92F0A41FB04136000AA183 /* InputView.swift */; };
 		EE92F0A61FB04136000AA183 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE92F0A41FB04136000AA183 /* InputView.swift */; };
@@ -33,6 +35,7 @@
 /* Begin PBXFileReference section */
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		EE3649CD1FB1DE3200850A70 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		EE92F09C1FB04108000AA183 /* JSONParserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONParserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE92F09E1FB04108000AA183 /* JSONParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParserTests.swift; sourceTree = "<group>"; };
 		EE92F0A01FB04108000AA183 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -82,6 +85,7 @@
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				EE92F0AD1FB041B8000AA183 /* JSONData.swift */,
+				EE3649CD1FB1DE3200850A70 /* JSONParser.swift */,
 				EE92F0A41FB04136000AA183 /* InputView.swift */,
 				EE92F0A71FB0413F000AA183 /* OutputView.swift */,
 			);
@@ -188,6 +192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				EE3649CE1FB1DE3200850A70 /* JSONParser.swift in Sources */,
 				EE92F0A51FB04136000AA183 /* InputView.swift in Sources */,
 				EE92F0A81FB0413F000AA183 /* OutputView.swift in Sources */,
 				EE92F0AE1FB041B8000AA183 /* JSONData.swift in Sources */,
@@ -200,6 +205,7 @@
 			files = (
 				EE92F09F1FB04108000AA183 /* JSONParserTests.swift in Sources */,
 				EE92F0B01FB05ECB000AA183 /* main.swift in Sources */,
+				EE3649CF1FB1DE3200850A70 /* JSONParser.swift in Sources */,
 				EE92F0A61FB04136000AA183 /* InputView.swift in Sources */,
 				EE92F0A91FB0413F000AA183 /* OutputView.swift in Sources */,
 				EE92F0AF1FB041B8000AA183 /* JSONData.swift in Sources */,
