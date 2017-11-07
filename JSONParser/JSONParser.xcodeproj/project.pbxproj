@@ -15,6 +15,7 @@
 		EE92F0A91FB0413F000AA183 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE92F0A71FB0413F000AA183 /* OutputView.swift */; };
 		EE92F0AE1FB041B8000AA183 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE92F0AD1FB041B8000AA183 /* JSONData.swift */; };
 		EE92F0AF1FB041B8000AA183 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE92F0AD1FB041B8000AA183 /* JSONData.swift */; };
+		EE92F0B01FB05ECB000AA183 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -198,6 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE92F09F1FB04108000AA183 /* JSONParserTests.swift in Sources */,
+				EE92F0B01FB05ECB000AA183 /* main.swift in Sources */,
 				EE92F0A61FB04136000AA183 /* InputView.swift in Sources */,
 				EE92F0A91FB0413F000AA183 /* OutputView.swift in Sources */,
 				EE92F0AF1FB041B8000AA183 /* JSONData.swift in Sources */,
@@ -317,6 +319,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
@@ -326,6 +329,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};

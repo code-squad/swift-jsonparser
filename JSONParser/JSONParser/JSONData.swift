@@ -9,52 +9,71 @@
 import Foundation
 
 struct JSONData {
-    enum Number {
-        case UInt
-        case Int
-        case Float
-        case Double
+    typealias Number = Int
+    var number: [Number] = []
+    var string: [String] = []
+    var bool: [Bool] = []
+    var count: Int {
+        return self.number.count + self.string.count + self.bool.count
     }
-    var number: [Number]?
-    var string: [String]?
-    var bool: [Bool]?
 }
 
 extension JSONData {
-    init?(parsedData: [Any]) {
-        for each in parsedData {
-            switch each {
-            case is Number: self.number?.append(each as! Number)
-            case is String: self.string?.append(each as! String)
-            case is Bool: self.bool?.append(each as! Bool)
+    
+    private(set) static var numberPattern = "((?!\")[0-9]+(?!\"))\\b"
+    private(set) static var stringPattern = "\"{1}[a-zA-B가-힣ㄱ-ㅎㅏ-ㅣ0-9]+\"{1}"
+    private(set) static var boolPattern = "true|false"
+    
+    init(_ parsedData: [Any]) {
+        for data in parsedData {
+            switch data {
+            case is Number: self.number.append(data as! Number)
+            case is String: self.string.append(data as! String)
+            case is Bool: self.bool.append(data as! Bool)
             default: break
             }
         }
     }
     
-    static let numberPattern = "((?!\")[0-9]+(?!\"))\\b"
-    static let stringPattern = "[a-zA-B가-힣0-9]+"
-    static let boolPattern = "true|false"
-    
     static func parse(from rawData: String) throws -> [Any] {
-        var splitData: [Any] = []
-        splitData.append(try rawData.split(by: numberPattern))
-        splitData.append(try rawData.split(by: stringPattern))
-        splitData.append(try rawData.split(by: boolPattern))
-        return splitData
+        let numberData = try rawData.split(by: numberPattern)
+        let stringData = try rawData.split(by: stringPattern)
+        let boolData = try rawData.split(by: boolPattern)
+        return numberData + stringData + boolData
     }
+    
 }
 
 extension String {
-    func split(by rxPattern: String) throws -> [String] {
+    
+    func split(by rxPattern: String) throws -> [Any] {
         do {
             let expression = try NSRegularExpression(pattern: rxPattern)
             let matchedRange = expression.matches(in: self, options: .init(rawValue: 0), range: NSRange.init(self.startIndex..., in: self))
-            return matchedRange.map({
-                return String(self[Range($0.range, in: self)!])
-            })
+            let matchedResult: [Any?] = matchedRange.map{
+                return convert(with: $0, using: rxPattern)
+            }
+            return matchedResult.flatMap{ $0 }
         } catch {
             throw error
         }
     }
+    
+    func convert(with nsInfo: NSTextCheckingResult, using rxPattern: String) -> Any? {
+        switch rxPattern {
+        case JSONData.numberPattern:
+            guard let number = Int(self[Range(nsInfo.range, in: self)!]) else { return nil }
+            return number
+        case JSONData.stringPattern:
+            let extractedString = self[Range(nsInfo.range, in: self)!]
+            let extractedStringWithoutParenthesis = extractedString.replacingOccurrences(of: "\"", with: "")
+            return String(extractedStringWithoutParenthesis)
+        case JSONData.boolPattern:
+            guard let bool = Bool(String(self[Range(nsInfo.range, in: self)!])) else { return nil }
+            return bool
+        default:
+            return String(self[Range(nsInfo.range, in: self)!])
+        }
+    }
+    
 }

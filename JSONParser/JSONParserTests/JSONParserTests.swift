@@ -7,17 +7,39 @@
 //
 
 import XCTest
+@testable import JSONParser
 
 class JSONParserTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    let jsonString: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
+    let parsedData: [Any] = [10, "jk", 4, "314", 99, "crong", false]
+    
+    func testParsingJSONData() {
+        do {
+            try JSONData.parse(from: jsonString)
+        }catch {
+            XCTAssertNoThrow(error, error.localizedDescription)
+        }
+    }
+
+    func testJSONObjectIsNotNil() {
+        let jsonData = JSONData.init(parsedData)
+        XCTAssertNotNil(jsonData)
+    }
+
+    func testCountOfNumberIsRight() {
+        let jsonData = JSONData.init(parsedData)
+        XCTAssertEqual(jsonData.number.count, 3)
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func testCountOfStringIsRight() {
+        let jsonData = JSONData.init(parsedData)
+        XCTAssertEqual(jsonData.string.count, 3)
     }
     
+    func testCountOfBoolIsRight() {
+        let jsonData = JSONData.init(parsedData)
+        XCTAssertEqual(jsonData.bool.count, 1)
+    }
+   
 }
