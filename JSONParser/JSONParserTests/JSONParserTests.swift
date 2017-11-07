@@ -11,7 +11,15 @@ import XCTest
 
 class JSONParserTests: XCTestCase {
     let jsonString: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-    let parsedData: [Any] = [10, "jk", 4, "314", 99, "crong", false]
+    var parsedData: JSONData!
+    
+    override func setUp() {
+        parsedData = JSONParser.parse(from: jsonString)
+    }
+    
+    override func tearDown() {
+        parsedData = nil
+    }
     
     func testParsingJSONData() {
         do {
