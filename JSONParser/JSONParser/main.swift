@@ -9,7 +9,15 @@
 import Foundation
 
 func main() {
-    
+    do {
+        while let userInput = try InputView.askFor(message: "분석할 JSON 데이터를 입력하세요: ") {
+            let parsedData = try JSONData.parse(from: userInput)
+            let jsonData = JSONData(parsedData)
+            OutputView.printDataReport(of: jsonData)
+        }
+    }catch {
+        print(error.localizedDescription)
+    }
 }
 
 main()
