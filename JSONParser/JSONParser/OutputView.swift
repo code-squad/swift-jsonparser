@@ -26,4 +26,8 @@ struct OutputView {
         print(result)
     }
     
+    static func printError(_ error: JSONParser.JsonError) {
+        print(error.rawValue)
+    }
+    
 }
