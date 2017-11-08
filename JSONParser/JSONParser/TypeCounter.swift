@@ -18,8 +18,8 @@ struct TypeCounter {
     
     mutating func countTypes(items: JSONData) {
         if items.count == 1 {
-            if items[0] is Dictionary<String, Any> {
-                countObjectType(items: items[0] as! Dictionary<String, Any>)
+            if items[0] is JSONObject {
+                countObjectType(items: items[0] as! JSONObject)
                 return
             }
         }
@@ -30,7 +30,7 @@ struct TypeCounter {
     }
     
     private mutating func countType(item: Any) {
-        if item is Dictionary<String, Any> {
+        if item is JSONObject {
             self.objectCounter += 1
         } else if item is String {
             self.stringCounter += 1
@@ -41,9 +41,9 @@ struct TypeCounter {
         }
     }
     
-    private mutating func countObjectType(items: Dictionary<String, Any>) {
+    private mutating func countObjectType(items: JSONObject) {
         for item in items {
-            if item.value is Dictionary<String, Any> {
+            if item.value is JSONObject {
                 self.objectCounter += 1
             } else if item.value is String {
                 self.stringCounter += 1

@@ -30,8 +30,8 @@ struct JSONAnalyser {
         return nil
     }
     
-    private func getObjectType(items: Array<String>) -> Dictionary<String, Any> {
-        var object : Dictionary<String, Any> = [:]
+    private func getObjectType(items: Array<String>) -> JSONObject {
+        var object : JSONObject = [:]
         for item in items {
             let keyValue = item.split(separator: ":").map({$0.trimmingCharacters(in: .whitespaces)})
             let key : String = String(keyValue[0]).replacingOccurrences(of: "\"", with: "")

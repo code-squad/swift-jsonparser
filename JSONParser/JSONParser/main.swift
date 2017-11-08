@@ -9,6 +9,7 @@
 import Foundation
 
 typealias JSONData = Array<Any>
+typealias JSONObject = Dictionary<String, Any>
 
 print("분석할 JSON 데이터를 입력하세요.")
 // 입력
