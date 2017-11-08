@@ -11,16 +11,6 @@ import Foundation
 struct InputView {
     func readInput() -> Array<String> {
         let readInput = readLine() ?? "[]"
-        return readInput.getElements()
-    }
-}
-
-extension String {
-    func getElements() -> Array<String> {
-        return self.trimmingCharacters(in: ["[","]"]).split(separator: ",").flatMap({$0.trimmingCharacters(in: .whitespaces)})
-    }
-    
-    func getElementsForObject() -> Array<String> {
-        return self.trimmingCharacters(in: ["{","}"]).split(separator: ",").flatMap({$0.trimmingCharacters(in: .whitespaces)})
+        return readInput.getElementsAll()
     }
 }
