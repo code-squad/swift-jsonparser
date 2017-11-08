@@ -9,23 +9,17 @@
 import Foundation
 
 struct GrammarChecker {
-    static let nestedJSONObjectRegularExpression = "\\{\\s*((((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))*\\s*\\}|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))*\\s*\\}|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\])*)*)*\\s*\\}"
-    static let nestedArrayRegularExpression = "\\[\\s*((\\d*|true|false|\"[^\"]*\"|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d*|false|true|\"[^\"]\"))*\\s*\\})*\\,\\s*)*(\\d+|false|true|\"[^\"]*\"|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))*\\s*\\})\\s*\\]"
-    static let dictionaryRegularExpression = "(\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))*\\s*\\}|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\])"
-    static let valueRegularExpression = "\\d+|false|true|\"[^\"]*\"|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))*\\s*\\}"
-    static let innerArrayRegularExpression = "\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]"
-    static let innerValueRegularExpression = "\\d+|false|true|\"[^\"]*\""
+    static let nestedObject = "\\{\\s*((((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))*\\s*\\}|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))*\\s*\\}|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\])*)*)*\\s*\\}"
+    static let nestedArray = "\\[\\s*((\\d*|true|false|\"[^\"]*\"|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d*|false|true|\"[^\"]\"))*\\s*\\})*\\,\\s*)*(\\d+|false|true|\"[^\"]*\"|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))*\\s*\\})\\s*\\]"
+    static let dictionary = "(\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*(\\d+|false|true|\"[^\"]*\"))*\\s*\\}|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\])"
+    static let value = "\\d+|false|true|\"[^\"]*\"|\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]|\\{\\s*(((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))\\,\\s*)*((\"[^\"]+\")\\s*\\:\\s*([0-9]+|false|true|\"[^\"]*\"))*\\s*\\}"
+    static let innerArray = "\\[\\s*((\\d*|true|false|\"[^\"]*\")*\\,\\s*)*(\\d+|false|true|\"[^\"]*\")\\s*\\]"
+    static let innerValue = "\\d+|false|true|\"[^\"]*\""
 
-    static func isNestedJSONArray(_ jsonString: String) -> Bool {
-        return jsonString.isValidAllString(with: nestedArrayRegularExpression)
-    }
-    
-    static func isNestedJSONObject(_ jsonString: String) -> Bool {
-        return jsonString.isValidAllString(with: nestedJSONObjectRegularExpression)
-    }
-    
-    static func isInnerArray(_ jsonString: String) -> Bool {
-        return jsonString.isValidAllString(with: innerArrayRegularExpression)
+    static func isValid(pattern: String) -> (String) -> Bool {
+        return { (jsonString: String) -> Bool in
+            return jsonString.isValidAllString(with: pattern)
+        }
     }
 }
 

@@ -13,14 +13,14 @@ import Foundation
 struct JSONAnalyzer {
     
     static func makeObject(with jsonString: String) throws -> JSONData {
-        if GrammarChecker.isNestedJSONObject(jsonString) {
+        if GrammarChecker.isValid(pattern: GrammarChecker.nestedObject)(jsonString) {
             // nested json Object 일 때
             guard let jsonObject = convertStringToJSONObject(jsonString) else {
                 throw GrammarChecker.FormatError.invalidDataType
             }
             return JSONData(array: [jsonObject])
         }
-        if GrammarChecker.isNestedJSONArray(jsonString) {
+        if GrammarChecker.isValid(pattern: GrammarChecker.nestedArray)(jsonString) {
             // nested json 배열 일 때
             guard let jsonObjectArray = convertStringToJSONOArray(jsonString) else {
                 throw GrammarChecker.FormatError.invalidDataType
@@ -33,13 +33,15 @@ struct JSONAnalyzer {
     // Dictionay ({"key":value...})형태의 스트링을 JSON Object로 변경
     fileprivate static func convertStringToJSONObject(_ objectsString: String) -> JSONObject? {
         var dictionaryForResult = [String : Value]()
-        guard let splitJSONObjectIntoDictionary = objectsString.findMatchedStrings(with: GrammarChecker.dictionaryRegularExpression) else { return nil }
+        guard let splitJSONObjectIntoDictionary = objectsString
+            .findMatchedStrings(with: GrammarChecker.dictionary) else { return nil }
         for dictionaryString in splitJSONObjectIntoDictionary {
-            guard let splitDictionaryStringIntoKeyAndValue = dictionaryString.findMatchedStrings(with: GrammarChecker.valueRegularExpression) else { return nil }
+            guard let splitDictionaryStringIntoKeyAndValue = dictionaryString
+                .findMatchedStrings(with: GrammarChecker.value) else { return nil }
             let keyString = splitDictionaryStringIntoKeyAndValue[0]
             let valueString = splitDictionaryStringIntoKeyAndValue[1]
             guard let key = keyString.convertStringToKey else { return nil }
-            if GrammarChecker.isInnerArray(valueString) {
+            if GrammarChecker.isValid(pattern: GrammarChecker.innerArray)(valueString) {
                 guard let value = convertStringToDatas(valueString) else { return nil }
                 dictionaryForResult[key] = value
             } else {
@@ -54,11 +56,9 @@ struct JSONAnalyzer {
     private static func convertStringToJSONOArray(_ objectsString: String) -> [Value]? {
         var jsonObjectsForResult = [Value]()
         guard let splitIntoJSONObjects = objectsString
-            .findMatchedStrings(with: GrammarChecker.valueRegularExpression) else {
-                return nil
-        }
+            .findMatchedStrings(with: GrammarChecker.value) else { return nil }
         for jsonObjectFormatString in splitIntoJSONObjects {
-            if GrammarChecker.isInnerArray(jsonObjectFormatString) {
+            if GrammarChecker.isValid(pattern: GrammarChecker.innerArray)(jsonObjectFormatString) {
                 guard let value = convertStringToDatas(jsonObjectFormatString) else { return nil }
                 jsonObjectsForResult.append(value)
             } else {
@@ -72,7 +72,7 @@ struct JSONAnalyzer {
     fileprivate static func convertStringToDatas(_ datasString: String) -> [Value]? {
         var valuesForResult = [Value]()
         guard let splitStrings = datasString
-            .findMatchedStrings(with: GrammarChecker.innerValueRegularExpression) else {
+            .findMatchedStrings(with: GrammarChecker.innerValue) else {
                 return nil
         }
         for contents in splitStrings {
