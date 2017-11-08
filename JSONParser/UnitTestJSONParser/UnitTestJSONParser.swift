@@ -89,26 +89,55 @@ class UnitTestJSONParser: XCTestCase {
         catchErrorSpellingTrue = nil
     }
     
-    func testMakeObject() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testMakeObjectCaseObjectInObject() {
         XCTAssertNotNil(try JSONAnalyzer.makeObject(with: nestedObjectInObject))
-        XCTAssertNotNil(try JSONAnalyzer.makeObject(with: nestedArrayInObject))
-        
-        XCTAssertThrowsError(try JSONAnalyzer.makeObject(with: formatErrorNestedArrayInObject))
-        
-        XCTAssertNotNil(try JSONAnalyzer.makeObject(with: nestedObjectInArray))
-        XCTAssertNotNil(try JSONAnalyzer.makeObject(with: nestedArrayInArray))
-        XCTAssertNotNil(try JSONAnalyzer.makeObject(with: nestedArrayAndObjectInArray))
-        XCTAssertThrowsError(try JSONAnalyzer.makeObject(with: nestedArrayAndObjectInArrayNoComma))
-        
-        XCTAssertNotNil(try JSONAnalyzer.makeObject(with: primitiveTypeInArray))
-        XCTAssertThrowsError(try JSONAnalyzer.makeObject(with: primitiveTypeInArrayNoComma))
-        XCTAssertThrowsError(try JSONAnalyzer.makeObject(with: primitiveTypeInArraywithLastDataComma))
-        
-        XCTAssertThrowsError(try JSONAnalyzer.makeObject(with: nestedArrayMoreThanTwo))
-        XCTAssertNotNil(try JSONAnalyzer.makeObject(with: nestedObjectsInArray))
-        XCTAssertThrowsError(try JSONAnalyzer.makeObject(with: catchErrorSpellingTrue))
     }
     
+    func testMakeObjectCaseArrayInObject() {
+        XCTAssertNotNil(try JSONAnalyzer.makeObject(with: nestedArrayInObject))
+    }
+    
+    func testMakeObjectCaseFormatErrorInObject() {
+        XCTAssertThrowsError(try JSONAnalyzer.makeObject(with: formatErrorNestedArrayInObject))
+    }
+    
+    func testMakeObjectCaseObjectInArray() {
+        XCTAssertNotNil(try JSONAnalyzer.makeObject(with: nestedObjectInArray))
+    }
+    
+    func testMakeObjectCaseArrayInArray() {
+        XCTAssertNotNil(try JSONAnalyzer.makeObject(with: nestedArrayInArray))
+    }
+    
+    func testMakeObjectCaseArrayAndObjectInArray() {
+        XCTAssertNotNil(try JSONAnalyzer.makeObject(with: nestedArrayAndObjectInArray))
+    }
+    
+    func testMakeObjectCaseNestedArrayWithNoComma() {
+        XCTAssertThrowsError(try JSONAnalyzer.makeObject(with: nestedArrayAndObjectInArrayNoComma))
+    }
+    
+    func testMakeObjectCasePrimitiveTypeInArray() {
+        XCTAssertNotNil(try JSONAnalyzer.makeObject(with: primitiveTypeInArray))
+    }
+    
+    func testMakeObjectCaseArrayWithNoComma() {
+        XCTAssertThrowsError(try JSONAnalyzer.makeObject(with: primitiveTypeInArrayNoComma))
+    }
+    
+    func testMakeObjectCaseArrayWithLastDataComma() {
+        XCTAssertThrowsError(try JSONAnalyzer.makeObject(with: primitiveTypeInArraywithLastDataComma))
+    }
+    
+    func testMakeObjectCaseArraysInArray()   {
+        XCTAssertThrowsError(try JSONAnalyzer.makeObject(with: nestedArrayMoreThanTwo))
+    }
+    
+    func testMakeObjectCaseObjectsInArray() {
+        XCTAssertNotNil(try JSONAnalyzer.makeObject(with: nestedObjectsInArray))
+    }
+    
+    func testMakeObjectCaseSpellingErrorInTrue() {
+        XCTAssertThrowsError(try JSONAnalyzer.makeObject(with: catchErrorSpellingTrue))
+    }
 }
