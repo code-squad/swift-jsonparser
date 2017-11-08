@@ -10,19 +10,10 @@ import XCTest
 @testable import JSONParser
 
 class JSONParserTests: XCTestCase {
-    let jsonString: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-    var parsedData: JSONData!
-    
-    override func setUp() {
-        parsedData = JSONParser.parse(from: jsonString)
-    }
-    
-    override func tearDown() {
-        parsedData = nil
-    }
     
     func testParsingJSONData() {
         do {
+            let jsonString: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
             try JSONParser.parse(from: jsonString)
         }catch {
             XCTAssertNoThrow(error, error.localizedDescription)
@@ -30,18 +21,26 @@ class JSONParserTests: XCTestCase {
     }
 
     func testJSONObjectIsNotNil() {
+        let jsonString: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
+        let parsedData = try JSONParser.parse(from: jsonString)
         XCTAssertNotNil(parsedData)
     }
 
     func testCountOfNumberIsRight() {
+        let jsonString: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
+        let parsedData = try JSONParser.parse(from: jsonString)
         XCTAssertEqual(parsedData.number.count, 3)
     }
     
     func testCountOfStringIsRight() {
+        let jsonString: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
+        let parsedData = try JSONParser.parse(from: jsonString)
         XCTAssertEqual(parsedData.string.count, 3)
     }
     
     func testCountOfBoolIsRight() {
+        let jsonString: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
+        let parsedData = try JSONParser.parse(from: jsonString)
         XCTAssertEqual(parsedData.bool.count, 1)
     }
    
