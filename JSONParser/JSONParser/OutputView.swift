@@ -25,7 +25,7 @@ struct OutputView {
         print("가 포함되어 있습니다.")
     }
     
-    static func calculateNumberOfType(_ values: [Value]) -> Dictionary<String, Int> {
+    private static func calculateNumberOfType(_ values: [Value]) -> Dictionary<String, Int> {
         var arrayCount = 0
         var jsonObjectCount = 0
         var stringCount = 0

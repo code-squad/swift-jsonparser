@@ -72,13 +72,9 @@ struct JSONAnalyzer {
     fileprivate static func convertStringToDatas(_ datasString: String) -> [Value]? {
         var valuesForResult = [Value]()
         guard let splitStrings = datasString
-            .findMatchedStrings(with: GrammarChecker.innerValue) else {
-                return nil
-        }
+            .findMatchedStrings(with: GrammarChecker.innerValue) else { return nil }
         for contents in splitStrings {
-            guard let value = contents.convertStringToValue else {
-                return nil
-            }
+            guard let value = contents.convertStringToValue else { return nil }
             valuesForResult.append(value)
         }
         return valuesForResult

@@ -18,7 +18,10 @@ struct GrammarChecker {
 
     static func isValid(pattern: String) -> (String) -> Bool {
         return { (jsonString: String) -> Bool in
-            return jsonString.isValidAllString(with: pattern)
+            guard let results = jsonString.findMatchedStrings(with: pattern) else {
+                return false
+            }
+            return results == [jsonString]
         }
     }
 }
@@ -32,20 +35,14 @@ extension GrammarChecker {
 
 extension String {
     
-    func isValidAllString(with regularExpression: String) -> Bool {
-        guard let results = findMatchedStrings(with: regularExpression) else {
-            return false
-        }
-        return results == [self]
-    }
-    
     func findMatchedStrings(with regularExpression: String) -> [String]? {
         do {
             // 파라미터로 받은 패턴으로 RegExp 객체 생성.
             let regex = try NSRegularExpression(pattern: regularExpression)
             // 현재 문자열(self)에서 패턴에 매칭되는 결과 반환. (NSTextCheckingResult 배열타입)
-            let nsTextResults = regex.matches(in: self, range: NSRange(self.startIndex..., in: self))
-            let results = nsTextResults.map{String(self[Range($0.range, in: self)!])}
+            let range = NSMakeRange(0, self.characters.count)
+            let nsTextResults = regex.matches(in: self, options: [], range: range)
+            let results = nsTextResults.map{ String(self[Range($0.range, in: self)!]) }
             return results
         } catch let error {
             print(error.localizedDescription)
