@@ -23,7 +23,7 @@ class JSONAnalyserTest: XCTestCase {
         jsonAnalyser = nil
     }
 
-    func testGetJsonData() {
+    func testGetJSONData() {
         let tester : String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
         let jsonData = jsonAnalyser.getJSONData(items: tester.getElementsAll())
         XCTAssertTrue(jsonData[0] is Int)
@@ -33,13 +33,16 @@ class JSONAnalyserTest: XCTestCase {
         XCTAssertTrue(jsonData[4] is Int)
         XCTAssertTrue(jsonData[5] is String)
         XCTAssertTrue(jsonData[6] is Bool)
-        
+    }
+    
+    func testGetJSONDataFromObject() {
         let objectTester : String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
         let objectJSONData = jsonAnalyser.getJSONData(items: objectTester.getElementsAll())
-        XCTAssertTrue(objectJSONData[0] is Dictionary<String, Any>)
-        let dic : Dictionary<String, Any> = objectJSONData[0] as! Dictionary<String, Any>
+        XCTAssertTrue(objectJSONData[0] is JSONObject)
+        let dic : JSONObject = objectJSONData[0] as! JSONObject
         XCTAssertEqual(dic.count, 4)
     }
+    
     /* private functions
     func testGetObjectType() {
         let tester : String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
