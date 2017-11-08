@@ -40,7 +40,7 @@ class JSONAnalyserTest: XCTestCase {
         let dic : Dictionary<String, Any> = objectJSONData[0] as! Dictionary<String, Any>
         XCTAssertEqual(dic.count, 4)
     }
-    
+    /* private functions
     func testGetObjectType() {
         let tester : String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
         XCTAssertEqual(tester.getElementsForObject().count, 4)
@@ -51,5 +51,6 @@ class JSONAnalyserTest: XCTestCase {
         XCTAssertEqual(object["level"] as! Int, 5)
         XCTAssertEqual(object["married"] as! Bool, true)
     }
+    */
 
 }

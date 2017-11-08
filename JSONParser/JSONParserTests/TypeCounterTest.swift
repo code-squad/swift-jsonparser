@@ -30,5 +30,14 @@ class TypeCounterTest: XCTestCase {
         XCTAssertEqual(typeCounter?.intCounter, 3)
         XCTAssertEqual(typeCounter?.stringCounter, 3)
     }
+    
+    func testCountObjectType() {
+        let tester : Dictionary<String, Any> = ["name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true]
+        let testers : JSONData = [tester]
+        typeCounter?.countTypes(items: testers)
+        XCTAssertEqual(typeCounter?.boolCounter, 1)
+        XCTAssertEqual(typeCounter?.intCounter, 1)
+        XCTAssertEqual(typeCounter?.stringCounter, 2)
+    }
 
 }

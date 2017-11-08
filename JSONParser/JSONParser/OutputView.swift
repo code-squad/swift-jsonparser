@@ -12,13 +12,17 @@ struct OutputView {
     private(set) var typeCounter : TypeCounter
     
     func printResult() {
-        var result : String = "총 \(typeCounter.totalCounter)개의 데이터 중에 "
+        var result : String = "총 \(typeCounter.totalCounter)개의 \(typeCounter.container) 데이터 중에 "
+        result += getObjectCounter()
+        if (typeCounter.stringCounter > 0) && (typeCounter.objectCounter > 0) {
+            result += ", "
+        }
         result += getStringCounter()
-        if (typeCounter.intCounter > 0) && (typeCounter.stringCounter > 0) {
+        if (typeCounter.intCounter > 0) && ((typeCounter.stringCounter > 0) || (typeCounter.objectCounter > 0)) {
             result += ", "
         }
         result += getIntCounter()
-        if (typeCounter.boolCounter > 0) && ((typeCounter.stringCounter > 0) || (typeCounter.intCounter > 0)) {
+        if (typeCounter.boolCounter > 0) && ((typeCounter.stringCounter > 0) || (typeCounter.intCounter > 0) || (typeCounter.objectCounter > 0)) {
             result += ", "
         }
         result += getBoolCounter()
@@ -46,4 +50,12 @@ struct OutputView {
         }
         return ""
     }
+    
+    private func getObjectCounter() -> String {
+        if typeCounter.objectCounter > 0 {
+            return "객체 \(typeCounter.objectCounter)개"
+        }
+        return ""
+    }
+    
 }
