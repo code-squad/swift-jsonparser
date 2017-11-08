@@ -18,13 +18,27 @@ struct JSONAnalyser {
     }
     
     private func setEachType(item: String) -> Any? {
-        if item.contains("\"") {
-            return item as String
+        if item.starts(with: "{") {
+            return getObjectType(items: item.getElementsForObject())
+        } else if item.starts(with: "\"") {
+            return item.replacingOccurrences(of: "\"", with: "")
         } else if let item = Int(item) {
             return item as Int
         } else if let item = Bool(item) {
             return item as Bool
         }
         return nil
+    }
+    
+    func getObjectType(items: Array<String>) -> Dictionary<String, Any> {
+        var object : Dictionary<String, Any> = [:]
+        for item in items {
+            let keyValue = item.split(separator: ":").map({$0.trimmingCharacters(in: .whitespaces)})
+            
+            let key : String = String(keyValue[0]).replacingOccurrences(of: "\"", with: "")
+            let value : Any = setEachType(item: String(keyValue[1])) ?? ""
+            object[key] = value
+        }
+        return object
     }
 }

@@ -19,4 +19,8 @@ extension String {
     func getElements() -> Array<String> {
         return self.trimmingCharacters(in: ["[","]"]).split(separator: ",").flatMap({$0.trimmingCharacters(in: .whitespaces)})
     }
+    
+    func getElementsForObject() -> Array<String> {
+        return self.trimmingCharacters(in: ["{","}"]).split(separator: ",").flatMap({$0.trimmingCharacters(in: .whitespaces)})
+    }
 }

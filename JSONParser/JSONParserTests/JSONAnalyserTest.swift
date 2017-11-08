@@ -34,5 +34,16 @@ class JSONAnalyserTest: XCTestCase {
         XCTAssertTrue(jsonData[5] is String)
         XCTAssertTrue(jsonData[6] is Bool)
     }
+    
+    func testGetObjectType() {
+        let tester : String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
+        XCTAssertEqual(tester.getElementsForObject().count, 4)
+        let object = jsonAnalyser.getObjectType(items: tester.getElementsForObject())
+        XCTAssertEqual(object.count, 4)
+        XCTAssertEqual(object["name"] as! String, "KIM JUNG")
+        XCTAssertEqual(object["alias"] as! String, "JK")
+        XCTAssertEqual(object["level"] as! Int, 5)
+        XCTAssertEqual(object["married"] as! Bool, true)
+    }
 
 }
