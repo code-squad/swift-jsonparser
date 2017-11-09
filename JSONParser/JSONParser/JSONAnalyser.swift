@@ -33,7 +33,7 @@ struct JSONAnalyser {
     private static func getJSONObject(items: Array<String>) -> JSONObject {
         var jsonObject : JSONObject = [:]
         for item in items {
-            let keyValue = item.split(separator: ":").map({$0.trimmingCharacters(in: .whitespaces)})
+            let keyValue = item.split(separator: ":").map {$0.trimmingCharacters(in: .whitespaces)}
             let key : String = String(keyValue[0]).replacingOccurrences(of: "\"", with: "")
             let value : Any = setEachType(item: String(keyValue[1])) ?? ""
             jsonObject[key] = value

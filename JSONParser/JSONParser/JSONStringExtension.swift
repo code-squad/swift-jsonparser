@@ -12,7 +12,7 @@ import Foundation
 extension String {
     func getElementsAll() -> Array<String> {
         var result : Array<String> = []
-        let objectGroups : Array<String> = self.trimmingCharacters(in: ["[","]"]).split(separator: "{").flatMap({$0.trimmingCharacters(in: .whitespaces)})
+        let objectGroups : Array<String> = self.trimmingCharacters(in: ["[","]"]).split(separator: "{").flatMap {$0.trimmingCharacters(in: .whitespaces)}
         for group in objectGroups {
             if !group.contains(":") {
                 result.append(contentsOf: group.getElements())
@@ -24,10 +24,10 @@ extension String {
     }
     
     func getElements() -> Array<String> {
-        return self.split(separator: ",").flatMap({$0.trimmingCharacters(in: .whitespaces)})
+        return self.split(separator: ",").flatMap {$0.trimmingCharacters(in: .whitespaces)}
     }
     
     func getElementsForObject() -> Array<String> {
-        return self.trimmingCharacters(in: ["{","}"]).split(separator: ",").flatMap({$0.trimmingCharacters(in: .whitespaces)})
+        return self.trimmingCharacters(in: ["{","}"]).split(separator: ",").flatMap {$0.trimmingCharacters(in: .whitespaces)}
     }
 }
