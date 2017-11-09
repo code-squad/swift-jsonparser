@@ -13,7 +13,7 @@ struct TypeCounter {
     private(set) var intCounter : Int = 0
     private(set) var boolCounter : Int = 0
     private(set) var objectCounter : Int = 0
-    private(set) var totalCounter : Int = 0
+    
     private(set) var container : String = "배열"
     
     mutating func countTypes(items: JSONData) {
@@ -26,7 +26,6 @@ struct TypeCounter {
         for item in items {
             countType(item: item)
         }
-        self.totalCounter = items.count
     }
     
     private mutating func countType(item: Any) {
@@ -53,8 +52,11 @@ struct TypeCounter {
                 self.boolCounter += 1
             }
         }
-        self.totalCounter = items.count
         self.container = "객체"
+    }
+    
+    func getTotalCount() -> Int {
+        return self.stringCounter + self.intCounter + self.boolCounter + self.objectCounter
     }
     
 }

@@ -9,10 +9,14 @@
 import Foundation
 
 struct OutputView {
-    private(set) var typeCounter : TypeCounter
+    private let typeCounter : TypeCounter
+    
+    init(typeCounter: TypeCounter) {
+        self.typeCounter = typeCounter
+    }
     
     func printResult() {
-        var result : String = "총 \(typeCounter.totalCounter)개의 \(typeCounter.container) 데이터 중에"
+        var result : String = "총 \(typeCounter.getTotalCount())개의 \(typeCounter.container) 데이터 중에"
         result += getObjectCounter()
         result += getStringCounter()
         result += getIntCounter()

@@ -39,5 +39,18 @@ class TypeCounterTest: XCTestCase {
         XCTAssertEqual(typeCounter?.intCounter, 1)
         XCTAssertEqual(typeCounter?.stringCounter, 2)
     }
+    
+    func testGetTotalCount() {
+        let testers : JSONData = [ 10, "jk", 4, "314", 99, "crong", false]
+        typeCounter?.countTypes(items: testers)
+        XCTAssertEqual(typeCounter?.getTotalCount(), 7)
+    }
+    
+    func testGetTotalCountForObject() {
+        let tester : Dictionary<String, Any> = ["name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true]
+        let testers : JSONData = [tester]
+        typeCounter?.countTypes(items: testers)
+        XCTAssertEqual(typeCounter?.getTotalCount(), 4)
+    }
 
 }
