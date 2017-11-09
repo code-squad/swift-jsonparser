@@ -18,6 +18,7 @@ while(true) {
         
         // 분석한 결과 출력
         OutputView.printAnalyzeResult(analyzedArray)
+        OutputView.printJSON(analyzedArray)
         
     } catch GrammarChecker.FormatError.notFormatted{
         print(GrammarChecker.FormatError.notFormatted.rawValue)

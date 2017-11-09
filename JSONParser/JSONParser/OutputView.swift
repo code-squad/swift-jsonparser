@@ -10,19 +10,22 @@ import Foundation
 
 struct OutputView {
     static func printAnalyzeResult(_ jsonData: JSONData) {
+        var resultForAnalyzingJSONData = ""
         var typeCountDictionary = [String:Int]()
         if jsonData.array.count == 1 {
             guard let object = jsonData.array[0] as? JSONObject else { return }
-            print("총 \(object.dictionary.count) 개의 객체 데이터 중에", terminator: "")
+            resultForAnalyzingJSONData += "총 \(object.dictionary.count) 개의 객체 데이터 중에"
             typeCountDictionary = calculateNumberOfType(Array(object.dictionary.values))
         } else {
-            print("총 \(jsonData.array.count) 개의 배열 데이터 중에", terminator: "")
+            resultForAnalyzingJSONData += "총 \(jsonData.array.count) 개의 배열 데이터 중에"
             typeCountDictionary = calculateNumberOfType(jsonData.array)
         }
         for (type,count) in typeCountDictionary where count != 0 {
-            print(" \(type) \(count)개", terminator: "")
+            resultForAnalyzingJSONData += " \(type) \(count)개,"
         }
-        print("가 포함되어 있습니다.")
+        resultForAnalyzingJSONData.removeLast()
+        resultForAnalyzingJSONData += "가 포함되어 있습니다."
+        print(resultForAnalyzingJSONData)
     }
     
     private static func calculateNumberOfType(_ values: [Value]) -> Dictionary<String, Int> {
@@ -47,7 +50,47 @@ struct OutputView {
                 "부울": boolCount,
                 "배열": arrayCount]
     }
-
+    
+    static func printJSON(_ jsonData: JSONData) {
+        var resultJSONDataString = ""
+        if jsonData.array.count == 1 {
+            resultJSONDataString += makeJSONDataString(jsonData.array, indent: 1)
+        } else {
+            resultJSONDataString = "["
+            resultJSONDataString += makeJSONDataString(jsonData.array, indent: 2)
+            resultJSONDataString += "\n]"
+        }
+        print(resultJSONDataString)
+    }
+    
+    private static func makeJSONDataString(_ values: [Value], indent: Int) -> String {
+        var result = ""
+        for value in values {
+            switch value {
+            case is JSONObject:
+                guard let valueObject = value as? JSONObject else { continue }
+                let dictionary = valueObject.dictionary
+                result += "{"
+                for (key, value) in dictionary {
+                    if indent == 1 {
+                        result += "\n\t\"\(key)\" : \(value),"
+                    } else {
+                        result += "\n\t\t\"\(key)\" : \(value),"
+                    }
+                }
+                result.removeLast()
+                if indent == 1 { result += "\n}  "}
+                else { result += "\n\t}, " }
+            case is [Value]:
+                guard let valueArray = value as? [Value] else { break }
+                result += "\n\t\(valueArray), "
+            default:
+                result += "\n\t\(value), "
+            }
+        }
+        result.remove(at: result.index(result.endIndex, offsetBy: -2))
+        return result
+    }
 }
 
 
