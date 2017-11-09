@@ -49,7 +49,6 @@ class UnitTestJSONParser: XCTestCase {
         nestedArrayInArray = "[ [ \"java\", \"javascript\", \"swift\" ] ]"
         
         // [Not Nil] 배열 내부에 객체와 배열
-        //nestedArrayAndObjectInArray = "[ [20, \"hee jung\"], { \"code squad\" : \"level 2\" }]"
         nestedArrayAndObjectInArray = "[{\"code squad\":\"5\"},[\"f\",6]]"
         
         // [throw Error] 배열 내부 객체와 배열 사이에 쉼표가 없을 때

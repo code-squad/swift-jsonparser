@@ -75,7 +75,9 @@ struct OutputView {
     private static func makeJSONDataString(_ values: [Value], indent: Int) -> String {
         var result = ""
         var preExistPrimitiveTypeValue = false
-        if values.count > 1 { result += "["}
+        if values.count > 1 {
+            result += "["
+        }
         for value in values {
             switch value {
             case is JSONObject:
@@ -115,7 +117,9 @@ struct OutputView {
         if indent == 2 {
             result += "\n"
         }
-        if values.count > 1 { result += "]"}
+        if values.count > 1 {
+            result += "]"
+        }
         return result
     }
     
