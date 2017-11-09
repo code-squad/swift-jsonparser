@@ -79,8 +79,12 @@ struct OutputView {
                     }
                 }
                 result.removeLast()
-                if indent == 1 { result += "\n}  "}
-                else { result += "\n\t}, " }
+                if indent == 1 {
+                    result += "\n}  "
+                }
+                else {
+                    result += "\n\t}, "
+                }
             case is [Value]:
                 guard let valueArray = value as? [Value] else { break }
                 result += "\n\t\(valueArray), "
