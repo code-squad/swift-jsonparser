@@ -11,6 +11,7 @@ import Foundation
 struct OutputView {
     
     static func printDataReport(of jsonDatas: [JSONData]) {
+        print(jsonDatas.count)
         let report = jsonDatas.count == 1 ? getSpecificReport(of: jsonDatas[0]) : getOverAllReport(of: jsonDatas)
         print(report)
     }
