@@ -12,10 +12,12 @@ import XCTest
 
 class TypeCounterTest: XCTestCase {
     var typeCounter : TypeCounter?
+    var testers : JSONData!
+    let objectTester : Dictionary<String, Any> = ["name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true]
     
     override func setUp() {
         super.setUp()
-        typeCounter = TypeCounter()
+        testers = [ 10, "jk", 4, "314", 99, "crong", false]
     }
     
     override func tearDown() {
@@ -24,32 +26,28 @@ class TypeCounterTest: XCTestCase {
     }
 
     func testCountType() {
-        let testers : JSONData = [ 10, "jk", 4, "314", 99, "crong", false]
-        typeCounter?.countTypes(items: testers)
+        typeCounter = TypeCounter.init(items: testers)
         XCTAssertEqual(typeCounter?.boolCounter, 1)
         XCTAssertEqual(typeCounter?.intCounter, 3)
         XCTAssertEqual(typeCounter?.stringCounter, 3)
     }
     
     func testCountObjectType() {
-        let tester : Dictionary<String, Any> = ["name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true]
-        let testers : JSONData = [tester]
-        typeCounter?.countTypes(items: testers)
+        testers = [objectTester]
+        typeCounter = TypeCounter.init(items: testers)
         XCTAssertEqual(typeCounter?.boolCounter, 1)
         XCTAssertEqual(typeCounter?.intCounter, 1)
         XCTAssertEqual(typeCounter?.stringCounter, 2)
     }
     
     func testGetTotalCount() {
-        let testers : JSONData = [ 10, "jk", 4, "314", 99, "crong", false]
-        typeCounter?.countTypes(items: testers)
+        typeCounter = TypeCounter.init(items: testers)
         XCTAssertEqual(typeCounter?.getTotalCount(), 7)
     }
     
     func testGetTotalCountForObject() {
-        let tester : Dictionary<String, Any> = ["name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true]
-        let testers : JSONData = [tester]
-        typeCounter?.countTypes(items: testers)
+        testers = [objectTester]
+        typeCounter = TypeCounter.init(items: testers)
         XCTAssertEqual(typeCounter?.getTotalCount(), 4)
     }
 

@@ -13,14 +13,12 @@ typealias JSONObject = Dictionary<String, Any>
 
 print("분석할 JSON 데이터를 입력하세요.")
 // 입력
-let inputView = InputView()
-let inputItems = inputView.readInput()
+let inputView : InputView = InputView()
+let inputItems : Array<String> = inputView.readInput()
 // 분석
-let analyser : JSONAnalyser = JSONAnalyser()
-let jsonData : JSONData = analyser.getJSONData(items: inputItems)
+let jsonData : JSONData = JSONAnalyser.getJSONData(items: inputItems)
 // 카운트
-var typeCounter = TypeCounter()
-typeCounter.countTypes(items: jsonData)
+let typeCounter : TypeCounter = TypeCounter.init(items: jsonData)
 // 출력
-let outputView = OutputView(typeCounter: typeCounter)
+let outputView : OutputView = OutputView.init(typeCounter: typeCounter)
 outputView.printResult()

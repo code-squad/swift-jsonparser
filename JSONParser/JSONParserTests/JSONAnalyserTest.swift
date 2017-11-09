@@ -12,6 +12,10 @@ import XCTest
 
 class JSONAnalyserTest: XCTestCase {
     var jsonAnalyser : JSONAnalyser!
+    var jsonData : JSONData!
+    let tester : String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
+    let objectTester : String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
+    var jsonObject : JSONObject!
     
     override func setUp() {
         super.setUp()
@@ -21,11 +25,11 @@ class JSONAnalyserTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         jsonAnalyser = nil
+        jsonData = nil
     }
 
     func testGetJSONData() {
-        let tester : String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let jsonData = jsonAnalyser.getJSONData(items: tester.getElementsAll())
+        jsonData = jsonAnalyser.getJSONData(items: tester.getElementsAll())
         XCTAssertTrue(jsonData[0] is Int)
         XCTAssertTrue(jsonData[1] is String)
         XCTAssertTrue(jsonData[2] is Int)
@@ -36,23 +40,21 @@ class JSONAnalyserTest: XCTestCase {
     }
     
     func testGetJSONDataFromObject() {
-        let objectTester : String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        let objectJSONData = jsonAnalyser.getJSONData(items: objectTester.getElementsAll())
-        XCTAssertTrue(objectJSONData[0] is JSONObject)
-        let dic : JSONObject = objectJSONData[0] as! JSONObject
+        jsonData = jsonAnalyser.getJSONData(items: objectTester.getElementsAll())
+        XCTAssertTrue(jsonData[0] is JSONObject)
+        let dic : JSONObject = jsonData[0] as! JSONObject
         XCTAssertEqual(dic.count, 4)
     }
     
     /* private functions
     func testGetObjectType() {
-        let tester : String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        XCTAssertEqual(tester.getElementsForObject().count, 4)
-        let object = jsonAnalyser.getObjectType(items: tester.getElementsForObject())
-        XCTAssertEqual(object.count, 4)
-        XCTAssertEqual(object["name"] as! String, "KIM JUNG")
-        XCTAssertEqual(object["alias"] as! String, "JK")
-        XCTAssertEqual(object["level"] as! Int, 5)
-        XCTAssertEqual(object["married"] as! Bool, true)
+        XCTAssertEqual(objectTester.getElementsForObject().count, 4)
+        jsonObject = jsonAnalyser.getJSONObject(items: objectTester.getElementsForObject())
+        XCTAssertEqual(jsonObject.count, 4)
+        XCTAssertEqual(jsonObject["name"] as! String, "KIM JUNG")
+        XCTAssertEqual(jsonObject["alias"] as! String, "JK")
+        XCTAssertEqual(jsonObject["level"] as! Int, 5)
+        XCTAssertEqual(jsonObject["married"] as! Bool, true)
     }
     */
 

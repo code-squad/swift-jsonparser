@@ -16,7 +16,7 @@ struct TypeCounter {
     
     private(set) var container : String = "배열"
     
-    mutating func countTypes(items: JSONData) {
+    init(items: JSONData) {
         if items.count == 1 {
             if items[0] is JSONObject {
                 countObjectType(items: items[0] as! JSONObject)

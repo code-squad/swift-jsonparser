@@ -9,7 +9,7 @@
 import Foundation
 
 struct JSONAnalyser {
-    func getJSONData(items: Array<String>) -> JSONData {
+    static func getJSONData(items: Array<String>) -> JSONData {
         var typedArray : JSONData = []
         for item in items {
             typedArray.append(setEachType(item: item) ?? "")
@@ -17,9 +17,9 @@ struct JSONAnalyser {
         return typedArray
     }
     
-    private func setEachType(item: String) -> Any? {
+    private static func setEachType(item: String) -> Any? {
         if item.starts(with: "{") {
-            return getObjectType(items: item.getElementsForObject())
+            return getJSONObject(items: item.getElementsForObject())
         } else if item.starts(with: "\"") {
             return item.replacingOccurrences(of: "\"", with: "")
         } else if let item = Int(item) {
@@ -30,14 +30,14 @@ struct JSONAnalyser {
         return nil
     }
     
-    private func getObjectType(items: Array<String>) -> JSONObject {
-        var object : JSONObject = [:]
+    private static func getJSONObject(items: Array<String>) -> JSONObject {
+        var jsonObject : JSONObject = [:]
         for item in items {
             let keyValue = item.split(separator: ":").map({$0.trimmingCharacters(in: .whitespaces)})
             let key : String = String(keyValue[0]).replacingOccurrences(of: "\"", with: "")
             let value : Any = setEachType(item: String(keyValue[1])) ?? ""
-            object[key] = value
+            jsonObject[key] = value
         }
-        return object
+        return jsonObject
     }
 }
