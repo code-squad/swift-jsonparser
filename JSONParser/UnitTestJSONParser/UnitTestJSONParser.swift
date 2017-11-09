@@ -27,6 +27,9 @@ class UnitTestJSONParser: XCTestCase {
     var nestedObjectsInArray: String!
     var catchErrorSpellingTrue: String!
     
+    var nestedOneObjectAndPrimitiveTypeInArray: String!
+    var nestedTwoObjectAndPrimitiveTypeInArray: String!
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -46,7 +49,8 @@ class UnitTestJSONParser: XCTestCase {
         nestedArrayInArray = "[ [ \"java\", \"javascript\", \"swift\" ] ]"
         
         // [Not Nil] 배열 내부에 객체와 배열
-        nestedArrayAndObjectInArray = "[ [20, \"hee jung\"], { \"code squad\" : \"level 2\" }]"
+        //nestedArrayAndObjectInArray = "[ [20, \"hee jung\"], { \"code squad\" : \"level 2\" }]"
+        nestedArrayAndObjectInArray = "[{\"code squad\":\"5\"},[\"f\",6]]"
         
         // [throw Error] 배열 내부 객체와 배열 사이에 쉼표가 없을 때
         nestedArrayAndObjectInArrayNoComma = "[ [20, \"hee jung\"]  { \"code squad\" : \"level 2\" }]"
@@ -65,6 +69,9 @@ class UnitTestJSONParser: XCTestCase {
         nestedObjectsInArray = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"
         // [throw Error] 스팰링 에러
         catchErrorSpellingTrue = "[ {\"visit\":ture} ]"
+        
+        nestedOneObjectAndPrimitiveTypeInArray = "[{\"code squad\":\"hj\"},\"f\"]"
+        nestedTwoObjectAndPrimitiveTypeInArray = "[ { \"code squad\" : \"level 2\", \"name\" : \"heejung\" }, 5]"
     }
     
     override func tearDown() {
@@ -87,6 +94,8 @@ class UnitTestJSONParser: XCTestCase {
         nestedArrayMoreThanTwo = nil
         nestedObjectsInArray = nil
         catchErrorSpellingTrue = nil
+        nestedOneObjectAndPrimitiveTypeInArray = nil
+        nestedTwoObjectAndPrimitiveTypeInArray = nil
     }
     
     func testMakeObjectCaseObjectInObject() {
@@ -139,5 +148,13 @@ class UnitTestJSONParser: XCTestCase {
     
     func testMakeObjectCaseSpellingErrorInTrue() {
         XCTAssertThrowsError(try JSONAnalyzer.makeObject(with: catchErrorSpellingTrue))
+    }
+    
+    func testMakeObectCaseOneObjectAndPrimitiveTypeInArray() {
+        XCTAssertNotNil(try JSONAnalyzer.makeObject(with: nestedOneObjectAndPrimitiveTypeInArray))
+    }
+    
+    func testMakeObjectCaseTwoObjectAndPrimitiveTypeInArray() {
+        XCTAssertNotNil(try JSONAnalyzer.makeObject(with: nestedTwoObjectAndPrimitiveTypeInArray))
     }
 }

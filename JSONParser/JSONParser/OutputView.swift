@@ -73,9 +73,9 @@ struct OutputView {
                 result += "{"
                 for (key, value) in dictionary {
                     if indent == 1 {
-                        result += "\n\t\"\(key)\" : \(value),"
+                        result += "\n\t\"\(key)\" : \(convertValueToString(value)),"
                     } else {
-                        result += "\n\t\t\"\(key)\" : \(value),"
+                        result += "\n\t\t\"\(key)\" : \(convertValueToString(value)),"
                     }
                 }
                 result.removeLast()
@@ -85,13 +85,20 @@ struct OutputView {
                 guard let valueArray = value as? [Value] else { break }
                 result += "\n\t\(valueArray), "
             default:
-                result += "\n\t\(value), "
+                result += "\n\t\(convertValueToString(value)), "
             }
         }
         result.remove(at: result.index(result.endIndex, offsetBy: -2))
         return result
     }
+    
+    private static func convertValueToString(_ value: Value) -> String {
+        var resultString = ""
+        switch value {
+        case is String: resultString += "\"\(value)\""
+        default: resultString += "\(value)"
+        }
+        return resultString
+    }
+
 }
-
-
-
