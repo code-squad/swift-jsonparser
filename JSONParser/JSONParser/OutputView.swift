@@ -74,6 +74,7 @@ struct OutputView {
     
     private static func makeJSONDataString(_ values: [Value], indent: Int) -> String {
         var result = ""
+        var preExistPrimitiveTypeValue = false
         if values.count > 1 { result += "["}
         for value in values {
             switch value {
@@ -97,9 +98,16 @@ struct OutputView {
                 }
             case is [Value]:
                 guard let valueArray = value as? [Value] else { break }
-                result += "\n\t\(valueArray), "
+                if preExistPrimitiveTypeValue {
+                    result += "\(valueArray), "
+                    preExistPrimitiveTypeValue = false
+                }
+                else {
+                    result += "\n\t\(valueArray), "
+                }
             default:
-                result += "\n\t\(convertValueToString(value)), "
+                preExistPrimitiveTypeValue = true
+                result += "\(convertValueToString(value)), "
             }
         }
         result.removeSubrange(
@@ -119,5 +127,5 @@ struct OutputView {
         }
         return resultString
     }
-
+    
 }
