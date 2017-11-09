@@ -22,10 +22,23 @@ struct InputView {
         let inputWithoutWhitespace = inputLine.filter { $0 != " " }
         // JSON 규격 여부 검사.
         guard try isJSONPattern(inputWithoutWhitespace) else { throw JSONParser.JsonError.invalidPattern }
+        // 첫 글자가 대괄호이면서 두 번재 글자는 대괄호가 아닐 때, 가장 바깥쪽 대괄호가 있다고 판단.
+        let firstCharacter = inputWithoutWhitespace.first
+        let secondCharacter = inputWithoutWhitespace[inputWithoutWhitespace.index(after: inputWithoutWhitespace.startIndex)]
+        if firstCharacter == "[" && secondCharacter != "[" {
+            // 대괄호가 있으면 제거 후 반환.
+            return removeSquareBracket(from: inputWithoutWhitespace)
+        }else {
+            // 대괄호가 없으면 그대로 반환.
+            return inputWithoutWhitespace
+        }
+    }
+    
+    private static func removeSquareBracket(from data: String) -> String {
         // 가장 바깥쪽 대괄호 제거.
-        let rangeWithoutSquareBracket = inputWithoutWhitespace.index(after: inputWithoutWhitespace.startIndex)..<inputWithoutWhitespace.index(before: inputWithoutWhitespace.endIndex)
-        let inputWithoutSquareBracket = inputWithoutWhitespace[rangeWithoutSquareBracket]
-        return String(inputWithoutSquareBracket)
+        let rangeWithoutSquareBracket = data.index(after: data.startIndex)..<data.index(before: data.endIndex)
+        let dataWithoutSquareBracket = data[rangeWithoutSquareBracket]
+        return String(dataWithoutSquareBracket)
     }
     
     // 사용자 입력 문자열이 JSON 규격인지 검사.
