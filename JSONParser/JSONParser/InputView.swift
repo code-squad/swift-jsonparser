@@ -10,7 +10,7 @@ import Foundation
 
 struct InputView {
     // json 데이터 규격 (단순히 [{ : }] 형태인지만 확인
-    private(set) static var jsonPattern = "\\[?(\\{\".+\":.+\\})+\\]?"
+    private(set) static var jsonPattern = "\\[?([\\[\\{]*\".+\":.+[\\}\\]]*,?)\\]?"
     
     // 사용자 입력 메뉴 출력 및 사용자 입력값 전처리.
     static func askFor(message: String) throws -> String? {
@@ -22,15 +22,14 @@ struct InputView {
         let inputWithoutWhitespace = inputLine.filter { $0 != " " }
         // JSON 규격 여부 검사.
         guard try isJSONPattern(inputWithoutWhitespace) else { throw JSONParser.JsonError.invalidPattern }
-        // 첫 글자가 대괄호이면서 두 번재 글자는 대괄호가 아닐 때, 가장 바깥쪽 대괄호가 있다고 판단.
-        let firstCharacter = inputWithoutWhitespace.first
         let secondCharacter = inputWithoutWhitespace[inputWithoutWhitespace.index(after: inputWithoutWhitespace.startIndex)]
-        if firstCharacter == "[" && secondCharacter != "[" {
-            // 대괄호가 있으면 제거 후 반환.
-            return removeSquareBracket(from: inputWithoutWhitespace)
-        }else {
-            // 대괄호가 없으면 그대로 반환.
+        // 두 번째 글자가 '[','{'가 아닐 때, 가장 바깥쪽 대괄호가 없다고 판단. 즉, 객체 1개나 배열 1개가 입력됐다고 판단.
+        if secondCharacter != "[" && secondCharacter != "{" {
+            // 입력된 그대로 반환.
             return inputWithoutWhitespace
+        }else {
+            // 가장 바깥쪽 대괄호를 지우고 반환.
+            return removeSquareBracket(from: inputWithoutWhitespace)
         }
     }
     
