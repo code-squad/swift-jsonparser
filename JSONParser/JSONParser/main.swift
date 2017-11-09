@@ -12,8 +12,8 @@ func main() throws {
     while true {
         do {
             guard let userInput = try InputView.askFor(message: "분석할 JSON 데이터를 입력하세요: ") else { return }
-            let jsonData = JSONParser.parse(from: userInput)
-            OutputView.printDataReport(of: jsonData)
+            let JsonDataObjects = try JSONParser.parse(userInput)
+            OutputView.printDataReport(of: JsonDataObjects)
         }catch let e as JSONParser.JsonError {
             OutputView.printError(e)
             continue
@@ -22,3 +22,4 @@ func main() throws {
 }
 
 try main()
+

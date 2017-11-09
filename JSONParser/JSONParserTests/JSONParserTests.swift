@@ -14,34 +14,44 @@ class JSONParserTests: XCTestCase {
     func testParsingJSONData() {
         do {
             let jsonString: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-            try JSONParser.parse(from: jsonString)
+            try JSONParser.parse(jsonString)
         }catch {
             XCTAssertNoThrow(error, error.localizedDescription)
         }
     }
-
-    func testJSONObjectIsNotNil() {
-        let jsonString: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let parsedData = try JSONParser.parse(from: jsonString)
+    
+    func testStringDataIsNotNil() {
+        let parsedData = JSONData(["name":"KIM JUNG"])
         XCTAssertNotNil(parsedData)
     }
-
+    
+    func testNumberDataIsNotNil() {
+        let parsedData = JSONData(["level" :5])
+        XCTAssertNotNil(parsedData)
+    }
+    
+    func testBoolDataIsNotNil() {
+        let parsedData = JSONData(["married": true])
+        XCTAssertNotNil(parsedData)
+    }
+    
     func testCountOfNumberIsRight() {
         let jsonString: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let parsedData = try JSONParser.parse(from: jsonString)
-        XCTAssertEqual(parsedData.number.count, 3)
+        let parsedData = try JSONParser.parse(jsonString)
+        XCTAssertEqual(parsedData[0].number.count, 3)
     }
     
     func testCountOfStringIsRight() {
         let jsonString: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let parsedData = try JSONParser.parse(from: jsonString)
-        XCTAssertEqual(parsedData.string.count, 3)
+        let parsedData = try JSONParser.parse(jsonString)
+        XCTAssertEqual(parsedData[0].string.count, 3)
     }
     
     func testCountOfBoolIsRight() {
         let jsonString: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let parsedData = try JSONParser.parse(from: jsonString)
-        XCTAssertEqual(parsedData.bool.count, 1)
+        let parsedData = try JSONParser.parse(jsonString)
+        XCTAssertEqual(parsedData[0].bool.count, 1)
     }
-   
+    
 }
+
