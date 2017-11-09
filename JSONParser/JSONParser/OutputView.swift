@@ -9,23 +9,27 @@
 import Foundation
 
 struct OutputView {
-    static func printAnalyzeResult(_ jsonData: JSONData) {
-        var resultForAnalyzingJSONData = ""
+    static func printJSON(_ jsonData: JSONData) {
+        var resultJSONDataString = ""
+        var resultJSONCountString = ""
+        var indent = 1
         var typeCountDictionary = [String:Int]()
         if jsonData.array.count == 1 {
             guard let object = jsonData.array[0] as? JSONObject else { return }
-            resultForAnalyzingJSONData += "총 \(object.dictionary.count) 개의 객체 데이터 중에"
-            typeCountDictionary = calculateNumberOfType(Array(object.dictionary.values))
-        } else {
-            resultForAnalyzingJSONData += "총 \(jsonData.array.count) 개의 배열 데이터 중에"
             typeCountDictionary = calculateNumberOfType(jsonData.array)
+            resultJSONCountString = makeJSONCountString(typeCountDictionary,
+                                                        objectCount: object.dictionary.count)
+            resultJSONDataString += makeJSONDataString(jsonData.array, indent: indent)
+        } else {
+            typeCountDictionary = calculateNumberOfType(jsonData.array)
+            resultJSONCountString = makeJSONCountString(typeCountDictionary, arrayCount: jsonData.array.count)
+            if typeCountDictionary["배열"] != 0 {
+                indent += 1
+            }
+            resultJSONDataString += makeJSONDataString(jsonData.array, indent: indent)
         }
-        for (type,count) in typeCountDictionary where count != 0 {
-            resultForAnalyzingJSONData += " \(type) \(count)개,"
-        }
-        resultForAnalyzingJSONData.removeLast()
-        resultForAnalyzingJSONData += "가 포함되어 있습니다."
-        print(resultForAnalyzingJSONData)
+        print(resultJSONCountString)
+        print(resultJSONDataString)
     }
     
     private static func calculateNumberOfType(_ values: [Value]) -> Dictionary<String, Int> {
@@ -51,20 +55,26 @@ struct OutputView {
                 "배열": arrayCount]
     }
     
-    static func printJSON(_ jsonData: JSONData) {
-        var resultJSONDataString = ""
-        if jsonData.array.count == 1 {
-            resultJSONDataString += makeJSONDataString(jsonData.array, indent: 1)
+    private static func makeJSONCountString(_ typeCountDictionary: Dictionary<String,Int>,
+                                            objectCount: Int = 0,
+                                            arrayCount: Int = 0) -> String {
+        var resultForAnalyzingJSONData = ""
+        if objectCount > 0 {
+            resultForAnalyzingJSONData += "총 \(objectCount) 개의 객체 데이터 중에"
         } else {
-            resultJSONDataString = "["
-            resultJSONDataString += makeJSONDataString(jsonData.array, indent: 2)
-            resultJSONDataString += "\n]"
+            resultForAnalyzingJSONData += "총 \(arrayCount) 개의 배열 데이터 중에"
         }
-        print(resultJSONDataString)
+        for (type,count) in typeCountDictionary where count != 0 {
+            resultForAnalyzingJSONData += " \(type) \(count)개,"
+        }
+        resultForAnalyzingJSONData.removeLast()
+        resultForAnalyzingJSONData += "가 포함되어 있습니다."
+        return resultForAnalyzingJSONData
     }
     
     private static func makeJSONDataString(_ values: [Value], indent: Int) -> String {
         var result = ""
+        if values.count > 1 { result += "["}
         for value in values {
             switch value {
             case is JSONObject:
@@ -80,7 +90,7 @@ struct OutputView {
                 }
                 result.removeLast()
                 if indent == 1 {
-                    result += "\n}  "
+                    result += "\n}, "
                 }
                 else {
                     result += "\n\t}, "
@@ -92,7 +102,12 @@ struct OutputView {
                 result += "\n\t\(convertValueToString(value)), "
             }
         }
-        result.remove(at: result.index(result.endIndex, offsetBy: -2))
+        result.removeSubrange(
+            result.index(result.endIndex, offsetBy: -2)...result.index(before: result.endIndex))
+        if indent == 2 {
+            result += "\n"
+        }
+        if values.count > 1 { result += "]"}
         return result
     }
     

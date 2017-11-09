@@ -17,7 +17,6 @@ while(true) {
         let analyzedArray = try JSONAnalyzer.makeObject(with: jsonString)
         
         // 분석한 결과 출력
-        OutputView.printAnalyzeResult(analyzedArray)
         OutputView.printJSON(analyzedArray)
         
     } catch GrammarChecker.FormatError.notFormatted{
