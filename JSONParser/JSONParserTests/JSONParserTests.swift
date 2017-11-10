@@ -66,6 +66,7 @@ class JSONParserTests: XCTestCase {
     func testCountOfObjectsAndArraysIsRight() throws {
         let jsonString: String = "{\"name\":\"KIMJUNG\",\"alias\":\"JK\",\"level\":5,\"married\":true},[\"name\":\"YOONJISU\",\"alias\":\"crong\",\"level\":4,\"married\":true],{\"asdf\":\"asdf\",\"hrtdg\":234},{\"ertgf\":true},[\"asdf\":\"asdf\",\"hrtdg\":234,\"ertgf\":true]"
         let parsedData = try JSONParser.parse(jsonString)
+        XCTAssertEqual(parsedData.count, 5)
         var arrayCount = 0
         var objectCount = 0
         for data in parsedData {
@@ -78,4 +79,24 @@ class JSONParserTests: XCTestCase {
         XCTAssertEqual(objectCount, 2)
     }
     
+    func testObjectWithWhitespace() throws {
+        let jsonString: String = "[ \"asdf\": \"asdf\", \"hrtdg\":234, \"ertgf\":true, \"sjdfkl\":234 ]"
+        let parsedData = try JSONParser.parse(jsonString)
+        XCTAssertEqual(parsedData.count, 1)
+        XCTAssertEqual(parsedData[0].bool.count, 1)
+        XCTAssertEqual(parsedData[0].number.count, 2)
+        XCTAssertEqual(parsedData[0].string.count, 1)
+    }
+    
+    func testArrayWithWhitespace() throws {
+        let jsonString: String = "[ { \"asdf\": \"asdf\", \"hrtdg\": 234 }, { \"ertgf\": true} ]"
+        let parsedData = try JSONParser.parse(jsonString)
+        XCTAssertEqual(parsedData.count, 2)
+        XCTAssertEqual(parsedData[0].bool.count, 0)
+        XCTAssertEqual(parsedData[0].number.count, 1)
+        XCTAssertEqual(parsedData[0].string.count, 1)
+        XCTAssertEqual(parsedData[1].bool.count, 1)
+        XCTAssertEqual(parsedData[1].number.count, 0)
+        XCTAssertEqual(parsedData[1].string.count, 0)
+    }
 }
