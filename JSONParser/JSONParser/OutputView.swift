@@ -15,15 +15,17 @@ struct OutputView {
         var indent = 1
         var typeCountDictionary = [String:Int]()
         if jsonData.array.count == 1 {
+            // 오브젝트 데이터 일 때
             guard let object = jsonData.array[0] as? JSONObject else { return }
             typeCountDictionary = calculateNumberOfType(jsonData.array)
             resultJSONCountString = makeJSONCountString(typeCountDictionary,
                                                         objectCount: object.dictionary.count)
             resultJSONDataString += makeJSONDataString(jsonData.array, indent: indent)
         } else {
+            // 배열 데이터 일 때
             typeCountDictionary = calculateNumberOfType(jsonData.array)
             resultJSONCountString = makeJSONCountString(typeCountDictionary, arrayCount: jsonData.array.count)
-            if typeCountDictionary["배열"] != 0 {
+            if isOneMoreIndentFronObject(jsonData.array) {
                 indent += 1
             }
             resultJSONDataString += makeJSONDataString(jsonData.array, indent: indent)
@@ -32,6 +34,7 @@ struct OutputView {
         print(resultJSONDataString)
     }
     
+    // 데이터 내부에 배열, 객체, 스트링, 인트, 부울 타입이 몇 개인지 계산 하는 함수
     private static func calculateNumberOfType(_ values: [Value]) -> Dictionary<String, Int> {
         var arrayCount = 0
         var jsonObjectCount = 0
@@ -55,6 +58,36 @@ struct OutputView {
                 "배열": arrayCount]
     }
     
+    // 오브젝트 앞에 인덴트가 두 개 인지 한 개 인지 판별
+    private static func isOneMoreIndentFronObject(_ values: [Value]) -> Bool {
+        var moreThanOneIndent = false
+        // 오브젝트 다음 배열, 배열 다음 배열일 때 : 오브젝트의 인덴트가 2
+        var preExistObject = false
+        var preExistArray = false
+        
+        for value in values {
+            if moreThanOneIndent { break }
+            switch value {
+            case is JSONObject:
+                if !preExistObject {
+                    preExistObject = true
+                }
+            case is [Value]:
+                if !preExistArray {
+                    preExistArray = true
+                }
+                if preExistArray || preExistObject {
+                    moreThanOneIndent = true
+                }
+            default:
+                preExistObject = false
+                preExistArray = false
+            }
+        }
+        return moreThanOneIndent
+    }
+    
+    // 데이터 내부에 타입 개수 분석한 결과를 바탕으로 스트링을 생성
     private static func makeJSONCountString(_ typeCountDictionary: Dictionary<String,Int>,
                                             objectCount: Int = 0,
                                             arrayCount: Int = 0) -> String {
@@ -72,6 +105,7 @@ struct OutputView {
         return resultForAnalyzingJSONData
     }
     
+    // JSON 데이터를 스트링으로 생성
     private static func makeJSONDataString(_ values: [Value], indent: Int) -> String {
         var result = ""
         var preExistPrimitiveTypeValue = false
@@ -98,6 +132,7 @@ struct OutputView {
                 else {
                     result += "\n\t}, "
                 }
+                preExistPrimitiveTypeValue = false
             case is [Value]:
                 guard let valueArray = value as? [Value] else { break }
                 if preExistPrimitiveTypeValue {
