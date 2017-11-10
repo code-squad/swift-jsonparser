@@ -90,7 +90,7 @@ struct JSONParser {
             return value.trimmingCharacters(in: ["\""])
         }else if let numberElement = JSONData.Number(value) {
             return numberElement
-        }else if let boolElement = Bool(value){
+        }else if let boolElement = Bool(value) {
             return boolElement
         }else {
             return nil
@@ -120,4 +120,3 @@ struct JSONParser {
     }
     
 }
-

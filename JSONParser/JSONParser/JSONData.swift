@@ -21,18 +21,22 @@ struct JSONData {
     var count: Int {
         return self.number.count + self.string.count + self.bool.count
     }
-    
     init(_ data: [String:Any], ofType type: DataType) {
         self.type = type
         for (key, value) in data {
             switch value {
-            case is String: self.string.updateValue(value as! String, forKey: key)
-            case is Number: self.number.updateValue(value as! Number, forKey: key)
-            case is Bool: self.bool.updateValue(value as! Bool, forKey: key)
+            case is String:
+                guard let stringValue = value as? String else { return }
+                self.string.updateValue(stringValue, forKey: key)
+            case is Number:
+                guard let numberValue = value as? Number else { return }
+                self.number.updateValue(numberValue, forKey: key)
+            case is Bool:
+                guard let boolValue = value as? Bool else { return }
+                self.bool.updateValue(boolValue, forKey: key)
             default: return
             }
         }
     }
     
 }
-

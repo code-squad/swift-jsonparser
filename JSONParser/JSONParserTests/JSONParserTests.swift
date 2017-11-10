@@ -79,4 +79,3 @@ class JSONParserTests: XCTestCase {
     }
     
 }
-
