@@ -10,15 +10,14 @@ import Foundation
 
 struct JSONParser {
     enum JsonError: String, Error {
-        case invalidPattern = "JSON 규격에 맞게 입력해주세요."
+        case invalidPattern = "지원하지 않는 형식을 포함하고 있습니다."
     }
     
     // 문자열을 JSONData로 파싱하여 배열로 반환.
     static func parse(_ rawData: String) throws -> [JSONData] {
-        let preprocessData = trimExceptDataInside(of: rawData)
         // 배열 데이터와 객체 데이터로 나눔.
-        let objects = try extractObjectBlobs(from: preprocessData)
-        let arrays = try extractArrayBlobs(from: preprocessData)
+        let objects = try extractObjectBlobs(from: rawData)
+        let arrays = try extractArrayBlobs(from: rawData)
         // 배열 blob, 객체 blob에 따라 각각 JSONData 객체들을 만들어 배열로 받음.
         let jsonObjects = try generateJSONData(from: objects, ofType: JSONData.DataType.object)
         let jsonArrays = try generateJSONData(from: arrays, ofType: JSONData.DataType.array)
@@ -26,29 +25,8 @@ struct JSONParser {
         return jsonObjects+jsonArrays
     }
     
-    // 사용자 입력값의 내부 데이터만 반환.
-    private static func trimExceptDataInside(of rawData: String) -> String {
-        let secondCharacter = rawData[rawData.index(after: rawData.startIndex)]
-        // 두 번째 글자가 '[','{'가 아닐 때, 가장 바깥쪽 대괄호가 없다고 판단. 즉, 객체 1개나 배열 1개가 입력됐다고 판단.
-        if secondCharacter != "[" && secondCharacter != "{" {
-            // 입력된 그대로 반환.
-            return rawData
-        }else {
-            // 가장 바깥쪽 대괄호를 지우고 반환.
-            return removeSquareBracket(from: rawData)
-        }
-    }
-    
-    // 가장 바깥쪽 대괄호 제거.
-    private static func removeSquareBracket(from data: String) -> String {
-        // 가장 바깥쪽 대괄호를 제외한 범위.
-        let rangeWithoutSquareBracket = data.index(after: data.startIndex)..<data.index(before: data.endIndex)
-        let dataWithoutSquareBracket = data[rangeWithoutSquareBracket]
-        return String(dataWithoutSquareBracket)
-    }
-    
-    private static let JSONObjectPattern = "\\[(.+?(?!\\{\\[\\]))\\]"
-    private static let JSONArrayPattern  = "\\{(.+?(?!\\{\\[\\]))\\}"
+    private static let JSONObjectPattern = "\\[\\s?(\".+?\"\\s?\\:\\s?.+?)\\s?\\]"
+    private static let JSONArrayPattern  = "\\{\\s?(\".+?\"\\s?\\:\\s?.+?)\\s?\\}"
     
     // blob 단위 JSONData 배열 반환.
     private static func generateJSONData(from blobs: [String], ofType type: JSONData.DataType) throws -> [JSONData] {
@@ -79,18 +57,20 @@ struct JSONParser {
     // 문자열 딕셔너리에서 key 값 추출.
     private static func generateKey(from data: String) -> String {
         let keyRange = data.startIndex..<data.index(of: ":")!
-        return String(data[keyRange]).trimmingCharacters(in: ["\""])
+        let trimmedKey = String(data[keyRange]).trimmingCharacters(in: .whitespaces).trimmingCharacters(in: ["\""])
+        return trimmedKey
     }
     
     // 문자열 딕셔너리에서 value 값 추출 및 실제 value 타입으로 캐스팅.
     private static func generateValue(from data: String) -> Any? {
-        let valueRange = data.index(of: ":")!..<data.endIndex
-        let value = String(data[valueRange]).trimmingCharacters(in: [":"])
-        if value.contains("\"") {
-            return value.trimmingCharacters(in: ["\""])
-        }else if let numberElement = JSONData.Number(value) {
+        let indexAfterColon = data.index(after: data.index(of: ":")!)
+        let valueRange = indexAfterColon..<data.endIndex
+        let trimmedValue = String(data[valueRange]).trimmingCharacters(in: .whitespaces)
+        if trimmedValue.contains("\"") {
+            return trimmedValue.trimmingCharacters(in: ["\""])
+        }else if let numberElement = JSONData.Number(trimmedValue) {
             return numberElement
-        }else if let boolElement = Bool(value) {
+        }else if let boolElement = Bool(trimmedValue) {
             return boolElement
         }else {
             return nil
