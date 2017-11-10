@@ -17,7 +17,7 @@ struct OutputView {
         if jsonData.array.count == 1 {
             // 오브젝트 데이터 일 때
             guard let object = jsonData.array[0] as? JSONObject else { return }
-            typeCountDictionary = calculateNumberOfType(jsonData.array)
+            typeCountDictionary = calculateNumberOfType(Array(object.dictionary.values))
             resultJSONCountString = makeJSONCountString(typeCountDictionary,
                                                         objectCount: object.dictionary.count)
             resultJSONDataString += makeJSONDataString(jsonData.array, indent: indent)
