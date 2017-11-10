@@ -117,21 +117,7 @@ struct OutputView {
             case is JSONObject:
                 guard let valueObject = value as? JSONObject else { continue }
                 let dictionary = valueObject.dictionary
-                result += "{"
-                for (key, value) in dictionary {
-                    if indent == 1 {
-                        result += "\n\t\"\(key)\" : \(convertValueToString(value)),"
-                    } else {
-                        result += "\n\t\t\"\(key)\" : \(convertValueToString(value)),"
-                    }
-                }
-                result.removeLast()
-                if indent == 1 {
-                    result += "\n}, "
-                }
-                else {
-                    result += "\n\t}, "
-                }
+                result += makeJSONObjectString(dictionary, indent: indent)
                 preExistPrimitiveTypeValue = false
             case is [Value]:
                 guard let valueArray = value as? [Value] else { break }
@@ -156,6 +142,27 @@ struct OutputView {
             result += "]"
         }
         return result
+    }
+    
+    private static func makeJSONObjectString(_ ojectDictionary: Dictionary<String, Any>,
+                                             indent: Int) -> String {
+        var result = "{"
+        for (key, value) in ojectDictionary {
+            if indent == 1 {
+                result += "\n\t\"\(key)\" : \(convertValueToString(value)),"
+            } else {
+                result += "\n\t\t\"\(key)\" : \(convertValueToString(value)),"
+            }
+        }
+        result.removeLast()
+        if indent == 1 {
+            result += "\n}, "
+        }
+        else {
+            result += "\n\t}, "
+        }
+        return result
+
     }
     
     private static func convertValueToString(_ value: Value) -> String {
