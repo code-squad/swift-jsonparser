@@ -9,11 +9,26 @@
 import Foundation
 
 struct OutputView {
-    static func writeJSONToText(_ jsonData: JSONData, writeFileName: String = "result.json") throws {
+    static func writeResult(_ jsonData: JSONData) throws {
+        let argCount = CommandLine.argc
+        guard let contents = makeTotalContentsOfJSON(jsonData) else { return }
+        do {
+            switch argCount {
+            case 1: print(contents)
+            case 2: try writeJSONToFile(contents: contents)
+            case 3: try writeJSONToFile(contents: contents,
+                                        writeFileName: CommandLine.arguments[2])
+            default: break
+            }
+        } catch let error{
+            throw error
+        }
+    }
+    
+    static func writeJSONToFile(contents: String, writeFileName: String = "result.json") throws {
         let file = writeFileName
         let dir = FileManager.default.homeDirectoryForCurrentUser
         let path = dir.appendingPathComponent(file)
-        guard let contents = makeTotalContentsOfJSON(jsonData) else { return }
         do {
             try contents.write(to: path,
                                atomically: false,
@@ -34,7 +49,6 @@ struct OutputView {
             typeCountDictionary = calculateNumberOfType(Array(object.dictionary.values))
             resultJSONCountString = makeJSONCountString(typeCountDictionary,
                                                         objectCount: object.dictionary.count)
-            resultJSONDataString += makeJSONDataString(jsonData.array, indent: indent)
         } else {
             // 배열 데이터 일 때
             typeCountDictionary = calculateNumberOfType(jsonData.array)
@@ -42,8 +56,8 @@ struct OutputView {
             if isOneMoreIndentFronObject(jsonData.array) {
                 indent += 1
             }
-            resultJSONDataString += makeJSONDataString(jsonData.array, indent: indent)
         }
+        resultJSONDataString += makeJSONDataString(jsonData.array, indent: indent)
         return resultJSONCountString + "\n" + resultJSONDataString + "\n"
     }
     

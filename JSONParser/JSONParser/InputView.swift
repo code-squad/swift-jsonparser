@@ -10,27 +10,34 @@ import Foundation
 
 struct InputView {
     typealias IOFileNames = (inputFileName: String, outputFileName: String?)
-    static func read() -> String? {
+    static func read() throws -> String? {
+        let argCount = CommandLine.argc
+        do {
+            switch argCount {
+            case 1:
+                guard let jsonString = readFromConsole() else { return nil }
+                return jsonString
+            case 2, 3:
+                let inputFileName = CommandLine.arguments[1]
+                let jsonString = try loadJSON(inputFileName)
+                return jsonString
+            default: break
+            }
+        } catch let error {
+            throw error
+        }
+        return nil
+        
+    }
+    
+    private static func readFromConsole() -> String? {
         print("분석할 JSON 데이터를 입력하세요.")
         let input = readLine() ?? ""
         if input == "" { return nil }
         return input
     }
-    
-    static func readIO() -> IOFileNames {
-        let argCount = CommandLine.argc
-        // input파일, output파일
-        if argCount > 2 {
-            let inputFile = CommandLine.arguments[1]
-            let outputFile = CommandLine.arguments[2]
-            return IOFileNames(inputFile, outputFile)
-        } else {
-            let inputFile = CommandLine.arguments[1]
-            return IOFileNames(inputFile, nil)
-        }
-    }
 
-    static func loadJSON(_ inputFileName: String) throws -> String {
+    private static func loadJSON(_ inputFileName: String) throws -> String {
         let dir = FileManager.default.homeDirectoryForCurrentUser
         let pathURL = dir.appendingPathComponent(inputFileName)
         do {
