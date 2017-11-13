@@ -30,7 +30,13 @@ struct GrammarChecker {
         arrayPattern = "\\[[\\s]?((\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.objectPattern))[,]?)+[\\s]?\\][\\s]?"
     }
     
-    func isArrayPattern(target: String) -> Bool {
+    func isJSONPattern(target: String) throws {
+        guard isArrayPattern(target: target) || isObjectPattern(target: target) else {
+            throw GrammarChecker.ErrorMessage.notJSONPattern
+        }
+    }
+    
+    private func isArrayPattern(target: String) -> Bool {
         guard target.starts(with: "[") else {
             return false
         }
@@ -38,7 +44,7 @@ struct GrammarChecker {
         return getMatchResult(checker: arrayChecker, target: target)
     }
     
-    func isObjectPattern(target: String) -> Bool {
+    private func isObjectPattern(target: String) -> Bool {
         guard target.starts(with: "{") else {
             return false
         }

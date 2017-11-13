@@ -36,14 +36,4 @@ class JSONStringExtensionTest: XCTestCase {
         XCTAssertEqual(objectTester.getElementsForObject(), ["\"name\" : \"KIM JUNG\"", "\"alias\" : \"JK\"", "\"level\" : 5", "\"married\" : true"])
     }
     
-    func testIsJSONPatternForArray() {
-        XCTAssertNoThrow(try arrayTester.isJSONPattern())
-        XCTAssertThrowsError(try errorTesterForArray.isJSONPattern())
-    }
-    
-    func testIsJSONPatternForObject() {
-        XCTAssertNoThrow(try objectTester.isJSONPattern())
-        XCTAssertThrowsError(try errorTesterForObject.isJSONPattern())
-    }
-    
 }

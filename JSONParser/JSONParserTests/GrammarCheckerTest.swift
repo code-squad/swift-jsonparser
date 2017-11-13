@@ -26,40 +26,15 @@ class GrammarCheckerTest: XCTestCase {
         super.tearDown()
         grammarChecker = nil
     }
-
-    func testObject() {
-        let tester : String = "{ \"name\": \"KIM JUNG\", \"alias\" :\"JK\", \"level\" : 5, \"married\" : true }"
-        let stringPattern : String = "[\\s]?\"[a-zA-Z\\d\\s]+\"[\\s]?"
-        let intPattern : String = "[\\s]?\\d+[\\s]?"
-        let boolPattern : String = "[\\s]?(true|false)[\\s]?"
-        let dictionaryPattern : String = "\(stringPattern):(\(stringPattern)|\(intPattern)|\(boolPattern))"
-        let objectPattern : String = "[\\s]?[\\{][\\s]?(\(dictionaryPattern)[,]?)+[\\s]?[\\}][\\s]?"
-        let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: objectPattern, options: [])
-        let result = objectChecker.numberOfMatches(in: tester, options: [], range: NSRange(location:0, length:tester.count))
-        XCTAssertEqual(result, 1)
+    
+    func testIsJSONPatternForArray() {
+        XCTAssertNoThrow(try grammarChecker.isJSONPattern(target: arrayTester))
+        XCTAssertThrowsError(try grammarChecker.isJSONPattern(target: errorTesterForArray))
     }
     
-    func testArray() {
-        let tester : String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false , { \"name\": \"KIM JUNG\", \"alias\" :\"JK\", \"level\" : 5, \"married\" : true } ]"
-        let stringPattern : String = "[\\s]?\"[a-zA-Z\\d\\s]+\"[\\s]?"
-        let intPattern : String = "[\\s]?\\d+[\\s]?"
-        let boolPattern : String = "[\\s]?(true|false)[\\s]?"
-        let dictionaryPattern : String = "\(stringPattern):(\(stringPattern)|\(intPattern)|\(boolPattern))"
-        let objectPattern : String = "[\\s]?[\\{][\\s]?(\(dictionaryPattern)[,]?)+[\\s]?[\\}][\\s]?"
-        let arrayPattern : String = "[\\s]?[\\[][\\s]?((\(stringPattern)|\(intPattern)|\(boolPattern)|\(objectPattern))[,]?)+[\\s]?[\\]][\\s]?"
-        let arrayChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: arrayPattern, options: [])
-        let result = arrayChecker.numberOfMatches(in: tester, options: [], range: NSRange(location:0, length:tester.count))
-        XCTAssertEqual(result, 1)
-    }
-    
-    func testIsArrayPattern() {
-        XCTAssertTrue(grammarChecker.isArrayPattern(target: arrayTester))
-        XCTAssertFalse(grammarChecker.isArrayPattern(target: errorTesterForArray))
-    }
-    
-    func testIsObjectPattern() {
-        XCTAssertTrue(grammarChecker.isObjectPattern(target: objectTester))
-        XCTAssertFalse(grammarChecker.isObjectPattern(target: errorTesterForObject))
+    func testIsJSONPatternForObject() {
+        XCTAssertNoThrow(try grammarChecker.isJSONPattern(target: objectTester))
+        XCTAssertThrowsError(try grammarChecker.isJSONPattern(target: errorTesterForObject))
     }
 
 }
