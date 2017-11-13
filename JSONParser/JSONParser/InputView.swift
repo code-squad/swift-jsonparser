@@ -10,6 +10,7 @@ import Foundation
 
 struct InputView {
     typealias IOFileNames = (inputFileName: String, outputFileName: String?)
+    
     static func read() throws -> String? {
         let argCount = CommandLine.argc
         do {
@@ -27,7 +28,6 @@ struct InputView {
             throw error
         }
         return nil
-        
     }
     
     private static func readFromConsole() -> String? {

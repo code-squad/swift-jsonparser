@@ -58,7 +58,7 @@ struct OutputView {
             }
         }
         resultJSONDataString += makeJSONDataString(jsonData.array, indent: indent)
-        return resultJSONCountString + "\n" + resultJSONDataString + "\n"
+        return resultJSONCountString + "\n" + resultJSONDataString
     }
     
     // 데이터 내부에 배열, 객체, 스트링, 인트, 부울 타입이 몇 개인지 계산 하는 함수
