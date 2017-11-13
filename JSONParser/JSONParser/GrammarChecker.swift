@@ -26,23 +26,29 @@ struct GrammarChecker {
         intPattern = "[\\s]?\\d+[\\s]?"
         boolPattern = "[\\s]?(true|false)[\\s]?"
         dictionaryPattern = "\(self.stringPattern):(\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern))"
-        objectPattern = "[\\s]?[\\{][\\s]?(\(self.dictionaryPattern)[,]?)+[\\s]?[\\}][\\s]?"
-        arrayPattern = "[\\s]?[\\[][\\s]?((\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.objectPattern))[,]?)+[\\s]?[\\]][\\s]?"
+        objectPattern = "[\\{][\\s]?(\(self.dictionaryPattern)[,]?)+[\\s]?[\\}][\\s]?"
+        arrayPattern = "\\[[\\s]?((\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.objectPattern))[,]?)+[\\s]?\\][\\s]?"
     }
     
     func isArrayPattern(target: String) -> Bool {
+        guard target.starts(with: "[") else {
+            return false
+        }
         let arrayChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.arrayPattern, options: [])
         return getMatchResult(checker: arrayChecker, target: target)
     }
     
     func isObjectPattern(target: String) -> Bool {
+        guard target.starts(with: "{") else {
+            return false
+        }
         let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.objectPattern, options: [])
         return getMatchResult(checker: objectChecker, target: target)
     }
     
     private func getMatchResult(checker: NSRegularExpression, target: String) -> Bool {
-        let matchResult = checker.numberOfMatches(in: target, options: [], range: NSRange(location:0, length:target.count))
-        guard matchResult == 1 else {
+        let matchCount = checker.numberOfMatches(in: target, options: [], range: NSRange(location:0, length:target.count))
+        guard matchCount == 1 else {
             return false
         }
         return true

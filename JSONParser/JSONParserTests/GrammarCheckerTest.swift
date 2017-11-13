@@ -13,7 +13,9 @@ import XCTest
 class GrammarCheckerTest: XCTestCase {
     var grammarChecker : GrammarChecker!
     var objectTester : String = "{ \"name\": \"KIM JUNG\", \"alias\" :\"JK\", \"level\" : 5, \"married\" : true }"
+    var errorTesterForObject : String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
     var arrayTester : String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
+    var errorTesterForArray : String = "[ \"name\" : \"KIM JUNG\" ]"
     
     override func setUp() {
         super.setUp()
@@ -52,10 +54,12 @@ class GrammarCheckerTest: XCTestCase {
     
     func testIsArrayPattern() {
         XCTAssertTrue(grammarChecker.isArrayPattern(target: arrayTester))
+        XCTAssertFalse(grammarChecker.isArrayPattern(target: errorTesterForArray))
     }
     
     func testIsObjectPattern() {
         XCTAssertTrue(grammarChecker.isObjectPattern(target: objectTester))
+        XCTAssertFalse(grammarChecker.isObjectPattern(target: errorTesterForObject))
     }
 
 }

@@ -9,8 +9,9 @@
 import Foundation
 
 struct InputView {
-    func readInput() -> Array<String> {
+    func readInput() throws -> Array<String> {
         let readInput = readLine() ?? "[]"
+        try readInput.isJSONPattern()
         return readInput.getElementsAll()
     }
 }

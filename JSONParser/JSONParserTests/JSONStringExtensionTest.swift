@@ -11,11 +11,10 @@ import XCTest
 @testable import JSONParser
 
 class JSONStringExtensionTest: XCTestCase {
-    
     let arrayTester : String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
     let objectTester : String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-    let errorTesterForArray : String = "[ 10, \"jk\", 4, \"314\", 99, \"cro^ng\", false ]"
-    let errorTesterForObject : String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : {errorTest} }"
+    let errorTesterForArray : String = "[ \"name\" : \"KIM JUNG\" ]"
+    let errorTesterForObject : String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
     
     override func setUp() {
         super.setUp()
