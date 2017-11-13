@@ -18,4 +18,3 @@ struct JSONObject {
         self.dictionary = dictionary
     }
 }
-

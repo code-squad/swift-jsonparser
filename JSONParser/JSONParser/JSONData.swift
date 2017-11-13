@@ -15,4 +15,3 @@ struct JSONData {
         self.array = array
     }
 }
-

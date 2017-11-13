@@ -17,7 +17,7 @@ struct InputView {
         return input
     }
     
-    static func readIO() -> IOFileNames{
+    static func readIO() -> IOFileNames {
         let argCount = CommandLine.argc
         // input파일, output파일
         if argCount > 2 {
@@ -29,7 +29,7 @@ struct InputView {
             return IOFileNames(inputFile, nil)
         }
     }
-    
+
     static func loadJSON(_ inputFileName: String) throws -> String {
         let dir = FileManager.default.homeDirectoryForCurrentUser
         let pathURL = dir.appendingPathComponent(inputFileName)
@@ -48,4 +48,3 @@ extension InputView {
         case notFindFile = "파일을 찾을 수 없습니다."
     }
 }
-

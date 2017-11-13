@@ -22,6 +22,7 @@ struct OutputView {
             throw error
         }
     }
+    
     static func makeTotalContentsOfJSON(_ jsonData: JSONData) -> String? {
         var resultJSONDataString = ""
         var resultJSONCountString = ""
