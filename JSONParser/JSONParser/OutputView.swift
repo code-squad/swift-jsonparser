@@ -9,14 +9,27 @@
 import Foundation
 
 struct OutputView {
-    static func printJSON(_ jsonData: JSONData) {
+    static func writeJSONToText(_ jsonData: JSONData, writeFileName: String = "result.json") throws {
+        let file = writeFileName
+        let dir = FileManager.default.homeDirectoryForCurrentUser
+        let path = dir.appendingPathComponent(file)
+        guard let contents = makeTotalContentsOfJSON(jsonData) else { return }
+        do {
+            try contents.write(to: path,
+                               atomically: false,
+                               encoding: String.Encoding.utf8)
+        } catch let error{
+            throw error
+        }
+    }
+    static func makeTotalContentsOfJSON(_ jsonData: JSONData) -> String? {
         var resultJSONDataString = ""
         var resultJSONCountString = ""
         var indent = 1
         var typeCountDictionary = [String:Int]()
         if jsonData.array.count == 1 {
             // 오브젝트 데이터 일 때
-            guard let object = jsonData.array[0] as? JSONObject else { return }
+            guard let object = jsonData.array[0] as? JSONObject else { return nil}
             typeCountDictionary = calculateNumberOfType(Array(object.dictionary.values))
             resultJSONCountString = makeJSONCountString(typeCountDictionary,
                                                         objectCount: object.dictionary.count)
@@ -30,8 +43,7 @@ struct OutputView {
             }
             resultJSONDataString += makeJSONDataString(jsonData.array, indent: indent)
         }
-        print(resultJSONCountString)
-        print(resultJSONDataString)
+        return resultJSONCountString + "\n" + resultJSONDataString + "\n"
     }
     
     // 데이터 내부에 배열, 객체, 스트링, 인트, 부울 타입이 몇 개인지 계산 하는 함수

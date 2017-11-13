@@ -18,8 +18,12 @@ do {
     let analyzedArray = try JSONAnalyzer.makeObject(with: jsonString)
     
     // 분석한 결과 출력
-    OutputView.printJSON(analyzedArray)
-    
+
+    if let outputFile = FileNames.outputFileName {
+        try OutputView.writeJSONToText(analyzedArray, writeFileName: outputFile)
+    } else {
+        try OutputView.writeJSONToText(analyzedArray)
+    }
 } catch InputView.InputError.notFindFile {
     print(InputView.InputError.notFindFile.rawValue)
 } catch GrammarChecker.FormatError.notFormatted{
