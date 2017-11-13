@@ -13,12 +13,14 @@ struct JSONData {
     private (set) var boolTypeCount: Int
     private (set) var stringTypeCount: Int
     private (set) var intTypeCount: Int
+    private (set) var sumOfData: Int
     
     init() {
         self.jsonData = [Any]()
         self.boolTypeCount = 0
         self.stringTypeCount = 0
         self.intTypeCount = 0
+        self.sumOfData = 0
     }
     
     init(_ value: [Any]) {
@@ -37,5 +39,6 @@ struct JSONData {
                 boolTypeCount += 1
             }
         }
+        sumOfData = intTypeCount + stringTypeCount + boolTypeCount
     }
 }

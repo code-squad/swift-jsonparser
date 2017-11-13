@@ -10,10 +10,7 @@ import Foundation
 
 struct OutputView {
     func printJSONAnalysis(jsonData: JSONData) {
-        let numberOfData = jsonData.stringTypeCount +
-                            jsonData.intTypeCount +
-                            jsonData.boolTypeCount
-        print("총 \(numberOfData)개의 데이터 중에", terminator: "")
+        print("총 \(jsonData.sumOfData)개의 데이터 중에", terminator: "")
         printJSONData(jsonData)
         print("가 포함되어 있습니다.")
     }
