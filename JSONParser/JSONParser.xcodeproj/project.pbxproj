@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		400222C21FB93D6A00AB1C6A /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400222C11FB93D6A00AB1C6A /* InputView.swift */; };
 		400222C61FB93F5600AB1C6A /* ErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400222C51FB93F5600AB1C6A /* ErrorCode.swift */; };
+		400222C91FB9433200AB1C6A /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400222C81FB9433200AB1C6A /* JSONData.swift */; };
+		400222CB1FB9437000AB1C6A /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400222CA1FB9437000AB1C6A /* JSONParser.swift */; };
+		400222CD1FB962B200AB1C6A /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400222CC1FB962B200AB1C6A /* OutputView.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +30,9 @@
 /* Begin PBXFileReference section */
 		400222C11FB93D6A00AB1C6A /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		400222C51FB93F5600AB1C6A /* ErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCode.swift; sourceTree = "<group>"; };
+		400222C81FB9433200AB1C6A /* JSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
+		400222CA1FB9437000AB1C6A /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
+		400222CC1FB962B200AB1C6A /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +78,9 @@
 				400222C71FB9427000AB1C6A /* Utility */,
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				400222C11FB93D6A00AB1C6A /* InputView.swift */,
+				400222CC1FB962B200AB1C6A /* OutputView.swift */,
+				400222C81FB9433200AB1C6A /* JSONData.swift */,
+				400222CA1FB9437000AB1C6A /* JSONParser.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -135,8 +144,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				400222CB1FB9437000AB1C6A /* JSONParser.swift in Sources */,
+				400222C91FB9433200AB1C6A /* JSONData.swift in Sources */,
 				400222C21FB93D6A00AB1C6A /* InputView.swift in Sources */,
 				400222C61FB93F5600AB1C6A /* ErrorCode.swift in Sources */,
+				400222CD1FB962B200AB1C6A /* OutputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
