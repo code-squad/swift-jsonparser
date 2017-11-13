@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
+		8E4BCDF21FB537F6007781EF /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4BCDF11FB537F6007781EF /* GrammarChecker.swift */; };
+		8E4BCDF41FB55336007781EF /* GrammarCheckerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4BCDF31FB55336007781EF /* GrammarCheckerTest.swift */; };
 		8E6FE4531FB024220022BC9E /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6FE4521FB024220022BC9E /* InputView.swift */; };
 		8E6FE4551FB0405D0022BC9E /* TypeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6FE4541FB0405D0022BC9E /* TypeCounter.swift */; };
 		8E6FE4631FB041FA0022BC9E /* TypeCounterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6FE4621FB041FA0022BC9E /* TypeCounterTest.swift */; };
@@ -19,6 +21,7 @@
 		8E6FE46C1FB07A540022BC9E /* JSONAnalyser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6FE4681FB05A530022BC9E /* JSONAnalyser.swift */; };
 		8E6FE46D1FB07A680022BC9E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		8E6FE46E1FB07B2C0022BC9E /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6FE4661FB04DF90022BC9E /* OutputView.swift */; };
+		8EAAEB9B1FB9479C004186C8 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4BCDF11FB537F6007781EF /* GrammarChecker.swift */; };
 		8EB601351FB2CFC90094171E /* JSONStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB601341FB2CFC90094171E /* JSONStringExtension.swift */; };
 		8EB601361FB2CFDF0094171E /* JSONStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB601341FB2CFC90094171E /* JSONStringExtension.swift */; };
 		8EB601381FB2D0800094171E /* JSONStringExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB601371FB2D0800094171E /* JSONStringExtensionTest.swift */; };
@@ -39,6 +42,8 @@
 /* Begin PBXFileReference section */
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		8E4BCDF11FB537F6007781EF /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
+		8E4BCDF31FB55336007781EF /* GrammarCheckerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarCheckerTest.swift; sourceTree = "<group>"; };
 		8E6FE4521FB024220022BC9E /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		8E6FE4541FB0405D0022BC9E /* TypeCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCounter.swift; sourceTree = "<group>"; };
 		8E6FE45A1FB041D80022BC9E /* JSONParserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONParserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +101,7 @@
 				8E6FE4661FB04DF90022BC9E /* OutputView.swift */,
 				8E6FE4681FB05A530022BC9E /* JSONAnalyser.swift */,
 				8EB601341FB2CFC90094171E /* JSONStringExtension.swift */,
+				8E4BCDF11FB537F6007781EF /* GrammarChecker.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -103,6 +109,7 @@
 		8E6FE45B1FB041D80022BC9E /* JSONParserTests */ = {
 			isa = PBXGroup;
 			children = (
+				8E4BCDF31FB55336007781EF /* GrammarCheckerTest.swift */,
 				8EB601371FB2D0800094171E /* JSONStringExtensionTest.swift */,
 				8E6FE46A1FB0785A0022BC9E /* JSONAnalyserTest.swift */,
 				8E6FE4621FB041FA0022BC9E /* TypeCounterTest.swift */,
@@ -201,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E4BCDF21FB537F6007781EF /* GrammarChecker.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				8E6FE4531FB024220022BC9E /* InputView.swift in Sources */,
 				8EB601351FB2CFC90094171E /* JSONStringExtension.swift in Sources */,
@@ -215,6 +223,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E6FE4631FB041FA0022BC9E /* TypeCounterTest.swift in Sources */,
+				8EAAEB9B1FB9479C004186C8 /* GrammarChecker.swift in Sources */,
 				8E6FE4651FB04C470022BC9E /* InputView.swift in Sources */,
 				8EB601361FB2CFDF0094171E /* JSONStringExtension.swift in Sources */,
 				8E6FE46E1FB07B2C0022BC9E /* OutputView.swift in Sources */,
@@ -223,6 +232,7 @@
 				8E6FE46C1FB07A540022BC9E /* JSONAnalyser.swift in Sources */,
 				8E6FE4641FB042630022BC9E /* TypeCounter.swift in Sources */,
 				8EB601381FB2D0800094171E /* JSONStringExtensionTest.swift in Sources */,
+				8E4BCDF41FB55336007781EF /* GrammarCheckerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,6 +12,11 @@ import XCTest
 
 class JSONStringExtensionTest: XCTestCase {
     
+    let arrayTester : String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
+    let objectTester : String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
+    let errorTesterForArray : String = "[ 10, \"jk\", 4, \"314\", 99, \"cro^ng\", false ]"
+    let errorTesterForObject : String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : {errorTest} }"
+    
     override func setUp() {
         super.setUp()
     }
@@ -20,13 +25,26 @@ class JSONStringExtensionTest: XCTestCase {
         super.tearDown()
     }
 
-    func testJSONStringExtension() {
-        var tester : String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        XCTAssertEqual(tester.getElementsAll(), ["10", "\"jk\"", "4", "\"314\"", "99", "\"crong\"", "false"])
-        tester = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]".trimmingCharacters(in: ["[","]"])
-        XCTAssertEqual(tester.getElements(), ["10", "\"jk\"", "4", "\"314\"", "99", "\"crong\"", "false"])
-        tester = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        XCTAssertEqual(tester.getElementsForObject(), ["\"name\" : \"KIM JUNG\"", "\"alias\" : \"JK\"", "\"level\" : 5", "\"married\" : true"])
+    func testGetElementsAll() {
+        XCTAssertEqual(arrayTester.getElementsAll(), ["10", "\"jk\"", "4", "\"314\"", "99", "\"crong\"", "false"])
+    }
+    
+    func testGetElements() {
+        XCTAssertEqual(arrayTester.trimmingCharacters(in: ["[","]"]).getElements(), ["10", "\"jk\"", "4", "\"314\"", "99", "\"crong\"", "false"])
+    }
+    
+    func testGetElementsForObject() {
+        XCTAssertEqual(objectTester.getElementsForObject(), ["\"name\" : \"KIM JUNG\"", "\"alias\" : \"JK\"", "\"level\" : 5", "\"married\" : true"])
+    }
+    
+    func testIsJSONPatternForArray() {
+        XCTAssertNoThrow(try arrayTester.isJSONPattern())
+        XCTAssertThrowsError(try errorTesterForArray.isJSONPattern())
+    }
+    
+    func testIsJSONPatternForObject() {
+        XCTAssertNoThrow(try objectTester.isJSONPattern())
+        XCTAssertThrowsError(try errorTesterForObject.isJSONPattern())
     }
     
 }

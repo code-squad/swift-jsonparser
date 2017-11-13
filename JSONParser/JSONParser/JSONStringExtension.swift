@@ -30,4 +30,12 @@ extension String {
     func getElementsForObject() -> Array<String> {
         return self.trimmingCharacters(in: ["{","}"]).split(separator: ",").flatMap {$0.trimmingCharacters(in: .whitespaces)}
     }
+    
+    func isJSONPattern() throws {
+        let pattern : GrammarChecker = GrammarChecker()
+        guard pattern.isArrayPattern(target: self) || pattern.isObjectPattern(target: self) else {
+            throw GrammarChecker.ErrorMessage.notJSONPattern
+        }
+    }
+    
 }
