@@ -16,16 +16,15 @@ struct JSONData {
     private (set) var sumOfData: Int
     
     init() {
-        self.jsonData = [Any]()
+        self.init([Any]())
+    }
+    
+    init(_ value: [Any]) {
+        self.jsonData = value
         self.boolTypeCount = 0
         self.stringTypeCount = 0
         self.intTypeCount = 0
         self.sumOfData = 0
-    }
-    
-    init(_ value: [Any]) {
-        self.init()
-        self.jsonData = value
         countJSONData()
     }
     
