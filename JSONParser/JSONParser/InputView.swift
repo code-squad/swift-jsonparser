@@ -12,7 +12,7 @@ struct InputView {
     func read() throws -> String? {
         let userRawData = readLine()
         do {
-            return try check(userRawData)
+            return try JSONParser.check(userRawData)
         } catch ErrorCode.invalidJSONStandard {
             throw ErrorCode.invalidJSONStandard
         } catch ErrorCode.invalidInputString {
@@ -22,15 +22,5 @@ struct InputView {
         }
     }
     
-    private func check(_ value: String?) throws -> String? {
-        guard let safeValue = value else {
-            throw ErrorCode.invalidInputString
-        }
-        if safeValue.hasPrefix("[") {
-            return safeValue
-        } else {
-            throw ErrorCode.invalidJSONStandard
-        }
-    }
 }
 
