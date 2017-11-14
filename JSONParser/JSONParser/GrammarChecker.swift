@@ -67,4 +67,18 @@ struct GrammarChecker {
         return true
     }
     
+    func getArrayMatches(from target: String) -> Array<String> {
+        let arrayChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: arrayPattern, options: [])
+        let arrayResult = arrayChecker.matches(in: target, options: [], range: NSRange(location:0, length:target.count))
+        let result = arrayResult.map {String(target[Range($0.range, in: target)!]).trimmingCharacters(in: .whitespaces)}
+        return result
+    }
+    
+    func getObjectMatches(from target: String) -> Array<String> {
+        let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: objectPattern, options: [])
+        let objectResult = objectChecker.matches(in: target, options: [], range: NSRange(location:0, length:target.count))
+        let result = objectResult.map {String(target[Range($0.range, in: target)!]).trimmingCharacters(in: .whitespaces)}
+        return result
+    }
+    
 }

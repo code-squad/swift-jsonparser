@@ -48,5 +48,13 @@ class GrammarCheckerTest: XCTestCase {
     func testIsJSONPatternForNestedObject() {
         XCTAssertNoThrow(try grammarChecker.isJSONPattern(target: nestedObjectTester))
     }
+    
+    func testGetArrayMatches() {
+        XCTAssertEqual(grammarChecker.getArrayMatches(from: nestedArrayTester), ["[1,2,3]"])
+    }
+    
+    func testGetObjectMatches() {
+        XCTAssertEqual(grammarChecker.getObjectMatches(from: nestedArrayTester), ["{ \"test\" : \"tester\" }"])
+    }
 
 }
