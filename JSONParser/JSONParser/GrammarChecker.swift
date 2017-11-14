@@ -13,9 +13,12 @@ struct GrammarChecker {
     private let intPattern : String
     private let boolPattern : String
     private let dictionaryPattern : String
-    
     private let objectPattern : String
     private let arrayPattern : String
+    
+    private let nestedDictionaryPattern : String
+    private let nestedObjectPattern : String
+    private let nestedArrayPattern : String
     
     enum ErrorMessage : Error {
         case notJSONPattern
@@ -28,6 +31,10 @@ struct GrammarChecker {
         dictionaryPattern = "\(self.stringPattern):(\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern))"
         objectPattern = "[\\{][\\s]?(\(self.dictionaryPattern)[,]?)+[\\s]?[\\}][\\s]?"
         arrayPattern = "\\[[\\s]?((\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.objectPattern))[,]?)+[\\s]?\\][\\s]?"
+        
+        nestedDictionaryPattern = "\(self.stringPattern):(\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.objectPattern)|\(self.arrayPattern))"
+        nestedObjectPattern = "[\\s]?[\\{][\\s]?((\(self.nestedDictionaryPattern))[,]?)+[\\s]?[\\}][\\s]?"
+        nestedArrayPattern = "[\\s]?[\\[][\\s]?((\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.nestedObjectPattern)|\(self.arrayPattern))[,]?)+[\\s]?[\\]][\\s]?"
     }
     
     func isJSONPattern(target: String) throws {
@@ -40,7 +47,7 @@ struct GrammarChecker {
         guard target.starts(with: "[") else {
             return false
         }
-        let arrayChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.arrayPattern, options: [])
+        let arrayChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.nestedArrayPattern, options: [])
         return getMatchResult(checker: arrayChecker, target: target)
     }
     
@@ -48,7 +55,7 @@ struct GrammarChecker {
         guard target.starts(with: "{") else {
             return false
         }
-        let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.objectPattern, options: [])
+        let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.nestedObjectPattern, options: [])
         return getMatchResult(checker: objectChecker, target: target)
     }
     
