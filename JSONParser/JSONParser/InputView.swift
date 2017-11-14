@@ -9,18 +9,9 @@
 import Foundation
 
 struct InputView {
-    func read() throws -> String? {
+    func read() -> String? {
         let userRawData = readLine()
-        do {
-            return try JSONParser.check(userRawData)
-        } catch ErrorCode.invalidJSONStandard {
-            throw ErrorCode.invalidJSONStandard
-        } catch ErrorCode.invalidInputString {
-            throw ErrorCode.invalidInputString
-        } catch {
-            return nil
-        }
+        return userRawData
     }
     
 }
-
