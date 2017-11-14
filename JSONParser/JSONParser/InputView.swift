@@ -9,16 +9,14 @@
 import Foundation
 
 struct InputView {
-    func read() -> String? {
+    func read() throws -> String? {
         let userRawData = readLine()
         do {
             return try check(userRawData)
         } catch ErrorCode.invalidJSONStandard {
-            print("JSON규격에 맞지않습니다. 올바른 입력값을 넣어주세요 :)")
-            return nil
+            throw ErrorCode.invalidJSONStandard
         } catch ErrorCode.invalidInputString {
-            print("입력값을 확인해주세요 :)")
-            return nil
+            throw ErrorCode.invalidInputString
         } catch {
             return nil
         }

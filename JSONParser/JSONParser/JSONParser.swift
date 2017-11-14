@@ -45,5 +45,6 @@ struct JSONParser {
         pureString.removeLast()
         return pureString
     }
-    
+
 }
+

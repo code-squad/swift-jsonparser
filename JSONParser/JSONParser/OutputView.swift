@@ -15,6 +15,15 @@ struct OutputView {
         print("가 포함되어 있습니다.")
     }
     
+    func printErrorMsg(errorCode: ErrorCode) {
+        switch errorCode {
+        case .invalidJSONStandard:
+            print("JSON규격에 맞지않습니다. 올바른 입력값을 넣어주세요 :)")
+        case .invalidInputString:
+            print("입력값을 확인해주세요 :)")
+        }
+    }
+    
     private func printJSONData(_ jsonData: JSONData) {
         if jsonData.stringTypeCount > 0 {
             print(" 문자열 \(jsonData.stringTypeCount)", terminator: "")
