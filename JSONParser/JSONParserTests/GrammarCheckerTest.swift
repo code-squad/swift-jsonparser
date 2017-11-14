@@ -56,5 +56,19 @@ class GrammarCheckerTest: XCTestCase {
     func testGetObjectMatches() {
         XCTAssertEqual(grammarChecker.getObjectMatches(from: nestedArrayTester), ["{ \"test\" : \"tester\" }"])
     }
-
+    
+    func testRemoveMatchedArray() {
+        XCTAssertEqual(grammarChecker.removeMatchedArray(target: nestedArrayTester), "[ { \"test\" : \"tester\" }, ]")
+    }
+    
+    func testRemoveMatchedObject() {
+        XCTAssertEqual(grammarChecker.removeMatchedObject(target: nestedArrayTester), "[ , [1,2,3] ]")
+    }
+    
+    func testRemoveMatchedAll() {
+        var tester = grammarChecker.removeMatchedArray(target: nestedArrayTester)
+        tester = grammarChecker.removeMatchedObject(target: tester)
+        XCTAssertEqual(tester, "[ , ]")
+    }
+    
 }

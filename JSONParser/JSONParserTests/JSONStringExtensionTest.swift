@@ -23,9 +23,23 @@ class JSONStringExtensionTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
     }
-
+    
     func testGetElementsAll() {
         XCTAssertEqual(arrayTester.getElementsAll(), ["10", "\"jk\"", "4", "\"314\"", "99", "\"crong\"", "false"])
+        
+        let checker = GrammarChecker()
+        var elementsFromArray : Array<String> = []
+        var elements : String = arrayTester.trimmingCharacters(in: ["[","]"])
+        XCTAssertEqual(elements, " 10, \"jk\", 4, \"314\", 99, \"crong\", false ")
+        elementsFromArray.append(contentsOf: checker.getArrayMatches(from: elements))
+        XCTAssertEqual(elements, " 10, \"jk\", 4, \"314\", 99, \"crong\", false ")
+        elements = checker.removeMatchedArray(target: elements)
+        XCTAssertEqual(elements, " 10, \"jk\", 4, \"314\", 99, \"crong\", false ")
+        elementsFromArray.append(contentsOf: checker.getObjectMatches(from: elements))
+        elements = checker.removeMatchedObject(target: elements)
+        XCTAssertEqual(elements, " 10, \"jk\", 4, \"314\", 99, \"crong\", false ")
+        elementsFromArray.append(contentsOf: elements.getElements())
+        XCTAssertEqual(elementsFromArray, [ "10", "\"jk\"", "4", "\"314\"", "99", "\"crong\"", "false" ])
     }
     
     func testGetElements() {

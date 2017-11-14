@@ -81,4 +81,15 @@ struct GrammarChecker {
         return result
     }
     
+    func removeMatchedArray(target: String) -> String {
+        let arrayChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: arrayPattern, options: [])
+        let result = arrayChecker.stringByReplacingMatches(in: target, options: [], range: NSRange(location:0, length:target.count), withTemplate: "")
+        return result
+    }
+    
+    func removeMatchedObject(target: String) -> String {
+        let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: objectPattern, options: [])
+        let result = objectChecker.stringByReplacingMatches(in: target, options: [], range: NSRange(location:0, length:target.count), withTemplate: "")
+        return result
+    }
 }
