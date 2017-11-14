@@ -9,6 +9,17 @@
 import Foundation
 
 struct JSONParser {
+    static func check(_ value: String?) throws -> String? {
+        guard let safeValue = value else {
+            throw ErrorCode.invalidInputString
+        }
+        if safeValue.hasPrefix("[") {
+            return safeValue
+        } else {
+            throw ErrorCode.invalidJSONStandard
+        }
+    }
+    
     func makeJSONData(_ value: String) -> JSONData{
         var rawJSON = value
         rawJSON.removeFirst()

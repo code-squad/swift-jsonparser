@@ -15,6 +15,7 @@
 		400222D51FB972BB00AB1C6A /* UnitTestJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400222D41FB972BB00AB1C6A /* UnitTestJSONParser.swift */; };
 		400222DA1FB972F500AB1C6A /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400222C81FB9433200AB1C6A /* JSONData.swift */; };
 		400222DB1FB972F500AB1C6A /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400222CA1FB9437000AB1C6A /* JSONParser.swift */; };
+		400222DC1FBA936700AB1C6A /* ErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400222C51FB93F5600AB1C6A /* ErrorCode.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -199,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				400222DC1FBA936700AB1C6A /* ErrorCode.swift in Sources */,
 				400222DA1FB972F500AB1C6A /* JSONData.swift in Sources */,
 				400222DB1FB972F500AB1C6A /* JSONParser.swift in Sources */,
 				400222D51FB972BB00AB1C6A /* UnitTestJSONParser.swift in Sources */,
