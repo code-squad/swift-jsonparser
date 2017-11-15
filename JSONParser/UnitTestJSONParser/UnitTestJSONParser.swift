@@ -83,7 +83,7 @@ class UnitTestJSONParser: XCTestCase {
     func testJSONParserObjectCase() {
         let parserTest = JSONParser()
         let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        let parserTypeCount = try! parserTest.makeObjectJSONData(testRawJSONData1)
+        let parserTypeCount = parserTest.makeObjectJSONData(testRawJSONData1)
         XCTAssertEqual(parserTypeCount.boolTypeCount, 1)
         XCTAssertEqual(parserTypeCount.stringTypeCount, 2)
         XCTAssertEqual(parserTypeCount.intTypeCount, 1)
