@@ -19,7 +19,7 @@ func executeJSONParser() {
         do {
             if let rawJSONData = inputView.read() {
                 let checkedJSON = try parser.check(rawJSONData)
-                outputView.printJSONAnalysis(jsonData: parser.makeJSONData(checkedJSON))
+                outputView.printJSONAnalysis(jsonData: try parser.makeJSONData(checkedJSON))
                 repeatCondition = false
             }
         } catch ErrorCode.invalidJSONStandard {
@@ -30,7 +30,7 @@ func executeJSONParser() {
             return
         }
     }
-
+    
 }
 
 executeJSONParser()

@@ -10,7 +10,11 @@ import Foundation
 
 struct OutputView {
     func printJSONAnalysis(jsonData: JSONData) {
-        print("총 \(jsonData.sumOfData)개의 데이터 중에", terminator: "")
+        if jsonData.jsonArray.count > 0 {
+            print("총 \(jsonData.sumOfData)개의 배열 데이터 중에", terminator: "")
+        } else if jsonData.jsonObject.count > 0 {
+            print("총 \(jsonData.sumOfData)개의 객체 데이터 중에", terminator: "")
+        }
         printJSONData(jsonData)
         print("가 포함되어 있습니다.")
     }
@@ -27,14 +31,24 @@ struct OutputView {
     private func printJSONData(_ jsonData: JSONData) {
         if jsonData.stringTypeCount > 0 {
             print(" 문자열 \(jsonData.stringTypeCount)", terminator: "")
-            if jsonData.intTypeCount > 0 || jsonData.boolTypeCount > 0 { print(",", terminator: "") }
+            if jsonData.intTypeCount > 0 ||
+                jsonData.boolTypeCount > 0 ||
+                jsonData.objectTypeCount > 0 { print(",", terminator: "") }
         }
         if jsonData.intTypeCount > 0 {
             print(" 숫자 \(jsonData.intTypeCount)", terminator: "")
-            if jsonData.stringTypeCount > 0 || jsonData.boolTypeCount > 0 { print(",", terminator: "") }
+            if jsonData.stringTypeCount > 0 ||
+                jsonData.boolTypeCount > 0 ||
+                jsonData.objectTypeCount > 0 { print(",", terminator: "") }
         }
         if jsonData.boolTypeCount > 0 {
             print(" 부울 \(jsonData.boolTypeCount)", terminator: "")
+            if jsonData.stringTypeCount > 0 ||
+                jsonData.intTypeCount > 0 ||
+                jsonData.objectTypeCount > 0 { print(",", terminator: "") }
+        }
+        if jsonData.objectTypeCount > 0 {
+            print(" 객체 \(jsonData.objectTypeCount)", terminator: "")
         }
     }
 }
