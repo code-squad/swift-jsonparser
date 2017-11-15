@@ -11,6 +11,7 @@ import Foundation
 extension JSONParser {
     func makeArrayJSONData(_ value: String) throws -> JSONData {
         var resultOfParser = [JSONType]()
+        var bracketJSON = value
         let removedBracket = supportingJSON.processBeforeMakingJSON(value)
         var rawJSON = removedBracket.trimmingCharacters(in: .whitespacesAndNewlines)
         var checkEndElement = true
@@ -68,8 +69,10 @@ extension JSONParser {
             let element = String(rawJSON.prefix(through: endOfElementIdx))
             jsonType = supportingJSON.sortJSONData(element)
             return (jsonType, endOfElementIdx)
+        } else {
+            let element = String(rawJSON.prefix(through: rawJSON.index(before: rawJSON.endIndex)))
+            jsonType = supportingJSON.sortJSONData(element)
+            return (jsonType, rawJSON.endIndex)
         }
-        throw ErrorCode.invalidJSONStandard
     }
-    
 }

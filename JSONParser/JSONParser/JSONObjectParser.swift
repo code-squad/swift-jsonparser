@@ -10,7 +10,7 @@ import Foundation
 // JSONParser for Object
 extension JSONParser {
     func makeObjectJSONData(_ rawJSON: String) -> JSONData {
-        var objectTypeJSON = [String:Any]()
+        var objectTypeJSON = [String:JSONType]()
         let removedBrace = supportingJSON.processBeforeMakingJSON(rawJSON)
         let separateJSON = removedBrace.components(separatedBy: ",")
         for objectComponents in separateJSON {

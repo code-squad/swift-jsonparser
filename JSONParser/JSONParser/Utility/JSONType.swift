@@ -9,8 +9,8 @@
 import Foundation
 
 enum JSONType {
-    case objectType(String)
     case intType(Int)
     case stringType(String)
     case boolType(Bool)
+    case objectType(String)
 }

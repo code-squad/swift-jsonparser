@@ -9,7 +9,7 @@ import Foundation
 
 struct JSONData {
     private (set) var jsonArray: [JSONType]
-    private (set) var jsonObject: [String:Any]
+    private (set) var jsonObject: [String:JSONType]
     private (set) var boolTypeCount: Int
     private (set) var stringTypeCount: Int
     private (set) var intTypeCount: Int
@@ -23,7 +23,7 @@ struct JSONData {
         self.objectTypeCount = 0
         self.sumOfData = 0
         self.jsonArray = [JSONType]()
-        self.jsonObject = [String:Any]()
+        self.jsonObject = [String:JSONType]()
     }
     
     init(_ value: [JSONType]) {
@@ -32,7 +32,7 @@ struct JSONData {
         countJSONArray()
     }
     
-    init(_ value: [String:Any]) {
+    init(_ value: [String:JSONType]) {
         self.init()
         self.jsonObject = value
         countJSONObject()
@@ -56,14 +56,16 @@ struct JSONData {
     
     mutating private func countJSONObject() {
         for (_, indexOfJSONData) in jsonObject {
-            if indexOfJSONData is Int {
+            switch indexOfJSONData {
+            case .intType:
                 intTypeCount += 1
-            } else if indexOfJSONData is String {
-                stringTypeCount += 1
-            } else {
+            case .boolType:
                 boolTypeCount += 1
-            }
-        }
+            case .stringType:
+                stringTypeCount += 1
+            case .objectType:
+                objectTypeCount += 1
+            }        }
         sumOfData = intTypeCount + stringTypeCount + boolTypeCount
     }
     
