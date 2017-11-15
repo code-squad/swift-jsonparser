@@ -14,8 +14,8 @@ class JSONAnalyserTest: XCTestCase {
     var jsonData : JSONData!
     let tester : Array<String> = [ "10", "\"jk\"", "4", "\"314\"", "99", "\"crong\"", "false" ]
     var objectTester : Array<String> = ["{\"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true}"]
-    var jsonObject : JSONObject!
     let nestedArrayTester : Array<String> = ["{ \"test\" : \"tester\" }","[1,2,3]"]
+    let nestedObjectTester : Array<String> = ["{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"], \"test\" : { \"test\" : \"tester\" } }"]
     
     override func setUp() {
         super.setUp()
@@ -48,6 +48,11 @@ class JSONAnalyserTest: XCTestCase {
         jsonData = JSONAnalyser.getJSONData(items: nestedArrayTester)
         XCTAssertTrue(jsonData[0] is JSONObject)
         XCTAssertTrue(jsonData[1] is JSONData)
+    }
+    
+    func testGetJSONDataForNestedObject() {
+        jsonData = JSONAnalyser.getJSONData(items: nestedObjectTester)
+        XCTAssertTrue(jsonData[0] is JSONObject)
     }
     
 }

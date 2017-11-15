@@ -36,8 +36,9 @@ extension String {
         return elementsFromArray
     }
     
-    func getElementsForObject() -> Array<String> {
-        return self.trimmingCharacters(in: ["{","}"]).split(separator: ",").flatMap {$0.trimmingCharacters(in: .whitespaces)}
+    func getObjectElements() -> Array<String> {
+        let grammarChecker : GrammarChecker = GrammarChecker()
+        return grammarChecker.getObjectElements(from: self)
     }
     
 }

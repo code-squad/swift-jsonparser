@@ -9,13 +9,14 @@
 import Foundation
 
 struct GrammarChecker {
+    // basic pattern
     private let stringPattern : String
     private let intPattern : String
     private let boolPattern : String
     private let dictionaryPattern : String
     private let objectPattern : String
     private let arrayPattern : String
-    
+    // nested pattern
     private let nestedDictionaryPattern : String
     private let nestedObjectPattern : String
     private let nestedArrayPattern : String
@@ -68,28 +69,36 @@ struct GrammarChecker {
     }
     
     func getArrayMatches(from target: String) -> Array<String> {
-        let arrayChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: arrayPattern, options: [])
+        let arrayChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.arrayPattern, options: [])
         let arrayResult = arrayChecker.matches(in: target, options: [], range: NSRange(location:0, length:target.count))
         let result = arrayResult.map {String(target[Range($0.range, in: target)!]).trimmingCharacters(in: .whitespaces)}
         return result
     }
     
     func getObjectMatches(from target: String) -> Array<String> {
-        let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: objectPattern, options: [])
+        let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.objectPattern, options: [])
         let objectResult = objectChecker.matches(in: target, options: [], range: NSRange(location:0, length:target.count))
         let result = objectResult.map {String(target[Range($0.range, in: target)!]).trimmingCharacters(in: .whitespaces)}
         return result
     }
     
     func removeMatchedArray(target: String) -> String {
-        let arrayChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: arrayPattern, options: [])
+        let arrayChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.arrayPattern, options: [])
         let result = arrayChecker.stringByReplacingMatches(in: target, options: [], range: NSRange(location:0, length:target.count), withTemplate: "")
         return result
     }
     
     func removeMatchedObject(target: String) -> String {
-        let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: objectPattern, options: [])
+        let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.objectPattern, options: [])
         let result = objectChecker.stringByReplacingMatches(in: target, options: [], range: NSRange(location:0, length:target.count), withTemplate: "")
         return result
     }
+    
+    func getObjectElements(from target: String) -> Array<String> {
+        let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.nestedDictionaryPattern, options: [])
+        let objectResult = objectChecker.matches(in: target, options: [], range: NSRange(location:0, length:target.count))
+        let result = objectResult.map {String(target[Range($0.range, in: target)!]).trimmingCharacters(in: .whitespaces)}
+        return result
+    }
+    
 }

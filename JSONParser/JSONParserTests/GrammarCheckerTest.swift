@@ -71,4 +71,8 @@ class GrammarCheckerTest: XCTestCase {
         XCTAssertEqual(tester, "[,]")
     }
     
+    func testGetObjectElements() {
+        XCTAssertEqual(grammarChecker.getObjectElements(from: nestedObjectTester), ["\"name\" : \"KIM JUNG\"","\"alias\" : \"JK\"","\"level\" : 5","\"children\" : [\"hana\", \"hayul\", \"haun\"]","\"test\" : { \"test\" : \"tester\" }"])
+    }
+    
 }

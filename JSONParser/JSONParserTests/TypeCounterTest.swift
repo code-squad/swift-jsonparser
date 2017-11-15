@@ -16,11 +16,14 @@ class TypeCounterTest: XCTestCase {
     let objectTester : JSONObject = ["name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true]
     var counterForObject : JSONData!
     var counterForNestedArray : JSONData!
+    let nestedObjectTester : JSONObject = ["name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true, "children" : ["hana", "hayul", "haun"], "test" : ["test" : "tester"]]
+    var counterForNestedObject : JSONData!
     
     override func setUp() {
         super.setUp()
         counterForObject = [self.objectTester]
         counterForNestedArray = [self.objectTester, self.counterForArray]
+        counterForNestedObject = [self.nestedObjectTester]
     }
     
     override func tearDown() {
@@ -48,6 +51,15 @@ class TypeCounterTest: XCTestCase {
         XCTAssertEqual(typeCounter?.arrayCounter, 1)
     }
     
+    func testCountTypeForNestedObject() {
+        typeCounter = TypeCounter.init(items: counterForNestedObject)
+        XCTAssertEqual(typeCounter?.stringCounter, 2)
+        XCTAssertEqual(typeCounter?.intCounter, 1)
+        XCTAssertEqual(typeCounter?.boolCounter, 1)
+        XCTAssertEqual(typeCounter?.arrayCounter, 1)
+        XCTAssertEqual(typeCounter?.objectCounter, 1)
+    }
+    
     func testGetTotalCount() {
         typeCounter = TypeCounter.init(items: counterForArray)
         XCTAssertEqual(typeCounter?.getTotalCount(), 7)
@@ -61,6 +73,11 @@ class TypeCounterTest: XCTestCase {
     func testGetTotalCountForNestedArray() {
         typeCounter = TypeCounter.init(items: counterForNestedArray)
         XCTAssertEqual(typeCounter?.getTotalCount(), 2)
+    }
+    
+    func testGetTotalCountForNestedObject() {
+        typeCounter = TypeCounter.init(items: counterForNestedObject)
+        XCTAssertEqual(typeCounter?.getTotalCount(), 6)
     }
 
 }

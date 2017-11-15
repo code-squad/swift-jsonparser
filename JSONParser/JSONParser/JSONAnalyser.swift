@@ -19,7 +19,7 @@ struct JSONAnalyser {
     
     private static func setEachType(item: String) -> Any? {
         if item.starts(with: "{") {
-            return getJSONObject(items: item.getElementsForObject())
+            return getJSONObject(items: item.getObjectElements())
         } else if item.starts(with: "[") {
             return getJSONData(items: item.getElementsAll())
         } else if item.starts(with: "\"") {
@@ -42,4 +42,5 @@ struct JSONAnalyser {
         }
         return jsonObject
     }
+    
 }
