@@ -25,7 +25,7 @@ struct GrammarChecker {
     }
     
     init() {
-        stringPattern = "[\\s]*\"{1}[a-zA-Z\\d\\s_-]+\"{1}[\\s]*"
+        stringPattern = "[\\s]*\"[^\"]+\"[\\s]*"
         intPattern = "[\\s]*\\d+[\\s]*"
         boolPattern = "[\\s]*(true|false)[\\s]*"
         dictionaryPattern = "\(self.stringPattern):(\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern))"

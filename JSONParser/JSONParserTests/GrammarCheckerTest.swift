@@ -18,8 +18,8 @@ class GrammarCheckerTest: XCTestCase {
     let nestedObjectTester : String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"], \"test\" : { \"test\" : \"tester\" } }"
     // array
     var arrayTester : String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-    var errorTesterForArray : String = "[ \"name\" : \"KIM JUNG\" ]"
-    let nestedArrayTester : String = "[ { \"test\" : \"tester\" }, [1,2,3] ]"
+    var errorTesterForArray : String = "[ \"name\" :  \"KIM JUNG\" ]"
+    let nestedArrayTester : String = "[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]"
     
     override func setUp() {
         super.setUp()
@@ -50,19 +50,19 @@ class GrammarCheckerTest: XCTestCase {
     }
     
     func testGetArrayMatches() {
-        XCTAssertEqual(grammarChecker.getArrayMatches(from: nestedArrayTester), ["[1,2,3]"])
+        XCTAssertEqual(grammarChecker.getArrayMatches(from: nestedArrayTester), ["[ \"java\", \"javascript\", \"swift\" ]"])
     }
     
     func testGetObjectMatches() {
-        XCTAssertEqual(grammarChecker.getObjectMatches(from: nestedArrayTester), ["{ \"test\" : \"tester\" }"])
+        XCTAssertEqual(grammarChecker.getObjectMatches(from: nestedArrayTester), ["{ \"name\" : \"master's course\", \"opened\" : true }"])
     }
     
     func testRemoveMatchedArray() {
-        XCTAssertEqual(grammarChecker.removeMatchedArray(target: nestedArrayTester), "[ { \"test\" : \"tester\" },]")
+        XCTAssertEqual(grammarChecker.removeMatchedArray(target: nestedArrayTester), "[ { \"name\" : \"master's course\", \"opened\" : true },]")
     }
     
     func testRemoveMatchedObject() {
-        XCTAssertEqual(grammarChecker.removeMatchedObject(target: nestedArrayTester), "[, [1,2,3] ]")
+        XCTAssertEqual(grammarChecker.removeMatchedObject(target: nestedArrayTester), "[, [ \"java\", \"javascript\", \"swift\" ] ]")
     }
     
     func testRemoveMatchedAll() {
