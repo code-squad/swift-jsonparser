@@ -34,7 +34,7 @@ struct TypeCounter {
             self.objectCounter += 1
         } else if item is JSONData {
             self.arrayCounter += 1
-        } else if item is String {
+        } else if item is String && (item as! String).count != 0 {
             self.stringCounter += 1
         } else if item is Int {
             self.intCounter += 1

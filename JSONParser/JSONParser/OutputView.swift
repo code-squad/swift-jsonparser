@@ -21,6 +21,7 @@ struct OutputView {
         result += getStringCounter()
         result += getIntCounter()
         result += getBoolCounter()
+        result += getArrayCounter()
         result.removeLast()
         result += "가 포함되어 있습니다."
         print(result)
@@ -50,6 +51,13 @@ struct OutputView {
     private func getObjectCounter() -> String {
         if typeCounter.objectCounter > 0 {
             return " 객체 \(typeCounter.objectCounter)개,"
+        }
+        return ""
+    }
+    
+    private func getArrayCounter() -> String {
+        if typeCounter.arrayCounter > 0 {
+            return " 배열 \(typeCounter.arrayCounter)개,"
         }
         return ""
     }

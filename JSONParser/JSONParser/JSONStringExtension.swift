@@ -15,7 +15,6 @@ extension String {
         if self.starts(with: "{") {
             result.append(self)
         } else {
-            print("test")
             result.append(contentsOf: getElementsFromArray())
         }
         return result

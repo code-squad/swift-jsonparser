@@ -12,12 +12,15 @@ import XCTest
 
 class TypeCounterTest: XCTestCase {
     var typeCounter : TypeCounter?
-    var testers : JSONData!
-    let objectTester : Dictionary<String, Any> = ["name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true]
+    let counterForArray : JSONData = [ 10, "jk", 4, "314", 99, "crong", false]
+    let objectTester : JSONObject = ["name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true]
+    var counterForObject : JSONData!
+    var counterForNestedArray : JSONData!
     
     override func setUp() {
         super.setUp()
-        testers = [ 10, "jk", 4, "314", 99, "crong", false]
+        counterForObject = [self.objectTester]
+        counterForNestedArray = [self.objectTester, self.counterForArray]
     }
     
     override func tearDown() {
@@ -26,29 +29,38 @@ class TypeCounterTest: XCTestCase {
     }
 
     func testCountType() {
-        typeCounter = TypeCounter.init(items: testers)
+        typeCounter = TypeCounter.init(items: counterForArray)
         XCTAssertEqual(typeCounter?.boolCounter, 1)
         XCTAssertEqual(typeCounter?.intCounter, 3)
         XCTAssertEqual(typeCounter?.stringCounter, 3)
     }
     
     func testCountObjectType() {
-        testers = [objectTester]
-        typeCounter = TypeCounter.init(items: testers)
+        typeCounter = TypeCounter.init(items: counterForObject)
         XCTAssertEqual(typeCounter?.boolCounter, 1)
         XCTAssertEqual(typeCounter?.intCounter, 1)
         XCTAssertEqual(typeCounter?.stringCounter, 2)
     }
     
+    func testCountTypeForNestedArray() {
+        typeCounter = TypeCounter.init(items: counterForNestedArray)
+        XCTAssertEqual(typeCounter?.objectCounter, 1)
+        XCTAssertEqual(typeCounter?.arrayCounter, 1)
+    }
+    
     func testGetTotalCount() {
-        typeCounter = TypeCounter.init(items: testers)
+        typeCounter = TypeCounter.init(items: counterForArray)
         XCTAssertEqual(typeCounter?.getTotalCount(), 7)
     }
     
     func testGetTotalCountForObject() {
-        testers = [objectTester]
-        typeCounter = TypeCounter.init(items: testers)
+        typeCounter = TypeCounter.init(items: counterForObject)
         XCTAssertEqual(typeCounter?.getTotalCount(), 4)
+    }
+    
+    func testGetTotalCountForNestedArray() {
+        typeCounter = TypeCounter.init(items: counterForNestedArray)
+        XCTAssertEqual(typeCounter?.getTotalCount(), 2)
     }
 
 }
