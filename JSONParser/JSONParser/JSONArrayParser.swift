@@ -11,7 +11,6 @@ import Foundation
 extension JSONParser {
     func makeArrayJSONData(_ value: String) throws -> JSONData {
         var resultOfParser = [JSONType]()
-        var bracketJSON = value
         let removedBracket = supportingJSON.processBeforeMakingJSON(value)
         var rawJSON = removedBracket.trimmingCharacters(in: .whitespacesAndNewlines)
         var checkEndElement = true
