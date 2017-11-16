@@ -14,40 +14,40 @@ class JSONParserTests: XCTestCase {
     func testBasicArrayPattern() throws {
         let data: String = "[ \"sdf\" , 234 , true ]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.arrayString.count, 1)
-        XCTAssertEqual(parsedData.arrayNumber.count, 1)
-        XCTAssertEqual(parsedData.arrayBool.count, 1)
+        XCTAssertEqual(parsedData.arrayCount.string, 1)
+        XCTAssertEqual(parsedData.arrayCount.number, 1)
+        XCTAssertEqual(parsedData.arrayCount.bool, 1)
     }
     
     func testBasicObjectPattern() throws {
         let data: String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\",\"level\":5,\"married\":true}"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.objectNumber.count, 1)
-        XCTAssertEqual(parsedData.objectString.count, 2)
-        XCTAssertEqual(parsedData.objectBool.count, 1)
+        XCTAssertEqual(parsedData.objectCount.number, 1)
+        XCTAssertEqual(parsedData.objectCount.string, 2)
+        XCTAssertEqual(parsedData.objectCount.bool, 1)
     }
     
     func testNestedObjectPattern() throws {
         let data: String = "[{\"asdf\":\"asdf\",\"hrtdg\":234},{\"ertgf\":true}]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.innerObjectCount, 2)
+        XCTAssertEqual(parsedData.arrayCount.nestedObject, 2)
     }
     
     func testNestedArrayPattern() throws {
         let data: String = "[ \"sdf\" , 234 , true, [\"Sdf\", 234], 234]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.arrayString.count, 1)
-        XCTAssertEqual(parsedData.arrayNumber.count, 2)
-        XCTAssertEqual(parsedData.arrayBool.count, 1)
-        XCTAssertEqual(parsedData.innerArrayCount, 1)
+        XCTAssertEqual(parsedData.arrayCount.string, 1)
+        XCTAssertEqual(parsedData.arrayCount.number, 2)
+        XCTAssertEqual(parsedData.arrayCount.bool, 1)
+        XCTAssertEqual(parsedData.arrayCount.nestedArray, 1)
     }
     
     func testNestedMultiPattern() throws {
         let data: String = "[ { \"name\" : \"KIMJUNG\", \"alias\":\"JK\",\"level\":5,\"married\":true}, [true,\"crong\",4,\"married\"], {\"asdf\":\"asdf\",\"hrtdg\":234}, {\"ertgf\":true}, [\"asdf\",234,\"ertgf\"] ]"
         let parsedData = try JSONParser.parse(data)
         XCTAssertEqual(parsedData.count, 5)
-        XCTAssertEqual(parsedData.innerArrayCount, 2)
-        XCTAssertEqual(parsedData.innerObjectCount, 3)
+        XCTAssertEqual(parsedData.arrayCount.nestedArray, 2)
+        XCTAssertEqual(parsedData.arrayCount.nestedObject, 3)
     }
     
     func testInvalidArrayType() throws {
