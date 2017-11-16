@@ -50,7 +50,7 @@ class UnitTestJSONParser: XCTestCase {
         XCTAssertEqual(try! parserTest.makeJSONData(testRawJSONData1).objectTypeCount, 2)
     }
     
-    func testJSONParserObjectInArrayCASE2() {
+    func testJSONParserObjectInArrayFirstAndEndObjects() {
         let parserTest = JSONParser()
         let testRawJSONData1 = "[ { \"name\" : \"Lee\" }, 123, \"Lee\", true, { \"name\" : \"JIN\" } ]"
         let parserTypeCount = try! parserTest.makeJSONData(testRawJSONData1)
@@ -60,24 +60,24 @@ class UnitTestJSONParser: XCTestCase {
         XCTAssertEqual(parserTypeCount.intTypeCount, 1)
     }
     
-    func testJSONParserObjectInArrayCASE3() {
+    func testJSONParserObjectInArrayObjectOfEnd() {
         let parserTest = JSONParser()
-        let testRawJSONData1 = "[ 123, \"Lee\", true, { \"name\" : \"JIN\" }, { \"name\" : \"Lee\" } ]"
+        let testRawJSONData1 = "[ 123, \"Lee\", true, { \"name\" : \"Lee\" } ]"
         let parserTypeCount = try! parserTest.makeJSONData(testRawJSONData1)
-        XCTAssertEqual(parserTypeCount.objectTypeCount, 2)
+        XCTAssertEqual(parserTypeCount.objectTypeCount, 1)
         XCTAssertEqual(parserTypeCount.boolTypeCount, 1)
         XCTAssertEqual(parserTypeCount.stringTypeCount, 1)
         XCTAssertEqual(parserTypeCount.intTypeCount, 1)
     }
     
-    func testJSONParserObjectInArrayCASE4() {
+    func testJSONParserObjectInArrayObjectOfCenter() {
         let parserTest = JSONParser()
-        let testRawJSONData1 = "[ { \"name\" : \"Lee\" }, { \"name\" : \"JIN\" }, 123, \"Lee\", true ]"
+        let testRawJSONData1 = "[ 123, \"Lee\", true, { \"name\" : \"JIN\" }, 123, \"Lee\", true ]"
         let parserTypeCount = try! parserTest.makeJSONData(testRawJSONData1)
-        XCTAssertEqual(parserTypeCount.objectTypeCount, 2)
-        XCTAssertEqual(parserTypeCount.boolTypeCount, 1)
-        XCTAssertEqual(parserTypeCount.stringTypeCount, 1)
-        XCTAssertEqual(parserTypeCount.intTypeCount, 1)
+        XCTAssertEqual(parserTypeCount.objectTypeCount, 1)
+        XCTAssertEqual(parserTypeCount.boolTypeCount, 2)
+        XCTAssertEqual(parserTypeCount.stringTypeCount, 2)
+        XCTAssertEqual(parserTypeCount.intTypeCount, 2)
     }
     
     func testJSONParserObjectCase() {
