@@ -28,11 +28,11 @@ while !flag {
         print("입력값이 정상적이지 않습니다.")
     }
 }
-let inputItems : Array<String> = inputValue.getElementsAll()
 // 분석
-let jsonData : JSONData = JSONAnalyser.getJSONData(items: inputItems)
+let jsonAnalyser = JSONAnalyser.init(grammarChecker: grammarChecker)
+let jsonData = jsonAnalyser.getJSONData(inputValue: inputValue)
 // 카운트
-let typeCounter : TypeCounter = TypeCounter.init(items: jsonData)
+let typeCounter = TypeCounter.init(jsonData: jsonData)
 // 출력
-let outputView : OutputView = OutputView.init(typeCounter: typeCounter)
+let outputView = OutputView.init(typeCounter: typeCounter)
 outputView.printResult()

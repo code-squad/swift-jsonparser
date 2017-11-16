@@ -16,7 +16,7 @@ struct OutputView {
     }
     
     func printResult() {
-        var result : String = "총 \(typeCounter.getTotalCount())개의 \(typeCounter.container) 데이터 중에"
+        var result : String = "총 \(typeCounter.totalCounter)개의 \(typeCounter.container) 데이터 중에"
         result += getObjectCounter()
         result += getStringCounter()
         result += getIntCounter()
