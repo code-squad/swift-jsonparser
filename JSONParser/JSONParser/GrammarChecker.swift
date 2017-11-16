@@ -48,57 +48,56 @@ struct GrammarChecker {
         guard target.starts(with: "[") else {
             return false
         }
-        let arrayChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.nestedArrayPattern, options: [])
-        return getMatchResult(checker: arrayChecker, target: target)
+        return getMatchResult(with: nestedArrayPattern, target: target)
     }
     
     private func isObjectPattern(target: String) -> Bool {
         guard target.starts(with: "{") else {
             return false
         }
-        let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.nestedObjectPattern, options: [])
-        return getMatchResult(checker: objectChecker, target: target)
+        return getMatchResult(with: nestedObjectPattern, target: target)
     }
     
-    private func getMatchResult(checker: NSRegularExpression, target: String) -> Bool {
-        let matchCount = checker.numberOfMatches(in: target, options: [], range: NSRange(location:0, length:target.count))
+    private func getMatchResult(with pattern: String, target: String) -> Bool {
+        let regularExpression = try! NSRegularExpression.init(pattern: pattern, options: [])
+        let matchCount = regularExpression.numberOfMatches(in: target, options: [], range: NSRange(location:0, length:target.count))
         guard matchCount == 1 else {
             return false
         }
         return true
     }
-    
+    // 배열 내부의 배열 추출
     func getArrayMatches(from target: String) -> Array<String> {
-        let arrayChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.arrayPattern, options: [])
-        let arrayResult = arrayChecker.matches(in: target, options: [], range: NSRange(location:0, length:target.count))
-        let result = arrayResult.map {String(target[Range($0.range, in: target)!]).trimmingCharacters(in: .whitespaces)}
-        return result
+        return getMatchedElements(from: target, with: arrayPattern)
     }
-    
+    // 배열 내부의 객체 추출
     func getObjectMatches(from target: String) -> Array<String> {
-        let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.objectPattern, options: [])
-        let objectResult = objectChecker.matches(in: target, options: [], range: NSRange(location:0, length:target.count))
+        return getMatchedElements(from: target, with: objectPattern)
+    }
+
+    private func getMatchedElements(from target: String, with pattern: String) -> Array<String> {
+        let regularExpression = try! NSRegularExpression.init(pattern: pattern, options: [])
+        let objectResult = regularExpression.matches(in: target, options: [], range: NSRange(location:0, length:target.count))
         let result = objectResult.map {String(target[Range($0.range, in: target)!]).trimmingCharacters(in: .whitespaces)}
         return result
     }
     
     func removeMatchedArray(target: String) -> String {
-        let arrayChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.arrayPattern, options: [])
-        let result = arrayChecker.stringByReplacingMatches(in: target, options: [], range: NSRange(location:0, length:target.count), withTemplate: "")
-        return result
+        return removeMatchedElements(from: target, with: arrayPattern)
     }
     
     func removeMatchedObject(target: String) -> String {
-        let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.objectPattern, options: [])
-        let result = objectChecker.stringByReplacingMatches(in: target, options: [], range: NSRange(location:0, length:target.count), withTemplate: "")
+        return removeMatchedElements(from: target, with: objectPattern)
+    }
+
+    private func removeMatchedElements(from target: String, with pattern: String) -> String {
+        let regularExpression = try! NSRegularExpression.init(pattern: pattern, options: [])
+        let result = regularExpression.stringByReplacingMatches(in: target, options: [], range: NSRange(location:0, length: target.count), withTemplate: "")
         return result
     }
-    
+    // JSONObject 타입에서 요소 추출
     func getObjectElements(from target: String) -> Array<String> {
-        let objectChecker : NSRegularExpression = try! NSRegularExpression.init(pattern: self.nestedDictionaryPattern, options: [])
-        let objectResult = objectChecker.matches(in: target, options: [], range: NSRange(location:0, length:target.count))
-        let result = objectResult.map {String(target[Range($0.range, in: target)!]).trimmingCharacters(in: .whitespaces)}
-        return result
+        return getMatchedElements(from: target, with: nestedDictionaryPattern)
     }
     
 }
