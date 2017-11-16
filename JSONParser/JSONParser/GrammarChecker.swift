@@ -12,6 +12,7 @@ struct GrammarChecker {
     
     enum JsonError: String, Error {
         case invalidPattern = "지원하지 않는 형식을 포함하고 있습니다."
+        case dataOfNil = "데이터 변환에 오류가 있습니다."
     }
     
     // 중첩 불가 정규식.
