@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+// protocol Extensions 
 struct JSONSupporting {
     func processBeforeMakingJSON(_ value: String) -> String {
         var rawJSON = value
@@ -26,9 +26,6 @@ struct JSONSupporting {
     
     func sortJSONData(_ value: String) -> JSONType {
         var rawJSON = value
-        if rawJSON.hasSuffix(",") {
-            rawJSON.removeLast()
-        }
         if let boolType = Bool(rawJSON) {
             return JSONType.boolType(boolType)
         } else if let intType = Int(rawJSON) {
