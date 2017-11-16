@@ -9,48 +9,34 @@
 import Foundation
 
 struct OutputView {
-    private var dataType: String = ""
-    private var totalCount = 0
-    private var stringCount = 0
-    private var numberCount = 0
-    private var boolCount = 0
-    private var innerObjectCount = 0
-    private var innerArrayCount = 0
     
-    init(_ data: JSONData) {
-        self.totalCount = data.count
+    static func printReport(_ data: JSONData) throws {
+        var dataType: String = ""
+        var dataCounts = data.arrayCount
         switch data.dataType {
         case .array:
-            self.dataType = "배열"
-            self.stringCount = data.arrayString.count
-            self.numberCount = data.arrayNumber.count
-            self.boolCount = data.arrayBool.count
+            dataType = "배열"
+            dataCounts = data.arrayCount
         case .object:
-            self.dataType = "객체"
-            self.stringCount = data.objectString.count
-            self.numberCount = data.objectNumber.count
-            self.boolCount = data.objectBool.count
+            dataType = "객체"
+            dataCounts = data.objectCount
         }
-        self.innerObjectCount = data.innerObjectCount
-        self.innerArrayCount = data.innerArrayCount
-    }
-    
-    func printReport() throws {
-        var result = "총 \(self.totalCount)개의 \(self.dataType) 데이터 중에"
-        if self.stringCount > 0 {
-            result += " 문자열 \(self.stringCount)개,"
+        
+        var result = "총 \(data.count)개의 \(dataType) 데이터 중에"
+        if dataCounts.string > 0 {
+            result += " 문자열 \(dataCounts.string)개,"
         }
-        if self.numberCount > 0 {
-            result += " 숫자 \(self.numberCount)개,"
+        if dataCounts.number > 0 {
+            result += " 숫자 \(dataCounts.number)개,"
         }
-        if self.boolCount > 0 {
-            result += " 부울 \(self.boolCount)개,"
+        if dataCounts.bool > 0 {
+            result += " 부울 \(dataCounts.bool)개,"
         }
-        if self.innerObjectCount > 0 {
-            result += " 객체 \(self.innerObjectCount)개,"
+        if dataCounts.nestedObject > 0 {
+            result += " 객체 \(dataCounts.nestedObject)개,"
         }
-        if self.innerArrayCount > 0 {
-            result += " 배열 \(self.innerArrayCount)개,"
+        if dataCounts.nestedArray > 0 {
+            result += " 배열 \(dataCounts.nestedArray)개,"
         }
         result.removeLast()             // 마지막 콤마(,) 제거.
         result += "가 포함되어 있습니다."
