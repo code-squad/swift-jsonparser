@@ -48,31 +48,5 @@ class GrammarCheckerTest: XCTestCase {
     func testIsJSONPatternForNestedObject() {
         XCTAssertNoThrow(try grammarChecker.isJSONPattern(target: nestedObjectTester))
     }
-    
-    func testGetArrayMatches() {
-        XCTAssertEqual(grammarChecker.getArrayMatches(from: nestedArrayTester), ["[ \"java\", \"javascript\", \"swift\" ]"])
-    }
-    
-    func testGetObjectMatches() {
-        XCTAssertEqual(grammarChecker.getObjectMatches(from: nestedArrayTester), ["{ \"name\" : \"master's course\", \"opened\" : true }"])
-    }
-    
-    func testRemoveMatchedArray() {
-        XCTAssertEqual(grammarChecker.removeMatchedArray(target: nestedArrayTester), "[ { \"name\" : \"master's course\", \"opened\" : true },]")
-    }
-    
-    func testRemoveMatchedObject() {
-        XCTAssertEqual(grammarChecker.removeMatchedObject(target: nestedArrayTester), "[, [ \"java\", \"javascript\", \"swift\" ] ]")
-    }
-    
-    func testRemoveMatchedAll() {
-        var tester = grammarChecker.removeMatchedArray(target: nestedArrayTester)
-        tester = grammarChecker.removeMatchedObject(target: tester)
-        XCTAssertEqual(tester, "[,]")
-    }
-    
-    func testGetObjectElements() {
-        XCTAssertEqual(grammarChecker.getObjectElements(from: nestedObjectTester), ["\"name\" : \"KIM JUNG\"","\"alias\" : \"JK\"","\"level\" : 5","\"children\" : [\"hana\", \"hayul\", \"haun\"]","\"test\" : { \"test\" : \"tester\" }"])
-    }
-    
+
 }

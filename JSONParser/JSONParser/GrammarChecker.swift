@@ -14,12 +14,12 @@ struct GrammarChecker {
     private let intPattern : String
     private let boolPattern : String
     private let dictionaryPattern : String
-    private let objectPattern : String
-    private let arrayPattern : String
+    let objectPattern : String
+    let arrayPattern : String
     // nested pattern
-    private let nestedDictionaryPattern : String
-    private let nestedObjectPattern : String
-    private let nestedArrayPattern : String
+    let nestedDictionaryPattern : String
+    let nestedObjectPattern : String
+    let nestedArrayPattern : String
     
     enum ErrorMessage : Error {
         case notJSONPattern
@@ -65,39 +65,6 @@ struct GrammarChecker {
             return false
         }
         return true
-    }
-    // 배열 내부의 배열 추출
-    func getArrayMatches(from target: String) -> Array<String> {
-        return getMatchedElements(from: target, with: arrayPattern)
-    }
-    // 배열 내부의 객체 추출
-    func getObjectMatches(from target: String) -> Array<String> {
-        return getMatchedElements(from: target, with: objectPattern)
-    }
-
-    private func getMatchedElements(from target: String, with pattern: String) -> Array<String> {
-        let regularExpression = try! NSRegularExpression.init(pattern: pattern, options: [])
-        let objectResult = regularExpression.matches(in: target, options: [], range: NSRange(location:0, length:target.count))
-        let result = objectResult.map {String(target[Range($0.range, in: target)!]).trimmingCharacters(in: .whitespaces)}
-        return result
-    }
-    
-    func removeMatchedArray(target: String) -> String {
-        return removeMatchedElements(from: target, with: arrayPattern)
-    }
-    
-    func removeMatchedObject(target: String) -> String {
-        return removeMatchedElements(from: target, with: objectPattern)
-    }
-
-    private func removeMatchedElements(from target: String, with pattern: String) -> String {
-        let regularExpression = try! NSRegularExpression.init(pattern: pattern, options: [])
-        let result = regularExpression.stringByReplacingMatches(in: target, options: [], range: NSRange(location:0, length: target.count), withTemplate: "")
-        return result
-    }
-    // JSONObject 타입에서 요소 추출
-    func getObjectElements(from target: String) -> Array<String> {
-        return getMatchedElements(from: target, with: nestedDictionaryPattern)
     }
     
 }

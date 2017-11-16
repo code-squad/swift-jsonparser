@@ -67,16 +67,49 @@ struct JSONAnalyser {
     private func getElementsFromArray(with target: String) -> Array<String> {
         var elementsFromArray : Array<String> = []
         var elements : String = target.trimmingCharacters(in: ["[","]"])
-        elementsFromArray.append(contentsOf: grammarChecker.getArrayMatches(from: elements))
-        elements = grammarChecker.removeMatchedArray(target: elements)
-        elementsFromArray.append(contentsOf: grammarChecker.getObjectMatches(from: elements))
-        elements = grammarChecker.removeMatchedObject(target: elements)
+        elementsFromArray.append(contentsOf: getArrayMatches(from: elements))
+        elements = removeMatchedArray(target: elements)
+        elementsFromArray.append(contentsOf: getObjectMatches(from: elements))
+        elements = removeMatchedObject(target: elements)
         elementsFromArray.append(contentsOf: getElements(from: elements))
         return elementsFromArray
     }
 
-    private func getObjectElements(from target: String) -> Array<String> {
-        return grammarChecker.getObjectElements(from: target)
+}
+
+extension JSONAnalyser {
+    // 배열 내부의 배열 추출
+    private func getArrayMatches(from target: String) -> Array<String> {
+        return getMatchedElements(from: target, with: grammarChecker.arrayPattern)
+    }
+    // 배열 내부의 객체 추출
+    private func getObjectMatches(from target: String) -> Array<String> {
+        return getMatchedElements(from: target, with: grammarChecker.objectPattern)
     }
 
+    private func getMatchedElements(from target: String, with pattern: String) -> Array<String> {
+        let regularExpression = try! NSRegularExpression.init(pattern: pattern, options: [])
+        let objectResult = regularExpression.matches(in: target, options: [], range: NSRange(location:0, length:target.count))
+        let result = objectResult.map {String(target[Range($0.range, in: target)!]).trimmingCharacters(in: .whitespaces)}
+        return result
+    }
+
+    private func removeMatchedArray(target: String) -> String {
+        return removeMatchedElements(from: target, with: grammarChecker.arrayPattern)
+    }
+
+    private func removeMatchedObject(target: String) -> String {
+        return removeMatchedElements(from: target, with: grammarChecker.objectPattern)
+    }
+
+    private func removeMatchedElements(from target: String, with pattern: String) -> String {
+        let regularExpression = try! NSRegularExpression.init(pattern: pattern, options: [])
+        let result = regularExpression.stringByReplacingMatches(in: target, options: [], range: NSRange(location:0, length: target.count), withTemplate: "")
+        return result
+    }
+    // JSONObject 타입에서 요소 추출
+    private func getObjectElements(from target: String) -> Array<String> {
+        return getMatchedElements(from: target, with: grammarChecker.nestedDictionaryPattern)
+    }
+    
 }
