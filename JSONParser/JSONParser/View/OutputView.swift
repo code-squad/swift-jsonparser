@@ -30,25 +30,19 @@ struct OutputView {
     
     private func printJSONData(_ jsonData: JSONData) {
         if jsonData.stringTypeCount > 0 {
-            print(" 문자열 \(jsonData.stringTypeCount)", terminator: "")
-            if jsonData.intTypeCount > 0 ||
-                jsonData.boolTypeCount > 0 ||
-                jsonData.objectTypeCount > 0 { print(",", terminator: "") }
+            print(" 문자열 \(jsonData.stringTypeCount)개", terminator: "")
+            if jsonData.sumOfData != jsonData.stringTypeCount { print(",", terminator: "") }
         }
         if jsonData.intTypeCount > 0 {
-            print(" 숫자 \(jsonData.intTypeCount)", terminator: "")
-            if jsonData.stringTypeCount > 0 ||
-                jsonData.boolTypeCount > 0 ||
-                jsonData.objectTypeCount > 0 { print(",", terminator: "") }
+            print(" 숫자 \(jsonData.intTypeCount)개", terminator: "")
+            if jsonData.sumOfData != jsonData.intTypeCount { print(",", terminator: "") }
         }
         if jsonData.boolTypeCount > 0 {
-            print(" 부울 \(jsonData.boolTypeCount)", terminator: "")
-            if jsonData.stringTypeCount > 0 ||
-                jsonData.intTypeCount > 0 ||
-                jsonData.objectTypeCount > 0 { print(",", terminator: "") }
+            print(" 부울 \(jsonData.boolTypeCount)개", terminator: "")
+            if jsonData.sumOfData != jsonData.boolTypeCount { print(",", terminator: "") }
         }
         if jsonData.objectTypeCount > 0 {
-            print(" 객체 \(jsonData.objectTypeCount)", terminator: "")
+            print(" 객체 \(jsonData.objectTypeCount)개", terminator: "")
         }
     }
 }
