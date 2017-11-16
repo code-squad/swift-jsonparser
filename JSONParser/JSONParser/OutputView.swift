@@ -10,9 +10,12 @@ import Foundation
 
 struct OutputView {
     
+    // JSONData 출력.
     static func printReport(_ data: JSONData) throws {
         var dataType: String = ""
+        // 전체 데이터 개수 (문자열, 숫자, 부울, 객체, 배열)
         var dataCounts = data.arrayCount
+        // 전체 데이터의 타입에 따른 분기. (가장 바깥쪽 데이터 타입)
         switch data.dataType {
         case .array:
             dataType = "배열"
@@ -21,7 +24,7 @@ struct OutputView {
             dataType = "객체"
             dataCounts = data.objectCount
         }
-        
+        // 출력할 문자열.
         var result = "총 \(data.count)개의 \(dataType) 데이터 중에"
         if dataCounts.string > 0 {
             result += " 문자열 \(dataCounts.string)개,"
