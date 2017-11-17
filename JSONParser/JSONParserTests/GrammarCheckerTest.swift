@@ -33,6 +33,9 @@ class GrammarCheckerTest: XCTestCase {
     
     func testIsJSONPatternForArray() {
         XCTAssertTrue(grammarChecker.isJSONPattern(target: arrayTester))
+    }
+
+    func testIsJSONPatternForNotArray() {
         XCTAssertFalse(grammarChecker.isJSONPattern(target: errorTesterForArray))
     }
     
@@ -42,6 +45,9 @@ class GrammarCheckerTest: XCTestCase {
     
     func testIsJSONPatternForObject() {
         XCTAssertTrue(grammarChecker.isJSONPattern(target: objectTester))
+    }
+
+    func testIsJSONPatternForNotObject() {
         XCTAssertFalse(grammarChecker.isJSONPattern(target: errorTesterForObject))
     }
     
