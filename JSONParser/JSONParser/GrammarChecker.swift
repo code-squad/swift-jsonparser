@@ -31,7 +31,7 @@ struct GrammarChecker {
     // 콤마선택 배열형 패턴. (중간 데이터는 콤마 필수, 마지막 데이터는 선택)
     private static let arrayValues = "(\\[" + GrammarChecker.arrayValueWithComma + "\\s*)*" + GrammarChecker.arrayValueWithComma + "?\\s*)\\])"
     // 중첩 배열형 패턴.
-    static let nestedArrayPattern = "\\[" + GrammarChecker.arrayValues + "+\\]"
+    private static let nestedArrayPattern = "\\[" + GrammarChecker.arrayValues + "+\\]"
     // 배열 내 삽입가능 값 패턴.
     static let arrayValuePattern = GrammarChecker.basicValuePattern+"|"+GrammarChecker.arrayValues+"|"+GrammarChecker.objectValues
     // 콤마필수 종합객체형 패턴. (중첩 객체값 가능.)
