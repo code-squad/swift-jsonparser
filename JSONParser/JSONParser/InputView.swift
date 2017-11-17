@@ -9,7 +9,9 @@
 import Foundation
 
 struct InputView {
+
     static func readInput() -> String {
         return readLine() ?? "[]"
     }
+
 }

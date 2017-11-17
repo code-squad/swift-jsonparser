@@ -73,6 +73,7 @@ struct JSONAnalyser {
 private typealias JSONElementsPicker = JSONAnalyser
 
 private extension JSONElementsPicker {
+    
     // 배열, 객체 외의 데이터 추출
     func getElements(from target: String) -> Array<String> {
         return target.split(separator: ",").flatMap {$0.trimmingCharacters(in: .whitespaces)}
