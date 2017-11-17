@@ -30,15 +30,15 @@ extension JSONParser {
         return JSONData(resultOfParser)
     }
     
-    private func adjustRawJSON(separatingIdx: String.Index, _ rawJSON: String) -> String {
-        var preRemoveJSON = rawJSON
-        if preRemoveJSON.contains(",") {
-            preRemoveJSON.removeSubrange(rawJSON.startIndex...separatingIdx)
-            if !preRemoveJSON.isEmpty { preRemoveJSON.removeSubrange(preRemoveJSON.startIndex..<preRemoveJSON.index(preRemoveJSON.startIndex, offsetBy: 2)) }
+    private func adjustRawJSON(separatingIdx: String.Index, _ value: String) -> String {
+        var rawJSON = value
+        if rawJSON.contains(",") {
+            rawJSON.removeSubrange(value.startIndex...separatingIdx)
+            if !rawJSON.isEmpty { rawJSON.removeSubrange(rawJSON.startIndex..<rawJSON.index(rawJSON.startIndex, offsetBy: 2)) }
         } else {
-            preRemoveJSON.removeAll()
+            rawJSON.removeAll()
         }
-        return preRemoveJSON
+        return rawJSON
     }
     
     // [ { } ] 처리로직
@@ -78,4 +78,5 @@ extension JSONParser {
             return (jsonType, rawJSON.endIndex)
         }
     }
+    
 }

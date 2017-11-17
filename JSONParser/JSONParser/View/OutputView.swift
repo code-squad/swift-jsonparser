@@ -45,4 +45,5 @@ struct OutputView {
             print(" 객체 \(jsonData.objectTypeCount)개", terminator: "")
         }
     }
+    
 }
