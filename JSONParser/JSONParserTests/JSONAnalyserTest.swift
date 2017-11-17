@@ -29,14 +29,22 @@ class JSONAnalyserTest: XCTestCase {
         jsonData = nil
     }
 
-    func testGetJSONData() {
+    func testGetJSONData_Int() {
         jsonData = jsonAnalyser.getJSONData(inputValue: tester)
         XCTAssertTrue(jsonData[0] is Int)
-        XCTAssertTrue(jsonData[1] is String)
         XCTAssertTrue(jsonData[2] is Int)
-        XCTAssertTrue(jsonData[3] is String)
         XCTAssertTrue(jsonData[4] is Int)
+    }
+
+    func testGetJSONData_String() {
+        jsonData = jsonAnalyser.getJSONData(inputValue: tester)
+        XCTAssertTrue(jsonData[1] is String)
+        XCTAssertTrue(jsonData[3] is String)
         XCTAssertTrue(jsonData[5] is String)
+    }
+
+    func testGetJSONData_Bool() {
+        jsonData = jsonAnalyser.getJSONData(inputValue: tester)
         XCTAssertTrue(jsonData[6] is Bool)
     }
     
@@ -47,9 +55,13 @@ class JSONAnalyserTest: XCTestCase {
         XCTAssertEqual(dic.count, 4)
     }
     
-    func testGetJSONDataForNestedArray() {
+    func testGetJSONDataForNestedArray_JSONObject() {
         jsonData = jsonAnalyser.getJSONData(inputValue: nestedArrayTester)
         XCTAssertTrue(jsonData[0] is JSONObject)
+    }
+
+    func testGetJSONDataForNestedArray_JSONData() {
+        jsonData = jsonAnalyser.getJSONData(inputValue: nestedArrayTester)
         XCTAssertTrue(jsonData[1] is JSONData)
     }
     
