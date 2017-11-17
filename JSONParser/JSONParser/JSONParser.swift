@@ -119,8 +119,8 @@ struct JSONParser {
     }
     
     // 객체 또는 배열 형태의 데이터 형변환.
-    private static func generateNestedArray(from data: String, of type: JSONData.DataType) throws -> JSONData.Array {
-        var arrayValue: JSONData.Array = []
+    private static func generateNestedArray(from data: String, of type: JSONData.DataType) throws -> JSONData.JSONArray {
+        var arrayValue: JSONData.JSONArray = []
         // data = 내부배열. elements = 내부배열 내의 각 문자열 데이터.(정규표현식을 쓰려고 했으나 오류남)
         var elements: [String] = []
         switch type {
