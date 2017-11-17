@@ -32,21 +32,21 @@ class GrammarCheckerTest: XCTestCase {
     }
     
     func testIsJSONPatternForArray() {
-        XCTAssertNoThrow(try grammarChecker.isJSONPattern(target: arrayTester))
-        XCTAssertThrowsError(try grammarChecker.isJSONPattern(target: errorTesterForArray))
+        XCTAssertTrue(grammarChecker.isJSONPattern(target: arrayTester))
+        XCTAssertFalse(grammarChecker.isJSONPattern(target: errorTesterForArray))
     }
     
     func testIsJSONPatternForNestedArray() {
-        XCTAssertNoThrow(try grammarChecker.isJSONPattern(target: nestedArrayTester))
+        XCTAssertTrue(grammarChecker.isJSONPattern(target: nestedArrayTester))
     }
     
     func testIsJSONPatternForObject() {
-        XCTAssertNoThrow(try grammarChecker.isJSONPattern(target: objectTester))
-        XCTAssertThrowsError(try grammarChecker.isJSONPattern(target: errorTesterForObject))
+        XCTAssertTrue(grammarChecker.isJSONPattern(target: objectTester))
+        XCTAssertFalse(grammarChecker.isJSONPattern(target: errorTesterForObject))
     }
     
     func testIsJSONPatternForNestedObject() {
-        XCTAssertNoThrow(try grammarChecker.isJSONPattern(target: nestedObjectTester))
+        XCTAssertTrue(grammarChecker.isJSONPattern(target: nestedObjectTester))
     }
 
 }

@@ -38,10 +38,8 @@ struct GrammarChecker {
         nestedArrayPattern = "[\\s]*?\\[((\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.nestedObjectPattern)|\(self.arrayPattern))[,]?)+[\\s]*?\\][\\s]*?"
     }
     
-    func isJSONPattern(target: String) throws {
-        guard isArrayPattern(target: target) || isObjectPattern(target: target) else {
-            throw GrammarChecker.ErrorMessage.notJSONPattern
-        }
+    func isJSONPattern(target: String) -> Bool {
+        return isArrayPattern(target: target) || isObjectPattern(target: target)
     }
     
     private func isArrayPattern(target: String) -> Bool {
@@ -61,7 +59,7 @@ struct GrammarChecker {
     private func getMatchResult(with pattern: String, target: String) -> Bool {
         let regularExpression = try! NSRegularExpression.init(pattern: pattern, options: [])
         let matchCount = regularExpression.numberOfMatches(in: target, options: [], range: NSRange(location:0, length:target.count))
-        guard matchCount == 1 else {
+        if matchCount != 1 {
             return false
         }
         return true
