@@ -9,7 +9,6 @@
 import Foundation
 
 struct InputView {
-    
     // 사용자 입력값의 json 규격 체크 후 반환.
     static func askFor(message: String) throws -> String? {
         // 요구 메시지 출력.

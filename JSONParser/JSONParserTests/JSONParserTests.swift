@@ -89,4 +89,5 @@ class JSONParserTests: XCTestCase {
         let data: String = "{ \"asdf\" : 324, [\"asdf\",234]}"
         XCTAssertFalse(try GrammarChecker.isJSONPattern(data))
     }
+    
 }
