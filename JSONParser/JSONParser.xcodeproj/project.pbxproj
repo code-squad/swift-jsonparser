@@ -21,6 +21,7 @@
 		8E6FE46C1FB07A540022BC9E /* JSONAnalyser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6FE4681FB05A530022BC9E /* JSONAnalyser.swift */; };
 		8E6FE46D1FB07A680022BC9E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		8E6FE46E1FB07B2C0022BC9E /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6FE4661FB04DF90022BC9E /* OutputView.swift */; };
+		8E7038A51FC27FAC0040E7E2 /* JSONPainter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7038A41FC27FAC0040E7E2 /* JSONPainter.swift */; };
 		8EAAEB9B1FB9479C004186C8 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4BCDF11FB537F6007781EF /* GrammarChecker.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		8E6FE4661FB04DF90022BC9E /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		8E6FE4681FB05A530022BC9E /* JSONAnalyser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAnalyser.swift; sourceTree = "<group>"; };
 		8E6FE46A1FB0785A0022BC9E /* JSONAnalyserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAnalyserTest.swift; sourceTree = "<group>"; };
+		8E7038A41FC27FAC0040E7E2 /* JSONPainter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPainter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 				8E6FE4661FB04DF90022BC9E /* OutputView.swift */,
 				8E6FE4681FB05A530022BC9E /* JSONAnalyser.swift */,
 				8E4BCDF11FB537F6007781EF /* GrammarChecker.swift */,
+				8E7038A41FC27FAC0040E7E2 /* JSONPainter.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E7038A51FC27FAC0040E7E2 /* JSONPainter.swift in Sources */,
 				8E4BCDF21FB537F6007781EF /* GrammarChecker.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				8E6FE4531FB024220022BC9E /* InputView.swift in Sources */,
