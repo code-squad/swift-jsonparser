@@ -62,8 +62,7 @@ struct OutputView {
         return ""
     }
 
-    func printJSON(jsonPainter: JSONPainter) {        
-        print(jsonPainter)
+    func printJSON(jsonPainter: JSONPainter) {
         print(jsonPainter.jsonPainting)
     }
     
