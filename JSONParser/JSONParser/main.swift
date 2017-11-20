@@ -8,9 +8,6 @@
 
 import Foundation
 
-typealias JSONData = Array<Any>
-typealias JSONObject = Dictionary<String, Any>
-
 var inputValue: String = ""
 let grammarChecker: GrammarChecker = GrammarChecker()
 // 입력

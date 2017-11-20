@@ -8,6 +8,9 @@
 
 import Foundation
 
+typealias JSONData = Array<Any>
+typealias JSONObject = Dictionary<String, Any>
+
 struct JSONAnalyser {
     private let grammarChecker : GrammarChecker
 
