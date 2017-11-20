@@ -27,7 +27,7 @@ struct JSONPainter {
         paintArrayType()
     }
 
-    mutating func paintObjectType(jsonObject: JSONObject, depth: Int) {
+    private mutating func paintObjectType(jsonObject: JSONObject, depth: Int) {
         jsonPainting += "{\n"
         jsonPainting += jsonObject.map { key, value in
             var valueString: String = ""
@@ -42,22 +42,29 @@ struct JSONPainter {
         jsonPainting += "\n" + String(repeating: "\t", count: depth) + "}"
     }
 
-    mutating func paintArrayType() {
+    private mutating func paintArrayType() {
         jsonPainting += "["
-        for element in jsonData {
-            if let jsonObject = element as? JSONObject {
-                depth += 1
-                paintObjectType(jsonObject: jsonObject, depth: depth)
-                jsonPainting += ",\n"
-            } else {
-                jsonPainting += String(repeating: "\t", count: depth) + String(describing: element) + ", "
-            }
-        }
+        paintInsideOfArray()
         jsonPainting.removeLast(2)
         if depth > 0 {
             jsonPainting += "\n"
         }
         jsonPainting += "]"
+    }
+
+    private mutating func paintInsideOfArray() {
+        for element in jsonData {
+            if let jsonObject = element as? JSONObject {
+                paintObjectType(jsonObject: jsonObject, depth: depth)
+                jsonPainting += ",\n"
+            } else {
+                if element is JSONData {
+                    depth += 1
+                    jsonPainting += "\n"
+                }
+                jsonPainting += String(repeating: "\t", count: depth) + String(describing: element) + ", "
+            }
+        }
     }
 
 }
