@@ -65,7 +65,7 @@ struct JSONData {
             case is Bool: self.objectCount.bool += 1
             case is JSONArray:
                 // 중첩배열의 값이 딕셔너리 형태이면, 중첩객체로 판단.
-                guard let elem = value as? [(key: String, value: Any)] else {
+                guard value is [(key: String, value: Any)] else {
                     self.objectCount.nestedArray += 1
                     continue
                 }
@@ -83,7 +83,7 @@ struct JSONData {
             case is Bool: self.arrayCount.bool += 1
             case is JSONArray:
                 // 중첩배열의 값이 딕셔너리 형태이면, 중첩객체로 판단.
-                guard let elem = value as? [(key: String, value: Any)] else {
+                guard value is [(key: String, value: Any)] else {
                     self.arrayCount.nestedArray += 1
                     continue
                 }
