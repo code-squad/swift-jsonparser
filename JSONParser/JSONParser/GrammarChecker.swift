@@ -51,10 +51,60 @@ struct GrammarChecker {
     static func isJSONPattern(_ message: String) throws -> Bool {
         let checkedMessage = try message.splitPattern(by: GrammarChecker.jsonPattern)
         // 1개 이상 매칭된 경우, full match만 통과.
-        guard checkedMessage.count > 0, checkedMessage[0] == message else {
-            return false
-        }
+        guard checkedMessage.count > 0, checkedMessage[0] == message else { return false }
+        guard try !containsRepeatedKey(of: message) else { return false }
         return true
+    }
+    
+    static func containsRepeatedKey(of data: String) throws -> Bool {
+        var basicElementsRemain = ""
+        // 가장 바깥쪽 괄호 떼어냄.
+        let dataWithoutBracket = try data.splitPattern(by: GrammarChecker.objectDataWithoutBracket+"|"+GrammarChecker.arrayDataWithoutBracket)
+        // 각 값들 떼어냄. ("키":값 형태.)
+        let elements = try dataWithoutBracket[0].splitPattern(by: GrammarChecker.jsonObjectValueWithComma+"?|"+GrammarChecker.objectValues)
+        for element in elements {
+            // 값에 "{"가 있으면 중첩객체로 판단. 키값을 따로 검증.
+            if element.contains("{") {
+                // 중첩 객체 안에 중복되는 키가 1개만 있어도 함수종료 및 true 반환.
+                guard try !containsRepeatedKeyInNestedObject(element) else { return true }
+            }else {
+                // 일반 값들만 모음.
+                basicElementsRemain += element
+            }
+        }
+        // 일반 값들의 키만 검증.
+        guard try !isKeyRepeated(of: basicElementsRemain) else { return true }
+        return false
+    }
+    
+    // 중첩 객체 안의 키들만 검사. 중복되는 키가 있으면 true 반환.
+    static func containsRepeatedKeyInNestedObject(_ value: String) throws -> Bool {
+        let valuesInNestedObject = try value.splitPattern(by: GrammarChecker.objectDataWithoutBracket)
+        for valueInObject in valuesInNestedObject {
+            // 하나라도 중첩되는 키가 있으면 true 반환.
+            if try isKeyRepeated(of: valueInObject) {
+                return true
+            }
+        }
+        return false
+    }
+    
+    // 중복 키 검사. 중복 시 true 반환.
+    static func isKeyRepeated(of data: String) throws -> Bool {
+        // 중복되지 않는 키(당선키)를 담을 집합.
+        var keys: Set<String> = []
+        // 후보키.
+        let candidateKeys = try data.splitPattern(by: GrammarChecker.keyPattern+"\\s*(?=:)")
+        for candidateKey in candidateKeys {
+            let candidateKey = candidateKey.trimmingCharacters(in: .whitespacesAndNewlines)
+            // 당선키 집합에 후보키가 없으면, 당선키 집합에 넣는다.
+            if !keys.contains(candidateKey) {
+                keys.insert(candidateKey)
+            }
+        }
+        // 당선키와 후보키의 갯수가 같으면 중복 없음으로 판단. false 반환.
+        guard keys.count == candidateKeys.count else { return true }
+        return false
     }
     
 }
