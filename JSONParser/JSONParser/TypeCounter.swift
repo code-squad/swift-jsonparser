@@ -22,11 +22,9 @@ struct TypeCounter {
     }
     
     init(jsonData: JSONData) {
-        if jsonData.count == 1 {
-            if jsonData[0] is JSONObject {
-                countObjectType(jsonObject: jsonData[0] as! JSONObject)
-                return
-            }
+        if jsonData.count == 1, let jsonObject = jsonData[0] as? JSONObject {
+            countObjectType(jsonObject: jsonObject)
+            return
         }
         for item in jsonData {
             countType(item: item)

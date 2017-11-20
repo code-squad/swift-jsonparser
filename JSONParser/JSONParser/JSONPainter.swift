@@ -18,11 +18,9 @@ struct JSONPainter {
     }
 
     mutating func paintJSON() {
-        if jsonData.count == 1 {
-            if let jsonObject = jsonData[0] as? JSONObject {
-                paintObjectType(jsonObject: jsonObject, depth: depth)
-                return
-            }
+        if jsonData.count == 1, let jsonObject = jsonData[0] as? JSONObject {
+            paintObjectType(jsonObject: jsonObject, depth: depth)
+            return
         }
         paintArrayType()
     }
