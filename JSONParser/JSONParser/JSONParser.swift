@@ -61,10 +61,11 @@ struct JSONParser {
         return jsonDataCollection
     }
     
+    // 각 blob 내부 데이터들로 생성한 배열 반환.
     private static func generateArray(from data: String) throws -> [Any] {
         var stringValues: [String] = []
         // array 내부 데이터로 들어갈 수 있는 밸류패턴으로 자름. (문자열, 부울, 숫자, 배열, 객체 패턴.)
-        stringValues = try data.splitPattern(by: GrammarChecker.arrayValuePattern)
+        stringValues = try data.splitPattern(by: GrammarChecker.jsonValuePattern)
         // 각 문자열 데이터를 실 데이터로 변환.
         let resultValues: [Any] = try stringValues.map { try makeRealElement(from: $0) }
         return resultValues
@@ -73,11 +74,12 @@ struct JSONParser {
     // 각 blob 내부 데이터들로 생성한 딕셔너리 반환.
     private static func generateDictionary(from data: String) throws -> [String:Any] {
         var dictionaries: [String:Any] = [:]
-        // 콤마(,) 기준으로 모든 데이터 분류 ( 키: 값, 키: 값, ... )
-        let elements = data.split(separator: ",").map { String($0) }
+        var elements: [String] = []
+        elements = try data.splitPattern(by: GrammarChecker.jsonObjectValueWithComma+"?")
         for element in elements {
-            // 개별 문자열 데이터의 키값(문자열) 및 밸류값의 실 데이터(문자열,숫자,부울,객체,배열).
-            dictionaries.updateValue(try generateValue(from: element), forKey: try generateKey(from: element))
+            let key = try generateKey(from: element)
+            let value = try generateValue(from: element)
+            dictionaries.updateValue(value, forKey: key)
         }
         // 실제 값으로 변환된 [String:Any] 반환.
         return dictionaries
@@ -86,9 +88,9 @@ struct JSONParser {
     // 문자열에서 key 값 추출. 모든 key 값은 문자열이므로 타입 캐스팅 없음.
     private static func generateKey(from data: String) throws -> String {
         // 콜론(:) 기준 키 값 범위.
-        let keyRange = data.startIndex...data.index(before: data.index(of: ":")!)
+        let keyRange = data.startIndex..<data.index(of: ":")!
         // 키값 범위의 문자열. (따옴표\" 제거)
-        let key = data[keyRange].trimmingCharacters(in: ["\""])
+        let key = data[keyRange].trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: ["\""])
         // 키 배열 반환.
         return key
     }
@@ -106,11 +108,11 @@ struct JSONParser {
     // 개별 문자열 데이터를 실 데이터로 변환.
     private static func makeRealElement(from value: String) throws -> Any {
         if value.contains("[") {
-            // 객체 형태의 데이터 형변환.
-            return try generateNestedArray(from: value, of: .array)
-        }else if value.contains("{") {
             // 배열 형태의 데이터 형변환.
-            return try generateNestedArray(from: value, of: .object)
+            return try generateNestedBlobData(from: value, of: .array)
+        }else if value.contains("{") {
+            // 객체 형태의 데이터 형변환.
+            return try generateNestedBlobData(from: value, of: .object)
         }else {
             // 기본형 데이터 형변환.
             guard let convertedValue = try generateBasicData(from: value) else { throw GrammarChecker.JsonError.dataOfNil }
@@ -119,14 +121,15 @@ struct JSONParser {
     }
     
     // 객체 또는 배열 형태의 데이터 형변환.
-    private static func generateNestedArray(from data: String, of type: JSONData.DataType) throws -> JSONData.JSONArray {
+    private static func generateNestedBlobData(from data: String, of type: JSONData.DataType) throws -> JSONData.JSONArray {
         var arrayValue: JSONData.JSONArray = []
         // data = 내부배열. elements = 내부배열 내의 각 문자열 데이터.(정규표현식을 쓰려고 했으나 오류남)
         var elements: [String] = []
+        let trimmedData = data.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: [","])
         switch type {
         case .array:
             // 내부 배열 데이터를 기본형 데이터 단위로 분리.
-            elements = data.trimmingCharacters(in: ["[","]"]).split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+            elements = trimmedData.trimmingCharacters(in: ["[","]"]).split(separator: ",").map(String.init)
             for element in elements {
                 // 내부 배열 내의 각 기본형 문자열 데이터를 실제 데이터로 변환.
                 guard let convertedValue = try generateBasicData(from: element) else { break }
@@ -135,7 +138,7 @@ struct JSONParser {
         case .object:
             var convertedValue: [String:Any] = [:]
             // 내부 객체 데이터를 기본형 데이터 단위로 분리.
-            elements = data.trimmingCharacters(in: ["{","}"]).split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+            elements = trimmedData.trimmingCharacters(in: ["{","}"]).split(separator: ",").map(String.init)
             for element in elements {
                 // 내부 객체 내의 각 기본형 문자열 데이터를 실제 데이터로 변환.
                 convertedValue = try generateDictionary(from: element)
@@ -149,11 +152,14 @@ struct JSONParser {
     // 기본형 문자열 데이터를 실제 값으로 변환.
     private static func generateBasicData(from data: String) throws -> Any? {
         var value: Any?
-        if data.contains("\"") {
-            value = data.trimmingCharacters(in: ["\""])
-        }else if let numberElement = JSONData.Number(data) {
+        // 데이터 전처리 (콤마 및 공백 제거)
+        let trimmedData = data.trimmingCharacters(in: [","]).trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedData.contains("\"") {
+            // 콤마, 따옴표 양쪽공백(데이터 내 공백 유지), 따옴표 제거
+            value = trimmedData.trimmingCharacters(in: ["\""])
+        }else if let numberElement = JSONData.Number(trimmedData) {
             value = numberElement
-        }else if let boolElement = Bool(data) {
+        }else if let boolElement = Bool(trimmedData) {
             value = boolElement
         }
         return value
