@@ -8,3 +8,8 @@
 
 import Foundation
 
+var inputView = InputView()
+let jsonValue = inputView.readInput()
+
+var jsonScanner = JsonScanner()
+jsonScanner.scanOfJsonValue(jsonValue: jsonValue)
