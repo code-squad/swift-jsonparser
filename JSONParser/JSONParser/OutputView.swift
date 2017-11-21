@@ -23,12 +23,12 @@ struct OutputView {
         // 전체 데이터 개수 (문자열, 숫자, 부울, 객체, 배열)
         let dataCounts = data.dataCountOfEach
         // 전체 데이터의 타입에 따른 분기. (가장 바깥쪽 데이터 타입)
-        switch data.dataType {
-        case .array:
-            dataType = "배열"
-        case .object:
-            dataType = "객체"
+        switch data {
+        case is JSONArray: dataType = "배열"
+        case is JSONObject: dataType = "객체"
+        default: break
         }
+        
         // 출력할 문자열.
         var result = "총 \(data.count)개의 \(dataType) 데이터 중에"
         if dataCounts.string > 0 {
