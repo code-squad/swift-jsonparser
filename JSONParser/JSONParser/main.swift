@@ -12,4 +12,9 @@ var inputView = InputView()
 let jsonValue = inputView.readInput()
 
 var jsonScanner = JsonScanner()
-jsonScanner.scanOfJsonValue(jsonValue: jsonValue)
+var token = jsonScanner.scanOfJsonValue(jsonValue: jsonValue)
+
+//for index in token {
+//    print(index.id, index.value)
+//}
+
