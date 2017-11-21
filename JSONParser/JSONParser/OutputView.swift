@@ -10,8 +10,15 @@ import Foundation
 
 struct OutputView {
     
+    static func printJSONData(_ data: JSONData) {
+        for datum in data.prettyData {
+            print(datum, terminator: "")
+        }
+        print("\n")
+    }
+    
     // JSONData 출력.
-    static func printReport(_ data: JSONData) throws {
+    static func printReport(_ data: JSONData) {
         var dataType: String = ""
         // 전체 데이터 개수 (문자열, 숫자, 부울, 객체, 배열)
         let dataCounts = data.dataCountOfEach
