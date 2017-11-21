@@ -157,9 +157,9 @@ struct JSONParser {
         if trimmedData.contains("\"") {
             // 콤마, 따옴표 양쪽공백(데이터 내 공백 유지), 따옴표 제거
             value = trimmedData.trimmingCharacters(in: ["\""])
-        }else if let numberElement = JSONData.Number(trimmedData) {
+        }else if let numberElement = JSONData.JSONNumber(trimmedData) {
             value = numberElement
-        }else if let boolElement = Bool(trimmedData) {
+        }else if let boolElement = JSONData.JSONBool(trimmedData) {
             value = boolElement
         }
         return value

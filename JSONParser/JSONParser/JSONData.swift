@@ -11,7 +11,9 @@ import Foundation
 struct JSONData {
     typealias JSONObject = [String:Any]
     typealias JSONArray = [Any]
-    typealias Number = Int
+    typealias JSONString = String
+    typealias JSONNumber = Int
+    typealias JSONBool = Bool
     enum DataType {
         case array
         case object
@@ -60,9 +62,9 @@ struct JSONData {
     private mutating func setCounts(of objects: JSONObject) {
         for value in objects.values {
             switch value {
-            case is String: self.objectCount.string += 1
-            case is Number: self.objectCount.number += 1
-            case is Bool: self.objectCount.bool += 1
+            case is JSONString: self.objectCount.string += 1
+            case is JSONNumber: self.objectCount.number += 1
+            case is JSONBool: self.objectCount.bool += 1
             case is JSONArray:
                 // 중첩배열의 값이 딕셔너리 형태이면, 중첩객체로 판단.
                 guard value is [(key: String, value: Any)] else {
@@ -78,9 +80,9 @@ struct JSONData {
     private mutating func setCounts(of arrays: JSONArray) {
         for value in arrays {
             switch value {
-            case is String: self.arrayCount.string += 1
-            case is Number: self.arrayCount.number += 1
-            case is Bool: self.arrayCount.bool += 1
+            case is JSONString: self.arrayCount.string += 1
+            case is JSONNumber: self.arrayCount.number += 1
+            case is JSONBool: self.arrayCount.bool += 1
             case is JSONArray:
                 // 중첩배열의 값이 딕셔너리 형태이면, 중첩객체로 판단.
                 guard value is [(key: String, value: Any)] else {
