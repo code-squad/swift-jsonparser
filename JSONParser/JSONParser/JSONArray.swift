@@ -21,7 +21,6 @@ struct JSONArray: JSONData {
         setCounts()
         makePrettyData()
     }
-    
     mutating func setData(_ data: TYPEArray) {
         for value in data {
             self.data.append(value)

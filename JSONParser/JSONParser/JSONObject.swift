@@ -21,7 +21,6 @@ struct JSONObject: JSONData {
         setCounts()
         makePrettyData()
     }
-    
     mutating func setData(_ data: TYPEObject) {
         for (key, value) in data {
             self.data.updateValue(value, forKey: key)

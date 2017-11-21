@@ -21,8 +21,9 @@ protocol JSONData {
     mutating func setCounts()
     
     mutating func makePrettyData()
-    
+
     mutating func addValuesOfData() -> [Any]
+    
 }
 
 extension JSONData {
