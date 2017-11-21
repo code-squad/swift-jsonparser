@@ -22,10 +22,10 @@ struct JSONData {
     private(set) var dataType: DataType
     // 각 데이터를 타입별로 저장.
     private(set) var object: JSONObject
-    private(set) var objectCount: (string: Int, number: Int, bool: Int, nestedObject: Int, nestedArray: Int) = (0, 0, 0, 0, 0)
     // object 항목의 array 데이터.
     private(set) var array: JSONArray
-    private(set) var arrayCount: (string: Int, number: Int, bool: Int, nestedObject: Int, nestedArray: Int) = (0, 0, 0, 0, 0)
+    // 데이터별 개수 저장.
+    private(set) var dataCountOfEach: (string: Int, number: Int, bool: Int, nestedObject: Int, nestedArray: Int) = (0, 0, 0, 0, 0)
     // 전체 데이터 개수.
     var count: Int {
         var result = 0
@@ -42,7 +42,7 @@ struct JSONData {
         self.array = []
     }
     
-    mutating func setData(_ data: [String:Any]) {
+    mutating func setData(_ data: JSONObject) {
         self.dataType = DataType.object
         for (key, value) in data {
             self.object.updateValue(value, forKey: key)
@@ -50,7 +50,7 @@ struct JSONData {
         setCounts(of: data)
     }
     
-    mutating func setData(_ data: [Any]) {
+    mutating func setData(_ data: JSONArray) {
         self.dataType = DataType.array
         for value in data {
             self.array.append(value)
@@ -61,37 +61,24 @@ struct JSONData {
     // 전체데이터가 객체 타입일 때 내부 데이터들의 개수 세팅.
     private mutating func setCounts(of objects: JSONObject) {
         for value in objects.values {
-            switch value {
-            case is JSONString: self.objectCount.string += 1
-            case is JSONNumber: self.objectCount.number += 1
-            case is JSONBool: self.objectCount.bool += 1
-            case is JSONArray:
-                // 중첩배열의 값이 딕셔너리 형태이면, 중첩객체로 판단.
-                guard value is [(key: String, value: Any)] else {
-                    self.objectCount.nestedArray += 1
-                    continue
-                }
-                self.objectCount.nestedObject += 1
-            default: break
-            }
+            setEachCounts(of: value)
         }
     }
     
     private mutating func setCounts(of arrays: JSONArray) {
         for value in arrays {
-            switch value {
-            case is JSONString: self.arrayCount.string += 1
-            case is JSONNumber: self.arrayCount.number += 1
-            case is JSONBool: self.arrayCount.bool += 1
-            case is JSONArray:
-                // 중첩배열의 값이 딕셔너리 형태이면, 중첩객체로 판단.
-                guard value is [(key: String, value: Any)] else {
-                    self.arrayCount.nestedArray += 1
-                    continue
-                }
-                self.arrayCount.nestedObject += 1
-            default: break
-            }
+            setEachCounts(of: value)
+        }
+    }
+    
+    private mutating func setEachCounts(of element: Any) {
+        switch element {
+        case is JSONString: self.dataCountOfEach.string += 1
+        case is JSONNumber: self.dataCountOfEach.number += 1
+        case is JSONBool: self.dataCountOfEach.bool += 1
+        case is JSONArray: self.dataCountOfEach.nestedArray += 1
+        case is JSONObject: self.dataCountOfEach.nestedObject += 1
+        default: break
         }
     }
     
