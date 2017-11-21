@@ -21,4 +21,5 @@ struct JSONArray: JSONType {
         JSONArray.append(element)
         JSONData.append(String(describing: element))
     }
+    
 }

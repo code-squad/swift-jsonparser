@@ -17,7 +17,7 @@ class JSONArrayTest: XCTestCase {
         super.setUp()
         jsonArray = JSONArray()
     }
-    
+
     override func tearDown() {
         jsonArray = nil
         super.tearDown()

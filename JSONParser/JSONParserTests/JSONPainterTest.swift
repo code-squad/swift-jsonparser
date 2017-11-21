@@ -17,7 +17,7 @@ class JSONPainterTest: XCTestCase {
         super.setUp()
         jsonPainter = JSONPainter()
     }
-    
+
     override func tearDown() {
         jsonPainter = nil
         super.tearDown()

@@ -21,4 +21,5 @@ struct JSONObject: JSONType {
         JSONData.append(keyValue.key)
         JSONObject[keyValue.key] = keyValue.value
     }
+    
 }
