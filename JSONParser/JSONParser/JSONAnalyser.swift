@@ -8,9 +8,6 @@
 
 import Foundation
 
-typealias JSONData = Array<Any>
-typealias JSONObject = Dictionary<String, Any>
-
 struct JSONAnalyser {
     private let grammarChecker : GrammarChecker
 
@@ -18,16 +15,19 @@ struct JSONAnalyser {
         self.grammarChecker = grammarChecker
     }
 
-    func getJSONData(inputValue: String) -> JSONData {
-        let elements: Array<String> = getElementsAll(from: inputValue)
-        return elements.map { element in setEachType(element: element) ?? ""}
+    func getJSONType(inputValue: String) -> JSONType {
+        if inputValue.starts(with: "{") {
+            return getJSONObject(elements: getObjectElements(from: inputValue))
+        } else {
+            return getJSONArray(elements: getElementsFromArray(with: inputValue))
+        }
     }
     
     private func setEachType(element: String) -> Any? {
         if element.starts(with: "{") {
             return getJSONObject(elements: getObjectElements(from: element))
         } else if element.starts(with: "[") {
-            return getJSONData(inputValue: element)
+            return getJSONArray(elements: getElementsFromArray(with: element))
         } else if element.starts(with: "\"") {
             return element.replacingOccurrences(of: "\"", with: "")
         } else if let element = Int(element) {
@@ -39,25 +39,23 @@ struct JSONAnalyser {
     }
     
     private func getJSONObject(elements: Array<String>) -> JSONObject {
-        var jsonObject : JSONObject = [:]
+        var jsonObject : JSONObject = JSONObject()
         for element in elements {
             let keyValue = element.split(separator: ":")
                                   .map {$0.trimmingCharacters(in: .whitespaces)}
             let key : String = String(keyValue[0]).replacingOccurrences(of: "\"", with: "")
             let value : Any = setEachType(element: String(keyValue[1])) ?? ""
-            jsonObject[key] = value
+            jsonObject.add(keyValue: (key: key, value: value))
         }
         return jsonObject
     }
 
-    private func getElementsAll(from target: String) -> Array<String> {
-        var result : Array<String> = []
-        if target.starts(with: "{") {
-            result.append(target)
-        } else {
-            result.append(contentsOf: getElementsFromArray(with: target))
+    private func getJSONArray(elements: Array<String>) -> JSONArray {
+        var jsonArray: JSONArray = JSONArray()
+        for element in elements {
+            jsonArray.add(element: (setEachType(element: element) ?? ""))
         }
-        return result
+        return jsonArray
     }
 
     private func getElementsFromArray(with target: String) -> Array<String> {

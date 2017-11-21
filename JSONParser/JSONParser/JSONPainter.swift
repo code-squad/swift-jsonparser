@@ -9,28 +9,26 @@
 import Foundation
 
 struct JSONPainter {
-    private let jsonData: JSONData
     private(set) var jsonPainting: String = ""
     private var depth: Int = 0
 
-    init(jsonData: JSONData) {
-        self.jsonData = jsonData
-    }
-
-    mutating func paintJSON() {
-        if jsonData.count == 1, let jsonObject = jsonData[0] as? JSONObject {
-            paintObjectType(jsonObject: jsonObject, depth: depth)
-            return
+    mutating func paintJSON(jsonType: JSONType) {
+        if let jsonObject = jsonType as? JSONObject {
+            paintObjectType(jsonObject: jsonObject)
+        } else {
+            let jsonArray = jsonType as? JSONArray
+            paintArrayType(jsonArray: jsonArray!)
         }
-        paintArrayType()
     }
 
-    private mutating func paintObjectType(jsonObject: JSONObject, depth: Int) {
+    private mutating func paintObjectType(jsonObject: JSONObject) {
         jsonPainting += "{\n"
-        jsonPainting += jsonObject.map { key, value in
+        jsonPainting += jsonObject.JSONObject.map { key, value in
             var valueString: String = ""
             if value is String {
                 valueString = "\"" + String(describing: value) + "\""
+            } else if let jsonArray = value as? JSONArray {
+                valueString = String(describing: jsonArray.JSONArray)
             } else {
                 valueString = String(describing: value)
             }
@@ -40,9 +38,9 @@ struct JSONPainter {
         jsonPainting += "\n" + String(repeating: "\t", count: depth) + "}"
     }
 
-    private mutating func paintArrayType() {
+    private mutating func paintArrayType(jsonArray: JSONArray) {
         jsonPainting += "["
-        paintInsideOfArray()
+        paintInsideOfArray(jsonArray: jsonArray)
         jsonPainting.removeLast(2)
         if depth > 0 {
             jsonPainting += "\n"
@@ -50,17 +48,19 @@ struct JSONPainter {
         jsonPainting += "]"
     }
 
-    private mutating func paintInsideOfArray() {
-        for element in jsonData {
+    private mutating func paintInsideOfArray(jsonArray: JSONArray) {
+        for element in jsonArray.JSONArray {
             if let jsonObject = element as? JSONObject {
-                paintObjectType(jsonObject: jsonObject, depth: depth)
+                paintObjectType(jsonObject: jsonObject)
                 jsonPainting += ",\n"
             } else {
-                if element is JSONData {
+                var item: Any = element
+                if let tmp = element as? JSONArray {
                     depth += 1
                     jsonPainting += "\n"
+                    item = tmp.JSONArray
                 }
-                jsonPainting += String(repeating: "\t", count: depth) + String(describing: element) + ", "
+                jsonPainting += String(repeating: "\t", count: depth) + String(describing: item) + ", "
             }
         }
     }

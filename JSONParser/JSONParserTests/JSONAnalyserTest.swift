@@ -12,7 +12,7 @@ import XCTest
 
 class JSONAnalyserTest: XCTestCase {
     let grammarChecker = GrammarChecker()
-    var jsonData: JSONData!
+    var jsonType: JSONType!
     var jsonAnalyser: JSONAnalyser!
     let tester: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
     var objectTester : String = "{\"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true}"
@@ -26,48 +26,49 @@ class JSONAnalyserTest: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
-        jsonData = nil
+        jsonType = nil
     }
 
     func testGetJSONData_Int() {
-        jsonData = jsonAnalyser.getJSONData(inputValue: tester)
-        XCTAssertTrue(jsonData[0] is Int)
-        XCTAssertTrue(jsonData[2] is Int)
-        XCTAssertTrue(jsonData[4] is Int)
+        let jsonArray = jsonAnalyser.getJSONType(inputValue: tester) as! JSONArray
+        XCTAssertTrue(jsonArray.JSONArray[0] is Int)
+        XCTAssertTrue(jsonArray.JSONArray[2] is Int)
+        XCTAssertTrue(jsonArray.JSONArray[4] is Int)
     }
 
     func testGetJSONData_String() {
-        jsonData = jsonAnalyser.getJSONData(inputValue: tester)
-        XCTAssertTrue(jsonData[1] is String)
-        XCTAssertTrue(jsonData[3] is String)
-        XCTAssertTrue(jsonData[5] is String)
+        let jsonArray = jsonAnalyser.getJSONType(inputValue: tester) as! JSONArray
+        XCTAssertTrue(jsonArray.JSONArray[1] is String)
+        XCTAssertTrue(jsonArray.JSONArray[3] is String)
+        XCTAssertTrue(jsonArray.JSONArray[5] is String)
     }
 
     func testGetJSONData_Bool() {
-        jsonData = jsonAnalyser.getJSONData(inputValue: tester)
-        XCTAssertTrue(jsonData[6] is Bool)
+        let jsonArray = jsonAnalyser.getJSONType(inputValue: tester) as! JSONArray
+        XCTAssertTrue(jsonArray.JSONArray[6] is Bool)
     }
     
     func testGetJSONDataFromObject() {
-        jsonData = jsonAnalyser.getJSONData(inputValue: objectTester)
-        XCTAssertTrue(jsonData[0] is JSONObject)
-        let dic : JSONObject = jsonData[0] as! JSONObject
-        XCTAssertEqual(dic.count, 4)
+        let jsonObject = jsonAnalyser.getJSONType(inputValue: objectTester)
+        XCTAssertTrue(jsonObject is JSONObject)
+
+        let dictionary : JSONObject = jsonObject as! JSONObject
+        XCTAssertEqual(dictionary.JSONObject.count, 4)
     }
     
     func testGetJSONDataForNestedArray_JSONObject() {
-        jsonData = jsonAnalyser.getJSONData(inputValue: nestedArrayTester)
-        XCTAssertTrue(jsonData[0] is JSONObject)
+        let jsonArray = jsonAnalyser.getJSONType(inputValue: nestedArrayTester) as? JSONArray
+        XCTAssertTrue(jsonArray?.JSONArray[0] is JSONObject)
     }
 
     func testGetJSONDataForNestedArray_JSONData() {
-        jsonData = jsonAnalyser.getJSONData(inputValue: nestedArrayTester)
-        XCTAssertTrue(jsonData[1] is JSONData)
+        let jsonArray = jsonAnalyser.getJSONType(inputValue: nestedArrayTester) as? JSONArray
+        XCTAssertTrue(jsonArray?.JSONArray[1] is JSONArray)
     }
     
     func testGetJSONDataForNestedObject() {
-        jsonData = jsonAnalyser.getJSONData(inputValue: nestedObjectTester)
-        XCTAssertTrue(jsonData[0] is JSONObject)
+        let jsonObject = jsonAnalyser.getJSONType(inputValue: nestedObjectTester) as! JSONObject
+        XCTAssertTrue(jsonObject.JSONObject["children"] is JSONArray)
     }
     
 }

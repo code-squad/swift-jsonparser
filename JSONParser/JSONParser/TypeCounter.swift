@@ -21,20 +21,19 @@ struct TypeCounter {
         return stringCounter + intCounter + boolCounter + objectCounter + arrayCounter
     }
     
-    init(jsonData: JSONData) {
-        if jsonData.count == 1, let jsonObject = jsonData[0] as? JSONObject {
+    init(jsonType: JSONType) {
+        if let jsonObject = jsonType as? JSONObject {
             countObjectType(jsonObject: jsonObject)
-            return
-        }
-        for item in jsonData {
-            countType(item: item)
+        } else {
+            let jsonArray = jsonType as? JSONArray
+            jsonArray?.JSONArray.forEach { countType(item: $0) }
         }
     }
     
     private mutating func countType(item: Any) {
-        if item is JSONObject {
+        if item is Dictionary<String, Any> {
             objectCounter += 1
-        } else if item is JSONData {
+        } else if item is Array<Any> {
             arrayCounter += 1
         } else if item is String && (item as! String).count != 0 {
             stringCounter += 1
@@ -46,16 +45,16 @@ struct TypeCounter {
     }
     
     private mutating func countObjectType(jsonObject: JSONObject) {
-        for item in jsonObject {
-            if item.value is JSONObject {
+        for value in jsonObject.JSONObject.values {
+            if value is Dictionary<String, Any> {
                 objectCounter += 1
-            } else if item.value is JSONData {
+            } else if value is Array<Any> {
                 arrayCounter += 1
-            } else if item.value is String {
+            } else if value is String {
                 stringCounter += 1
-            } else if item.value is Int {
+            } else if value is Int {
                 intCounter += 1
-            } else if item.value is Bool {
+            } else if value is Bool {
                 boolCounter += 1
             }
         }
