@@ -48,8 +48,10 @@ struct JSONObject: JSONType, Sequence, IteratorProtocol {
             objectCounter += 1
         } else if element is JSONArray || element is Array<Any> {
             arrayCounter += 1
-        } else if element is String && (element as! String).count != 0 {
-            stringCounter += 1
+        } else if let stringElement = element as? String {
+            if stringElement.count != 0 {
+                stringCounter += 1
+            }
         } else if element is Int {
             intCounter += 1
         } else if element is Bool {
