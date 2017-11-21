@@ -15,7 +15,8 @@ func main() throws {
             // JSON 규격 여부 검사.
             guard try GrammarChecker.isJSONPattern(userInput) else { throw GrammarChecker.JsonError.invalidPattern }
             let jsonData = try JSONParser.parse(userInput)
-            try OutputView.printReport(jsonData)
+            OutputView.printReport(jsonData)
+            OutputView.printJSONData(jsonData)
         }catch let e as GrammarChecker.JsonError {
             OutputView.printError(e)
             continue
