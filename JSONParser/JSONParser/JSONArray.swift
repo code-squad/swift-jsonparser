@@ -15,28 +15,31 @@ struct JSONArray: JSONType, Sequence, IteratorProtocol {
     private(set) var objectCounter: Int = 0
     private(set) var arrayCounter: Int = 0
     private(set) var container: String = "배열"
-    private(set) var count: Int = 0
     private var jsonArray: Array<Any>
-    private var currentCount: Int = 0
+    private var indexForNext: Int = 0
+
+    var count: Int {
+        return jsonArray.count
+    }
 
     init() {
         self.jsonArray = []
     }
 
     mutating func next() -> Any? {
-        if currentCount == 0 {
+        if indexForNext == 0 {
+            defer { indexForNext = count }
             return nil
         } else {
-            defer { currentCount -= 1 }
-            return jsonArray[count-currentCount]
+            defer { indexForNext -= 1 }
+            return jsonArray[count-indexForNext]
         }
     }
 
     mutating func add(element: Any) {
         jsonArray.append(element)
         countType(element: element)
-        count += 1
-        currentCount += 1
+        indexForNext = count
     }
 
     private mutating func countType(element: Any) {

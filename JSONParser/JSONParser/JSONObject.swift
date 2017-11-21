@@ -15,10 +15,13 @@ struct JSONObject: JSONType, Sequence, IteratorProtocol {
     private(set) var objectCounter : Int = 0
     private(set) var arrayCounter : Int = 0
     private(set) var container : String = "객체"
-    private(set) var count: Int = 0
-    private(set) var keyCount: Int = 0
+    private var indexForNext: Int = 0
     private var jsonObject: Dictionary<String, Any>
     private var keys: Array<String>
+
+    var count: Int {
+        return keys.count
+    }
 
     init() {
         jsonObject = [:]
@@ -26,11 +29,12 @@ struct JSONObject: JSONType, Sequence, IteratorProtocol {
     }
 
     mutating func next() -> (key: String, value: Any)? {
-        if keyCount == 0 {
+        if indexForNext == 0 {
+            defer { indexForNext = count }
             return nil
         } else {
-            let index = count-keyCount
-            defer { keyCount -= 1 }
+            let index = count-indexForNext
+            defer { indexForNext -= 1 }
             return (key: keys[index], value: jsonObject[keys[index]] ?? "")
         }
     }
@@ -38,9 +42,8 @@ struct JSONObject: JSONType, Sequence, IteratorProtocol {
     mutating func add(key: String, value: Any) {
         jsonObject[key] = value
         countType(element: value)
-        count += 1
         keys = [String](jsonObject.keys)
-        keyCount += 1
+        indexForNext = count
     }
 
     private mutating func countType(element: Any) {
