@@ -13,7 +13,6 @@ struct JSONObject: JSONData {
     var dataCountOfEach: (string: Int, number: Int, bool: Int, nestedObject: Int, nestedArray: Int)
     var prettyData: [Any]
     var count: Int { return data.count }
-    
     init(data: TYPEObject) {
         self.data = [:]
         self.dataCountOfEach = (0,0,0,0,0)

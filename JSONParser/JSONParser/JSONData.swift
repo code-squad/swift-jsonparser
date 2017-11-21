@@ -17,8 +17,11 @@ protocol JSONData {
     var count: Int { get }
     var dataCountOfEach: (string: Int, number: Int, bool: Int, nestedObject: Int, nestedArray: Int) { get set }
     var prettyData: [Any] { get set }
+    
     mutating func setCounts()
+    
     mutating func makePrettyData()
+    
     mutating func addValuesOfData() -> [Any]
 }
 
