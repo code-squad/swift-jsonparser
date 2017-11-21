@@ -12,6 +12,7 @@ struct JSONParser: JSONSupporting {
     enum ErrorCode: Error {
         case invalidInputString
         case invalidJSONStandard
+        case invalidPatten
     }
 
     func check(_ value: String?) throws -> String {
