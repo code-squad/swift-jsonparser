@@ -22,9 +22,9 @@ func executeJSONParser() {
                 outputView.printJSONAnalysis(jsonData: try parser.makeJSONData(checkedJSON))
                 repeatCondition = false
             }
-        } catch ErrorCode.invalidJSONStandard {
+        } catch JSONParser.ErrorCode.invalidJSONStandard {
             outputView.printErrorMsg(errorCode: .invalidJSONStandard)
-        } catch ErrorCode.invalidInputString {
+        } catch JSONParser.ErrorCode.invalidInputString {
             outputView.printErrorMsg(errorCode: .invalidInputString)
         } catch {
             return

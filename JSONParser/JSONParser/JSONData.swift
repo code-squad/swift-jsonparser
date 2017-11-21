@@ -55,7 +55,7 @@ struct JSONData {
     }
     
     mutating private func countJSONObject() {
-        for (_, indexOfJSONData) in jsonObject {
+        for (_ , indexOfJSONData) in jsonObject {
             switch indexOfJSONData {
             case .intType:
                 intTypeCount += 1

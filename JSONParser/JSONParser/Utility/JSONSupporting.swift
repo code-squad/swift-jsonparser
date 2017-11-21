@@ -7,8 +7,10 @@
 //
 
 import Foundation
-// protocol Extensions 
-struct JSONSupporting {
+// protocol Extensions
+protocol JSONSupporting { }
+
+extension JSONSupporting {
     func processBeforeMakingJSON(_ value: String) -> String {
         var rawJSON = value
         rawJSON.removeFirst()

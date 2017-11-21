@@ -19,7 +19,7 @@ struct OutputView {
         print("가 포함되어 있습니다.")
     }
     
-    func printErrorMsg(errorCode: ErrorCode) {
+    func printErrorMsg(errorCode: JSONParser.ErrorCode) {
         switch errorCode {
         case .invalidJSONStandard:
             print("JSON규격에 맞지않습니다. 올바른 입력값을 넣어주세요 :)")
