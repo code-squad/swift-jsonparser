@@ -9,14 +9,14 @@
 import Foundation
 
 struct OutputView {
-    private let typeCounter : TypeCounter
+    private let jsonType : JSONType
     
-    init(typeCounter: TypeCounter) {
-        self.typeCounter = typeCounter
+    init(jsonType: JSONType) {
+        self.jsonType = jsonType
     }
     
     func printResult() {
-        var result : String = "총 \(typeCounter.totalCounter)개의 \(typeCounter.container) 데이터 중에"
+        var result : String = "총 \(jsonType.totalCounter)개의 \(jsonType.container) 데이터 중에"
         result += getObjectCounter()
         result += getStringCounter()
         result += getIntCounter()
@@ -28,36 +28,36 @@ struct OutputView {
     }
     
     private func getStringCounter() -> String {
-        if typeCounter.stringCounter > 0 {
-            return " 문자열 \(typeCounter.stringCounter)개,"
+        if jsonType.stringCounter > 0 {
+            return " 문자열 \(jsonType.stringCounter)개,"
         }
         return ""
     }
     
     private func getIntCounter() -> String {
-        if typeCounter.intCounter > 0 {
-            return " 숫자 \(typeCounter.intCounter)개,"
+        if jsonType.intCounter > 0 {
+            return " 숫자 \(jsonType.intCounter)개,"
         }
         return ""
     }
     
     private func getBoolCounter() -> String {
-        if typeCounter.boolCounter > 0 {
-            return " 부울 \(typeCounter.boolCounter)개,"
+        if jsonType.boolCounter > 0 {
+            return " 부울 \(jsonType.boolCounter)개,"
         }
         return ""
     }
     
     private func getObjectCounter() -> String {
-        if typeCounter.objectCounter > 0 {
-            return " 객체 \(typeCounter.objectCounter)개,"
+        if jsonType.objectCounter > 0 {
+            return " 객체 \(jsonType.objectCounter)개,"
         }
         return ""
     }
     
     private func getArrayCounter() -> String {
-        if typeCounter.arrayCounter > 0 {
-            return " 배열 \(typeCounter.arrayCounter)개,"
+        if jsonType.arrayCounter > 0 {
+            return " 배열 \(jsonType.arrayCounter)개,"
         }
         return ""
     }

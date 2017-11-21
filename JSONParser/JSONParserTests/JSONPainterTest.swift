@@ -29,13 +29,13 @@ class JSONPainterTest: XCTestCase {
         jsonArray.add(element: "jake")
         jsonArray.add(element: 3)
         jsonPainter?.paintJSON(jsonType: jsonArray)
-        XCTAssertEqual(jsonPainter?.jsonPainting, "[1, jake, 3]")
+        XCTAssertEqual(jsonPainter?.jsonPainting, "[1, \"jake\", 3]")
     }
 
     func testJSONObject() {
         var jsonObject: JSONObject = JSONObject()
-        jsonObject.add(keyValue: (key: "name", value: "jake"))
-        jsonObject.add(keyValue: (key: "distance", value: 100))
+        jsonObject.add(key: "name", value: "jake")
+        jsonObject.add(key: "distance", value: 100)
         jsonPainter?.paintJSON(jsonType: jsonObject)
         XCTAssertEqual(jsonPainter?.jsonPainting, "{\n\t\"name\" : \"jake\",\n\t\"distance\" : 100\n}")
     }
@@ -51,9 +51,9 @@ class JSONPainterTest: XCTestCase {
 
     func testNestedJSONObject() {
         var jsonObject: JSONObject = JSONObject()
-        jsonObject.add(keyValue: (key: "name", value: "jake"))
-        jsonObject.add(keyValue: (key: "distance", value: 100))
-        jsonObject.add(keyValue: (key: "object", value: ["master","jk"]))
+        jsonObject.add(key: "name", value: "jake")
+        jsonObject.add(key: "distance", value: 100)
+        jsonObject.add(key: "object", value: ["master","jk"])
         jsonPainter?.paintJSON(jsonType: jsonObject)
         XCTAssertEqual(jsonPainter?.jsonPainting, "{\n\t\"object\" : [\"master\", \"jk\"],\n\t\"name\" : \"jake\",\n\t\"distance\" : 100\n}")
     }

@@ -14,55 +14,65 @@ struct JSONPainter {
 
     mutating func paintJSON(jsonType: JSONType) {
         if let jsonObject = jsonType as? JSONObject {
-            paintObjectType(jsonObject: jsonObject)
-        } else {
-            let jsonArray = jsonType as? JSONArray
-            paintArrayType(jsonArray: jsonArray!)
+            jsonPainting = paintObjectType(jsonObject: jsonObject)
+        } else if let jsonArray = jsonType as? JSONArray {
+            jsonPainting = paintArrayType(jsonArray: jsonArray, endFlag: true)
         }
     }
 
-    private mutating func paintObjectType(jsonObject: JSONObject) {
-        jsonPainting += "{\n"
-        jsonPainting += jsonObject.JSONObject.map { key, value in
+    private mutating func paintObjectType(jsonObject: JSONObject) -> String {
+        var result: String = ""
+        result += "{\n"
+        result += paintInsideOfObject(jsonObject: jsonObject)
+        result.removeLast(2)
+        result += "\n" + String(repeating: "\t", count: depth) + "}"
+        return result
+    }
+
+    private mutating func paintInsideOfObject(jsonObject: JSONObject) -> String {
+        var result: String = ""
+        for (key, value) in jsonObject {
             var valueString: String = ""
             if value is String {
                 valueString = "\"" + String(describing: value) + "\""
             } else if let jsonArray = value as? JSONArray {
-                valueString = String(describing: jsonArray.JSONArray)
+                valueString = paintArrayType(jsonArray: jsonArray, endFlag: false)
             } else {
                 valueString = String(describing: value)
             }
-            return String(repeating: "\t", count: depth+1) + "\"\(key)\" : \(valueString)" + ",\n"
-        }.joined(separator: "")
-        jsonPainting.removeLast(2)
-        jsonPainting += "\n" + String(repeating: "\t", count: depth) + "}"
-    }
-
-    private mutating func paintArrayType(jsonArray: JSONArray) {
-        jsonPainting += "["
-        paintInsideOfArray(jsonArray: jsonArray)
-        jsonPainting.removeLast(2)
-        if depth > 0 {
-            jsonPainting += "\n"
+            result += String(repeating: "\t", count: depth+1) + "\"\(key)\" : \(valueString)" + ",\n"
         }
-        jsonPainting += "]"
+        return result
     }
 
-    private mutating func paintInsideOfArray(jsonArray: JSONArray) {
-        for element in jsonArray.JSONArray {
-            if let jsonObject = element as? JSONObject {
-                paintObjectType(jsonObject: jsonObject)
-                jsonPainting += ",\n"
+    private mutating func paintArrayType(jsonArray: JSONArray, endFlag: Bool) -> String {
+        var result: String = ""
+        result += "["
+        result += paintInsideOfArray(jsonArray: jsonArray)
+        result.removeLast(2)
+        if depth > 0 && endFlag == true {
+            result += "\n"
+        }
+        result += "]"
+        return result
+    }
+
+    private mutating func paintInsideOfArray(jsonArray: JSONArray) -> String {
+        var result: String = ""
+        for element in jsonArray {
+            if element is String {
+                result += "\"" + String(describing: element) + "\", "
+            } else if let jsonObject = element as? JSONObject {
+                result += paintObjectType(jsonObject: jsonObject) + ",\n"
+            } else if let jsonInsideArray = element as? JSONArray {
+                depth += 1
+                result += "\n" + String(repeating: "\t", count: depth)
+                result += paintArrayType(jsonArray: jsonInsideArray, endFlag: false) + ", "
             } else {
-                var item: Any = element
-                if let tmp = element as? JSONArray {
-                    depth += 1
-                    jsonPainting += "\n"
-                    item = tmp.JSONArray
-                }
-                jsonPainting += String(repeating: "\t", count: depth) + String(describing: item) + ", "
+                result += String(describing: element) + ", "
             }
         }
+        return result
     }
 
 }

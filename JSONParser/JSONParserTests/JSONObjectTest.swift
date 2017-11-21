@@ -28,13 +28,12 @@ class JSONObjectTest: XCTestCase {
     }
 
     func testAdd() {
-        jsonObject.add(keyValue: (key: "jake", value: 3))
-        XCTAssertEqual(jsonObject.JSONObject.count, 1)
-        XCTAssertEqual(jsonObject.JSONData.count, 1)
+        jsonObject.add(key: "jake", value: 3)
+        XCTAssertEqual(jsonObject.count, 1)
 
-        jsonObject.add(keyValue: (key: "jk", value: 5))
-        XCTAssertEqual(jsonObject.JSONObject.count, 2)
-        XCTAssertEqual(jsonObject.JSONData.count, 2)
+
+        jsonObject.add(key: "jk", value: 5)
+        XCTAssertEqual(jsonObject.count, 2)
     }
 
 }

@@ -29,12 +29,10 @@ class JSONArrayTest: XCTestCase {
 
     func testAdd() {
         jsonArray.add(element: 3)
-        XCTAssertEqual(jsonArray.JSONArray.count, 1)
-        XCTAssertEqual(jsonArray.JSONData.count, 1)
+        XCTAssertEqual(jsonArray.count, 1)
 
         jsonArray.add(element: "jake")
-        XCTAssertEqual(jsonArray.JSONArray.count, 2)
-        XCTAssertEqual(jsonArray.JSONData.count, 2)
+        XCTAssertEqual(jsonArray.count, 2)
     }
 
 }

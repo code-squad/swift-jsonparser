@@ -45,7 +45,7 @@ struct JSONAnalyser {
                                   .map {$0.trimmingCharacters(in: .whitespaces)}
             let key : String = String(keyValue[0]).replacingOccurrences(of: "\"", with: "")
             let value : Any = setEachType(element: String(keyValue[1])) ?? ""
-            jsonObject.add(keyValue: (key: key, value: value))
+            jsonObject.add(key: key, value: value)
         }
         return jsonObject
     }

@@ -23,12 +23,10 @@ while !isJSONPattern {
 // 분석
 let jsonAnalyser = JSONAnalyser.init(grammarChecker: grammarChecker)
 let jsonType = jsonAnalyser.getJSONType(inputValue: inputValue)
-// 카운트
-let typeCounter = TypeCounter.init(jsonType: jsonType)
 // JSON 형식
 var jsonPainter = JSONPainter()
 jsonPainter.paintJSON(jsonType: jsonType)
 // 출력
-let outputView = OutputView.init(typeCounter: typeCounter)
+let outputView = OutputView.init(jsonType: jsonType)
 outputView.printResult()
 outputView.printJSON(jsonPainter: jsonPainter)
