@@ -73,8 +73,11 @@ struct GrammarChecker {
             }
         }
         // 일반 값들의 키만 검증.
-        guard try !isKeyRepeated(of: basicElementsRemain) else { return true }
-        return false
+        if try isKeyRepeated(of: basicElementsRemain) {
+            return true
+        }else {
+            return false
+        }
     }
     
     // 중첩 객체 안의 키들만 검사. 중복되는 키가 있으면 true 반환.
