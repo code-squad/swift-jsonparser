@@ -35,11 +35,13 @@ struct JSONData {
         }
         return result
     }
+    private(set) var prettyData: [Any]
     
     init() {
         self.dataType = DataType.array
         self.object = [:]
         self.array = []
+        self.prettyData = []
     }
     
     mutating func setData(_ data: JSONObject) {
@@ -48,6 +50,7 @@ struct JSONData {
             self.object.updateValue(value, forKey: key)
         }
         setCounts(of: data)
+        makePrettyData()
     }
     
     mutating func setData(_ data: JSONArray) {
@@ -56,6 +59,7 @@ struct JSONData {
             self.array.append(value)
         }
         setCounts(of: data)
+        makePrettyData()
     }
     
     // 전체데이터가 객체 타입일 때 내부 데이터들의 개수 세팅.
@@ -79,6 +83,96 @@ struct JSONData {
         case is JSONArray: self.dataCountOfEach.nestedArray += 1
         case is JSONObject: self.dataCountOfEach.nestedObject += 1
         default: break
+        }
+    }
+    
+    private mutating func makePrettyData() {
+        switch self.dataType {
+        case .array:
+            self.prettyData.append("[")
+            self.prettyData.append(contentsOf: addValuesOfArray())
+            self.prettyData.append("]")
+            break
+        case .object:
+            self.prettyData.append("{")
+            self.prettyData.append(contentsOf: addValuesOfObject())
+            self.prettyData.append("\n")
+            self.prettyData.append("}")
+            break
+        }
+    }
+    
+    private mutating func appendAnys(to dest: inout [Any], of datum: Any...) {
+        dest.append(contentsOf: datum)
+    }
+    
+    private mutating func addValuesOfArray() -> [Any] {
+        var temp: [Any] = []
+        var isNotNormalData = false
+        for datum in self.array {
+            switch datum {
+            case let values as JSONObject:
+                temp.append("{")
+                for (key, value) in values {
+                    let data = makeDataString(from: value)
+                    appendAnys(to: &temp, of: "\n\t\t\"", key, "\": ", data, ",")
+                }
+                temp.append("\n\t},")
+                isNotNormalData = true
+                break
+            case let values as JSONArray:
+                let elem = makeDataString(from: values)
+                if self.dataCountOfEach.nestedObject != 0 {
+                    temp.append("\n\t")
+                }
+                appendAnys(to: &temp, of: elem, ",")
+                isNotNormalData = false
+                break
+            default:
+                let elem = makeDataString(from: datum)
+                appendAnys(to: &temp, of: " ", elem, ",")
+                isNotNormalData = false
+                break
+            }
+        }
+        if isNotNormalData {
+            temp.append("\n")
+        }
+        return temp
+    }
+    
+    private mutating func addValuesOfObject() -> [Any] {
+        var temp: [Any] = []
+        for (key, value) in self.object {
+            switch value {
+            case let values as JSONObject:
+                appendAnys(to: &temp, of: "\n\t\"", key, "\": ", "{")
+                for (key, value) in values {
+                    // 데이터가 문자열이면 따옴표 붙임.
+                    let data = makeDataString(from: value)
+                    appendAnys(to: &temp, of: "\n\t\t\"", key, "\": ", data, ",")
+                }
+                temp.append("\n\t},")
+                break
+            case let values as JSONArray:
+                let data = makeDataString(from: values)
+                appendAnys(to: &temp, of: "\n\t\"", key, "\": ", data, ",")
+                break
+            default:
+                let data = makeDataString(from: value)
+                appendAnys(to: &temp, of: "\n\t\"", key, "\": ", data, ",")
+                break
+            }
+        }
+        return temp
+    }
+    
+    private func makeDataString(from data: Any) -> Any {
+        switch data {
+        case let value as String:
+            return "\"" + value + "\""
+        default:
+            return data
         }
     }
     
