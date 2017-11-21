@@ -8,3 +8,9 @@
 
 import Foundation
 
+do {
+    OutputView.printResult(in: try InputView.readValue())
+} catch let error as InputView.Errors {
+    print(error.rawValue)
+}
+
