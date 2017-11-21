@@ -20,12 +20,6 @@ struct InputView {
             throw InputView.Errors.emptyValue
         }
         
-        let splitValue = Utility.removeFromFirstToEnd(in: readValue).split()
-        
-        guard splitValue.count > 0 else {
-            throw InputView.Errors.emptyValue
-        }
-        
-        return TypeChecker.checkType(in: splitValue)
+        return try JSONParser.analyzeJSONData(in: readValue)
     }
 }

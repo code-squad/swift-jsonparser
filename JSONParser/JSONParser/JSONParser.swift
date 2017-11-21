@@ -1,5 +1,5 @@
 //
-//  TypeChecker.swift
+//  JSONParser.swift
 //  JSONParser
 //
 //  Created by yuaming on 2017. 11. 21..
@@ -8,8 +8,18 @@
 
 import Foundation
 
-struct TypeChecker {
-    static func checkType(in jsonData: [String]) -> JSONArray {
+struct JSONParser {
+    static func analyzeJSONData(in value: String) throws -> JSONArray {
+        let splitValue = Utility.removeFromFirstToEnd(in: value).split()
+        
+        guard splitValue.count > 0 else {
+            throw InputView.Errors.emptyValue
+        }
+        
+        return checkType(in: splitValue)
+    }
+    
+    private static func checkType(in jsonData: [String]) -> JSONArray {
         var booleanTypeCount = 0
         var numberTypeCount = 0
         var stringTypeCount = 0
