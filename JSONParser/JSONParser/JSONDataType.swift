@@ -9,16 +9,25 @@
 import Foundation
 
 struct JSONDataType {
-    private(set) var booleanTypeCount: Int = 0
-    private(set) var numberTypeCount: Int = 0
-    private(set) var stringTypeCount: Int = 0
+    private var typeDictionary: [String: Int]
     
-    init(){}
+    init() {
+        self.typeDictionary = [:]
+    }
     
     init(booleanTypeCount: Int, numberTypeCount: Int, stringTypeCount: Int) {
-        self.booleanTypeCount = booleanTypeCount
-        self.numberTypeCount = numberTypeCount
-        self.stringTypeCount = stringTypeCount
+        self.typeDictionary = [TypeName.boolean.rawValue: booleanTypeCount, TypeName.number.rawValue: numberTypeCount, TypeName.string.rawValue: stringTypeCount]
+    }
+    
+    subscript(key: String) -> Int {
+        return typeDictionary[key] ?? 0
+    }
+    
+    enum TypeName: String {
+        case boolean = "부울"
+        case number = "숫자"
+        case string = "문자열"
+        case array = "배열"
     }
 }
 

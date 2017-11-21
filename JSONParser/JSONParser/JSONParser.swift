@@ -16,10 +16,10 @@ struct JSONParser {
             throw InputView.Errors.emptyValue
         }
         
-        return checkType(in: splitValue)
+        return makeJSONArray(in: splitValue)
     }
     
-    private static func checkType(in jsonData: [String]) -> JSONArray {
+    private static func makeJSONArray(in jsonData: [String]) -> JSONArray {
         var booleanTypeCount = 0
         var numberTypeCount = 0
         var stringTypeCount = 0

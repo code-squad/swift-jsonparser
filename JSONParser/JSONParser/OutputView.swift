@@ -9,13 +9,15 @@
 import Foundation
 
 struct OutputView {
+    typealias DataTypeName = JSONDataType.TypeName
+    
     static func printResult(in data: JSONArray) {
         var description: String = ""
         let outputs = makeCharacterToOutput(in: data)
         
-        description += "총 \(outputs["총"]!)개의 데이터 중에 "
+        description += "총 \(outputs[DataTypeName.array.rawValue]!)개의 데이터 중에 "
     
-        for (type, count) in outputs.filter ({ (key, value) in key != "총" && value > 0 }) {
+        for (type, count) in outputs.filter ({ (key, value) in key != "배열" && value > 0 }) {
             description += "\(type) \(count)개,"
         }
         
@@ -26,11 +28,11 @@ struct OutputView {
     }
     
     private static func makeCharacterToOutput(in data: JSONArray) -> [String: Int] {
-        let jsonDataCount = data.jsonArray.count
-        let booleanTypeCount = data.jsonDataType.booleanTypeCount
-        let numberTypeCount = data.jsonDataType.numberTypeCount
-        let stringTypeCount = data.jsonDataType.stringTypeCount
+        let jsonDataCount = data.count
+        let booleanTypeCount = data.getJSONDataType[DataTypeName.boolean.rawValue]
+        let numberTypeCount = data.getJSONDataType[DataTypeName.number.rawValue]
+        let stringTypeCount = data.getJSONDataType[DataTypeName.string.rawValue]
         
-        return ["총": jsonDataCount, "부울": booleanTypeCount, "숫자": numberTypeCount, "문자": stringTypeCount]
+        return [DataTypeName.array.rawValue: jsonDataCount, DataTypeName.boolean.rawValue: booleanTypeCount, DataTypeName.number.rawValue: numberTypeCount, DataTypeName.string.rawValue: stringTypeCount]
     }
 }

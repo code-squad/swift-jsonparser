@@ -26,10 +26,12 @@ class JSONParserTests: XCTestCase {
     }
     
     func test_분리한_데이터_타입_확인() {
+        typealias DataTypeName = JSONDataType.TypeName
+        
         let inputValue = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        XCTAssertTrue(try JSONParser.analyzeJSONData(in: inputValue).jsonDataType.booleanTypeCount == 1)
-        XCTAssertTrue(try JSONParser.analyzeJSONData(in: inputValue).jsonDataType.numberTypeCount == 3)
-        XCTAssertTrue(try JSONParser.analyzeJSONData(in: inputValue).jsonDataType.stringTypeCount == 3)
+        XCTAssertTrue(try JSONParser.analyzeJSONData(in: inputValue).getJSONDataType[DataTypeName.boolean.rawValue] == 1)
+        XCTAssertTrue(try JSONParser.analyzeJSONData(in: inputValue).getJSONDataType[DataTypeName.number.rawValue]  == 3)
+        XCTAssertTrue(try JSONParser.analyzeJSONData(in: inputValue).getJSONDataType[DataTypeName.string.rawValue]  == 3)
     }
     
     func test_빈값_오류_확인() {
