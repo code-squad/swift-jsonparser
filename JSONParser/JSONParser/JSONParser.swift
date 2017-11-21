@@ -12,12 +12,12 @@ struct JSONParser {
     
     // 문자열을 JSONData로 파싱.
     static func parse(_ rawData: String) throws -> JSONData {
-        var jsonData = JSONData()
+        var jsonData: JSONData
         // 전체 데이터의 타입(object|array) 확인.
         if try isObjectType(rawData) {
-            jsonData = try generateJSONData(from: rawData, ofType: JSONData.DataType.object)
+            jsonData = JSONObject(data: try generateDictionary(from: rawData))
         }else {
-            jsonData = try generateJSONData(from: rawData, ofType: JSONData.DataType.array)
+            jsonData = JSONArray(data: try generateArray(from: rawData))
         }
         // 모든 JSONData 반환.
         return jsonData
@@ -35,29 +35,8 @@ struct JSONParser {
         return false
     }
     
-    // blob 단위 JSONData 배열 반환.
-    private static func generateJSONData(from data: String, ofType type: JSONData.DataType) throws -> JSONData {
-        // 데이터를 저장할 JSONData 구조체.
-        var jsonDataCollection = JSONData()
-        // 타입에 따라 딕셔너리로 추출할지, 배열로 추출할지 결정.
-        switch type {
-        case .object:
-            // 문자열 데이터를 딕셔너리로 변환.
-            let objectData = try generateDictionary(from: data)
-            // 데이터를 JSONData 구조체 내에 저장 - 딕셔너리를 파라미터로 받는 생성자 사용.
-            jsonDataCollection.setData(objectData)
-        case .array:
-            // 문자열 데이터를 배열로 변환.
-            let arrayData = try generateArray(from: data)
-            // 데이터를 JSONData 구조체 내에 저장 - 배열을 파라미터로 받는 생성자 사용.
-            jsonDataCollection.setData(arrayData)
-        }
-        // JSONData 반환.
-        return jsonDataCollection
-    }
-    
     // 각 blob 내부 데이터들로 생성한 배열 반환.
-    private static func generateArray(from data: String) throws -> JSONData.JSONArray {
+    private static func generateArray(from data: String) throws -> JSONData.TYPEArray {
         var stringValues: [String] = []
         // 가장 바깥쪽 괄호 제거.
         let rawDataWithoutBracket = try data.splitPattern(by: GrammarChecker.arrayDataWithoutBracket)
@@ -69,8 +48,8 @@ struct JSONParser {
     }
     
     // 각 blob 내부 데이터들로 생성한 딕셔너리 반환.
-    private static func generateDictionary(from data: String) throws -> JSONData.JSONObject {
-        var dictionaries: JSONData.JSONObject = [:]
+    private static func generateDictionary(from data: String) throws -> JSONData.TYPEObject {
+        var dictionaries: JSONData.TYPEObject = [:]
         // 가장 바깥쪽 괄호 제거.
         let rawDataWithoutBracket = try data.splitPattern(by: GrammarChecker.objectDataWithoutBracket)
         // 객체 내부 데이터 단위로 자름.
@@ -128,9 +107,9 @@ struct JSONParser {
         if trimmedData.contains("\"") {
             // 콤마, 따옴표 양쪽공백(데이터 내 공백 유지), 따옴표 제거
             value = trimmedData.trimmingCharacters(in: ["\""])
-        }else if let numberElement = JSONData.JSONNumber(trimmedData) {
+        }else if let numberElement = JSONData.TYPENumber(trimmedData) {
             value = numberElement
-        }else if let boolElement = JSONData.JSONBool(trimmedData) {
+        }else if let boolElement = JSONData.TYPEBool(trimmedData) {
             value = boolElement
         }
         return value
