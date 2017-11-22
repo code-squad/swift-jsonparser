@@ -28,7 +28,7 @@ protocol JSONData {
 
 extension JSONData {
     
-    func makeDataString(from data: Any) -> Any {
+    internal func makeDataString(from data: Any) -> Any {
         switch data {
         case let value as String:
             return "\"" + value + "\""
@@ -37,11 +37,11 @@ extension JSONData {
         }
     }
 
-    func appendAnys(to dest: inout [Any], of datum: Any...) {
+    internal func appendAnys(to dest: inout [Any], of datum: Any...) {
         dest.append(contentsOf: datum)
     }
     
-    mutating func setEachCounts(of datum: Any) {
+    internal mutating func setEachCounts(of datum: Any) {
         switch datum {
         case is TYPEString: self.dataCountOfEach.string += 1
         case is TYPENumber: self.dataCountOfEach.number += 1

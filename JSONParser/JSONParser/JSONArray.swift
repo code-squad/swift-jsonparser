@@ -9,10 +9,6 @@
 import Foundation
 
 struct JSONArray: JSONData {
-    var data: TYPEArray
-    var dataCountOfEach: (string: Int, number: Int, bool: Int, nestedObject: Int, nestedArray: Int)
-    var prettyData: [Any]
-    var count: Int { return data.count }
     init(data: TYPEArray) {
         self.data = []
         self.dataCountOfEach = (0,0,0,0,0)
@@ -21,31 +17,35 @@ struct JSONArray: JSONData {
         setCounts()
         makePrettyData()
     }
+    private var data: TYPEArray
+    internal var dataCountOfEach: (string: Int, number: Int, bool: Int, nestedObject: Int, nestedArray: Int)
+    internal var prettyData: [Any]
+    internal var count: Int { return data.count }
     
-    mutating func setData(_ data: TYPEArray) {
+    private mutating func setData(_ data: TYPEArray) {
         for value in data {
             self.data.append(value)
         }
     }
     
-    mutating func setCounts() {
+    internal mutating func setCounts() {
         for value in data {
             setEachCounts(of: value)
         }
     }
     
-    mutating func makePrettyData() {
+    internal mutating func makePrettyData() {
         self.prettyData.append("[")
         self.prettyData.append(contentsOf: addValuesOfData())
         self.prettyData.append("]")
     }
     
-    func addValuesOfData() -> [Any] {
+    internal func addValuesOfData() -> [Any] {
         var temp: [Any] = []
         var isNotNormalData = false
         for datum in self.data {
             switch datum {
-            case let values as [String:Any]:
+            case let values as TYPEObject:
                 temp.append("{")
                 for (key, value) in values {
                     let data = makeDataString(from: value)
@@ -54,7 +54,7 @@ struct JSONArray: JSONData {
                 temp.append("\n\t},")
                 isNotNormalData = true
                 break
-            case let values as [Any]:
+            case let values as TYPEArray:
                 let elem = makeDataString(from: values)
                 if self.dataCountOfEach.nestedObject != 0 {
                     temp.append("\n\t")

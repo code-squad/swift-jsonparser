@@ -9,10 +9,6 @@
 import Foundation
 
 struct JSONObject: JSONData {
-    var data: TYPEObject
-    var dataCountOfEach: (string: Int, number: Int, bool: Int, nestedObject: Int, nestedArray: Int)
-    var prettyData: [Any]
-    var count: Int { return data.count }
     init(data: TYPEObject) {
         self.data = [:]
         self.dataCountOfEach = (0,0,0,0,0)
@@ -21,31 +17,35 @@ struct JSONObject: JSONData {
         setCounts()
         makePrettyData()
     }
+    private var data: TYPEObject
+    internal var dataCountOfEach: (string: Int, number: Int, bool: Int, nestedObject: Int, nestedArray: Int)
+    internal var prettyData: [Any]
+    internal var count: Int { return data.count }
     
-    mutating func setData(_ data: TYPEObject) {
+    private mutating func setData(_ data: TYPEObject) {
         for (key, value) in data {
             self.data.updateValue(value, forKey: key)
         }
     }
     
-    mutating func setCounts() {
+    internal mutating func setCounts() {
         for value in data.values {
             setEachCounts(of: value)
         }
     }
 
-    mutating func makePrettyData() {
+    internal mutating func makePrettyData() {
         self.prettyData.append("{")
         self.prettyData.append(contentsOf: addValuesOfData())
         self.prettyData.append("\n")
         self.prettyData.append("}")
     }
     
-    func addValuesOfData() -> [Any] {
+    internal func addValuesOfData() -> [Any] {
         var temp: [Any] = []
         for (key, value) in self.data {
             switch value {
-            case let values as [String:Any]:
+            case let values as TYPEObject:
                 appendAnys(to: &temp, of: "\n\t\"", key, "\": ", "{")
                 for (key, value) in values {
                     // 데이터가 문자열이면 따옴표 붙임.
@@ -54,7 +54,7 @@ struct JSONObject: JSONData {
                 }
                 temp.append("\n\t},")
                 break
-            case let values as [Any]:
+            case let values as TYPEArray:
                 let data = makeDataString(from: values)
                 appendAnys(to: &temp, of: "\n\t\"", key, "\": ", data, ",")
                 break
