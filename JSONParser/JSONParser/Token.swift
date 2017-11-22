@@ -9,9 +9,9 @@
 import Foundation
 
 struct Token {
-    var id: String
+    var id: JsonScanner.regex
     var value: String
-    init(id: String, value: String) {
+    init(id: JsonScanner.regex, value: String) {
         self.id = id
         self.value = value
     }

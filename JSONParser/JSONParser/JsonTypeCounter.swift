@@ -13,13 +13,13 @@ struct JsonTypeCounter {
     func countDataType(token: [Token]) -> DataInfo {
         var dataInfo = DataInfo()
         for info in token {
-            if info.id == "NUMBER" {
+            if info.id == JsonScanner.regex.NUMBER {
                 dataInfo.countOfNumber += 1
             }
-            if info.id == "STRING" {
+            if info.id == JsonScanner.regex.STRING {
                 dataInfo.countOfString += 1
             }
-            if info.id == "BOOLEAN" {
+            if info.id == JsonScanner.regex.BOOLEAN {
                 dataInfo.countOfBool += 1
             }
         }

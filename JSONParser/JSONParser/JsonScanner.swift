@@ -32,9 +32,8 @@ struct JsonScanner {
                 for match in matches {
                     let range = match.range
                     let value = (jsonValue as NSString).substring(with: range)
-                    let id = String(describing: index)
-                    if id == "NUMBER" || id == "STRING" || id == "BOOLEAN" {
-                        token.append(Token(id: String(describing: id), value: value))
+                    if index == regex.NUMBER || index == regex.STRING || index == regex.BOOLEAN {
+                        token.append(Token(id: index, value: value))
                     }
                 }
             } catch {
