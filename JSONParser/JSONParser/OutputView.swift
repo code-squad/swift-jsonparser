@@ -10,6 +10,7 @@ import Foundation
 
 struct OutputView {
     
+    // JSON 규격에 맞춰 예쁘게 출력.
     static func printJSONData(_ data: JSONData) {
         for datum in data.prettyData {
             print(datum, terminator: "")
@@ -17,7 +18,7 @@ struct OutputView {
         print("\n")
     }
     
-    // JSONData 출력.
+    // 내부 데이터 description 출력.
     static func printReport(_ data: JSONData) {
         var dataType: String = ""
         // 전체 데이터 개수 (문자열, 숫자, 부울, 객체, 배열)
@@ -51,6 +52,7 @@ struct OutputView {
         print(result)
     }
     
+    // JSON 관련 에러 출력.
     static func printError(_ error: GrammarChecker.JsonError) {
         print(error.rawValue)
     }

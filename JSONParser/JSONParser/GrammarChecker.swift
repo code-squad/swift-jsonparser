@@ -56,6 +56,7 @@ struct GrammarChecker {
         return true
     }
     
+    // 중복 키 유무 검사.
     static func containsRepeatedKey(of data: String) throws -> Bool {
         var basicElementsRemain = ""
         // 가장 바깥쪽 괄호 떼어냄.
@@ -80,7 +81,7 @@ struct GrammarChecker {
         }
     }
     
-    // 중첩 객체 안의 키들만 검사. 중복되는 키가 있으면 true 반환.
+    // 중첩객체 안의 중복 키 유무 검사. 중복 키가 있으면 true 반환.
     static func containsRepeatedKeyInNestedObject(_ value: String) throws -> Bool {
         let valuesInNestedObject = try value.splitPattern(by: GrammarChecker.objectDataWithoutBracket)
         for valueInObject in valuesInNestedObject {
@@ -92,7 +93,7 @@ struct GrammarChecker {
         return false
     }
     
-    // 중복 키 검사. 중복 시 true 반환.
+    // 중복 키 검사 함수. 중복 시 true 반환.
     static func isKeyRepeated(of data: String) throws -> Bool {
         // 중복되지 않는 키(당선키)를 담을 집합.
         var keys: Set<String> = []
