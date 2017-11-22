@@ -31,21 +31,20 @@ struct OutputView {
     }
     
     private func printJSONData(_ jsonData: JSONData) {
+        func printComma(_ jsonDataCount: Int) -> String {
+            return (jsonData.sumOfData != jsonDataCount) ? "," : ""
+        }
         if jsonData.stringTypeCount > 0 {
-            print(" 문자열 \(jsonData.stringTypeCount)개", terminator: "")
-            if jsonData.sumOfData != jsonData.stringTypeCount { print(",", terminator: "") }
+            print(" 문자열 \(jsonData.stringTypeCount)개", terminator: printComma(jsonData.stringTypeCount))
         }
         if jsonData.intTypeCount > 0 {
-            print(" 숫자 \(jsonData.intTypeCount)개", terminator: "")
-            if jsonData.sumOfData != jsonData.intTypeCount { print(",", terminator: "") }
+            print(" 숫자 \(jsonData.intTypeCount)개", terminator: printComma(jsonData.intTypeCount))
         }
         if jsonData.boolTypeCount > 0 {
-            print(" 부울 \(jsonData.boolTypeCount)개", terminator: "")
-            if jsonData.sumOfData != jsonData.boolTypeCount { print(",", terminator: "") }
+            print(" 부울 \(jsonData.boolTypeCount)개", terminator: printComma(jsonData.boolTypeCount))
         }
         if jsonData.objectTypeCount > 0 {
             print(" 객체 \(jsonData.objectTypeCount)개", terminator: "")
         }
     }
-    
 }
