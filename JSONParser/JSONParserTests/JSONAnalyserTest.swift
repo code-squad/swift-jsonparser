@@ -58,12 +58,12 @@ class JSONAnalyserTest: XCTestCase {
     
     func testGetJSONDataForNestedArray_JSONObject() {
         let jsonArray = jsonAnalyser.getJSONType(inputValue: nestedArrayTester) as? JSONArray
-        XCTAssertTrue(jsonArray?[0] is JSONObject)
+        XCTAssertTrue(jsonArray?[1] is JSONObject)
     }
 
-    func testGetJSONDataForNestedArray_JSONData() {
+    func testGetJSONDataForNestedArray_JSONArray() {
         let jsonArray = jsonAnalyser.getJSONType(inputValue: nestedArrayTester) as? JSONArray
-        XCTAssertTrue(jsonArray?[1] is JSONArray)
+        XCTAssertTrue(jsonArray?[0] is JSONArray)
     }
     
     func testGetJSONDataForNestedObject() {

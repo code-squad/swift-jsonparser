@@ -32,7 +32,9 @@ class GrammarCheckerTest: XCTestCase {
     }
     
     func testIsJSONPatternForArray() {
+        let arrayErrorTester: String = "[10, \"jk\" 4, \"314\", 99, \"crong\" false,]"
         XCTAssertTrue(grammarChecker.isJSONPattern(target: arrayTester))
+        XCTAssertFalse(grammarChecker.isJSONPattern(target: arrayErrorTester))
     }
 
     func testIsJSONPatternForNotArray() {
@@ -53,6 +55,11 @@ class GrammarCheckerTest: XCTestCase {
     
     func testIsJSONPatternForNestedObject() {
         XCTAssertTrue(grammarChecker.isJSONPattern(target: nestedObjectTester))
+    }
+
+    func testIsInsideArrayPattern() {
+        XCTAssertTrue(grammarChecker.isInsideArrayPattern(target: nestedArrayTester))
+        XCTAssertFalse(grammarChecker.isInsideArrayPattern(target: arrayTester))
     }
 
 }

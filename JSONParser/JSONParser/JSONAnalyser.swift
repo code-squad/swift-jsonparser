@@ -27,7 +27,7 @@ struct JSONAnalyser {
         if element.starts(with: "{") {
             return getJSONObject(elements: getObjectElements(from: element))
         } else if element.starts(with: "[") {
-            return getJSONArray(elements: getElementsFromArray(with: element))
+            return getJSONArray(elements: getElementsFromArray(with: element.trimmingCharacters(in: ["[","]"])))
         } else if element.starts(with: "\"") {
             return element.replacingOccurrences(of: "\"", with: "")
         } else if let element = Int(element) {
@@ -60,12 +60,22 @@ struct JSONAnalyser {
 
     private func getElementsFromArray(with target: String) -> Array<String> {
         var elementsFromArray : Array<String> = []
-        var elements : String = target.trimmingCharacters(in: ["[","]"])
-        elementsFromArray.append(contentsOf: getArrayMatches(from: elements))
-        elements = removeMatchedArray(target: elements)
-        elementsFromArray.append(contentsOf: getObjectMatches(from: elements))
-        elements = removeMatchedObject(target: elements)
+        var elements : String = target
+        if grammarChecker.isInsideArrayPattern(target: elements) {
+            elementsFromArray.append(contentsOf: getArrayMatches(from: elements))
+            print(1)
+            print(elementsFromArray)
+            elements = removeMatchedArray(target: elements)
+            print(elements)
+            elementsFromArray.append(contentsOf: getObjectMatches(from: elements))
+            print(2)
+            print(elementsFromArray)
+            elements = removeMatchedObject(target: elements)
+            print(elements)
+        }
         elementsFromArray.append(contentsOf: getElements(from: elements))
+        print(3)
+        print(elementsFromArray)
         return elementsFromArray
     }
 
@@ -77,7 +87,7 @@ private extension JSONElementsPicker {
     
     // 배열, 객체 외의 데이터 추출
     func getElements(from target: String) -> Array<String> {
-        return target.split(separator: ",").flatMap {$0.trimmingCharacters(in: .whitespaces)}
+        return target.trimmingCharacters(in: ["[","]"]).split(separator: ",").flatMap {$0.trimmingCharacters(in: .whitespaces)}
     }
 
     // 배열 내부의 배열 추출

@@ -10,18 +10,19 @@ import Foundation
 
 struct GrammarChecker {
     // basic pattern
-    private let stringPattern : String
-    private let intPattern : String
-    private let boolPattern : String
-    private let dictionaryPattern : String
-    let objectPattern : String
-    let arrayPattern : String
+    private let stringPattern: String
+    private let intPattern: String
+    private let boolPattern: String
+    private let dictionaryPattern: String
+    let objectPattern: String
+    let arrayPattern: String
     // nested pattern
-    let nestedDictionaryPattern : String
-    let nestedObjectPattern : String
-    let nestedArrayPattern : String
+    let nestedDictionaryPattern: String
+    let nestedObjectPattern: String
+    let nestedArrayPattern: String
+    let insideArrayPattern: String
     
-    enum ErrorMessage : Error {
+    enum ErrorMessage: Error {
         case notJSONPattern
     }
     
@@ -30,12 +31,13 @@ struct GrammarChecker {
         intPattern = "[\\s]*\\d+[\\s]*"
         boolPattern = "[\\s]*(true|false)[\\s]*"
         dictionaryPattern = "\(self.stringPattern):(\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern))"
-        objectPattern = "[\\s]*\\{(\(self.dictionaryPattern)[,]?)+[\\s]*\\}[\\s]*"
-        arrayPattern = "[\\s]*\\[((\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.objectPattern))[,]?)+[\\s]*\\][\\s]*"
-        
+        objectPattern = "[\\s]*\\{(\(self.dictionaryPattern){1}[,]{1})*\(self.dictionaryPattern)\\}[\\s]*"
+        arrayPattern = "[\\s]*\\[((\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.objectPattern)){1}[,]{1})*(\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.objectPattern))\\][\\s]*"
+
         nestedDictionaryPattern = "\(self.stringPattern):(\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.objectPattern)|\(self.arrayPattern))"
-        nestedObjectPattern = "[\\s]*?\\{(\(self.nestedDictionaryPattern)[,]?)+[\\s]*?\\}[\\s]*?"
-        nestedArrayPattern = "[\\s]*?\\[((\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.nestedObjectPattern)|\(self.arrayPattern))[,]?)+[\\s]*?\\][\\s]*?"
+        nestedObjectPattern = "[\\s]*?\\{(\(self.nestedDictionaryPattern){1}[,]{1})*\(self.nestedDictionaryPattern){1}\\}[\\s]*?"
+        nestedArrayPattern = "[\\s]*?\\[((\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.nestedObjectPattern)|\(self.arrayPattern)){1}[,]{1})*(\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.nestedObjectPattern)|\(self.arrayPattern)){1}\\][\\s]*?"
+        insideArrayPattern = "[\\s]*?\\[((\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.nestedObjectPattern))[,]?)*\(self.arrayPattern)((\(self.stringPattern)|\(self.intPattern)|\(self.boolPattern)|\(self.nestedObjectPattern))[,]?)*[\\s]*?\\][\\s]*?"
     }
     
     func isJSONPattern(target: String) -> Bool {
@@ -64,5 +66,8 @@ struct GrammarChecker {
         }
         return true
     }
-    
+
+    func isInsideArrayPattern(target: String) -> Bool {
+        return getMatchResult(with: insideArrayPattern, target: target)
+    }
 }
