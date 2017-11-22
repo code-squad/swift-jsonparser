@@ -24,7 +24,7 @@ struct OutputView {
         if data.countOfBool != 0 {
             result.append(" 부울 \(data.countOfBool)개")
         }
-        print(result.joined(), separator: ",", terminator: "")
+        print(result.joined(separator: ","), terminator: "")
         print("가 포함되어 있습니다.")
     }
 

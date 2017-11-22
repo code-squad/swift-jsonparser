@@ -18,6 +18,7 @@ do {
 }catch JsonScanner.JsonError.invalidJsonPattern {
     print("Json invalid error")
 }
+
 var jsonTypeCounter = JsonTypeCounter()
 var data = jsonTypeCounter.countDataType(token: token!)
 
