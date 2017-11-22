@@ -9,24 +9,26 @@
 import Foundation
 
 struct GrammarChecker {
-    private let objectCheckPatten = "(([\\{])(.*:.[^\\[\\]]*)([\\}]))"
-    private let arrayCheckPatten = "(\\{[^\\{\\}]*\\})|(true|false)|(\\d+)|(\".+?\")|(:)"
+    private let objectSeparatePattern = "([^\\,\\{\\}]+)"
+    private let objectCheckPattern = "(([\\{])(.*:.[^\\[\\]]*)([\\}]))"
+    private let arrayCheckAndSeparatePattern = "(\\{[^\\{\\}]*\\})|(true|false)|(\\d+)|(\".+?\")|(:)"
     
-    func checkObject(inString value: String) throws -> String {
-        let numberOfGroup = try listNumberOfGroup(pattern: objectCheckPatten, inString: value)
-        if  numberOfGroup == 0 {
-            throw JSONParser.ErrorCode.invalidJSONStandard
-        }
-        return value
-    }
-    
-    func checkArray(inString value: String) throws -> String {
-        let separateString = try listMatches(pattern: arrayCheckPatten, inString: value)
+    func checkAndSeparateArray(inString value: String) throws -> [String] {
+        let separateString = try listMatches(pattern: arrayCheckAndSeparatePattern, inString: value)
         if (separateString.contains(":"))  {
             throw JSONParser.ErrorCode.invalidJSONStandard
         } else {
-            return value
+            return separateString
         }
+    }
+    
+    func checkAndSeparateObject(inString value: String) throws -> [String] {
+        let numberOfGroup = try listNumberOfGroup(pattern: objectCheckPattern, inString: value)
+        if  numberOfGroup == 0 {
+            throw JSONParser.ErrorCode.invalidJSONStandard
+        }
+        let separateString = try listMatches(pattern: objectSeparatePattern, inString: value)
+        return separateString
     }
     
 }
