@@ -15,30 +15,8 @@ struct InputView {
         self.grammarChecker = grammarChecker
     }
 
-    func readInput() throws -> String {
-        let commandCount: Int = CommandLine.arguments.count
-        var result: String = ""
-        switch commandCount {
-        case 2,3:
-            result = try readFromFile()
-        default:
-            result = readFromConsole()
-        }
-        return result
-    }
-
     func readFromConsole() -> String {
-        var inputValue: String = ""
-        var isJSONPattern: Bool = false
-        while !isJSONPattern {
-            print(GuideMessage.inputRequest.rawValue)
-            inputValue = readLine() ?? "[]"
-            isJSONPattern = grammarChecker.isJSONPattern(target: inputValue)
-            if !isJSONPattern {
-                print(GuideMessage.notJSONPattern.rawValue)
-            }
-        }
-        return inputValue
+        return readLine() ?? "[]"
     }
 
     func readFromFile() throws -> String {
