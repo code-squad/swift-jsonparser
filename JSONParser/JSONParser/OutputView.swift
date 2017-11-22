@@ -14,16 +14,12 @@ struct OutputView {
     init(jsonType: JSONType) {
         self.jsonType = jsonType
     }
-
-    enum FileName: String {
-        case defaultFileName = "output.json"
-    }
     
     func printResult(jsonPainter: JSONPainter) {
         let commandCount: Int = CommandLine.arguments.count
         switch commandCount {
         case 2:
-            printOnFile(newFileName: OutputView.FileName.defaultFileName.rawValue, jsonPainter: jsonPainter)
+            printOnFile(newFileName: GuideMessage.defaultFileName.rawValue, jsonPainter: jsonPainter)
         case 3:
             printOnFile(newFileName: CommandLine.arguments[2], jsonPainter: jsonPainter)
         default:
@@ -49,8 +45,7 @@ struct OutputView {
     }
 
     private func printOnFile(newFileName: String, jsonPainter: JSONPainter) {
-        let basePath: String = "./MyProject/CodeSquad/Masters/Level2/swift-jsonparser/JSONParser/JSONFile/"
-        let file: String = basePath + newFileName
+        let file: String = GuideMessage.baseDirPath.rawValue + newFileName
         if let dir = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first {
             let fileURL = dir.appendingPathComponent(file)
             do {
@@ -58,7 +53,7 @@ struct OutputView {
                 try output.write(to: fileURL, atomically: false, encoding: .utf8)
             }
             catch {
-                print("출력이 정상적으로 이루어지지 않았습니다")
+                print(GuideMessage.outputError.rawValue)
             }
         }
     }

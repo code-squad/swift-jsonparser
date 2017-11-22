@@ -30,6 +30,7 @@
 		8EB0D4FA1FC3BE8500273665 /* JSONArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB0D4EF1FC2C2C500273665 /* JSONArray.swift */; };
 		8EB0D4FB1FC3BE8700273665 /* JSONType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB0D4ED1FC2C25C00273665 /* JSONType.swift */; };
 		8EB0D4FC1FC3BE8A00273665 /* JSONPainter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7038A41FC27FAC0040E7E2 /* JSONPainter.swift */; };
+		8EF38B071FC566D30054D7FD /* GuideMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF38B061FC566D30054D7FD /* GuideMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -62,6 +63,7 @@
 		8EB0D4F31FC3BD5E00273665 /* JSONArrayTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONArrayTest.swift; sourceTree = "<group>"; };
 		8EB0D4F51FC3BD6C00273665 /* JSONObjectTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONObjectTest.swift; sourceTree = "<group>"; };
 		8EB0D4F71FC3BD7F00273665 /* JSONPainterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPainterTest.swift; sourceTree = "<group>"; };
+		8EF38B061FC566D30054D7FD /* GuideMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				8EB0D4ED1FC2C25C00273665 /* JSONType.swift */,
 				8EB0D4EF1FC2C2C500273665 /* JSONArray.swift */,
 				8EB0D4F11FC2C2D200273665 /* JSONObject.swift */,
+				8EF38B061FC566D30054D7FD /* GuideMessage.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 				8E4BCDF21FB537F6007781EF /* GrammarChecker.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				8E6FE4531FB024220022BC9E /* InputView.swift in Sources */,
+				8EF38B071FC566D30054D7FD /* GuideMessage.swift in Sources */,
 				8EB0D4F21FC2C2D200273665 /* JSONObject.swift in Sources */,
 				8EB0D4F01FC2C2C500273665 /* JSONArray.swift in Sources */,
 				8EB0D4EE1FC2C25C00273665 /* JSONType.swift in Sources */,
