@@ -14,8 +14,24 @@ struct OutputView {
     init(jsonType: JSONType) {
         self.jsonType = jsonType
     }
+
+    enum FileName: String {
+        case defaultFileName = "output.json"
+    }
     
-    func printResult() {
+    func printResult(jsonPainter: JSONPainter) {
+        let commandCount: Int = CommandLine.arguments.count
+        switch commandCount {
+        case 2:
+            printOnFile(newFileName: OutputView.FileName.defaultFileName.rawValue, jsonPainter: jsonPainter)
+        case 3:
+            printOnFile(newFileName: CommandLine.arguments[2], jsonPainter: jsonPainter)
+        default:
+            printOnConsole(jsonPainter: jsonPainter)
+        }
+    }
+
+    private func getCountResult() -> String {
         var result : String = "총 \(jsonType.totalCounter)개의 \(jsonType.container) 데이터 중에"
         result += getObjectCounter()
         result += getStringCounter()
@@ -24,7 +40,27 @@ struct OutputView {
         result += getArrayCounter()
         result.removeLast()
         result += "가 포함되어 있습니다."
-        print(result)
+        return result
+    }
+
+    private func printOnConsole(jsonPainter: JSONPainter) {
+        print(getCountResult())
+        print(jsonPainter.jsonPainting)
+    }
+
+    private func printOnFile(newFileName: String, jsonPainter: JSONPainter) {
+        let basePath: String = "./MyProject/CodeSquad/Masters/Level2/swift-jsonparser/JSONParser/JSONFile/"
+        let file: String = basePath + newFileName
+        if let dir = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first {
+            let fileURL = dir.appendingPathComponent(file)
+            do {
+                let output: String = getCountResult() + "\n" + jsonPainter.jsonPainting
+                try output.write(to: fileURL, atomically: false, encoding: .utf8)
+            }
+            catch {
+                print("출력이 정상적으로 이루어지지 않았습니다")
+            }
+        }
     }
     
     private func getStringCounter() -> String {
@@ -60,10 +96,6 @@ struct OutputView {
             return " 배열 \(jsonType.arrayCounter)개,"
         }
         return ""
-    }
-
-    func printJSON(jsonPainter: JSONPainter) {
-        print(jsonPainter.jsonPainting)
     }
     
 }

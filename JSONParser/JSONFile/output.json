@@ -1,0 +1,7 @@
+총 4개의 객체 데이터 중에 문자열 2개, 숫자 1개, 배열 1개가 포함되어 있습니다.
+{
+	"children" : ["hana", "hayul", "haun"],
+	"name" : "KIM JUNG",
+	"level" : 5,
+	"alias" : "JK"
+}

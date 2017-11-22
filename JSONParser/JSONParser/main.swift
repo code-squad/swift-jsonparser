@@ -22,8 +22,7 @@ do {
     jsonPainter.paintJSON(jsonType: jsonType)
     // 출력
     let outputView = OutputView.init(jsonType: jsonType)
-    outputView.printResult()
-    outputView.printJSON(jsonPainter: jsonPainter)
+    outputView.printResult(jsonPainter: jsonPainter)
 } catch InputView.InputError.notJSONPattern {
     print("지원하지 않는 형식을 포함하고 있습니다.")
 } catch {
