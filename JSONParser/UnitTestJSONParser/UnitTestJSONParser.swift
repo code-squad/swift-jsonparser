@@ -9,9 +9,6 @@
 import XCTest
 @testable import JSONParser
 class UnitTestJSONParser: XCTestCase {
-    var data1 = DataInfo()
-    var data2 = DataInfo()
-    
     override func setUp() {
         super.setUp()
     }
@@ -23,6 +20,7 @@ class UnitTestJSONParser: XCTestCase {
     func testJSONParser1() {
         let jsonScanner1 = JsonScanner()
         let jsonTypeCounter1 = JsonTypeCounter()
+        var data1 = DataInfo()
         let token = try! jsonScanner1.scanOfJsonValue(jsonValue: "[ 10, 21, 4, 314, 99, 0, 72 ]")
         data1 = jsonTypeCounter1.countDataType(token: token)
         XCTAssertEqual(data1.countOfString, 0)
@@ -33,6 +31,7 @@ class UnitTestJSONParser: XCTestCase {
     func testJSONParser2() {
         let jsonScanner2 = JsonScanner()
         let jsonTypeCounter2 = JsonTypeCounter()
+        var data2 = DataInfo()
         let token = try! jsonScanner2.scanOfJsonValue(jsonValue: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]")
         data2 = jsonTypeCounter2.countDataType(token: token)
         XCTAssertEqual(data2.countOfString, 3)
