@@ -10,7 +10,7 @@ import Foundation
 
 struct GrammarChecker {
     private let objectSeparatePattern = "([^\\,\\{\\}]+)"
-    private let objectCheckPattern = "(([\\{])(.*:.[^\\[\\]]*)([\\}]))"
+    private let objectCheckPattern = "(([\\{])(.[^\\[\\]]*)([\\}]))"
     private let arrayCheckAndSeparatePattern = "(\\{[^\\{\\}]*\\})|(true|false)|(\\d+)|(\".+?\")|(:)"
     
     func checkAndSeparateArray(inString value: String) throws -> [String] {
