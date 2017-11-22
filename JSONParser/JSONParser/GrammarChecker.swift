@@ -5,25 +5,28 @@
 //  Created by Mrlee on 2017. 11. 17..
 //  Copyright © 2017년 JK. All rights reserved.
 //
-
+// [{"Lee": true},  true, 123, false, "Dong"]
+// [{"Lee": true}, {"Lee": true},  true, 123, false, "Dong"]
+// ["Lee": true]
+// { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "children" : ["hana", "hayul", "haun"] }
 import Foundation
 
 struct GrammarChecker {
     private let objectCheckPatten = "(([\\{])(.*:.[^\\[\\]]*)([\\}]))"
-    private let arrayCheckPatten = "(\\d+)|(\"\\w+\")|(true|false)|(([\\{])(.*:.[^\\[\\]]*)([\\}]))"
+    private let arrayCheckPatten = "(\\{[^\\{\\}]*\\})|(true|false)|(\\d+)|(\".+?\")|(:)"
     
-    func checkObject(inString string: [String]) throws -> [String] {
-        guard (try? NSRegularExpression(pattern: objectCheckPatten, options: [])) != nil else {
-            throw JSONParser.ErrorCode.invalidPatten
+    func checkObject(inString value: String) throws -> String {
+        let numberOfGroup = try listNumberOfGroup(pattern: objectCheckPatten, inString: value)
+        if  numberOfGroup == 0 {
+            throw JSONParser.ErrorCode.invalidJSONStandard
         }
-        return string
+        return value
     }
     
     func checkArray(inString value: String) throws -> String {
-        let numberOfComma = value.filter{ $0 == "," }
-        let numberOfGroup = try listNumberOfGroup(pattern: arrayCheckPatten, inString: value)
-        if (numberOfComma.count + 1) != numberOfGroup {
-            throw JSONParser.ErrorCode.invalidPatten
+        let separateString = try listMatches(pattern: arrayCheckPatten, inString: value)
+        if (separateString.contains(":"))  {
+            throw JSONParser.ErrorCode.invalidJSONStandard
         } else {
             return value
         }
@@ -36,15 +39,8 @@ extension GrammarChecker {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
             throw JSONParser.ErrorCode.invalidJSONStandard
         }
-        let range = NSMakeRange(0, value.count)
-        guard let matches = regex.firstMatch(in: value, options: [], range: range) else {
-            throw JSONParser.ErrorCode.invalidJSONStandard
-        }
-        let arrMatches = [matches]
-        return arrMatches.map {
-            let range = $0.range
-            return (value as NSString).substring(with: range)
-        }
+        let results = regex.matches(in: value, options: [], range: NSRange(value.startIndex..., in: value))
+        return results.map{ String(value[Range($0.range, in: value)!]) }
     }
     
     func listNumberOfGroup(pattern: String, inString value: String) throws -> Int {

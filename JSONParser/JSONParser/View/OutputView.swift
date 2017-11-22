@@ -25,6 +25,8 @@ struct OutputView {
             print("JSON규격에 맞지않습니다. 올바른 입력값을 넣어주세요 :)")
         case .invalidInputString:
             print("입력값을 확인해주세요 :)")
+        case .invalidPatten:
+            print("Regex 패턴이 맞지 않습니다. 확인해주세요 :)")
         }
     }
     

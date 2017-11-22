@@ -19,10 +19,13 @@ struct JSONParser: JSONSupporting {
         guard let safeValue = value else {
             throw ErrorCode.invalidInputString
         }
+        let grammarChecker = GrammarChecker()
         if safeValue.hasPrefix("[") {
-            return safeValue
+            let validValue = try grammarChecker.checkArray(inString: safeValue)
+            return validValue
         } else if safeValue.hasPrefix("{"){
-            return safeValue
+            let validValue = try grammarChecker.checkObject(inString: safeValue)
+            return validValue
         } else {
             throw ErrorCode.invalidJSONStandard
         }

@@ -26,6 +26,8 @@ func executeJSONParser() {
             outputView.printErrorMsg(errorCode: .invalidJSONStandard)
         } catch JSONParser.ErrorCode.invalidInputString {
             outputView.printErrorMsg(errorCode: .invalidInputString)
+        } catch JSONParser.ErrorCode.invalidPatten {
+            outputView.printErrorMsg(errorCode: .invalidPatten)
         } catch {
             return
         }
