@@ -70,4 +70,5 @@ struct GrammarChecker {
     func isInsideArrayPattern(target: String) -> Bool {
         return getMatchResult(with: insideArrayPattern, target: target)
     }
+    
 }
