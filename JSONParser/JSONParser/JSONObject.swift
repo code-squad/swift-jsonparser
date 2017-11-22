@@ -18,9 +18,9 @@ struct JSONObject: JSONData {
         makePrettyData()
     }
     private var data: TYPEObject
-    internal var dataCountOfEach: (string: Int, number: Int, bool: Int, nestedObject: Int, nestedArray: Int)
-    internal var prettyData: [Any]
-    internal var count: Int { return data.count }
+    var dataCountOfEach: (string: Int, number: Int, bool: Int, nestedObject: Int, nestedArray: Int)
+    var prettyData: [Any]
+    var count: Int { return data.count }
     
     private mutating func setData(_ data: TYPEObject) {
         for (key, value) in data {
@@ -28,20 +28,20 @@ struct JSONObject: JSONData {
         }
     }
     
-    internal mutating func setCounts() {
+    mutating func setCounts() {
         for value in data.values {
             setEachCounts(of: value)
         }
     }
 
-    internal mutating func makePrettyData() {
+    mutating func makePrettyData() {
         self.prettyData.append("{")
         self.prettyData.append(contentsOf: addValuesOfData())
         self.prettyData.append("\n")
         self.prettyData.append("}")
     }
     
-    internal func addValuesOfData() -> [Any] {
+    func addValuesOfData() -> [Any] {
         var temp: [Any] = []
         for (key, value) in self.data {
             switch value {
