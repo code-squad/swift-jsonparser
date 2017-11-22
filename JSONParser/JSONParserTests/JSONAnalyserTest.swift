@@ -11,7 +11,6 @@ import XCTest
 @testable import JSONParser
 
 class JSONAnalyserTest: XCTestCase {
-    let grammarChecker = GrammarChecker()
     var jsonType: JSONType!
     var jsonAnalyser: JSONAnalyser!
     let tester: String = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
@@ -21,7 +20,7 @@ class JSONAnalyserTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        jsonAnalyser = JSONAnalyser.init(grammarChecker: grammarChecker)
+        jsonAnalyser = JSONAnalyser()
     }
     
     override func tearDown() {

@@ -15,7 +15,7 @@ let inputView: InputView = InputView.init(grammarChecker: grammarChecker)
 do {
     inputValue = try inputView.readInput()
     // 분석
-    let jsonAnalyser = JSONAnalyser.init(grammarChecker: grammarChecker)
+    let jsonAnalyser = JSONAnalyser()
     let jsonType = jsonAnalyser.getJSONType(inputValue: inputValue)
     // JSON 형식
     var jsonPainter = JSONPainter()

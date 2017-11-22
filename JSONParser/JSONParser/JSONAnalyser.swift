@@ -9,11 +9,6 @@
 import Foundation
 
 struct JSONAnalyser {
-    private let grammarChecker : GrammarChecker
-
-    init(grammarChecker: GrammarChecker) {
-        self.grammarChecker = grammarChecker
-    }
 
     func getJSONType(inputValue: String) -> JSONType {
         if inputValue.starts(with: "{") {
@@ -84,17 +79,17 @@ private extension JSONElementsPicker {
 
     // 배열 내부의 배열 추출
     func getArrayMatches(from target: String) -> Array<String> {
-        return getMatchedElements(from: target, with: grammarChecker.arrayPattern)
+        return getMatchedElements(from: target, with: JSONPatterns.arrayPattern)
     }
 
     // 배열 내부의 객체 추출
     func getObjectMatches(from target: String) -> Array<String> {
-        return getMatchedElements(from: target, with: grammarChecker.objectPattern)
+        return getMatchedElements(from: target, with: JSONPatterns.objectPattern)
     }
 
     // JSONObject 타입에서 요소 추출
     func getObjectElements(from target: String) -> Array<String> {
-        return getMatchedElements(from: target, with: grammarChecker.nestedDictionaryPattern)
+        return getMatchedElements(from: target, with: JSONPatterns.nestedDictionaryPattern)
     }
 
     func getMatchedElements(from target: String, with pattern: String) -> Array<String> {
@@ -105,11 +100,11 @@ private extension JSONElementsPicker {
     }
 
     func removeMatchedArray(target: String) -> String {
-        return removeMatchedElements(from: target, with: grammarChecker.arrayPattern)
+        return removeMatchedElements(from: target, with: JSONPatterns.arrayPattern)
     }
 
     func removeMatchedObject(target: String) -> String {
-        return removeMatchedElements(from: target, with: grammarChecker.objectPattern)
+        return removeMatchedElements(from: target, with: JSONPatterns.objectPattern)
     }
 
     func removeMatchedElements(from target: String, with pattern: String) -> String {
