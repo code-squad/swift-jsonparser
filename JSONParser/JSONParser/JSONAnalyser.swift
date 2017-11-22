@@ -63,19 +63,11 @@ struct JSONAnalyser {
         var elements : String = target
         if grammarChecker.isInsideArrayPattern(target: elements) {
             elementsFromArray.append(contentsOf: getArrayMatches(from: elements))
-            print(1)
-            print(elementsFromArray)
             elements = removeMatchedArray(target: elements)
-            print(elements)
             elementsFromArray.append(contentsOf: getObjectMatches(from: elements))
-            print(2)
-            print(elementsFromArray)
             elements = removeMatchedObject(target: elements)
-            print(elements)
         }
         elementsFromArray.append(contentsOf: getElements(from: elements))
-        print(3)
-        print(elementsFromArray)
         return elementsFromArray
     }
 
