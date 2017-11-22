@@ -34,7 +34,7 @@ struct GrammarChecker {
 }
 
 extension GrammarChecker {
-    func listMatches(pattern: String, inString value: String) throws -> [String] {
+    private func listMatches(pattern: String, inString value: String) throws -> [String] {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
             throw JSONParser.ErrorCode.invalidJSONStandard
         }
@@ -42,7 +42,7 @@ extension GrammarChecker {
         return results.map{ String(value[Range($0.range, in: value)!]) }
     }
     
-    func listNumberOfGroup(pattern: String, inString value: String) throws -> Int {
+    private func listNumberOfGroup(pattern: String, inString value: String) throws -> Int {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
             throw JSONParser.ErrorCode.invalidPatten
         }

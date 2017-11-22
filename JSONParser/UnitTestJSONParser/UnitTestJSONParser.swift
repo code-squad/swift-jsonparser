@@ -53,96 +53,86 @@ class UnitTestJSONParser: XCTestCase {
     }
     
     func testJSONParserObjectInArrayFirstAndEndObjects() {
-        let parserTest = JSONParser()
+        let parser = JSONParser()
         let testRawJSONData1 = "[ { \"name\" : \"Lee\" }, 123, \"Lee\", true, { \"name\" : \"JIN\" } ]"
-        let parserTypeCount = try! parserTest.makeJSONData(testRawJSONData1)
+        let parserTypeCount = try! parser.makeJSONData(testRawJSONData1)
         XCTAssertEqual(parserTypeCount.objectTypeCount, 2)
     }
     
     func testJSONParserObjectInArrayObjectOfEnd() {
-        let parserTest = JSONParser()
+        let parser = JSONParser()
         let testRawJSONData1 = "[ 123, \"Lee\", true, { \"name\" : \"Lee\" } ]"
-        let parserTypeCount = try! parserTest.makeJSONData(testRawJSONData1)
+        let parserTypeCount = try! parser.makeJSONData(testRawJSONData1)
         XCTAssertEqual(parserTypeCount.objectTypeCount, 1)
     }
     
     func testJSONParserObjectInArrayObjectOfCenter() {
-        let parserTest = JSONParser()
+        let parser = JSONParser()
         let testRawJSONData1 = "[ 123, \"Lee\", true, { \"name\" : \"JIN\" }, 123, \"Lee\", true ]"
-        let parserTypeCount = try! parserTest.makeJSONData(testRawJSONData1)
+        let parserTypeCount = try! parser.makeJSONData(testRawJSONData1)
         XCTAssertEqual(parserTypeCount.objectTypeCount, 1)
     }
     
+    func testMakeJSONDataMethod() {
+        let parser = JSONParser()
+        let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
+        XCTAssertThrowsError(try parser.makeJSONData(testRawJSONData1))
+    }
+    
     func testJSONParserObjectBoolCASE() {
-        let parserTest = JSONParser()
-        let grammarCheckTest = GrammarChecker()
+        let parser = JSONParser()
         let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        let separateValue = try! grammarCheckTest.listMatches(pattern: objectSeparatePattern, inString: testRawJSONData1)
-        let parserTypeCount = parserTest.makeObjectJSONData(separateValue)
-        XCTAssertEqual(parserTypeCount.boolTypeCount, 1)
+        let separateValue = try! parser.makeJSONData(testRawJSONData1)
+        XCTAssertEqual(separateValue.boolTypeCount, 1)
     }
     
     func testJSONParserObjectStringCASE() {
-        let parserTest = JSONParser()
-        let grammarCheckTest = GrammarChecker()
+        let parser = JSONParser()
         let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        let separateValue = try! grammarCheckTest.listMatches(pattern: objectSeparatePattern, inString: testRawJSONData1)
-        let parserTypeCount = parserTest.makeObjectJSONData(separateValue)
+        let parserTypeCount = try! parser.makeJSONData(testRawJSONData1)
         XCTAssertEqual(parserTypeCount.stringTypeCount, 2)
     }
     
     func testJSONParserObjectIntCASE() {
-        let parserTest = JSONParser()
-        let grammarCheckTest = GrammarChecker()
+        let parser = JSONParser()
         let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        let separateValue = try! grammarCheckTest.listMatches(pattern: objectSeparatePattern, inString: testRawJSONData1)
-        let parserTypeCount = parserTest.makeObjectJSONData(separateValue)
+        let parserTypeCount = try! parser.makeJSONData(testRawJSONData1)
         XCTAssertEqual(parserTypeCount.intTypeCount, 1)
     }
     
     func testJSONParserObjectSumOfDataCASE() {
-        let parserTest = JSONParser()
-        let grammarCheckTest = GrammarChecker()
+        let parser = JSONParser()
         let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        let separateValue = try! grammarCheckTest.listMatches(pattern: objectSeparatePattern, inString: testRawJSONData1)
-        let parserTypeCount = parserTest.makeObjectJSONData(separateValue)
+        let parserTypeCount = try! parser.makeJSONData(testRawJSONData1)
         XCTAssertEqual(parserTypeCount.sumOfData, 4)
     }
     
     func testJSONParserArrayMethodStringCASE() {
-        let parserTest = JSONParser()
-        let grammarCheckTest = GrammarChecker()
-        let testRawJSONData1 = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let separateValue = try! grammarCheckTest.listMatches(pattern: arrayCheckAndSeparatePattern, inString: testRawJSONData1)
-        let arrayParserCount = try! parserTest.makeArrayJSONData(separateValue)
-        XCTAssertEqual(arrayParserCount.stringTypeCount, 3)
+        let parser = JSONParser()
+        let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
+        let parserTypeCount = try! parser.makeJSONData(testRawJSONData1)
+        XCTAssertEqual(parserTypeCount.stringTypeCount, 2)
     }
     
     func testJSONParserArrayMethodIntCASE() {
-        let parserTest = JSONParser()
-        let grammarCheckTest = GrammarChecker()
-        let testRawJSONData1 = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let separateValue = try! grammarCheckTest.listMatches(pattern: arrayCheckAndSeparatePattern, inString: testRawJSONData1)
-        let arrayParserCount = try! parserTest.makeArrayJSONData(separateValue)
-        XCTAssertEqual(arrayParserCount.intTypeCount, 3)
+        let parser = JSONParser()
+        let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
+        let parserTypeCount = try! parser.makeJSONData(testRawJSONData1)
+        XCTAssertEqual(parserTypeCount.intTypeCount, 1)
     }
     
     func testJSONParserArrayMethodBoolCASE() {
-        let parserTest = JSONParser()
-        let grammarCheckTest = GrammarChecker()
-        let testRawJSONData1 = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let separateValue = try! grammarCheckTest.listMatches(pattern: arrayCheckAndSeparatePattern, inString: testRawJSONData1)
-        let arrayParserCount = try! parserTest.makeArrayJSONData(separateValue)
-        XCTAssertEqual(arrayParserCount.boolTypeCount, 1)
+        let parser = JSONParser()
+        let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
+        let parserTypeCount = try! parser.makeJSONData(testRawJSONData1)
+        XCTAssertEqual(parserTypeCount.boolTypeCount, 1)
     }
     
     func testJSONParserArrayMethodSumOfDataCASE() {
-        let parserTest = JSONParser()
-        let grammarCheckTest = GrammarChecker()
-        let testRawJSONData1 = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let separateValue = try! grammarCheckTest.listMatches(pattern: arrayCheckAndSeparatePattern, inString: testRawJSONData1)
-        let arrayParserCount = try! parserTest.makeArrayJSONData(separateValue)
-        XCTAssertEqual(arrayParserCount.sumOfData, 7)
+        let parser = JSONParser()
+        let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
+        let parserTypeCount = try! parser.makeJSONData(testRawJSONData1)
+        XCTAssertEqual(parserTypeCount.sumOfData, 4)
     }
     
     func testGrammarCheckerInvalidJSONAtArray() {

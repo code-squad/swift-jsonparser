@@ -30,12 +30,8 @@ struct JSONParser: JSONSupporting {
             throw ErrorCode.invalidJSONStandard
         }
     }
-
-}
-
-// JSONParser for Object
-extension JSONParser {
-    func makeObjectJSONData(_ separateJSON: [String]) -> JSONData {
+    
+    private func makeObjectJSONData(_ separateJSON: [String]) -> JSONData {
         var objectTypeJSON = [String:JSONType]()
         for objectComponents in separateJSON {
             let separateObject = objectComponents.components(separatedBy: ":")
@@ -46,12 +42,8 @@ extension JSONParser {
         return JSONData(objectTypeJSON)
     }
     
-}
-
-// JSONParser for Array
-typealias JSONTypeAndIdx = (object: JSONType, elementIdx: String.Index)
-extension JSONParser {
-    func makeArrayJSONData(_ value: [String]) throws -> JSONData {        
+    private func makeArrayJSONData(_ value: [String]) throws -> JSONData {
         return JSONData(value.map{ sortJSONData($0) })
     }
+
 }
