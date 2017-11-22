@@ -108,7 +108,7 @@ extension JSONParser {
     
     // [ , ] processing logic
     private func makeJSONInArray(_ value: String) throws -> JSONTypeAndIdx {
-        let rawJSON = value
+        let rawJSON = value.trimmingCharacters(in: .whitespacesAndNewlines)
         var jsonType: JSONType
         if let endOfElementIdx = rawJSON.index(of: ",") {
             var element = String(rawJSON.prefix(through: endOfElementIdx))

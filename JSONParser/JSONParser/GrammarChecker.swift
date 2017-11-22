@@ -6,7 +6,7 @@
 //  Copyright © 2017년 JK. All rights reserved.
 //
 // [{"Lee": true},  true, 123, false, "Dong"]
-// [{"Lee": true}, {"Lee": true},  true, 123, false, "Dong"]
+// [{"Lee": true}, "Lee": true,  true, 123, false, "Dong"]
 // ["Lee": true]
 // { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "children" : ["hana", "hayul", "haun"] }
 import Foundation

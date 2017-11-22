@@ -126,4 +126,15 @@ class UnitTestJSONParser: XCTestCase {
         XCTAssertEqual(arrayParserCount.sumOfData, 7)
     }
     
+    func testGrammarCheckerInvalidJSONAtArray() {
+        let grammarCheckerTest = GrammarChecker()
+        let testRawJSONData1 = "[ \"name\" : \"KIM JUNG\" ]"
+        XCTAssertThrowsError(try grammarCheckerTest.checkArray(inString: testRawJSONData1))
+    }
+    
+    func testGrammarCheckerAtObject() {
+        let grammarCheckerTest = GrammarChecker()
+        let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
+        XCTAssertThrowsError(try grammarCheckerTest.checkObject(inString: testRawJSONData1))
+    }
 }
