@@ -18,8 +18,7 @@ func executeJSONParser() {
         print("분석할 JSON 데이터를 입력하세요.")
         do {
             if let rawJSONData = inputView.read() {
-                let checkedJSON = try parser.check(rawJSONData)
-                outputView.printJSONAnalysis(jsonData: try parser.makeJSONData(checkedJSON))
+                outputView.printJSONAnalysis(jsonData: try parser.makeJSONData(rawJSONData))
                 repeatCondition = false
             }
         } catch JSONParser.ErrorCode.invalidJSONStandard {
