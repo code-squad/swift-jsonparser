@@ -16,7 +16,6 @@ struct JsonScanner {
         case BOOLEAN = "(true|false)"
         case NUMBER = " [0-9]+"
         case COMMA = ","
-        
         static let order = [STARTSQUAREBRACKET, ENDSQUAREBRACKET, NUMBER, STRING, BOOLEAN, COMMA]
     }
     enum JsonError: Error {

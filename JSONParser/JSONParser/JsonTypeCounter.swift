@@ -25,4 +25,5 @@ struct JsonTypeCounter {
         }
         return dataInfo
     }
+    
 }

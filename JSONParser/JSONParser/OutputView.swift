@@ -14,7 +14,6 @@ struct OutputView {
         let sum = data.countOfBool + data.countOfNumber + data.countOfString
         var result = [String]()
         print("총 \(sum)개의 데이터 중에", terminator: "")
-        
         if data.countOfString != 0 {
             result.append(" 문자열 \(data.countOfString)개")
         }

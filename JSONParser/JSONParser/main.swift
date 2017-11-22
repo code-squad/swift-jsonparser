@@ -24,4 +24,3 @@ var data = jsonTypeCounter.countDataType(token: token!)
 
 var outputView = OutputView()
 outputView.printDataInfo(data: data)
-
