@@ -5,10 +5,7 @@
 //  Created by Mrlee on 2017. 11. 17..
 //  Copyright © 2017년 JK. All rights reserved.
 //
-// [{"Lee": true},  true, 123, false, "Dong"]
-// [{"Lee": true}, "Lee": true,  true, 123, false, "Dong"]
-// ["Lee": true]
-// { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "children" : ["hana", "hayul", "haun"] }
+
 import Foundation
 
 struct GrammarChecker {
@@ -53,10 +50,10 @@ extension GrammarChecker {
 }
 
 extension String {
-    var fullRange: NSRange { return NSRange(location:0, length: self.count)}
-    func range(from r:NSRange) -> Range<Index> {
-        let s = index(startIndex, offsetBy: r.location)
-        let e = index(s, offsetBy: r.length)
-        return s..<e
+    var fullRange: NSRange { return NSRange(location:0, length: self.count) }
+    func range(from range:NSRange) -> Range<Index> {
+        let start = index(startIndex, offsetBy: range.location)
+        let end = index(start, offsetBy: range.length)
+        return start..<end
     }
 }
