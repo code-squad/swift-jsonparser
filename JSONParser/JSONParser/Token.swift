@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TokenInfo {
+struct Token {
     var id: String
     var value: String
     init(id: String, value: String) {

@@ -19,9 +19,12 @@ struct JsonScanner {
         
         static let order = [STARTSQUAREBRACKET, ENDSQUAREBRACKET, NUMBER, STRING, BOOLEAN, COMMA]
     }
+    enum JsonError: Error {
+        case invalidJsonPattern
+    }
     
-    func scanOfJsonValue(jsonValue: String) -> [TokenInfo] {
-        var token = [TokenInfo]()
+    func scanOfJsonValue(jsonValue: String) throws -> [Token] {
+        var token = [Token]()
         for index in regex.order {
             do {
                 let lex = try NSRegularExpression(pattern: index.rawValue)
@@ -31,11 +34,11 @@ struct JsonScanner {
                     let value = (jsonValue as NSString).substring(with: range)
                     let id = String(describing: index)
                     if id == "NUMBER" || id == "STRING" || id == "BOOLEAN" {
-                        token.append(TokenInfo(id: String(describing: id), value: value))
+                        token.append(Token(id: String(describing: id), value: value))
                     }
                 }
             } catch {
-                
+                throw JsonError.invalidJsonPattern
             }
         }
         return token

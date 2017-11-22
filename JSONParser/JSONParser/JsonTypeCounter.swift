@@ -10,7 +10,7 @@ import Foundation
 
 struct JsonTypeCounter {
     
-    func countDataType(token: [TokenInfo]) -> DataInfo {
+    func countDataType(token: [Token]) -> DataInfo {
         var dataInfo = DataInfo()
         for info in token {
             if info.id == "NUMBER" {

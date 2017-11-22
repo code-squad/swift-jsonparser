@@ -10,12 +10,16 @@ import Foundation
 
 var inputView = InputView()
 let jsonValue = inputView.readInput()
+var token: [Token]? = nil
 
 var jsonScanner = JsonScanner()
-var token = jsonScanner.scanOfJsonValue(jsonValue: jsonValue)
-
+do {
+    try token = jsonScanner.scanOfJsonValue(jsonValue: jsonValue)
+}catch JsonScanner.JsonError.invalidJsonPattern {
+    print("Json invalid error")
+}
 var jsonTypeCounter = JsonTypeCounter()
-var data = jsonTypeCounter.countDataType(token: token)
+var data = jsonTypeCounter.countDataType(token: token!)
 
 var outputView = OutputView()
 outputView.printDataInfo(data: data)
