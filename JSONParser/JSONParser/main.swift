@@ -14,7 +14,9 @@ let jsonValue = inputView.readInput()
 var jsonScanner = JsonScanner()
 var token = jsonScanner.scanOfJsonValue(jsonValue: jsonValue)
 
-//for index in token {
-//    print(index.id, index.value)
-//}
+var jsonTypeCounter = JsonTypeCounter()
+var data = jsonTypeCounter.countDataType(token: token)
+
+var outputView = OutputView()
+outputView.printDataInfo(data: data)
 

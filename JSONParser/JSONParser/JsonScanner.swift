@@ -40,8 +40,5 @@ struct JsonScanner {
         }
         return token
     }
-    
-    func getToken() {
-        
-    }
+
 }
