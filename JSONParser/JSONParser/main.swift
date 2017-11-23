@@ -8,25 +8,36 @@
 
 import Foundation
 
-var inputValue: String = ""
+// 초기화
+let commandCount: Int = CommandLine.arguments.count
+var file: String = ""
+if commandCount > 1 {
+    file = CommandLine.arguments[1]
+}
 let grammarChecker: GrammarChecker = GrammarChecker()
 // 입력
-let inputView: InputView = InputView.init(grammarChecker: grammarChecker)
-var isError: Bool = true
-while isError {
-    print(GuideMessage.inputRequest.rawValue)
+let inputView: InputView = InputView()
+var inputValue: String = ""
+while inputValue.count == 0 {
+    if commandCount == 1 {
+        print(GuideMessage.inputRequest.rawValue)
+    }
     do {
-        inputValue = try inputView.readInput(isError: isError)
-        isError = false
-    } catch  GuideMessage.notJSONPattern {
-        isError = true
-        print(GuideMessage.notJSONPattern.rawValue)
+        inputValue = try inputView.readInput(file: file)
     } catch {
-        isError = true
-        print(GuideMessage.wrongInput.rawValue)
+        print(GuideMessage.invalidFile.rawValue)
+        file = inputView.readFromConsole()
+        continue
+    }
+    if !grammarChecker.isJSONPattern(target: inputValue) {
+        print(GuideMessage.notJSONPattern.rawValue)
+        inputValue = ""
+        if commandCount > 1 {
+            print(GuideMessage.invalidFile.rawValue)
+            file = inputView.readFromConsole()
+        }
     }
 }
-
 // 분석
 let jsonAnalyser = JSONAnalyser()
 let jsonType = jsonAnalyser.getJSONType(inputValue: inputValue)

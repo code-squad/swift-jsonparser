@@ -9,53 +9,30 @@
 import Foundation
 
 struct InputView {
-    let grammarChecker: GrammarChecker
 
-    init(grammarChecker: GrammarChecker) {
-        self.grammarChecker = grammarChecker
-    }
-
-    func readInput(isError: Bool) throws -> String {
+    func readInput(file: String) throws -> String {
         var inputValue: String = ""
-        let commandCount: Int = CommandLine.arguments.count
-        switch commandCount {
-        case 2,3:
-            inputValue = try readFromFile(isError: isError)
-        default:
-            inputValue = try readFromConsole()
+        if file.count > 0 {
+            inputValue = try readFromFile(file)
+        } else {
+            inputValue = readFromConsole()
         }
         return inputValue
     }
 
-    private func readFromConsole() throws -> String {
-        var inputValue: String = ""
-        inputValue = readLine() ?? "[]"
-        try checkJSONPattern(inputValue: inputValue)
-        return inputValue
+    func readFromConsole() -> String {
+        return readLine() ?? ""
     }
 
-    private func readFromFile(isError: Bool) throws -> String {
+    private func readFromFile(_ fileName: String) throws -> String {
         var inputValue: String = ""
         let base: String = GuideMessage.baseDirPath.rawValue
-        var file: String = base
-        if isError {
-            print("파일명을 확인해서 다시 입력해주세요.")
-            file += readLine() ?? "[]"
-        } else {
-            file += CommandLine.arguments[1]
-        }
+        let file: String = base + fileName
         if let dir = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first {
             let fileURL = dir.appendingPathComponent(file)
             inputValue = try String(contentsOf: fileURL, encoding: .utf8)
-            try checkJSONPattern(inputValue: inputValue)
         }
         return inputValue.trimmingCharacters(in: .whitespaces)
-    }
-
-    private func checkJSONPattern(inputValue: String) throws {
-        if !grammarChecker.isJSONPattern(target: inputValue) {
-            throw GuideMessage.notJSONPattern
-        }
     }
 
 }

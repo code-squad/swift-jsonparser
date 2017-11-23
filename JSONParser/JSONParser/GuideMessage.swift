@@ -18,5 +18,5 @@ enum GuideMessage: String, Error {
     // file
     case baseDirPath = "./MyProject/CodeSquad/Masters/Level2/swift-jsonparser/JSONParser/JSONFile/"
     case defaultFileName = "output.json"
-
+    case invalidFile = "파일을 확인하시고 파일명을 다시 입력해 주세요."
 }
