@@ -21,22 +21,22 @@ struct GrammarChecker {
     // 기본형 값 패턴. 문자열|부울|숫자)
     private static let basicValuePattern = "(\"[^,:\\\"\\{\\[\\]\\}]+?\"|true|false|\\d+)"
     // 콤마포함 객체형 패턴. - "key" : value ,
-    private static let objectValueWithComma = "(\\s*" + GrammarChecker.keyPattern + "\\s*:\\s*" + GrammarChecker.basicValuePattern + "\\s*,"
+    private static let objectValue = "(\\s*" + GrammarChecker.keyPattern + "\\s*:\\s*" + GrammarChecker.basicValuePattern + "\\s*"
     // 콤마선택 객체형 패턴. (중간 데이터는 콤마 필수, 마지막 데이터는 선택) - {"key": value, "key": value, "key": value, ... }
-    private static let objectValues = "(\\{" + GrammarChecker.objectValueWithComma + "\\s*)*" + GrammarChecker.objectValueWithComma + "?\\s*)\\})"
+    private static let objectValues = "(\\{" + GrammarChecker.objectValue + ",\\s*)*" + GrammarChecker.objectValue + "\\s*)\\})"
     // 콤마포함 배열형 패턴. - value,
-    private static let arrayValueWithComma = "(\\s*" + GrammarChecker.basicValuePattern + "\\s*,"
+    private static let arrayValue = "(\\s*" + GrammarChecker.basicValuePattern + "\\s*"
     // 콤마선택 배열형 패턴. (중간 데이터는 콤마 필수, 마지막 데이터는 선택) - [ value, value, ... ]
-    private static let arrayValues = "(\\[" + GrammarChecker.arrayValueWithComma + "\\s*)*" + GrammarChecker.arrayValueWithComma + "?\\s*)\\])"
+    private static let arrayValues = "(\\[" + GrammarChecker.arrayValue + ",\\s*)*" + GrammarChecker.arrayValue + "\\s*)\\])"
     // 배열, 객체 내 삽입가능 값 패턴.
     static let jsonValuePattern = "(" + GrammarChecker.basicValuePattern+"|"+GrammarChecker.arrayValues+"|"+GrammarChecker.objectValues + ")"
     // 콤마포함 종합객체형 패턴. (중첩 객체값 가능.)
-    private static let jsonValueWithComma = jsonValuePattern + "\\s*,"
-    static let jsonObjectValueWithComma = GrammarChecker.keyPattern + "\\s*:\\s*" + GrammarChecker.jsonValueWithComma
+    private static let jsonValue = jsonValuePattern + "\\s*"
+    static let jsonObjectValue = GrammarChecker.keyPattern + "\\s*:\\s*" + GrammarChecker.jsonValue
     // 콤마선택 종합객체형 패턴. (중간 데이터는 콤마 필수, 마지막 데이터는 선택)
-    private static let jsonObjectValues = "(\\s*" + GrammarChecker.jsonObjectValueWithComma + "\\s*)*(\\s*" + GrammarChecker.jsonObjectValueWithComma + "?\\s*)"
+    private static let jsonObjectValues = "(\\s*" + GrammarChecker.jsonObjectValue + ",\\s*)*(\\s*" + GrammarChecker.jsonObjectValue + "\\s*)"
     // 콤마선택 종합배열형 패턴. (중간 데이터는 콤마 필수, 마지막 데이터는 선택)
-    private static let jsonArrayValues = "(\\s*" + GrammarChecker.jsonValueWithComma + "\\s*)*(" + GrammarChecker.jsonValueWithComma + "?\\s*)"
+    private static let jsonArrayValues = "(\\s*" + GrammarChecker.jsonValue + ",\\s*)*(" + GrammarChecker.jsonValue + "\\s*)"
     // 전체 배열 패턴. (1뎁스)
     private static let jsonArrayPattern = "(\\[" + GrammarChecker.jsonArrayValues + "\\])"
     // 전체 객체 패턴. (1뎁스)
@@ -62,7 +62,7 @@ struct GrammarChecker {
         // 가장 바깥쪽 괄호 떼어냄.
         let dataWithoutBracket = try data.splitPattern(by: GrammarChecker.objectDataWithoutBracket+"|"+GrammarChecker.arrayDataWithoutBracket)
         // 각 값들 떼어냄. ("키":값 형태.)
-        let elements = try dataWithoutBracket[0].splitPattern(by: GrammarChecker.jsonObjectValueWithComma+"?|"+GrammarChecker.objectValues)
+        let elements = try dataWithoutBracket[0].splitPattern(by: GrammarChecker.jsonObjectValue+",?|"+GrammarChecker.objectValues)
         for element in elements {
             // 값에 "{"가 있으면 중첩객체로 판단. 키값을 따로 검증.
             if element.contains("{") {

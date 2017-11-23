@@ -53,7 +53,7 @@ struct JSONParser {
         // 가장 바깥쪽 괄호 제거.
         let rawDataWithoutBracket = try data.splitPattern(by: GrammarChecker.objectDataWithoutBracket)
         // 객체 내부 데이터 단위로 자름.
-        let elements = try rawDataWithoutBracket[0].splitPattern(by: GrammarChecker.jsonObjectValueWithComma+"?")
+        let elements = try rawDataWithoutBracket[0].splitPattern(by: GrammarChecker.jsonObjectValue+",?")
         for element in elements {
             let key = try generateKey(from: element)
             let value = try generateValue(from: element)
