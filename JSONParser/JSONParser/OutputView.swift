@@ -14,10 +14,9 @@ struct OutputView {
         case fileURLError = "파일 내용을 쓰는 데 실패했습니다."
     }
     
-    static func writeData(_ reportData: String, _ prettyData: String, into outputFileName: String) throws {
-        let resultData = reportData + "\n\n" + prettyData
+    static func writeData(_ prettyData: String, into outputFileName: String) throws {
         do {
-            try resultData.write(toFile: outputFileName, atomically: true, encoding: .utf8)
+            try prettyData.write(toFile: outputFileName, atomically: true, encoding: .utf8)
         }catch {
             throw OutputError.fileURLError
         }

@@ -18,7 +18,7 @@ func main() throws {
         let report = OutputView.getReport(jsonData)
         let prettyData = OutputView.getPrettyData(jsonData)
         if let outputFileName = userFileNames.1 {
-            try OutputView.writeData(report, prettyData, into: outputFileName)
+            try OutputView.writeData(prettyData, into: outputFileName)
         }else {
             print(report, "\n")
             print(prettyData)
