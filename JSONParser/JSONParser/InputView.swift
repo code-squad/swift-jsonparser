@@ -15,21 +15,47 @@ struct InputView {
         self.grammarChecker = grammarChecker
     }
 
-    func readFromConsole() -> String {
-        return readLine() ?? "[]"
+    func readInput(isError: Bool) throws -> String {
+        var inputValue: String = ""
+        let commandCount: Int = CommandLine.arguments.count
+        switch commandCount {
+        case 2,3:
+            inputValue = try readFromFile(isError: isError)
+        default:
+            inputValue = try readFromConsole()
+        }
+        return inputValue
     }
 
-    func readFromFile() throws -> String {
+    private func readFromConsole() throws -> String {
         var inputValue: String = ""
-        let file: String = GuideMessage.baseDirPath.rawValue + CommandLine.arguments[1]
+        inputValue = readLine() ?? "[]"
+        try checkJSONPattern(inputValue: inputValue)
+        return inputValue
+    }
+
+    private func readFromFile(isError: Bool) throws -> String {
+        var inputValue: String = ""
+        let base: String = GuideMessage.baseDirPath.rawValue
+        var file: String = base
+        if isError {
+            print("파일명을 확인해서 다시 입력해주세요.")
+            file += readLine() ?? "[]"
+        } else {
+            file += CommandLine.arguments[1]
+        }
         if let dir = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first {
             let fileURL = dir.appendingPathComponent(file)
             inputValue = try String(contentsOf: fileURL, encoding: .utf8)
-            if !grammarChecker.isJSONPattern(target: inputValue) {
-                throw GuideMessage.notJSONPattern
-            }
+            try checkJSONPattern(inputValue: inputValue)
         }
         return inputValue.trimmingCharacters(in: .whitespaces)
+    }
+
+    private func checkJSONPattern(inputValue: String) throws {
+        if !grammarChecker.isJSONPattern(target: inputValue) {
+            throw GuideMessage.notJSONPattern
+        }
     }
 
 }

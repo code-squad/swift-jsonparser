@@ -12,26 +12,18 @@ var inputValue: String = ""
 let grammarChecker: GrammarChecker = GrammarChecker()
 // 입력
 let inputView: InputView = InputView.init(grammarChecker: grammarChecker)
-
-let commandCount: Int = CommandLine.arguments.count
-switch commandCount {
-case 2,3:
+var isError: Bool = true
+while isError {
+    print(GuideMessage.inputRequest.rawValue)
     do {
-        inputValue = try inputView.readFromFile()
-    } catch GuideMessage.notJSONPattern {
+        inputValue = try inputView.readInput(isError: isError)
+        isError = false
+    } catch  GuideMessage.notJSONPattern {
+        isError = true
         print(GuideMessage.notJSONPattern.rawValue)
     } catch {
+        isError = true
         print(GuideMessage.wrongInput.rawValue)
-    }
-default:
-    var isJSONPattern: Bool = false
-    while !isJSONPattern {
-        print(GuideMessage.inputRequest.rawValue)
-        inputValue = inputView.readFromConsole()
-        isJSONPattern = grammarChecker.isJSONPattern(target: inputValue)
-        if !isJSONPattern {
-            print(GuideMessage.notJSONPattern.rawValue)
-        }
     }
 }
 
