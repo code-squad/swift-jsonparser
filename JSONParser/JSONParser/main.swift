@@ -10,7 +10,7 @@ import Foundation
 
 func main() throws {
     do {
-        let userFileNames = try InputView.terminalMode(manualMessage: "분석할 JSON 파일이름과 출력할 파일이름을 적어주세요: ")
+        let userFileNames = try InputView.terminalMode()
         let userData = try InputView.getData(from: userFileNames.0)
         // JSON 규격 여부 검사.
         guard try GrammarChecker.isJSONPattern(userData) else { throw GrammarChecker.JsonError.invalidPattern }

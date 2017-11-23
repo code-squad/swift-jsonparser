@@ -52,29 +52,38 @@ struct JSONObject: JSONData {
         self.prettyData.append("}")
     }
     
+    // 데이터별 개행 규칙
+    // 기본 : 데이터 내부(X) / 외부(X)
+    // 배열 : 데이터 내부(X) / 외부(O) - 윗줄 개행 후 시작.
+    // 객체 : 데이터 내부(O) / 외부(X)
     private func addValuesOfData() -> [Any] {
         var temp: [Any] = []
         for (key, value) in self.data {
             switch value {
             case let values as TYPEObject:
-                appendAnys(to: &temp, of: "\n\t\"", key, "\": ", "{")
+                temp.append("\n\t\"\(key)\": {")
                 for (key, value) in values {
                     // 데이터가 문자열이면 따옴표 붙임.
                     let data = makeDataString(from: value)
-                    appendAnys(to: &temp, of: "\n\t\t\"", key, "\": ", data, ",")
+                    temp.append("\n\t\t\"\(key)\": \(data),")
                 }
-                temp.append("\n\t},")
+                temp.removeLast()
+                temp.append("\n\t}")
+                temp.append(",")
                 break
             case let values as TYPEArray:
                 let data = makeDataString(from: values)
-                appendAnys(to: &temp, of: "\n\t\"", key, "\": ", data, ",")
+                temp.append("\n\t\"\(key)\": \(data)")
+                temp.append(",")
                 break
             default:
                 let data = makeDataString(from: value)
-                appendAnys(to: &temp, of: "\n\t\"", key, "\": ", data, ",")
+                temp.append("\n\t\"\(key)\": \(data)")
+                temp.append(",")
                 break
             }
         }
+        temp.removeLast()
         return temp
     }
     

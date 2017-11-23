@@ -26,7 +26,7 @@ struct InputView {
         }
     }
     
-    static func terminalMode(manualMessage: String) throws -> (String, String?) {
+    static func terminalMode() throws -> (String, String?) {
         var inputFileName: String
         var outputFileName: String?
         // 첫번째 인자 저장.
