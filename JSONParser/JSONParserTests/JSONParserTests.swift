@@ -281,4 +281,24 @@ class JSONParserTests: XCTestCase {
         XCTAssertTrue(try GrammarChecker.isJSONPattern(data))
     }
     
+    func testInvalidLastCommaInArray() throws {
+        let data: String = "[ \"score\", 234, true, ]"
+        XCTAssertFalse(try GrammarChecker.isJSONPattern(data))
+    }
+    
+    func testInvalidLastCommaInObject() throws {
+        let data: String = "{ \"level\": 4, \"score\":234, \"skills\": true, }"
+        XCTAssertFalse(try GrammarChecker.isJSONPattern(data))
+    }
+    
+    func testInvalidLastCommaInNestedObject() throws {
+        let data: String = "{ \"JK\": {\"level\": 4, \"score\":234, \"skills\": true, } }"
+        XCTAssertFalse(try GrammarChecker.isJSONPattern(data))
+    }
+    
+    func testInvalidLastCommaInNestedArray() throws {
+        let data: String = "[ \"JK\", true, false, [\"Honux\",234,\"name\", ] ]"
+        XCTAssertFalse(try GrammarChecker.isJSONPattern(data))
+    }
+    
 }
