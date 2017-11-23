@@ -9,88 +9,29 @@
 import Foundation
 
 struct OutputView {
-    private let jsonType : JSONType
-    
-    init(jsonType: JSONType) {
-        self.jsonType = jsonType
-    }
-    
-    func printResult(jsonPainter: JSONPainter) {
-        let commandCount: Int = CommandLine.arguments.count
-        switch commandCount {
-        case 2:
-            printOnFile(newFileName: GuideMessage.defaultFileName.rawValue, jsonPainter: jsonPainter)
-        case 3:
-            printOnFile(newFileName: CommandLine.arguments[2], jsonPainter: jsonPainter)
-        default:
-            printOnConsole(jsonPainter: jsonPainter)
+
+    func printResult(jsonResult: String, newFileName: String) {
+        if newFileName.count > 0 {
+            printOnFile(jsonResult: jsonResult, newFileName: newFileName)
+        } else {
+            printOnConsole(jsonResult: jsonResult)
         }
     }
 
-    private func getCountResult() -> String {
-        var result : String = "총 \(jsonType.totalCounter)개의 \(jsonType.container) 데이터 중에"
-        result += getObjectCounter()
-        result += getStringCounter()
-        result += getIntCounter()
-        result += getBoolCounter()
-        result += getArrayCounter()
-        result.removeLast()
-        result += "가 포함되어 있습니다."
-        return result
+    private func printOnConsole(jsonResult: String) {
+        print(jsonResult)
     }
 
-    private func printOnConsole(jsonPainter: JSONPainter) {
-        print(getCountResult())
-        print(jsonPainter.jsonPainting)
-    }
-
-    private func printOnFile(newFileName: String, jsonPainter: JSONPainter) {
+    private func printOnFile(jsonResult: String, newFileName: String) {
         let file: String = GuideMessage.baseDirPath.rawValue + newFileName
         if let dir = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first {
             let fileURL = dir.appendingPathComponent(file)
             do {
-                let output: String = getCountResult() + "\n" + jsonPainter.jsonPainting
-                try output.write(to: fileURL, atomically: false, encoding: .utf8)
-            }
-            catch {
+                try jsonResult.write(to: fileURL, atomically: false, encoding: .utf8)
+            } catch {
                 print(GuideMessage.outputError.rawValue)
             }
         }
     }
-    
-    private func getStringCounter() -> String {
-        if jsonType.stringCounter > 0 {
-            return " 문자열 \(jsonType.stringCounter)개,"
-        }
-        return ""
-    }
-    
-    private func getIntCounter() -> String {
-        if jsonType.intCounter > 0 {
-            return " 숫자 \(jsonType.intCounter)개,"
-        }
-        return ""
-    }
-    
-    private func getBoolCounter() -> String {
-        if jsonType.boolCounter > 0 {
-            return " 부울 \(jsonType.boolCounter)개,"
-        }
-        return ""
-    }
-    
-    private func getObjectCounter() -> String {
-        if jsonType.objectCounter > 0 {
-            return " 객체 \(jsonType.objectCounter)개,"
-        }
-        return ""
-    }
-    
-    private func getArrayCounter() -> String {
-        if jsonType.arrayCounter > 0 {
-            return " 배열 \(jsonType.arrayCounter)개,"
-        }
-        return ""
-    }
-    
+
 }

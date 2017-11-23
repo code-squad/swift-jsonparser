@@ -42,8 +42,15 @@ while inputValue.count == 0 {
 let jsonAnalyser = JSONAnalyser()
 let jsonType = jsonAnalyser.getJSONType(inputValue: inputValue)
 // JSON 형식
-var jsonPainter = JSONPainter()
-jsonPainter.paintJSON(jsonType: jsonType)
+var jsonPainter = JSONPainter(jsonType: jsonType)
+let jsonResult: String = jsonPainter.getJSONResultAll()
 // 출력
-let outputView = OutputView.init(jsonType: jsonType)
-outputView.printResult(jsonPainter: jsonPainter)
+let outputView = OutputView()
+switch commandCount {
+case 2:
+    outputView.printResult(jsonResult: jsonResult, newFileName: GuideMessage.defaultFileName.rawValue)
+case 3:
+    outputView.printResult(jsonResult: jsonResult, newFileName: CommandLine.arguments[2])
+default:
+    outputView.printResult(jsonResult: jsonResult, newFileName: "")
+}

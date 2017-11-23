@@ -9,10 +9,20 @@
 import Foundation
 
 struct JSONPainter {
+    private let jsonType: JSONType
     private(set) var jsonPainting: String = ""
     private var depth: Int = 0
 
-    mutating func paintJSON(jsonType: JSONType) {
+    init(jsonType: JSONType) {
+        self.jsonType = jsonType
+        paintJSON()
+    }
+
+    func getJSONResultAll() -> String {
+        return getCountResult() + "\n" + jsonPainting
+    }
+
+    private mutating func paintJSON() {
         if let jsonObject = jsonType as? JSONObject {
             jsonPainting = paintObjectType(jsonObject: jsonObject)
         } else if let jsonArray = jsonType as? JSONArray {
@@ -73,6 +83,58 @@ struct JSONPainter {
             }
         }
         return result
+    }
+
+}
+
+typealias JSONCounter = JSONPainter
+private extension JSONCounter {
+
+    func getCountResult() -> String {
+        var result : String = "총 \(jsonType.totalCounter)개의 \(jsonType.container) 데이터 중에"
+        result += getObjectCounter()
+        result += getStringCounter()
+        result += getIntCounter()
+        result += getBoolCounter()
+        result += getArrayCounter()
+        result.removeLast()
+        result += "가 포함되어 있습니다."
+        return result
+    }
+
+    func getStringCounter() -> String {
+        if jsonType.stringCounter > 0 {
+            return " 문자열 \(jsonType.stringCounter)개,"
+        }
+        return ""
+    }
+
+    func getIntCounter() -> String {
+        if jsonType.intCounter > 0 {
+            return " 숫자 \(jsonType.intCounter)개,"
+        }
+        return ""
+    }
+
+    func getBoolCounter() -> String {
+        if jsonType.boolCounter > 0 {
+            return " 부울 \(jsonType.boolCounter)개,"
+        }
+        return ""
+    }
+
+    func getObjectCounter() -> String {
+        if jsonType.objectCounter > 0 {
+            return " 객체 \(jsonType.objectCounter)개,"
+        }
+        return ""
+    }
+
+    func getArrayCounter() -> String {
+        if jsonType.arrayCounter > 0 {
+            return " 배열 \(jsonType.arrayCounter)개,"
+        }
+        return ""
     }
 
 }
