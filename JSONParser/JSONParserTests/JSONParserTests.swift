@@ -25,19 +25,22 @@ class JSONParserTests: XCTestCase {
     func testStringDataCountInBasicArray() throws {
         let data: String = "[ \"JK\" , 234 , true, false ]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.string, 1)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.string, 1)
     }
     
     func testNumberDataCountInBasicArray() throws {
         let data: String = "[ \"JK\" , 234 , true, false ]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.number, 1)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.number, 1)
     }
     
     func testBoolDataCountInBasicArray() throws {
         let data: String = "[ \"JK\" , 234 , true, false ]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.bool, 2)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.bool, 2)
     }
     
     func testValidationOfBasicObject() throws {
@@ -48,25 +51,29 @@ class JSONParserTests: XCTestCase {
     func testWholeDataCountOfBasicObject() throws {
         let data: String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\": true }"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.count, 4)
+        let parsedObject = parsedData as! JSONObject
+        XCTAssertEqual(parsedObject.count, 4)
     }
     
     func testNumberDataCountInBasicObject() throws {
         let data: String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\": true }"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.number, 1)
+        let parsedObject = parsedData as! JSONObject
+        XCTAssertEqual(parsedObject.dataCountOfEach.number, 1)
     }
     
     func testStringDataCountInBasicObject() throws {
         let data: String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\": true }"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.string, 2)
+        let parsedObject = parsedData as! JSONObject
+        XCTAssertEqual(parsedObject.dataCountOfEach.string, 2)
     }
     
     func testBoolDataCountInBasicObject() throws {
         let data: String = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\": true }"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.bool, 1)
+        let parsedObject = parsedData as! JSONObject
+        XCTAssertEqual(parsedObject.dataCountOfEach.bool, 1)
     }
     
     func testValidationOfArrayWithNestedObject() throws {
@@ -83,25 +90,29 @@ class JSONParserTests: XCTestCase {
     func testNestedObjectDataCountInArray() throws {
         let data: String = "[ \"Napster\", \"Lemon\", \"Alley\", false, \"Alien\", 890, { \"Aming\": \"Jake\", \"Hoon\": 234}, { \"Jack\": true } ]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.nestedObject, 2)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.nestedObject, 2)
     }
     
     func testStringDataCountWithNestedObjectInArray() throws {
         let data: String = "[ \"Napster\", \"Lemon\", \"Alley\", false, \"Alien\", 890, { \"Aming\": \"Jake\", \"Hoon\": 234}, { \"Jack\": true } ]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.string, 4)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.string, 4)
     }
     
     func testNumberDataCountWithNestedObjectInArray() throws {
         let data: String = "[ \"Napster\", \"Lemon\", \"Alley\", false, \"Alien\", 890, { \"Aming\": \"Jake\", \"Hoon\": 234}, { \"Jack\": true } ]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.number, 1)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.number, 1)
     }
     
     func testBoolDataCountWithNestedObjectInArray() throws {
         let data: String = "[ \"Napster\", \"Lemon\", \"Alley\", false, \"Alien\", 890, { \"Aming\": \"Jake\", \"Hoon\": 234}, { \"Jack\": true } ]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.bool, 1)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.bool, 1)
     }
     
     func testValidationOfArrayWithNestedArray() throws {
@@ -118,25 +129,29 @@ class JSONParserTests: XCTestCase {
     func testNestedArrayDataCountInArray() throws {
         let data: String = "[ \"JK\" , 234 , true, [\"KIM JUNG\", 789, true, false], 890]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.nestedArray, 1)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.nestedArray, 1)
     }
     
     func testStringDataCountWithNestedArrayInArray() throws {
         let data: String = "[ \"JK\" , 234 , true, [\"KIM JUNG\", 789, true, false], 890]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.string, 1)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.string, 1)
     }
     
     func testNumberDataCountWithNestedArrayInArray() throws {
         let data: String = "[ \"JK\" , 234 , true, [\"KIM JUNG\", 789, true, false], 890]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.number, 2)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.number, 2)
     }
     
     func testBoolDataCountWithNestedArrayInArray() throws {
         let data: String = "[ \"JK\" , 234 , true, [\"KIM JUNG\", 789, true, false], 890]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.bool, 1)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.bool, 1)
     }
     
     func testValidationOfArrayWithMultiNestedBlobs() throws {
@@ -153,31 +168,36 @@ class JSONParserTests: XCTestCase {
     func testNestedArrayCountWithMultiNestedBlobsInArray() throws {
         let data: String = "[ \"JK\", true, false, { \"name\" : \"KIMJUNG\", \"alias\":\"JK\",\"level\":5,\"married\":true}, [true,\"crong\",4,\"married\"], {\"nickname\":\"Pobi\",\"score\":4}, {\"slept\":true}, [\"Honux\",234,\"name\"], 3456 ]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.nestedArray, 2)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.nestedArray, 2)
     }
     
     func testNestedObjectCountWithMultiNestedBlobsInArray() throws {
         let data: String = "[ \"JK\", true, false, { \"name\" : \"KIMJUNG\", \"alias\":\"JK\",\"level\":5,\"married\":true}, [true,\"crong\",4,\"married\"], {\"nickname\":\"Pobi\",\"score\":4}, {\"slept\":true}, [\"Honux\",234,\"name\"], 3456 ]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.nestedObject, 3)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.nestedObject, 3)
     }
     
     func testStringDataCountWithMultiNestedBlobsInArray() throws {
         let data: String = "[ \"JK\", true, false, { \"name\" : \"KIMJUNG\", \"alias\":\"JK\",\"level\":5,\"married\":true}, [true,\"crong\",4,\"married\"], {\"nickname\":\"Pobi\",\"score\":4}, {\"slept\":true}, [\"Honux\",234,\"name\"], 3456 ]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.string, 1)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.string, 1)
     }
     
     func testNumberDataCountWithMultiNestedBlobsInArray() throws {
         let data: String = "[ \"JK\", true, false, { \"name\" : \"KIMJUNG\", \"alias\":\"JK\",\"level\":5,\"married\":true}, [true,\"crong\",4,\"married\"], {\"nickname\":\"Pobi\",\"score\":4}, {\"slept\":true}, [\"Honux\",234,\"name\"], 3456 ]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.number, 1)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.number, 1)
     }
     
     func testBoolDataCountWithMultiNestedBlobsInArray() throws {
         let data: String = "[ \"JK\", true, false, { \"name\" : \"KIMJUNG\", \"alias\":\"JK\",\"level\":5,\"married\":true}, [true,\"crong\",4,\"married\"], {\"nickname\":\"Pobi\",\"score\":4}, {\"slept\":true}, [\"Honux\",234,\"name\"], 3456 ]"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.bool, 2)
+        let parsedArray = parsedData as! JSONArray
+        XCTAssertEqual(parsedArray.dataCountOfEach.bool, 2)
     }
     
     func testValidationOfObjectWithMultiNestedBlobs() throws {
@@ -194,31 +214,36 @@ class JSONParserTests: XCTestCase {
     func testNestedArrayCountWithMultiNestedBlobsInObject() throws {
         let data: String = "{ \"JK\":true, \"Alley\": 234, \"Lemon\":234, \"Aming\": {\"Alien\": \"Asdf\", \"Napster\": 324, \"Jake\":true }, \"Hoon\":[true, false, 234, \"Jack\"], \"Min\": false }"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.nestedArray, 1)
+        let parsedObject = parsedData as! JSONObject
+        XCTAssertEqual(parsedObject.dataCountOfEach.nestedArray, 1)
     }
     
     func testNestedObjectCountWithMultiNestedBlobsInObject() throws {
         let data: String = "{ \"JK\":true, \"Alley\": 234, \"Lemon\":234, \"Aming\": {\"Alien\": \"Asdf\", \"Napster\": 324, \"Jake\":true }, \"Hoon\":[true, false, 234, \"Jack\"], \"Min\": false }"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.nestedObject, 1)
+        let parsedObject = parsedData as! JSONObject
+        XCTAssertEqual(parsedObject.dataCountOfEach.nestedObject, 1)
     }
     
     func testStringCountWithMultiNestedBlobsInObject() throws {
         let data: String = "{ \"JK\":true, \"Alley\": 234, \"Lemon\":234, \"Aming\": {\"Alien\": \"Asdf\", \"Napster\": 324, \"Jake\":true }, \"Hoon\":[true, false, 234, \"Jack\"], \"Min\": false }"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.string, 0)
+        let parsedObject = parsedData as! JSONObject
+        XCTAssertEqual(parsedObject.dataCountOfEach.string, 0)
     }
     
     func testNumberCountWithMultiNestedBlobsInObject() throws {
         let data: String = "{ \"JK\":true, \"Alley\": 234, \"Lemon\":234, \"Aming\": {\"Alien\": \"Asdf\", \"Napster\": 324, \"Jake\":true }, \"Hoon\":[true, false, 234, \"Jack\"], \"Min\": false }"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.number, 2)
+        let parsedObject = parsedData as! JSONObject
+        XCTAssertEqual(parsedObject.dataCountOfEach.number, 2)
     }
     
     func testBoolCountWithMultiNestedBlobsInObject() throws {
         let data: String = "{ \"JK\":true, \"Alley\": 234, \"Lemon\":234, \"Aming\": {\"Alien\": \"Asdf\", \"Napster\": 324, \"Jake\":true }, \"Hoon\":[true, false, 234, \"Jack\"], \"Min\": false }"
         let parsedData = try JSONParser.parse(data)
-        XCTAssertEqual(parsedData.dataCountOfEach.bool, 2)
+        let parsedObject = parsedData as! JSONObject
+        XCTAssertEqual(parsedObject.dataCountOfEach.bool, 2)
     }
     
     func testInvalidArrayPattern() throws {

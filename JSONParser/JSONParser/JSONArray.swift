@@ -18,8 +18,8 @@ struct JSONArray: JSONData {
         self.prettyData.append(contentsOf: addValuesOfData())
     }
     private var data: TYPEArray
-    var dataCountOfEach: (string: Int, number: Int, bool: Int, nestedObject: Int, nestedArray: Int)
-    var prettyData: [Any]
+    private(set) var dataCountOfEach: (string: Int, number: Int, bool: Int, nestedObject: Int, nestedArray: Int)
+    private var prettyData: [Any]
     var count: Int { return data.count }
     
     private mutating func setData(_ data: TYPEArray) {
@@ -142,6 +142,42 @@ struct JSONArray: JSONData {
         default:
             return data
         }
+    }
+    
+    func generateJSONReport() -> String {
+        let dataType = "배열"
+        // 전체 데이터 개수 (문자열, 숫자, 부울, 객체, 배열)
+        let dataCounts = self.dataCountOfEach
+        
+        // 출력할 문자열.
+        var result = "총 \(data.count)개의 \(dataType) 데이터 중에"
+        if dataCounts.string > 0 {
+            result += " 문자열 \(dataCounts.string)개,"
+        }
+        if dataCounts.number > 0 {
+            result += " 숫자 \(dataCounts.number)개,"
+        }
+        if dataCounts.bool > 0 {
+            result += " 부울 \(dataCounts.bool)개,"
+        }
+        if dataCounts.nestedObject > 0 {
+            result += " 객체 \(dataCounts.nestedObject)개,"
+        }
+        if dataCounts.nestedArray > 0 {
+            result += " 배열 \(dataCounts.nestedArray)개,"
+        }
+        result.removeLast()             // 마지막 콤마(,) 제거.
+        result += "가 포함되어 있습니다."
+        return result
+    }
+    
+    func generatePrettyJSONData() -> String {
+        var resultData = ""
+        for datum in self.prettyData {
+            resultData += "\(datum) "
+        }
+        resultData += "\n"
+        return resultData
     }
     
 }

@@ -15,8 +15,8 @@ func main() throws {
         // JSON 규격 여부 검사.
         guard try GrammarChecker.isJSONPattern(userData) else { throw GrammarChecker.JsonError.invalidPattern }
         let jsonData = try JSONParser.parse(userData)
-        let report = OutputView.getReport(jsonData)
-        let prettyData = OutputView.getPrettyData(jsonData)
+        let report = jsonData.generateJSONReport()
+        let prettyData = jsonData.generatePrettyJSONData()
         if let outputFileName = userFileNames.1 {
             try OutputView.writeData(prettyData, into: outputFileName)
         }else {

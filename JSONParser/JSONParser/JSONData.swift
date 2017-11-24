@@ -14,7 +14,7 @@ protocol JSONData {
     typealias TYPEString = String
     typealias TYPENumber = Int
     typealias TYPEBool = Bool
-    var prettyData: [Any] { get set }
     var count: Int { get }
-    var dataCountOfEach: (string: Int, number: Int, bool: Int, nestedObject: Int, nestedArray: Int) { get set }
+    func generateJSONReport() -> String
+    func generatePrettyJSONData() -> String
 }

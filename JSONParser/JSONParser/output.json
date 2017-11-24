@@ -1,6 +1,13 @@
-{ 
-	"alias": "JK" , 
-	"name": "KIM JUNG" , 
-	"level": 5 , 
-	"children": ["hana", "hayul", "haun"] 
- } 
+[ { 
+	 	"married":true , 
+	 	"name":"KIMJUNG" , 
+	 	"level":5 , 
+	 	"alias":"JK" 
+	} , { 
+	 	"name":"Pobi" , 
+	 	"level":4 
+	} , { 
+	 	"married":true 
+	} , 
+	 [true, false, 234, "Jack"] , "sdfdsf" , 234 
+ ] 

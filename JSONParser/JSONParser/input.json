@@ -1,1 +1,1 @@
-{ "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "children" : ["hana", "hayul", "haun"] }
+[ { "name" : "KIMJUNG", "alias":"JK", "level":5, "married":true}, {"name":"Pobi", "level":4}, {"married":true}, [true, false, 234, "Jack"], "sdfdsf", 234]
