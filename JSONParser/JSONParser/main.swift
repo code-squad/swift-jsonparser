@@ -17,11 +17,13 @@ func main() throws {
         let jsonData = try JSONParser.parse(userData)
         let report = jsonData.generateJSONReport()
         let prettyData = jsonData.generatePrettyJSONData()
+        // 출력파일 이름이 있으면,
         if let outputFileName = userFileNames.1 {
+            // 파일에 출력. (.json 파일이므로 레포트는 따로 출력하지 않는다.)
             try OutputView.writeData(prettyData, into: outputFileName)
         }else {
-            print(report, "\n")
-            print(prettyData)
+            // 콘솔 출력.
+            OutputView.printData(report, prettyData)
         }
     }catch let e as GrammarChecker.JsonError {
         OutputView.printError(e)

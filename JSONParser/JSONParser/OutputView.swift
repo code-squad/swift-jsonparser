@@ -22,6 +22,11 @@ struct OutputView {
         }
     }
     
+    static func printData(_ report: String, _ prettyData: String) {
+        print(report, "\n")
+        print(prettyData)
+    }
+    
     // JSON 관련 에러 출력.
     static func printError(_ error: GrammarChecker.JsonError) {
         print(error.rawValue)
