@@ -56,7 +56,9 @@ struct JSONArray: JSONData {
         for index in 0..<self.data.count {
             let datum = self.data[index]
             var isLastDatum = false
-            if index == self.data.count - 1 { isLastDatum = true }
+            if index == self.data.count - 1 {
+                isLastDatum = true
+            }
             switch datum {
             case let objectDatum as TYPEObject:
                 let prettyObject = makePrettyData(objectDatum, isLastDatum, isArrayPreceded)
@@ -90,10 +92,10 @@ struct JSONArray: JSONData {
         // 외부 개행 없음.
         temp.append("{")
         // 내부 데이터 각각에 개행 적용.
-        for (key, var value) in datum {
+        for (key, value) in datum {
             let data = makeDataString(from: value)
             temp.append("\n\t")
-            temp.append("\t\"\(key)\":\(value)")
+            temp.append("\t\"\(key)\":\(data)")
             temp.append(",")
         }
         // 배열 내부 마지막 콤마 제거.
