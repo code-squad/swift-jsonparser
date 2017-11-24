@@ -1,12 +1,6 @@
 { 
-	" JK ":  true , 
-	" Lemon ":  234 , 
-	" Alley ":  234 , 
-	" Hoon ":  [true, false, 234, "Jack"] , 
-	" Min ":  false , 
-	" Aming ":  { 
-		" Napster ":  324 , 
-		" Alien ":  "Asdf" , 
-		" Jake ":  true , 
-	}, 
+	"alias": "JK" , 
+	"name": "KIM JUNG" , 
+	"level": 5 , 
+	"children": ["hana", "hayul", "haun"] 
  } 
