@@ -10,9 +10,6 @@ import XCTest
 @testable import JSONParser
 
 class UnitTestJSONParser: XCTestCase {
-    private let objectSeparatePattern = "([^\\,\\{\\}]+)"
-    private let arrayCheckAndSeparatePattern = "(\\{[^\\{\\}]*\\})|(true|false)|(\\d+)|(\".+?\")|(:)"
-    
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
@@ -75,15 +72,16 @@ class UnitTestJSONParser: XCTestCase {
     
     func testMakeJSONDataMethod() {
         let parser = JSONParser()
-        let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
-        XCTAssertThrowsError(try parser.makeJSONData(testRawJSONData1))
+        let testRawJSONData1 = "{ \"name\" : [\"KIM JUNG\", 123], \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
+        let parserTypeCount = try! parser.makeJSONData(testRawJSONData1)
+        XCTAssertEqual(parserTypeCount.arrayTypeCount, 2)
     }
     
     func testJSONParserObjectBoolCASE() {
         let parser = JSONParser()
-        let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
+        let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : false, \"married\" : true }"
         let separateValue = try! parser.makeJSONData(testRawJSONData1)
-        XCTAssertEqual(separateValue.boolTypeCount, 1)
+        XCTAssertEqual(separateValue.boolTypeCount, 2)
     }
     
     func testJSONParserObjectStringCASE() {
@@ -135,15 +133,28 @@ class UnitTestJSONParser: XCTestCase {
         XCTAssertEqual(parserTypeCount.sumOfData, 4)
     }
     
-    func testGrammarCheckerInvalidJSONAtArray() {
-        let grammarCheckerTest = GrammarChecker()
-        let testRawJSONData1 = "[ \"name\" : \"KIM JUNG\" ]"
-        XCTAssertThrowsError(try grammarCheckerTest.checkAndSeparateArray(inString: testRawJSONData1))
+    func testArrayParserTest1() {
+        let parser = JSONParser()
+        let testRawJSONData1 = "[\"Lee\": true, 123, \"test\"]"
+        XCTAssertThrowsError(try parser.makeJSONData(testRawJSONData1))
     }
     
-    func testGrammarCheckerAtObject() {
-        let grammarCheckerTest = GrammarChecker()
-        let testRawJSONData1 = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
-        XCTAssertThrowsError(try grammarCheckerTest.checkAndSeparateObject(inString: testRawJSONData1))
+    func testArrayParserTest2() {
+        let parser = JSONParser()
+        let testRawJSONData1 = "[{\"Lee\": true}, 123, \"test\"],]"
+        XCTAssertThrowsError(try parser.makeJSONData(testRawJSONData1))
     }
+ 
+    func testObjectParserTest1() {
+        let parser = JSONParser()
+        let testRawJSONData1 = "{\"Lee\": true, \"Dong\": [\"\", 123}"
+        XCTAssertThrowsError(try parser.makeJSONData(testRawJSONData1))
+    }
+    
+    func testObjectParserTest2() {
+        let parser = JSONParser()
+        let testRawJSONData1 = "{\"Lee\": true, \"Dong\": \"test\", 123]}"
+        XCTAssertThrowsError(try parser.makeJSONData(testRawJSONData1))
+    }
+    
 }
