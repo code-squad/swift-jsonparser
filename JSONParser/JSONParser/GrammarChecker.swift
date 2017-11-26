@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GrammarChecker {
+struct GrammarChecker : JSONSupporting {
     private let invalidCharacter: Set<String> = [":", "{", "}", "[", "]"]
     
     func flatJSON(Of inString: String) throws -> JSONType {
@@ -26,13 +26,6 @@ struct GrammarChecker {
             if invalidCharacter.contains(element) { throw ErrorCode.invalidJSONStandard }
         }
         return values
-    }
-    
-    func removeBrace(_ value: String) -> String {
-        var rawJSON = value
-        rawJSON.removeFirst()
-        rawJSON.removeLast()
-        return rawJSON
     }
     
 }
