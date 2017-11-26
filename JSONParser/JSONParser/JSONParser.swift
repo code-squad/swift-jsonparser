@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JSONParser {
+struct JSONParser : JSONSupporting {
     private let arrayPattern = "(\\[[^\\[\\]]*\\])|(\\{[^\\{\\}]*\\})|(true|false)|(\\d+)|(\".+?\")|(:)|(\\[|\\])"
     private let objectPattern = "((\"[^\"\"]*\")\\s*?:\\s*?((\\[[^\\[\\]]*\\])|(true|false)|(\\d+)|(\"[^\"\"]*\")|(\\{[^\\{\\}]*\\})))|(:)|(\\[|\\])"
     private let grammarChecker = GrammarChecker()
@@ -58,13 +58,6 @@ struct JSONParser {
             objectTypeJSON[key] = try sortJSONData(objectValue)
         }
         return JSONData(objectTypeJSON)
-    }
-    
-    private func removeBrace(_ value: String) -> String {
-        var rawJSON = value
-        rawJSON.removeFirst()
-        rawJSON.removeLast()
-        return rawJSON
     }
 
 }
