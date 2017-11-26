@@ -11,7 +11,9 @@ import Foundation
 struct JsonScanner {
     enum regex: String {
         case STARTSQUAREBRACKET = "\\["
-        case ENDSQUAREBRACKET = "]"
+        case ENDSQUAREBRACKET = "\\]"
+        case STARTCURLYBRACKET = "\\{"
+        case ENDCURLYBRACKET = "\\}"
         case STRING = "\"[a-z,A-Z,0-9]+\""
         case BOOLEAN = "(true|false)"
         case NUMBER = " [0-9]+"
