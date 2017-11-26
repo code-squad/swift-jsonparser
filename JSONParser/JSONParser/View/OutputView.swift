@@ -19,15 +19,8 @@ struct OutputView {
         print("가 포함되어 있습니다.")
     }
     
-    func printErrorMsg(errorCode: JSONParser.ErrorCode) {
-        switch errorCode {
-        case .invalidJSONStandard:
-            print("JSON규격에 맞지않습니다. 올바른 입력값을 넣어주세요 :)")
-        case .invalidInputString:
-            print("입력값을 확인해주세요 :)")
-        case .invalidPatten:
-            print("Regex 패턴이 맞지 않습니다. 확인해주세요 :)")
-        }
+    func printErrorMsg(errorCode: ErrorCode) {
+        print("\(errorCode.rawValue)")
     }
     
     private func printJSONData(_ jsonData: JSONData) {
@@ -44,7 +37,10 @@ struct OutputView {
             print(" 부울 \(jsonData.boolTypeCount)개", terminator: printComma(jsonData.boolTypeCount))
         }
         if jsonData.objectTypeCount > 0 {
-            print(" 객체 \(jsonData.objectTypeCount)개", terminator: "")
+            print(" 객체 \(jsonData.objectTypeCount)개", terminator: printComma(jsonData.objectTypeCount))
+        }
+        if jsonData.arrayTypeCount > 0 {
+            print(" 배열 \(jsonData.arrayTypeCount)개", terminator: "")
         }
     }
 }

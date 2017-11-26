@@ -9,53 +9,30 @@
 import Foundation
 
 struct GrammarChecker {
-    private let objectSeparatePattern = "([^\\,\\{\\}]+)"
-    private let objectCheckPattern = "(([\\{])(.[^\\[\\]]*)([\\}]))"
-    private let arrayCheckAndSeparatePattern = "(\\{[^\\{\\}]*\\})|(true|false)|(\\d+)|(\".+?\")|(:)"
+    private let invalidCharacter: Set<String> = [":", "{", "}", "[", "]"]
     
-    func checkAndSeparateArray(inString value: String) throws -> [String] {
-        let separateString = try listMatches(pattern: arrayCheckAndSeparatePattern, inString: value)
-        if (separateString.contains(":"))  {
-            throw JSONParser.ErrorCode.invalidJSONStandard
-        } else {
-            return separateString
+    func flatJSON(Of inString: String) throws -> JSONType {
+        if inString.hasPrefix("[") && inString.hasSuffix("]") {
+            return JSONType.arrayType(removeBrace(inString))
         }
-    }
-    
-    func checkAndSeparateObject(inString value: String) throws -> [String] {
-        let numberOfGroup = try listNumberOfGroup(pattern: objectCheckPattern, inString: value)
-        if  numberOfGroup == 0 {
-            throw JSONParser.ErrorCode.invalidJSONStandard
+        if inString.hasPrefix("{") && inString.hasSuffix("}") {
+            return JSONType.objectType(removeBrace(inString))
         }
-        let separateString = try listMatches(pattern: objectSeparatePattern, inString: value)
-        return separateString
+        throw ErrorCode.invalidJSONStandard
     }
     
-}
-
-extension GrammarChecker {
-    private func listMatches(pattern: String, inString value: String) throws -> [String] {
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
-            throw JSONParser.ErrorCode.invalidJSONStandard
+    func checkElements(Of values: [String]) throws -> [String] {
+        for element in values {
+            if invalidCharacter.contains(element) { throw ErrorCode.invalidJSONStandard }
         }
-        let results = regex.matches(in: value, options: [], range: NSRange(value.startIndex..., in: value))
-        return results.map{ String(value[Range($0.range, in: value)!]) }
+        return values
     }
     
-    private func listNumberOfGroup(pattern: String, inString value: String) throws -> Int {
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
-            throw JSONParser.ErrorCode.invalidPatten
-        }
-        let matches = regex.numberOfMatches(in: value, options: [], range: value.fullRange)
-        return matches
+    func removeBrace(_ value: String) -> String {
+        var rawJSON = value
+        rawJSON.removeFirst()
+        rawJSON.removeLast()
+        return rawJSON
     }
-}
-
-extension String {
-    var fullRange: NSRange { return NSRange(location:0, length: self.count) }
-    func range(from range:NSRange) -> Range<Index> {
-        let start = index(startIndex, offsetBy: range.location)
-        let end = index(start, offsetBy: range.length)
-        return start..<end
-    }
+    
 }

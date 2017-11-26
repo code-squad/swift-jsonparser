@@ -14,6 +14,7 @@ struct JSONData {
     private (set) var stringTypeCount: Int
     private (set) var intTypeCount: Int
     private (set) var objectTypeCount: Int
+    private (set) var arrayTypeCount: Int
     private (set) var sumOfData: Int
     
     init() {
@@ -21,6 +22,7 @@ struct JSONData {
         self.stringTypeCount = 0
         self.intTypeCount = 0
         self.objectTypeCount = 0
+        self.arrayTypeCount = 0
         self.sumOfData = 0
         self.jsonArray = [JSONType]()
         self.jsonObject = [String:JSONType]()
@@ -49,9 +51,11 @@ struct JSONData {
                 stringTypeCount += 1
             case .objectType:
                 objectTypeCount += 1
+            case .arrayType:
+                arrayTypeCount += 1
             }
         }
-        sumOfData = intTypeCount + stringTypeCount + boolTypeCount + objectTypeCount
+        sumOfData = intTypeCount + stringTypeCount + boolTypeCount + objectTypeCount + arrayTypeCount
     }
     
     mutating private func countJSONObject() {
@@ -65,8 +69,10 @@ struct JSONData {
                 stringTypeCount += 1
             case .objectType:
                 objectTypeCount += 1
-            }        }
-        sumOfData = intTypeCount + stringTypeCount + boolTypeCount
+            case .arrayType:
+                arrayTypeCount += 1
+            }
+        }
+        sumOfData = intTypeCount + stringTypeCount + boolTypeCount + arrayTypeCount
     }
-    
 }

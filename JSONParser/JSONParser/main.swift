@@ -17,15 +17,15 @@ func executeJSONParser() {
     while repeatCondition {
         print("분석할 JSON 데이터를 입력하세요.")
         do {
-            if let rawJSONData = inputView.read() {
+            if let rawJSONData = try inputView.read() {
                 outputView.printJSONAnalysis(jsonData: try parser.makeJSONData(rawJSONData))
                 repeatCondition = false
             }
-        } catch JSONParser.ErrorCode.invalidJSONStandard {
+        } catch ErrorCode.invalidJSONStandard {
             outputView.printErrorMsg(errorCode: .invalidJSONStandard)
-        } catch JSONParser.ErrorCode.invalidInputString {
+        } catch ErrorCode.invalidInputString {
             outputView.printErrorMsg(errorCode: .invalidInputString)
-        } catch JSONParser.ErrorCode.invalidPatten {
+        } catch ErrorCode.invalidPatten {
             outputView.printErrorMsg(errorCode: .invalidPatten)
         } catch {
             return
