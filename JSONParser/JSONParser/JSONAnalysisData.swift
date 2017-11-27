@@ -16,8 +16,8 @@ struct JSONAnalysisData {
     private (set) var arrayTypeCount: Int = 0
     private (set) var sumOfData: Int = 0
     
-    mutating func countJSONArray(_ value: JSONArrayData) {
-        for elementOfJSONArray in value.jsonArray {
+    init(_ array: JSONArrayData) {
+        for elementOfJSONArray in array.jsonArray {
             switch elementOfJSONArray {
             case .intType:
                 intTypeCount += 1
@@ -34,8 +34,8 @@ struct JSONAnalysisData {
         sumOfData = intTypeCount + boolTypeCount + stringTypeCount + objectTypeCount + arrayTypeCount
     }
     
-    mutating func countJSONObject(_ value: JSONObjectData) {
-        for (_ , indexOfJSONData) in value.jsonObject {
+    init(_ object: JSONObjectData){
+        for (_ , indexOfJSONData) in object.jsonObject {
             switch indexOfJSONData {
             case .intType:
                 intTypeCount += 1
