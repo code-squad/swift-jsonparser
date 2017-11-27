@@ -18,6 +18,7 @@
 		45EE99FF1FC411BF00D79FE6 /* DataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EE99FE1FC411BF00D79FE6 /* DataInfo.swift */; };
 		45F1D7111FBECC1A00124D11 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F1D7101FBECC1A00124D11 /* InputView.swift */; };
 		45F1D7131FBED0CC00124D11 /* JsonScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F1D7121FBED0CC00124D11 /* JsonScanner.swift */; };
+		45F4C45E1FCBE444008D0019 /* JsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F4C45D1FCBE444008D0019 /* JsonParser.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		45EE99FE1FC411BF00D79FE6 /* DataInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataInfo.swift; sourceTree = "<group>"; };
 		45F1D7101FBECC1A00124D11 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		45F1D7121FBED0CC00124D11 /* JsonScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonScanner.swift; sourceTree = "<group>"; };
+		45F4C45D1FCBE444008D0019 /* JsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParser.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,6 +104,7 @@
 				451C0B871FC269E600BA4998 /* Token.swift */,
 				45EE99FC1FC4083800D79FE6 /* OutputView.swift */,
 				45EE99FE1FC411BF00D79FE6 /* DataInfo.swift */,
+				45F4C45D1FCBE444008D0019 /* JsonParser.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				45F1D7111FBECC1A00124D11 /* InputView.swift in Sources */,
+				45F4C45E1FCBE444008D0019 /* JsonParser.swift in Sources */,
 				451C0B861FC267AE00BA4998 /* JsonTypeCounter.swift in Sources */,
 				451C0B881FC269E600BA4998 /* Token.swift in Sources */,
 				45EE99FF1FC411BF00D79FE6 /* DataInfo.swift in Sources */,

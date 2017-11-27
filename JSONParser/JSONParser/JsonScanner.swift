@@ -14,11 +14,12 @@ struct JsonScanner {
         case ENDSQUAREBRACKET = "\\]"
         case STARTCURLYBRACKET = "\\{"
         case ENDCURLYBRACKET = "\\}"
-        case STRING = "\"[a-z,A-Z,0-9]+\""
+        case STRING = "\"[a-z,A-Z,0-9, ]+\""
         case BOOLEAN = "(true|false)"
         case NUMBER = "[0-9]+"
-        case COMMA = ","
-        static let order = [STARTSQUAREBRACKET, ENDSQUAREBRACKET, NUMBER, STRING, BOOLEAN, COMMA]
+        case COMMA = "\\,"
+        case COLON = "\\:"
+        static let order = [STARTSQUAREBRACKET, ENDSQUAREBRACKET, STARTCURLYBRACKET, ENDCURLYBRACKET, NUMBER, STRING, BOOLEAN, COMMA, COLON]
     }
     enum JsonError: Error {
         case invalidJsonPattern
@@ -26,8 +27,8 @@ struct JsonScanner {
     
     func scanOfJsonValue(jsonValue: String) throws -> [Token] {
         var token = [Token]()
-        let regexOfwhole = "([\\d+\\w\"(true|false)\\[\\]]+)"
-        let lex = try NSRegularExpression(pattern: regexOfwhole)
+        let regexOfWhole = "(\"[^\"\"]*\")|(false|true)|(\\{|\\})|(:)|(\\,)|(\\d+)"
+        let lex = try NSRegularExpression(pattern: regexOfWhole)
         let mathes = lex.matches(in: jsonValue, range: NSMakeRange(0, jsonValue.count))
         // split each token
         for match in mathes {
