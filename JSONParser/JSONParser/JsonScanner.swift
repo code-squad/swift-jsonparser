@@ -16,7 +16,7 @@ struct JsonScanner {
         case ENDCURLYBRACKET = "\\}"
         case STRING = "\"[a-z,A-Z,0-9]+\""
         case BOOLEAN = "(true|false)"
-        case NUMBER = " [0-9]+"
+        case NUMBER = "[0-9]+"
         case COMMA = ","
         static let order = [STARTSQUAREBRACKET, ENDSQUAREBRACKET, NUMBER, STRING, BOOLEAN, COMMA]
     }
@@ -26,19 +26,23 @@ struct JsonScanner {
     
     func scanOfJsonValue(jsonValue: String) throws -> [Token] {
         var token = [Token]()
-        for index in regex.order {
-            do {
-                let lex = try NSRegularExpression(pattern: index.rawValue)
-                let matches = lex.matches(in: jsonValue, range: NSMakeRange(0, jsonValue.count))
-                for match in matches {
-                    let range = match.range
-                    let value = (jsonValue as NSString).substring(with: range)
-                    if index == regex.NUMBER || index == regex.STRING || index == regex.BOOLEAN {
-                        token.append(Token(id: index, value: value))
-                    }
+        let regexOfwhole = "([\\d+\\w\"(true|false)\\[\\]]+)"
+        let lex = try NSRegularExpression(pattern: regexOfwhole)
+        let mathes = lex.matches(in: jsonValue, range: NSMakeRange(0, jsonValue.count))
+        // split each token
+        for match in mathes {
+            let range = match.range
+            let valueOfRange = (jsonValue as NSString).substring(with: range) // 10, "Jk"
+            // matching each type
+            for index in regex.order {
+                let lexOfType = try NSRegularExpression(pattern: index.rawValue)
+                let matchesOfType = lexOfType.firstMatch(in: valueOfRange, range: NSMakeRange(0, valueOfRange.count))
+                if matchesOfType != nil {
+                    let rangeOfType = matchesOfType?.range
+                    let value = (valueOfRange as NSString).substring(with: rangeOfType!)
+                    print(index, value)
+                    token.append(Token(id: index, value: value))
                 }
-            } catch {
-                throw JsonError.invalidJsonPattern
             }
         }
         return token
