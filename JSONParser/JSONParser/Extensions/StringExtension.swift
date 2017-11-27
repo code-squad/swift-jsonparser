@@ -27,3 +27,9 @@ extension String {
         return self.trimmingCharacters(in: .whitespaces)
     }
 }
+
+extension String: JSONDataMaker {
+    func makeJSONData() -> JSONData {
+        return JSONData.string(self)
+    }
+}
