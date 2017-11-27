@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct JSONParser : JSONSupporting {
+struct JSONParser {
     private let arrayPattern = "(\\[[^\\[\\]]*\\])|(\\{[^\\{\\}]*\\})|(true|false)|(\\d+)|(\".+?\")|(:)|(\\[|\\])"
     private let objectPattern = "((\"[^\"\"]*\")\\s*?:\\s*?((\\[[^\\[\\]]*\\])|(true|false)|(\\d+)|(\"[^\"\"]*\")|(\\{[^\\{\\}]*\\})))|(:)|(\\[|\\])"
     private let grammarChecker = GrammarChecker()
     private let lexer = JSONLexer()
 
-    func makeJSONData(_ value: String) throws -> JSONData {
+    func makeJSONData(_ value: String) throws -> Any {
         var rawJSON = [String]()
         let firstObjectJSON = try grammarChecker.flatJSON(of: value)
         
@@ -46,22 +46,35 @@ struct JSONParser : JSONSupporting {
             _ = try makeJSONData(rawJSON)
             return JSONType.arrayType(rawJSON)
         }
-        return JSONType.stringType(removeBrace(rawJSON))
+        return JSONType.stringType(rawJSON.removeBrace())
+        
     }
     
-    private func makeArrayJSONData(_ value: [String]) throws -> JSONData {
-        return try JSONData(value.map{ try sortJSONData($0) })
+    private func makeArrayJSONData(_ value: [String]) throws -> JSONArrayData {
+        return try JSONArrayData(value.map{ try sortJSONData($0) })
     }
     
-    private func makeObjectJSONData(_ separateJSON: [String]) throws -> JSONData {
+    private func makeObjectJSONData(_ separateJSON: [String]) throws -> JSONObjectData {
         var objectTypeJSON = [String:JSONType]()
         for objectComponents in separateJSON {
             let separateObject = objectComponents.components(separatedBy: ":")
-            let key = removeBrace(separateObject[0].trimmingCharacters(in: .whitespacesAndNewlines))
+            let trimmingKey = separateObject[0].trimmingCharacters(in: .whitespacesAndNewlines)
+            let key = trimmingKey.removeBrace()
             let objectValue = separateObject[1].trimmingCharacters(in: .whitespacesAndNewlines)
             objectTypeJSON[key] = try sortJSONData(objectValue)
         }
-        return JSONData(objectTypeJSON)
+        return JSONObjectData(objectTypeJSON)
     }
 
+}
+
+extension String {
+    
+    func removeBrace() -> String {
+        var rawJSON = self
+        rawJSON.removeFirst()
+        rawJSON.removeLast()
+        return rawJSON
+    }
+    
 }

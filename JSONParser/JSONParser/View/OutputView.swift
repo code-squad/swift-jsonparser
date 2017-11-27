@@ -9,13 +9,20 @@
 import Foundation
 
 struct OutputView {
-    func printJSONAnalysis(jsonData: JSONData) {
-        if jsonData.jsonArray.count > 0 {
-            print("총 \(jsonData.sumOfData)개의 배열 데이터 중에", terminator: "")
-        } else if jsonData.jsonObject.count > 0 {
-            print("총 \(jsonData.sumOfData)개의 객체 데이터 중에", terminator: "")
+    func printJSONAnalysis(jsonData: Any) {
+        var analysisData = JSONAnalysisData()
+        switch jsonData {
+        case let value as JSONArrayData:
+            print("총 \(value.jsonArray.count)개의 배열 데이터 중에", terminator: "")
+            analysisData.countJSONArray(value)
+            printJSONData(analysisData)
+        case let value as JSONObjectData:
+            analysisData.countJSONObject(value)
+            print("총 \(value.jsonObject.count)개의 객체 데이터 중에", terminator: "")
+            printJSONData(analysisData)
+        default:
+            printErrorMsg(errorCode: ErrorCode.invalidInputString)
         }
-        printJSONData(jsonData)
         print("가 포함되어 있습니다.")
     }
     
@@ -23,7 +30,7 @@ struct OutputView {
         print("\(errorCode.rawValue)")
     }
     
-    private func printJSONData(_ jsonData: JSONData) {
+    private func printJSONData(_ jsonData: JSONAnalysisData) {
         func printComma(_ jsonDataCount: Int) -> String {
             return (jsonData.sumOfData != jsonDataCount) ? "," : ""
         }

@@ -8,15 +8,15 @@
 
 import Foundation
 
-struct GrammarChecker : JSONSupporting {
+struct GrammarChecker {
     private let invalidCharacter: Set<String> = [":", "{", "}", "[", "]"]
     
     func flatJSON(of inString: String) throws -> JSONType {
         if inString.hasPrefix("[") && inString.hasSuffix("]") {
-            return JSONType.arrayType(removeBrace(inString))
+            return JSONType.arrayType(inString.removeBrace())
         }
         if inString.hasPrefix("{") && inString.hasSuffix("}") {
-            return JSONType.objectType(removeBrace(inString))
+            return JSONType.objectType(inString.removeBrace())
         }
         throw ErrorCode.invalidJSONStandard
     }
