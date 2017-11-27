@@ -11,7 +11,7 @@ import Foundation
 struct GrammarChecker : JSONSupporting {
     private let invalidCharacter: Set<String> = [":", "{", "}", "[", "]"]
     
-    func flatJSON(Of inString: String) throws -> JSONType {
+    func flatJSON(of inString: String) throws -> JSONType {
         if inString.hasPrefix("[") && inString.hasSuffix("]") {
             return JSONType.arrayType(removeBrace(inString))
         }
@@ -21,9 +21,11 @@ struct GrammarChecker : JSONSupporting {
         throw ErrorCode.invalidJSONStandard
     }
     
-    func checkElements(Of values: [String]) throws -> [String] {
+    func checkElements(of values: [String]) throws -> [String] {
         for element in values {
-            if invalidCharacter.contains(element) { throw ErrorCode.invalidJSONStandard }
+            if invalidCharacter.contains(element) {
+                throw ErrorCode.invalidJSONStandard
+            }
         }
         return values
     }

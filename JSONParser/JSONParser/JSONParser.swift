@@ -16,15 +16,15 @@ struct JSONParser : JSONSupporting {
 
     func makeJSONData(_ value: String) throws -> JSONData {
         var rawJSON = [String]()
-        let firstObjectJSON = try grammarChecker.flatJSON(Of: value)
+        let firstObjectJSON = try grammarChecker.flatJSON(of: value)
         
         switch firstObjectJSON {
         case let .arrayType(array) :
             rawJSON = try lexer.listMatches(pattern: arrayPattern, inString: array)
-            return try makeArrayJSONData(grammarChecker.checkElements(Of: rawJSON))
+            return try makeArrayJSONData(grammarChecker.checkElements(of: rawJSON))
         case let .objectType(object) :
             rawJSON = try lexer.listMatches(pattern: objectPattern, inString: object)
-            return try makeObjectJSONData(grammarChecker.checkElements(Of: rawJSON))
+            return try makeObjectJSONData(grammarChecker.checkElements(of: rawJSON))
         default :
             throw ErrorCode.invalidJSONStandard
         }
@@ -32,8 +32,12 @@ struct JSONParser : JSONSupporting {
     
     private func sortJSONData(_ value: String) throws -> JSONType {
         let rawJSON = value
-        if let boolType = Bool(rawJSON) { return JSONType.boolType(boolType) }
-        if let intType = Int(rawJSON) { return JSONType.intType(intType) }
+        if let boolType = Bool(rawJSON) {
+            return JSONType.boolType(boolType)
+        }
+        if let intType = Int(rawJSON) {
+            return JSONType.intType(intType)
+        }
         if rawJSON.hasPrefix("{") {
             _ = try makeJSONData(rawJSON)
             return JSONType.objectType(rawJSON)

@@ -9,10 +9,10 @@
 import Foundation
 
 protocol JSONSupporting {
-    
 }
 
 extension JSONSupporting {
+    
     func removeBrace(_ value: String) -> String {
         var rawJSON = value
         rawJSON.removeFirst()

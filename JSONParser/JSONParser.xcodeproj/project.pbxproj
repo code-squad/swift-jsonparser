@@ -179,7 +179,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0910;
 				LastUpgradeCheck = 0900;
-				ORGANIZATIONNAME = JK;
+				ORGANIZATIONNAME = Napster;
 				TargetAttributes = {
 					400222D11FB972BA00AB1C6A = {
 						CreatedOnToolsVersion = 9.1;
