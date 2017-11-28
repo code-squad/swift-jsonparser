@@ -9,29 +9,33 @@
 import Foundation
 
 struct JSONParser {
-    static func analyzeJSONData(in value: String) throws -> JSONDataCountable & JSONDataMaker {
-        let splitValue = Utility.removeFromFirstToEnd(in: value).split()
-        
-        guard splitValue.count > 0 else {
-            throw InputView.Errors.emptyValue
+    static func analyzeJSONData(in value: String) throws -> JSONDataCountable {
+        guard value.hasPrefix("{") else {
+            return makeJSONArray(in: value)
         }
         
-        return makeJSONArray(in: splitValue)
+        return makeJSONObject(in: value)
     }
     
-    private static func makeJSONArray(in value: [String]) -> JSONArray {
-        let jsonData = value.map({ (s: String) -> JSONData in
-            if s.match(pattern: JSONDataTypePattern.bool.rawValue) {
+    private static func makeJSONArray(in value: String) -> JSONArray {
+        let splitValues = Utility.removeFromFirstToEnd(in: value).splitUnits()
+        
+        let jsonData = splitValues.map({ (s: String) -> JSONData in
+            if s.matchPatterns(pattern: JSONDataTypePattern.bool) {
                 return JSONData(value: Bool(s) ?? false).makeJSONData()
-            } else if s.match(pattern: JSONDataTypePattern.number.rawValue) {
+            } else if s.matchPatterns(pattern: JSONDataTypePattern.number) {
                 return JSONData(value: Double(s) ?? 0).makeJSONData()
-            } else if s.match(pattern: JSONDataTypePattern.string.rawValue) {
+            } else if s.matchPatterns(pattern: JSONDataTypePattern.string) {
                 return JSONData(value: s).makeJSONData()
             } else {
-                return JSONData.null
+                return JSONData(value: s).makeJSONData()
             }
         })
         
         return JSONArray(data: jsonData)
+    }
+    
+    private static func makeJSONObject(in value: String) -> JSONObject {
+        return JSONObject()
     }
 }

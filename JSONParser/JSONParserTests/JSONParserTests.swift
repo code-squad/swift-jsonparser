@@ -13,7 +13,7 @@ class JSONParserTests: XCTestCase {
     
     func test_JSONData_배열_요소_분리_확인() {
         let inputValue = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        XCTAssertTrue(Utility.removeFromFirstToEnd(in: inputValue).split().count == 7)
+        XCTAssertTrue(Utility.removeFromFirstToEnd(in: inputValue).splitUnits().count == 7)
     }
     
     func test_JSONData_배열_요소_개수_확인() {

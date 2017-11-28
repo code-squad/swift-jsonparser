@@ -9,9 +9,9 @@
 import Foundation
 
 struct Utility {
-    static func removeFromFirstToEnd(in jsonData: String) -> String {
-        let startIndex = jsonData.index(jsonData.startIndex, offsetBy: 1)
-        let endIndex = jsonData.index(jsonData.endIndex, offsetBy: -1)
-        return String(jsonData[startIndex..<endIndex])
+    static func removeFromFirstToEnd(in value: String) -> String {
+        let startIndex = value.index(value.startIndex, offsetBy: 1)
+        let endIndex = value.index(value.endIndex, offsetBy: -1)
+        return String(value[startIndex..<endIndex])
     }
 }

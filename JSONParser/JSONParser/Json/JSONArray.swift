@@ -11,6 +11,10 @@ import Foundation
 struct JSONArray {
     private var jsonArray: [JSONData]
     
+    init() {
+        self.jsonArray = []
+    }
+    
     init(data: [JSONData]) {
         self.jsonArray = data
     }

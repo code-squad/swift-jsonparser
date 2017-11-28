@@ -9,11 +9,7 @@
 import Foundation
 
 do {
-    guard let result = try InputView.readValue() as? JSONDataCountable & JSONDataMaker else {
-        throw OutputView.Errors.notPrintValue
-    }
-    
-    OutputView.printResult(in: result as JSONDataCountable & JSONDataMaker)
+    OutputView.printResult(in: try InputView.readValue())
 } catch let error as InputView.Errors {
     print(error.rawValue)
 } catch let error2 as OutputView.Errors {

@@ -11,6 +11,10 @@ import Foundation
 struct JSONObject {
     private var jsonObject: [String: JSONData]
     
+    init() {
+        self.jsonObject = [:]
+    }
+    
     init(data: [String: JSONData]) {
         self.jsonObject = data
     }

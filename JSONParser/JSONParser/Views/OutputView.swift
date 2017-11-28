@@ -15,7 +15,7 @@ struct OutputView {
     
     typealias DataTypeName = JSONData.TypeName
     
-    static func printResult(in data: JSONDataCountable & JSONDataMaker) {
+    static func printResult(in data: JSONDataCountable) {
         var description: String = ""
         let outputs = makeCharacterToOutput(in: data)
         
@@ -31,13 +31,15 @@ struct OutputView {
         print(description)
     }
     
-    private static func makeCharacterToOutput(in data: JSONDataCountable & JSONDataMaker) -> [String: Int] {
-        let jsonDataCount = data.arrayCount
+    private static func makeCharacterToOutput(in data: JSONDataCountable) -> [String: Int] {
+        let arrayCount = data.arrayCount
+        let objectCount = data.objectCount
         let booleanTypeCount = data.boolCount
         let numberTypeCount = data.numberCount
         let stringTypeCount = data.stringCount
         
-        return [DataTypeName.array.rawValue: jsonDataCount, DataTypeName.bool.rawValue: booleanTypeCount, DataTypeName.number.rawValue: numberTypeCount, DataTypeName.string.rawValue: stringTypeCount]
+        return [DataTypeName.array.rawValue: arrayCount, DataTypeName.object.rawValue: objectCount,
+                DataTypeName.bool.rawValue: booleanTypeCount, DataTypeName.number.rawValue: numberTypeCount, DataTypeName.string.rawValue: stringTypeCount]
     }
 }
 

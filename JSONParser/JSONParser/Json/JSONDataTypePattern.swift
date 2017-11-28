@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum JSONDataTypePattern: String {
-    case bool = "^true|false|null"
-    case number = "^[0-9]+"
-    case string = "^[A-Za-z0-9가-힣-+\"]+"
+struct JSONDataTypePattern {
+    static let bool: String = "^true|false|null"
+    static let number: String = "^[0-9]+"
+    static let string: String = "^[A-Za-z0-9가-힣-+\"]+"
 }

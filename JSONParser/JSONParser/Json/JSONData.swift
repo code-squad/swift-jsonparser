@@ -15,9 +15,7 @@ enum JSONData {
     case string(String)
     case array([JSONData])
     case object([String: JSONData])
-}
-
-extension JSONData {
+    
     var bool: Bool? {
         guard case .bool(let b) = self else {
             return nil
@@ -57,7 +55,9 @@ extension JSONData {
         
         return o
     }
-    
+}
+
+extension JSONData {
     enum TypeName: String {
         case bool = "부울"
         case number = "숫자"
