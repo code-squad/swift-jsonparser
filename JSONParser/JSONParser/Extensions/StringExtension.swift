@@ -22,6 +22,18 @@ extension String {
             return String(s).trimmingCharacters(in: .whitespaces)
         })
     }
+    
+    func splitByPatterns(pattern regex: String) -> [String] {
+        guard let regex = try? NSRegularExpression(pattern: regex) else {
+            return []
+        }
+        
+        let results = regex.matches(in: self, range: NSRange(self.startIndex..., in: self))
+        
+        return results.map {
+            String(self[Range($0.range, in: self)!])
+        }
+    }
 }
 
 extension String: JSONDataMaker {

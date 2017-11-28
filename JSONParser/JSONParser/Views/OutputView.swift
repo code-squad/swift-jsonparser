@@ -18,17 +18,22 @@ struct OutputView {
     static func printResult(in data: JSONDataCountable) {
         var description: String = ""
         let outputs = makeCharacterToOutput(in: data)
+        let totalKeyword = searchTotalCharacter(in: data)
         
-        description += "총 \(outputs[DataTypeName.array.rawValue] ?? 0)개의 데이터 중에 "
+        description += "총 \(outputs[totalKeyword] ?? 0)개의 \(totalKeyword) 데이터 중에 "
     
-        for (type, count) in outputs.filter ({ (key, value) in key != "배열" && value > 0 }) {
-            description += "\(type) \(count)개,"
-        }
+        description += outputs.filter({ (key, value) in key != totalKeyword && value > 0 }).map{ (type, count) in
+            "\(type) \(count)개,"
+        }.joined()
         
         description.removeLast()
         description += "가 포함되어 있습니다."
         
         print(description)
+    }
+    
+    private static func searchTotalCharacter(in data: JSONDataCountable) -> String {
+        return data is JSONArray ? DataTypeName.array.rawValue : DataTypeName.object.rawValue
     }
     
     private static func makeCharacterToOutput(in data: JSONDataCountable) -> [String: Int] {

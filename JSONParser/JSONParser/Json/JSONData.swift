@@ -72,10 +72,6 @@ protocol JSONDataMaker {
 }
 
 extension JSONData: JSONDataMaker {
-    init(value: JSONDataMaker) {
-        self = value.makeJSONData()
-    }
-    
     func makeJSONData() -> JSONData {
         return self
     }

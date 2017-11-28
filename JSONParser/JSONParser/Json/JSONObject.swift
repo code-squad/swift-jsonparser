@@ -11,10 +11,6 @@ import Foundation
 struct JSONObject {
     private var jsonObject: [String: JSONData]
     
-    init() {
-        self.jsonObject = [:]
-    }
-    
     init(data: [String: JSONData]) {
         self.jsonObject = data
     }
@@ -22,7 +18,7 @@ struct JSONObject {
 
 extension JSONObject: JSONDataMaker {
     func makeJSONData() -> JSONData {
-        return JSONData.object(jsonObject)
+        return JSONData.object(self.jsonObject)
     }
 }
 

@@ -9,7 +9,9 @@
 import Foundation
 
 struct JSONDataTypePattern {
-    static let bool: String = "^true|false|null"
+    static let bool: String = "^true|false"
     static let number: String = "^[0-9]+"
     static let string: String = "^[A-Za-z0-9가-힣-+\"]+"
+    static let array: String = "\\[\\s*[^\\[\\]]*?\\s*\\]"
+    static let object: String = "\\{\\s*[^\\[\\]]*?\\s*\\}"
 }
