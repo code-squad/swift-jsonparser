@@ -1,5 +1,5 @@
 //
-//  JSONData.swift
+//  JSONPrintData.swift
 //  JSONParser
 //
 //  Created by Mrlee on 2017. 11. 28..
@@ -8,7 +8,6 @@
 
 import Foundation
 
-protocol JSONData {
-    func analyzeData() -> JSONAnalysisData
-    func countData() -> String
+struct JSONPrintData {
+    
 }

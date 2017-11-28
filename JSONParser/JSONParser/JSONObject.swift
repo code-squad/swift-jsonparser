@@ -20,4 +20,8 @@ struct JSONObject: JSONData {
         return jsonData
     }
     
+    func countData() -> String {
+        return "\(jsonObject.count)개의 객체"
+    }
+    
 }

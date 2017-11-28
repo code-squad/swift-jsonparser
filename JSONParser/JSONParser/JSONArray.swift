@@ -19,4 +19,9 @@ struct JSONArray: JSONData {
         let jsonData = JSONAnalysisData(jsonArray)
         return jsonData
     }
+    
+    func countData() -> String {
+        return "\(jsonArray.count)개의 배열"
+    }
+    
 }
