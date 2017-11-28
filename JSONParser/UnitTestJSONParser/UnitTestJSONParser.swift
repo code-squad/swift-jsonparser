@@ -133,25 +133,25 @@ class UnitTestJSONParser: XCTestCase {
         XCTAssertEqual(parserTypeCount.sumOfData, 4)
     }
     
-    func testArrayParserTest1() {
+    func testArrayParserBrokenObjectPattern() {
         let parser = JSONParser()
         let testRawJSONData1 = "[\"Lee\": true, 123, \"test\"]"
         XCTAssertThrowsError(try parser.makeJSONData(testRawJSONData1))
     }
     
-    func testArrayParserTest2() {
+    func testArrayParserBrokenArrayPattern() {
         let parser = JSONParser()
         let testRawJSONData1 = "[{\"Lee\": true}, 123, \"test\"],]"
         XCTAssertThrowsError(try parser.makeJSONData(testRawJSONData1))
     }
  
-    func testObjectParserTest1() {
+    func testObjectParserBrokenArrayPattern() {
         let parser = JSONParser()
         let testRawJSONData1 = "{\"Lee\": true, \"Dong\": [\"\", 123}"
         XCTAssertThrowsError(try parser.makeJSONData(testRawJSONData1))
     }
     
-    func testObjectParserTest2() {
+    func testObjectParserBrokenArrayPatternFrontBracket() {
         let parser = JSONParser()
         let testRawJSONData1 = "{\"Lee\": true, \"Dong\": \"test\", 123]}"
         XCTAssertThrowsError(try parser.makeJSONData(testRawJSONData1))
