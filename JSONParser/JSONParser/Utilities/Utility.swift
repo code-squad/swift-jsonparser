@@ -9,12 +9,6 @@
 import Foundation
 
 struct Utility {
-    static func removeFromFirstToEnd(in value: String) -> String {
-        let startIndex = value.index(value.startIndex, offsetBy: 1)
-        let endIndex = value.index(value.endIndex, offsetBy: -1)
-        return String(value[startIndex..<endIndex])
-    }
-    
     static func convertStringToJSONDataArray(in value: String) -> [JSONData] {
         let splitValues = removeFromFirstToEnd(in: value).splitUnits()
         let jsonData = splitValues.map({ (s: String) -> JSONData in
@@ -39,9 +33,9 @@ struct Utility {
     
     private static func nextValue(_ s: String) -> JSONData {
         let value = s.trimmingCharacters(in: .whitespaces)
-        if value.matchPatterns(pattern: JSONDataTypePattern.array) {
+        if value.starts(with: "[") {
             return nextArray(value)
-        } else if value.matchPatterns(pattern: JSONDataTypePattern.object) {
+        } else if value.starts(with: "{") {
             return nextObject(value)
         } else if value.matchPatterns(pattern: JSONDataTypePattern.bool) {
             return nextBool(value)
@@ -76,7 +70,6 @@ struct Utility {
         })
         
         var dictionaryBuilder = [String: JSONData]()
-        
         tupleBuilder.forEach{ dictionaryBuilder[$0.0] = $0.1 }
         
         return JSONData.object(dictionaryBuilder)
@@ -89,5 +82,11 @@ struct Utility {
         })
         
         return JSONData.array(arrayBuilder)
+    }
+    
+    private static func removeFromFirstToEnd(in value: String) -> String {
+        let startIndex = value.index(value.startIndex, offsetBy: 1)
+        let endIndex = value.index(value.endIndex, offsetBy: -1)
+        return String(value[startIndex..<endIndex])
     }
 }
