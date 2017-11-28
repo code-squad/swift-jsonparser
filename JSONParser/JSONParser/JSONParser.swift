@@ -14,7 +14,7 @@ struct JSONParser {
     private let grammarChecker = GrammarChecker()
     private let lexer = JSONLexer()
 
-    func makeJSONData(_ value: String) throws -> Any {
+    func makeJSONData(_ value: String) throws -> JSONAnalysisData {
         var rawJSON = [String]()
         let firstObjectJSON = try grammarChecker.flatJSON(of: value)
         
@@ -24,12 +24,12 @@ struct JSONParser {
             return try makeArrayJSONData(grammarChecker.checkElements(of: rawJSON))
         case let .objectType(object) :
             rawJSON = try lexer.listMatches(pattern: objectPattern, inString: object)
-            return try makeObjectJSONData(grammarChecker.checkElements(of: rawJSON))
+            return try makeObjectJSONData(grammarChecker.checkElements(of: rawJSON)) 
         default :
             throw ErrorCode.invalidJSONStandard
         }
     }
-    
+
     private func sortJSONData(_ value: String) throws -> JSONType {
         let rawJSON = value
         if let boolType = Bool(rawJSON) {
@@ -50,11 +50,11 @@ struct JSONParser {
         
     }
     
-    private func makeArrayJSONData(_ value: [String]) throws -> JSONArrayData {
-        return try JSONArrayData(value.map{ try sortJSONData($0) })
+    private func makeArrayJSONData(_ value: [String]) throws -> JSONArray {
+        return try JSONArray(value.map{ try sortJSONData($0) })
     }
     
-    private func makeObjectJSONData(_ separateJSON: [String]) throws -> JSONObjectData {
+    private func makeObjectJSONData(_ separateJSON: [String]) throws -> JSONObject {
         var objectTypeJSON = [String:JSONType]()
         for objectComponents in separateJSON {
             let separateObject = objectComponents.components(separatedBy: ":")
@@ -63,7 +63,7 @@ struct JSONParser {
             let objectValue = separateObject[1].trimmingCharacters(in: .whitespacesAndNewlines)
             objectTypeJSON[key] = try sortJSONData(objectValue)
         }
-        return JSONObjectData(objectTypeJSON)
+        return JSONObject(objectTypeJSON)
     }
 
 }

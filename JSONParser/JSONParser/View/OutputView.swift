@@ -9,20 +9,18 @@
 import Foundation
 
 struct OutputView {
-    func printJSONAnalysis(jsonData: Any) {
+    func printJSONAnalysis(jsonData: JSONAnalysisData) {
         switch jsonData {
-        case let value as JSONArrayData:
+        case let value as JSONArray:
             print("총 \(value.jsonArray.count)개의 배열 데이터 중에", terminator: "")
-            let analysisData = JSONAnalysisData(value)
-            printJSONData(analysisData)
-        case let value as JSONObjectData:
-            let analysisData = JSONAnalysisData(value)
+            printJSONData(value)
+        case let value as JSONObject:
             print("총 \(value.jsonObject.count)개의 객체 데이터 중에", terminator: "")
-            printJSONData(analysisData)
+            printJSONData(value)
+            print("가 포함되어 있습니다.")
         default:
             printErrorMsg(errorCode: ErrorCode.invalidInputString)
         }
-        print("가 포함되어 있습니다.")
     }
     
     func printErrorMsg(errorCode: ErrorCode) {
