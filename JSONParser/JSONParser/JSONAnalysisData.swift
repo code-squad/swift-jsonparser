@@ -8,12 +8,47 @@
 
 import Foundation
 
-protocol JSONAnalysisData {
-    var boolTypeCount: Int { get }
-    var stringTypeCount: Int { get }
-    var intTypeCount: Int { get }
-    var objectTypeCount: Int { get }
-    var arrayTypeCount: Int { get }
-    var sumOfData: Int { get }
-    mutating func countJSONData()
+struct JSONAnalysisData {
+    private (set) var boolTypeCount: Int = 0
+    private (set) var stringTypeCount: Int = 0
+    private (set) var intTypeCount: Int = 0
+    private (set) var objectTypeCount: Int = 0
+    private (set) var arrayTypeCount: Int = 0
+    private (set) var sumOfData: Int = 0
+    
+    init(_ jsonArray: [JSONType]) {
+        for elementOfJSONArray in jsonArray {
+            switch elementOfJSONArray {
+            case .intType:
+                intTypeCount += 1
+            case .boolType:
+                boolTypeCount += 1
+            case .stringType:
+                stringTypeCount += 1
+            case .objectType:
+                objectTypeCount += 1
+            case .arrayType:
+                arrayTypeCount += 1
+            }
+        }
+        sumOfData = intTypeCount + boolTypeCount + stringTypeCount + objectTypeCount + arrayTypeCount
+    }
+    
+    init(_ jsonObject: [String:JSONType]) {
+        for (_ , indexOfJSONData) in jsonObject {
+            switch indexOfJSONData {
+            case .intType:
+                intTypeCount += 1
+            case .boolType:
+                boolTypeCount += 1
+            case .stringType:
+                stringTypeCount += 1
+            case .objectType:
+                objectTypeCount += 1
+            case .arrayType:
+                arrayTypeCount += 1
+            }
+        }
+        sumOfData = intTypeCount + boolTypeCount + stringTypeCount + objectTypeCount + arrayTypeCount
+    }
 }

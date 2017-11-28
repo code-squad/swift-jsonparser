@@ -13,8 +13,8 @@ struct JSONParser {
     private let objectPattern = "((\"[^\"\"]*\")\\s*?:\\s*?((\\[[^\\[\\]]*\\])|(true|false)|(\\d+)|(\"[^\"\"]*\")|(\\{[^\\{\\}]*\\})))|(:)|(\\[|\\])"
     private let grammarChecker = GrammarChecker()
     private let lexer = JSONLexer()
-
-    func makeJSONData(_ value: String) throws -> JSONAnalysisData {
+    
+    func makeJSONData(_ value: String) throws -> JSONData {
         var rawJSON = [String]()
         let firstObjectJSON = try grammarChecker.flatJSON(of: value)
         
