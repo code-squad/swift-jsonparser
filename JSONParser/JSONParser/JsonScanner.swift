@@ -41,7 +41,6 @@ struct JsonScanner {
                 if matchesOfType != nil {
                     let rangeOfType = matchesOfType?.range
                     let value = (valueOfRange as NSString).substring(with: rangeOfType!)
-                    print(index, value)
                     token.append(Token(id: index, value: value))
                 }
             }

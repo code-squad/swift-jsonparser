@@ -19,6 +19,11 @@ do {
     print("Json invalid error")
 }
 
+var objectJsonParser = ObjectJsonParser()
+do {
+    try objectJsonParser.checkJsonSyntax(token: token!)
+}catch JsonScanner.JsonError.invalidJsonPattern{
+}
 
 var jsonTypeCounter = JsonTypeCounter()
 var data = jsonTypeCounter.countDataType(token: token!)
