@@ -9,6 +9,8 @@
 import Foundation
 
 struct JSONAnalyzer {
+    private let location = "/Users/Mrlee/Documents/CodeSquad_Napster/iOS Level 2/swift-jsonparser/JSONParser/"
+
     func make() {
         let inputView = InputView()
         let outputView = OutputView()
@@ -41,13 +43,11 @@ struct JSONAnalyzer {
     }
     
     private func readFile(name: String) -> String? {
-        let location = "/Users/Mrlee/Documents/CodeSquad_Napster/iOS Level 2/swift-jsonparser/JSONParser/"
         let fileContent = try? String(contentsOfFile: location + name, encoding: String.Encoding.utf8)
         return fileContent
     }
     
     private func writeFile(contents: String, writeFileName: String?) {
-        let location = "/Users/Mrlee/Documents/CodeSquad_Napster/iOS Level 2/swift-jsonparser/JSONParser/"
         var fileName = "output.json"
         if writeFileName != nil { fileName = writeFileName! }
         do {
