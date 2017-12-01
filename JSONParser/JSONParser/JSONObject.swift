@@ -10,7 +10,7 @@ import Foundation
 
 struct JSONObject: JSONData {
     private var jsonObject: [String:JSONType]
-    private var keyValue = [String]()
+
     init(_ value: [String:JSONType]) {
         self.jsonObject = value
     }
@@ -56,7 +56,9 @@ struct JSONObject: JSONData {
     
     static func makeJSONFirstObjectData(_ value: String) throws -> JSONData {
         let rawValue = try lexData(value)
-        try GrammarChecker.checkElements(of: rawValue)
+        guard GrammarChecker.checkElements(of: rawValue) else {
+            throw ErrorCode.invalidJSONStandard
+        }
         return try makeJSONData(rawValue)
     }
     

@@ -63,7 +63,9 @@ struct JSONArray: JSONData {
     
     static func makeJSONFirstObjectData(_ value: String) throws -> JSONData {
         let rawValue = try lexData(value)
-        try GrammarChecker.checkElements(of: rawValue)
+        guard GrammarChecker.checkElements(of: rawValue) else {
+            throw ErrorCode.invalidJSONStandard
+        }
         return try makeJSONData(rawValue)
     }
     

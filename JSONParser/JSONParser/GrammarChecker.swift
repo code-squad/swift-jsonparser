@@ -10,24 +10,24 @@ import Foundation
 
 struct GrammarChecker {
     
-    static func checkFirstObjectJSON(of inString: String) throws {
+    static func checkFirstObjectJSON(of inString: String) -> Bool {
         if inString.hasPrefix("[") && inString.hasSuffix("]") {
-            return
+            return true
         }
         if inString.hasPrefix("{") && inString.hasSuffix("}") {
-            return
+            return true
         }
-        throw ErrorCode.invalidJSONStandard
-        
+        return false
     }
     
-    static func checkElements(of values: [String]) throws {
+    static func checkElements(of values: [String]) -> Bool {
         let invalidCharacter: Set<String> = [":", "{", "}", "[", "]"]
         for element in values {
             if invalidCharacter.contains(element) {
-                throw ErrorCode.invalidJSONStandard
+                return false
             }
         }
+        return true
     }
     
 }

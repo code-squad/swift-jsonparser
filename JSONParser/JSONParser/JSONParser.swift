@@ -9,14 +9,15 @@
 import Foundation
 typealias JSONAnalysis = (analysisData: JSONData, textData: String)
 struct JSONParser {
-
+    
     func makeJSONData(_ value: String) throws -> JSONData {
-        try GrammarChecker.checkFirstObjectJSON(of: value)
-        if value.hasPrefix("[") {
-            return try JSONArray.makeJSONFirstObjectData(value)
-        }
-        if value.hasPrefix("{") {
-            return try JSONObject.makeJSONFirstObjectData(value)
+        if GrammarChecker.checkFirstObjectJSON(of: value) {
+            if value.hasPrefix("[") {
+                return try JSONArray.makeJSONFirstObjectData(value)
+            }
+            if value.hasPrefix("{") {
+                return try JSONObject.makeJSONFirstObjectData(value)
+            }
         }
         throw ErrorCode.invalidJSONStandard
     }
