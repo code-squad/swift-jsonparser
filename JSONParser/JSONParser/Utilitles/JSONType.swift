@@ -15,4 +15,3 @@ enum JSONType {
     case arrayType(JSONArray)
     case objectType(JSONObject)
 }
-

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-typealias JSONAnalysis = (analysisData: JSONData, textData: String)
+
 struct JSONParser {
     
     func makeJSONData(_ value: String) throws -> JSONData {
