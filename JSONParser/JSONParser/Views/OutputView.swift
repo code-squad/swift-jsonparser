@@ -8,11 +8,12 @@
 
 import Foundation
 
-struct OutputView {
-    func printJSONAnalysis(jsonData: JSONData) {
-            print("총 \(jsonData.countData()) 데이터 중에", terminator: "")
-            printJSONData(jsonData.analyzeData())
+struct OutputView {    
+    func printJSONAnalysis(_ value: JSONData) {
+            print("총 \(value.countData()) 데이터 중에", terminator: "")
+            printJSONData(value.analyzeData())
             print("가 포함되어 있습니다.")
+            print("\(value.showJSONData(1))")
     }
     
     func printErrorMsg(errorCode: ErrorCode) {
@@ -21,7 +22,7 @@ struct OutputView {
     
     private func printJSONData(_ jsonData: JSONAnalysisData) {
         func printComma(_ jsonDataCount: Int) -> String {
-            return (jsonData.sumOfData != jsonDataCount) ? "," : ""
+            return (jsonData.sumOfData > jsonDataCount) ? "," : ""
         }
         if jsonData.stringTypeCount > 0 {
             print(" 문자열 \(jsonData.stringTypeCount)개", terminator: printComma(jsonData.stringTypeCount))
@@ -39,4 +40,5 @@ struct OutputView {
             print(" 배열 \(jsonData.arrayTypeCount)개", terminator: "")
         }
     }
+
 }

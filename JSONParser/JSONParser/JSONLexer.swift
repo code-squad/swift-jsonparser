@@ -10,7 +10,7 @@ import Foundation
 
 struct JSONLexer {
     
-    func listMatches(pattern: String, inString value: String) throws -> [String] {
+    static func listMatches(pattern: String, inString value: String) throws -> [String] {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
             throw ErrorCode.invalidPatten
         }

@@ -9,25 +9,25 @@
 import Foundation
 
 struct GrammarChecker {
-    private let invalidCharacter: Set<String> = [":", "{", "}", "[", "]"]
     
-    func flatJSON(of inString: String) throws -> JSONType {
+    static func checkFirstObjectJSON(of inString: String) throws {
         if inString.hasPrefix("[") && inString.hasSuffix("]") {
-            return JSONType.arrayType(inString.removeBrace())
+            return
         }
         if inString.hasPrefix("{") && inString.hasSuffix("}") {
-            return JSONType.objectType(inString.removeBrace())
+            return
         }
         throw ErrorCode.invalidJSONStandard
+        
     }
     
-    func checkElements(of values: [String]) throws -> [String] {
+    static func checkElements(of values: [String]) throws {
+        let invalidCharacter: Set<String> = [":", "{", "}", "[", "]"]
         for element in values {
             if invalidCharacter.contains(element) {
                 throw ErrorCode.invalidJSONStandard
             }
         }
-        return values
     }
     
 }

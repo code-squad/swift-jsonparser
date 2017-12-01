@@ -10,8 +10,9 @@ import Foundation
 
 enum JSONType {
     case intType(Int)
-    case stringType(String)
     case boolType(Bool)
-    case objectType(String)
-    case arrayType(String)
+    case stringType(String)
+    case arrayType(JSONArray)
+    case objectType(JSONObject)
 }
+
