@@ -20,6 +20,14 @@ struct OutputView {
         print("\(errorCode.rawValue)")
     }
     
+    static func printAPIErrorMsg(errorCode: NSError) {
+        print("ErrorCode: \(errorCode)")
+    }
+    
+    static func printSuccessMsg() {
+        print("성공적으로 파일을 생성하였습니다.")
+    }
+    
     private func printJSONData(_ jsonData: JSONAnalysisData) {
         
         func printComma(_ jsonDataCount: Int) -> String {

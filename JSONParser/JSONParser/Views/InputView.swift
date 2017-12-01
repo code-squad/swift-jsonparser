@@ -9,9 +9,9 @@
 import Foundation
 
 struct InputView {
-    func read() throws -> String? {
+    func read() -> String? {
         guard let userRawData = readLine() else {
-            throw ErrorCode.invalidInputString
+            return nil
         }
         return userRawData
     }
