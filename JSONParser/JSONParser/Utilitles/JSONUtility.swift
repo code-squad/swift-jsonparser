@@ -9,7 +9,6 @@
 import Foundation
 
 struct JSONUtility {
-    
     static func sortJSONData(_ value: String) throws -> JSONType {
         let rawValue = value
         if let boolType = Bool(rawValue) {

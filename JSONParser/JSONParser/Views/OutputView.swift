@@ -21,6 +21,7 @@ struct OutputView {
     }
     
     private func printJSONData(_ jsonData: JSONAnalysisData) {
+        
         func printComma(_ jsonDataCount: Int) -> String {
             return (jsonData.sumOfData > jsonDataCount) ? "," : ""
         }
