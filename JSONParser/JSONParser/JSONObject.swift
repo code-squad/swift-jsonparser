@@ -39,7 +39,8 @@ struct JSONObject: JSONData {
                 resultJSON += "\n" + String(repeating: "\t", count: depth) + "\"" + key + "\"" + " : " + String(value)
             case .stringType(let value):
                 resultJSON += "\n" + String(repeating: "\t", count: depth) + "\"" + key + "\"" + " : " + "\"" + value + "\""
-            } 
+            }
+            
             resultJSON += ","
         }
         resultJSON.removeLast()
