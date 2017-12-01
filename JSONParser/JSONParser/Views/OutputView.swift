@@ -16,7 +16,7 @@ struct OutputView {
             print("\(value.showJSONData(1))")
     }
     
-    func printErrorMsg(errorCode: ErrorCode) {
+    static func printErrorMsg(errorCode: ErrorCode) {
         print("\(errorCode.rawValue)")
     }
     
