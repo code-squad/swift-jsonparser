@@ -11,13 +11,14 @@ typealias JSONAnalysis = (analysisData: JSONData, textData: String)
 struct JSONParser {
     
     func makeJSONData(_ value: String) throws -> JSONData {
-        if GrammarChecker.checkFirstObjectJSON(of: value) {
-            if value.hasPrefix("[") {
-                return try JSONArray.makeJSONFirstObjectData(value)
-            }
-            if value.hasPrefix("{") {
-                return try JSONObject.makeJSONFirstObjectData(value)
-            }
+        guard GrammarChecker.checkFirstObjectJSON(of: value) else {
+            throw ErrorCode.invalidJSONStandard
+        }
+        if value.hasPrefix("[") {
+            return try JSONArray.makeJSONFirstObjectData(value)
+        }
+        if value.hasPrefix("{") {
+            return try JSONObject.makeJSONFirstObjectData(value)
         }
         throw ErrorCode.invalidJSONStandard
     }
