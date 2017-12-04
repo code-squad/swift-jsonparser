@@ -31,7 +31,7 @@ struct JSONAnalyzer {
         var repeatCondition = true
         while repeatCondition {
             guard let rawJSON = inputView.readFile(name: inputFile) else {
-                OutputView.printErrorMsg(errorCode: .invalidCommandlineArgument)
+                OutputView.printErrorMsg(errorCode: .invalidFilePath)
                 return
             }
             if let vaildJSON = executeParser(rawJSONData: rawJSON) {
