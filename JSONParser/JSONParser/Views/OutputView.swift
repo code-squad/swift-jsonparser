@@ -49,5 +49,18 @@ struct OutputView {
             print(" 배열 \(jsonData.arrayTypeCount)개", terminator: "")
         }
     }
+}
 
+extension OutputView {
+    func writeFile(contents: String, writeFileName: String?) {
+        let location = "/Users/Mrlee/Documents/CodeSquad_Napster/iOS Level 2/swift-jsonparser/JSONParser/"
+        var fileName = "output.json"
+        if writeFileName != nil { fileName = writeFileName! }
+        do {
+            try contents.write(toFile: location + fileName, atomically: false, encoding: String.Encoding.utf8)
+            OutputView.printSuccessMsg()
+        } catch let error as NSError {
+            OutputView.printAPIErrorMsg(errorCode: error)
+        }
+    }
 }
