@@ -10,10 +10,10 @@ import Foundation
 
 struct OutputView {    
     func printJSONAnalysis(_ value: JSONData) {
-            print("총 \(value.countData()) 데이터 중에", terminator: "")
-            printJSONData(value.analyzeData())
-            print("가 포함되어 있습니다.")
-            print("\(value.showJSONData(1))")
+        print("총 \(value.countData()) 데이터 중에", terminator: "")
+        printJSONData(value.analyzeData())
+        print("가 포함되어 있습니다.")
+        print("\(value.showJSONData(1))")
     }
     
     static func printErrorMsg(errorCode: ErrorCode) {
@@ -53,17 +53,15 @@ struct OutputView {
 
 extension OutputView {
     func writeFile(contents: String, writeFileName: String?) {
-        let location = "/CodeSquad_Napster/iOS Level 2/swift-jsonparser/JSONParser/"
         var fileName = "output.json"
         if writeFileName != nil { fileName = writeFileName! }
-        if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let filePath = location + fileName
-            do {
-                try contents.write(to: documentsDirectory.appendingPathComponent(filePath), atomically: false, encoding: String.Encoding.utf8)
-                OutputView.printSuccessMsg()
-            } catch let error as NSError {
-                OutputView.printAPIErrorMsg(errorCode: error)
-            }
+        let documentsDirectory = FileManager.default.currentDirectoryPath
+        let filePath = "/\(fileName)"
+        do {
+            try contents.write(toFile: documentsDirectory + filePath, atomically: false, encoding: String.Encoding.utf8)
+            OutputView.printSuccessMsg()
+        } catch let error as NSError {
+            OutputView.printAPIErrorMsg(errorCode: error)
         }
     }
 }

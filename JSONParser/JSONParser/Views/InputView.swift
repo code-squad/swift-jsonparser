@@ -20,12 +20,9 @@ struct InputView {
 
 extension InputView {
     func readFile(name: String) -> String? {
-        let location = "/CodeSquad_Napster/iOS Level 2/swift-jsonparser/JSONParser/"
-        if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let filePath = location + name
-            let fileContent = try? String(contentsOf: documentsDirectory.appendingPathComponent(filePath), encoding: String.Encoding.utf8)
-            return fileContent
-        }
-        return nil
+        let documentsDirectory = FileManager.default.currentDirectoryPath
+        let filePath = "/\(name)"
+        let fileContent = try? String(contentsOfFile: documentsDirectory + filePath, encoding: String.Encoding.utf8)
+        return fileContent
     }
 }
