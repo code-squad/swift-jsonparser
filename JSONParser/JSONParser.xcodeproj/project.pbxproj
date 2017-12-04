@@ -19,6 +19,7 @@
 		45EE99FF1FC411BF00D79FE6 /* DataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EE99FE1FC411BF00D79FE6 /* DataInfo.swift */; };
 		45F1D7111FBECC1A00124D11 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F1D7101FBECC1A00124D11 /* InputView.swift */; };
 		45F1D7131FBED0CC00124D11 /* JsonScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F1D7121FBED0CC00124D11 /* JsonScanner.swift */; };
+		45F23FDB1FD4F29C004A404C /* ArrayJsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F23FDA1FD4F29C004A404C /* ArrayJsonParser.swift */; };
 		45F4C45E1FCBE444008D0019 /* ObjectJsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F4C45D1FCBE444008D0019 /* ObjectJsonParser.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 		45EE99FE1FC411BF00D79FE6 /* DataInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataInfo.swift; sourceTree = "<group>"; };
 		45F1D7101FBECC1A00124D11 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		45F1D7121FBED0CC00124D11 /* JsonScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonScanner.swift; sourceTree = "<group>"; };
+		45F23FDA1FD4F29C004A404C /* ArrayJsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayJsonParser.swift; sourceTree = "<group>"; };
 		45F4C45D1FCBE444008D0019 /* ObjectJsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectJsonParser.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				45EE99FE1FC411BF00D79FE6 /* DataInfo.swift */,
 				45F4C45D1FCBE444008D0019 /* ObjectJsonParser.swift */,
 				45EBCA971FCE9D0E00D144B3 /* JsonStack.swift */,
+				45F23FDA1FD4F29C004A404C /* ArrayJsonParser.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				451C0B861FC267AE00BA4998 /* JsonTypeCounter.swift in Sources */,
 				451C0B881FC269E600BA4998 /* Token.swift in Sources */,
 				45EE99FF1FC411BF00D79FE6 /* DataInfo.swift in Sources */,
+				45F23FDB1FD4F29C004A404C /* ArrayJsonParser.swift in Sources */,
 				45EBCA981FCE9D0E00D144B3 /* JsonStack.swift in Sources */,
 				45F1D7131FBED0CC00124D11 /* JsonScanner.swift in Sources */,
 				45EE99FD1FC4083800D79FE6 /* OutputView.swift in Sources */,

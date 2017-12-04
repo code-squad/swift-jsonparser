@@ -19,14 +19,16 @@ do {
     print("Json invalid error")
 }
 
+var resultValue = [Token]()
 var objectJsonParser = ObjectJsonParser()
 do {
-    try objectJsonParser.checkJsonSyntax(token: token!)
+    resultValue = try objectJsonParser.checkJsonSyntax(token: token!)
 }catch JsonScanner.JsonError.invalidJsonPattern{
 }
 
 var jsonTypeCounter = JsonTypeCounter()
-var data = jsonTypeCounter.countDataType(token: token!)
+var data = jsonTypeCounter.countDataType(token: resultValue)
 
 var outputView = OutputView()
 outputView.printDataInfo(data: data)
+
