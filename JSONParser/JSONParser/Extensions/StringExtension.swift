@@ -17,22 +17,10 @@ extension String {
         return regex.matches(in: self, range: NSRange(self.startIndex..., in: self)).count > 0
     }
     
-    func splitUnits() -> [String] {
-        return self.split(separator: ",").map({ (s: String.SubSequence) -> String in
-            return String(s).trimmingCharacters(in: .whitespaces)
+    func splitUnits(seperator _seperator: Character) -> [String] {
+        return self.split(separator: _seperator).map({ (s: String.SubSequence) -> String in
+            return String(s)
         })
-    }
-    
-    func splitByPatterns(pattern regex: String) -> [String] {
-        guard let regex = try? NSRegularExpression(pattern: regex) else {
-            return []
-        }
-        
-        let results = regex.matches(in: self, range: NSRange(self.startIndex..., in: self))
-        
-        return results.map {
-            String(self[Range($0.range, in: self)!])
-        }
     }
 }
 

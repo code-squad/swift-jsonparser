@@ -12,7 +12,5 @@ do {
     OutputView.printResult(in: try InputView.readValue())
 } catch let error as InputView.Errors {
     print(error.rawValue)
-} catch let error2 as OutputView.Errors {
-    print(error2.rawValue)
-}
+} 
 

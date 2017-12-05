@@ -64,6 +64,7 @@ extension JSONData {
         case string = "문자열"
         case array = "배열"
         case object = "객체"
+        case total = "총"
     }
 }
 
@@ -83,6 +84,7 @@ protocol JSONDataCountable {
     var boolCount: Int { get }
     var numberCount: Int { get }
     var stringCount: Int { get }
+    var totalCount: Int { get }
 }
 
 

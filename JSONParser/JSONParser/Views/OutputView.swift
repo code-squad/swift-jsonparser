@@ -8,21 +8,18 @@
 
 import Foundation
 
-struct OutputView {
-    enum Errors: String, Error {
-        case emptyValue = "출력할 값이 없습니다."
-    }
-    
+struct OutputView {    
     typealias DataTypeName = JSONData.TypeName
     
     static func printResult(in data: JSONDataCountable) {
         var description: String = ""
         let outputs = makeCharacterToOutput(in: data)
-        let totalKeyword = searchTotalCharacter(in: data)
+        let totalLabel = DataTypeName.total.rawValue
+        let label = searchTotalCharacter(in: data)
         
-        description += "총 \(outputs[totalKeyword] ?? 0)개의 \(totalKeyword) 데이터 중에 "
+        description += "\(totalLabel) \(outputs[totalLabel] ?? 0)개의 \(label) 데이터 중에 "
     
-        description += outputs.filter({ (key, value) in key != totalKeyword && value > 0 }).map{ (type, count) in
+        description += outputs.filter({ (key, value) in key != totalLabel && value > 0 }).map{ (type, count) in
             "\(type) \(count)개,"
         }.joined()
         
@@ -42,9 +39,10 @@ struct OutputView {
         let booleanTypeCount = data.boolCount
         let numberTypeCount = data.numberCount
         let stringTypeCount = data.stringCount
+        let totalCount = data.totalCount
         
         return [DataTypeName.array.rawValue: arrayCount, DataTypeName.object.rawValue: objectCount,
-                DataTypeName.bool.rawValue: booleanTypeCount, DataTypeName.number.rawValue: numberTypeCount, DataTypeName.string.rawValue: stringTypeCount]
+                DataTypeName.bool.rawValue: booleanTypeCount, DataTypeName.number.rawValue: numberTypeCount, DataTypeName.string.rawValue: stringTypeCount, DataTypeName.total.rawValue: totalCount]
     }
 }
 

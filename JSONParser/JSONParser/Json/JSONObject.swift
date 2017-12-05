@@ -23,8 +23,12 @@ extension JSONObject: JSONDataMaker {
 }
 
 extension JSONObject: JSONDataCountable {
+    var totalCount: Int {
+        return self.jsonObject.values.count
+    }
+    
     var objectCount: Int {
-        return self.jsonObject.count
+        return self.jsonObject.values.flatMap{ $0.object }.count
     }
     
     var boolCount: Int {
