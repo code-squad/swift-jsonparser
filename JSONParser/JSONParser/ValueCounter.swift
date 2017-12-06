@@ -21,8 +21,7 @@ struct ValueCounter {
                 valueList.append(boolValue as AnyObject)
                 boolNum += 1
                 continue
-            }
-            if let intValue = Int(value) {
+            } else if let intValue = Int(value) {
                 valueList.append(intValue as AnyObject)
                 intNum += 1
                 continue

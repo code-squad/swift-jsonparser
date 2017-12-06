@@ -10,9 +10,9 @@ import Foundation
 
 struct CountingInfo {
     var valueNum: Int = 0
-    var intNum: Int = 0
-    var stringNum: Int = 0
-    var boolNum: Int = 0
+    private var intNum: Int = 0
+    private var stringNum: Int = 0
+    private var boolNum: Int = 0
     
     init (_ valueNum: Int, _ intNum: Int, _ stringNum: Int, _ boolNum: Int) {
         self.valueNum = valueNum
