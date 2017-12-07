@@ -33,14 +33,15 @@ struct ObjectJsonParser: FirstObject {
     
     func goToArrayJsonParser(token: [Token], index: Int, stack: JsonStack) -> Int {
         var objectToken = [Token]()
-        let objectJsonParser = ObjectJsonParser()
+        let arrayJsonParser = ArrayJsonParser()
         let tokenValue = token.map({$0})
         var currentIndex = 0
         for tokenIndex in index..<token.count {
             objectToken.append(tokenValue[tokenIndex])
             if token[tokenIndex].id == regex.ENDSQUAREBRACKET {
-                objectJsonParser.checkJsonSyntax(token: objectToken, stack: stack)
+                arrayJsonParser.checkJsonSyntax(token: objectToken, stack: stack)
                 currentIndex = tokenIndex
+                currentIndex = tokenIndex - index
                 break
             }
         }
@@ -59,7 +60,7 @@ inner:      for row in 0..<parsingTableOfObject.count {
                             break outer
                         }
                         if tokenValue[tokenIndex].id == columnName[regexIndex]{
-                            //print(columnName[regexIndex])
+                            print(columnName[regexIndex])
                             jsonStack.push(tokenData: tokenValue[tokenIndex])
                             if tokenValue[tokenIndex].id == regex.STARTSQUAREBRACKET {
                                 let index = goToArrayJsonParser(token: token, index: tokenIndex, stack: jsonStack)

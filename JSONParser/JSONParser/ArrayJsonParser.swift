@@ -68,7 +68,6 @@ inner:      for row in 0..<parsingTableOfArray.count {
                                 tokenIndex += 1
                                 break inner
                             }
-                            //print(columnName[regexIndex])
                             jsonStack.push(tokenData: tokenValue[tokenIndex])
                             regexIndex = parsingTableOfArray[row][col]
                             tokenIndex += 1
