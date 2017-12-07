@@ -34,10 +34,9 @@ struct ObjectJsonParser: FirstObject {
     func goToArrayJsonParser(token: [Token], index: Int, stack: JsonStack) -> Int {
         var objectToken = [Token]()
         let arrayJsonParser = ArrayJsonParser()
-        let tokenValue = token.map({$0})
         var currentIndex = 0
         for tokenIndex in index..<token.count {
-            objectToken.append(tokenValue[tokenIndex])
+            objectToken.append(token[tokenIndex])
             if token[tokenIndex].id == regex.ENDSQUAREBRACKET {
                 arrayJsonParser.checkJsonSyntax(token: objectToken, stack: stack)
                 currentIndex = tokenIndex
@@ -51,7 +50,6 @@ struct ObjectJsonParser: FirstObject {
     func checkJsonSyntax(token: [Token], stack: JsonStack) {
         var regexIndex = 0
         var tokenIndex = 0
-        var tokenValue = token.map({$0})
 outer:  while tokenIndex < token.count {
 inner:      for row in 0..<parsingTableOfObject.count {
                 for col in 0..<parsingTableOfObject[row].count {
@@ -59,14 +57,13 @@ inner:      for row in 0..<parsingTableOfObject.count {
                         if tokenIndex >= token.count {
                             break outer
                         }
-                        if tokenValue[tokenIndex].id == columnName[regexIndex]{
-                            print(columnName[regexIndex])
-                            jsonStack.push(tokenData: tokenValue[tokenIndex])
-                            if tokenValue[tokenIndex].id == regex.STARTSQUAREBRACKET {
+                        if token[tokenIndex].id == columnName[regexIndex]{
+                            jsonStack.push(tokenData: token[tokenIndex])
+                            if token[tokenIndex].id == regex.STARTSQUAREBRACKET {
                                 let index = goToArrayJsonParser(token: token, index: tokenIndex, stack: jsonStack)
                                 tokenIndex += index
                             }
-                            if tokenValue[tokenIndex].id == regex.COMMA {
+                            if token[tokenIndex].id == regex.COMMA {
                                 regexIndex = 1
                                 tokenIndex += 1
                                 break inner

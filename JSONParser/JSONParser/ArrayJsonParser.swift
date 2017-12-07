@@ -34,10 +34,9 @@ struct ArrayJsonParser: FirstObject {
     func goToObjectJsonParser(token: [Token], index: Int, stack: JsonStack) -> Int {
         var objectToken = [Token]()
         let objectJsonParser = ObjectJsonParser()
-        let tokenValue = token.map({$0})
         var currentIndex = 0
         for tokenIndex in index..<token.count {
-            objectToken.append(tokenValue[tokenIndex])
+            objectToken.append(token[tokenIndex])
             if token[tokenIndex].id == regex.ENDCURLYBRACKET {
                 objectJsonParser.checkJsonSyntax(token: objectToken, stack: stack)
                 currentIndex = tokenIndex - index
@@ -50,25 +49,24 @@ struct ArrayJsonParser: FirstObject {
     func checkJsonSyntax(token: [Token], stack: JsonStack) {
         var regexIndex = 0
         var tokenIndex = 0
-        var tokenValue = token.map({$0})
-outer:  for _ in 0..<tokenValue.count {
+outer:  for _ in 0..<token.count {
 inner:      for row in 0..<parsingTableOfArray.count {
                 for col in 0..<parsingTableOfArray[row].count {
                     if parsingTableOfArray[row][col] != 0 {
                         if tokenIndex >= token.count {
                             break outer
                         }
-                        if tokenValue[tokenIndex].id == columnName[regexIndex]{
-                            if tokenValue[tokenIndex].id == regex.STARTCURLYBRACKET {
+                        if token[tokenIndex].id == columnName[regexIndex]{
+                            if token[tokenIndex].id == regex.STARTCURLYBRACKET {
                                 let index = goToObjectJsonParser(token: token, index: tokenIndex, stack: jsonStack)
                                 tokenIndex += index
                             }
-                            if tokenValue[tokenIndex].id == regex.COMMA {
+                            if token[tokenIndex].id == regex.COMMA {
                                 regexIndex = 1
                                 tokenIndex += 1
                                 break inner
                             }
-                            jsonStack.push(tokenData: tokenValue[tokenIndex])
+                            jsonStack.push(tokenData: token[tokenIndex])
                             regexIndex = parsingTableOfArray[row][col]
                             tokenIndex += 1
                             break
