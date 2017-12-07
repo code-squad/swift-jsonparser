@@ -8,13 +8,12 @@
 
 
 let inputView = InputView()
-let producer = ValueProducer()
-let valueCounter = ValueCounter()
 let outputView = OutputView()
+let producer = ObjectProducer()
+let counter = ObjectCounter()
 
 
 let userInput = inputView.askUserInput()
-let stringValues = producer.makeInputIntoList(userInput)
-let countInfo = valueCounter.checkTypeOfValue(stringValues)
+let stringValues = producer.makeObject(userInput)
+let countInfo = counter.checkTypeOfValues(stringValues)
 outputView.showResult(countInfo)
-
