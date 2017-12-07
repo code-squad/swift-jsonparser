@@ -35,7 +35,7 @@ struct JSONParser {
             return try JSONParser.nextValue(s)
         })
         
-        if Utility.compareJSONDataValue(jsonData) {
+        if GrammerChecker.compareJSONDataValue(jsonData) {
             throw JSONError.notDataConversation
         }
         
@@ -52,7 +52,7 @@ struct JSONParser {
         var jsonData = [String: JSONData]()
         tupleBuilder.forEach{ jsonData[$0.0] = $0.1 }
         
-        if Utility.compareJSONDataValue(Array(jsonData.values)) {
+        if GrammerChecker.compareJSONDataValue(Array(jsonData.values)) {
             throw JSONError.notDataConversation
         }
         
@@ -62,19 +62,15 @@ struct JSONParser {
     static func nextValue(_ s: String) throws -> JSONData {
         let value = s.trimmingCharacters(in: .whitespaces)
         
-        guard GrammerChecker.matchPatternForType(in: value) else {
-            throw JSONError.unsupportedFormat
-        }
-        
-        if value.hasPrefix(JSONDataTypePattern.leftSquareBracket) {
+        if try value.matchPatterns(pattern: JSONDataTypePattern.array) {
             return try nextArray(value)
-        } else if value.hasPrefix(JSONDataTypePattern.leftBrace) {
+        } else if try value.matchPatterns(pattern: JSONDataTypePattern.object) {
             return try nextObject(value)
-        } else if value.matchPatterns(pattern: JSONDataTypePattern.bool) {
+        } else if try value.matchPatterns(pattern: JSONDataTypePattern.bool) {
             return nextBool(value)
-        } else if value.matchPatterns(pattern: JSONDataTypePattern.number) {
+        } else if try value.matchPatterns(pattern: JSONDataTypePattern.number) {
             return nextNumber(value)
-        } else if value.contains(JSONDataTypePattern.doubleQuotation) {
+        } else if try value.matchPatterns(pattern: JSONDataTypePattern.string) {
             return nextString(value)
         }
         

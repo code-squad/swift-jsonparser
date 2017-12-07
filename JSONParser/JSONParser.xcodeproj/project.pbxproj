@@ -8,10 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
-		87433E401FD8E61900CDB823 /* GrammerChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87433E3F1FD8E61900CDB823 /* GrammerChecker.swift */; };
-		87433E411FD8E78D00CDB823 /* GrammerChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87433E3F1FD8E61900CDB823 /* GrammerChecker.swift */; };
 		87433E431FD8E81F00CDB823 /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87433E421FD8E81F00CDB823 /* JSONError.swift */; };
 		87433E441FD8E81F00CDB823 /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87433E421FD8E81F00CDB823 /* JSONError.swift */; };
+		87433E511FD90F9200CDB823 /* JSONDataTypePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876A05791FD62A6F00A58108 /* JSONDataTypePattern.swift */; };
+		87433E531FD90FCC00CDB823 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878BE9961FBEB62A00E702B3 /* StringExtension.swift */; };
+		87433E551FD9102100CDB823 /* JSONDataTypePatternTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87433E541FD9102100CDB823 /* JSONDataTypePatternTests.swift */; };
+		87433E571FD9164200CDB823 /* GrammerChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87433E561FD9164200CDB823 /* GrammerChecker.swift */; };
+		87433E581FD9164200CDB823 /* GrammerChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87433E561FD9164200CDB823 /* GrammerChecker.swift */; };
 		874352751FC3C6AE003FE809 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874352741FC3C6AE003FE809 /* JSONData.swift */; };
 		874352781FC3CF3F003FE809 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874352741FC3C6AE003FE809 /* JSONData.swift */; };
 		874352811FC3FCB5003FE809 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874352801FC3FCB5003FE809 /* JSONParser.swift */; };
@@ -54,8 +57,10 @@
 /* Begin PBXFileReference section */
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		87433E3F1FD8E61900CDB823 /* GrammerChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammerChecker.swift; sourceTree = "<group>"; };
 		87433E421FD8E81F00CDB823 /* JSONError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
+		87433E491FD90F7E00CDB823 /* JSONPatternTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONPatternTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		87433E541FD9102100CDB823 /* JSONDataTypePatternTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDataTypePatternTests.swift; sourceTree = "<group>"; };
+		87433E561FD9164200CDB823 /* GrammerChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammerChecker.swift; sourceTree = "<group>"; };
 		874352741FC3C6AE003FE809 /* JSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
 		874352801FC3FCB5003FE809 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		876A05791FD62A6F00A58108 /* JSONDataTypePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDataTypePattern.swift; sourceTree = "<group>"; };
@@ -75,6 +80,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		83AE2E091F8CAC2800F38CC9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87433E461FD90F7E00CDB823 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -105,6 +117,7 @@
 			children = (
 				83AE2E0C1F8CAC2800F38CC9 /* JSONParser */,
 				878BE98C1FBEB24500E702B3 /* JSONParserTests.xctest */,
+				87433E491FD90F7E00CDB823 /* JSONPatternTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -124,6 +137,7 @@
 		878BE98D1FBEB24500E702B3 /* JSONParserTests */ = {
 			isa = PBXGroup;
 			children = (
+				87433E541FD9102100CDB823 /* JSONDataTypePatternTests.swift */,
 				878BE98E1FBEB24500E702B3 /* JSONParserTests.swift */,
 				878BE9901FBEB24500E702B3 /* Info.plist */,
 			);
@@ -133,13 +147,13 @@
 		87C501CB1FC7BC03008C6783 /* Json */ = {
 			isa = PBXGroup;
 			children = (
-				876A05791FD62A6F00A58108 /* JSONDataTypePattern.swift */,
-				874352801FC3FCB5003FE809 /* JSONParser.swift */,
-				876A057C1FD636B700A58108 /* JSONScanner.swift */,
 				878BE97A1FBEAEC600E702B3 /* JSONArray.swift */,
 				874352741FC3C6AE003FE809 /* JSONData.swift */,
-				876B07741FCBF69200E66F30 /* JSONObject.swift */,
+				876A05791FD62A6F00A58108 /* JSONDataTypePattern.swift */,
 				87433E421FD8E81F00CDB823 /* JSONError.swift */,
+				876B07741FCBF69200E66F30 /* JSONObject.swift */,
+				874352801FC3FCB5003FE809 /* JSONParser.swift */,
+				876A057C1FD636B700A58108 /* JSONScanner.swift */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -148,7 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				876A53311FC2AD22002CCFAB /* Utility.swift */,
-				87433E3F1FD8E61900CDB823 /* GrammerChecker.swift */,
+				87433E561FD9164200CDB823 /* GrammerChecker.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -192,6 +206,23 @@
 			productReference = 83AE2E0C1F8CAC2800F38CC9 /* JSONParser */;
 			productType = "com.apple.product-type.tool";
 		};
+		87433E481FD90F7E00CDB823 /* JSONPatternTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87433E4E1FD90F7E00CDB823 /* Build configuration list for PBXNativeTarget "JSONPatternTest" */;
+			buildPhases = (
+				87433E451FD90F7E00CDB823 /* Sources */,
+				87433E461FD90F7E00CDB823 /* Frameworks */,
+				87433E471FD90F7E00CDB823 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JSONPatternTest;
+			productName = JSONPatternTest;
+			productReference = 87433E491FD90F7E00CDB823 /* JSONPatternTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		878BE98B1FBEB24500E702B3 /* JSONParserTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 878BE9911FBEB24500E702B3 /* Build configuration list for PBXNativeTarget "JSONParserTests" */;
@@ -223,6 +254,10 @@
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
 					};
+					87433E481FD90F7E00CDB823 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
 					878BE98B1FBEB24500E702B3 = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
@@ -243,11 +278,19 @@
 			targets = (
 				83AE2E0B1F8CAC2800F38CC9 /* JSONParser */,
 				878BE98B1FBEB24500E702B3 /* JSONParserTests */,
+				87433E481FD90F7E00CDB823 /* JSONPatternTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		87433E471FD90F7E00CDB823 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		878BE98A1FBEB24500E702B3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -263,6 +306,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87433E431FD8E81F00CDB823 /* JSONError.swift in Sources */,
+				87433E571FD9164200CDB823 /* GrammerChecker.swift in Sources */,
 				876A057A1FD62A6F00A58108 /* JSONDataTypePattern.swift in Sources */,
 				876A53321FC2AD22002CCFAB /* Utility.swift in Sources */,
 				876B076B1FCBEE7D00E66F30 /* BoolExtension.swift in Sources */,
@@ -274,9 +318,17 @@
 				878BE9791FBEAC6900E702B3 /* InputView.swift in Sources */,
 				878BE9971FBEB62A00E702B3 /* StringExtension.swift in Sources */,
 				874352811FC3FCB5003FE809 /* JSONParser.swift in Sources */,
-				87433E401FD8E61900CDB823 /* GrammerChecker.swift in Sources */,
 				876A53391FC2C338002CCFAB /* OutputView.swift in Sources */,
 				878BE97B1FBEAEC600E702B3 /* JSONArray.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87433E451FD90F7E00CDB823 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87433E531FD90FCC00CDB823 /* StringExtension.swift in Sources */,
+				87433E511FD90F9200CDB823 /* JSONDataTypePattern.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,9 +348,10 @@
 				876A53351FC2B087002CCFAB /* Utility.swift in Sources */,
 				874352831FC3FE16003FE809 /* InputView.swift in Sources */,
 				876A53331FC2B07E002CCFAB /* JSONArray.swift in Sources */,
-				87433E411FD8E78D00CDB823 /* GrammerChecker.swift in Sources */,
+				87433E551FD9102100CDB823 /* JSONDataTypePatternTests.swift in Sources */,
 				878BE9A31FBEBBD600E702B3 /* JSONParserTests.swift in Sources */,
 				874352841FC3FE1D003FE809 /* OutputView.swift in Sources */,
+				87433E581FD9164200CDB823 /* GrammerChecker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +482,32 @@
 			};
 			name = Release;
 		};
+		87433E4F1FD90F7E00CDB823 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = JSONPatternTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuaming.JSONPatternTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		87433E501FD90F7E00CDB823 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = JSONPatternTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuaming.JSONPatternTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 		878BE9921FBEB24500E702B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -472,6 +551,15 @@
 			buildConfigurations = (
 				83AE2E141F8CAC2800F38CC9 /* Debug */,
 				83AE2E151F8CAC2800F38CC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		87433E4E1FD90F7E00CDB823 /* Build configuration list for PBXNativeTarget "JSONPatternTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87433E4F1FD90F7E00CDB823 /* Debug */,
+				87433E501FD90F7E00CDB823 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

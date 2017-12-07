@@ -15,8 +15,4 @@ struct Utility {
         _value.removeLast()
         return _value
     }
-    
-    static func compareJSONDataValue(_ jsonData: [JSONData]) -> Bool {
-        return jsonData.filter{ $0 == JSONData.null ? true : false }.count > 0
-    }
 }

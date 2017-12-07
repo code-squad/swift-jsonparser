@@ -9,16 +9,7 @@
 import Foundation
 
 struct GrammerChecker {
-    static func matchPatternForType(in value: String) -> Bool {
-        if value.matchPatterns(pattern: JSONDataTypePattern.leftBrace) ||
-            value.matchPatterns(pattern: JSONDataTypePattern.leftBrace) ||
-            value.matchPatterns(pattern: JSONDataTypePattern.bool) ||
-            value.matchPatterns(pattern: JSONDataTypePattern.number) ||
-            value.matchPatterns(pattern: JSONDataTypePattern.rightBrace)
-            {
-           return true
-        } 
-        
-        return false
+    static func compareJSONDataValue(_ jsonData: [JSONData]) -> Bool {
+        return jsonData.filter{ $0 == JSONData.null ? true : false }.count > 0
     }
 }

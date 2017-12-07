@@ -17,4 +17,7 @@ struct JSONDataTypePattern {
     static let comma = ","
     static let number = "^[\\d]+"
     static let bool = "true|false"
+    static let string = "\".+\""
+    static let array = "\\[\\s*?((\\d+|true|false|\".+\"|\\{.+\\}|\\[.+\\])*,\\s*?(\\d|true|false|\".+\"|\\{.+\\}|\\[.+\\])*)*\\s*?\\]"
+    static let object = "\\{\\s*?((\".+\")\\s*?:\\s*?(\\d*|true|false|\".+\"|\\{.+\\}|\\[.+\\])*,\\s*?(\".+\")\\s*?:\\s*?(\\d*|true|false|\".+\"|\\{.+\\}|\\[.+\\])*)*\\s*?\\}"
 }

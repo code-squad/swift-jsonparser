@@ -9,12 +9,16 @@
 import Foundation
 
 extension String {
-    func matchPatterns(pattern regex: String) -> Bool {
+    func matchPatterns(pattern regex: String) throws -> Bool {
         guard let regex = try? NSRegularExpression(pattern: regex) else {
-            return false
+            throw JSONError.notDataConversation
         }
         
-        return regex.matches(in: self, range: NSRange(self.startIndex..., in: self)).count > 0
+        guard regex.matches(in: self, range: NSRange(self.startIndex..., in: self)).count > 0 else {
+            throw JSONError.unsupportedFormat
+        }
+        
+        return true
     }
     
     func splitUnits(seperator _seperator: Character) -> [String] {
