@@ -133,6 +133,9 @@
 		87C501CB1FC7BC03008C6783 /* Json */ = {
 			isa = PBXGroup;
 			children = (
+				876A05791FD62A6F00A58108 /* JSONDataTypePattern.swift */,
+				874352801FC3FCB5003FE809 /* JSONParser.swift */,
+				876A057C1FD636B700A58108 /* JSONScanner.swift */,
 				878BE97A1FBEAEC600E702B3 /* JSONArray.swift */,
 				874352741FC3C6AE003FE809 /* JSONData.swift */,
 				876B07741FCBF69200E66F30 /* JSONObject.swift */,
@@ -144,9 +147,6 @@
 		87C501CC1FC7BC28008C6783 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				876A05791FD62A6F00A58108 /* JSONDataTypePattern.swift */,
-				874352801FC3FCB5003FE809 /* JSONParser.swift */,
-				876A057C1FD636B700A58108 /* JSONScanner.swift */,
 				876A53311FC2AD22002CCFAB /* Utility.swift */,
 				87433E3F1FD8E61900CDB823 /* GrammerChecker.swift */,
 			);
