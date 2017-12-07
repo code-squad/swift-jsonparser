@@ -9,29 +9,29 @@
 import Foundation
 
 struct CountingInfo {
-    var valueNum: Int = 0
-    private var intNum: Int = 0
-    private var stringNum: Int = 0
-    private var boolNum: Int = 0
+    var countOfValue: Int = 0
+    private var countOfInt: Int = 0
+    private var countOfString: Int = 0
+    private var countOfBool: Int = 0
     
-    init (_ valueNum: Int, _ intNum: Int, _ stringNum: Int, _ boolNum: Int) {
-        self.valueNum = valueNum
-        self.intNum = intNum
-        self.stringNum = stringNum
-        self.boolNum = boolNum
+    init (_ countOfValue: Int, _ countOfInt: Int, _ countOfString: Int, _ countOfBool: Int) {
+        self.countOfValue = countOfValue
+        self.countOfInt = countOfInt
+        self.countOfString = countOfString
+        self.countOfBool = countOfBool
     }
 
     func makeResultMessage () -> String{
         var resultMessage = ""
         
-        if intNum != 0 {
-            resultMessage.append("숫자 \(intNum)개 ")
+        if countOfInt != 0 {
+            resultMessage.append("숫자 \(countOfInt)개 ")
         }
-        if stringNum != 0 {
-            resultMessage.append("문자열 \(stringNum)개 ")
+        if countOfString != 0 {
+            resultMessage.append("문자열 \(countOfString)개 ")
         }
-        if boolNum != 0 {
-            resultMessage.append("부울 \(boolNum)개 ")
+        if countOfBool != 0 {
+            resultMessage.append("부울 \(countOfBool)개 ")
         }
         return resultMessage
     }

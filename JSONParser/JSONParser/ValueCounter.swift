@@ -11,26 +11,26 @@ import Foundation
 struct ValueCounter {
     
     func checkTypeOfValue (_ values: [String]) -> CountingInfo {
-        var intNum: Int = 0
-        var stringNum: Int = 0
-        var boolNum: Int = 0
+        var countOfInt: Int = 0
+        var countOfString: Int = 0
+        var countOfBool: Int = 0
         var valueList : [AnyObject] = []
         
         for value in values {
             if let boolValue = Bool(value) {
                 valueList.append(boolValue as AnyObject)
-                boolNum += 1
+                countOfBool += 1
                 continue
             } else if let intValue = Int(value) {
                 valueList.append(intValue as AnyObject)
-                intNum += 1
+                countOfInt += 1
                 continue
             }
                 valueList.append(value as AnyObject)
-                stringNum += 1
+                countOfString += 1
         }
-        let valueNum = valueList.count
-        return CountingInfo(valueNum, intNum, stringNum, boolNum)
+        let countOfValue = valueList.count
+        return CountingInfo(countOfValue, countOfInt, countOfString, countOfBool)
     }
     
 }

@@ -11,7 +11,7 @@ import Foundation
 struct OutputView {
     
     func showResult(_ countInfo: CountingInfo) {
-        print("\(countInfo.valueNum)개 데이터 중에 \(countInfo.makeResultMessage())가 포함되어 있습니다.")
+        print("\(countInfo.countOfValue)개 데이터 중에 \(countInfo.makeResultMessage())가 포함되어 있습니다.")
     }
     
 }

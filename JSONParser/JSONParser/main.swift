@@ -6,7 +6,6 @@
 //  Copyright © 2017 JK. All rights reserved.
 //
 
-import Foundation
 
 let inputView = InputView()
 let producer = ValueProducer()
