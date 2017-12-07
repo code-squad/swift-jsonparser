@@ -9,8 +9,8 @@
 import Foundation
 
 struct JsonStack {
-    var stack = [Token]()
-    var size = 0
+    private var stack = [Token]()
+    private(set) var size = 0
     
     mutating func push(tokenData: Token) {
         stack.append(tokenData)
