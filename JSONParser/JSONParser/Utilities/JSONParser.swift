@@ -26,25 +26,23 @@ struct JSONParser {
     }
     
     private static func convertStringToJSONDataArray(in value: String) -> [JSONData] {
-        let jsonData = JSONScanner.makeValues(value).map({ (s: String) -> JSONData in
+        var jsonScanner: JSONScanner = JSONScanner()
+        let jsonData = jsonScanner.makeValues(value).map({ (s: String) -> JSONData in
             return JSONParser.nextValue(s)
         })
-        
-        print("Array: \(jsonData)")
         
         return jsonData
     }
     
     private static func convertStringToJSONDataObject(in value: String) -> [String: JSONData] {
-        let tupleBuilder = JSONScanner.makeValues(value).map({ (s: String) -> (String, JSONData) in
+        var jsonScanner: JSONScanner = JSONScanner()
+        let tupleBuilder = jsonScanner.makeValues(value).map({ (s: String) -> (String, JSONData) in
             let arr = s.split(separator: ":").map(String.init)
             return (arr[0], JSONParser.nextValue(arr[1]))
         })
         
         var jsonData = [String: JSONData]()
         tupleBuilder.forEach{ jsonData[$0.0] = $0.1 }
-        
-        print("Object: \(jsonData)")
         
         return jsonData
     }
@@ -80,9 +78,9 @@ struct JSONParser {
     }
     
     private static func nextObject(_ s: String) -> JSONData {
-        let tupleBuilder = JSONScanner.makeValues(s).map({ (s: String) -> (String, JSONData) in
+        var jsonScanner: JSONScanner = JSONScanner()
+        let tupleBuilder = jsonScanner.makeValues(s).map({ (s: String) -> (String, JSONData) in
             let _s = s.trimmingCharacters(in: .whitespaces)
-            print("nextObject : \(_s)")
             let arr = _s.split(separator: ":").map(String.init)
             let k = arr[0].trimmingCharacters(in: .whitespaces)
             let v = arr[1].trimmingCharacters(in: .whitespaces)
@@ -96,9 +94,9 @@ struct JSONParser {
     }
     
     private static func nextArray(_ s: String) -> JSONData {
-        let arrayBuilder: [JSONData] = JSONScanner.makeValues(s).map({ (s: String) -> JSONData in
+        var jsonScanner: JSONScanner = JSONScanner()
+        let arrayBuilder: [JSONData] = jsonScanner.makeValues(s).map({ (s: String) -> JSONData in
             let _s = s.trimmingCharacters(in: .whitespaces)
-            print("nextArray : \(_s)")
             return nextValue(_s)
         })
         

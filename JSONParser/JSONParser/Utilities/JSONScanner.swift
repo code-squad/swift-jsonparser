@@ -9,39 +9,64 @@
 import Foundation
 
 struct JSONScanner {
-    static func makeValues(_ s: String) -> [String] {
+    private var value: String = ""
+    private var values: [String] = []
+    
+    mutating func makeValues(_ s: String) -> [String] {
         let strings = Utility.removeFromFirstToEnd(in: s)
         var stringIterators: IndexingIterator<String> = strings.makeIterator()
         var stringsCount: Int = strings.count
-        var value: String = ""
-        var values: [String] = []
         
         while let stringIterator = stringIterators.next() {
             value += String(stringIterator)
             stringsCount -= stringIterator.unicodeScalars.count
             
             if value.contains(JSONDataTypePattern.leftBrace) {
-                if value.contains(JSONDataTypePattern.rightBrace) {
-                    values.append(value)
-                    value = ""
-                }
+                makeArrayValue()
             } else if value.contains(JSONDataTypePattern.leftSquareBracket) {
-                if value.contains(JSONDataTypePattern.rightSquareBracket) {
-                    values.append(value)
-                    value = ""
-                }
+                makeObjectValue()
             } else if value.hasSuffix(JSONDataTypePattern.comma) {
-                value.removeLast()
-                values.append(value)
-                value = ""
+                makeValue(stringsCount)
             }
             
             if stringsCount == 0 {
-                values.append(value)
-                value = ""
+                makeValue()
             }
         }
         
         return values.filter{ $0.isEmpty || $0 == " " ? false : true }
+    }
+    
+    private mutating func makeArrayValue() {
+        guard value.contains(JSONDataTypePattern.rightBrace) else {
+            return
+        }
+        
+        values.append(value)
+        value = ""
+    }
+    
+    private mutating func makeObjectValue() {
+        guard value.contains(JSONDataTypePattern.rightSquareBracket) else {
+            return
+        }
+        
+        values.append(value)
+        value = ""
+    }
+    
+    private mutating func makeValue(_ count: Int) {
+        guard count > 0 else {
+            return
+        }
+        
+        value.removeLast()
+        values.append(value)
+        value = ""
+    }
+    
+    private mutating func makeValue() {
+        values.append(value)
+        value = ""
     }
 }
