@@ -25,7 +25,7 @@ struct ObjectProducer {
     }
     
     private func makeDictionary (_ value: String) -> (key: String, value: String){
-        let split = value.split(separator: ":").map({(value: String.SubSequence) -> String in String(value)})
+        let split = value.split(separator: ":").map({(value: String.SubSequence) -> String in String(value).trimmingCharacters(in: .whitespacesAndNewlines)})
         let key = split[0]
         let value = split[1]
         

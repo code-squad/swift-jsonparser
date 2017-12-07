@@ -33,7 +33,6 @@ struct ObjectCounter {
         }
         
         return CountingInfo(countOfValue, countOfInt, countOfString, countOfBool)
-        
     }
     
 }
