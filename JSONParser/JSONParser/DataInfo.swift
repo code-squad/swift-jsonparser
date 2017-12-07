@@ -9,7 +9,9 @@
 import Foundation
 
 struct DataInfo {
+    var type = ""
     var countOfNumber = 0
     var countOfString = 0
     var countOfBool = 0
+    var countOfObject = 0
 }

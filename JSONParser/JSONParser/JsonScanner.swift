@@ -27,7 +27,7 @@ struct JsonScanner {
     
     func scanOfJsonValue(jsonValue: String) throws -> [Token] {
         var token = [Token]()
-        let regexOfWhole = "(\"[^\"\"]*\")|(false|true)|(\\{|\\})|(:)|(\\,)|(\\d+)"
+        let regexOfWhole = "(\"[^\"\"]*\")|(false|true)|(\\{|\\})|(\\[|\\])|(:)|(\\,)|(\\d+)"
         let lex = try NSRegularExpression(pattern: regexOfWhole)
         let mathes = lex.matches(in: jsonValue, range: NSMakeRange(0, jsonValue.count))
         // split each token
