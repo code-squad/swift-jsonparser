@@ -10,7 +10,7 @@ import Foundation
 
 do {
     OutputView.printResult(in: try InputView.readValue())
-} catch let error as InputView.Errors {
+} catch let error as JSONError {
     print(error.rawValue)
-} 
+}
 

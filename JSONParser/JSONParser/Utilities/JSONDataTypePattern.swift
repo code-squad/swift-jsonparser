@@ -16,5 +16,5 @@ struct JSONDataTypePattern {
     static let doubleQuotation = "\""
     static let comma = ","
     static let number = "^[\\d]+"
-    static let bool = "true|false|null"
+    static let bool = "true|false"
 }

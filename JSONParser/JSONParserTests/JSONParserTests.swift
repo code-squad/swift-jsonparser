@@ -69,4 +69,45 @@ class JSONParserTests: XCTestCase {
         XCTAssertTrue(try JSONParser.analyzeJSONData(in: inputValue).objectCount == 1)
         XCTAssertTrue(try JSONParser.analyzeJSONData(in: inputValue).arrayCount  == 1)
     }
+    
+    func test_JSONData_입력값_없음() {
+        let inputValue = ""
+        XCTAssertThrowsError(try JSONParser.analyzeJSONData(in: inputValue))
+    }
+    
+    func test_JSONData_객체_패턴_매칭_성공() {
+        let inputValue = """
+        { "name" : "master's course", "opened" : true, "language": [ "java", "javascript", "swift" ] }
+        """
+        XCTAssertTrue(GrammerChecker.matchPatternForType(in: inputValue))
+    }
+    
+    func test_JSONData_객체_패턴_매칭_실패() {
+        let inputValue = """
+        { "name" : "master's course", "opened" : true,
+        """
+        XCTAssertFalse(GrammerChecker.matchPatternForType(in: inputValue))
+    }
+    
+    func test_JSONData_배열_패턴_매칭_성공() {
+        let inputValue = """
+        [ "java", "javascript", "swift", {"name" : "강현정"} ]
+        """
+        XCTAssertTrue(GrammerChecker.matchPatternForType(in: inputValue))
+    }
+    
+    func test_JSONData_배열_패턴_매칭_실패() {
+        let inputValue = """
+        [ "java", "javascript", "swift"
+        """
+        XCTAssertFalse(GrammerChecker.matchPatternForType(in: inputValue))
+    }
+    
+    func test_JSONData_null_같음() {
+        XCTAssertTrue(JSONData.null == JSONData.null)
+    }
+    
+    func test_JSONData_null_다름() {
+        XCTAssertFalse(JSONData.null == JSONData.bool(false))
+    }
 }

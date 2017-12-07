@@ -66,6 +66,16 @@ extension JSONData {
         case object = "객체"
         case total = "총"
     }
+    
+    static func == (lhs: JSONData, rhs: JSONData) -> Bool {
+        switch (lhs, rhs) {
+        case (.null, .null):
+            return true
+        default:
+            return false
+        }
+    }
+
 }
 
 protocol JSONDataMaker {
