@@ -24,10 +24,11 @@ do {
 // json parser (checking json syntax)
 var jsonStack = JsonStack()
 var firstObject: FirstObject? = nil
+
 if token![0].id == JsonScanner.regex.STARTSQUAREBRACKET {
     firstObject = ArrayJsonParser()
 }else if token![0].id == JsonScanner.regex.STARTCURLYBRACKET {
-        firstObject = ObjectJsonParser()
+    firstObject = ObjectJsonParser()
 }else {
     print("객체도 배열도 아님", token![0].id)
 }
@@ -38,6 +39,6 @@ var jsonTypeCounter = JsonTypeCounter()
 let data = try jsonTypeCounter.countDataType(stack: jsonStack, kindOf: (firstObject?.type)!)
 
 // outputview
-var outputView = OutputView()
+let outputView = OutputView()
 outputView.printDataInfo(data: data)
 

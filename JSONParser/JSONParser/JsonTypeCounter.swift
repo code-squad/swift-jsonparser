@@ -34,8 +34,7 @@ struct JsonTypeCounter {
                     if stackId == JsonScanner.regex.BOOLEAN {
                         dataInfo.countOfBool += 1
                     }
-                }
-                if data.id == JsonScanner.regex.COLON {
+                }else if data.id == JsonScanner.regex.COLON {
                     key = try jsonStack.peek().value
                     jsonData[key] = value
                 }

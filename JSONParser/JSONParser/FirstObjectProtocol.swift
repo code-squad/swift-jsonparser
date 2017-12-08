@@ -9,6 +9,6 @@
 import Foundation
 
 protocol FirstObject {
-    var type: String {get}
+    var type: String { get }
     func checkJsonSyntax(token: [Token], stack: JsonStack)
 }
