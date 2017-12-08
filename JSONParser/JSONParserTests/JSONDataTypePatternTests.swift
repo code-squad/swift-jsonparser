@@ -21,7 +21,7 @@ class JSONDataTypePatternTest: XCTestCase {
         let inputValue = """
         { "name" : "master's course", "opened"
         """
-        XCTAssertThrowsError(try inputValue.matchPatterns(pattern: JSONDataTypePattern.object))
+        XCTAssertFalse(try inputValue.matchPatterns(pattern: JSONDataTypePattern.object))
     }
     
     func test_JSONData_배열_패턴_매칭_성공() {
@@ -35,7 +35,7 @@ class JSONDataTypePatternTest: XCTestCase {
         let inputValue = """
         [ "java", "javascript", "swift"
         """
-        XCTAssertThrowsError(try inputValue.matchPatterns(pattern: JSONDataTypePattern.array))
+        XCTAssertFalse(try inputValue.matchPatterns(pattern: JSONDataTypePattern.array))
     }
     
     func test_JSONData_문자_패턴_매칭_성공() {
@@ -49,7 +49,7 @@ class JSONDataTypePatternTest: XCTestCase {
         let inputValue = """
         "test
         """
-        XCTAssertThrowsError(try inputValue.matchPatterns(pattern: JSONDataTypePattern.string))
+        XCTAssertFalse(try inputValue.matchPatterns(pattern: JSONDataTypePattern.string))
     }
 
     func test_JSONData_숫자_패턴_매칭_성공() {
@@ -63,7 +63,7 @@ class JSONDataTypePatternTest: XCTestCase {
         let inputValue = """
         강현정
         """
-        XCTAssertThrowsError(try inputValue.matchPatterns(pattern: JSONDataTypePattern.number))
+        XCTAssertFalse(try inputValue.matchPatterns(pattern: JSONDataTypePattern.number))
     }
     
     func test_JSONData_플래그_패턴_매칭_성공() {
@@ -77,6 +77,6 @@ class JSONDataTypePatternTest: XCTestCase {
         let inputValue = """
         null
         """
-        XCTAssertThrowsError(try inputValue.matchPatterns(pattern: JSONDataTypePattern.bool))
+        XCTAssertFalse(try inputValue.matchPatterns(pattern: JSONDataTypePattern.bool))
     }
 }

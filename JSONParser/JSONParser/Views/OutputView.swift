@@ -14,12 +14,11 @@ struct OutputView {
     static func printResult(in data: JSONDataCountable) {
         var description: String = ""
         let outputs = makeCharacterToOutput(in: data)
-        let totalLabel = DataTypeName.total.rawValue
-        let label = searchTotalCharacter(in: data)
+        let label = searchArrayOrObjectWords(in: data)
         
-        description += "\(totalLabel) \(outputs[totalLabel] ?? 0)개의 \(label) 데이터 중에 "
+        description += "\(DataTypeName.total.rawValue) \(outputs[DataTypeName.total.rawValue] ?? 0)개의 \(label) 데이터 중에 "
     
-        description += outputs.filter({ (key, value) in key != totalLabel && value > 0 }).map{ (type, count) in
+        description += outputs.filter({ (key, value) in key != DataTypeName.total.rawValue && value > 0 }).map{ (type, count) in
             "\(type) \(count)개,"
         }.joined()
         
@@ -29,7 +28,7 @@ struct OutputView {
         print(description)
     }
     
-    private static func searchTotalCharacter(in data: JSONDataCountable) -> String {
+    private static func searchArrayOrObjectWords(in data: JSONDataCountable) -> String {
         return data is JSONArray ? DataTypeName.array.rawValue : DataTypeName.object.rawValue
     }
     

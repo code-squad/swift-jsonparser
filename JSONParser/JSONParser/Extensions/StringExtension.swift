@@ -14,11 +14,7 @@ extension String {
             throw JSONError.notDataConversation
         }
         
-        guard regex.matches(in: self, range: NSRange(self.startIndex..., in: self)).count > 0 else {
-            throw JSONError.unsupportedFormat
-        }
-        
-        return true
+        return regex.matches(in: self, range: NSRange(self.startIndex..., in: self)).count > 0
     }
     
     func splitUnits(seperator _seperator: Character) -> [String] {

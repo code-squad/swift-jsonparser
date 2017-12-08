@@ -10,15 +10,15 @@ import Foundation
 
 struct JSONParser {
     static func analyzeJSONData(in value: String) throws -> JSONDataCountable {
-        if value.isEmpty {
+        guard value.count > 0 else {
             throw JSONError.emptyValue
         }
         
-        guard value.hasPrefix(JSONDataTypePattern.leftBrace) else {
-            return try makeJSONArray(in: value)
+        if value.hasPrefix(JSONDataTypePattern.leftBrace) {
+            return try makeJSONObject(in: value)
         }
         
-        return try makeJSONObject(in: value)
+        return try makeJSONArray(in: value)
     }
     
     private static func makeJSONArray(in value: String) throws -> JSONArray {
@@ -35,7 +35,7 @@ struct JSONParser {
             return try JSONParser.nextValue(s)
         })
         
-        if GrammerChecker.compareJSONDataValue(jsonData) {
+        guard GrammerChecker.searchJSONDataNull(jsonData) else {
             throw JSONError.notDataConversation
         }
         
@@ -52,7 +52,7 @@ struct JSONParser {
         var jsonData = [String: JSONData]()
         tupleBuilder.forEach{ jsonData[$0.0] = $0.1 }
         
-        if GrammerChecker.compareJSONDataValue(Array(jsonData.values)) {
+        guard GrammerChecker.searchJSONDataNull(Array(jsonData.values)) else {
             throw JSONError.notDataConversation
         }
         

@@ -9,7 +9,7 @@
 import Foundation
 
 struct GrammerChecker {
-    static func compareJSONDataValue(_ jsonData: [JSONData]) -> Bool {
-        return jsonData.filter{ $0 == JSONData.null ? true : false }.count > 0
+    static func searchJSONDataNull(_ jsonData: [JSONData]) -> Bool {
+        return jsonData.filter{ $0 == JSONData.null ? false : true }.count > 0
     }
 }

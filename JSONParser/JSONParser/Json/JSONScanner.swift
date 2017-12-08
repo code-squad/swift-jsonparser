@@ -12,32 +12,31 @@ struct JSONScanner {
     private var value: String = ""
     private var values: [String] = []
     
-    mutating func makeValues(_ s: String) throws -> [String] {
+    mutating func makeValues(_ s: String) -> [String] {
         let strings = Utility.removeFromFirstToEnd(in: s)
-        var stringIterators: IndexingIterator<String> = strings.makeIterator()
         var stringsCount: Int = strings.count
         
-        while let stringIterator = stringIterators.next() {
-            value += String(stringIterator)
-            stringsCount -= stringIterator.unicodeScalars.count
+        for character in strings {
+            value += String(character)
+            stringsCount -= 1
             
             if value.contains(JSONDataTypePattern.leftBrace) {
-                try makeObjectValue()
+                makeObjectValue()
             } else if value.contains(JSONDataTypePattern.leftSquareBracket) {
-                try makeArrayValue()
+                makeArrayValue()
             } else if value.hasSuffix(JSONDataTypePattern.comma) {
-                try makeValue(stringsCount)
+                makeValue(stringsCount)
             }
             
             if stringsCount == 0 {
-                try makeValue()
+                makeValue()
             }
         }
         
         return values.filter{ $0.isEmpty || $0 == " " ? false : true } 
     }
     
-    private mutating func makeArrayValue() throws {
+    private mutating func makeArrayValue() {
         guard value.contains(JSONDataTypePattern.rightSquareBracket) else {
             return
         }
@@ -46,7 +45,7 @@ struct JSONScanner {
         value = ""
     }
     
-    private mutating func makeObjectValue() throws {
+    private mutating func makeObjectValue() {
         guard value.contains(JSONDataTypePattern.rightBrace) else {
             return
         }
@@ -55,7 +54,7 @@ struct JSONScanner {
         value = ""
     }
     
-    private mutating func makeValue(_ count: Int) throws {
+    private mutating func makeValue(_ count: Int) {
         guard count > 0 else {
              return
         }
@@ -65,7 +64,7 @@ struct JSONScanner {
         value = ""
     }
     
-    private mutating func makeValue() throws {
+    private mutating func makeValue() {
         values.append(value)
         value = ""
     }
