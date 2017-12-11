@@ -17,11 +17,11 @@ struct Utility {
     }
     
     static func validateFile(_ fileName: String) throws -> String {
-        if fileName.isEmpty {
+        guard !fileName.isEmpty else {
             throw JSONError.errorWhileReadingFile
         }
         
-        if !fileName.hasSuffix("json") {
+        guard fileName.hasSuffix("json") else {
             throw JSONError.notJSONFile
         }
         
