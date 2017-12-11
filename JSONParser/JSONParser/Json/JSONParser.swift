@@ -100,7 +100,7 @@ struct JSONParser {
         })
 
         var dictionaryBuilder = [String: JSONData]()
-        tupleBuilder.forEach{ dictionaryBuilder[$0.0] = $0.1 }
+        tupleBuilder.forEach({ dictionaryBuilder[$0.0] = $0.1 })
 
         return JSONData.object(dictionaryBuilder)
     }

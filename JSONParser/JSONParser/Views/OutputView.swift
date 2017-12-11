@@ -52,9 +52,9 @@ struct OutputView {
         
         description += outputs.filter({ (key, value) in
             key != DataTypeName.total.rawValue && value > 0
-        }).map{ (type, count) in
+        }).map({ (type, count) in
             "\(type) \(count)개,"
-        }.joined()
+        }).joined()
         
         description.removeLast()
         description += "가 포함되어 있습니다."

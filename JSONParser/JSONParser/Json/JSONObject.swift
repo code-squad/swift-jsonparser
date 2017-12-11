@@ -28,22 +28,22 @@ extension JSONObject: JSONDataCountable {
     }
     
     var objectCount: Int {
-        return self.jsonObject.values.flatMap{ $0.object }.count
+        return self.jsonObject.values.flatMap({ $0.object }).count
     }
     
     var boolCount: Int {
-        return self.jsonObject.values.flatMap{ $0.bool }.count
+        return self.jsonObject.values.flatMap({ $0.bool }).count
     }
     
     var numberCount: Int {
-        return self.jsonObject.values.flatMap{ $0.number }.count
+        return self.jsonObject.values.flatMap({ $0.number }).count
     }
     
     var stringCount: Int {
-        return self.jsonObject.values.flatMap{ $0.string }.count
+        return self.jsonObject.values.flatMap({ $0.string }).count
     }
     
     var arrayCount: Int {
-        return self.jsonObject.values.flatMap{ $0.array }.count
+        return self.jsonObject.values.flatMap({ $0.array }).count
     }
 }
