@@ -11,14 +11,36 @@ import Foundation
 struct OutputView {    
     private typealias DataTypeName = JSONData.TypeName
     
-    static func printResult(in data: JSONDataCountable & JSONDataMaker) {
+    static func printJSONData(in data: JSONDataCountable & JSONDataMaker) throws {
         let prettyJSONData = JSONDataGenerator.unwrapJSONData(in: data.makeJSONData(), indent: 0)
-        printJSONData(in: prettyJSONData)
-        printJSONDataType(in: data)
+        
+        if ProcessInfo.processInfo.arguments.count <= 1  {
+            printResult(prettyJSONData, data as JSONDataCountable)
+        } else {
+            try generateOutputFile(prettyJSONData, ProcessInfo.processInfo.arguments)
+        }
     }
     
-    private static func printJSONData(in data: String) {
-        print(data)
+    private static func generateOutputFile(_ prettyJSONData: String, _ arguments: [String]) throws {
+        let dir = FileManager.default.homeDirectoryForCurrentUser
+        let fileName = arguments.count <= 2 ? "result.json" : try Utility.validateFile(arguments[2])
+        let baseFilePath = ProcessInfo.processInfo.environment["baseFilePath"]
+        let path = "\(baseFilePath!)\(try Utility.validateFile(fileName))"
+            
+        do {
+            try prettyJSONData.write(to: dir.appendingPathComponent(path), atomically: false, encoding: .utf8)
+        } catch {
+            throw JSONError.errorWhileWritingFile
+        }
+    }
+    
+    private static func printResult(_ prettyJSONData: String, _ jsonDataCountable: JSONDataCountable ) {
+        printJSONData(in: prettyJSONData)
+        printJSONDataType(in: jsonDataCountable)
+    }
+    
+    private static func printJSONData(in prettyJSONData: String) {
+        print(prettyJSONData)
     }
     
     private static func printJSONDataType(in data: JSONDataCountable) {

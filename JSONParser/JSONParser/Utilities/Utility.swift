@@ -15,4 +15,16 @@ struct Utility {
         _value.removeLast()
         return _value
     }
+    
+    static func validateFile(_ fileName: String) throws -> String {
+        if fileName.isEmpty {
+            throw JSONError.errorWhileReadingFile
+        }
+        
+        if !fileName.hasSuffix("json") {
+            throw JSONError.notJSONFile
+        }
+        
+        return fileName
+    }
 }

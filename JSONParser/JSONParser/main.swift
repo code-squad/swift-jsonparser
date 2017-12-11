@@ -9,7 +9,7 @@
 import Foundation
 
 do {
-    OutputView.printResult(in: try InputView.readValue())
+    try OutputView.printJSONData(in: try InputView.readValues())
 } catch let error as JSONError {
     print(error.rawValue)
 }
