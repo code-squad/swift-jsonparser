@@ -10,8 +10,25 @@ import Foundation
 
 struct OutputView {
     
+    private func makeResultMessage(_ info : CountingInfo) -> String{
+        var result = ""
+        
+        if info.countOfInt != 0 {
+            result.append("숫자 \(info.countOfInt)개 ")
+        }
+        if info.countOfBool != 0 {
+            result.append("부울 \(info.countOfBool)개 ")
+        }
+        if info.countOfString != 0 {
+            result.append("문자열 \(info.countOfString)개 ")
+        }
+        
+        return result
+    }
+    
+    
     func showResult(_ countInfo: CountingInfo) {
-        print("\(countInfo.countOfValue)개 데이터 중에 \(countInfo.makeResultMessage())가 포함되어 있습니다.")
+        print("\(countInfo.countOfJSONData)개 데이터 중에 \(makeResultMessage(countInfo))가 포함되어 있습니다.")
     }
     
 }

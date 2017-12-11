@@ -8,12 +8,16 @@
 
 
 let inputView = InputView()
-let outputView = OutputView()
-let producer = ObjectProducer()
-let counter = ObjectCounter()
-
-
 let userInput = inputView.askUserInput()
-let stringValues = producer.makeObject(userInput)
-let countInfo = counter.checkTypeOfValues(stringValues)
-outputView.showResult(countInfo)
+
+let targetFactory = ParsingTargetFactory()
+let targetString = targetFactory.makeParsingTarget(userInput)
+
+let typeIdentifier = TypeIdentifier()
+let parsedData = typeIdentifier.matchType(targetString)
+
+let counter = ValueCounter(parsedData)
+let countingInfo = counter.countingValues()
+
+let outputView = OutputView()
+outputView.showResult(countingInfo)
