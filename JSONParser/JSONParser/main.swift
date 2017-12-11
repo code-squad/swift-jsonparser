@@ -11,7 +11,7 @@ let inputView = InputView()
 let userInput = inputView.askUserInput()
 
 let targetFactory = ParsingTargetFactory()
-let targetString = targetFactory.makeParsingTarget(userInput)
+let targetString = targetFactory.setTargetType(userInput)
 
 let typeIdentifier = TypeIdentifier()
 let parsedData = typeIdentifier.matchType(targetString)
