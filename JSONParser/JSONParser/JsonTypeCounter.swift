@@ -11,34 +11,14 @@ import Foundation
 struct JsonTypeCounter {
     
     func countDataType(stack: JsonStack, kindOf: String) throws -> DataInfo {
-        var jsonData = [String:Any]()
         var dataInfo = DataInfo()
         dataInfo.type = kindOf
         var jsonStack = stack
-        var value: Any = ""
-        var key: String = ""
         var isObject = false
+
         
         if kindOf == "객체" {
-            while jsonStack.size > 0 {
-                let data = try jsonStack.pop()
-                if data.id == JsonScanner.regex.ENDCURLYBRACKET || data.id == JsonScanner.regex.COMMA {
-                    value = try jsonStack.peek().value
-                    let stackId = try jsonStack.peek().id
-                    if stackId == JsonScanner.regex.NUMBER {
-                        dataInfo.countOfNumber += 1
-                    }
-                    if stackId == JsonScanner.regex.STRING {
-                        dataInfo.countOfString += 1
-                    }
-                    if stackId == JsonScanner.regex.BOOLEAN {
-                        dataInfo.countOfBool += 1
-                    }
-                }else if data.id == JsonScanner.regex.COLON {
-                    key = try jsonStack.peek().value
-                    jsonData[key] = value
-                }
-            }
+            dataInfo = try countStackOfObject(stack: jsonStack)
         }else if kindOf == "배열" {
             while jsonStack.size > 0 {
                 let data = try jsonStack.pop()
@@ -51,6 +31,35 @@ struct JsonTypeCounter {
             }
         }
 
+        return dataInfo
+    }
+    
+    func countStackOfObject(stack: JsonStack) throws -> DataInfo {
+        var jsonStack = stack
+        var value: Any = ""
+        var key: String = ""
+        var jsonData = [String:Any]()
+        var dataInfo = DataInfo()
+        
+        while jsonStack.size > 0 {
+            let data = try jsonStack.pop()
+            if data.id == JsonScanner.regex.ENDCURLYBRACKET || data.id == JsonScanner.regex.COMMA {
+                value = try jsonStack.peek().value
+                let stackId = try jsonStack.peek().id
+                if stackId == JsonScanner.regex.NUMBER {
+                    dataInfo.countOfNumber += 1
+                }
+                if stackId == JsonScanner.regex.STRING {
+                    dataInfo.countOfString += 1
+                }
+                if stackId == JsonScanner.regex.BOOLEAN {
+                    dataInfo.countOfBool += 1
+                }
+            }else if data.id == JsonScanner.regex.COLON {
+                key = try jsonStack.peek().value
+                jsonData[key] = value
+            }
+        }
         return dataInfo
     }
     

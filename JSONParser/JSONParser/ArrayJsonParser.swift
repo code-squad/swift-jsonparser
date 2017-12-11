@@ -9,9 +9,9 @@
 import Foundation
 struct ArrayJsonParser: FirstObject {
     typealias regex = JsonScanner.regex
-    let type = "배열"
-    let columnName = [regex.STARTSQUAREBRACKET, regex.STARTCURLYBRACKET, regex.STRING, regex.NUMBER, regex.BOOLEAN, regex.ENDCURLYBRACKET, regex.COMMA, regex.ENDSQUAREBRACKET]
-    let parsingTableOfArray = [[1, 0, 0, 0, 0, 0, 0, 0],
+    private(set) var type = "배열"
+    private let columnName = [regex.STARTSQUAREBRACKET, regex.STARTCURLYBRACKET, regex.STRING, regex.NUMBER, regex.BOOLEAN, regex.ENDCURLYBRACKET, regex.COMMA, regex.ENDSQUAREBRACKET]
+    private let parsingTableOfArray = [[1, 0, 0, 0, 0, 0, 0, 0],
                                 [2, 0, 0, 0, 0, 0, 0, 0],
                                 [3, 0, 0, 0, 0, 0, 0, 0],
                                 [4, 0, 0, 0, 0, 0, 0, 0],

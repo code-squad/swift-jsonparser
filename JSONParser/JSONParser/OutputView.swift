@@ -10,7 +10,7 @@ import Foundation
 
 struct OutputView {
 
-    func printDataInfo(data: DataInfo) {
+    static func printDataInfo(data: DataInfo) {
         let sum = data.countOfBool + data.countOfNumber + data.countOfString + data.countOfObject
         var result = [String]()
         print("총 \(sum)개의 \(data.type) 데이터 중에", terminator: "")

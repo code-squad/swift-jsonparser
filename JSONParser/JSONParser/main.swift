@@ -24,13 +24,15 @@ do {
 // json parser (checking json syntax)
 var jsonStack = JsonStack()
 var firstObject: FirstObject? = nil
-
-if token![0].id == JsonScanner.regex.STARTSQUAREBRACKET {
+guard let tokenValue: JsonScanner.regex = token?[0].id else {
+    throw JsonScanner.JsonError.invalidJsonPattern
+}
+if tokenValue == JsonScanner.regex.STARTSQUAREBRACKET {
     firstObject = ArrayJsonParser()
-}else if token![0].id == JsonScanner.regex.STARTCURLYBRACKET {
+}else if tokenValue == JsonScanner.regex.STARTCURLYBRACKET {
     firstObject = ObjectJsonParser()
 }else {
-    print("객체도 배열도 아님", token![0].id)
+    print("JSON 데이터가 아님")
 }
 firstObject?.checkJsonSyntax(token: token!, stack: jsonStack)
 
@@ -39,6 +41,5 @@ var jsonTypeCounter = JsonTypeCounter()
 let data = try jsonTypeCounter.countDataType(stack: jsonStack, kindOf: (firstObject?.type)!)
 
 // outputview
-let outputView = OutputView()
-outputView.printDataInfo(data: data)
+OutputView.printDataInfo(data: data)
 

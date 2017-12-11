@@ -10,9 +10,9 @@ import Foundation
 
 struct ObjectJsonParser: FirstObject {
     typealias regex = JsonScanner.regex
-    let type = "객체"
-    let columnName = [regex.STARTCURLYBRACKET, regex.STRING, regex.COLON, regex.STARTSQUAREBRACKET, regex.STRING, regex.NUMBER, regex.BOOLEAN, regex.ENDSQUAREBRACKET, regex.COMMA, regex.ENDCURLYBRACKET]
-    let parsingTableOfObject = [[1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    private(set) var type = "객체"
+    private let columnName = [regex.STARTCURLYBRACKET, regex.STRING, regex.COLON, regex.STARTSQUAREBRACKET, regex.STRING, regex.NUMBER, regex.BOOLEAN, regex.ENDSQUAREBRACKET, regex.COMMA, regex.ENDCURLYBRACKET]
+    private let parsingTableOfObject = [[1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                                 [0 ,2, 0, 0, 0, 0, 0, 0, 0, 0],
                                 [0, 0, 3, 0, 0, 0, 0, 0, 0, 0],
                                 [0, 0, 4, 0, 0, 0, 0, 0, 0, 0],
