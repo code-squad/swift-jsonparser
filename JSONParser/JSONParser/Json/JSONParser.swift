@@ -9,7 +9,7 @@
 import Foundation
 
 struct JSONParser {
-    static func analyzeJSONData(in value: String) throws -> JSONDataCountable {
+    static func analyzeJSONData(in value: String) throws -> JSONDataCountable & JSONDataMaker {
         guard value.count > 0 else {
             throw JSONError.emptyValue
         }
