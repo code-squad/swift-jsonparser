@@ -12,7 +12,8 @@ struct OutputView {
     private typealias DataTypeName = JSONData.TypeName
     
     static func printResult(in data: JSONDataCountable & JSONDataMaker) {
-        printJSONData(in: JSONDataGenerator.unwrapJSONData(in: data.makeJSONData(), indent: 0))
+        let prettyJSONData = JSONDataGenerator.unwrapJSONData(in: data.makeJSONData(), indent: 0)
+        printJSONData(in: prettyJSONData)
         printJSONDataType(in: data)
     }
     
@@ -27,9 +28,11 @@ struct OutputView {
         
         description += "\(DataTypeName.total.rawValue) \(outputs[DataTypeName.total.rawValue] ?? 0)개의 \(label) 데이터 중에 "
         
-        description += outputs.filter({ (key, value) in key != DataTypeName.total.rawValue && value > 0 }).map{ (type, count) in
+        description += outputs.filter({ (key, value) in
+            key != DataTypeName.total.rawValue && value > 0
+        }).map{ (type, count) in
             "\(type) \(count)개,"
-            }.joined()
+        }.joined()
         
         description.removeLast()
         description += "가 포함되어 있습니다."

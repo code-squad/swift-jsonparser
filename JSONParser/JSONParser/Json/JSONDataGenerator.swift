@@ -105,12 +105,6 @@ struct JSONDataGenerator {
     }
     
     private static func newSpace(_ indentLevel: Int) -> String {
-        var result: String = ""
-        
-        for _ in 0..<indentLevel {
-            result += "  "
-        }
-        
-        return result
+        return String(repeating: "  ", count: indentLevel)
     }
 }
