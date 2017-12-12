@@ -9,12 +9,12 @@
 import Foundation
 
 struct InputView {
-    static func readValues() throws -> JSONDataCountable & JSONDataMaker {
-        if ProcessInfo.processInfo.arguments.count <= 1 {
+    static func readValues(_ arguments: [String]) throws -> JSONDataCountable & JSONDataMaker {
+        if arguments.count <= 1 {
             return try readValue()
         }
         
-        let filePath = try Utility.makeFileIOPath(in: ProcessInfo.processInfo.arguments)
+        let filePath = try Utility.makeFileIOPath(in: arguments)
         return try readFile(in: filePath.0)
     }
     

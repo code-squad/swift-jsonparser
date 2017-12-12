@@ -9,7 +9,8 @@
 import Foundation
 
 do {
-    try OutputView.printJSONData(in: try InputView.readValues())
+    let jsonData = try InputView.readValues(ProcessInfo.processInfo.arguments)
+    try OutputView.printJSONData(in: jsonData, arguments: ProcessInfo.processInfo.arguments)
 } catch let error as JSONError {
     print(error.rawValue)
 }

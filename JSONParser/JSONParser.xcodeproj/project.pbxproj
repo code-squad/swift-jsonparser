@@ -131,10 +131,10 @@
 		878BE98D1FBEB24500E702B3 /* JSONParserTests */ = {
 			isa = PBXGroup;
 			children = (
-				87433E541FD9102100CDB823 /* JSONDataTypePatternTests.swift */,
-				878BE98E1FBEB24500E702B3 /* JSONParserTests.swift */,
 				878BE9901FBEB24500E702B3 /* Info.plist */,
+				87433E541FD9102100CDB823 /* JSONDataTypePatternTests.swift */,
 				875CDBEF1FDF7EF300AE1269 /* JSONParserFileIOTests.swift */,
+				878BE98E1FBEB24500E702B3 /* JSONParserTests.swift */,
 			);
 			path = JSONParserTests;
 			sourceTree = "<group>";

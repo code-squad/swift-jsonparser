@@ -11,13 +11,13 @@ import Foundation
 struct OutputView {    
     private typealias DataTypeName = JSONData.TypeName
     
-    static func printJSONData(in data: JSONDataCountable & JSONDataMaker) throws {
-        let prettyJSONData = JSONDataGenerator.unwrapJSONData(in: data.makeJSONData(), indent: 0)
+    static func printJSONData(in jsonData: JSONDataCountable & JSONDataMaker, arguments arguments: [String]) throws {
+        let prettyJSONData = JSONDataGenerator.unwrapJSONData(in: jsonData.makeJSONData(), indent: 0)
         
-        if ProcessInfo.processInfo.arguments.count <= 1  {
-            printResult(prettyJSONData, data as JSONDataCountable)
+        if arguments.count <= 1  {
+            printResult(prettyJSONData, jsonData as JSONDataCountable)
         } else {
-            let filePath = try Utility.makeFileIOPath(in: ProcessInfo.processInfo.arguments)
+            let filePath = try Utility.makeFileIOPath(in: arguments)
             try generateOutputFile(prettyJSONData, filePath.1)
         }
     }
