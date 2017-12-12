@@ -14,8 +14,8 @@ struct InputView {
             return try readValue()
         }
         
-        
-        return try readFile(in: CommandLine.arguments)
+        let filePath = try Utility.makeFileIOPath(in: ProcessInfo.processInfo.arguments)
+        return try readFile(in: filePath.0)
     }
     
     private static func readValue() throws -> JSONDataCountable & JSONDataMaker {
@@ -28,17 +28,15 @@ struct InputView {
         return try JSONParser.analyzeJSONData(in: readValue)
     }
     
-    private static func readFile(in arguments: [String]) throws -> JSONDataCountable & JSONDataMaker {
+    private static func readFile(in filePath: String) throws -> JSONDataCountable & JSONDataMaker {
         let dir = FileManager.default.homeDirectoryForCurrentUser
-        let baseFilePath = ProcessInfo.processInfo.environment["baseFilePath"]
-        let path = "\(baseFilePath!)\(try Utility.validateFile(arguments[1]))"
         var readTexts: String = ""
         
         do {
-            readTexts = try String(contentsOf: dir.appendingPathComponent(path)
+            readTexts = try String(contentsOf: dir.appendingPathComponent(filePath)
 , encoding: .utf8)
         } catch {
-            throw JSONError.errorWhileReadingFile
+            throw JSONError.errorWhileProcessingFile
         }
 
         return try JSONParser.analyzeJSONData(in: readTexts)

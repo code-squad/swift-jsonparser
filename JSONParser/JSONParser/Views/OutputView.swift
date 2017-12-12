@@ -17,20 +17,18 @@ struct OutputView {
         if ProcessInfo.processInfo.arguments.count <= 1  {
             printResult(prettyJSONData, data as JSONDataCountable)
         } else {
-            try generateOutputFile(prettyJSONData, ProcessInfo.processInfo.arguments)
+            let filePath = try Utility.makeFileIOPath(in: ProcessInfo.processInfo.arguments)
+            try generateOutputFile(prettyJSONData, filePath.1)
         }
     }
     
-    private static func generateOutputFile(_ prettyJSONData: String, _ arguments: [String]) throws {
+    private static func generateOutputFile(_ prettyJSONData: String, _ filePath: String) throws {
         let dir = FileManager.default.homeDirectoryForCurrentUser
-        let fileName = arguments.count <= 2 ? "result.json" : try Utility.validateFile(arguments[2])
-        let baseFilePath = ProcessInfo.processInfo.environment["baseFilePath"]
-        let path = "\(baseFilePath!)\(try Utility.validateFile(fileName))"
             
         do {
-            try prettyJSONData.write(to: dir.appendingPathComponent(path), atomically: false, encoding: .utf8)
+            try prettyJSONData.write(to: dir.appendingPathComponent(filePath), atomically: false, encoding: .utf8)
         } catch {
-            throw JSONError.errorWhileWritingFile
+            throw JSONError.errorWhileProcessingFile
         }
     }
     

@@ -13,22 +13,22 @@ struct JSONScanner {
     private var values: [String] = []
     
     mutating func makeValues(_ s: String) -> [String] {
-        let strings = Utility.removeFromFirstToEnd(in: s)
-        var stringsCount: Int = strings.count
+        let string = Utility.removeFromFirstToEnd(in: s)
+        var stringCount: Int = string.count
         
-        for character in strings {
+        for character in string {
             value += String(character)
-            stringsCount -= 1
+            stringCount -= 1
             
             if value.contains(JSONDataTypePattern.leftBrace) {
                 makeObjectValue()
             } else if value.contains(JSONDataTypePattern.leftSquareBracket) {
                 makeArrayValue()
             } else if value.hasSuffix(JSONDataTypePattern.comma) {
-                makeValue(stringsCount)
+                makeValue(stringCount)
             }
             
-            if stringsCount == 0 {
+            if stringCount == 0 {
                 makeValue()
             }
         }
