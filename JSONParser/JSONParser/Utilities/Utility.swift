@@ -21,9 +21,6 @@ struct Utility {
         let inPath: String
         let outPath: String
         
-        print("count : \(arguments.count)")
-        print("arguments : \(arguments)")
-        
         switch arguments.count {
         case 2:
             inPath = "\(base!)\(try validateFile(arguments[1]))"
