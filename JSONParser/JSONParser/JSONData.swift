@@ -1,5 +1,5 @@
 //
-//  JSONDataType.swift
+//  JSONData.swift
 //  JSONParser
 //
 //  Created by YOUTH on 2017. 12. 11..

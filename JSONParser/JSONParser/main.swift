@@ -11,13 +11,15 @@ let inputView = InputView()
 let userInput = inputView.askUserInput()
 
 let targetFactory = ParsingTargetFactory()
-let targetString = targetFactory.setTargetType(userInput)
+let targetString = targetFactory.convertTargetToString(userInput)
 
-let typeIdentifier = TypeIdentifier()
-let parsedData = typeIdentifier.matchType(targetString)
+let targetSetter = JSONDataFactory(targetString)
+let parsedData = targetSetter.setTargetType()
 
 let counter = ValueCounter(parsedData)
 let countingInfo = counter.countingValues()
 
 let outputView = OutputView()
 outputView.showResult(countingInfo)
+
+

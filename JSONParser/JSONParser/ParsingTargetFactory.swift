@@ -1,5 +1,5 @@
 //
-//  ObjectProducer.swift
+//  ParsingTargetFactory.swift
 //  JSONParser
 //
 //  Created by YOUTH on 2017. 12. 7..
@@ -10,46 +10,46 @@ import Foundation
 
 struct ParsingTargetFactory {
     
-    func setTargetType (_ input: String?) -> [String] {
+    func convertTargetToString (_ input: String?) -> ParsingTarget {
         let inputValue = input ?? ""
-        var stringValues : [String] = []
         
         if inputValue.hasPrefix("[") && inputValue.hasSuffix("]") {
             let trimmedValue = inputValue.trimmingCharacters(in: ["[","]"])
             if trimmedValue.contains("{") && trimmedValue.contains("}") {
                 // object가 배열 안에 있는 경우
             } else {
-                stringValues = makeTargetArray(trimmedValue)
+                return makeTargetArray(trimmedValue)
             }
         }
         
         if inputValue.hasPrefix("{") && inputValue.hasSuffix("}") {
             let trimmedValue = inputValue.trimmingCharacters(in: ["{","}"])
-            stringValues = makeTargetObject(trimmedValue)
+            return makeTargetObject(trimmedValue)
         }
         
-        return stringValues
+        return makeTargetArray("")
     }
 }
 
 extension ParsingTargetFactory {
     
-    private func makeTargetArray (_ changeTarget: String) -> [String] {
+    private func makeTargetArray (_ changeTarget: String) -> ParsingTarget {
         var stringValuesToArray : [String] = []
         
         let valuesList = changeTarget.split(separator: ",")
         stringValuesToArray = valuesList.map({(value:String.SubSequence)->String in String(value).trimmingCharacters(in: .whitespacesAndNewlines)})
-        return stringValuesToArray
+        
+        return MyArray(stringValuesToArray)
     }
     
-    private func makeTargetObject (_ changeTarget: String) -> [String] {
-        var stringValuesToObject : [String] = []
+    private func makeTargetObject (_ changeTarget: String) -> ParsingTarget {
+        var stringDictionaryToObject : Dictionary<String, String> = [:]
         
         let listOfValue = changeTarget.split(separator: ",").map({(value: String.SubSequence) -> String in String(value)}) // [""key":value", ""key":value"]
         for tempValue in listOfValue {
-            stringValuesToObject.append(makeTempDictionary(tempValue).value)
+            stringDictionaryToObject[makeTempDictionary(tempValue).key] = makeTempDictionary(tempValue).value
         }
-        return stringValuesToObject
+        return MyObject(stringDictionaryToObject)
     }
     
     private func makeTempDictionary (_ value: String) -> (key: String, value: String){

@@ -9,7 +9,6 @@
 import Foundation
 
 struct ValueCounter {
-
     var JSONDataList : [JSONData] = []
     
     init (_ data : [JSONData]) {

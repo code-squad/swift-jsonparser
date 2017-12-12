@@ -1,5 +1,5 @@
 //
-//  CountInfo.swift
+//  CountingInfo.swift
 //  JSONParser
 //
 //  Created by YOUTH on 2017. 12. 11..
