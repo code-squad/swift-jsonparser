@@ -43,10 +43,15 @@ struct Analyzer {
     
     // 각각의 타입 갯수를 세서 타입카운터 데이터 객체로 반환
     private func makeType (_ input: Array<String>) -> (Int, Int, Int, Int) {
-        let countOfNum = input.flatMap() {Int($0)}.count
-        let countOfBoolean = input.flatMap() {Bool($0)}.count
-        let conutOfString = input.count - countOfNum - countOfBoolean
-        return (countOfNum, countOfBoolean, conutOfString, input.count)
+        var countOfN = 0
+        var countOfB = 0
+        var countOfS = 0
+        for value in input {
+            if Int(value) != nil { countOfN += 1 }
+            if Bool(value) != nil { countOfB += 1 }
+            if value.contains("\"") { countOfS += 1 }
+        }
+        return (countOfN, countOfB, countOfS, input.count)
     }
     
     
