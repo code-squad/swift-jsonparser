@@ -23,5 +23,12 @@ struct MyObject: ParsingTarget {
         let objectValues = Array(myObject.values)
         return objectValues[orderOfvalue]
     }
+}
+    
+    
+extension MyObject {
+    func getDictionary() -> Dictionary<String, String> {
+        return self.myObject
+    }
     
 }

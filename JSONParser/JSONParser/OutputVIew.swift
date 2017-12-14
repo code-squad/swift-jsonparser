@@ -10,7 +10,7 @@ import Foundation
 
 struct OutputView {
     
-    private func makeResultMessage(_ info : CountingInfo) -> String{
+    private func makeResultMessage(_ info : CountInfo) -> String{
         var result = ""
         
         if info.countOfInt != 0 {
@@ -27,7 +27,7 @@ struct OutputView {
     }
     
     
-    func showResult(_ countInfo: CountingInfo) {
+    func showResult(_ countInfo: CountInfo) {
         print("\(countInfo.countOfJSONData)개 데이터 중에 \(makeResultMessage(countInfo))가 포함되어 있습니다.")
     }
     

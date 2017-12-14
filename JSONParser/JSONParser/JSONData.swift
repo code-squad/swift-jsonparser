@@ -12,6 +12,7 @@ enum JSONData {
     case IntegerValue(Int)
     case StringValue(String)
     case BoolValue(Bool)
-    case ObjectValue(Dictionary<String, Any>)
+    case ObjectValue(Dictionary<String, JSONData>)
+    case ArrayValue([JSONData])
 }
 

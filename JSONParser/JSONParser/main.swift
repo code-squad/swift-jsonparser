@@ -17,9 +17,9 @@ let targetSetter = JSONDataFactory(targetString)
 let parsedData = targetSetter.setTargetType()
 
 let counter = ValueCounter(parsedData)
-let countingInfo = counter.countingValues()
+let countInfo = counter.makeCountInfo()
 
 let outputView = OutputView()
-outputView.showResult(countingInfo)
+outputView.showResult(countInfo)
 
 

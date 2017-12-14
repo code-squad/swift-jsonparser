@@ -9,7 +9,6 @@
 import Foundation
 
 struct MyArray: ParsingTarget {
-    
     var myArray : [String]
     
     init (_ stringValues: [String]) {
@@ -23,5 +22,5 @@ struct MyArray: ParsingTarget {
     func getEachValue(_ orderOfValue: Int) -> String {
         return myArray[orderOfValue]
     }
-    
+
 }

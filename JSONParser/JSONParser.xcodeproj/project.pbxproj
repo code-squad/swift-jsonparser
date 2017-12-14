@@ -17,7 +17,7 @@
 		E8B1EB331FDD5B3D00FC9883 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B1EB321FDD5B3D00FC9883 /* Parser.swift */; };
 		E8B1EB371FDE566200FC9883 /* ValueCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B1EB361FDE566200FC9883 /* ValueCounter.swift */; };
 		E8B1EB391FDE5A3600FC9883 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B1EB381FDE5A3600FC9883 /* JSONData.swift */; };
-		E8B1EB3B1FDE604600FC9883 /* CountingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B1EB3A1FDE604600FC9883 /* CountingInfo.swift */; };
+		E8B1EB3B1FDE604600FC9883 /* CountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B1EB3A1FDE604600FC9883 /* CountInfo.swift */; };
 		E8C096661FD6339900D01BF4 /* OutputVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C096651FD6339900D01BF4 /* OutputVIew.swift */; };
 		E8D1F4FB1FD901160048E77D /* ParsingTargetFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D1F4FA1FD901160048E77D /* ParsingTargetFactory.swift */; };
 /* End PBXBuildFile section */
@@ -46,7 +46,7 @@
 		E8B1EB321FDD5B3D00FC9883 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		E8B1EB361FDE566200FC9883 /* ValueCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueCounter.swift; sourceTree = "<group>"; };
 		E8B1EB381FDE5A3600FC9883 /* JSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
-		E8B1EB3A1FDE604600FC9883 /* CountingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingInfo.swift; sourceTree = "<group>"; };
+		E8B1EB3A1FDE604600FC9883 /* CountInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountInfo.swift; sourceTree = "<group>"; };
 		E8C096651FD6339900D01BF4 /* OutputVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputVIew.swift; sourceTree = "<group>"; };
 		E8D1F4FA1FD901160048E77D /* ParsingTargetFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingTargetFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,7 +88,7 @@
 				E844FFBC1FDC1B8E002458B2 /* SplitInput.swift */,
 				E8B1EB321FDD5B3D00FC9883 /* Parser.swift */,
 				E8B1EB361FDE566200FC9883 /* ValueCounter.swift */,
-				E8B1EB3A1FDE604600FC9883 /* CountingInfo.swift */,
+				E8B1EB3A1FDE604600FC9883 /* CountInfo.swift */,
 				E8B1EB381FDE5A3600FC9883 /* JSONData.swift */,
 				E82A51BD1FDEA9D9004833B8 /* ParsingTarget.swift */,
 				E82A51BF1FDEABCB004833B8 /* JSONDataFactory.swift */,
@@ -157,7 +157,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E844FFBD1FDC1B8E002458B2 /* SplitInput.swift in Sources */,
-				E8B1EB3B1FDE604600FC9883 /* CountingInfo.swift in Sources */,
+				E8B1EB3B1FDE604600FC9883 /* CountInfo.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				E82A51C21FDEAE63004833B8 /* MyObject.swift in Sources */,
 				E8C096661FD6339900D01BF4 /* OutputVIew.swift in Sources */,

@@ -9,19 +9,31 @@
 import Foundation
 
 struct ValueCounter {
-    var JSONDataList : [JSONData] = []
+    var parsedJSONDataList : JSONData
     
-    init (_ data : [JSONData]) {
-        self.JSONDataList = data
+    init (_ data : JSONData) {
+        self.parsedJSONDataList = data
     }
     
-    func countingValues() -> CountingInfo{
+    func makeCountInfo () -> CountInfo {
+        var countInfo = CountInfo(0,0,0,0)
+        
+        if case let JSONData.ArrayValue(countTarget) = parsedJSONDataList { // enum바인딩
+           countInfo = countArrayValues(countTarget)
+        }
+        if case let JSONData.ObjectValue(countTarget) = parsedJSONDataList {
+            countInfo = countObjectValues(countTarget)
+        }
+        return countInfo
+    }
+    
+    func countArrayValues(_ countTarget: [JSONData]) -> CountInfo{
         var countOfInt = 0
         var countOfBool = 0
         var countOfString = 0
-        let countOfJSONData = JSONDataList.count
+        let countOfJSONData = countTarget.count
         
-        for datum in JSONDataList {
+        for datum in countTarget {
             switch datum {
             case .IntegerValue :
                 countOfInt += 1
@@ -31,12 +43,38 @@ struct ValueCounter {
                 
             case .StringValue :
                 countOfString += 1
-            
+                
             default :
                 countOfString += 0
             }
         }
-        return CountingInfo(countOfInt, countOfBool, countOfString, countOfJSONData)
+        return CountInfo(countOfInt, countOfBool, countOfString, countOfJSONData)
     }
-
+    
+    func countObjectValues(_ countTarget: Dictionary<String, JSONData>) -> CountInfo {
+        var countOfInt = 0
+        var countOfBool = 0
+        var countOfString = 0
+        let countOfJSONData = countTarget.count
+        
+        for datum in countTarget.values {
+            switch datum {
+            case .IntegerValue :
+                countOfInt += 1
+                
+            case .BoolValue:
+                countOfBool += 1
+                
+            case .StringValue :
+                countOfString += 1
+                
+            default :
+                countOfString += 0
+            }
+        }
+        return CountInfo(countOfInt, countOfBool, countOfString, countOfJSONData)
+    }
+    
 }
+
+

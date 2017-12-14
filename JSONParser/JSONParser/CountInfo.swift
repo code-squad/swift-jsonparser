@@ -1,5 +1,5 @@
 //
-//  CountingInfo.swift
+//  CountInfo.swift
 //  JSONParser
 //
 //  Created by YOUTH on 2017. 12. 11..
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CountingInfo {
+struct CountInfo {
     var countOfInt = 0
     var countOfBool = 0
     var countOfString = 0
