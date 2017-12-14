@@ -10,10 +10,10 @@ import Foundation
 
 while true {
     do {
-        let temp = InputView.read()
-        if temp == "quit" { break }
-        let temp2 = try Analyzer().makeTypeCounting(temp)
-        OutputView.printResult(temp2)
+        let unanalyzedValue = InputView.read()
+        if unanalyzedValue == "quit" { break }
+        let countedValue = try Analyzer().makeTypeCounting(unanalyzedValue)
+        OutputView.printResult(countedValue)
     } catch let error as Analyzer.ErrorMessage {
         print (error.rawValue)
     }
