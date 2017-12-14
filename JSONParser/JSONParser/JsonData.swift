@@ -9,8 +9,10 @@
 import Foundation
 
 struct CountingData {
-    var countOfNumericValue: Int
-    var countOfBooleanValue: Int
-    var countOfStringValue: Int
-    var countOfTotalValue: Int
+    private (set) var countOfNumericValue: Int
+    private (set) var countOfBooleanValue: Int
+    private (set) var countOfStringValue: Int
+    private (set) var countOfTotalValue: Int
+    
+    
 }
