@@ -9,6 +9,6 @@
 import Foundation
 struct OutputView {
     static func printResult (_ input: CountingData) {
-         print ("총 \(input.countOfTotalValue)의 데이터중 숫자 \(input.countOfNumericValue)개, 불값 \(input.countOfBooleanValue)개, 문자열 \(input.countOfStringValue)개가 있습니다.")
+         print ("총 \(input.countOfTotalValue)의 데이터중 숫자 \(input.countOfNumericValue.count)개, 불값 \(input.countOfBooleanValue.count)개, 문자열 \(input.countOfStringValue.count)개가 있습니다.")
     }
 }

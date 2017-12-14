@@ -19,7 +19,7 @@ struct SyntaxChecker {
     }
     
     private static func checkIsValidForJson (_ stringValue: String) throws -> Bool{
-        let jsonPattern = "\\[{1}.*,*\\]{1}?"
+        let jsonPattern = "\\[.+,?\\]"
         do {
             let regex = try NSRegularExpression(pattern: jsonPattern)
             let results = regex.matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count))
@@ -32,5 +32,5 @@ struct SyntaxChecker {
     private static func findJsonString (from validString: String) -> [String] {
         return validString.trimmingCharacters(in: ["[", "]"]).split(separator: ",").map{ String($0) }
     }
-    
+
 }

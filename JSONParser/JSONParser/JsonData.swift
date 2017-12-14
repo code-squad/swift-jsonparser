@@ -9,10 +9,10 @@
 import Foundation
 
 struct CountingData {
-    private (set) var countOfNumericValue: Int
-    private (set) var countOfBooleanValue: Int
-    private (set) var countOfStringValue: Int
+    private (set) var countOfNumericValue: [Int]
+    private (set) var countOfBooleanValue: [Bool]
+    private (set) var countOfStringValue: [String]
     var countOfTotalValue: Int {
-        return self.countOfNumericValue + self.countOfBooleanValue + self.countOfStringValue
+        return self.countOfNumericValue.count + self.countOfBooleanValue.count + self.countOfStringValue.count
     }
 }

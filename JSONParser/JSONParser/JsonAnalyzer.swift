@@ -10,17 +10,20 @@ import Foundation
 
 // 입력값을 분석해서 타입 갯수 객체를 생성
 struct Analyzer {
-    // 각각의 타입 갯수를 세서 각각 타입갯수를 세서 튜플로 반환
-    static func makeCountedTypeInstance (_ stringValues: Array<String>) -> CountingData {
-        var countOfNumber = 0
-        var countOfBool = 0
-        var countOfString = 0
+    private let countingData : CountingData
+    init (_ countingData: CountingData) {
+        self.countingData = countingData
+    }
+     static func makeCountedTypeInstance (_ stringValues: Array<String>) -> CountingData {
+        var numberValue = [Int]()
+        var boolValue = [Bool]()
+        var stringValue = [String]()
         for value in stringValues {
-            if let _ = Int(value) { countOfNumber += 1 }
-            if let _ = Bool(value) { countOfBool += 1 }
-            if value.contains("\"") { countOfString += 1 }
+            if let IntegerValue = Int(value) { numberValue.append(IntegerValue) }
+            if let booleanValue = Bool(value) { boolValue.append(booleanValue) }
+            if value.contains("\"") { stringValue.append(value) }
         }
-        let countedData = CountingData(countOfNumericValue: countOfNumber, countOfBooleanValue: countOfBool, countOfStringValue: countOfString)
+        let countedData = CountingData(countOfNumericValue: numberValue, countOfBooleanValue: boolValue, countOfStringValue: stringValue)
         return countedData
     }
 }
