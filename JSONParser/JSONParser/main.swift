@@ -12,9 +12,10 @@ while true {
     do {
         let unanalyzedValue = InputView.read()
         if unanalyzedValue == "quit" { break }
-        let countedValue = try Analyzer().makeTypeCounting(unanalyzedValue)
+        let validString = try SyntaxChecker.makeValidString(values: unanalyzedValue)
+        let countedValue =  Analyzer.makeCountedTypeInstance(validString)
         OutputView.printResult(countedValue)
-    } catch let error as Analyzer.ErrorMessage {
+    } catch let error as SyntaxChecker.ErrorMessage {
         print (error.rawValue)
     }
     

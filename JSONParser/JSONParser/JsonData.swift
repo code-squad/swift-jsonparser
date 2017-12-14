@@ -12,7 +12,7 @@ struct CountingData {
     private (set) var countOfNumericValue: Int
     private (set) var countOfBooleanValue: Int
     private (set) var countOfStringValue: Int
-    private (set) var countOfTotalValue: Int
-    
-    
+    var countOfTotalValue: Int {
+        return self.countOfNumericValue + self.countOfBooleanValue + self.countOfStringValue
+    }
 }

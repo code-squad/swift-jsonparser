@@ -12,6 +12,7 @@
 		C388CD611FDE710300DDC82A /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C388CD601FDE710300DDC82A /* OutputView.swift */; };
 		C388CD631FDE730B00DDC82A /* JsonAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C388CD621FDE730B00DDC82A /* JsonAnalyzer.swift */; };
 		C388CD651FDF745500DDC82A /* JsonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C388CD641FDF745500DDC82A /* JsonData.swift */; };
+		C388CD671FE23A9B00DDC82A /* JsonSyntaxChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C388CD661FE23A9B00DDC82A /* JsonSyntaxChecker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,7 @@
 		C388CD601FDE710300DDC82A /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		C388CD621FDE730B00DDC82A /* JsonAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonAnalyzer.swift; sourceTree = "<group>"; };
 		C388CD641FDF745500DDC82A /* JsonData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonData.swift; sourceTree = "<group>"; };
+		C388CD661FE23A9B00DDC82A /* JsonSyntaxChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSyntaxChecker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				C388CD5E1FDE70D700DDC82A /* InputView.swift */,
 				C388CD641FDF745500DDC82A /* JsonData.swift */,
+				C388CD661FE23A9B00DDC82A /* JsonSyntaxChecker.swift */,
 				C388CD621FDE730B00DDC82A /* JsonAnalyzer.swift */,
 				C388CD601FDE710300DDC82A /* OutputView.swift */,
 			);
@@ -132,6 +135,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C388CD671FE23A9B00DDC82A /* JsonSyntaxChecker.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				C388CD631FDE730B00DDC82A /* JsonAnalyzer.swift in Sources */,
 				C388CD5F1FDE70D700DDC82A /* InputView.swift in Sources */,
