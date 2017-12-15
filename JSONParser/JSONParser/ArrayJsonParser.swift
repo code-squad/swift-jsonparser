@@ -9,9 +9,8 @@
 import Foundation
 struct ArrayJsonParser: FirstObject {    
     typealias regex = JsonScanner.regex
-    private(set) var type = "배열"
     private var arrayOfJsonData = [Any]() //Array<Any>
-    private var tokenOfJson: [Token]
+    private var tokenOfJson = [Token]()
     private var indexOfToken: Int = 0
     private var indexOfNextRegex: Int = 0
     private var countOfRepeat = 0
@@ -35,11 +34,8 @@ struct ArrayJsonParser: FirstObject {
                                        [0, 0, 0, 0, 0, 0, 4, 0],
                                        [0, 0, 0, 0, 0, 0, 0, -1]]
     
-    init(token: [Token]) {
+    mutating func makeJsonData(token: [Token]) -> [Any] {
         tokenOfJson = token
-    }
-    
-    mutating func makeJsonData() -> [Any] {
         while indexOfToken < tokenOfJson.count {
             let terminator = compareToParsingTable()
             if terminator == -2 {
@@ -73,16 +69,16 @@ struct ArrayJsonParser: FirstObject {
         indexOfToken += 1
         if columnName[col] == regex.STARTCURLYBRACKET {
             let tokenOfSplit = tokenOfJson[indexOfToken..<tokenOfJson.count]
-            var objectJsonParser = ObjectJsonParser(token: Array(tokenOfSplit))
-            let jsonData = objectJsonParser.makeJsonData()
+            var objectJsonParser = ObjectJsonParser()
+            let jsonData = objectJsonParser.makeJsonData(token: Array(tokenOfSplit))
             arrayOfJsonData.append(jsonData)
             indexOfToken = indexOfToken + ( jsonData.count * 3 ) + ( jsonData.count - 1 )
             return row
         }else if columnName[col] == regex.STARTSQUAREBRACKET {
             if countOfRepeat > 0 {
                 let tokenOfSplit = tokenOfJson[indexOfToken..<tokenOfJson.count]
-                var arrayJsonParser = ArrayJsonParser(token: Array(tokenOfSplit))
-                let jsonData = arrayJsonParser.makeJsonData()
+                var arrayJsonParser = ArrayJsonParser()
+                let jsonData = arrayJsonParser.makeJsonData(token: Array(tokenOfSplit))
                 arrayOfJsonData.append(jsonData)
                 indexOfToken += (jsonData.count + ( jsonData.count - 1 ))
             }

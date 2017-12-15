@@ -41,12 +41,13 @@ struct JsonScanner {
                 if matchesOfType != nil {
                     let rangeOfType = matchesOfType?.range
                     var value: Any = ""
+                    let valueOfPartial = (valueOfRange as NSString).substring(with: rangeOfType!)
                     if index == regex.NUMBER {
-                        value = Int((valueOfRange as NSString).substring(with: rangeOfType!)) as Any
+                        value = Int(valueOfPartial) as Any
                     }else if index == regex.BOOLEAN {
-                        value = Bool((valueOfRange as NSString).substring(with: rangeOfType!)) as Any
+                        value = Bool(valueOfPartial) as Any
                     }else if index == regex.STRING {
-                        value = String((valueOfRange as NSString).substring(with: rangeOfType!))
+                        value = String(valueOfPartial)
                     }
                     token.append(Token(id: index, value: value))
                 }

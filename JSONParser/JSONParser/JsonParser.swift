@@ -25,13 +25,12 @@ struct JsonParser {
             throw JsonScanner.JsonError.invalidJsonPattern
         }
         if startOfToken == JsonScanner.regex.STARTSQUAREBRACKET {
-            var arrayJsonParser = ArrayJsonParser(token: tokenValues)
-            jsonData = arrayJsonParser.makeJsonData()
+            var arrayJsonParser = ArrayJsonParser()
+            jsonData = arrayJsonParser.makeJsonData(token: tokenValues)
 
         }else if startOfToken == JsonScanner.regex.STARTCURLYBRACKET {
-            var objectJsonParser = ObjectJsonParser(token: tokenValues)
-            jsonData = objectJsonParser.makeJsonData()
-
+            var objectJsonParser = ObjectJsonParser()
+            jsonData = objectJsonParser.makeJsonData(token: tokenValues)
         }else {
             print("JSON 데이터가 아님")
         }

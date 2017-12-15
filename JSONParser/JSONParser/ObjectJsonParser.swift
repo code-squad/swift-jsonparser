@@ -9,9 +9,8 @@ import Foundation
 
 struct ObjectJsonParser: FirstObject {
     typealias regex = JsonScanner.regex
-    private(set) var type = "객체"
     private var objectOfJsonData = [String:Any]() //Dictionary<String,Any>
-    private var tokenOfJson: [Token]
+    private var tokenOfJson = [Token]()
     private var indexOfToken: Int = 0
     private var indexOfNextRegex: Int = 0
     private var value: Any = ""
@@ -35,11 +34,9 @@ struct ObjectJsonParser: FirstObject {
                                         [0, 0, 0, 0, 0, 0, 0, 9, 0, 0],
                                         [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
                                         [0, 0, 0, 0, 0, 0, 0, 0, 0, -1]]
-    init(token: [Token]) {
+    
+    mutating func makeJsonData(token: [Token]) -> [String:Any] {
         tokenOfJson = token
-    }
-
-    mutating func makeJsonData() -> [String:Any] {
         while indexOfToken < tokenOfJson.count {
             let terminator = compareToParsingTable()
             if terminator == -2 {
@@ -94,13 +91,13 @@ struct ObjectJsonParser: FirstObject {
     mutating func fetchTheValue(col: Int) {
         if columnName[col] == regex.STARTSQUAREBRACKET {
             let tokenOfSplit = tokenOfJson[indexOfToken..<tokenOfJson.count]
-            var arrayJsonParser = ArrayJsonParser(token: Array(tokenOfSplit))
-            let jsonData = arrayJsonParser.makeJsonData()
+            var arrayJsonParser = ArrayJsonParser()
+            let jsonData = arrayJsonParser.makeJsonData(token: Array(tokenOfSplit))
             value = jsonData
         }else if columnName[col] == regex.STARTCURLYBRACKET {
             let tokenOfSplit = tokenOfJson[indexOfToken..<tokenOfJson.count]
-            var objectJsonParser = ObjectJsonParser(token: Array(tokenOfSplit))
-            let jsonData = objectJsonParser.makeJsonData()
+            var objectJsonParser = ObjectJsonParser()
+            let jsonData = objectJsonParser.makeJsonData(token: Array(tokenOfSplit))
             value = jsonData
             indexOfToken = indexOfToken + ( jsonData.count * 3 ) * 2
         }else {

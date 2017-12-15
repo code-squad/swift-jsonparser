@@ -9,7 +9,7 @@
 import Foundation
 
 protocol FirstObject {
-    var type: String { get }
+    init()
     mutating func compareToParsingTable() -> Int
     mutating func searchNextRegexIndex(row: Int, col: Int) -> Int
 }
