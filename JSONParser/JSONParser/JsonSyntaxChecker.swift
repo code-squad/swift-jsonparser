@@ -30,7 +30,7 @@ struct SyntaxChecker {
     }
     
     private static func findJsonString (from validString: String) -> [String] {
-        return validString.trimmingCharacters(in: ["[", "]"]).split(separator: ",").map{ String($0) }
+        return validString.trimmingCharacters(in: ["[", "]"]).split(separator: ",").map{ String($0.trimmingCharacters(in: .whitespacesAndNewlines)) }
     }
 
 }
