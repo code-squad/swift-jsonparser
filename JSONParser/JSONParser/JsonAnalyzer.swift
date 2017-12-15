@@ -15,7 +15,9 @@ struct Analyzer {
         var numberValue = [Int]()
         var boolValue = [Bool]()
         var stringValue = [String]()
+        print(stringValues)
         for value in stringValues {
+            print(value)
             if let IntegerValue = Int(value) { numberValue.append(IntegerValue) }
             if let booleanValue = Bool(value) { boolValue.append(booleanValue) }
             if value.contains("\"") { stringValue.append(value) }

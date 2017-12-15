@@ -18,14 +18,14 @@ class TestJsonParser: XCTestCase {
     }
     
     func testIsSuccessMakingCountingDataInstance () {
-        let uncheckedValues = "[57,\"JeongHoon\",41,\"Korea\",120,\"make\",true,true,\"Choi\",2017]"
+        let uncheckedValues = "[ 57, \"JeongHoon\", 41, \"Korea\", 120, \"make\", true, true,\"Choi\",2017]"
         let checkedValues = try! SyntaxChecker.makeValidString(values: uncheckedValues)
         let countedType: CountingData = Analyzer.makeCountedTypeInstance(checkedValues)
         XCTAssertNotNil(countedType)
     }
     
     func testIsSuccessMakingCountedTypeInstance () {
-        let uncheckedValues = "[120,\"minimum\",12,\"Jazz\",2015,true]"
+        let uncheckedValues = "[120, \"minimum\", 12,\"Jazz\" ,2015, true]"
         let checkedValues = try! SyntaxChecker.makeValidString(values: uncheckedValues)
         let numberValue: [Int] = [120,12,2015]
         let boolValue: [Bool] = [true]
