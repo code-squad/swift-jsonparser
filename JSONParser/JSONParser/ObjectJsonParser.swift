@@ -70,22 +70,7 @@ struct ObjectJsonParser: FirstObject {
             key = tokenOfJson[indexOfToken].value as! String
             isKey = false
         }else if isValue {
-            if columnName[col] == regex.STARTSQUAREBRACKET {
-                let tokenOfSplit = tokenOfJson[indexOfToken..<tokenOfJson.count]
-                var arrayJsonParser = ArrayJsonParser(token: Array(tokenOfSplit))
-                let jsonData = arrayJsonParser.makeJsonData()
-                value = jsonData
-            }else if columnName[col] == regex.STARTCURLYBRACKET {
-                    let tokenOfSplit = tokenOfJson[indexOfToken..<tokenOfJson.count]
-                    var objectJsonParser = ObjectJsonParser(token: Array(tokenOfSplit))
-                    let jsonData = objectJsonParser.makeJsonData()
-                    value = jsonData
-                    indexOfToken = indexOfToken + ( jsonData.count * 3 ) * 2
-            }else {
-                value = tokenOfJson[indexOfToken].value
-            }
-            objectOfJsonData[key] = value
-            isValue = false
+            fetchTheValue(col: col)
         }
         if columnName[col] == regex.STARTCURLYBRACKET || columnName[col] == regex.COMMA {
             isKey = true
@@ -104,6 +89,25 @@ struct ObjectJsonParser: FirstObject {
             return -2
         }
         return row
+    }
+    
+    mutating func fetchTheValue(col: Int) {
+        if columnName[col] == regex.STARTSQUAREBRACKET {
+            let tokenOfSplit = tokenOfJson[indexOfToken..<tokenOfJson.count]
+            var arrayJsonParser = ArrayJsonParser(token: Array(tokenOfSplit))
+            let jsonData = arrayJsonParser.makeJsonData()
+            value = jsonData
+        }else if columnName[col] == regex.STARTCURLYBRACKET {
+            let tokenOfSplit = tokenOfJson[indexOfToken..<tokenOfJson.count]
+            var objectJsonParser = ObjectJsonParser(token: Array(tokenOfSplit))
+            let jsonData = objectJsonParser.makeJsonData()
+            value = jsonData
+            indexOfToken = indexOfToken + ( jsonData.count * 3 ) * 2
+        }else {
+            value = tokenOfJson[indexOfToken].value
+        }
+        objectOfJsonData[key] = value
+        isValue = false
     }
     
 }
