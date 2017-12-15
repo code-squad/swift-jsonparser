@@ -5,62 +5,58 @@
 //  Created by Eunjin Kim on 2017. 11. 20..
 //  Copyright © 2017년 JK. All rights reserved.
 //
-
 import Foundation
 
 struct JsonTypeCounter {
     
-    func countDataType(stack: JsonStack, kindOf: String) throws -> DataInfo {
+    func findTypeOfData(jsonData: Any) throws -> DataInfo {
         var dataInfo = DataInfo()
-        dataInfo.type = kindOf
-        var jsonStack = stack
-        var isObject = false
-
-        
-        if kindOf == "객체" {
-            dataInfo = try countStackOfObject(stack: jsonStack)
-        }else if kindOf == "배열" {
-            while jsonStack.size > 0 {
-                let data = try jsonStack.pop()
-                if data.id == JsonScanner.regex.ENDCURLYBRACKET {
-                    isObject = true
-                }else if data.id == JsonScanner.regex.STARTCURLYBRACKET {
-                    isObject = false
-                    dataInfo.countOfObject += 1
-                }
-            }
+        switch jsonData {
+            case is Dictionary<String, Any>:
+                try dataInfo = countDataOfObject(jsonData: jsonData as! Dictionary)
+            case is [Any]:
+                try dataInfo = countDataOfArray(jsonData: jsonData as! Array)
+            default:
+                print("error")
         }
-
         return dataInfo
     }
     
-    func countStackOfObject(stack: JsonStack) throws -> DataInfo {
-        var jsonStack = stack
-        var value: Any = ""
-        var key: String = ""
-        var jsonData = [String:Any]()
+    func countDataOfObject(jsonData: [String:Any]) throws -> DataInfo {
         var dataInfo = DataInfo()
-        
-        while jsonStack.size > 0 {
-            let data = try jsonStack.pop()
-            if data.id == JsonScanner.regex.ENDCURLYBRACKET || data.id == JsonScanner.regex.COMMA {
-                value = try jsonStack.peek().value
-                let stackId = try jsonStack.peek().id
-                if stackId == JsonScanner.regex.NUMBER {
-                    dataInfo.countOfNumber += 1
-                }
-                if stackId == JsonScanner.regex.STRING {
-                    dataInfo.countOfString += 1
-                }
-                if stackId == JsonScanner.regex.BOOLEAN {
-                    dataInfo.countOfBool += 1
-                }
-            }else if data.id == JsonScanner.regex.COLON {
-                key = try jsonStack.peek().value
-                jsonData[key] = value
+        for data in jsonData{
+            if (data.value as? Int) != nil {
+                dataInfo.countOfNumber += 1
+            }else if (data.value as? String) != nil {
+                dataInfo.countOfString += 1
+            }else if (data.value as? Bool) != nil {
+                dataInfo.countOfBool += 1
+            }else if (data.value as? Dictionary<String, Any>) != nil {
+                dataInfo.countOfObject += 1
+            }else if (data.value as? Array<Any>) != nil {
+                dataInfo.countOfArray += 1
             }
         }
         return dataInfo
     }
     
+    func countDataOfArray(jsonData: [Any]) throws -> DataInfo {
+        var dataInfo = DataInfo()
+        for data in jsonData{
+            if (data as? Int) != nil {
+                dataInfo.countOfNumber += 1
+            }else if (data as? String) != nil {
+                dataInfo.countOfString += 1
+            }else if (data as? Bool) != nil {
+                dataInfo.countOfBool += 1
+            }else if (data as? Dictionary<String, Any>) != nil {
+                dataInfo.countOfObject += 1
+            }else if (data as? Array<Any>) != nil {
+                dataInfo.countOfArray += 1
+            }
+        }
+
+        return dataInfo
+    }
+
 }

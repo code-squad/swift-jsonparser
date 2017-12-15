@@ -14,4 +14,5 @@ struct DataInfo {
     var countOfString = 0
     var countOfBool = 0
     var countOfObject = 0
+    var countOfArray = 0
 }

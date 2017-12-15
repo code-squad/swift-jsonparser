@@ -10,5 +10,6 @@ import Foundation
 
 protocol FirstObject {
     var type: String { get }
-    func checkJsonSyntax(token: [Token], stack: JsonStack)
+    mutating func compareToParsingTable() -> Int
+    mutating func searchNextRegexIndex(row: Int, col: Int) -> Int
 }

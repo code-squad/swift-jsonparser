@@ -40,7 +40,14 @@ struct JsonScanner {
                 let matchesOfType = lexOfType.firstMatch(in: valueOfRange, range: NSMakeRange(0, valueOfRange.count))
                 if matchesOfType != nil {
                     let rangeOfType = matchesOfType?.range
-                    let value = (valueOfRange as NSString).substring(with: rangeOfType!)
+                    var value: Any = ""
+                    if index == regex.NUMBER {
+                        value = Int((valueOfRange as NSString).substring(with: rangeOfType!)) as Any
+                    }else if index == regex.BOOLEAN {
+                        value = Bool((valueOfRange as NSString).substring(with: rangeOfType!)) as Any
+                    }else if index == regex.STRING {
+                        value = String((valueOfRange as NSString).substring(with: rangeOfType!))
+                    }
                     token.append(Token(id: index, value: value))
                 }
             }

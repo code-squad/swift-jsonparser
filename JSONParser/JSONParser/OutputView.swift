@@ -11,7 +11,7 @@ import Foundation
 struct OutputView {
 
     static func printDataInfo(data: DataInfo) {
-        let sum = data.countOfBool + data.countOfNumber + data.countOfString + data.countOfObject
+        let sum = data.countOfBool + data.countOfNumber + data.countOfString + data.countOfObject + data.countOfArray
         var result = [String]()
         print("총 \(sum)개의 \(data.type) 데이터 중에", terminator: "")
         if data.countOfString != 0 {
@@ -25,6 +25,9 @@ struct OutputView {
         }
         if data.countOfObject != 0 {
             result.append(" 객체 \(data.countOfObject)개")
+        }
+        if data.countOfArray != 0 {
+            result.append(" 배열 \(data.countOfArray)개")
         }
         print(result.joined(separator: ","), terminator: "")
         print("가 포함되어 있습니다.")

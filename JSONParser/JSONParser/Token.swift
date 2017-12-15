@@ -10,8 +10,8 @@ import Foundation
 
 struct Token {
     var id: JsonScanner.regex
-    var value: String
-    init(id: JsonScanner.regex, value: String) {
+    var value: Any
+    init(id: JsonScanner.regex, value: Any) {
         self.id = id
         self.value = value
     }

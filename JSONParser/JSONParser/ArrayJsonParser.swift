@@ -1,3 +1,4 @@
+
 //
 //  ArrayJsonParser.swift
 //  JSONParser
@@ -5,91 +6,93 @@
 //  Created by Eunjin Kim on 2017. 12. 4..
 //  Copyright © 2017년 JK. All rights reserved.
 //
-
 import Foundation
-struct ArrayJsonParser: FirstObject {
+struct ArrayJsonParser: FirstObject {    
     typealias regex = JsonScanner.regex
     private(set) var type = "배열"
+    private var arrayOfJsonData = [Any]() //Array<Any>
+    private var tokenOfJson: [Token]
+    private var indexOfToken: Int = 0
+    private var indexOfNextRegex: Int = 0
+    private var countOfRepeat = 0
     private let columnName = [regex.STARTSQUAREBRACKET, regex.STARTCURLYBRACKET, regex.STRING, regex.NUMBER, regex.BOOLEAN, regex.ENDCURLYBRACKET, regex.COMMA, regex.ENDSQUAREBRACKET]
     private let parsingTableOfArray = [[1, 0, 0, 0, 0, 0, 0, 0],
-                                [2, 0, 0, 0, 0, 0, 0, 0],
-                                [3, 0, 0, 0, 0, 0, 0, 0],
-                                [4, 0, 0, 0, 0, 0, 0, 0],
-                                [0, 5, 0, 0, 0, 0, 0, 0],
-                                [0, 0, 6, 0, 0, 0, 0, 0],
-                                [0, 0, 7, 0, 0, 0, 0, 0],
-                                [0, 0, 0, 6, 0, 0, 0, 0],
-                                [0, 0, 0, 7, 0, 0, 0, 0],
-                                [0, 0, 0, 0, 6, 0, 0, 0],
-                                [0, 0, 0, 0, 7, 0, 0, 0],
-                                [0, 0, 0, 0, 0, 6, 0, 0],
-                                [0, 0, 0, 0, 0, 7, 0, 0],
-                                [0, 0, 0, 0, 0, 0, 1, 0],
-                                [0, 0, 0, 0, 0, 0, 2, 0],
-                                [0, 0, 0, 0, 0, 0, 3, 0],
-                                [0, 0, 0, 0, 0, 0, 4, 0],
-                                [0, 0, 0, 0, 0, 0, 0, -1]]
+                                       [2, 0, 0, 0, 0, 0, 0, 0],
+                                       [3, 0, 0, 0, 0, 0, 0, 0],
+                                       [4, 0, 0, 0, 0, 0, 0, 0],
+                                       [0, 5, 0, 0, 0, 0, 0, 0],
+                                       [0, 0, 6, 0, 0, 0, 0, 0],
+                                       [0, 0, 7, 0, 0, 0, 0, 0],
+                                       [0, 0, 0, 6, 0, 0, 0, 0],
+                                       [0, 0, 0, 7, 0, 0, 0, 0],
+                                       [0, 0, 0, 0, 6, 0, 0, 0],
+                                       [0, 0, 0, 0, 7, 0, 0, 0],
+                                       [0, 0, 0, 0, 0, 6, 0, 0],
+                                       [0, 0, 0, 0, 0, 7, 0, 0],
+                                       [0, 0, 0, 0, 0, 0, 1, 0],
+                                       [0, 0, 0, 0, 0, 0, 2, 0],
+                                       [0, 0, 0, 0, 0, 0, 3, 0],
+                                       [0, 0, 0, 0, 0, 0, 4, 0],
+                                       [0, 0, 0, 0, 0, 0, 0, -1]]
     
-    func goToObjectJsonParser(token: [Token], index: Int, stack: JsonStack) -> Int {
-        var objectToken = [Token]()
-        let objectJsonParser = ObjectJsonParser()
-        var currentIndex = 0
-        for tokenIndex in index..<token.count {
-            objectToken.append(token[tokenIndex])
-            if token[tokenIndex].id == regex.ENDCURLYBRACKET {
-                objectJsonParser.checkJsonSyntax(token: objectToken, stack: stack)
-                currentIndex = tokenIndex - index
+    init(token: [Token]) {
+        tokenOfJson = token
+    }
+    
+    mutating func makeJsonData() -> [Any] {
+        while indexOfToken < tokenOfJson.count {
+            let terminator = compareToParsingTable()
+            if terminator == -2 {
                 break
             }
         }
-        return currentIndex
+        return arrayOfJsonData
     }
     
-    func checkJsonSyntax(token: [Token], stack: JsonStack) {
-        var tokenIndex = 0
-        var nextRegexIndex = 0
-        let jsonStack = stack
-        while tokenIndex < token.count {
-            let indexes = compareToParsingTable(token: token, tokenIndex: tokenIndex, nextRegexIndex: nextRegexIndex, stack: jsonStack)
-            tokenIndex = indexes.tokenIndex
-            nextRegexIndex = indexes.nextRegexIndex
-        }
-    }
-    
-    func compareToParsingTable(token: [Token], tokenIndex: Int, nextRegexIndex: Int, stack: JsonStack) -> (tokenIndex: Int, nextRegexIndex: Int, stack: JsonStack) {
-        var indexOfToken = tokenIndex
-        var indexOfNextRegex = nextRegexIndex
+    mutating func compareToParsingTable() -> Int {
         for row in 0..<parsingTableOfArray.count {
             for col in 0..<parsingTableOfArray[row].count {
-                let indexes = searchNextRegexIndex(token: token, tokenIndex: indexOfToken, nextRegexIndex: indexOfNextRegex, row: row, col: col, stack: jsonStack)
-                indexOfToken = indexes.tokenIndex
-                indexOfNextRegex = indexes.nextRegexIndex
-                jsonStack = indexes.stack
-                if indexes.row == -1 {
-                    return (indexOfToken, indexOfNextRegex, jsonStack)
+                let valueOfRow = searchNextRegexIndex(row: row, col: col)
+                if valueOfRow == -1 {
+                    return 0
+                }else if valueOfRow == -2 {
+                    return -2
                 }
             }
         }
-        return (indexOfToken, indexOfNextRegex, jsonStack)
+        return 0
     }
     
-    func searchNextRegexIndex(token: [Token], tokenIndex: Int, nextRegexIndex: Int, row: Int, col: Int, stack: JsonStack) -> (tokenIndex: Int, nextRegexIndex: Int, row: Int, stack: JsonStack) {
-        var indexOfToken = tokenIndex
-        var indexOfNextRegex = nextRegexIndex
-        var jsonStack = stack
-        if parsingTableOfArray[row][col] != 0 {
-            if columnName[col] == token[tokenIndex].id {
-                jsonStack.push(tokenData: token[tokenIndex])
-                indexOfNextRegex = parsingTableOfArray[row][col]
-                indexOfToken += 1
-                if columnName[col] == regex.STARTCURLYBRACKET {
-                    indexOfToken += goToObjectJsonParser(token: token, index: indexOfToken, stack: jsonStack)
-                }else if columnName[col] == regex.COMMA {
-                    return (indexOfToken, indexOfNextRegex, -1, jsonStack)
-                }
-            }
+    mutating func searchNextRegexIndex(row: Int, col: Int) -> Int {
+        guard parsingTableOfArray[row][col] != 0 else { return row }
+        guard columnName[col] == tokenOfJson[indexOfToken].id else { return row }
+        if columnName[col] == regex.NUMBER || columnName[col] == regex.BOOLEAN || columnName[col] == regex.STRING {
+            arrayOfJsonData.append(tokenOfJson[indexOfToken].value)
         }
-        return (indexOfToken, indexOfNextRegex, row, jsonStack)
+        indexOfNextRegex = parsingTableOfArray[row][col]
+        indexOfToken += 1
+        if columnName[col] == regex.STARTCURLYBRACKET {
+            let tokenOfSplit = tokenOfJson[indexOfToken..<tokenOfJson.count]
+            var objectJsonParser = ObjectJsonParser(token: Array(tokenOfSplit))
+            let jsonData = objectJsonParser.makeJsonData()
+            arrayOfJsonData.append(jsonData)
+            indexOfToken = indexOfToken + ( jsonData.count * 3 ) + ( jsonData.count - 1 )
+            return row
+        }else if columnName[col] == regex.STARTSQUAREBRACKET {
+            if countOfRepeat > 0 {
+                let tokenOfSplit = tokenOfJson[indexOfToken..<tokenOfJson.count]
+                var arrayJsonParser = ArrayJsonParser(token: Array(tokenOfSplit))
+                let jsonData = arrayJsonParser.makeJsonData()
+                arrayOfJsonData.append(jsonData)
+                indexOfToken += (jsonData.count + ( jsonData.count - 1 ))
+            }
+            countOfRepeat += 1
+        }else if columnName[col] == regex.COMMA {
+            return -1
+        }else if columnName[col] == regex.ENDSQUAREBRACKET {
+            return -2
+        }
+        return row
     }
     
 }
