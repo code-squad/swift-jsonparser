@@ -11,9 +11,6 @@ import Foundation
 // 입력값을 분석해서 타입 갯수 객체를 생성
 struct Analyzer {
     private let countingData : CountingData
-    init (_ countingData: CountingData) {
-        self.countingData = countingData
-    }
      static func makeCountedTypeInstance (_ stringValues: Array<String>) -> CountingData {
         var numberValue = [Int]()
         var boolValue = [Bool]()
