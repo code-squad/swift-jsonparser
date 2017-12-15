@@ -17,8 +17,11 @@ struct ParsingTargetFactory {
             let trimmedValue = inputValue.trimmingCharacters(in: ["[","]"])
             if trimmedValue.contains("{") && trimmedValue.contains("}") {
                 // object가 배열 안에 있는 경우
+                while trimmedValue.contains("{") {
+                    return makeTargetArrayWithObject(trimmedValue)
+                }
             } else {
-                return makeTargetArray(trimmedValue)
+                return MyArray(makeTargetArray(trimmedValue))
             }
         }
         
@@ -27,19 +30,21 @@ struct ParsingTargetFactory {
             return makeTargetObject(trimmedValue)
         }
         
-        return makeTargetArray("")
+        return MyArray(makeTargetArray(""))
     }
+    
+    
 }
 
 extension ParsingTargetFactory {
     
-    private func makeTargetArray (_ changeTarget: String) -> ParsingTarget {
+    private func makeTargetArray (_ changeTarget: String) -> [String] {
         var stringValuesToArray : [String] = []
         
         let valuesList = changeTarget.split(separator: ",")
         stringValuesToArray = valuesList.map({(value:String.SubSequence)->String in String(value).trimmingCharacters(in: .whitespacesAndNewlines)})
         
-        return MyArray(stringValuesToArray)
+        return stringValuesToArray
     }
     
     private func makeTargetObject (_ changeTarget: String) -> ParsingTarget {
@@ -60,6 +65,34 @@ extension ParsingTargetFactory {
         return (key, value)
     }
     
-
+    // 배열안에 딕셔너리가 있는 경우 {}괄호와 글자를 따로 저장하고 빼내는 작업
+    private func makeTargetArrayWithObject(_ value: String) -> ParsingTarget {
+        var rawValue = value
+        var tempIndex = 0
+        var openBracketBound = String.Index(encodedOffset: 0)
+        var closeBracketBound = String.Index(encodedOffset: 0)
+        var rawValues : [String] = []
+        
+        while rawValue.contains("{"){
+            for char in rawValue.characters {
+                if char == "{" {
+                    print(tempIndex)
+                    openBracketBound = String.Index(encodedOffset: tempIndex)
+                }
+                if char == "}" {
+                    print(tempIndex)
+                    closeBracketBound = String.Index(encodedOffset: tempIndex)
+                }
+                tempIndex += 1
+            }
+            rawValues.append(String(rawValue[openBracketBound...closeBracketBound]))
+            rawValue.removeSubrange(openBracketBound...closeBracketBound)
+        }
+        let pureValues = makeTargetArray(rawValue)
+        
+        return MyArray(rawValues + pureValues)
+    }
+    
+    
 }
 
