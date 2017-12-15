@@ -14,7 +14,7 @@
 		45E2F30F1FC51C1F00CE479F /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C0B871FC269E600BA4998 /* Token.swift */; };
 		45E2F3101FC51C2400CE479F /* DataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EE99FE1FC411BF00D79FE6 /* DataInfo.swift */; };
 		45E7A6B31FD53AE70005E255 /* ArrayJsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E7A6B21FD53AE70005E255 /* ArrayJsonParser.swift */; };
-		45EB6CC51FD673E400973D10 /* FirstObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB6CC41FD673E400973D10 /* FirstObjectProtocol.swift */; };
+		45EB6CC51FD673E400973D10 /* FirstClassObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB6CC41FD673E400973D10 /* FirstClassObjectProtocol.swift */; };
 		45ECA60C1FC5180B0009ACA2 /* UnitTestJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ECA60B1FC5180B0009ACA2 /* UnitTestJSONParser.swift */; };
 		45EE99FD1FC4083800D79FE6 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EE99FC1FC4083800D79FE6 /* OutputView.swift */; };
 		45EE99FF1FC411BF00D79FE6 /* DataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EE99FE1FC411BF00D79FE6 /* DataInfo.swift */; };
@@ -42,7 +42,7 @@
 		451C0B851FC267AE00BA4998 /* JsonTypeCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonTypeCounter.swift; sourceTree = "<group>"; };
 		451C0B871FC269E600BA4998 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		45E7A6B21FD53AE70005E255 /* ArrayJsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayJsonParser.swift; sourceTree = "<group>"; };
-		45EB6CC41FD673E400973D10 /* FirstObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstObjectProtocol.swift; sourceTree = "<group>"; };
+		45EB6CC41FD673E400973D10 /* FirstClassObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstClassObjectProtocol.swift; sourceTree = "<group>"; };
 		45ECA6091FC5180B0009ACA2 /* UnitTestJSONParser.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTestJSONParser.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		45ECA60B1FC5180B0009ACA2 /* UnitTestJSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestJSONParser.swift; sourceTree = "<group>"; };
 		45ECA60D1FC5180B0009ACA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -114,7 +114,7 @@
 				45EE99FE1FC411BF00D79FE6 /* DataInfo.swift */,
 				45F4C45D1FCBE444008D0019 /* ObjectJsonParser.swift */,
 				45E7A6B21FD53AE70005E255 /* ArrayJsonParser.swift */,
-				45EB6CC41FD673E400973D10 /* FirstObjectProtocol.swift */,
+				45EB6CC41FD673E400973D10 /* FirstClassObjectProtocol.swift */,
 				45F5FE5E1FDE313600B8EF92 /* JsonParser.swift */,
 				45F46A311FE112B300B8CD83 /* ObjectJsonParser2.swift */,
 			);
@@ -231,7 +231,7 @@
 				451C0B861FC267AE00BA4998 /* JsonTypeCounter.swift in Sources */,
 				45E7A6B31FD53AE70005E255 /* ArrayJsonParser.swift in Sources */,
 				451C0B881FC269E600BA4998 /* Token.swift in Sources */,
-				45EB6CC51FD673E400973D10 /* FirstObjectProtocol.swift in Sources */,
+				45EB6CC51FD673E400973D10 /* FirstClassObjectProtocol.swift in Sources */,
 				45EE99FF1FC411BF00D79FE6 /* DataInfo.swift in Sources */,
 				45F1D7131FBED0CC00124D11 /* JsonScanner.swift in Sources */,
 				45EE99FD1FC4083800D79FE6 /* OutputView.swift in Sources */,

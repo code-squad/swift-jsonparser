@@ -7,7 +7,7 @@
 //  Copyright © 2017년 JK. All rights reserved.
 //
 import Foundation
-struct ArrayJsonParser: FirstObject {    
+struct ArrayJsonParser {    
     typealias regex = JsonScanner.regex
     private var arrayOfJsonData = [Any]() //Array<Any>
     private var tokenOfJson = [Token]()

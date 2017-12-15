@@ -7,7 +7,7 @@
 //
 import Foundation    
 
-struct ObjectJsonParser: FirstObject {
+struct ObjectJsonParser {
     typealias regex = JsonScanner.regex
     private var objectOfJsonData = [String:Any]() //Dictionary<String,Any>
     private var tokenOfJson = [Token]()

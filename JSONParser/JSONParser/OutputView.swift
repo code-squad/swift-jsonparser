@@ -10,7 +10,7 @@ import Foundation
 
 struct OutputView {
 
-    static func printDataInfo(data: DataInfo) {
+    func printDataInfo(data: DataInfo) {
         let sum = data.countOfBool + data.countOfNumber + data.countOfString + data.countOfObject + data.countOfArray
         var result = [String]()
         print("총 \(sum)개의 \(data.type) 데이터 중에", terminator: "")
@@ -31,6 +31,12 @@ struct OutputView {
         }
         print(result.joined(separator: ","), terminator: "")
         print("가 포함되어 있습니다.")
+    }
+    
+    func printJsonString(jsonData: Any) {
+//        var depth = 0
+        
+
     }
 
 }
