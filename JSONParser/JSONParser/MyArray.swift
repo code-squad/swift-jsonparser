@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MyArray {
+struct MyArray: ParsingTarget {
     let JSONFactory = JSONDataFactory()
     var myArray : String
     

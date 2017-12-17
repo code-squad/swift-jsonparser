@@ -15,4 +15,14 @@ struct TypeConductor {
         self.inputValue = inputValue
     }
     
+    func decideInputType() -> ParsingTarget {
+        if inputValue.hasPrefix("[") && inputValue.hasSuffix("]") {
+            return MyArray(inputValue)
+        }
+        if inputValue.hasPrefix("{") && inputValue.hasSuffix("}") {
+            return MyObject(inputValue)
+        }
+        return MyArray("")
+    }
+    
 }
