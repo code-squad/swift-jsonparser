@@ -8,19 +8,24 @@
 
 import Foundation
 
-struct MyArray: ParsingTarget {
-    var myArray : [String]
+struct MyArray {
+    let JSONFactory = JSONDataFactory()
+    var myArray : String
     
-    init (_ stringValues: [String]) {
+    
+    init (_ stringValues: String) {
         myArray = stringValues
     }
     
-    func count() -> Int {
-        return myArray.count
+    func makeMyType() -> [String] {
+       let targetArray = ParsingTargetFactory.setTargetToArray(myArray)
+        return targetArray
     }
     
-    func getEachValue(_ orderOfValue: Int) -> String {
-        return myArray[orderOfValue]
+    
+    func makeJSONDataValues () -> [JSONData] {
+        let arrayInString = makeMyType()
+        return JSONFactory.matchValueOfArray(arrayInString)
     }
-
+    
 }

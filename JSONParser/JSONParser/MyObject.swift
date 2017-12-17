@@ -8,27 +8,23 @@
 
 import Foundation
 
-struct MyObject: ParsingTarget {
-    var myObject: Dictionary<String, String>
+struct MyObject {
+    var myObject: String
+    let JSONFactory = JSONDataFactory()
     
-    init (_ stringValues: Dictionary<String, String>) {
+    init (_ stringValues: String) {
         myObject = stringValues
     }
     
-    func count () -> Int {
-        return myObject.count
+    func makeMyType() -> Dictionary<String,String> {
+        let targetObject = ParsingTargetFactory.setTargetToObject(myObject)
+        return targetObject
     }
 
-    func getEachValue(_ orderOfvalue: Int) -> String {
-        let objectValues = Array(myObject.values)
-        return objectValues[orderOfvalue]
-    }
-}
     
-    
-extension MyObject {
-    func getDictionary() -> Dictionary<String, String> {
-        return self.myObject
+    func makeJSONDataValues () -> Dictionary<String,JSONData> {
+        let objectInString = makeMyType()
+        return JSONFactory.matchValueOfObject(objectInString)
     }
     
 }

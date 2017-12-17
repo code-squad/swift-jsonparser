@@ -9,58 +9,44 @@
 import Foundation
 
 struct JSONDataFactory {
-    var JSONParsingTarget : ParsingTarget
     
-    init (_ JSONParsingTarget: ParsingTarget) {
-        self.JSONParsingTarget = JSONParsingTarget
-    }
-    
+    /*
     func setTargetType () -> JSONData {
         var parsedJSONData : JSONData
         
         switch JSONParsingTarget {
         case let JSONParsingTarget as MyArray:
-            parsedJSONData = matchValueofArray(JSONParsingTarget)
+            parsedJSONData = matchValueOfArray(JSONParsingTarget)
         case let JSONParsingTarget as MyObject:
             parsedJSONData = matchValueOfObject(JSONParsingTarget)
         default:
-            parsedJSONData = matchValueofArray(JSONParsingTarget)
+            parsedJSONData = matchValueOfArray(JSONParsingTarget)
+        }
+        return parsedJSONData
+    }
+    */
+    
+    func matchValueOfArray (_ targets: [String]) -> [JSONData] {
+        var parsedJSONData : [JSONData] = []
+        
+        for value in targets {
+            parsedJSONData.append(matchValueType(value))
         }
         return parsedJSONData
     }
     
-    private func matchValueofArray (_ targets: ParsingTarget) -> JSONData {
-        var parsedJSONData : [JSONData] = []
-        
-        for turn in 0..<targets.count() {
-            if let boolValue = Bool(targets.getEachValue(turn)) {
-                parsedJSONData.append(JSONData.BoolValue(boolValue))
-                continue
-            }
-            if let intValue = Int(targets.getEachValue(turn)) {
-                parsedJSONData.append(JSONData.IntegerValue(intValue))
-                continue
-            }
-            if targets.getEachValue(turn).contains("\""){
-                parsedJSONData.append(JSONData.StringValue(targets.getEachValue(turn)))
-                continue
-            }
-        }
-        return JSONData.ArrayValue(parsedJSONData)
-    }
 
-    
-    private func matchValueOfObject (_ targets: MyObject) -> JSONData {
+    func matchValueOfObject (_ targets: Dictionary<String, String>) -> Dictionary<String, JSONData> {
         var parsedJSONData : Dictionary<String, JSONData> = [:]
         
-        for label in targets.getDictionary().keys {
-            parsedJSONData[label] = matchValueType(targets.getDictionary()[label]!)
+        for key in targets.keys {
+            parsedJSONData[key] = matchValueType(targets[key]!)
         }
-        return JSONData.ObjectValue(parsedJSONData)
+        return parsedJSONData
     }
 
 
-    private func matchValueType (_ value: String) -> JSONData {
+    func matchValueType (_ value: String) -> JSONData {
         if let boolValue = Bool(value) {
             return JSONData.BoolValue(boolValue)
         }
@@ -70,7 +56,12 @@ struct JSONDataFactory {
         if value.contains("\""){
             return JSONData.StringValue(value)
         }
-        
+        if value.contains("{") {
+            let myObject = MyObject(value)
+            let tempDic = myObject.makeMyType()
+            let parsedObject = matchValueOfObject(tempDic)
+            return JSONData.ObjectValue(parsedObject)
+        }
         return JSONData.StringValue(value)
     }
     
