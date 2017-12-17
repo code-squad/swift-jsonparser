@@ -11,12 +11,12 @@ import Foundation
 struct ValueCounter {
     var parsedJSONDataList : JSONData
     
-    init (_ data : JSONData) {
-        self.parsedJSONDataList = data
+    init (targetToCount countTarget : JSONData) {
+        self.parsedJSONDataList = countTarget
     }
     
     func makeCountInfo () -> CountInfo {
-        var countInfo = CountInfo(0,0,0,0)
+        var countInfo = CountInfo(i:0,b:0,s:0,o:0,all:0)
         
         if case let JSONData.ArrayValue(countTarget) = parsedJSONDataList { // enum바인딩
            countInfo = countArrayValues(countTarget)
@@ -27,31 +27,31 @@ struct ValueCounter {
         return countInfo
     }
     
-    func countArrayValues(_ countTarget: [JSONData]) -> CountInfo{
+   private func countArrayValues(_ countTarget: [JSONData]) -> CountInfo{
         var countOfInt = 0
         var countOfBool = 0
         var countOfString = 0
+        var countOfObject = 0
         let countOfJSONData = countTarget.count
         
         for datum in countTarget {
             switch datum {
             case .IntegerValue :
                 countOfInt += 1
-                
             case .BoolValue:
                 countOfBool += 1
-                
             case .StringValue :
                 countOfString += 1
-                
+            case .ObjectValue :
+                countOfObject += 1
             default :
                 countOfString += 0
             }
         }
-        return CountInfo(countOfInt, countOfBool, countOfString, countOfJSONData)
+    return CountInfo(i:countOfInt, b:countOfBool, s:countOfString, o:countOfObject, all:countOfJSONData)
     }
     
-    func countObjectValues(_ countTarget: Dictionary<String, JSONData>) -> CountInfo {
+    private func countObjectValues(_ countTarget: Dictionary<String, JSONData>) -> CountInfo {
         var countOfInt = 0
         var countOfBool = 0
         var countOfString = 0
@@ -67,12 +67,12 @@ struct ValueCounter {
                 
             case .StringValue :
                 countOfString += 1
-                
+            
             default :
                 countOfString += 0
             }
         }
-        return CountInfo(countOfInt, countOfBool, countOfString, countOfJSONData)
+        return CountInfo(i:countOfInt, b:countOfBool, s:countOfString, o:0, all:countOfJSONData)
     }
     
 }

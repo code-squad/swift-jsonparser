@@ -22,6 +22,9 @@ struct OutputView {
         if info.countOfString != 0 {
             result.append("문자열 \(info.countOfString)개 ")
         }
+        if info.countOfObject != 0 {
+            result.append("객체 \(info.countOfObject)개 ")
+        }
         
         return result
     }

@@ -11,7 +11,8 @@ import Foundation
 struct TypeConductor {
     var inputValue : String
     
-    init (_ inputValue: String) {
+    init (_ inputValue: String?) {
+        let inputValue = inputValue ?? ""
         self.inputValue = inputValue
     }
     

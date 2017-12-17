@@ -53,10 +53,7 @@ struct JSONDataFactory {
         if let intValue = Int(value) {
             return JSONData.IntegerValue(intValue)
         }
-        if value.contains("\""){
-            return JSONData.StringValue(value)
-        }
-        if value.contains("{") {
+        if value.contains(":") {
             let myObject = MyObject(value)
             let tempDic = myObject.makeMyType()
             let parsedObject = makeConvertedObject(tempDic)
