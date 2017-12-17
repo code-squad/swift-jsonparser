@@ -9,7 +9,7 @@
 import Foundation
 
 struct JSONDataFactory {
-    
+
     func convertValues (_ parsingTarget: ParsingTarget) -> JSONData {
         var parsedJSONData : JSONData
         

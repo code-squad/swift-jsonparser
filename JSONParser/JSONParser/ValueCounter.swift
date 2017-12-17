@@ -76,5 +76,3 @@ struct ValueCounter {
     }
     
 }
-
-

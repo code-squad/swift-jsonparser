@@ -10,7 +10,7 @@ import Foundation
 
 struct OutputView {
     
-    private func makeResultMessage(_ info : CountInfo) -> String{
+    private func makeResultMessage(_ info : CountInfo) -> String {
         var result = ""
         
         if info.countOfInt != 0 {

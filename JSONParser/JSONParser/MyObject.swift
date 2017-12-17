@@ -11,7 +11,7 @@ import Foundation
 struct MyObject: ParsingTarget {
     let JSONFactory = JSONDataFactory()
     var myObject: String
-    
+
     init (_ stringValues: String) {
         myObject = stringValues
     }

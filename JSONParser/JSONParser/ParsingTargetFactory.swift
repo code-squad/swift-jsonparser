@@ -9,7 +9,7 @@
 import Foundation
 
 struct ParsingTargetFactory {
-    
+
     static func setTargetToArray (_ input: String) -> [String] {
         let trimmedValue = input.trimmingCharacters(in: ["[","]"])
         if trimmedValue.contains("{") && trimmedValue.contains("}") {
@@ -44,7 +44,7 @@ extension ParsingTargetFactory {
         var closeBracketBound = String.Index(encodedOffset: 0)
         var splitedValues : [String] = []
         
-        while rawValue.contains("{"){
+        while rawValue.contains("{") {
             var tempIndex = 0
             for char in rawValue.characters {
                 if char == "{" {
@@ -76,7 +76,7 @@ extension ParsingTargetFactory {
         return stringDictionaryToObject
     }
     
-    static func makeTempDictionary (_ value: String) -> (key: String, value: String){
+    static func makeTempDictionary (_ value: String) -> (key: String, value: String) {
         let splitedTempDictionary = value.split(separator: ":")
                                     .map(){value in String(value)
                                     .trimmingCharacters(in: .whitespacesAndNewlines)}
@@ -87,4 +87,6 @@ extension ParsingTargetFactory {
     }
 
 }
+
+
 

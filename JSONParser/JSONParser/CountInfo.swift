@@ -22,5 +22,5 @@ struct CountInfo {
         self.countOfObject = countOfObject
         self.countOfJSONData = countOfJSONData
     }
-    
+
 }

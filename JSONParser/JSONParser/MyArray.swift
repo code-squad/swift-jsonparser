@@ -11,7 +11,7 @@ import Foundation
 struct MyArray: ParsingTarget {
     let JSONFactory = JSONDataFactory()
     var myArray : String
-    
+
     init (_ stringValues: String) {
         myArray = stringValues
     }
