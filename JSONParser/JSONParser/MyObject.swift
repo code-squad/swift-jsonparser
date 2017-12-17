@@ -9,8 +9,8 @@
 import Foundation
 
 struct MyObject: ParsingTarget {
-    var myObject: String
     let JSONFactory = JSONDataFactory()
+    var myObject: String
     
     init (_ stringValues: String) {
         myObject = stringValues
@@ -20,11 +20,10 @@ struct MyObject: ParsingTarget {
         let targetObject = ParsingTargetFactory.setTargetToObject(myObject)
         return targetObject
     }
-
     
     func makeJSONDataValues () -> Dictionary<String,JSONData> {
         let objectInString = makeMyType()
-        return JSONFactory.matchValueOfObject(objectInString)
+        return JSONFactory.makeConvertedObject(objectInString)
     }
     
 }

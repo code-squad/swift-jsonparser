@@ -12,7 +12,6 @@ struct MyArray: ParsingTarget {
     let JSONFactory = JSONDataFactory()
     var myArray : String
     
-    
     init (_ stringValues: String) {
         myArray = stringValues
     }
@@ -22,10 +21,9 @@ struct MyArray: ParsingTarget {
         return targetArray
     }
     
-    
     func makeJSONDataValues () -> [JSONData] {
         let arrayInString = makeMyType()
-        return JSONFactory.matchValueOfArray(arrayInString)
+        return JSONFactory.makeConvertedArray(arrayInString)
     }
     
 }

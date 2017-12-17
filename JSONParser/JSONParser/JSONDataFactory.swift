@@ -10,23 +10,25 @@ import Foundation
 
 struct JSONDataFactory {
     
-    /*
-    func setTargetType () -> JSONData {
+    func convertValues (_ parsingTarget: ParsingTarget) -> JSONData {
         var parsedJSONData : JSONData
         
-        switch JSONParsingTarget {
-        case let JSONParsingTarget as MyArray:
-            parsedJSONData = matchValueOfArray(JSONParsingTarget)
-        case let JSONParsingTarget as MyObject:
-            parsedJSONData = matchValueOfObject(JSONParsingTarget)
+        switch parsingTarget {
+        case let parsingTarget as MyArray:
+           let parsedArray = makeConvertedArray(parsingTarget.makeMyType())
+           parsedJSONData = JSONData.ArrayValue(parsedArray)
+            
+        case let parsingTarget as MyObject:
+            let parsedObject = makeConvertedObject(parsingTarget.makeMyType())
+            parsedJSONData = JSONData.ObjectValue(parsedObject)
         default:
-            parsedJSONData = matchValueOfArray(JSONParsingTarget)
+            let parsedArray = makeConvertedArray([])
+            parsedJSONData = JSONData.ArrayValue(parsedArray)
         }
         return parsedJSONData
     }
-    */
     
-    func matchValueOfArray (_ targets: [String]) -> [JSONData] {
+    func makeConvertedArray (_ targets: [String]) -> [JSONData] {
         var parsedJSONData : [JSONData] = []
         
         for value in targets {
@@ -34,9 +36,8 @@ struct JSONDataFactory {
         }
         return parsedJSONData
     }
-    
-
-    func matchValueOfObject (_ targets: Dictionary<String, String>) -> Dictionary<String, JSONData> {
+ 
+    func makeConvertedObject (_ targets: Dictionary<String, String>) -> Dictionary<String, JSONData> {
         var parsedJSONData : Dictionary<String, JSONData> = [:]
         
         for key in targets.keys {
@@ -44,7 +45,6 @@ struct JSONDataFactory {
         }
         return parsedJSONData
     }
-
 
     func matchValueType (_ value: String) -> JSONData {
         if let boolValue = Bool(value) {
@@ -59,7 +59,7 @@ struct JSONDataFactory {
         if value.contains("{") {
             let myObject = MyObject(value)
             let tempDic = myObject.makeMyType()
-            let parsedObject = matchValueOfObject(tempDic)
+            let parsedObject = makeConvertedObject(tempDic)
             return JSONData.ObjectValue(parsedObject)
         }
         return JSONData.StringValue(value)
