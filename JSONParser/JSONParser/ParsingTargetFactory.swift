@@ -69,7 +69,7 @@ extension ParsingTargetFactory {
     static func makeTargetObject (_ changeTarget: String) -> Dictionary<String,String> {
         var stringDictionaryToObject : Dictionary<String, String> = [:]
         
-        let listOfValue = changeTarget.split(separator: ",").map({(value: String.SubSequence) -> String in String(value)}) // [""key":value", ""key":value"]
+        let listOfValue = changeTarget.split(separator: ",").map(){value in String(value)} // [""key":value", ""key":value"]
         for tempValue in listOfValue {
             stringDictionaryToObject[makeTempDictionary(tempValue).key] = makeTempDictionary(tempValue).value
         }
@@ -77,7 +77,9 @@ extension ParsingTargetFactory {
     }
     
     static func makeTempDictionary (_ value: String) -> (key: String, value: String){
-        let splitedTempDictionary = value.split(separator: ":").map({(value: String.SubSequence) -> String in String(value).trimmingCharacters(in: .whitespacesAndNewlines)})
+        let splitedTempDictionary = value.split(separator: ":")
+                                    .map(){value in String(value)
+                                    .trimmingCharacters(in: .whitespacesAndNewlines)}
         let key = splitedTempDictionary[0]
         let value = splitedTempDictionary[1]
         
