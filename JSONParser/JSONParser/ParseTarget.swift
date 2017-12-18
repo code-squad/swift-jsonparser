@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol ParsingTarget {
-
+protocol ParseTarget {
+    func makeJSONDataValues () -> JSONData
 }

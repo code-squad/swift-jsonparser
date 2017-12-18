@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MyObject: ParsingTarget {
+struct MyObject: ParseTarget {
     let JSONFactory = JSONDataFactory()
     var myObject: String
 
@@ -17,13 +17,14 @@ struct MyObject: ParsingTarget {
     }
     
     func makeMyType() -> Dictionary<String,String> {
-        let targetObject = ParsingTargetFactory.setTargetToObject(myObject)
+        let targetObject = ParseTargetFactory.setTargetToObject(myObject)
         return targetObject
     }
     
-    func makeJSONDataValues () -> Dictionary<String,JSONData> {
+    func makeJSONDataValues () -> JSONData {
         let objectInString = makeMyType()
-        return JSONFactory.makeConvertedObject(objectInString)
+        let convertedObject = JSONFactory.makeConvertedObject(objectInString)
+        return JSONData.ObjectValue(convertedObject)
     }
     
 }

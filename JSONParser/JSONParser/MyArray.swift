@@ -8,22 +8,28 @@
 
 import Foundation
 
-struct MyArray: ParsingTarget {
+struct MyArray: ParseTarget {
     let JSONFactory = JSONDataFactory()
     var myArray : String
 
+    lazy var myArrayToConvert : [String] = {
+        let targetArray = ParseTargetFactory.setTargetToArray(myArray)
+        return targetArray
+    }()
+    
     init (_ stringValues: String) {
         myArray = stringValues
     }
     
     func makeMyType() -> [String] {
-       let targetArray = ParsingTargetFactory.setTargetToArray(myArray)
+       let targetArray = ParseTargetFactory.setTargetToArray(myArray)
         return targetArray
     }
     
-    func makeJSONDataValues () -> [JSONData] {
+    func makeJSONDataValues () -> JSONData {
         let arrayInString = makeMyType()
-        return JSONFactory.makeConvertedArray(arrayInString)
+        let convertedArray = JSONFactory.makeConvertedArray(arrayInString)
+        return JSONData.ArrayValue(convertedArray)
     }
     
 }

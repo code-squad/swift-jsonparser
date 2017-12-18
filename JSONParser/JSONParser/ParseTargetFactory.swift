@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ParsingTargetFactory {
+struct ParseTargetFactory {
 
     static func setTargetToArray (_ input: String) -> [String] {
         let trimmedValue = input.trimmingCharacters(in: ["[","]"])
@@ -23,10 +23,9 @@ struct ParsingTargetFactory {
         let trimmedValue = input.trimmingCharacters(in: ["{","}"])
         return makeTargetObject(trimmedValue)
     }
-    
-}
 
-extension ParsingTargetFactory {
+
+    // MARK: Make [String]
     
     static func makeTargetArray (_ changeTarget: String) -> [String] {
         var stringValuesToArray : [String] = []
@@ -37,7 +36,7 @@ extension ParsingTargetFactory {
         return stringValuesToArray
     }
     
-    // 배열안에 딕셔너리가 있는 경우 {}괄호와 글자를 따로 저장하고 빼내는 작업
+    
     static func makeTargetArrayWithObject(_ value: String) -> [String] {
         var rawValue = value
         var openBracketBound = String.Index(encodedOffset: 0)
@@ -61,11 +60,10 @@ extension ParsingTargetFactory {
         
         return splitedValues + singleValues
     }
-    
-}
 
-extension ParsingTargetFactory {
-    
+
+    // MARK: Make Object
+
     static func makeTargetObject (_ changeTarget: String) -> Dictionary<String,String> {
         var stringDictionaryToObject : Dictionary<String, String> = [:]
         
@@ -86,7 +84,5 @@ extension ParsingTargetFactory {
         return (key, value)
     }
 
+
 }
-
-
-

@@ -16,7 +16,7 @@ struct TypeConductor {
         self.inputValue = inputValue
     }
     
-    func decideInputType() -> ParsingTarget {
+    func decideInputType() -> ParseTarget {
         if inputValue.hasPrefix("[") && inputValue.hasSuffix("]") {
             return MyArray(inputValue)
         }
