@@ -16,7 +16,7 @@ struct ValueCounter {
     }
     
     func makeCountInfo () -> CountInfo {
-        var countInfo = CountInfo(i:0,b:0,s:0,o:0,all:0)
+        var countInfo = CountInfo(intCnt:0,boolCnt:0,stringCnt:0,objentCnt:0,allCnt:0)
         
         if case let JSONData.ArrayValue(countTarget) = parsedJSONDataList { // enum바인딩
            countInfo = countArrayValues(countTarget)
@@ -48,7 +48,7 @@ struct ValueCounter {
                 countOfString += 0
             }
         }
-    return CountInfo(i:countOfInt, b:countOfBool, s:countOfString, o:countOfObject, all:countOfJSONData)
+    return CountInfo(intCnt:countOfInt, boolCnt:countOfBool, stringCnt:countOfString, objentCnt:countOfObject, allCnt:countOfJSONData)
     }
     
     private func countObjectValues(_ countTarget: Dictionary<String, JSONData>) -> CountInfo {
@@ -72,7 +72,7 @@ struct ValueCounter {
                 countOfString += 0
             }
         }
-        return CountInfo(i:countOfInt, b:countOfBool, s:countOfString, o:0, all:countOfJSONData)
+        return CountInfo(intCnt:countOfInt, boolCnt:countOfBool, stringCnt:countOfString, objentCnt:0, allCnt:countOfJSONData)
     }
     
 }

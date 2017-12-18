@@ -9,13 +9,13 @@
 import Foundation
 
 struct CountInfo {
-    var countOfInt = 0
-    var countOfBool = 0
-    var countOfString = 0
-    var countOfObject = 0
-    var countOfJSONData = 0
+    private var countOfInt = 0
+    private var countOfBool = 0
+    private var countOfString = 0
+    private var countOfObject = 0
+    private var countOfJSONData = 0
 
-    init (i countOfInt: Int, b countOfBool: Int, s countOfString: Int, o countOfObject: Int, all countOfJSONData: Int) {
+    init (intCnt countOfInt: Int, boolCnt countOfBool: Int, stringCnt countOfString: Int, objentCnt countOfObject: Int, allCnt countOfJSONData: Int) {
         self.countOfInt = countOfInt
         self.countOfBool = countOfBool
         self.countOfString = countOfString
