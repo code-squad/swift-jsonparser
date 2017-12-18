@@ -9,26 +9,26 @@
 import Foundation
 
 struct JSONDataFactory {
-
-    func convertValues (_ parseTarget: ParseTarget) -> JSONData {
-        var parsedJSONData : JSONData
+    
+    func makeConvertedData (_ targets: ConvertTarget) -> JSONData {
+        var parsedJSONArray : [JSONData] = []
+        var parsedJSONObject : Dictionary<String, JSONData> = [:]
         
-        switch parseTarget {
-        case let parseTarget as MyArray:
-           let parsedArray = makeConvertedArray(parseTarget.makeMyType())
-           parsedJSONData = JSONData.ArrayValue(parsedArray)
+        switch targets {
+        case let targets as Array<String>:
+            parsedJSONArray = makeConvertedArray(targets)
+            return JSONData.ArrayValue(parsedJSONArray)
             
-        case let parseTarget as MyObject:
-            let parsedObject = makeConvertedObject(parseTarget.makeMyType())
-            parsedJSONData = JSONData.ObjectValue(parsedObject)
+        case let targets as Dictionary<String,String>:
+            parsedJSONObject = makeConvertedObject(targets)
+            return JSONData.ObjectValue(parsedJSONObject)
+            
         default:
-            let parsedArray = makeConvertedArray([])
-            parsedJSONData = JSONData.ArrayValue(parsedArray)
+            return JSONData.ArrayValue(parsedJSONArray)
         }
-        return parsedJSONData
     }
     
-    func makeConvertedArray (_ targets: [String]) -> [JSONData] {
+    private func makeConvertedArray (_ targets: [String]) -> [JSONData] {
         var parsedJSONData : [JSONData] = []
         
         for value in targets {
@@ -37,7 +37,7 @@ struct JSONDataFactory {
         return parsedJSONData
     }
  
-   func makeConvertedObject (_ targets: Dictionary<String, String>) -> Dictionary<String, JSONData> {
+   private func makeConvertedObject (_ targets: Dictionary<String, String>) -> Dictionary<String, JSONData> {
         var parsedJSONData : Dictionary<String, JSONData> = [:]
         
         for key in targets.keys {

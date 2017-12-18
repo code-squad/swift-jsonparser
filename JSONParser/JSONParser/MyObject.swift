@@ -11,20 +11,18 @@ import Foundation
 struct MyObject: ParseTarget {
     let JSONFactory = JSONDataFactory()
     var myObject: String
-
+    
     init (_ stringValues: String) {
         myObject = stringValues
     }
     
-    func makeMyType() -> Dictionary<String,String> {
+    func makeMyType() -> ConvertTarget {
         let targetObject = ParseTargetFactory.setTargetToObject(myObject)
         return targetObject
     }
     
-    func makeJSONDataValues () -> JSONData {
+   func makeJSONDataValues () -> JSONData {
         let objectInString = makeMyType()
-        let convertedObject = JSONFactory.makeConvertedObject(objectInString)
-        return JSONData.ObjectValue(convertedObject)
-    }
+        return JSONFactory.makeConvertedData(objectInString)    }
     
 }
