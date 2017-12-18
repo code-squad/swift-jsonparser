@@ -9,12 +9,11 @@
 
 let inputView = InputView()
 let userInput = inputView.askUserInput()
-
-let conductor = TypeConductor(userInput)
-let parseTarget = conductor.decideInputType()
+let parseTargetFactory = ParseTargetFactory()
+let parseTarget = parseTargetFactory.decideInputType(userInput)
 
 let targetFactory = JSONDataFactory()
-let convertedValue = targetFactory.convertValues(parseTarget)
+let convertedValue = targetFactory.makeConvertedData(parseTarget.makeMyType())
 let counter = ValueCounter(targetToCount: convertedValue)
 let countInfo = counter.makeCountInfo()
 

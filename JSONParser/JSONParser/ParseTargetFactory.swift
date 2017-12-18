@@ -10,6 +10,17 @@ import Foundation
 
 struct ParseTargetFactory {
 
+    func decideInputType(_ userInput: String?) -> ParseTarget {
+        let inputValue = userInput ?? ""
+        if inputValue.hasPrefix("[") && inputValue.hasSuffix("]") {
+            return MyArray(inputValue)
+        }
+        if inputValue.hasPrefix("{") && inputValue.hasSuffix("}") {
+            return MyObject(inputValue)
+        }
+        return MyArray("")
+    }
+    
     static func setTargetToArray (_ input: String) -> [String] {
         let trimmedValue = input.trimmingCharacters(in: ["[","]"])
         if trimmedValue.contains("{") && trimmedValue.contains("}") {
