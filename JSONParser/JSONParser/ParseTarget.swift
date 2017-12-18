@@ -9,5 +9,6 @@
 import Foundation
 
 protocol ParseTarget {
+    func makeMyType() -> ConvertTarget
     func makeJSONDataValues () -> JSONData
 }
