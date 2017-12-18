@@ -20,6 +20,7 @@
 		C388CD771FE38E9C00DDC82A /* JsonSyntaxChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C388CD661FE23A9B00DDC82A /* JsonSyntaxChecker.swift */; };
 		C388CD781FE38E9C00DDC82A /* JsonAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C388CD621FDE730B00DDC82A /* JsonAnalyzer.swift */; };
 		C388CD791FE38E9C00DDC82A /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C388CD601FDE710300DDC82A /* OutputView.swift */; };
+		C3D73E581FE7932A001B1C9C /* JsonSyntaxRull.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D73E571FE7932A001B1C9C /* JsonSyntaxRull.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,6 +46,7 @@
 		C388CD6C1FE36AE100DDC82A /* TestJsonParser.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestJsonParser.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C388CD6E1FE36AE100DDC82A /* TestJsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestJsonParser.swift; sourceTree = "<group>"; };
 		C388CD701FE36AE100DDC82A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3D73E571FE7932A001B1C9C /* JsonSyntaxRull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSyntaxRull.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				C388CD5E1FDE70D700DDC82A /* InputView.swift */,
 				C388CD641FDF745500DDC82A /* JsonData.swift */,
 				C388CD661FE23A9B00DDC82A /* JsonSyntaxChecker.swift */,
+				C3D73E571FE7932A001B1C9C /* JsonSyntaxRull.swift */,
 				C388CD621FDE730B00DDC82A /* JsonAnalyzer.swift */,
 				C388CD601FDE710300DDC82A /* OutputView.swift */,
 			);
@@ -201,6 +204,7 @@
 				C388CD5F1FDE70D700DDC82A /* InputView.swift in Sources */,
 				C388CD611FDE710300DDC82A /* OutputView.swift in Sources */,
 				C388CD651FDF745500DDC82A /* JsonData.swift in Sources */,
+				C3D73E581FE7932A001B1C9C /* JsonSyntaxRull.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

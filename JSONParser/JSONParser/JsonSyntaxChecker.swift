@@ -8,29 +8,45 @@
 
 import Foundation
 
+// Json 문법검사 구조체
 struct SyntaxChecker {
     enum ErrorMessage: String, Error {
-        case ofNoSquareBracket = "입력값이 유효하지 않습니다."
-    }
-     static func makeValidString (values: String) throws -> Array<String> {
-        guard try checkIsValidForJson(values)  else { throw ErrorMessage.ofNoSquareBracket }
-        let validvalues = findJsonString(from: values)
-        return validvalues
+        case ofInvalidInput = "입력값이 유효하지 않습니다."
     }
     
-    private static func checkIsValidForJson (_ stringValue: String) throws -> Bool{
-        let jsonPattern = "\\[\\s*.+,*\\s*\\]"
-        do {
-            let regex = try NSRegularExpression(pattern: jsonPattern)
+    // 문법을 검사하여 통과시 배열로 반환
+     static func makeValidString (values: String) throws -> Array<String> {
+        guard checkIsValidJsonArrayPattern(values) || checkIsValidJsonObjectPattern(values) else { throw ErrorMessage.ofInvalidInput }
+            let validvalues = findJsonString(from: values)
+            return validvalues
+        }
+    
+    // JsonArray패턴에 맞는지 검사
+    private static func checkIsValidJsonArrayPattern (_ stringValue: String) -> Bool{
+        guard stringValue.starts(with: "[") else {
+            return false
+        }
+            let regex = try! NSRegularExpression(pattern: JSONPattern.ofArray)
             let results = regex.matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count))
             return !results.isEmpty
-        } catch {
-            throw error
-        }
     }
     
+    // JsonObject패턴에 맞는지 검사
+    private static func checkIsValidJsonObjectPattern (_ stringValue: String) -> Bool{
+        guard stringValue.starts(with: "{") else {
+            return false
+        }
+        let regex = try! NSRegularExpression(pattern: JSONPattern.ofObject)
+        let results = regex.matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count))
+        return !results.isEmpty
+    }
+   
+    // 문자열에서 대괄호 제거
     private static func findJsonString (from validString: String) -> [String] {
-        return validString.trimmingCharacters(in: ["[", "]"]).split(separator: ",").map{ String($0.trimmingCharacters(in: .whitespacesAndNewlines)) }
+        return validString.trimmingCharacters(in: ["[", "]"])
+                                            .split(separator: ",")
+                                            .map({  $0.trimmingCharacters(in: .whitespacesAndNewlines)
+        })
     }
 
 }

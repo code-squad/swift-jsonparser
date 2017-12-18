@@ -9,10 +9,24 @@
 import Foundation
 
 struct CountingData {
-    private (set) var countOfNumericValue: [Int]
-    private (set) var countOfBooleanValue: [Bool]
-    private (set) var countOfStringValue: [String]
-    var countOfTotalValue: Int {
-        return self.countOfNumericValue.count + self.countOfBooleanValue.count + self.countOfStringValue.count
+    private (set) var ofNumericValue: Int = 0
+    private (set) var ofBooleanValue: Int = 0
+    private (set) var ofStringValue: Int = 0
+    private (set) var ofObject: Int = 0
+    private (set) var total: Int = 0
+    
+    init (ofNumericValue: [Int], ofBooleanValue: [Bool], ofStringValue: [String], total: Int) {
+        self.ofNumericValue = ofNumericValue.count
+        self.ofBooleanValue = ofBooleanValue.count
+        self.ofStringValue = ofStringValue.count
+        self.total = ofStringValue.count + ofBooleanValue.count + ofNumericValue.count
+    }
+    
+    init (ofNumericValue: [Int], ofBooleanValue: [Bool], ofStringValue: [String], ofObject: [String:Any], total: Int) {
+        self.ofNumericValue = ofNumericValue.count
+        self.ofBooleanValue = ofBooleanValue.count
+        self.ofStringValue = ofStringValue.count
+        self.ofObject = ofObject.count
+        self.total = ofStringValue.count + ofBooleanValue.count + ofNumericValue.count + ofObject.count
     }
 }
