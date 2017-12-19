@@ -22,13 +22,13 @@ struct Analyzer {
     
     // 객체타입의 카운팅 인스턴스 생성
     private static func makeObjectType(_ stringValues: String) -> CountingData {
-        var objectValues = [String:Any]()
+        var object = [String:Any]()
         var objects = [Any]()
-        let tempString = generateObjectElements(stringValues)
-        objectValues = (generateObject(items: tempString))
-        objects.append(objectValues)
-        let (num, bool, string) = countOfValueTypeInObject(objects)
-        return CountingData(ofNumericValue: num, ofBooleanValue: bool, ofStringValue: string, total: objects.count)
+        let elementsOfObject = generateObjectElements(stringValues)
+        object = (generateObject(elementsOfObject))
+        objects.append(object)
+        let (countOfNum, countOfBool, countOfString) = countOfValueTypeInObject(objects)
+        return CountingData(countOfNum, countOfBool, countOfString, objects.count)
     }
     
     // 배열 타입의 카운팅 인스턴스 생성
@@ -49,12 +49,12 @@ struct Analyzer {
     }
     
     // 객체생성
-    private static func generateObject(items: Array<String>) -> [String:Any] {
+    private static func generateObject(_ stringsInArray: Array<String>) -> [String:Any] {
         var jsonObject = [String:Any]()
-        _ = items.map {
+        _ = stringsInArray.map {
             let keyValue = $0.split(separator: ":").map {$0.trimmingCharacters(in: .whitespaces)}
             let key : String = String(describing: keyValue.first ?? "").replacingOccurrences(of: "\"", with: "")
-            let value : Any = generateValueInObject(item: String(describing: keyValue.last ?? ""))
+            let value : Any = generateValueInObject(stringNotyetValue: String(describing: keyValue.last ?? ""))
             jsonObject.updateValue(value, forKey: key)
         }
         return jsonObject
@@ -66,28 +66,27 @@ struct Analyzer {
         var boolValue = [Bool]()
         var stringValue = [String]()
         _ = objects.forEach {
-            for objectValue in $0 as! [String:Any] {
-                if let integer =  objectValue.value  as? Int {
+            for object in $0 as! [String:Any] {
+                if let integer =  object.value  as? Int {
                     numberValue.append(integer)
-                }else if let boolean = objectValue.value as? Bool {
+                }else if let boolean = object.value as? Bool {
                     boolValue.append(boolean)
-                }else  { stringValue.append((objectValue.value as? String)!) }
+                }else  { stringValue.append((object.value as? String ?? "")) }
             }
         }
         return (numberValue.count, boolValue.count, stringValue.count)
     }
     
     // 오브젝트 딕셔너리의 벨류생성
-    private static func generateValueInObject(item: String) -> Any {
-        if item.starts(with: "\"") { return item.replacingOccurrences(of: "\"", with: "")}
-        else if let interger = Int(item) { return interger }
-        else if let boolean = Bool(item) { return boolean }
+    private static func generateValueInObject(stringNotyetValue: String) -> Any {
+        if stringNotyetValue.starts(with: "\"") { return stringNotyetValue.replacingOccurrences(of: "\"", with: "")}
+        else if let interger = Int(stringNotyetValue) { return interger }
+        else if let boolean = Bool(stringNotyetValue) { return boolean }
         else { return ""}
     }
     
     // 객체측정을 위해 최초입력값에서 "{","}" 제거
     private static func generateObjectElements(_ input: String) -> Array<String> {
-        let temp = input.trimmingCharacters(in: ["{","}"]).split(separator: ",").map {String($0)}
-        return temp
+        return input.trimmingCharacters(in: ["{","}"]).split(separator: ",").map {String($0)}
     }
 }

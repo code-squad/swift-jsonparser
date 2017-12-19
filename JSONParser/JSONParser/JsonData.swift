@@ -20,7 +20,7 @@ struct CountingData {
         case array
     }
     
-    init (ofNumericValue: Int, ofBooleanValue: Int, ofStringValue: Int, total: Int) {
+    init (_ ofNumericValue: Int, _ ofBooleanValue: Int, _ ofStringValue: Int, _ total: Int) {
         self.type = CountingType.object
         self.ofNumericValue = ofNumericValue
         self.ofBooleanValue = ofBooleanValue
