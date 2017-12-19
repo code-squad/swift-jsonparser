@@ -33,7 +33,7 @@ struct OutputView {
         print("가 포함되어 있습니다.")
     }
     
-    func printJsonString(jsonData: FirstClassObject) {
+    func printJsonString(jsonData: JSONParsingData) {
         print(jsonData.printParsingData(intent: 0))
     }
     

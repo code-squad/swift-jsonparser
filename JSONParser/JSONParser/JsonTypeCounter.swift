@@ -9,7 +9,7 @@ import Foundation
 
 struct JsonTypeCounter {
     
-    func findTypeOfData(jsonData: FirstClassObject) throws -> (dataInfo: DataInfo, jsonData: FirstClassObject) {
+    func findTypeOfData(jsonData: JSONParsingData) throws -> (dataInfo: DataInfo, jsonData: JSONParsingData) {
         let dataInfo = jsonData.countParsingData()
         return (dataInfo, jsonData)
     }

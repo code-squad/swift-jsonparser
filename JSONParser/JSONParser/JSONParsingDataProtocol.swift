@@ -8,13 +8,13 @@
 
 import Foundation
 
-protocol FirstClassObject {
+protocol JSONParsingData {
     func countParsingData() -> DataInfo
     func printParsingData(intent: Int) -> String
      
 }
 
-extension Dictionary: FirstClassObject {
+extension Dictionary: JSONParsingData {
     func countParsingData() -> DataInfo {
         var dataInfo = DataInfo()
         for data in self {
@@ -43,10 +43,10 @@ extension Dictionary: FirstClassObject {
             result.append(String(describing: data.key))
             result.append(" : ")
             if data.value is Array<Any> {
-                let resultOfArray = (data.value as! FirstClassObject).printParsingData(intent: intent+1)
+                let resultOfArray = (data.value as! JSONParsingData).printParsingData(intent: intent+1)
                 result.append(resultOfArray)
             }else if data.value is Dictionary<String, Any> {
-                let resultOfDictionary = (data.value as! FirstClassObject).printParsingData(intent: intent+1)
+                let resultOfDictionary = (data.value as! JSONParsingData).printParsingData(intent: intent+1)
                 result.append(resultOfDictionary)
             }else {
                 result.append(String(describing: data.value))
@@ -63,7 +63,7 @@ extension Dictionary: FirstClassObject {
     }
 }
 
-extension Array: FirstClassObject {
+extension Array: JSONParsingData {
     func countParsingData() -> DataInfo {
         var dataInfo = DataInfo()
         for data in self {
@@ -89,11 +89,11 @@ extension Array: FirstClassObject {
         for data in self {
             countOfData += 1
             if data is Dictionary<String, Any> {
-                let resultOfDictionary = (data as! FirstClassObject).printParsingData(intent: intent+1)
+                let resultOfDictionary = (data as! JSONParsingData).printParsingData(intent: intent+1)
                 result.append(resultOfDictionary)
             }else if data is Array<Any> {
                 result.append("\t")
-                let resultOfArray = (data as! FirstClassObject).printParsingData(intent: intent+1)
+                let resultOfArray = (data as! JSONParsingData).printParsingData(intent: intent+1)
                 result.append(resultOfArray)
             }else {
                 result.append(String(describing: data))

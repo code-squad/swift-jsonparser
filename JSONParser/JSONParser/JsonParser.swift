@@ -9,7 +9,7 @@
 import Foundation
 
 struct JsonParser {
-    func makeJsonData(jsonValue: String) throws -> Any {
+    func makeJsonData(jsonValue: String) throws -> JSONParsingData {
         // scanner
         var tokenValues: [Token]
         let jsonScanner = JsonScanner()
@@ -20,7 +20,7 @@ struct JsonParser {
         }
         
         // json parser (checking json syntax)
-        var jsonData: Any = ""
+        var jsonData: JSONParsingData?
         guard let startOfToken: JsonScanner.regex = tokenValues[0].id else {
             throw JsonScanner.JsonError.invalidJsonPattern
         }
@@ -34,7 +34,7 @@ struct JsonParser {
         }else {
             print("JSON 데이터가 아님")
         }
-        return jsonData
+        return jsonData!
     }
     
 }
