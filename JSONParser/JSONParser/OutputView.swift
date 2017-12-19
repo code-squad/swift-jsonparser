@@ -8,7 +8,11 @@
 
 import Foundation
 struct OutputView {
-    static func printResult (_ input: CountingData) {
-        print ("총 \(input.total)개의 데이터중 객체 \(input.ofObject) 숫자 \(input.ofNumericValue)개, 불값 \(input.ofBooleanValue)개, 문자열 \(input.ofStringValue)개가 있습니다.")
+    static func printResult (_ countedValue: CountingData) {
+        if countedValue.type == CountingData.CountingType.object {
+            print ("총 \(countedValue.total)개의 객체중 숫자 \(countedValue.ofNumericValue)개, 불값 \(countedValue.ofBooleanValue)개, 문자열 \(countedValue.ofStringValue)개가 있습니다.")
+        } else if countedValue.type == CountingData.CountingType.array {
+            print ("총 \(countedValue.total)개의 데이터중 객체 \(countedValue.ofObject) 숫자 \(countedValue.ofNumericValue)개, 불값 \(countedValue.ofBooleanValue)개, 문자열 \(countedValue.ofStringValue)개가 있습니다.")
+        }
     }
 }

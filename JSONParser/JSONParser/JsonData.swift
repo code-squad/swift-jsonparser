@@ -14,8 +14,14 @@ struct CountingData {
     private (set) var ofStringValue: Int = 0
     private (set) var ofObject: Int = 0
     private (set) var total: Int = 0
+    private (set) var type: CountingType
+    enum CountingType {
+        case object
+        case array
+    }
     
     init (ofNumericValue: [Int], ofBooleanValue: [Bool], ofStringValue: [String], total: Int) {
+        self.type = CountingType.object
         self.ofNumericValue = ofNumericValue.count
         self.ofBooleanValue = ofBooleanValue.count
         self.ofStringValue = ofStringValue.count
@@ -23,6 +29,7 @@ struct CountingData {
     }
     
     init (ofNumericValue: [Int], ofBooleanValue: [Bool], ofStringValue: [String], ofObject: [String:Any], total: Int) {
+        self.type = CountingType.array
         self.ofNumericValue = ofNumericValue.count
         self.ofBooleanValue = ofBooleanValue.count
         self.ofStringValue = ofStringValue.count
