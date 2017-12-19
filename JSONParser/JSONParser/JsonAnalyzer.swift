@@ -51,7 +51,7 @@ struct Analyzer {
     // 객체생성
     private static func generateObject(_ stringsInArray: Array<String>) -> [String:Any] {
         var jsonObject = [String:Any]()
-        _ = stringsInArray.map {
+        _ = stringsInArray.forEach {
             let keyValue = $0.split(separator: ":").map {$0.trimmingCharacters(in: .whitespaces)}
             let key : String = String(describing: keyValue.first ?? "").replacingOccurrences(of: "\"", with: "")
             let value : Any = generateValueInObject(stringNotyetValue: String(describing: keyValue.last ?? ""))
