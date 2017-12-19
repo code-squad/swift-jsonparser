@@ -17,8 +17,7 @@ struct SyntaxChecker {
     // 문법을 검사하여 통과시 배열로 반환
      static func makeValidString (values: String) throws -> Array<String> {
         guard checkIsValidJsonArrayPattern(values) || checkIsValidJsonObjectPattern(values) else { throw ErrorMessage.ofInvalidInput }
-            let validvalues = findJsonString(from: values)
-            return validvalues
+            return findJsonString(from: values)
         }
     
     // JsonArray패턴에 맞는지 검사
