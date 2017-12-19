@@ -18,12 +18,12 @@ let jsonData = try jsonParser.makeJsonData(jsonValue: jsonValue)
 
 // counting json data
 var jsonTypeCounter = JsonTypeCounter()
-//let data = try jsonTypeCounter.findTypeOfData(jsonData: jsonData)
+let data = try jsonTypeCounter.findTypeOfData(jsonData: jsonData as! FirstClassObject)
 
 // outputview
 var outputView = OutputView()
-//outputView.printDataInfo(data: data.dataInfo)
-//outputView.printJsonString(jsonData: data.jsonData)
+outputView.printDataInfo(data: data.dataInfo)
+outputView.printJsonString(jsonData: data.jsonData)
 
 
 

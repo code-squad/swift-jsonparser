@@ -64,7 +64,7 @@ struct ObjectJsonParser {
         guard parsingTableOfObject[row][col] != 0 else { return row }
         guard columnName[col] == tokenOfJson[indexOfToken].id else { return row }
         if isKey {
-            key = tokenOfJson[indexOfToken].value as! String
+            key = String(describing: tokenOfJson[indexOfToken].value)
             isKey = false
         }else if isValue {
             fetchTheValue(col: col)

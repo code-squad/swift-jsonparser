@@ -68,7 +68,7 @@ struct ArrayJsonParser {
         indexOfNextRegex = parsingTableOfArray[row][col]
         indexOfToken += 1
         if columnName[col] == regex.STARTCURLYBRACKET {
-            let tokenOfSplit = tokenOfJson[indexOfToken..<tokenOfJson.count]
+            let tokenOfSplit = tokenOfJson[(indexOfToken-1)..<tokenOfJson.count]
             var objectJsonParser = ObjectJsonParser()
             let jsonData = objectJsonParser.makeJsonData(token: Array(tokenOfSplit))
             arrayOfJsonData.append(jsonData)
