@@ -11,31 +11,43 @@ import Foundation
 // 입력값을 분석해서 타입 갯수 객체를 생성
 struct Analyzer {
     static func makeCountedTypeInstance (_ stringValues: Array<String>) -> CountingData {
+        if (stringValues.first ?? "").starts(with: "{") {
+            return makeObjectType(stringValues)
+        } else {
+            return makeArrayType(stringValues)
+        }
+    }
+    
+    private static func makeObjectType(_ stringValues: [String]) -> CountingData {
         var numberValue = [Int]()
         var boolValue = [Bool]()
         var stringValue = [String]()
         var objectValues = [String:Any]()
-        if stringValues[0].starts(with: "{") {
-            let tempString = stringValues.joined().trimmingCharacters(in: ["{","}"]).components(separatedBy: ",")
-            objectValues = (generateObject(items: tempString))
-            for object in objectValues {
-                if let integer = Int(String(describing: object.value)) { numberValue.append(integer) }
-                if let boolean = Bool(String(describing: object.value)) { boolValue.append(boolean) }
-                else { stringValue.append(object.value as! String)}
-            }
-            let countedData = CountingData(ofNumericValue: numberValue, ofBooleanValue: boolValue, ofStringValue: stringValue, total: objectValues.count)
-            return countedData
-        } else {
-            _ = stringValues.map {
-                if $0.starts(with: "{") {objectValues = generateObject(items: generateObjectElements($0)) }
-                if let integer = Int($0) { numberValue.append(integer)}
-                if let boolean = Bool($0) { boolValue.append(boolean)}
-                if $0.starts(with: "\""){ stringValue.append($0)}
-            }
-            let totalCount = numberValue.count + boolValue.count + stringValue.count + objectValues.count
-            let countedData = CountingData(ofNumericValue: numberValue, ofBooleanValue: boolValue, ofStringValue: stringValue, ofObject: objectValues, total: totalCount)
-            return countedData
+        let tempString = stringValues.joined().trimmingCharacters(in: ["{","}"]).components(separatedBy: ",")
+        objectValues = (generateObject(items: tempString))
+        for object in objectValues {
+            if let integer =  object.value  as? Int {
+                numberValue.append(integer)
+            }else if let boolean = object.value as? Bool {
+                boolValue.append(boolean)
+            }else  { stringValue.append((object.value as? String)!) }
         }
+        return CountingData(ofNumericValue: numberValue, ofBooleanValue: boolValue, ofStringValue: stringValue, total: objectValues.count)
+    }
+    
+    private static func makeArrayType(_ stringValues: [String]) -> CountingData {
+        var numberValue = [Int]()
+        var boolValue = [Bool]()
+        var stringValue = [String]()
+        var objects = [Any]()
+        _ = stringValues.map {
+            if $0.starts(with: "{") { objects.append(generateObject(items: generateObjectElements($0))) }
+            if let integer = Int($0) { numberValue.append(integer)}
+            if let boolean = Bool($0) { boolValue.append(boolean)}
+            if $0.starts(with: "\""){ stringValue.append($0)}
+        }
+        let totalCount = numberValue.count + boolValue.count + stringValue.count + objects.count
+        return CountingData(ofNumericValue: numberValue, ofBooleanValue: boolValue, ofStringValue: stringValue, ofObject: objects, total: totalCount)
     }
     
     // 객체생성
@@ -43,8 +55,8 @@ struct Analyzer {
         var jsonObject = [String:Any]()
         _ = items.map {
             let keyValue = $0.split(separator: ":").map {$0.trimmingCharacters(in: .whitespaces)}
-            let key : String = String(keyValue[0]).replacingOccurrences(of: "\"", with: "")
-            let value : Any = generateValueInObject(item: String(keyValue[1]))
+            let key : String = String(describing: keyValue.first ?? "").replacingOccurrences(of: "\"", with: "")
+            let value : Any = generateValueInObject(item: String(describing: keyValue.last ?? ""))
             jsonObject.updateValue(value, forKey: key)
         }
         return jsonObject
