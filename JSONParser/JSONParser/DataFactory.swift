@@ -10,8 +10,9 @@ import Foundation
 
 struct DataFactory {
     
-    func seperateData (_ userData : String) -> [Any] {
-        var dataSeperated = userData.split(separator: ",").map(String.init)
+    func seperateData (_ userInput : String) -> [Any] {
+        let userDataWithoutMarks = sliceMarks(userInput)
+        var dataSeperated = userDataWithoutMarks.split(separator: ",").map(String.init)
         var temp : [Any] = []
         for indexOfData in 0..<dataSeperated.count {
             temp.append(seperateOneData(oneData: dataSeperated[indexOfData]))
@@ -19,7 +20,7 @@ struct DataFactory {
         return temp
     }
     
-    func seperateOneData (oneData : String) -> Any {
+    private func seperateOneData (oneData : String) -> Any {
         guard isBoolType(oneData) == false else { return makeBoolType(oneData) }
         guard isStringType(oneData) == false else { return makeStringType(oneData) }
         guard isNumber(oneData) == false else { return Int(oneData) ?? 0 }
@@ -34,6 +35,10 @@ struct DataFactory {
         return oneData.first == "\"" && oneData.last == "\""
     }
     
+    private func isBoolType (_ oneData : String) -> Bool {
+        return oneData == "true" || oneData == "false"
+    }
+    
     private func makeStringType (_ oneData : String) -> String {
         var temp = oneData
         temp.removeFirst()
@@ -41,11 +46,22 @@ struct DataFactory {
         return temp
     }
     
-    private func isBoolType (_ oneData : String) -> Bool {
-        return oneData == "true" || oneData == "false"
-    }
-    
     private func makeBoolType (_ oneData : String ) -> Bool {
         return oneData == "true"
+    }
+    
+    private func sliceMarks (_ userInput : String) -> String {
+        let userInputWithoutEmpty = sliceOneMark(userInput, mark: " ")
+        let userInputWithoutLeftMark = sliceOneMark(userInputWithoutEmpty, mark: "[")
+        return sliceOneMark(userInputWithoutLeftMark, mark: "]")
+    }
+    
+    private func sliceOneMark (_ fullString : String, mark : Character) -> String {
+        var temp = ""
+        let stringsWithoutMark : [String] = fullString.split(separator: mark).map(String.init)
+        for index in 0..<stringsWithoutMark.count {
+            temp += stringsWithoutMark[index]
+        }
+        return temp
     }
 }
