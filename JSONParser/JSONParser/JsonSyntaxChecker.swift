@@ -15,16 +15,16 @@ struct SyntaxChecker {
     }
     
     // 문법을 검사하여 통과시 배열로 반환
-     static func makeValidString (values: String) throws -> Array<String> {
+    static func makeValidString (values: String) throws -> String {
         guard checkIsValidJsonArrayPattern(values) || checkIsValidJsonObjectPattern(values) else { throw ErrorMessage.ofInvalidInput }
-            return findJsonString(from: values)
-        }
+        return findJsonString(from: values)
+    }
     
     // JsonArray패턴에 맞는지 검사
     private static func checkIsValidJsonArrayPattern (_ stringValue: String) -> Bool{
-            let regex = try! NSRegularExpression(pattern: JSONPattern.ofArray)
-            let results = regex.matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count))
-            return !results.isEmpty
+        let regex = try! NSRegularExpression(pattern: JSONPattern.ofArray)
+        let results = regex.matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count))
+        return !results.isEmpty
     }
     
     // JsonObject패턴에 맞는지 검사
@@ -33,13 +33,11 @@ struct SyntaxChecker {
         let results = regex.matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count))
         return !results.isEmpty
     }
-   
-    // 문자열에서 대괄호 제거
-    private static func findJsonString (from validString: String) -> [String] {
-        return validString.trimmingCharacters(in: ["[", "]"])
-                                            .split(separator: ",")
-                                            .map({  $0.trimmingCharacters(in: .whitespacesAndNewlines)
-        })
+    
+    // 문자열에서 공백만 제거
+    private static func findJsonString (from validString: String) -> String{
+        let splitted = validString.filter { $0 != " " }
+        return splitted
     }
-
+    
 }

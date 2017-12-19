@@ -10,38 +10,48 @@ import Foundation
 
 // 입력값을 분석해서 타입 갯수 객체를 생성
 struct Analyzer {
-    static func makeCountedTypeInstance (_ stringValues: Array<String>) -> CountingData {
-        if (stringValues.first ?? "").starts(with: "{") {
+    // 입력받은 스트링을 타입에 따라 카운팅 인스턴스 생성반환
+    static func makeCountedTypeInstance (_ stringValues: String) -> CountingData {
+        var stringValues = stringValues
+        if stringValues.removeFirst() == "{" {
             return makeObjectType(stringValues)
         } else {
             return makeArrayType(stringValues)
         }
     }
     
-    private static func makeObjectType(_ stringValues: [String]) -> CountingData {
+    // 객체타입의 카운팅 인스턴스 생성
+    private static func makeObjectType(_ stringValues: String) -> CountingData {
         var numberValue = [Int]()
         var boolValue = [Bool]()
         var stringValue = [String]()
         var objectValues = [String:Any]()
-        let tempString = stringValues.joined().trimmingCharacters(in: ["{","}"]).components(separatedBy: ",")
+        var objects = [Any]()
+        let tempString = generateObjectElements(stringValues)
         objectValues = (generateObject(items: tempString))
-        for object in objectValues {
-            if let integer =  object.value  as? Int {
-                numberValue.append(integer)
-            }else if let boolean = object.value as? Bool {
-                boolValue.append(boolean)
-            }else  { stringValue.append((object.value as? String)!) }
+        objects.append(objectValues)
+        _ = objects.map {
+            for objectValue in $0 as! [String:Any] {
+                if let integer =  objectValue.value  as? Int {
+                    numberValue.append(integer)
+                }else if let boolean = objectValue.value as? Bool {
+                    boolValue.append(boolean)
+                }else  { stringValue.append((objectValue.value as? String)!) }
+            }
         }
-        return CountingData(ofNumericValue: numberValue, ofBooleanValue: boolValue, ofStringValue: stringValue, total: objectValues.count)
+        return CountingData(ofNumericValue: numberValue, ofBooleanValue: boolValue, ofStringValue: stringValue, total: objects.count)
     }
     
-    private static func makeArrayType(_ stringValues: [String]) -> CountingData {
+    // 배열 타입의 카운팅 인스턴스 생성
+    private static func makeArrayType(_ stringValues: String) -> CountingData {
         var numberValue = [Int]()
         var boolValue = [Bool]()
         var stringValue = [String]()
         var objects = [Any]()
-        _ = stringValues.map {
-            if $0.starts(with: "{") { objects.append(generateObject(items: generateObjectElements($0))) }
+        let stringValued = stringValues.trimmingCharacters(in: ["[","]"]).split(separator: ",").map { String($0)}
+        print(stringValued)
+        _ = stringValued.map {
+            if $0.contains("{") { objects.append($0) }
             if let integer = Int($0) { numberValue.append(integer)}
             if let boolean = Bool($0) { boolValue.append(boolean)}
             if $0.starts(with: "\""){ stringValue.append($0)}
@@ -70,9 +80,9 @@ struct Analyzer {
         else { return ""}
     }
     
-    // 객체 입력값에서 { , } 제거
+    // 객체측정을 위해 최초입력값에서 "{","}" 제거
     private static func generateObjectElements(_ input: String) -> Array<String> {
-        return input.trimmingCharacters(in: ["{","}"]).components(separatedBy: ",")
+        let temp = input.trimmingCharacters(in: ["{","}"]).split(separator: ",").map {String($0)}
+        return temp
     }
 }
-
