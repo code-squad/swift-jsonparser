@@ -9,7 +9,7 @@
 import Foundation
 
 struct ValueCounter {
-    var parsedJSONDataList : JSONData
+    private var parsedJSONDataList : JSONData
     
     init (targetToCount countTarget : JSONData) {
         self.parsedJSONDataList = countTarget

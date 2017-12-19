@@ -1,5 +1,5 @@
 //
-//  ParsingTargetFactory.swift
+//  Parser.swift
 //  JSONParser
 //
 //  Created by YOUTH on 2017. 12. 7..
@@ -8,47 +8,37 @@
 
 import Foundation
 
-struct ParseTargetFactory {
-
-    func decideInputType(_ userInput: String?) -> ParseTarget {
+struct Parser {
+    
+    func matchValuesToJSONType(_ userInput: String?) -> JSONData {
         let inputValue = userInput ?? ""
+        
         if inputValue.hasPrefix("[") && inputValue.hasSuffix("]") {
-            return MyArray(inputValue)
+            return setTargetToArray(inputValue)
+        } else if inputValue.hasPrefix("{") && inputValue.hasSuffix("}") {
+            return setTargetToObject(inputValue)
         }
-        if inputValue.hasPrefix("{") && inputValue.hasSuffix("}") {
-            return MyObject(inputValue)
-        }
-        return MyArray("")
+        return setTargetToArray("")
     }
     
-    static func setTargetToArray (_ input: String) -> [String] {
+    func setTargetToArray (_ input: String) -> JSONData {
         let trimmedValue = input.trimmingCharacters(in: ["[","]"])
-        if trimmedValue.contains("{") && trimmedValue.contains("}") {
-            return makeTargetArrayWithObject(trimmedValue)
-        } else {
-            return makeTargetArray(trimmedValue)
-        }
+        let stringArray = makeTargetArray(trimmedValue)
+        let JSONArray = stringArray.matchType(stringArray)
+        return JSONArray
     }
     
-    static func setTargetToObject (_ input: String) -> Dictionary<String,String> {
+    func setTargetToObject (_ input: String) -> JSONData {
         let trimmedValue = input.trimmingCharacters(in: ["{","}"])
-        return makeTargetObject(trimmedValue)
+        let stringObj = makeTargetObject(trimmedValue)
+        let JSONObj = stringObj.matchType(stringObj)
+        return JSONObj
     }
-
-
+    
+    
     // MARK: Make [String]
     
-    static func makeTargetArray (_ changeTarget: String) -> [String] {
-        var stringValuesToArray : [String] = []
-        
-        let valuesList = changeTarget.split(separator: ",")
-        stringValuesToArray = valuesList.map({(value:String.SubSequence)->String in String(value).trimmingCharacters(in: .whitespacesAndNewlines)})
-        
-        return stringValuesToArray
-    }
-    
-    
-    static func makeTargetArrayWithObject(_ value: String) -> [String] {
+    private func makeTargetArray(_ value: String) -> ConvertTarget {
         var rawValue = value
         var openBracketBound = String.Index(encodedOffset: 0)
         var closeBracketBound = String.Index(encodedOffset: 0)
@@ -67,15 +57,18 @@ struct ParseTargetFactory {
             splitedValues.append(String(rawValue[openBracketBound...closeBracketBound]))
             rawValue.removeSubrange(openBracketBound...closeBracketBound)
         }
-        let singleValues = makeTargetArray(rawValue)
+        
+        let singleValues = rawValue.split(separator: ",")
+                        .map({(value:String.SubSequence)->String in String(value)
+                        .trimmingCharacters(in: .whitespacesAndNewlines)})
         
         return splitedValues + singleValues
     }
-
-
+    
+    
     // MARK: Make Object
-
-    static func makeTargetObject (_ changeTarget: String) -> Dictionary<String,String> {
+    
+    private func makeTargetObject (_ changeTarget: String) -> ConvertTarget {
         var stringDictionaryToObject : Dictionary<String, String> = [:]
         
         let listOfValue = changeTarget.split(separator: ",").map(){value in String(value)} // [""key":value", ""key":value"]
@@ -85,15 +78,15 @@ struct ParseTargetFactory {
         return stringDictionaryToObject
     }
     
-    static func makeTempDictionary (_ value: String) -> (key: String, value: String) {
+    private func makeTempDictionary (_ value: String) -> (key: String, value: String) {
         let splitedTempDictionary = value.split(separator: ":")
-                                    .map(){value in String(value)
-                                    .trimmingCharacters(in: .whitespacesAndNewlines)}
+            .map(){value in String(value)
+                .trimmingCharacters(in: .whitespacesAndNewlines)}
         let key = splitedTempDictionary[0]
         let value = splitedTempDictionary[1]
         
         return (key, value)
     }
-
-
+    
 }
+

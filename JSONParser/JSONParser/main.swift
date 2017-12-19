@@ -9,14 +9,14 @@
 
 let inputView = InputView()
 let userInput = inputView.askUserInput()
-let parseTargetFactory = ParseTargetFactory()
-let parseTarget = parseTargetFactory.decideInputType(userInput)
 
-let targetFactory = JSONDataFactory()
-let convertedValue = targetFactory.makeConvertedData(parseTarget.makeMyType())
-let counter = ValueCounter(targetToCount: convertedValue)
+let parser = Parser()
+let convertedValues = parser.matchValuesToJSONType(userInput)
+
+let counter = ValueCounter(targetToCount: convertedValues)
 let countInfo = counter.makeCountInfo()
 
 let outputView = OutputView()
 outputView.showResult(countInfo)
+
 
