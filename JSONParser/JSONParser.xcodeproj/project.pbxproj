@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0454F99F1FE8A58300ECACB9 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0454F99E1FE8A58300ECACB9 /* InputView.swift */; };
+		0454F9A11FE8B32F00ECACB9 /* DataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0454F9A01FE8B32F00ECACB9 /* DataFactory.swift */; };
+		0454F9A31FE8B56300ECACB9 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0454F9A21FE8B56300ECACB9 /* OutputView.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +26,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0454F99E1FE8A58300ECACB9 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		0454F9A01FE8B32F00ECACB9 /* DataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFactory.swift; sourceTree = "<group>"; };
+		0454F9A21FE8B56300ECACB9 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -57,6 +63,9 @@
 		83AE2E0E1F8CAC2800F38CC9 /* JSONParser */ = {
 			isa = PBXGroup;
 			children = (
+				0454F99E1FE8A58300ECACB9 /* InputView.swift */,
+				0454F9A01FE8B32F00ECACB9 /* DataFactory.swift */,
+				0454F9A21FE8B56300ECACB9 /* OutputView.swift */,
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 			);
 			path = JSONParser;
@@ -121,6 +130,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				0454F99F1FE8A58300ECACB9 /* InputView.swift in Sources */,
+				0454F9A11FE8B32F00ECACB9 /* DataFactory.swift in Sources */,
+				0454F9A31FE8B56300ECACB9 /* OutputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

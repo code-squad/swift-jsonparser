@@ -2,9 +2,18 @@
 //  main.swift
 //  JSONParser
 //
-//  Created by JK on 10/10/2017.
-//  Copyright © 2017 JK. All rights reserved.
+//  Created by Jack (2017/12/19)
+//  Copyright © 2017년 JK. All rights reserved.
 //
 
 import Foundation
 
+var runJsonParser : Bool = true
+mainLoop : while runJsonParser == true {
+    let inputView : InputView = InputView()
+    let userInput = inputView.readInput()
+    guard userInput != "q" else { break }
+    guard inputView.isValid(userInput) == true else { continue }
+    let userData = inputView.sliceMarks(userInput)
+    
+}
