@@ -28,7 +28,7 @@ struct CountingData {
         self.total = ofStringValue.count + ofBooleanValue.count + ofNumericValue.count
     }
     
-    init (ofNumericValue: [Int], ofBooleanValue: [Bool], ofStringValue: [String], ofObject: [String:Any], total: Int) {
+    init (ofNumericValue: [Int], ofBooleanValue: [Bool], ofStringValue: [String], ofObject: [Any], total: Int) {
         self.type = CountingType.array
         self.ofNumericValue = ofNumericValue.count
         self.ofBooleanValue = ofBooleanValue.count
