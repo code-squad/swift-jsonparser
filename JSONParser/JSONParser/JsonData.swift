@@ -20,20 +20,20 @@ struct CountingData {
         case array
     }
     
-    init (ofNumericValue: [Int], ofBooleanValue: [Bool], ofStringValue: [String], total: Int) {
+    init (ofNumericValue: Int, ofBooleanValue: Int, ofStringValue: Int, total: Int) {
         self.type = CountingType.object
-        self.ofNumericValue = ofNumericValue.count
-        self.ofBooleanValue = ofBooleanValue.count
-        self.ofStringValue = ofStringValue.count
-        self.total = ofStringValue.count + ofBooleanValue.count + ofNumericValue.count
+        self.ofNumericValue = ofNumericValue
+        self.ofBooleanValue = ofBooleanValue
+        self.ofStringValue = ofStringValue
+        self.total = ofStringValue + ofBooleanValue + ofNumericValue
     }
     
-    init (ofNumericValue: [Int], ofBooleanValue: [Bool], ofStringValue: [String], ofObject: [Any], total: Int) {
+    init (ofNumericValue: Int, ofBooleanValue: Int, ofStringValue: Int, ofObject: Int, total: Int) {
         self.type = CountingType.array
-        self.ofNumericValue = ofNumericValue.count
-        self.ofBooleanValue = ofBooleanValue.count
-        self.ofStringValue = ofStringValue.count
-        self.ofObject = ofObject.count
-        self.total = ofStringValue.count + ofBooleanValue.count + ofNumericValue.count + ofObject.count
+        self.ofNumericValue = ofNumericValue
+        self.ofBooleanValue = ofBooleanValue
+        self.ofStringValue = ofStringValue
+        self.ofObject = ofObject
+        self.total = ofStringValue + ofBooleanValue + ofNumericValue + ofObject
     }
 }

@@ -22,24 +22,13 @@ struct Analyzer {
     
     // 객체타입의 카운팅 인스턴스 생성
     private static func makeObjectType(_ stringValues: String) -> CountingData {
-        var numberValue = [Int]()
-        var boolValue = [Bool]()
-        var stringValue = [String]()
         var objectValues = [String:Any]()
         var objects = [Any]()
         let tempString = generateObjectElements(stringValues)
         objectValues = (generateObject(items: tempString))
         objects.append(objectValues)
-        _ = objects.map {
-            for objectValue in $0 as! [String:Any] {
-                if let integer =  objectValue.value  as? Int {
-                    numberValue.append(integer)
-                }else if let boolean = objectValue.value as? Bool {
-                    boolValue.append(boolean)
-                }else  { stringValue.append((objectValue.value as? String)!) }
-            }
-        }
-        return CountingData(ofNumericValue: numberValue, ofBooleanValue: boolValue, ofStringValue: stringValue, total: objects.count)
+        let (num, bool, string) = countOfValueTypeInObject(objects)
+        return CountingData(ofNumericValue: num, ofBooleanValue: bool, ofStringValue: string, total: objects.count)
     }
     
     // 배열 타입의 카운팅 인스턴스 생성
@@ -49,7 +38,6 @@ struct Analyzer {
         var stringValue = [String]()
         var objects = [Any]()
         let stringValued = stringValues.trimmingCharacters(in: ["[","]"]).split(separator: ",").map { String($0)}
-        print(stringValued)
         _ = stringValued.map {
             if $0.contains("{") { objects.append($0) }
             if let integer = Int($0) { numberValue.append(integer)}
@@ -57,7 +45,7 @@ struct Analyzer {
             if $0.starts(with: "\""){ stringValue.append($0)}
         }
         let totalCount = numberValue.count + boolValue.count + stringValue.count + objects.count
-        return CountingData(ofNumericValue: numberValue, ofBooleanValue: boolValue, ofStringValue: stringValue, ofObject: objects, total: totalCount)
+        return CountingData(ofNumericValue: numberValue.count, ofBooleanValue: boolValue.count, ofStringValue: stringValue.count, ofObject: objects.count, total: totalCount)
     }
     
     // 객체생성
@@ -70,6 +58,23 @@ struct Analyzer {
             jsonObject.updateValue(value, forKey: key)
         }
         return jsonObject
+    }
+    
+    // 객체 내의 값의 타입 갯수를 세어 반환
+    static func countOfValueTypeInObject(_ objects: [Any]) -> (countOfNum: Int, countOfBool: Int, countOfString: Int){
+        var numberValue = [Int]()
+        var boolValue = [Bool]()
+        var stringValue = [String]()
+        _ = objects.map {
+            for objectValue in $0 as! [String:Any] {
+                if let integer =  objectValue.value  as? Int {
+                    numberValue.append(integer)
+                }else if let boolean = objectValue.value as? Bool {
+                    boolValue.append(boolean)
+                }else  { stringValue.append((objectValue.value as? String)!) }
+            }
+        }
+        return (numberValue.count, boolValue.count, stringValue.count)
     }
     
     // 오브젝트 딕셔너리의 벨류생성
