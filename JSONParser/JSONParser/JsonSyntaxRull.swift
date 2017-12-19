@@ -11,9 +11,9 @@ import Foundation
 // Json 문법 구조체
 struct JSONPattern {
     static let ofString = "\\s*?\".+\"\\s*?"
-    static let ofInt = "\\s*?\\d\\s*?"
+    static let ofInt = "\\s*?\\d+\\s*?"
     static let ofBool = "\\s*?(true|false)\\s*?"
-    static let ofDictionary = "\(ofString):(\(ofInt)|\(ofString)|\(ofBool))"
+    static let ofDictionary = "\\s*?\(ofString):(\(ofInt)|\(ofString)|\(ofBool))\\s*?"
     static let ofObject = "[\\{]\\s*?(\(ofDictionary)[,]?)+\\s*?[\\}]\\s*?"
-    static let ofArray = "\\[\\s*?((\(ofInt)|\(ofString)|\(ofBool)|\(ofObject))[,]?)+\\s*?\\]\\s*?"
+    static let ofArray = "\\[\\s*?((\(ofInt)|\\s*?\(ofString)|\\s*?\(ofBool)|\\s*?\(ofObject))[,]?)+\\s*?\\]\\s*?"
 }
