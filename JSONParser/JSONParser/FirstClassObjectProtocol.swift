@@ -39,7 +39,7 @@ extension Dictionary: FirstClassObject {
         result.append("{\n")
         for data in self {
             count += 1
-            result.append(String.init(repeating: "\t" as Character, count: intent))
+            result.append(String.init(repeating: "\t" as Character, count: intent+1))
             result.append(String(describing: data.key))
             result.append(" : ")
             if data.value is Array<Any> {
