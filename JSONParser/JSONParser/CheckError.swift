@@ -12,14 +12,13 @@ struct CheckError {
     private let validCharacters = CharacterSet.init(charactersIn: " ,[]truefalse\"").union(CharacterSet.alphanumerics)
     
     func isValid (_ userInput : String) -> Bool {
-        guard userInput != "q" else { return false }
         guard isArray(userInput) == true else { return false }
-        guard isValid(userInput) == true else { return false }
+        guard isValidCharacters(userInput) == true else { return false }
         return true
     }
     
-    private func isArray (_ userInput : String) -> Bool {
-        if userInput.first == "[" && userInput.last == "]" {
+    private func isArray (_ input : String) -> Bool {
+        if input.first == "[" && input.last == "]" {
             return true
         }
         print("배열의 형태가 아닙니다. 다시 입력해주세요.")

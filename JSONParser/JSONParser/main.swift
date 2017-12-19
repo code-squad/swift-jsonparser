@@ -10,15 +10,12 @@ import Foundation
 
 var runJsonParser : Bool = true
 mainLoop : while runJsonParser == true {
-    let inputView : InputView = InputView()
-    let dataFactory : DataFactory = DataFactory()
     
-    let userInput = inputView.readInput()
+    let userInput = InputView().readInput()
     guard userInput != "q" else { break }
-    guard inputView.isValid(userInput) == true else { continue }
-    let userData = inputView.sliceMarks(userInput)
+    guard CheckError().isValid(userInput) == true else { continue }
     
-    let resultOfparsing = dataFactory.seperateData(userData)
+    let convertedData = DataFactory().generateDataAndCount(userInput)
     
-    OutputView().printResult(resultOfparsing)
+    OutputView().printResult(convertedData.data, convertedData.countVal)
 }
