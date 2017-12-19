@@ -38,7 +38,7 @@ struct Analyzer {
         var stringValue = [String]()
         var objects = [Any]()
         let stringValued = stringValues.trimmingCharacters(in: ["[","]"]).split(separator: ",").map { String($0)}
-        _ = stringValued.map {
+        _ = stringValued.forEach {
             if $0.contains("{") { objects.append($0) }
             if let integer = Int($0) { numberValue.append(integer)}
             if let boolean = Bool($0) { boolValue.append(boolean)}
@@ -65,7 +65,7 @@ struct Analyzer {
         var numberValue = [Int]()
         var boolValue = [Bool]()
         var stringValue = [String]()
-        _ = objects.map {
+        _ = objects.forEach {
             for objectValue in $0 as! [String:Any] {
                 if let integer =  objectValue.value  as? Int {
                     numberValue.append(integer)
