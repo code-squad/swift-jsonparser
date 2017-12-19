@@ -39,7 +39,8 @@ struct InputView {
     }
     
     func sliceMarks (_ userInput : String) -> String {
-        let userInputWithoutLeftMark = sliceOneMark(userInput, mark: "[")
+        let userInputWithoutEmpty = sliceOneMark(userInput, mark: " ")
+        let userInputWithoutLeftMark = sliceOneMark(userInputWithoutEmpty, mark: "[")
         return sliceOneMark(userInputWithoutLeftMark, mark: "]")
     }
     
