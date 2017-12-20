@@ -7,29 +7,55 @@
 //
 
 import Foundation
+typealias ObjectDictionary = [String : Any]
 
 struct DataFactory {
     
-    func generateData (_ userInput : String) ->  [Any] {
-        let userDataWithoutMarks = sliceMarks(userInput)
-        let dataSeperated = seperateData(userDataWithoutMarks)
-        return dataSeperated
-    }
-    
-    private func seperateData (_ dataWithoutMarks : String) -> [Any] {
-        let dataBeforeSeperating = dataWithoutMarks.split(separator: ",").map(String.init)
-        var temp : [Any] = []
-        for indexOfData in 0..<dataBeforeSeperating.count {
-            temp.append(seperateOneData(oneData: dataBeforeSeperating[indexOfData]))
+    func generateData (_ userInput : String) -> Any {
+        if isArray(userInput) == true {
+            return generateArray(userInput)
         }
-        return temp
+        return generateObject(userInput)
     }
     
-    private func seperateOneData (oneData : String) -> Any {
+    private func generateObject (_ data : String) -> ObjectDictionary {
+        let userDataWithoutMarks = sliceMarks(data)
+        let dataBeforeSeperating = userDataWithoutMarks.split(separator: ",").map(String.init)
+        var seperatedObject : ObjectDictionary = [:]
+        var temp : (key : String, value : Any)
+        for indexOfData in 0..<dataBeforeSeperating.count {
+            temp = makeObjectType(dataBeforeSeperating[indexOfData])
+            seperatedObject[temp.key] = temp.value
+        }
+        return seperatedObject
+    }
+    
+    private func generateArray (_ data : String) -> [Any] {
+        let userDataWithoutMarks = sliceMarks(data)
+        let dataBeforeSeperating = userDataWithoutMarks.split(separator: ",").map(String.init)
+        var seperatedArray : [Any] = []
+        for indexOfData in 0..<dataBeforeSeperating.count {
+            seperatedArray.append(makeOneData(dataBeforeSeperating[indexOfData]))
+        }
+        return seperatedArray
+    }
+    
+    private func makeOneData (_ oneData : String) -> Any {
         guard isBoolType(oneData) == false else { return makeBoolType(oneData) }
-        guard isStringType(oneData) == false else { return makeStringType(oneData) }
+        guard isStringType(oneData) == false else { return sliceMarks(oneData) }
         guard isNumber(oneData) == false else { return Int(oneData) ?? 0 }
-        return ""
+        return makeObjectType(oneData)
+    }
+    
+    private func makeObjectType (_ oneData : String) -> (key : String, value : Any) {
+        var databeforeSeperating = oneData.split(separator: ":").map(String.init)
+        let tempKey = sliceMarks(databeforeSeperating[0])
+        let tempValue = makeOneData(databeforeSeperating[1])
+        return (tempKey, tempValue)
+    }
+    
+    private func makeBoolType (_ oneData : String ) -> Bool {
+        return oneData == "true"
     }
     
     private func isNumber (_ oneData : String) -> Bool {
@@ -44,21 +70,15 @@ struct DataFactory {
         return oneData == "true" || oneData == "false"
     }
     
-    private func makeStringType (_ oneData : String) -> String {
-        var temp = oneData
-        temp.removeFirst()
-        temp.removeLast()
-        return temp
-    }
-    
-    private func makeBoolType (_ oneData : String ) -> Bool {
-        return oneData == "true"
+    private func isArray (_ oneData : String) -> Bool {
+        return oneData.first == "["
     }
     
     private func sliceMarks (_ userInput : String) -> String {
-        let userInputWithoutEmpty = sliceOneMark(userInput, mark: " ")
-        let userInputWithoutLeftMark = sliceOneMark(userInputWithoutEmpty, mark: "[")
-        return sliceOneMark(userInputWithoutLeftMark, mark: "]")
+        var userInputWithoutBracket = sliceOneMark(userInput, mark: " ")
+        userInputWithoutBracket.removeFirst()
+        userInputWithoutBracket.removeLast()
+        return userInputWithoutBracket
     }
     
     private func sliceOneMark (_ fullString : String, mark : Character) -> String {
@@ -69,4 +89,5 @@ struct DataFactory {
         }
         return temp
     }
+
 }

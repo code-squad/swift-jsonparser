@@ -9,19 +9,18 @@
 import Foundation
 
 struct CheckError {
-    private let validCharacters = CharacterSet.init(charactersIn: " ,[]truefalse\"").union(CharacterSet.alphanumerics)
+    private let validCharacters = CharacterSet.init(charactersIn: " ,[]truefalse\"{}:").union(CharacterSet.alphanumerics)
     
     func isValid (_ userInput : String) -> Bool {
-        guard isArray(userInput) == true else { return false }
+        guard isData(userInput) == true else { return false }
         guard isValidCharacters(userInput) == true else { return false }
         return true
     }
     
-    private func isArray (_ input : String) -> Bool {
-        if input.first == "[" && input.last == "]" {
-            return true
-        }
-        print("배열의 형태가 아닙니다. 다시 입력해주세요.")
+    private func isData (_ input : String) -> Bool {
+        if input.first == "[" && input.last == "]" { return true }
+        if input.first == "{" && input.last == "}" { return true }
+        print("배열이나 객체의 형태가 아닙니다. 다시 입력해주세요.")
         return false
     }
     
