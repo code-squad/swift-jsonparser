@@ -10,9 +10,10 @@ import Foundation
 
 struct OutputView {
     
-    func printResult (_ data : [Any], _ countVal : (stringVal : Int, numberVal : Int, boolVal : Int)) {
+    func printResult (_ countVal : (stringVal : Int, numberVal : Int, boolVal : Int)) {
+        let sumOfCount = countVal.boolVal + countVal.numberVal + countVal.stringVal
         let countOfObjects = makeNumberMessage(countVal)
-        print("총 \(data.count)개의 데이터 중에 \(countOfObjects) 포함되어 있습니다.")
+        print("총 \(sumOfCount)개의 데이터 중에 \(countOfObjects)포함되어 있습니다.")
     }
     
     private func makeNumberMessage(_ data : (stringVal : Int, numberVal : Int, boolVal : Int)) -> String {

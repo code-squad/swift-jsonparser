@@ -10,11 +10,10 @@ import Foundation
 
 struct DataFactory {
     
-    func generateDataAndCount (_ userInput : String) -> (data : [Any], countVal : (stringVal : Int, numberVal : Int, boolVal : Int)) {
+    func generateData (_ userInput : String) ->  [Any] {
         let userDataWithoutMarks = sliceMarks(userInput)
         let dataSeperated = seperateData(userDataWithoutMarks)
-        let numbersOfObjects = countNumberOfObjects(userData: dataSeperated)
-        return (dataSeperated, numbersOfObjects)
+        return dataSeperated
     }
     
     private func seperateData (_ dataWithoutMarks : String) -> [Any] {
@@ -67,19 +66,6 @@ struct DataFactory {
         let stringsWithoutMark : [String] = fullString.split(separator: mark).map(String.init)
         for index in 0..<stringsWithoutMark.count {
             temp += stringsWithoutMark[index]
-        }
-        return temp
-    }
-    
-    private func countNumberOfObjects(userData : [Any]) -> (stringVal : Int, numberVal : Int, boolVal : Int) {
-        var temp : (stringVal : Int, numberVal : Int, boolVal : Int) = (0,0,0)
-        for oneData in userData {
-            switch oneData {
-            case is String : temp.stringVal += 1
-            case is Int : temp.numberVal += 1
-            case is Bool : temp.boolVal += 1
-            default : break
-            }
         }
         return temp
     }
