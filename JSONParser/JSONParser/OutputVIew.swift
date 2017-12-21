@@ -25,6 +25,9 @@ struct OutputView {
         if info.countOfObject != 0 {
             result.append("객체 \(info.countOfObject)개 ")
         }
+        if info.countOfArray != 0 {
+            result.append("배열 \(info.countOfArray)개 ")
+        }
         
         return result
     }

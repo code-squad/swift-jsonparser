@@ -35,10 +35,15 @@ struct DataTypeConverter {
         if let intValue = Int(value) {
             return JSONData.IntegerValue(intValue)
         }
-        if value.contains(":") {
+        if value.contains("{") {
             let parser = Parser()
-            let targetObj = parser.setTargetToObject(value)
-            return targetObj
+            let targetObject = parser.setTargetToObject(value)
+            return targetObject
+        }
+        if value.contains("[") {
+            let parser = Parser()
+            let targetArray = parser.setTargetToArray(value)
+            return targetArray
         }
         return JSONData.StringValue(value)
     }
