@@ -11,7 +11,7 @@ typealias ObjectDictionary = [String : Any]
 
 struct DataFactory {
     
-    func generateData (_ data : String) -> MyData {
+    func generateData (_ data : String) -> Any {
         let dataBeforeSeperating = sliceData(data)
         var seperatedArray : [Any] = []
         var seperatedObeject : [String:Any] = [:]
@@ -24,8 +24,8 @@ struct DataFactory {
             temp = makeObjectType(dataBeforeSeperating[indexOfData])
             seperatedObeject.updateValue(temp.value, forKey: temp.key)
         }
-        guard isArray(data) == false else { return MyArray.init(seperatedArray) }
-        return MyDictionary.init(seperatedObeject)
+        guard isArray(data) == false else { return seperatedArray }
+        return seperatedObeject
     }
     
     private func makeOneData (_ oneData : String) -> Any {
@@ -33,7 +33,7 @@ struct DataFactory {
         guard isStringType(oneData) == false else { return sliceMarks(oneData) }
         if isObject(oneData) == true {
             let temp = makeObjectType(oneData)
-            return MyDictionary.init([temp.key : temp.value])
+            return [temp.key : temp.value]
         }
         return Int(oneData) ?? 0
     }

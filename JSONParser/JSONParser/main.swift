@@ -16,6 +16,7 @@ mainLoop : while runJsonParser == true {
     guard CheckError().isValid(userInput) == true else { continue }
     
     let convertedData = DataFactory().generateData(userInput)
+    let numbersOfData = DataCounter().countNumberOfData(convertedData)
     
-    OutputView().printResultOfData(convertedData)
+    OutputView().printResultOfData(numbersOfData)
 }
