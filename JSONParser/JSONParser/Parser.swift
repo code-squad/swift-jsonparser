@@ -22,57 +22,36 @@ struct Parser {
     }
     
     func setTargetToArray (_ input: String) -> JSONData {
-        let trimmedValue = input.trimmingCharacters(in: ["[","]"])
-        let stringArray = makeTargetArray(trimmedValue)
-        let JSONArray = stringArray.matchType(stringArray)
+        let grammarChecker = GrammarChecker()
+        var targetArray = [String]()
+        do {
+            targetArray = try grammarChecker.checkArray(input)
+        } catch {
+            print(GrammarChecker.GrammarError.array.message)
+        }
+        let JSONArray = targetArray.matchType(targetArray)
         return JSONArray
     }
     
     func setTargetToObject (_ input: String) -> JSONData {
-        let trimmedValue = input.trimmingCharacters(in: ["{","}"])
-        let stringObj = makeTargetObject(trimmedValue)
-        let JSONObj = stringObj.matchType(stringObj)
-        return JSONObj
-    }
-    
-    
-    // MARK: Make [String]
-    
-    private func makeTargetArray(_ value: String) -> ConvertTarget {
-        var rawValue = value
-        var openBracketBound = String.Index(encodedOffset: 0)
-        var closeBracketBound = String.Index(encodedOffset: 0)
-        var splitedValues : [String] = []
-        
-        while rawValue.contains("{") {
-            var tempIndex = 0
-            for char in rawValue.characters {
-                if char == "{" {
-                    openBracketBound = String.Index(encodedOffset: tempIndex)
-                } else if char == "}" {
-                    closeBracketBound = String.Index(encodedOffset: tempIndex)
-                }
-                tempIndex += 1
-            }
-            splitedValues.append(String(rawValue[openBracketBound...closeBracketBound]))
-            rawValue.removeSubrange(openBracketBound...closeBracketBound)
+        let grammarChecker = GrammarChecker()
+        var targetObject = [String:String]()
+        do {
+            let split = try grammarChecker.checkObject(input)
+            targetObject = newTargetObject(split)
+        } catch {
+            print(GrammarChecker.GrammarError.object)
         }
         
-        let singleValues = rawValue.split(separator: ",")
-                        .map({(value:String.SubSequence)->String in String(value)
-                        .trimmingCharacters(in: .whitespacesAndNewlines)})
-        
-        return splitedValues + singleValues
+        let JSONObject = targetObject.matchType(targetObject)
+        return JSONObject
     }
     
+    // MARK: Private functions to make object
     
-    // MARK: Make Object
-    
-    private func makeTargetObject (_ changeTarget: String) -> ConvertTarget {
-        var stringDictionaryToObject : Dictionary<String, String> = [:]
-        
-        let listOfValue = changeTarget.split(separator: ",").map(){value in String(value)} // [""key":value", ""key":value"]
-        for tempValue in listOfValue {
+    private func newTargetObject(_ pairsOfValue: [String]) -> [String:String] {
+        var stringDictionaryToObject = [String:String]()
+        for tempValue in pairsOfValue {
             stringDictionaryToObject[makeTempDictionary(tempValue).key] = makeTempDictionary(tempValue).value
         }
         return stringDictionaryToObject
