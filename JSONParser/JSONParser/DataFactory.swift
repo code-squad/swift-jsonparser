@@ -11,39 +11,28 @@ typealias ObjectDictionary = [String : Any]
 
 struct DataFactory {
     
-    func generateData (_ userInput : String) -> Any {
-        if isArray(userInput) == true {
-            return generateArray(userInput)
-        }
-        return generateObject(userInput)
-    }
-    
-    private func generateObject (_ data : String) -> ObjectDictionary {
-        let userDataWithoutMarks = sliceMarks(data)
-        let dataBeforeSeperating = userDataWithoutMarks.split(separator: ",").map(String.init)
-        var seperatedObject : ObjectDictionary = [:]
+    func generateData (_ data : String) -> Any {
+        let dataBeforeSeperating = sliceData(data)
+        var seperatedArray : [Any] = []
+        var seperatedObeject : ObjectDictionary = [:]
         var temp : (key : String, value : Any)
         for indexOfData in 0..<dataBeforeSeperating.count {
+            if isArray(data) == true {
+                seperatedArray.append(makeOneData(dataBeforeSeperating[indexOfData]))
+                continue
+            }
             temp = makeObjectType(dataBeforeSeperating[indexOfData])
-            seperatedObject[temp.key] = temp.value
+            seperatedObeject.updateValue(temp.value , forKey: temp.key)
         }
-        return seperatedObject
-    }
-    
-    private func generateArray (_ data : String) -> [Any] {
-        let userDataWithoutMarks = sliceMarks(data)
-        let dataBeforeSeperating = userDataWithoutMarks.split(separator: ",").map(String.init)
-        var seperatedArray : [Any] = []
-        for indexOfData in 0..<dataBeforeSeperating.count {
-            seperatedArray.append(makeOneData(dataBeforeSeperating[indexOfData]))
-        }
-        return seperatedArray
+        guard isArray(data) == false else { return seperatedArray }
+        return seperatedObeject
     }
     
     private func makeOneData (_ oneData : String) -> Any {
         guard isBoolType(oneData) == false else { return makeBoolType(oneData) }
         guard isStringType(oneData) == false else { return sliceMarks(oneData) }
         guard isNumber(oneData) == false else { return Int(oneData) ?? 0 }
+        guard isArray(oneData) == false else { return generateData(oneData)}
         return makeObjectType(oneData)
     }
     
@@ -72,6 +61,11 @@ struct DataFactory {
     
     private func isArray (_ oneData : String) -> Bool {
         return oneData.first == "["
+    }
+    
+    private func sliceData (_ data : String) -> [String] {
+        let temp = sliceMarks(data)
+        return temp.split(separator: ",").map(String.init)
     }
     
     private func sliceMarks (_ userInput : String) -> String {
