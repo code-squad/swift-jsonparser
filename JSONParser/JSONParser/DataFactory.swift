@@ -11,29 +11,31 @@ typealias ObjectDictionary = [String : Any]
 
 struct DataFactory {
     
-    func generateData (_ data : String) -> Any {
+    func generateData (_ data : String) -> MyData {
         let dataBeforeSeperating = sliceData(data)
         var seperatedArray : [Any] = []
-        var seperatedObeject : ObjectDictionary = [:]
-        var temp : (key : String, value : Any)
+        var seperatedObeject : [String:Any] = [:]
+        var temp : ( key : String, value : Any )
         for indexOfData in 0..<dataBeforeSeperating.count {
             if isArray(data) == true {
                 seperatedArray.append(makeOneData(dataBeforeSeperating[indexOfData]))
                 continue
             }
             temp = makeObjectType(dataBeforeSeperating[indexOfData])
-            seperatedObeject.updateValue(temp.value , forKey: temp.key)
+            seperatedObeject.updateValue(temp.value, forKey: temp.key)
         }
-        guard isArray(data) == false else { return seperatedArray }
-        return seperatedObeject
+        guard isArray(data) == false else { return MyArray.init(seperatedArray) }
+        return MyDictionary.init(seperatedObeject)
     }
     
     private func makeOneData (_ oneData : String) -> Any {
         guard isBoolType(oneData) == false else { return makeBoolType(oneData) }
         guard isStringType(oneData) == false else { return sliceMarks(oneData) }
-        guard isNumber(oneData) == false else { return Int(oneData) ?? 0 }
-        guard isArray(oneData) == false else { return generateData(oneData)}
-        return makeObjectType(oneData)
+        if isObject(oneData) == true {
+            let temp = makeObjectType(oneData)
+            return MyDictionary.init([temp.key : temp.value])
+        }
+        return Int(oneData) ?? 0
     }
     
     private func makeObjectType (_ oneData : String) -> (key : String, value : Any) {
@@ -61,6 +63,10 @@ struct DataFactory {
     
     private func isArray (_ oneData : String) -> Bool {
         return oneData.first == "["
+    }
+    
+    private func isObject (_ oneData : String) -> Bool {
+        return oneData.first == "{"
     }
     
     private func sliceData (_ data : String) -> [String] {

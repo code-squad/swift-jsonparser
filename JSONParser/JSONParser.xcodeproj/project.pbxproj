@@ -11,8 +11,9 @@
 		0454F99F1FE8A58300ECACB9 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0454F99E1FE8A58300ECACB9 /* InputView.swift */; };
 		0454F9A11FE8B32F00ECACB9 /* DataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0454F9A01FE8B32F00ECACB9 /* DataFactory.swift */; };
 		0454F9A31FE8B56300ECACB9 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0454F9A21FE8B56300ECACB9 /* OutputView.swift */; };
-		04E91A0C1FEB5BE100F7B5EF /* MyCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E91A0B1FEB5BE100F7B5EF /* MyCount.swift */; };
-		04FC49BF1FEA205D0002C4F1 /* DataCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FC49BE1FEA205D0002C4F1 /* DataCounter.swift */; };
+		04E91A0E1FEB863500F7B5EF /* MyDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E91A0D1FEB863500F7B5EF /* MyDictionary.swift */; };
+		04E91A101FEB864000F7B5EF /* MyArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E91A0F1FEB864000F7B5EF /* MyArray.swift */; };
+		04E91A121FEB8A8500F7B5EF /* MyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E91A111FEB8A8500F7B5EF /* MyData.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,8 +34,9 @@
 		0454F99E1FE8A58300ECACB9 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		0454F9A01FE8B32F00ECACB9 /* DataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFactory.swift; sourceTree = "<group>"; };
 		0454F9A21FE8B56300ECACB9 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
-		04E91A0B1FEB5BE100F7B5EF /* MyCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCount.swift; sourceTree = "<group>"; };
-		04FC49BE1FEA205D0002C4F1 /* DataCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCounter.swift; sourceTree = "<group>"; };
+		04E91A0D1FEB863500F7B5EF /* MyDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDictionary.swift; sourceTree = "<group>"; };
+		04E91A0F1FEB864000F7B5EF /* MyArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyArray.swift; sourceTree = "<group>"; };
+		04E91A111FEB8A8500F7B5EF /* MyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyData.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,9 +73,10 @@
 			children = (
 				0454F99E1FE8A58300ECACB9 /* InputView.swift */,
 				0404E8251FE8FEF10073BAE4 /* CheckError.swift */,
+				04E91A0D1FEB863500F7B5EF /* MyDictionary.swift */,
+				04E91A0F1FEB864000F7B5EF /* MyArray.swift */,
+				04E91A111FEB8A8500F7B5EF /* MyData.swift */,
 				0454F9A01FE8B32F00ECACB9 /* DataFactory.swift */,
-				04E91A0B1FEB5BE100F7B5EF /* MyCount.swift */,
-				04FC49BE1FEA205D0002C4F1 /* DataCounter.swift */,
 				0454F9A21FE8B56300ECACB9 /* OutputView.swift */,
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 			);
@@ -139,11 +142,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
-				04FC49BF1FEA205D0002C4F1 /* DataCounter.swift in Sources */,
+				04E91A0E1FEB863500F7B5EF /* MyDictionary.swift in Sources */,
+				04E91A121FEB8A8500F7B5EF /* MyData.swift in Sources */,
 				0454F99F1FE8A58300ECACB9 /* InputView.swift in Sources */,
+				04E91A101FEB864000F7B5EF /* MyArray.swift in Sources */,
 				0454F9A11FE8B32F00ECACB9 /* DataFactory.swift in Sources */,
 				0454F9A31FE8B56300ECACB9 /* OutputView.swift in Sources */,
-				04E91A0C1FEB5BE100F7B5EF /* MyCount.swift in Sources */,
 				0404E8261FE8FEF10073BAE4 /* CheckError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
