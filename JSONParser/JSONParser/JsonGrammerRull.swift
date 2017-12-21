@@ -9,11 +9,11 @@
 import Foundation
 
 // Json 문법 구조체
-struct JSONPattern {
-    static let ofString = "\\s*?\".+\"\\s*?"
+struct JsonGrammerRull {
+    static let ofString = "\\s*?\"[a-zA-Z\\d\\s]+\"\\s*?"  
     static let ofInt = "\\s*?\\d+\\s*?"
     static let ofBool = "\\s*?(true|false)\\s*?"
-    static let ofDictionary = "\\s*?\(ofString):(\(ofInt)|\(ofString)|\(ofBool))\\s*?"
-    static let ofObject = "[\\{]\\s*?(\(ofDictionary)[,]?)+\\s*?[\\}]\\s*?"
+    static let ofDictionary = "\\s*?\(ofString)\\s*?:\\s*?(\(ofInt)|\\s*?\(ofString)|\\s*?\(ofBool))\\s*?"
+    static let ofObject = "[\\{]\\s*?(\(ofDictionary)\\s*?[,]?\\s*?)+\\s*?[\\}]\\s*?"
     static let ofArray = "\\[\\s*?((\(ofInt)|\\s*?\(ofString)|\\s*?\(ofBool)|\\s*?\(ofObject))[,]?)+\\s*?\\]\\s*?"
 }

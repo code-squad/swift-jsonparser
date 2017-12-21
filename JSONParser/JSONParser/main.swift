@@ -12,11 +12,11 @@ while true {
     do {
         let unanalyzedValue = InputView.read()
         if unanalyzedValue == "quit" { break }
-        let validString = try SyntaxChecker.makeValidString(values: unanalyzedValue)
+        let validString = try GrammerChecker.makeValidString(values: unanalyzedValue)
         let countedValue =  Analyzer.makeCountedTypeInstance(validString)
         OutputView.printResult(countedValue)
-    } catch let error as SyntaxChecker.ErrorMessage {
-        print (error.rawValue)
+    } catch let error as GrammerChecker.ErrorMessage {
+        print (error.localizedDescription)
     }
     
 }
