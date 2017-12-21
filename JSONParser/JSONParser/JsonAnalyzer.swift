@@ -39,7 +39,7 @@ struct Analyzer {
         var objects = [Any]()
         let stringValued = stringValues.trimmingCharacters(in: ["[","]"]).split(separator: ",").map { String($0)}
         _ = stringValued.forEach {
-            if $0.starts(with: "{") && $0[$0.index(before: $0.endIndex)] == "}" { objects.append($0) }
+            if $0.hasPrefix("{") && $0.hasSuffix("}") { objects.append($0) }
             else if let integer = Int($0) { numberValue.append(integer)}
             else if let boolean = Bool($0) { boolValue.append(boolean)}
             else if  let firstString = $0.first, firstString == "\"" {stringValue.append($0)}
