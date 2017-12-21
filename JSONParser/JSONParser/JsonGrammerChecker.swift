@@ -10,7 +10,7 @@ import Foundation
 
 // Json 문법검사 구조체
 struct GrammerChecker {
-    enum ErrorMessage:  Error {
+    enum ErrorOfJasonGrammer:  Error {
         case invalidFormat
         var localizedDescription: String {
             switch self {
@@ -22,7 +22,7 @@ struct GrammerChecker {
     
     // 문법을 검사하여 통과시 배열로 반환
     static func makeValidString (values: String) throws -> String {
-        guard checkIsValidJsonArrayPattern(values) || checkIsValidJsonObjectPattern(values) else { throw ErrorMessage.invalidFormat }
+        guard checkIsValidJsonArrayPattern(values) || checkIsValidJsonObjectPattern(values) else { throw ErrorOfJasonGrammer.invalidFormat }
         return findJsonString(from: values)
     }
     

@@ -15,7 +15,7 @@ while true {
         let validString = try GrammerChecker.makeValidString(values: unanalyzedValue)
         let countedValue =  Analyzer.makeCountedTypeInstance(validString)
         OutputView.printResult(countedValue)
-    } catch let error as GrammerChecker.ErrorMessage {
+    } catch let error as GrammerChecker.ErrorOfJasonGrammer {
         print (error.localizedDescription)
     }
     
