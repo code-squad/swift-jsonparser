@@ -29,7 +29,7 @@ struct GrammerChecker {
     // JsonArray패턴에 맞는지 검사
     private static func checkIsValidJsonArrayPattern (_ stringValue: String) -> Bool{
         guard stringValue.starts(with: "[") else { return false }
-        let regex = try! NSRegularExpression(pattern: JsonGrammerRull.ofArray)
+        let regex = try! NSRegularExpression(pattern: JsonGrammerRule.ofArray)
         let results = regex.matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count))
         return !results.isEmpty
     }
@@ -37,7 +37,7 @@ struct GrammerChecker {
     // JsonObject패턴에 맞는지 검사
     private static func checkIsValidJsonObjectPattern (_ stringValue: String) -> Bool{
         guard stringValue.starts(with: "{") else { return false }
-        let regex = try! NSRegularExpression(pattern: JsonGrammerRull.ofObject)
+        let regex = try! NSRegularExpression(pattern: JsonGrammerRule.ofObject)
         let results = regex.matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count))
         return !results.isEmpty
     }
