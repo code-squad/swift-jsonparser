@@ -39,10 +39,10 @@ struct Analyzer {
         var objects = [Any]()
         let stringValued = stringValues.trimmingCharacters(in: ["[","]"]).split(separator: ",").map { String($0)}
         _ = stringValued.forEach {
-            if $0.contains("{") { objects.append($0) }
+            if $0.starts(with: "{") && $0[$0.index(before: $0.endIndex)] == "}" { objects.append($0) }
             else if let integer = Int($0) { numberValue.append(integer)}
             else if let boolean = Bool($0) { boolValue.append(boolean)}
-            else if  $0.first! == "\"" {stringValue.append($0)}
+            else if  let firstString = $0.first, firstString == "\"" {stringValue.append($0)}
         }
         let totalCount = numberValue.count + boolValue.count + stringValue.count + objects.count
         return CountingData(ofNumericValue: numberValue.count, ofBooleanValue: boolValue.count, ofStringValue: stringValue.count, ofObject: objects.count, total: totalCount)
