@@ -16,12 +16,17 @@ struct CountInfo {
     private (set) var countOfArray = 0
     private (set) var countOfJSONData = 0
 
-    init (intCnt countOfInt: Int, boolCnt countOfBool: Int, stringCnt countOfString: Int, objectCnt countOfObject: Int, arrayCnt: Int, allCnt countOfJSONData: Int) {
+    init (countOfInt: Int,
+          countOfBool: Int,
+          countOfString: Int,
+          countOfObject: Int,
+          countOfArray: Int,
+          countOfJSONData: Int) {
         self.countOfInt = countOfInt
         self.countOfBool = countOfBool
         self.countOfString = countOfString
         self.countOfObject = countOfObject
-        self.countOfArray = arrayCnt
+        self.countOfArray = countOfArray
         self.countOfJSONData = countOfJSONData
     }
 

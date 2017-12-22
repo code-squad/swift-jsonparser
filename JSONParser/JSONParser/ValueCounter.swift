@@ -16,7 +16,12 @@ struct ValueCounter {
     }
     
     func makeCountInfo () -> CountInfo {
-        var countInfo = CountInfo(intCnt:0,boolCnt:0,stringCnt:0,objectCnt:0,arrayCnt:0,allCnt:0)
+        var countInfo = CountInfo(countOfInt: 0,
+                                  countOfBool: 0,
+                                  countOfString: 0,
+                                  countOfObject: 0,
+                                  countOfArray: 0,
+                                  countOfJSONData: 0)
         
         if case let JSONData.ArrayValue(countTarget) = parsedJSONDataList { // enum바인딩
            countInfo = countArrayValues(countTarget)
@@ -48,12 +53,12 @@ struct ValueCounter {
                 countOfString += 0
             }
         }
-    return CountInfo(intCnt:countOfInt,
-                     boolCnt:countOfBool,
-                     stringCnt:countOfString,
-                     objectCnt:countOfObject,
-                     arrayCnt: 0,
-                     allCnt:countOfJSONData)
+    return CountInfo(countOfInt: countOfInt,
+                     countOfBool: countOfBool,
+                     countOfString: countOfString,
+                     countOfObject: countOfObject,
+                     countOfArray: 0,
+                     countOfJSONData: countOfJSONData)
     }
     
     private func countObjectValues(_ countTarget: Dictionary<String, JSONData>) -> CountInfo {
@@ -81,12 +86,12 @@ struct ValueCounter {
                 countOfString += 0
             }
         }
-        return CountInfo(intCnt:countOfInt,
-                         boolCnt:countOfBool,
-                         stringCnt:countOfString,
-                         objectCnt:0,
-                         arrayCnt:countOfArray,
-                         allCnt:countOfJSONData)
+        return CountInfo(countOfInt: countOfInt,
+                         countOfBool: countOfBool,
+                         countOfString: countOfString,
+                         countOfObject: 0,
+                         countOfArray: countOfArray,
+                         countOfJSONData: countOfJSONData)
     }
     
 }
