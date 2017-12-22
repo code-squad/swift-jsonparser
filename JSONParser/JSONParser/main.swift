@@ -10,8 +10,7 @@
 let inputView = InputView()
 let userInput = inputView.askUserInput()
 
-let parser = Parser()
-let convertedValues = parser.matchValuesToJSONType(userInput)
+let convertedValues = Parser.matchValuesToJSONType(userInput)
 
 let counter = ValueCounter(targetToCount: convertedValues)
 let countInfo = counter.makeCountInfo()

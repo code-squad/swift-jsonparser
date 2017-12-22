@@ -36,16 +36,12 @@ struct DataTypeConverter {
             return JSONData.IntegerValue(intValue)
         }
         if value.contains("{") {
-            let parser = Parser()
-            let targetObject = parser.setTargetToObject(value)
-            return targetObject
+            return Parser.setTargetToObject(value)
         }
         if value.contains("[") {
-            let parser = Parser()
-            let targetArray = parser.setTargetToArray(value)
-            return targetArray
+            return Parser.setTargetToArray(value)
         }
         return JSONData.StringValue(value)
     }
-    
+
 }
