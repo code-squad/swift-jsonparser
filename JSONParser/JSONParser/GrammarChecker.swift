@@ -14,15 +14,15 @@ struct GrammarChecker {
     let arrayPattern = "true|false|\".+?\"|\\d+|\\{.+?\\}|:"
     let objectPattern = "(\".+?\")\\:(true|false|\\\".+?\\\"|\\d+|\\[.+?\\])"
 
-    enum GrammarError: Error {
-        case invalidArrayFormat
-        case invalidObjectFormat
+    enum FormatError: Error {
+        case invalidArray
+        case invalidObject
         
         var description: String {
             switch self {
-            case .invalidArrayFormat:
+            case .invalidArray:
                 return "지원하지 않는 배열 형식입니다."
-            case .invalidObjectFormat:
+            case .invalidObject:
                 return "지원하지 않는 객체 형식입니다."
             }
         }
@@ -45,11 +45,11 @@ struct GrammarChecker {
         let formatMatchValues = checkArrayFormat(input)
         for value in formatMatchValues {
             if (value == ":")||(value == ",") {
-                throw GrammarChecker.GrammarError.invalidArrayFormat
+                throw GrammarChecker.FormatError.invalidArray
             }
             if (value.hasPrefix("{") && value.hasSuffix("}")) {
                 if !value.contains(":") {
-                    throw GrammarChecker.GrammarError.invalidArrayFormat
+                    throw GrammarChecker.FormatError.invalidArray
                 }
             }
         }
@@ -73,7 +73,7 @@ struct GrammarChecker {
         let formatMatchValues = checkObjectFormat(input)
         for value in formatMatchValues {
             if !value.contains(":") {
-                throw GrammarChecker.GrammarError.invalidObjectFormat
+                throw GrammarChecker.FormatError.invalidObject
             }
         }
         return formatMatchValues

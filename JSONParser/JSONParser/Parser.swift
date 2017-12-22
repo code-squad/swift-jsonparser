@@ -27,7 +27,7 @@ struct Parser {
         do {
             targetArray = try grammarChecker.checkArray(input)
         } catch {
-            print(GrammarChecker.GrammarError.array.message)
+            print(GrammarChecker.FormatError.invalidArray.description)
         }
         let JSONArray = targetArray.matchType(targetArray)
         return JSONArray
@@ -40,7 +40,7 @@ struct Parser {
             let split = try grammarChecker.checkObject(input)
             targetObject = newTargetObject(split)
         } catch {
-            print(GrammarChecker.GrammarError.object)
+            print(GrammarChecker.FormatError.invalidArray.description)
         }
         
         let JSONObject = targetObject.matchType(targetObject)
