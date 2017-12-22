@@ -15,14 +15,14 @@ struct GrammarChecker {
     let objectPattern = "(\".+?\")\\:(true|false|\\\".+?\\\"|\\d+|\\[.+?\\])"
 
     enum GrammarError: Error {
-        case array
-        case object
+        case invalidArrayFormat
+        case invalidObjectFormat
         
-        var message: String {
+        var description: String {
             switch self {
-            case .array:
+            case .invalidArrayFormat:
                 return "지원하지 않는 배열 형식입니다."
-            case .object:
+            case .invalidObjectFormat:
                 return "지원하지 않는 객체 형식입니다."
             }
         }
@@ -45,18 +45,17 @@ struct GrammarChecker {
         let formatMatchValues = checkArrayFormat(input)
         for value in formatMatchValues {
             if (value == ":")||(value == ",") {
-                throw GrammarChecker.GrammarError.array
+                throw GrammarChecker.GrammarError.invalidArrayFormat
             }
             if (value.hasPrefix("{") && value.hasSuffix("}")) {
                 if !value.contains(":") {
-                    throw GrammarChecker.GrammarError.array
+                    throw GrammarChecker.GrammarError.invalidArrayFormat
                 }
             }
         }
         return formatMatchValues
     }
-    
-    
+
     private func checkObjectFormat (_ input: String) -> [String] {
         do {
             let regex = try NSRegularExpression(pattern: objectPattern)
@@ -69,12 +68,12 @@ struct GrammarChecker {
             return []
         }
     }
-    
+
     func checkObject (_ input: String) throws -> [String] {
         let formatMatchValues = checkObjectFormat(input)
         for value in formatMatchValues {
             if !value.contains(":") {
-                throw GrammarChecker.GrammarError.object
+                throw GrammarChecker.GrammarError.invalidObjectFormat
             }
         }
         return formatMatchValues
