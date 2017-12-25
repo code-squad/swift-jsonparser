@@ -22,22 +22,22 @@ struct GrammerChecker {
     
     // 문법을 검사하여 통과시 배열로 반환
     static func makeValidString (values: String) throws -> String {
-        guard checkIsValidJsonArrayPattern(values) || checkIsValidJsonObjectPattern(values) else { throw ErrorOfJasonGrammer.invalidFormat }
+        guard try checkIsValidJsonArrayPattern(values) || checkIsValidJsonObjectPattern(values) else { throw ErrorOfJasonGrammer.invalidFormat }
         return findJsonString(from: values)
     }
     
     // JsonArray패턴에 맞는지 검사
-    private static func checkIsValidJsonArrayPattern (_ stringValue: String) -> Bool{
+    private static func checkIsValidJsonArrayPattern (_ stringValue: String)  throws -> Bool{
         guard stringValue.starts(with: "[") else { return false }
-        let regex = try! NSRegularExpression(pattern: JsonGrammerRule.ofArray)
+        let regex = try NSRegularExpression(pattern: JsonGrammerRule.nestedArrayPattern)
         let results = regex.matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count))
         return !results.isEmpty
     }
     
     // JsonObject패턴에 맞는지 검사
-    private static func checkIsValidJsonObjectPattern (_ stringValue: String) -> Bool{
+    private static func checkIsValidJsonObjectPattern (_ stringValue: String)  throws -> Bool{
         guard stringValue.starts(with: "{") else { return false }
-        let regex = try! NSRegularExpression(pattern: JsonGrammerRule.ofObject)
+        let regex = try NSRegularExpression(pattern: JsonGrammerRule.nestedObjectPattern)
         let results = regex.matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count))
         return !results.isEmpty
     }
@@ -49,3 +49,4 @@ struct GrammerChecker {
     }
     
 }
+

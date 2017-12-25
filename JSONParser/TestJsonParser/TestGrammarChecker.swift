@@ -54,6 +54,14 @@ class TestGrammarChcker: XCTestCase {
         XCTAssertNoThrow(try GrammerChecker.makeValidString(values: validInput))
     }
     
+    // 중첩된 객체
+    func testIsNestedObjectGrammerCheckerPassed () {
+        let validInput = """
+    { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "children" : ["hana", "hayul", "haun"] }
+    """
+         XCTAssertNoThrow(try GrammerChecker.makeValidString(values: validInput))
+    }
+    
     // Mark : 배열 문법통과 실패 테스트
     
     // 배열 좌측 대괄호가 없는 경우
