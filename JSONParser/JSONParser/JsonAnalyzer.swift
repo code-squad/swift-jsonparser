@@ -97,12 +97,14 @@ struct Analyzer {
         var initialValue = target
         initialValue.removeFirst()
         initialValue.removeLast()
-        if initialValue.contains("[") || initialValue.contains("{") {
-            if initialValue.contains("{") {elementsFromArray.append(getObjectMatches(from: initialValue))}
-            if initialValue.contains("[") {elementsFromArray.append(getArrayMatches(from: initialValue))}
-        } else {
+            if initialValue.contains("{") {elementsFromArray.append(getObjectMatches(from: initialValue))
+                initialValue = initialValue.replacingOccurrences(of: getObjectMatches(from: initialValue), with: "")
+            }
+            if initialValue.contains("[") {elementsFromArray.append(getArrayMatches(from: initialValue))
+                initialValue = initialValue.replacingOccurrences(of: getArrayMatches(from: initialValue), with: "")
+            }
             elementsFromArray.append(contentsOf: getElementsOfValue(from: initialValue))
-        }
+        
         return elementsFromArray
     }
     
@@ -129,7 +131,7 @@ struct Analyzer {
     // Mark : 객체 내부의 값 추출
     // 객체 내부에서 카운팅할 값들 추출
     private static func getElementsOfObject(from target: String) -> Array<String> {
-        return getElementsOfMatchedWIthJsonGrammer(inputValue: target, pattern: JsonGrammerRule.nestedDictionaryPattern)
+        return getElementsOfMatchedWIthJsonGrammer(inputValue: target, pattern: JsonGrammerRule.ofNestedArray)
     }
     
     // Mark : 문법과 매칭할 NS함수
