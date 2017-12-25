@@ -18,7 +18,7 @@ struct JsonGrammerRule {
     static let ofArray = "\\[\\s*?((\(ofInt)|\\s*?\(ofString)|\\s*?\(ofBool)|\\s*?\(ofObject))[,]?)+\\s*?\\]\\s*?"
     static let value = "\(ofString)|\(ofInt)|\(ofBool)"
     
-    static let nestedDictionaryPattern = "\(ofString)\\s*?:\\s*?(\(ofString)|\(ofInt)|\(ofBool)|\(ofObject)|\(ofArray))"
-    static let nestedObjectPattern = "\\{(\(nestedDictionaryPattern)\\s*?[,]?\\s*?)+\\s*?[\\}]\\s*?"
-    static let nestedArrayPattern = "\\s*\\[((\(ofString)|\(ofInt)|\(ofBool)|\(ofObject)|\(ofArray))[,]?)+\\s*\\]"
+    static let ofNestedDictionary = "\(ofString)\\s*?:\\s*?(\(ofString)|\(ofInt)|\(ofBool)|\(ofObject)|\(ofArray))"
+    static let ofNestedObject = "\\{(\(ofNestedDictionary)\\s*?[,]?\\s*?)+\\s*?[\\}]\\s*?"
+    static let ofNestedArray = "\\s*\\[((\(ofString)|\(ofInt)|\(ofBool)|\(ofObject)|\(ofArray))[,]?)+\\s*\\]"
 }

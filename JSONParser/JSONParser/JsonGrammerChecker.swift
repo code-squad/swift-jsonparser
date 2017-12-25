@@ -29,7 +29,7 @@ struct GrammerChecker {
     // JsonArray패턴에 맞는지 검사
     private static func checkIsValidJsonArrayPattern (_ stringValue: String)  throws -> Bool{
         guard stringValue.starts(with: "[") else { return false }
-        let regex = try NSRegularExpression(pattern: JsonGrammerRule.nestedArrayPattern)
+        let regex = try NSRegularExpression(pattern: JsonGrammerRule.ofNestedArray)
         let results = regex.matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count))
         return !results.isEmpty
     }
@@ -37,7 +37,7 @@ struct GrammerChecker {
     // JsonObject패턴에 맞는지 검사
     private static func checkIsValidJsonObjectPattern (_ stringValue: String)  throws -> Bool{
         guard stringValue.starts(with: "{") else { return false }
-        let regex = try NSRegularExpression(pattern: JsonGrammerRule.nestedObjectPattern)
+        let regex = try NSRegularExpression(pattern: JsonGrammerRule.ofNestedObject)
         let results = regex.matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count))
         return !results.isEmpty
     }
