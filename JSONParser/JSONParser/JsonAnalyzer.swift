@@ -97,14 +97,13 @@ struct Analyzer {
         var initialValue = target
         initialValue.removeFirst()
         initialValue.removeLast()
-            if initialValue.contains("{") {elementsFromArray.append(getObjectMatches(from: initialValue))
-                initialValue = initialValue.replacingOccurrences(of: getObjectMatches(from: initialValue), with: "")
-            }
-            if initialValue.contains("[") {elementsFromArray.append(getArrayMatches(from: initialValue))
-                initialValue = initialValue.replacingOccurrences(of: getArrayMatches(from: initialValue), with: "")
-            }
-            elementsFromArray.append(contentsOf: getElementsOfValue(from: initialValue))
-        
+        if initialValue.contains("{") {elementsFromArray.append(getObjectMatches(from: initialValue))
+            initialValue = initialValue.replacingOccurrences(of: getObjectMatches(from: initialValue), with: "")
+        }
+        if initialValue.contains("[") {elementsFromArray.append(getArrayMatches(from: initialValue))
+            initialValue = initialValue.replacingOccurrences(of: getArrayMatches(from: initialValue), with: "")
+        }
+        elementsFromArray.append(contentsOf: getElementsOfValue(from: initialValue))
         return elementsFromArray
     }
     
