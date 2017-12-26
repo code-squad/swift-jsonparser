@@ -20,11 +20,6 @@ extension String {
 }
 
 struct GrammarChecker {
-//    let stringPattern = "[\\s]*(\"\\w\")[\\s]*"
-//    let numberPattern = "[\\s]*(\\d)[\\s]*"
-//    let boolPattern  = "[\\s]*(true|false)[\\s]*"
-//    let dictionaryPattern = "(\\{)[\\s]*(\"\\w\")[\\s]*:[\\s]*((\"\\w\")|(\\d)|(true|false))[\\s]*(\\})"
-//    let dataPattern = "[\\s]*((\"\\w\")|(\\d)|(true|false))[\\s]*"
     
     let arrayPattern  = "[\\s]*(\\[)[[\\s]*((\"\\w\")|(\\d)|(true|false)|(\\{)[\\s]*(\"\\w\")[\\s]*:[\\s]*((\"\\w\")|(\\d)|(true|false))[\\s]*(\\}))(\\])*(,)*[\\s]*]+(\\])"
     let objectPattern  = "[\\s]*(\\{)[[\\s]*(\"\\w\")[\\s]*:[\\s]*((\"\\w\")|(\\d)|(true|false))[\\s]*(\\})*(,)*[\\s]*]+(\\})"
@@ -33,7 +28,6 @@ struct GrammarChecker {
         if isValidArray(userInput) == true || isValidObject(userInput) == true {
             return true
         }
-        print("지원하는 형식이 아닙니다. 다시 입력해주세요.")
         return false
     }
     
