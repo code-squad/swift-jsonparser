@@ -113,11 +113,11 @@
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				C388CD5E1FDE70D700DDC82A /* InputView.swift */,
-				C388CD641FDF745500DDC82A /* JsonData.swift */,
-				C3936BCC1FF1F5E70097A88C /* CountingJsonData.swift */,
-				C388CD661FE23A9B00DDC82A /* JsonGrammerChecker.swift */,
 				C3D73E571FE7932A001B1C9C /* JsonGrammerRule.swift */,
+				C388CD661FE23A9B00DDC82A /* JsonGrammerChecker.swift */,
+				C388CD641FDF745500DDC82A /* JsonData.swift */,
 				C388CD621FDE730B00DDC82A /* JsonAnalyzer.swift */,
+				C3936BCC1FF1F5E70097A88C /* CountingJsonData.swift */,
 				C388CD601FDE710300DDC82A /* OutputView.swift */,
 			);
 			path = JSONParser;
