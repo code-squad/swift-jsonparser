@@ -17,6 +17,7 @@ while true {
         validString += try GrammerChecker.makeValidString(values: unanalyzedValue)
     } catch let error as GrammerChecker.ErrorOfJasonGrammer {
         print (error.localizedDescription)
+        continue
     }
     // 분석된 Json 타입인스턴스 생성
     let analyzedValue = Analyzer.makeAnalyzedTypeInstance(validString)
