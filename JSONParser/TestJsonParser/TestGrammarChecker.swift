@@ -91,10 +91,18 @@ class TestGrammarChcker: XCTestCase {
     // Mark : 배열 문법통과 성공 테스트
     
     
-    // 배열데이터 5개
-    func testIsArrayGrammerCheckerPassed () {
+    // 중첩배열 : 객체1, 배열1
+    func testIsSimpleNestedArrayGrammerCheckerPassed () {
         let validInput = """
-    [ { "name" : "KIM JUNG", "alias" : "JK"}, "level", 5, true, "JeongHoon" ]
+    [ { "name" : "master's course", "opened" : true }, [ "java", "javascript", "swift" ], 123, false ]
+    """
+        XCTAssertNoThrow(try GrammerChecker.makeValidString(values: validInput))
+    }
+    
+    // 중첩배열2 : 객체1, 배열1, 문자열2, 불값2, 숫자1
+    func testIsComplicatedNestedArrayGrammerCheckerPassed () {
+        let validInput = """
+    [{"name" : "jh", "married":false}, "age", true, "korea", false, 451, ["haha","hoho"]]
     """
         XCTAssertNoThrow(try GrammerChecker.makeValidString(values: validInput))
     }
