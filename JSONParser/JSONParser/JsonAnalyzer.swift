@@ -10,8 +10,14 @@ import Foundation
 
 // 입력값을 분석해서 타입 갯수 객체를 생성
 struct Analyzer {
-    // 객체타입 생성
-    static func makeJsonObject(_ inputValue: String) -> [String:Any] {
+    
+    // 분석된 타입 인스턴스를 반환
+    static func makeAnalyzedTypeInstance (_ inputValue: String) -> Any {
+        return inputValue.first == "{" ? getJsonObject(inputValue) : getJsonArray(inputValue)
+    }
+    
+    //
+    private static func getJsonObject(_ inputValue: String) -> [String:Any] {
         var jsonObject = [String:Any]()
          let elementsOfObject = Analyzer.getElementsOfObject(from: inputValue)
         _ = elementsOfObject.forEach {
@@ -24,9 +30,9 @@ struct Analyzer {
     }
     
     //  입력된 스트링값을 각 문법규칙에 맞게 배열로 변환
-    static func makeJsonArray(with target: String) -> Array<String> {
+    private static func getJsonArray(_ inputValue: String) -> Array<String> {
         var elementsFromArray : Array<String> = []
-        var initialValue = target
+        var initialValue = inputValue
         initialValue.removeFirst()
         initialValue.removeLast()
         if initialValue.contains("{") {

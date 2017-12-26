@@ -10,31 +10,29 @@ import Foundation
 
 struct CountingJsonData {
     
-    static func makeCountedTypeInstance (_ stringValues: String) -> JsonData {
-        if stringValues.first == "{" {
-            return getCountedObjectType(stringValues)
-        } else {
-            return getCountedArrayType(stringValues)
+    static func makeCountedTypeInstance (_ input: Any) -> JsonData {
+        switch input {
+        case is Dictionary<String,Any> :
+            return getCountedObjectType(input as! [String : Any])
+        default:
+            return getCountedArrayType(input as! [String])
         }
     }
     
     //  객체타입의 카운팅 인스턴스 생성
-    private static func getCountedObjectType(_ stringValues: String) -> JsonData {
-        var object = [String:Any]()
-        object = (Analyzer.makeJsonObject(stringValues))
-        let (countOfNum, countOfBool, countOfString, countOfArray) = countOfValueTypeInObject(object)
+    private static func getCountedObjectType(_ objectValue: [String:Any]) -> JsonData {
+        let (countOfNum, countOfBool, countOfString, countOfArray) = countOfValueTypeInObject(objectValue)
         return JsonData(countOfNum, countOfBool, countOfString, countOfArray)
     }
     
     //  배열 타입의 카운팅 인스턴스 생성
-    private static func getCountedArrayType(_ stringValues: String) -> JsonData {
+    private static func getCountedArrayType(_ arrayValue: [String]) -> JsonData {
         var countOfNumber: Int = 0
        var countOfBool: Int = 0
        var countOfString: Int = 0
        var countOfObject: Int = 0
         var countOfofArray: Int = 0
-        let elementsOfArray = Analyzer.makeJsonArray(with: stringValues)
-        _ = elementsOfArray.forEach {
+        _ = arrayValue.forEach {
             if $0.hasPrefix("{") && $0.hasSuffix("}") { countOfObject += 1}
             else if $0.hasPrefix("[") && $0.hasSuffix("]") { countOfofArray += 1 }
             else if let _ = Int($0) { countOfNumber += 1}
