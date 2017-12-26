@@ -13,7 +13,7 @@ mainLoop : while runJsonParser == true {
     
     let userInput = InputView().readInput()
     guard userInput != "q" else { break }
-    guard CheckError().isValid(userInput) == true else { continue }
+    guard GrammarChecker().isValid(userInput: userInput) == true else { continue }
     
     let convertedData = DataFactory().generateData(userInput)
     let numbersOfData = DataCounter().countNumberOfData(convertedData)
