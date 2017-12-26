@@ -13,7 +13,7 @@ while true {
         let unanalyzedValue = InputView.read()
         if unanalyzedValue == "quit" { break }
         let validString = try GrammerChecker.makeValidString(values: unanalyzedValue)
-        let countedValue =  Analyzer.makeCountedTypeInstance(validString)
+        let countedValue =  CountingJsonData.makeCountedTypeInstance(validString)
         OutputView.printResult(countedValue)
     } catch let error as GrammerChecker.ErrorOfJasonGrammer {
         print (error.localizedDescription)

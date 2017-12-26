@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CountingData {
+struct JsonData {
     private (set) var ofNumericValue: Int = 0
     private (set) var ofBooleanValue: Int = 0
     private (set) var ofStringValue: Int = 0
