@@ -9,19 +9,19 @@
 import Foundation
 
 while true {
+    let unanalyzedValue = InputView.read()
+    if unanalyzedValue == "quit" { break }
+    var validString: String = ""
     do {
-        let unanalyzedValue = InputView.read()
-        if unanalyzedValue == "quit" { break }
         // 문법체크
-        let validString = try GrammerChecker.makeValidString(values: unanalyzedValue)
-        // 분석된 Json 타입인스턴스 생성
-        let analyzedValue = Analyzer.makeAnalyzedTypeInstance(validString)
-        // Json타입 카운팅
-        let countedValue =  CountingJsonData.makeCountedTypeInstance(analyzedValue)
-        // 카운팅 출력
-        OutputView.printResult(countedValue)
+        validString += try GrammerChecker.makeValidString(values: unanalyzedValue)
     } catch let error as GrammerChecker.ErrorOfJasonGrammer {
         print (error.localizedDescription)
     }
-    
+    // 분석된 Json 타입인스턴스 생성
+    let analyzedValue = Analyzer.makeAnalyzedTypeInstance(validString)
+    // Json타입 카운팅
+    let countedValue =  CountingJsonData.makeCountedTypeInstance(analyzedValue)
+    // 카운팅 출력
+    OutputView.printResult(countedValue)
 }
