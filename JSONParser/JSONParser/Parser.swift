@@ -10,42 +10,29 @@ import Foundation
 
 struct Parser {
     
-    static func matchValuesToJSONType(_ userInput: String?) -> JSONData {
-        let inputValue = userInput ?? ""
+    static func matchValues(_ parseTarget: ([String], String)) throws -> JSONData {
+        let convertTarget = parseTarget.0
+        let inputValue = parseTarget.1
         
         if inputValue.hasPrefix("[") && inputValue.hasSuffix("]") {
-            return setTargetToArray(inputValue)
+            do {
+                let JSONArray = try convertTarget.matchType(convertTarget)
+                return JSONArray
+            } catch let error {
+                throw error
+            }
         } else if inputValue.hasPrefix("{") && inputValue.hasSuffix("}") {
-            return setTargetToObject(inputValue)
+            let targetObject = newTargetObject(convertTarget)
+            do {
+                let JSONObject = try targetObject.matchType(targetObject)
+                return JSONObject
+            } catch let error {
+                throw error
+            }
         }
-        return setTargetToArray("")
+       return try [""].matchType([""])
     }
-    
-    static func setTargetToArray (_ input: String) -> JSONData {
-        let grammarChecker = GrammarChecker()
-        var targetArray = [String]()
-        do {
-            targetArray = try grammarChecker.checkArray(input)
-        } catch {
-            print(GrammarChecker.FormatError.invalidArray.description)
-        }
-        let JSONArray = targetArray.matchType(targetArray)
-        return JSONArray
-    }
-    
-    static func setTargetToObject (_ input: String) -> JSONData {
-        let grammarChecker = GrammarChecker()
-        var targetObject = [String:String]()
-        do {
-            let split = try grammarChecker.checkObject(input)
-            targetObject = newTargetObject(split)
-        } catch {
-            print(GrammarChecker.FormatError.invalidArray.description)
-        }
-        
-        let JSONObject = targetObject.matchType(targetObject)
-        return JSONObject
-    }
+   
     
     // MARK: Private functions to make object
     
@@ -66,6 +53,6 @@ struct Parser {
         
         return (key, value)
     }
-    
+
 }
 

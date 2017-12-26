@@ -10,25 +10,34 @@ import Foundation
 
 struct DataTypeConverter {
     
-    func makeConvertedArray (_ targets: [String]) -> [JSONData] {
+    func makeConvertedArray (_ targets: [String]) throws -> [JSONData] {
         var parsedJSONData : [JSONData] = []
         
         for value in targets {
-            parsedJSONData.append(matchValueType(value))
+            do {
+                let matchedValue = try matchValueType(value)
+                parsedJSONData.append(matchedValue)
+            } catch let error {
+                throw error
+            }
         }
         return parsedJSONData
     }
  
-   func makeConvertedObject (_ targets: Dictionary<String, String>) -> Dictionary<String, JSONData> {
+   func makeConvertedObject (_ targets: Dictionary<String, String>) throws -> Dictionary<String, JSONData> {
         var parsedJSONData : Dictionary<String, JSONData> = [:]
-        
         for key in targets.keys {
-            parsedJSONData[key] = matchValueType(targets[key]!)
+            do {
+                parsedJSONData[key] = try matchValueType(targets[key]!)
+            } catch let error {
+                throw error
+            }
         }
         return parsedJSONData
     }
 
-    func matchValueType (_ value: String) -> JSONData {
+    func matchValueType (_ value: String) throws -> JSONData {
+        let grammarChecker = GrammarChecker()
         if let boolValue = Bool(value) {
             return JSONData.BoolValue(boolValue)
         }
@@ -36,10 +45,22 @@ struct DataTypeConverter {
             return JSONData.IntegerValue(intValue)
         }
         if value.contains("{") {
-            return Parser.setTargetToObject(value)
+            do {
+                let target = try grammarChecker.execute(value)
+                let parsedData = try Parser.matchValues(target)
+                return parsedData
+            } catch let error {
+                throw error
+            }
         }
         if value.contains("[") {
-            return Parser.setTargetToArray(value)
+            do {
+                let target = try grammarChecker.execute(value)
+                let parsedData = try Parser.matchValues(target)
+                return parsedData
+            } catch let error {
+                throw error
+            }
         }
         return JSONData.StringValue(value)
     }

@@ -10,12 +10,26 @@
 let inputView = InputView()
 let userInput = inputView.askUserInput()
 
-let convertedValues = Parser.matchValuesToJSONType(userInput)
+let grammarChecker = GrammarChecker()
+var parseTarget = ([String](),"")
 
-let counter = ValueCounter(targetToCount: convertedValues)
-let countInfo = counter.makeCountInfo()
+do {
+    parseTarget = try grammarChecker.execute(userInput)
+    let convertedValues = try Parser.matchValues(parseTarget)
+    let counter = ValueCounter(targetToCount: convertedValues)
+    let countInfo = counter.makeCountInfo()
+    let outputView = OutputView()
+    outputView.showResult(countInfo)
+} catch let error as GrammarChecker.FormatError {
+    switch error {
+    case .invalidArray:
+        print(GrammarChecker.FormatError.invalidArray.description)
+    case .invalidObject:
+        print(GrammarChecker.FormatError.invalidObject.description)
+    }
+}
 
-let outputView = OutputView()
-outputView.showResult(countInfo)
+
+
 
 
