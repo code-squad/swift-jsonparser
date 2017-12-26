@@ -108,36 +108,35 @@ struct Analyzer {
     }
     
     // Mark : 배열 및 객체 각각의 세부 값 추출 (스트링으로 추출됨)
-    // 배열 내부의 객체 추출
+    //  배열 내부의 객체 추출
     private static func getObjectMatches(from target: String) -> String {
         let leftBrace = target.index(of: "{") ?? target.endIndex
         let rightBrace = target.index(of: "}") ?? target.endIndex
         return String(target[leftBrace...rightBrace])
     }
     
-    // 배열 내부의 배열 추출
+    //  배열 내부의 배열 추출
     private static func getArrayMatches(from target: String) -> String {
         let leftSquareBracket = target.index(of: "[") ?? target.endIndex
         let rightSquareBracket = target.index(of: "]") ?? target.endIndex
         return String(target[leftSquareBracket...rightSquareBracket])
     }
     
-    // 배열내부의 배열,객체 제외한 값 추출
+    //  배열내부의 배열,객체 제외한 값 추출
     private static func getElementsOfValue(from target: String) -> Array<String> {
         return getElementsOfMatchedWIthJsonGrammer(inputValue: target, pattern: JsonGrammerRule.value)
     }
     
-    // Mark : 객체 내부의 값 추출
-    // 객체 내부에서 카운팅할 값들 추출
+    //  객체 내부에서 카운팅할 값들 추출
     private static func getElementsOfObject(from target: String) -> Array<String> {
-        return getElementsOfMatchedWIthJsonGrammer(inputValue: target, pattern: JsonGrammerRule.ofNestedArray)
+        return getElementsOfMatchedWIthJsonGrammer(inputValue: target, pattern: JsonGrammerRule.ofNestedDictionary)
     }
     
     // Mark : 문법과 매칭할 NS함수
     private static func getElementsOfMatchedWIthJsonGrammer(inputValue: String, pattern: String) -> Array<String> {
         let regularExpression = try! NSRegularExpression.init(pattern: pattern, options: [])
-        let objectResult = regularExpression.matches(in: inputValue, options: [], range: NSRange(location:0, length:inputValue.count))
-        let result = objectResult.map {String(inputValue[Range($0.range, in: inputValue)!])}
+        let matchedValue = regularExpression.matches(in: inputValue, options: [], range: NSRange(location:0, length:inputValue.count))
+        let result = matchedValue.map {String(inputValue[Range($0.range, in: inputValue)!])}
         return result
     }
     
