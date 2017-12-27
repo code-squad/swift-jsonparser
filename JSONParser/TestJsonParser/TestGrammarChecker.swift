@@ -107,6 +107,14 @@ class TestGrammarChcker: XCTestCase {
         XCTAssertNoThrow(try GrammerChecker.makeValidString(values: validInput))
     }
     
+    // 중첩배열2 : 객체1, 배열1, 문자열2, 불값2, 숫자1
+    func testIsComplicatedNestedArraySecondGrammerCheckerPassed () {
+        let validInput = """
+    [ { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true }, { "name" : "YOON JISU", "alias" : "crong", "level" : 4, "married" : true } ]
+    """
+        XCTAssertNoThrow(try GrammerChecker.makeValidString(values: validInput))
+    }
+    
 }
 
 

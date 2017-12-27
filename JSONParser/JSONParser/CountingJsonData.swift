@@ -9,7 +9,6 @@
 import Foundation
 
 struct CountingJsonData {
-    
     static func makeCountedTypeInstance (_ input: Any) -> JsonData {
         switch input {
         case is Dictionary<String,Any> :
@@ -28,9 +27,9 @@ struct CountingJsonData {
     //  배열 타입의 카운팅 인스턴스 생성
     private static func getCountedArrayType(_ arrayValue: [String]) -> JsonData {
         var countOfNumber: Int = 0
-       var countOfBool: Int = 0
-       var countOfString: Int = 0
-       var countOfObject: Int = 0
+        var countOfBool: Int = 0
+        var countOfString: Int = 0
+        var countOfObject: Int = 0
         var countOfofArray: Int = 0
         _ = arrayValue.forEach {
             if $0.hasPrefix("{") && $0.hasSuffix("}") { countOfObject += 1}
