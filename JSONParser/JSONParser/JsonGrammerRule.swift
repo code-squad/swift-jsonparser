@@ -10,7 +10,7 @@ import Foundation
 
 // Json 문법 구조체
 struct JsonGrammerRule {
-    static let ofString = "\\s*?\"[a-zA-Z\\d\\s]+\"\\s*?"
+    static let ofString = "\\s*?\"[^\"]+\"\\s*?"
     static let ofInt = "\\s*?\\d+\\s*?"
     static let ofBool = "\\s*?(true|false)\\s*?"
     static let ofDictionary = "\\s*?\(ofString)\\s*?:\\s*?(\(ofInt)|\\s*?\(ofString)|\\s*?\(ofBool))\\s*?"
@@ -18,7 +18,7 @@ struct JsonGrammerRule {
     static let ofArray = "\\[\\s*?((\(ofInt)|\\s*?\(ofString)|\\s*?\(ofBool)|\\s*?\(ofObject))[,]?)+\\s*?\\]\\s*?"
     static let ofValue = "\(ofString)|\(ofInt)|\(ofBool)"
     
-    static let ofNestedDictionary = "\(ofString)\\s*?:\\s*?(\(ofString)|\(ofInt)|\(ofBool)|\(ofObject)|\(ofArray))"
+    static let ofNestedDictionary = "\\s*?\(ofString)\\s*?:\\s*?(\(ofString)|\(ofInt)|\(ofBool)|\(ofObject)|\(ofArray))"
     static let ofNestedObject = "\\{(\(ofNestedDictionary)\\s*?[,]?\\s*?)+\\s*?[\\}]\\s*?"
     static let ofNestedArray = "\\s*\\[((\(ofString)|\(ofInt)|\(ofBool)|\(ofObject)|\(ofArray))[,]?)+\\s*\\]"
 }
