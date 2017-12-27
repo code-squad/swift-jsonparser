@@ -14,15 +14,10 @@ struct ValueCounter {
     init (targetToCount countTarget : JSONData) {
         self.parsedJSONDataList = countTarget
     }
-    
+
     func makeCountInfo () -> CountInfo {
-        var countInfo = CountInfo(countOfInt: 0,
-                                  countOfBool: 0,
-                                  countOfString: 0,
-                                  countOfObject: 0,
-                                  countOfArray: 0,
-                                  countOfJSONData: 0)
-        
+        var countInfo = CountInfo()
+
         if case let JSONData.ArrayValue(countTarget) = parsedJSONDataList { // enum바인딩
            countInfo = countArrayValues(countTarget)
         }
