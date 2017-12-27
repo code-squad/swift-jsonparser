@@ -19,6 +19,7 @@ struct GrammarChecker {
     enum FormatError: Error {
         case invalidArray
         case invalidObject
+        case invalidInput
         
         var description: String {
             switch self {
@@ -26,6 +27,9 @@ struct GrammarChecker {
                 return "지원하지 않는 배열 형식입니다."
             case .invalidObject:
                 return "지원하지 않는 객체 형식입니다."
+            case .invalidInput:
+                return "지원하지 않는 입력 형태입니다."
+
             }
         }
     }
@@ -34,25 +38,24 @@ struct GrammarChecker {
         let input = userInput ?? ""
         
         if input.hasPrefix("[") && input.hasSuffix("]") {
-            if checkArray(input) {
-               return (checkArrayFormat(input),Parser.ParseTarget.list)
+            if isValidArray(input) {
+               return (extractArrayValue(input),Parser.ParseTarget.list)
             } else {
                 throw GrammarChecker.FormatError.invalidArray
             }
         }
         if input.hasPrefix("{") && input.hasSuffix("}") {
-            if checkObject(input) {
-               return (checkObjectFormat(input),Parser.ParseTarget.object)
+            if isValidObject(input) {
+               return (extractObjectValue(input),Parser.ParseTarget.object)
             } else {
                 throw GrammarChecker.FormatError.invalidObject
             }
         }
-        //return ([],Parser.ParseTarget.list)
-        throw GrammarChecker.FormatError.invalidArray
+        throw GrammarChecker.FormatError.invalidInput
     }
     
     // #1. Array - format check
-    private func checkArrayFormat (_ input: String) -> [String] { 
+    private func extractArrayValue (_ input: String) -> [String] {
         do {
             let regex = try NSRegularExpression(pattern: arrayPattern)
             let nsInput = input as NSString
@@ -65,7 +68,7 @@ struct GrammarChecker {
     }
     
     // #2. Array - value check
-    private func checkArrayValue (_ value: String) -> Bool {
+    private func isValidValueInArray (_ value: String) -> Bool {
         var matchValue = [String]()
         do {
             let regex = try NSRegularExpression(pattern: arrayValuePattern)
@@ -83,10 +86,10 @@ struct GrammarChecker {
     }
     
     // Array - #1, #2 execute
-    func checkArray (_ input: String) -> Bool {
-        let formatMatchValues = checkArrayFormat(input)
+    func isValidArray (_ input: String) -> Bool {
+        let formatMatchValues = extractArrayValue(input)
         for value in formatMatchValues {
-            if checkArrayValue(value) {
+            if isValidValueInArray(value) {
                 return true
             } else {
                 return false
@@ -96,7 +99,7 @@ struct GrammarChecker {
     }
 
     // #1. Object - format Check
-    private func checkObjectFormat (_ input: String) -> [String] {
+    private func extractObjectValue (_ input: String) -> [String] {
         do {
             let regex = try NSRegularExpression(pattern: objectPattern)
             let nsInput = input as NSString
@@ -109,7 +112,7 @@ struct GrammarChecker {
     }
 
     // 2. Object - value check
-    private func checkObjectValue (_ value: String) -> Bool {
+    private func isValidValueinObject (_ value: String) -> Bool {
         var matchValue = [String]()
         do {
             let regex = try NSRegularExpression(pattern: objectValuePattern)
@@ -127,10 +130,10 @@ struct GrammarChecker {
     }
     
     // Object - #1, #2 execute
-    func checkObject (_ input: String) -> Bool {
-        let formatMatchValues = checkObjectFormat(input)
+    func isValidObject (_ input: String) -> Bool {
+        let formatMatchValues = extractObjectValue(input)
         for value in formatMatchValues {
-            if checkObjectValue(value) {
+            if isValidValueinObject(value) {
                 return true
             } else {
                 return false

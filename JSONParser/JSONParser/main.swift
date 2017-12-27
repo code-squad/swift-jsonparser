@@ -23,6 +23,8 @@ do {
         print(GrammarChecker.FormatError.invalidArray.description)
     case .invalidObject:
         print(GrammarChecker.FormatError.invalidObject.description)
+    case .invalidInput:
+        print(GrammarChecker.FormatError.invalidInput.description)
     }
 }
 
