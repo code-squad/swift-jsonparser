@@ -78,22 +78,14 @@ struct GrammarChecker {
         } catch {
             matchValue = []
         }
-        if matchValue != [] {
-            return true
-        } else {
-            return false
-        }
+        return !matchValue.isEmpty
     }
     
     // Array - #1, #2 execute
     func isValidArray (_ input: String) -> Bool {
         let formatMatchValues = extractArrayValue(input)
         for value in formatMatchValues {
-            if isValidValueInArray(value) {
-                return true
-            } else {
-                return false
-            }
+            return isValidValueInArray(value)
         }
         return false
     }
@@ -102,9 +94,9 @@ struct GrammarChecker {
     private func extractObjectValue (_ input: String) -> [String] {
         do {
             let regex = try NSRegularExpression(pattern: objectPattern)
-            let nsInput = input as NSString
-            let matches = regex.matches(in: input, range: NSRange(location: 0, length: nsInput.length))
-            let matchValues = matches.map{nsInput.substring(with: $0.range)}
+            let inputInNS = input as NSString
+            let matches = regex.matches(in: input, range: NSRange(location: 0, length: inputInNS.length))
+            let matchValues = matches.map{inputInNS.substring(with: $0.range)}
             return matchValues
         } catch {
             return []
@@ -116,31 +108,23 @@ struct GrammarChecker {
         var matchValue = [String]()
         do {
             let regex = try NSRegularExpression(pattern: objectValuePattern)
-            let nsInput = value as NSString
-            let matches = regex.matches(in: value, range: NSRange(location: 0, length: nsInput.length))
-            matchValue = matches.map{nsInput.substring(with: $0.range)}
+            let inputInNS = value as NSString
+            let matches = regex.matches(in: value, range: NSRange(location: 0, length: inputInNS.length))
+            matchValue = matches.map{inputInNS.substring(with: $0.range)}
         } catch {
             matchValue = []
         }
-        if matchValue != [] {
-            return true
-        } else {
-            return false
-        }
+        return !matchValue.isEmpty
     }
     
     // Object - #1, #2 execute
     func isValidObject (_ input: String) -> Bool {
         let formatMatchValues = extractObjectValue(input)
         for value in formatMatchValues {
-            if isValidValueinObject(value) {
-                return true
-            } else {
-                return false
-            }
+            return isValidValueinObject(value)
         }
         return false
     }
-    
 
 }
+
