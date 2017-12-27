@@ -16,10 +16,10 @@ struct Analyzer {
         return inputValue.first == "{" ? getJsonObject(inputValue) : getJsonArray(inputValue)
     }
     
-    //
+    // 입력된 스트링값을 객체 문법규칙에 맞게 변환
     private static func getJsonObject(_ inputValue: String) -> [String:Any] {
         var jsonObject = [String:Any]()
-         let elementsOfObject = Analyzer.getElementsOfObject(from: inputValue)
+        let elementsOfObject = Analyzer.getElementsOfObject(from: inputValue)
         _ = elementsOfObject.forEach {
             let keyValue = $0.split(separator: ":").map {$0.trimmingCharacters(in: .whitespaces)}
             let key : String = String(describing: keyValue.first ?? "").replacingOccurrences(of: "\"", with: "")
@@ -29,27 +29,22 @@ struct Analyzer {
         return jsonObject
     }
     
-    //  입력된 스트링값을 각 문법규칙에 맞게 배열로 변환
+    //  입력된 스트링값을 각 배열규칙에 맞게 변환
     private static func getJsonArray(_ inputValue: String) -> Array<String> {
         var elementsFromArray : Array<String> = []
         var initialValue = inputValue
         initialValue.removeFirst()
         initialValue.removeLast()
-        if initialValue.contains("{") {
-            elementsFromArray.append(getObjectMatches(from: initialValue))
-            initialValue = initialValue.replacingOccurrences(of: getObjectMatches(from: initialValue), with: "")
-        }
-        if initialValue.contains("[") {
-            elementsFromArray.append(getArrayMatches(from: initialValue))
-            initialValue = initialValue.replacingOccurrences(of: getArrayMatches(from: initialValue), with: "")
-        }
+        elementsFromArray.append(contentsOf: getObjectOfArray(from: initialValue))
+        initialValue = removeMatchedObjectfromString(from: initialValue)
+        elementsFromArray.append(contentsOf: getArrayOfArray(from: initialValue))
+        initialValue = removeMatchedArrayfromString(from: initialValue)
         elementsFromArray.append(contentsOf: getElementsOfValue(from: initialValue))
         return elementsFromArray
     }
     
-    
     //  객체 내의 벨류생성
-     private static func generateValueInObject(stringNotyetValue: String) -> Any {
+    private static func generateValueInObject(stringNotyetValue: String) -> Any {
         if stringNotyetValue.hasPrefix("[") && stringNotyetValue.hasSuffix("]") { return stringNotyetValue }
         else if stringNotyetValue.starts(with: "\"") { return stringNotyetValue.replacingOccurrences(of: "\"", with: "")}
         else if let interger = Int(stringNotyetValue) { return interger }
@@ -57,37 +52,54 @@ struct Analyzer {
         else { return ""}
     }
     
-    // Mark : 배열 및 객체 각각의 세부 값 추출 (스트링으로 추출됨)
-    //  배열 내부의 객체 추출
-     private static func getObjectMatches(from target: String) -> String {
-        let leftBrace = target.index(of: "{") ?? target.endIndex
-        let rightBrace = target.index(of: "}") ?? target.endIndex
-        return String(target[leftBrace...rightBrace])
+    // Mark : 배열 및 객체 각각의 세부 값 추출 (어레이 스트링으로 추출됨)
+    
+    //  배열내부의 객체 추출
+    private static func getObjectOfArray(from input: String) -> Array<String> {
+        return getElementsOfMatchedWIthJsonGrammer(inputValue: input, pattern: JsonGrammerRule.ofObject)
     }
     
-    //  배열 내부의 배열 추출
-     private static func getArrayMatches(from target: String) -> String {
-        let leftSquareBracket = target.index(of: "[") ?? target.endIndex
-        let rightSquareBracket = target.index(of: "]") ?? target.endIndex
-        return String(target[leftSquareBracket...rightSquareBracket])
+    //  배열내부의 배열 추출
+    private static func getArrayOfArray(from input: String) -> Array<String> {
+        return getElementsOfMatchedWIthJsonGrammer(inputValue: input, pattern: JsonGrammerRule.ofArray)
     }
     
     //  배열내부의 배열,객체 제외한 값 추출
-     private static func getElementsOfValue(from target: String) -> Array<String> {
-        return getElementsOfMatchedWIthJsonGrammer(inputValue: target, pattern: JsonGrammerRule.ofValue)
+    private static func getElementsOfValue(from input: String) -> Array<String> {
+        return getElementsOfMatchedWIthJsonGrammer(inputValue: input, pattern: JsonGrammerRule.ofValue)
     }
     
     //  객체 내부에서 카운팅할 값들 추출
-     private static func getElementsOfObject(from target: String) -> Array<String> {
-        return getElementsOfMatchedWIthJsonGrammer(inputValue: target, pattern: JsonGrammerRule.ofNestedDictionary)
+    private static func getElementsOfObject(from input: String) -> Array<String> {
+        return getElementsOfMatchedWIthJsonGrammer(inputValue: input, pattern: JsonGrammerRule.ofNestedDictionary)
     }
     
-    // Mark : 문법과 매칭할 NS함수
-     private static func getElementsOfMatchedWIthJsonGrammer(inputValue: String, pattern: String) -> Array<String> {
+    // Mark : 문법과 매칭하여 값을 추출할 NS함수
+    private static func getElementsOfMatchedWIthJsonGrammer(inputValue: String, pattern: String) -> Array<String> {
         let regularExpression = try! NSRegularExpression(pattern: pattern)
         let matchedValue = regularExpression.matches(in: inputValue, range: NSRange(location:0, length:inputValue.count))
         let result = matchedValue.map {String(inputValue[Range($0.range, in: inputValue)!])}
         return result
+    }
+    
+    //  이미 매칭된 객체를 삭제
+    private static func removeMatchedObjectfromString (from input: String) -> String {
+        return removeAlreadyMatchedPattern(from: input, pattern: JsonGrammerRule.ofObject)
+    }
+    
+    //  이미 매칭된 배열을 삭제
+    private static func removeMatchedArrayfromString (from input: String) -> String {
+        return removeAlreadyMatchedPattern(from: input, pattern: JsonGrammerRule.ofArray)
+    }
+    
+    // Mark : 이미 매칭된 값을 삭제하는 NS함수
+    private static func removeAlreadyMatchedPattern(from input: String, pattern: String) -> String {
+        let regex = try! NSRegularExpression(pattern: pattern, options: [])
+        return regex.stringByReplacingMatches(
+            in: input,
+            range: NSRange(location: 0, length: input.count),
+            withTemplate: ""
+        )
     }
     
 }
