@@ -30,24 +30,25 @@ struct GrammarChecker {
         }
     }
     
-    func execute (_ userInput: String?) throws -> ([String],String) {
+    func execute (_ userInput: String?) throws -> ([String],Parser.ParseTarget) {
         let input = userInput ?? ""
         
         if input.hasPrefix("[") && input.hasSuffix("]") {
             if checkArray(input) {
-               return (checkArrayFormat(input),input)
+               return (checkArrayFormat(input),Parser.ParseTarget.list)
             } else {
                 throw GrammarChecker.FormatError.invalidArray
             }
         }
         if input.hasPrefix("{") && input.hasSuffix("}") {
             if checkObject(input) {
-               return (checkObjectFormat(input),input)
+               return (checkObjectFormat(input),Parser.ParseTarget.object)
             } else {
                 throw GrammarChecker.FormatError.invalidObject
             }
         }
-        return ([],"")
+        //return ([],Parser.ParseTarget.list)
+        throw GrammarChecker.FormatError.invalidArray
     }
     
     // #1. Array - format check

@@ -10,18 +10,23 @@ import Foundation
 
 struct Parser {
     
-    static func matchValues(_ parseTarget: ([String], String)) throws -> JSONData {
-        let convertTarget = parseTarget.0
-        let inputValue = parseTarget.1
+    enum ParseTarget {
+        case list
+        case object
+    }
+    
+    static func matchValues(_ target: ([String], ParseTarget)) throws -> JSONData {
+        let convertTarget = target.0
+        let targetType = target.1
         
-        if inputValue.hasPrefix("[") && inputValue.hasSuffix("]") {
+        if targetType == Parser.ParseTarget.list {
             do {
                 let JSONArray = try convertTarget.matchType(convertTarget)
                 return JSONArray
             } catch let error {
                 throw error
             }
-        } else if inputValue.hasPrefix("{") && inputValue.hasSuffix("}") {
+        } else if targetType == Parser.ParseTarget.object {
             let targetObject = newTargetObject(convertTarget)
             do {
                 let JSONObject = try targetObject.matchType(targetObject)
