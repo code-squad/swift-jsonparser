@@ -8,15 +8,24 @@
 
 import Foundation
 
+
+// 이 부분을 함수에 jsonType을 넘기는게 아니라 뒤집어서 생각해보면,
+// jsonType에 동일한 함수를 구현해놓고 호출하는 방식이라면 if 구문도 안쓰고 더 간결해지지 않을까요?
+protocol js {
+    func makeobject (_ jsonObjectType: Dictionary<String,Any>) -> String
+    func makeArray (_ jsonArrayType: [String]) -> String
+}
 struct JsonPrintingMaker {
     static func makeJsonTypeforPrinting(jsonType: Any) -> String {
-        if let jsonObjectType = jsonType as? Dictionary<String,Any> {
-            return  makeObjectTypeForPrinting(jsonObjectType)
-        } else if let jsonArrayType = jsonType as? Array<String> {
-            return  makeArrayTypeForPrinting(jsonArrayType)
-        } else {
-            return ""
-        }
+        return readyforPrinting(jsonType)
+    }
+    
+    private static func readyforPrinting (_ jsonType: Any) -> String{
+                if let jsonObjectType = jsonType as? Dictionary<String,Any> {
+                        return  makeObjectTypeForPrinting(jsonObjectType)
+                    } else {
+                        return  makeArrayTypeForPrinting(jsonType as! Array<String>)
+                    }
     }
     
     private static func makeObjectTypeForPrinting(_ jsonObjectType: Dictionary<String,Any>) -> String {
