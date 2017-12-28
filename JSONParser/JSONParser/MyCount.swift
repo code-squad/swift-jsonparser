@@ -15,6 +15,7 @@ struct MyCount {
     var numberVal : Int = 0
     var boolVal : Int = 0
     var objectVal : Int = 0
+    var arrayVal : Int = 0
     
 }
 
@@ -32,6 +33,7 @@ extension Array : CountTypes {
             case is Int : arrCount.numberVal += 1
             case is Bool : arrCount.boolVal += 1
             case is [String : Any] : arrCount.objectVal += 1
+            case is [Any] : arrCount.arrayVal += 1
             default : continue
             }
         }
@@ -49,10 +51,11 @@ extension Dictionary : CountTypes {
             case is String : dicCount.stringVal += 1
             case is Int : dicCount.numberVal += 1
             case is Bool : dicCount.boolVal += 1
+            case is [Any] : dicCount.arrayVal += 1
             default : continue
             }
         }
-        dicCount.objectVal = dicCount.boolVal + dicCount.numberVal + dicCount.stringVal
+        dicCount.objectVal = dicCount.boolVal + dicCount.numberVal + dicCount.stringVal + dicCount.arrayVal
         return dicCount
     }
     

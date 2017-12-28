@@ -10,16 +10,18 @@ import Foundation
 
 var runJsonParser : Bool = true
 mainLoop : while runJsonParser == true {
+    let outputView : OutputView = OutputView()
     
+    outputView.printMessages("input")
     let userInput = InputView().readInput()
     guard userInput != "q" else { break }
     guard GrammarChecker().isValid(userInput: userInput) else {
-        print("지원하는 형식이 아닙니다. 다시 입력해주세요.")
+        outputView.printMessages("formatError")
         continue
     }
-    
+
     let convertedData = DataFactory().generateData(userInput)
     let numbersOfData = DataCounter().countNumberOfData(convertedData)
     
-    OutputView().printResultOfData(numbersOfData)
+    outputView.printResultOfData(numbersOfData)
 }

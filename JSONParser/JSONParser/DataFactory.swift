@@ -9,6 +9,20 @@
 import Foundation
 typealias ObjectDictionary = [String : Any]
 
+extension String {
+    
+    func sliceByString(from:String, to:String) -> String? {
+        let startRange = self.range(of: from)
+        guard let firstRange = startRange else {return ""}
+        let subString = String(self[firstRange.upperBound...])
+        
+        let endRange = subString.range(of: to)
+        guard let secondRange = endRange else {return ""}
+        return String(subString[..<secondRange.lowerBound])
+    }
+    
+}
+
 struct DataFactory {
     
     func generateData (_ data : String) -> Any {
@@ -24,17 +38,20 @@ struct DataFactory {
             temp = makeObjectType(dataBeforeSeperating[indexOfData])
             seperatedObeject.updateValue(temp.value, forKey: temp.key)
         }
+        print(seperatedArray)
+        print(seperatedObeject)
         guard isArray(data) == false else { return seperatedArray }
         return seperatedObeject
     }
     
     private func makeOneData (_ oneData : String) -> Any {
-        guard isBoolType(oneData) == false else { return makeBoolType(oneData) }
-        guard isStringType(oneData) == false else { return sliceMarks(oneData) }
         if isObject(oneData) == true {
             let temp = makeObjectType(oneData)
             return [temp.key : temp.value]
         }
+        guard isArray(oneData) == false else { return generateData(oneData) }
+        guard isBoolType(oneData) == false else { return makeBoolType(oneData) }
+        guard isStringType(oneData) == false else { return makeStringType(oneData) }
         return Int(oneData) ?? 0
     }
     
@@ -49,8 +66,12 @@ struct DataFactory {
         return oneData == "true"
     }
     
+    private func makeStringType (_ oneData : String) -> String {
+        return sliceOneMark(oneData, mark: "\"")
+    }
+    
     private func isNumber (_ oneData : String) -> Bool {
-        return oneData.components(separatedBy: CharacterSet.decimalDigits).count != 0
+        return oneData.components(separatedBy: CharacterSet.decimalDigits).count > 0
     }
     
     private func isStringType (_ oneData : String) -> Bool {
@@ -65,19 +86,35 @@ struct DataFactory {
         return oneData.first == "["
     }
     
+    private func isInnerArray(_ oneData : String) -> Bool {
+        return oneData.first == "/"
+    }
+    
     private func isObject (_ oneData : String) -> Bool {
         return oneData.first == "{"
     }
     
     private func sliceData (_ data : String) -> [String] {
-        let temp = sliceMarks(data)
-        return temp.split(separator: ",").map(String.init)
+        let dataWithoutMarks = sliceMarks(data)
+        let valuesInArray = dataWithoutMarks.sliceByString(from: "[", to: "]")
+        let temp = dataWithoutMarks.replacingOccurrences(of: valuesInArray!, with: " ", range: nil)
+        var seperatedData = temp.split(separator: ",").map(String.init)
+        for index in 0..<seperatedData.count {
+            if isArray(data) == true && seperatedData[index].contains("[") {
+               seperatedData[index] = "[" + valuesInArray! + "]"
+               break
+            }
+            seperatedData[index] = seperatedData[index].replacingOccurrences(of: "]", with: valuesInArray! + "]")
+        }
+        return seperatedData
     }
     
     private func sliceMarks (_ userInput : String) -> String {
         var userInputWithoutBracket = sliceOneMark(userInput, mark: " ")
+        if isArray(userInputWithoutBracket) || isObject(userInputWithoutBracket) || isStringType(userInputWithoutBracket) {
         userInputWithoutBracket.removeFirst()
         userInputWithoutBracket.removeLast()
+        }
         return userInputWithoutBracket
     }
     

@@ -14,16 +14,18 @@ extension NSRegularExpression {
 }
 
 extension String {
+    
     func isMatching(expression: NSRegularExpression) -> Bool {
         return expression.numberOfMatches(in: self, range: NSRange(location: 0, length: self.count)) > 0
     }
+    
 }
 
 struct GrammarChecker {
-    
-    let arrayPattern  = "[\\s]*(\\[)[[\\s]*((\"\\w\")|(\\d)|(true|false)|(\\{)[\\s]*(\"\\w\")[\\s]*:[\\s]*((\"\\w\")|(\\d)|(true|false))[\\s]*(\\}))(\\])*(,)*[\\s]*]+(\\])"
-    let objectPattern  = "[\\s]*(\\{)[[\\s]*(\"\\w\")[\\s]*:[\\s]*((\"\\w\")|(\\d)|(true|false))[\\s]*(\\})*(,)*[\\s]*]+(\\})"
-    
+    let arrayPattern  = "[\\s]*(\\[)[[\\s]*((\"\\w\")|(\\d)|(true|false)|(\\{)[\\s]*(\"\\w\")[\\s]*:[\\s]*((\"\\w\")|(\\d)|(true|false)|([\\s]*(\\[)[[\\s]*((\"\\w\")|(\\d)|(true|false)|(\\{)[\\s]*(\"\\w\")[\\s]*:[\\s]*((\"\\w\")|(\\d)|(true|false))[\\s]*(\\}))(\\])*(,)*[\\s]*]+(\\])))[\\s]*(\\}))(\\])*(,)*[\\s]*]+(\\])"
+
+    let objectPattern  = "[\\s]*(\\{)[[\\s]*(\"\\w\")[\\s]*:[\\s]*((\"\\w\")|(\\d)|(true|false)|((\\[)[[\\s]*((\"\\w\")|(\\d)|(true|false)|((\\{)[\\s]*(\"\\w\")[\\s]*:[\\s]*((\"\\w\")|(\\d)|(true|false))[\\s]*(\\})))(\\])*(,)*[\\s]*]+(\\])))[\\s]*(\\})*(,)*[\\s]*]+(\\})"
+
     func isValid(userInput : String) -> Bool {
         if isValidArray(userInput) == true || isValidObject(userInput) == true {
             return true
@@ -38,4 +40,5 @@ struct GrammarChecker {
     private func isValidObject(_ userInput : String) -> Bool {
         return userInput.isMatching(expression: NSRegularExpression(pattern : objectPattern))
     }
+    
 }
