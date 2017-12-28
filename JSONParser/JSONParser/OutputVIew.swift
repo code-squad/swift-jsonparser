@@ -28,13 +28,22 @@ struct OutputView {
         if info.countOfArray != 0 {
             result.append("배열 \(info.countOfArray)개 ")
         }
-        
         return result
     }
     
+    private func selectType(_ info: CountInfo) -> String {
+        if info.parseType == Parser.ParseTarget.list {
+            return "배열 데이터"
+        }
+        if info.parseType == Parser.ParseTarget.object {
+            return "객체 데이터"
+        }
+        return "데이터"
+    }
     
+
     func showResult(_ countInfo: CountInfo) {
-        print("\(countInfo.countOfJSONData)개 데이터 중에 \(makeResultMessage(countInfo))가 포함되어 있습니다.")
+        print("\(countInfo.countOfJSONData)개 \(selectType(countInfo)) 중에 \(makeResultMessage(countInfo))가 포함되어 있습니다.")
     }
     
 }
