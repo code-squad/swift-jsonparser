@@ -8,13 +8,6 @@
 
 import Foundation
 
-
-// 이 부분을 함수에 jsonType을 넘기는게 아니라 뒤집어서 생각해보면,
-// jsonType에 동일한 함수를 구현해놓고 호출하는 방식이라면 if 구문도 안쓰고 더 간결해지지 않을까요?
-protocol js {
-    func makeobject (_ jsonObjectType: Dictionary<String,Any>) -> String
-    func makeArray (_ jsonArrayType: [String]) -> String
-}
 struct JsonPrintingMaker {
     static func makeJsonTypeforPrinting(jsonType: Any) -> String {
         return readyforPrinting(jsonType)
