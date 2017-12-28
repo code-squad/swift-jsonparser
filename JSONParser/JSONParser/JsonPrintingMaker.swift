@@ -9,11 +9,13 @@
 import Foundation
 
 struct JsonPrintingMaker {
-    static func makeJsonTypeforPrinting(jsonType: Any) -> String{
+    static func makeJsonTypeforPrinting(jsonType: Any) -> String {
         if let jsonObjectType = jsonType as? Dictionary<String,Any> {
             return  makeObjectTypeForPrinting(jsonObjectType)
+        } else if let jsonArrayType = jsonType as? Array<String> {
+            return  makeArrayTypeForPrinting(jsonArrayType)
         } else {
-            return  makeArrayTypeForPrinting(jsonType as! Array<String>)
+            return ""
         }
     }
     
@@ -56,8 +58,8 @@ struct JsonPrintingMaker {
         _ = jsonArrayType.forEach {
             if $0 is String {
                 result += insertIndentation() + String(describing: $0) + "," + makeNewLine()
-            } else if let JsonObjectType = $0 as? Dictionary<String,Any> {
-                result += makeObjectTypeForPrinting(JsonObjectType) + "," + makeNewLine()
+            } else if let jsonObjectType = $0 as? Dictionary<String,Any> {
+                result += makeObjectTypeForPrinting(jsonObjectType) + "," + makeNewLine()
             } else if let arrayTypeInArray = $0 as? Array<String> {
                 result += makeArrayTypeForPrinting(arrayTypeInArray)
             } else {

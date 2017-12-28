@@ -16,7 +16,7 @@ struct OutputView {
         }
     }
     
-    static func printJsonDataType (_ JsonDataType: Any) {
-        print(JsonPrintingMaker.makeJsonTypeforPrinting(jsonType: JsonDataType))
+    static func printJsonDataType (_ jsonDataType: Any) {
+        print(JsonPrintingMaker.makeJsonTypeforPrinting(jsonType: jsonDataType))
     }
 }

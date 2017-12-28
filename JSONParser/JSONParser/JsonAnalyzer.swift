@@ -103,7 +103,7 @@ struct Analyzer {
     }
     
     // Mark : 문자열의 처음과 끝을 제거하는 함수
-    private static func removeFirstAndLastCharacter (_ input: String) -> String{
+    private static func removeFirstAndLastCharacter (_ input: String) -> String {
         var input = input
         input.removeFirst()
         input.removeLast()
