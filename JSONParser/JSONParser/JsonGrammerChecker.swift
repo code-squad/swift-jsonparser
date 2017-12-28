@@ -44,8 +44,8 @@ struct GrammerChecker {
     
     // 문자열에서 공백만 제거
     private static func findJsonString (from validString: String) -> String{
-        let splitted = validString.filter { $0 != " " }
-        return splitted
+        let removedWhiteSpace = validString.filter { $0 != " " }
+        return removedWhiteSpace
     }
     
 }

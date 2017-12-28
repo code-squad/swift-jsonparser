@@ -24,6 +24,7 @@
 		C3936BCD1FF1F5E70097A88C /* CountingJsonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3936BCC1FF1F5E70097A88C /* CountingJsonData.swift */; };
 		C3936BCE1FF212B30097A88C /* CountingJsonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3936BCC1FF1F5E70097A88C /* CountingJsonData.swift */; };
 		C3936BCF1FF212D10097A88C /* CountingJsonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3936BCC1FF1F5E70097A88C /* CountingJsonData.swift */; };
+		C3936BD11FF493C20097A88C /* JsonPrintingMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3936BD01FF493C20097A88C /* JsonPrintingMaker.swift */; };
 		C3954B311FEA490E00057D15 /* TestAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3954B301FEA490E00057D15 /* TestAnalyzer.swift */; };
 		C3954B361FEA49BD00057D15 /* TestAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3954B301FEA490E00057D15 /* TestAnalyzer.swift */; };
 		C3D369641FEB4D4F001CA87D /* JsonGrammerChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C388CD661FE23A9B00DDC82A /* JsonGrammerChecker.swift */; };
@@ -57,6 +58,7 @@
 		C388CD6E1FE36AE100DDC82A /* TestGrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGrammarChecker.swift; sourceTree = "<group>"; };
 		C388CD701FE36AE100DDC82A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3936BCC1FF1F5E70097A88C /* CountingJsonData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingJsonData.swift; sourceTree = "<group>"; };
+		C3936BD01FF493C20097A88C /* JsonPrintingMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonPrintingMaker.swift; sourceTree = "<group>"; };
 		C3954B2E1FEA490E00057D15 /* TestAnalyzer.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestAnalyzer.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3954B301FEA490E00057D15 /* TestAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAnalyzer.swift; sourceTree = "<group>"; };
 		C3954B321FEA490E00057D15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				C388CD641FDF745500DDC82A /* JsonData.swift */,
 				C388CD621FDE730B00DDC82A /* JsonAnalyzer.swift */,
 				C3936BCC1FF1F5E70097A88C /* CountingJsonData.swift */,
+				C3936BD01FF493C20097A88C /* JsonPrintingMaker.swift */,
 				C388CD601FDE710300DDC82A /* OutputView.swift */,
 			);
 			path = JSONParser;
@@ -267,6 +270,7 @@
 				C3936BCD1FF1F5E70097A88C /* CountingJsonData.swift in Sources */,
 				C388CD611FDE710300DDC82A /* OutputView.swift in Sources */,
 				C388CD651FDF745500DDC82A /* JsonData.swift in Sources */,
+				C3936BD11FF493C20097A88C /* JsonPrintingMaker.swift in Sources */,
 				C3D73E581FE7932A001B1C9C /* JsonGrammerRule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

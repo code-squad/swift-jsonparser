@@ -24,5 +24,7 @@ while true {
     // Json타입 카운팅
     let countedValue =  CountingJsonData.makeCountedTypeInstance(analyzedValue)
     // 카운팅 출력
-    OutputView.printResult(countedValue)
+    OutputView.printCountedResult(countedValue)
+    // JsonDataType 출력
+    OutputView.printJsonDataType(analyzedValue)
 }
