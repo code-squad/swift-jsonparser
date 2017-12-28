@@ -11,9 +11,9 @@ import Foundation
 
 struct GrammarChecker {
     
-    let arrayPattern = "true|false|\".+?\"|\\d+|\\{.+?\\}|:"
+    let arrayPattern = "true|false|\".+?\"|(\\d+)|(\\[[^\\[\\]]*\\])|(\\{[^\\{\\}]*\\})"
     let objectPattern = "(\".+?\")\\:(true|false|\\\".+?\\\"|\\d+|\\[.+?\\])"
-    let arrayValuePattern = "(true|false)|(\\{.*\\})|(\\d+)|(\".*\")|(\\[.*\\])"
+    let arrayValuePattern = "true|false|(\\d+)|\".+?\"|(\\[[^\\[\\]]*\\])|(\\{[^\\{\\}]*\\})"
     let objectValuePattern = "(\".*\"):((true|false)|(\\{.*\\})|(\\d+)|(\".*\")|(\\[.*\\]))"
 
     enum FormatError: Error {
@@ -39,7 +39,7 @@ struct GrammarChecker {
         
         if input.hasPrefix("[") && input.hasSuffix("]") {
             if isValidArray(input) {
-               return (extractArrayValue(input),Parser.ParseTarget.list)
+               return (extractArrayValue(input.trimmingCharacters(in: ["[","]"])),Parser.ParseTarget.list)
             } else {
                 throw GrammarChecker.FormatError.invalidArray
             }

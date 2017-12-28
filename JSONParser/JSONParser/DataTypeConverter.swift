@@ -38,12 +38,7 @@ struct DataTypeConverter {
 
     func matchValueType (_ value: String) throws -> JSONData {
         let grammarChecker = GrammarChecker()
-        if let boolValue = Bool(value) {
-            return JSONData.BoolValue(boolValue)
-        }
-        if let intValue = Int(value) {
-            return JSONData.IntegerValue(intValue)
-        }
+       
         if value.contains("{") {
             do {
                 let target = try grammarChecker.execute(value)
@@ -62,6 +57,13 @@ struct DataTypeConverter {
                 throw error
             }
         }
+        if let boolValue = Bool(value) {
+            return JSONData.BoolValue(boolValue)
+        }
+        if let intValue = Int(value) {
+            return JSONData.IntegerValue(intValue)
+        }
+        
         return JSONData.StringValue(value)
     }
 
