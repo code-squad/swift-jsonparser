@@ -9,11 +9,23 @@
 import Foundation
 
 struct InputView {
-    static func read() -> String {
-        print ("분석할 JSON 데이터를 입력하세요. quit입력시 종료됩니다")
-        if let unanalyzedValue = readLine() {
-            guard unanalyzedValue == "quit" else { return unanalyzedValue }
+     enum FrontMessage {
+        case ofWelcoming
+        case ofEndingProgram
+        var description: String {
+            switch self {
+            case .ofWelcoming :
+                return "분석할 JSON 데이터를 입력하세요. quit입력시 종료됩니다"
+            case .ofEndingProgram :
+                return "quit"
+            }
         }
-        return "quit"
+    }
+    static func read() -> String {
+        print (FrontMessage.ofWelcoming.description)
+        if let unanalyzedValue = readLine() {
+            guard unanalyzedValue == FrontMessage.ofEndingProgram.description else { return unanalyzedValue }
+        }
+        return FrontMessage.ofEndingProgram.description
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 
 while true {
     let unanalyzedValue = InputView.read()
-    if unanalyzedValue == "quit" { break }
+    if unanalyzedValue == InputView.FrontMessage.ofEndingProgram.description { break }
     var validString: String = ""
     do {
         // 문법체크
