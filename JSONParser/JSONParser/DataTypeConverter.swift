@@ -50,7 +50,7 @@ struct DataTypeConverter {
         }
         if value.contains("[") {
             do {
-                let target = try grammarChecker.execute(value)
+                let target = try grammarChecker.forNestedArray(value)
                 let parsedData = try Parser.matchValues(target)
                 return parsedData
             } catch let error {

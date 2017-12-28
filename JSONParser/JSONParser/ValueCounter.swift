@@ -32,6 +32,7 @@ struct ValueCounter {
         var countOfBool = 0
         var countOfString = 0
         var countOfObject = 0
+        var countOfArray = 0
         let countOfJSONData = countTarget.count
         
         for datum in countTarget {
@@ -44,15 +45,15 @@ struct ValueCounter {
                 countOfString += 1
             case .ObjectValue :
                 countOfObject += 1
-            default :
-                countOfString += 0
+            case .ArrayValue :
+                countOfArray += 1
             }
         }
     return CountInfo(countOfInt: countOfInt,
                      countOfBool: countOfBool,
                      countOfString: countOfString,
                      countOfObject: countOfObject,
-                     countOfArray: 0,
+                     countOfArray: countOfArray,
                      countOfJSONData: countOfJSONData)
     }
     

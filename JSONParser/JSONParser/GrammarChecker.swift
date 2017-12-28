@@ -15,6 +15,7 @@ struct GrammarChecker {
     let objectPattern = "(\".+?\")\\:(true|false|\\\".+?\\\"|\\d+|\\[.+?\\])"
     let arrayValuePattern = "true|false|(\\d+)|\".+?\"|(\\[[^\\[\\]]*\\])|(\\{[^\\{\\}]*\\})"
     let objectValuePattern = "(\".*\"):((true|false)|(\\{.*\\})|(\\d+)|(\".*\")|(\\[.*\\]))"
+    let nestedArrayPattern = "true|false|\".+?\"|(\\d+)"
 
     enum FormatError: Error {
         case invalidArray
@@ -34,12 +35,20 @@ struct GrammarChecker {
         }
     }
     
+    func removeBrackets(_ input: String) -> String{
+        var trimString = input
+        trimString.removeFirst()
+        trimString.removeLast()
+        return trimString
+    }
+    
+    
     func execute (_ userInput: String?) throws -> ([String],Parser.ParseTarget) {
         let input = userInput ?? ""
         
         if input.hasPrefix("[") && input.hasSuffix("]") {
             if isValidArray(input) {
-               return (extractArrayValue(input.trimmingCharacters(in: ["[","]"])),Parser.ParseTarget.list)
+               return (extractArrayValue(removeBrackets(input)),Parser.ParseTarget.list)
             } else {
                 throw GrammarChecker.FormatError.invalidArray
             }
@@ -53,6 +62,36 @@ struct GrammarChecker {
         }
         throw GrammarChecker.FormatError.invalidInput
     }
+    
+    func forNestedArray (_ input: String) throws -> ([String],Parser.ParseTarget) {
+        if isValidNestedArray(input) {
+            return (extractNestedArrayValue(input),Parser.ParseTarget.list)
+        } else {
+            throw GrammarChecker.FormatError.invalidArray
+        }
+    }
+    
+    func isValidNestedArray (_ input: String) -> Bool {
+        let formatMatchValues = extractNestedArrayValue(input)
+        for value in formatMatchValues {
+            return isValidValueInArray(value)
+        }
+        return false
+    }
+    
+    func extractNestedArrayValue (_ input: String) -> [String] {
+        do {
+            let regex = try NSRegularExpression(pattern: nestedArrayPattern)
+            let nsInput = input as NSString
+            let matches = regex.matches(in: input, range: NSRange(location: 0, length: nsInput.length))
+            let matchValues = matches.map{nsInput.substring(with: $0.range)}
+            return matchValues
+        } catch {
+            return []
+        }
+    }
+    
+    
     
     // #1. Array - format check
     private func extractArrayValue (_ input: String) -> [String] {
