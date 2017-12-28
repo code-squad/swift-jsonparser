@@ -47,7 +47,7 @@ class TestGrammarChcker: XCTestCase {
     // Mark : 객체 문법통과 성공 테스트
     
     // 객체데이터 3개 : 문자열1, 불1, 숫자1
-    func testIsGrammerCheckerPassed_SimpleObject_01 () {
+    func testIsGrammerCheckerPassed_String_Bool_Int_In_SimpleObject () {
         let validInput = """
     { "name" : "hoon" , "married" : false, "age" : 33}
     """
@@ -55,7 +55,7 @@ class TestGrammarChcker: XCTestCase {
     }
     
     // 객체데이터 5개 : 문자열2, 불2, 숫자1
-    func testIsGrammerCheckerPassed_SimpleObject_02 () {
+    func testIsGrammerCheckerPassed_String_Bool_Int_In_LongSimpleObject () {
         let validInput = """
     { "nationality" : "South Korea" , "power" : "middle", "isHuge" : false, "population" : 50000000, "hasNuclear" : false}
     """
@@ -63,7 +63,7 @@ class TestGrammarChcker: XCTestCase {
     }
     
     // 중첩된 객체 : 문자열, 숫자, 배열
-    func testIsGrammerCheckerPassed_NestedObject_01 () {
+    func testIsGrammerCheckerPassed_String_Int_Array_In_NestedObject () {
         let validInput = """
     { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "children" : ["hana", "hayul", "haun"] }
     """
@@ -71,7 +71,7 @@ class TestGrammarChcker: XCTestCase {
     }
     
     // 중첩된 객체 : 문자열, 불, 배열
-    func testIsGrammerCheckerPassed_NestedObject_02 () {
+    func testIsGrammerCheckerPassed_String_Int_Bool_Array_In_NestedObject () {
         let validInput = """
     { "color" : "blue", "isBright" : true, "count" : 20, "kindOfColor" : ["blue", "red", "white"] }
     """
@@ -107,24 +107,24 @@ class TestGrammarChcker: XCTestCase {
     
     // Mark : 배열 문법통과 성공 테스트
     
-    // 단순배열 : 객체1
-    func testIsGrammerCheckerPassed_SimpleArray_01 () {
-        let validInput = """
-    [ { "name" : "master's course", "opened" : true }, [ "java", "javascript", "swift" ], 123, false ]
-    """
-        XCTAssertNoThrow(try GrammerChecker.makeValidString(values: validInput))
-    }
-    
-    // 단순배열2 : 객체2
-    func testIsGrammerCheckerPassed_SimpleArray_02 () {
+    // 단순배열1 : 객체2
+    func testIsGrammerCheckerPassed_TwoObjects_In_SimpleArray () {
         let validInput = """
     [ { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true }, { "name" : "YOON JISU", "alias" : "crong", "level" : 4, "married" : true } ]
     """
         XCTAssertNoThrow(try GrammerChecker.makeValidString(values: validInput))
     }
     
+    // 중첩배열 : 객체1, 배열1
+    func testIsGrammerCheckerPassed_Object_Array_In_NestedArray () {
+        let validInput = """
+    [ { "name" : "master's course", "opened" : true }, [ "java", "javascript", "swift" ] ]
+    """
+        XCTAssertNoThrow(try GrammerChecker.makeValidString(values: validInput))
+    }
+    
     // 중첩배열1 : 객체1, 배열1, 숫자, 불
-    func testIsGrammerCheckerPassed_NestedArray_01 () {
+    func testIsGrammerCheckerPassed_Object_Array_Bool_Number_In_NestedArray () {
         let validInput = """
     [ { "name" : "master's course", "opened" : true }, [ "java", "javascript", "swift" ], 123, false ]
     """
@@ -132,20 +132,11 @@ class TestGrammarChcker: XCTestCase {
     }
     
     // 중첩배열2 : 객체1, 배열1, 문자열2, 불값2, 숫자1
-    func testIsGrammerCheckerPassed_NestedArray_02 () {
+    func testIsGrammerCheckerPassed_Object_Array_String_Bool_Number_In_NestedArray () {
         let validInput = """
     [{"name" : "jh", "married":false}, "age", true, "korea", false, 451, ["haha","hoho"]]
     """
         XCTAssertNoThrow(try GrammerChecker.makeValidString(values: validInput))
     }
-    
-    // 중첩배열2 : 객체1, 배열1, 문자열1, 불값2, 숫자1
-    func testIsGrammerCheckerPassed_NestedArray_03 () {
-        let validInput = """
-    [ { "name" : "dd" , "asd" : "asd" }, "add", true, false, 451, ["da","dad"] ]
-    """
-        XCTAssertNoThrow(try GrammerChecker.makeValidString(values: validInput))
-    }
+
 }
-
-
