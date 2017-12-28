@@ -33,13 +33,12 @@ struct Analyzer {
     private static func getJsonArray(_ inputValue: String) -> Array<String> {
         var elementsFromArray : Array<String> = []
         var initialValue = inputValue
-        initialValue.removeFirst()
-        initialValue.removeLast()
+        initialValue = removeFirstAndLastCharacter(initialValue)
         elementsFromArray.append(contentsOf: getObjectOfArray(from: initialValue))
         initialValue = removeMatchedObjectfromString(from: initialValue)
         elementsFromArray.append(contentsOf: getArrayOfArray(from: initialValue))
         initialValue = removeMatchedArrayfromString(from: initialValue)
-        elementsFromArray.append(contentsOf: getElementsOfValue(from: initialValue))
+        elementsFromArray.append(contentsOf: getValueFromArray(from: initialValue))
         return elementsFromArray
     }
     
@@ -65,7 +64,7 @@ struct Analyzer {
     }
     
     //  배열내부의 배열,객체 제외한 값 추출
-    private static func getElementsOfValue(from input: String) -> Array<String> {
+    private static func getValueFromArray(from input: String) -> Array<String> {
         return getElementsOfMatchedWIthJsonGrammer(inputValue: input, pattern: JsonGrammerRule.ofValue)
     }
     
@@ -74,7 +73,7 @@ struct Analyzer {
         return getElementsOfMatchedWIthJsonGrammer(inputValue: input, pattern: JsonGrammerRule.ofNestedDictionary)
     }
     
-    // Mark : 문법과 매칭하여 값을 추출할 NS함수
+    // 문법과 매칭하여 값을 추출할 NS함수
     private static func getElementsOfMatchedWIthJsonGrammer(inputValue: String, pattern: String) -> Array<String> {
         let regularExpression = try! NSRegularExpression(pattern: pattern)
         let matchedValue = regularExpression.matches(in: inputValue, range: NSRange(location:0, length:inputValue.count))
@@ -82,6 +81,7 @@ struct Analyzer {
         return result
     }
     
+    // Mark : 매칭된 값 삭제
     //  이미 매칭된 객체를 삭제
     private static func removeMatchedObjectfromString (from input: String) -> String {
         return removeAlreadyMatchedPattern(from: input, pattern: JsonGrammerRule.ofObject)
@@ -92,7 +92,7 @@ struct Analyzer {
         return removeAlreadyMatchedPattern(from: input, pattern: JsonGrammerRule.ofArray)
     }
     
-    // Mark : 이미 매칭된 값을 삭제하는 NS함수
+    // 문법과 매칭된 값을 삭제하는 NS함수
     private static func removeAlreadyMatchedPattern(from input: String, pattern: String) -> String {
         let regex = try! NSRegularExpression(pattern: pattern, options: [])
         return regex.stringByReplacingMatches(
@@ -100,6 +100,14 @@ struct Analyzer {
             range: NSRange(location: 0, length: input.count),
             withTemplate: ""
         )
+    }
+    
+    // Mark : 문자열의 처음과 끝을 제거하는 함수
+    private static func removeFirstAndLastCharacter (_ input: String) -> String{
+        var input = input
+        input.removeFirst()
+        input.removeLast()
+        return input
     }
     
 }
