@@ -9,23 +9,20 @@
 import Foundation
 
 struct CountingJsonData {
-    static func makeCountedTypeInstance (_ input: Any) -> JsonData {
-        switch input {
-        case is Dictionary<String,Any> :
-            return getCountedObjectType(input as! [String : Any])
-        default:
-            return getCountedArrayType(input as! [String])
-        }
+    
+    // 카운팅된 JsonData 인스턴스 생성
+    static func makeCountedTypeInstance (jsonType: JsonDataCommon) -> JsonData {
+        return jsonType.getCountedType()
     }
     
     //  객체타입의 카운팅 인스턴스 생성
-    private static func getCountedObjectType(_ objectValue: [String:Any]) -> JsonData {
+     static func getCountedObjectType(_ objectValue: [String:Any]) -> JsonData {
         let (countOfNum, countOfBool, countOfString, countOfArray) = countOfValueTypeInObject(objectValue)
         return JsonData(countOfNum, countOfBool, countOfString, countOfArray)
     }
     
     //  배열 타입의 카운팅 인스턴스 생성
-    private static func getCountedArrayType(_ arrayValue: [String]) -> JsonData {
+     static func getCountedArrayType(_ arrayValue: [String]) -> JsonData {
         var countOfNumber: Int = 0
         var countOfBool: Int = 0
         var countOfString: Int = 0

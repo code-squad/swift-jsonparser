@@ -22,7 +22,7 @@ while true {
     // 분석된 Json 타입인스턴스 생성
     let analyzedValue = Analyzer.makeAnalyzedTypeInstance(validString)
     // Json타입 카운팅
-    let countedValue =  CountingJsonData.makeCountedTypeInstance(analyzedValue)
+    let countedValue =  CountingJsonData.makeCountedTypeInstance(jsonType: analyzedValue)
     // 카운팅 출력
     OutputView.printCountedResult(countedValue)
     // JsonDataType 출력

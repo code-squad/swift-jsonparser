@@ -9,19 +9,12 @@
 import Foundation
 
 struct JsonPrintingMaker {
-    static func makeJsonTypeforPrinting(jsonType: Any) -> String {
-        return readyforPrinting(jsonType)
-    }
     
-    private static func readyforPrinting (_ jsonType: Any) -> String{
-                if let jsonObjectType = jsonType as? Dictionary<String,Any> {
-                        return  makeObjectTypeForPrinting(jsonObjectType)
-                    } else {
-                        return  makeArrayTypeForPrinting(jsonType as! Array<String>)
-                    }
+    static func makeJsonTypeforPrinting(jsonType: JsonDataCommon) -> String {
+        return jsonType.readyforPrinting()
     }
-    
-    private static func makeObjectTypeForPrinting(_ jsonObjectType: Dictionary<String,Any>) -> String {
+   
+    static func makeObjectTypeForPrinting(_ jsonObjectType: Dictionary<String,Any>) -> String {
         var result: String = ""
         result += "{" + makeNewLine()
         result += getValuesFromObject(jsonObjectType)
@@ -30,7 +23,7 @@ struct JsonPrintingMaker {
         return result
     }
     
-    private static func getValuesFromObject(_ jsonObjectType: Dictionary<String,Any>) -> String {
+    static func getValuesFromObject(_ jsonObjectType: Dictionary<String,Any>) -> String {
         var result: String = ""
         _ = jsonObjectType.forEach {
             var value = ""
@@ -46,7 +39,7 @@ struct JsonPrintingMaker {
         return result
     }
     
-    private static func makeArrayTypeForPrinting(_ jsonArrayType: [String]) -> String {
+    static func makeArrayTypeForPrinting(_ jsonArrayType: [String]) -> String {
         var result: String = ""
         result += "[" + makeNewLine()
         result += getValueFromArray(jsonArrayType)

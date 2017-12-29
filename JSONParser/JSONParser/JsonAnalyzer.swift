@@ -12,7 +12,7 @@ import Foundation
 struct Analyzer {
     
     // 분석된 타입 인스턴스를 반환
-    static func makeAnalyzedTypeInstance (_ inputValue: String) -> Any {
+    static func makeAnalyzedTypeInstance (_ inputValue: String) -> JsonDataCommon {
         return inputValue.first == "{" ? getJsonObject(inputValue) : getJsonArray(inputValue)
     }
     

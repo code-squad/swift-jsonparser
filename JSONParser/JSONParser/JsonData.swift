@@ -21,6 +21,7 @@ struct JsonData {
         case array
     }
     
+    
     // 객체타입 생성자
     init (_ ofNumericValue: Int, _ ofBooleanValue: Int, _ ofStringValue: Int, _ ofArray: Int) {
         self.type = CountingType.object
