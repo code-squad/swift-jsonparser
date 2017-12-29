@@ -15,9 +15,9 @@ struct Parser {
         case object
     }
     
-    static func matchValues(_ target: ([String], ParseTarget)) throws -> JSONData {
-        let convertTarget = target.0
-        let targetType = target.1
+    static func matchValues(_ target: (parseValue: [String], parseType: ParseTarget)) throws -> JSONData {
+        let convertTarget = target.parseValue
+        let targetType = target.parseType
         
         if targetType == Parser.ParseTarget.list {
             do {

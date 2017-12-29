@@ -11,7 +11,7 @@ let inputView = InputView()
 let userInput = inputView.askUserInput()
 
 let grammarChecker = GrammarChecker()
-var parseTarget = ([String](),Parser.ParseTarget.list)
+var parseTarget = (parseValue: [String](), parseType: Parser.ParseTarget.list)
 var convertedValues : JSONData = JSONData.IntegerValue(0)
 
 do {
@@ -31,7 +31,7 @@ do {
 let counter = ValueCounter(targetToCount: convertedValues)
 let countInfo = counter.makeCountInfo()
 let outputView = OutputView()
-outputView.showResult(countInfo)
+outputView.showResult(countInfo, parseTarget.parseType)
 
 
 

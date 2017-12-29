@@ -15,23 +15,19 @@ struct CountInfo {
     private (set) var countOfObject : Int
     private (set) var countOfArray : Int
     private (set) var countOfJSONData : Int
-    private (set) var parseType : Parser.ParseTarget
-    
 
     init (countOfInt: Int = 0,
           countOfBool: Int = 0,
           countOfString: Int = 0,
           countOfObject: Int = 0,
           countOfArray: Int = 0,
-          countOfJSONData: Int = 0,
-          parseType: Parser.ParseTarget) {
+          countOfJSONData: Int = 0) {
         self.countOfInt = countOfInt
         self.countOfBool = countOfBool
         self.countOfString = countOfString
         self.countOfObject = countOfObject
         self.countOfArray = countOfArray
         self.countOfJSONData = countOfJSONData
-        self.parseType = parseType
     }
 
 }
