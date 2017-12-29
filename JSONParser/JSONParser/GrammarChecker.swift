@@ -47,7 +47,7 @@ struct GrammarChecker {
         
         if input.hasPrefix("[") && input.hasSuffix("]") {
             if isValidArray(input) {
-               return (extractArrayValue(removeBrackets(input)),Parser.ParseTarget.list)
+                return (extractArrayValue(input: removeBrackets(input), regexPattern: arrayPattern),Parser.ParseTarget.list)
             } else {
                 throw GrammarChecker.FormatError.invalidArray
             }
@@ -65,9 +65,9 @@ struct GrammarChecker {
     // MARK: Array Check
     
     // #1. Array - format check
-    private func extractArrayValue (_ input: String) -> [String] {
+    private func extractArrayValue (input: String, regexPattern: String) -> [String] {
         do {
-            let regex = try NSRegularExpression(pattern: arrayPattern)
+            let regex = try NSRegularExpression(pattern: regexPattern)
             let nsInput = input as NSString
             let matches = regex.matches(in: input, range: NSRange(location: 0, length: nsInput.length))
             let matchValues = matches.map{nsInput.substring(with: $0.range)}
@@ -93,7 +93,7 @@ struct GrammarChecker {
     
     // Array - #1, #2 execute
     func isValidArray (_ input: String) -> Bool {
-        let formatMatchValues = extractArrayValue(input)
+        let formatMatchValues = extractArrayValue(input: removeBrackets(input), regexPattern: arrayPattern)
         for value in formatMatchValues {
             return isValidValueInArray(value)
         }
@@ -142,30 +142,18 @@ struct GrammarChecker {
     
     func forNestedArray (_ input: String) throws -> ([String],Parser.ParseTarget) {
         if isValidNestedArray(input) {
-            return (extractNestedArrayValue(input),Parser.ParseTarget.list)
+            return (extractArrayValue(input: input, regexPattern: nestedArrayPattern),Parser.ParseTarget.list)
         } else {
             throw GrammarChecker.FormatError.invalidArray
         }
     }
     
     private func isValidNestedArray (_ input: String) -> Bool {
-        let formatMatchValues = extractNestedArrayValue(input)
+        let formatMatchValues = extractArrayValue(input: input, regexPattern: nestedArrayPattern)
         for value in formatMatchValues {
             return isValidValueInArray(value)
         }
         return false
-    }
-    
-    private func extractNestedArrayValue (_ input: String) -> [String] {
-        do {
-            let regex = try NSRegularExpression(pattern: nestedArrayPattern)
-            let nsInput = input as NSString
-            let matches = regex.matches(in: input, range: NSRange(location: 0, length: nsInput.length))
-            let matchValues = matches.map{nsInput.substring(with: $0.range)}
-            return matchValues
-        } catch {
-            return []
-        }
     }
 
 }
