@@ -14,11 +14,10 @@ extension String {
     func sliceByString(from:String, to:String) -> String? {
         let startRange = self.range(of: from)
         guard let firstRange = startRange else {return ""}
-        let subString = String(self[firstRange.upperBound...])
         
-        let endRange = subString.range(of: to)
+        let endRange = self.range(of: to)
         guard let secondRange = endRange else {return ""}
-        return String(subString[..<secondRange.lowerBound])
+        return String(self[firstRange.upperBound..<secondRange.lowerBound])
     }
     
 }

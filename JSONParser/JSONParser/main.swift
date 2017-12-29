@@ -9,23 +9,19 @@
 import Foundation
 
 let outputView : OutputView = OutputView()
-var userInput : String = ""
-repeat {
+var runJSONParser : Bool = true
+while runJSONParser {
     
     outputView.printMessages(.inputMessage)
-    userInput = InputView().readInput()
-    guard userInput != "q" else {
-        outputView.printMessages(.exitMessage)
-        continue
-    }
+    let userInput = InputView().readInput()
+    guard userInput != "q" else { break }
     guard GrammarChecker().isValid(userInput: userInput) else {
         outputView.printMessages(.formatError)
         continue
     }
-
     let convertedData = DataFactory().generateData(userInput)
     let numbersOfData = DataCounter().countNumberOfData(convertedData)
     
     outputView.printResultOfData(numbersOfData)
     
-} while(userInput != "q")
+}
