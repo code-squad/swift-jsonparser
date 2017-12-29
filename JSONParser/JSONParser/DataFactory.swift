@@ -38,10 +38,9 @@ struct DataFactory {
             temp = makeObjectType(dataBeforeSeperating[indexOfData])
             seperatedObeject.updateValue(temp.value, forKey: temp.key)
         }
-        print(seperatedArray)
-        print(seperatedObeject)
         guard isArray(data) == false else { return seperatedArray }
         return seperatedObeject
+        
     }
     
     private func makeOneData (_ oneData : String) -> Any {
@@ -97,14 +96,14 @@ struct DataFactory {
     private func sliceData (_ data : String) -> [String] {
         let dataWithoutMarks = sliceMarks(data)
         let valuesInArray = dataWithoutMarks.sliceByString(from: "[", to: "]")
-        let temp = dataWithoutMarks.replacingOccurrences(of: valuesInArray!, with: " ", range: nil)
+        let temp = dataWithoutMarks.replacingOccurrences(of: valuesInArray ?? "", with: " ", range: nil)
         var seperatedData = temp.split(separator: ",").map(String.init)
         for index in 0..<seperatedData.count {
             if isArray(data) == true && seperatedData[index].contains("[") {
-               seperatedData[index] = "[" + valuesInArray! + "]"
+               seperatedData[index] = "[" + (valuesInArray ?? "") + "]"
                break
             }
-            seperatedData[index] = seperatedData[index].replacingOccurrences(of: "]", with: valuesInArray! + "]")
+            seperatedData[index] = seperatedData[index].replacingOccurrences(of: "]", with: valuesInArray ?? "" + "]")
         }
         return seperatedData
     }

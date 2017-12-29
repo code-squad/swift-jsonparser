@@ -8,15 +8,18 @@
 
 import Foundation
 
-var runJsonParser : Bool = true
-mainLoop : while runJsonParser == true {
-    let outputView : OutputView = OutputView()
+let outputView : OutputView = OutputView()
+var userInput : String = ""
+repeat {
     
-    outputView.printMessages("input")
-    let userInput = InputView().readInput()
-    guard userInput != "q" else { break }
+    outputView.printMessages(.inputMessage)
+    userInput = InputView().readInput()
+    guard userInput != "q" else {
+        outputView.printMessages(.exitMessage)
+        continue
+    }
     guard GrammarChecker().isValid(userInput: userInput) else {
-        outputView.printMessages("formatError")
+        outputView.printMessages(.formatError)
         continue
     }
 
@@ -24,4 +27,5 @@ mainLoop : while runJsonParser == true {
     let numbersOfData = DataCounter().countNumberOfData(convertedData)
     
     outputView.printResultOfData(numbersOfData)
-}
+    
+} while(userInput != "q")

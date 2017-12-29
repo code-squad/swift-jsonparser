@@ -10,20 +10,14 @@ import Foundation
 
 struct OutputView {
     
-    private enum Messages : String {
+    enum Messages : String {
         case inputMessage = "분석할 JSON데이터를 입력하세요. 종료를 원하시면 q를 입력해주세요."
         case formatError = "지원하는 형식이 아닙니다. 다시 입력해주세요."
+        case exitMessage = "종료합니다."
     }
     
-    func printMessages(_ message : String) {
-        switch message {
-        case "input" :
-            print(Messages.inputMessage.rawValue)
-        case "formatError" :
-            print(Messages.formatError.rawValue)
-        default:
-            break
-        }
+    func printMessages(_ message : Messages) {
+        print(message.rawValue)
     }
     
     func printResultOfData(_ countVal : MyCount) {
