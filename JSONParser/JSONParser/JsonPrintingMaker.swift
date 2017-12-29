@@ -23,7 +23,16 @@ struct JsonPrintingMaker {
         return result
     }
     
-    static func getValuesFromObject(_ jsonObjectType: Dictionary<String,Any>) -> String {
+    static func makeArrayTypeForPrinting(_ jsonArrayType: [String]) -> String {
+        var result: String = ""
+        result += "[" + makeNewLine()
+        result += getValueFromArray(jsonArrayType)
+        result.removeLast(2)
+        result += makeNewLine() + "]"
+        return result
+    }
+    
+    private static func getValuesFromObject(_ jsonObjectType: Dictionary<String,Any>) -> String {
         var result: String = ""
         _ = jsonObjectType.forEach {
             var value = ""
@@ -36,15 +45,6 @@ struct JsonPrintingMaker {
             }
             result += insertIndentation() + "\"\($0.key)\" : \(value)" + "," + makeNewLine()
         }
-        return result
-    }
-    
-    static func makeArrayTypeForPrinting(_ jsonArrayType: [String]) -> String {
-        var result: String = ""
-        result += "[" + makeNewLine()
-        result += getValueFromArray(jsonArrayType)
-        result.removeLast(2)
-        result += makeNewLine() + "]"
         return result
     }
     

@@ -20,9 +20,7 @@ extension Dictionary: JsonDataCommon {
     }
     
     func readyforPrinting() -> String{
-        var result = ""
-        result +=  JsonPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, Any>)
-        return result
+        return JsonPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, Any>)
     }
 }
 
@@ -32,8 +30,6 @@ extension Array: JsonDataCommon {
     }
     
     func readyforPrinting() -> String{
-        var result = ""
-        result +=  JsonPrintingMaker.makeArrayTypeForPrinting(self as! [String])
-        return result
+        return JsonPrintingMaker.makeArrayTypeForPrinting(self as! [String])
     }
 }
