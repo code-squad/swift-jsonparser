@@ -12,7 +12,7 @@ import Foundation
 struct Analyzer {
     
     // 분석된 타입 인스턴스를 반환
-    static func makeAnalyzedTypeInstance (_ inputValue: String) -> JsonDataCommon {
+    static func makeAnalyzedTypeInstance (_ inputValue: String) -> JsonDataCommon{
         return inputValue.first == "{" ? getJsonObject(inputValue) : getJsonArray(inputValue)
     }
     
@@ -20,7 +20,7 @@ struct Analyzer {
     private static func getJsonObject(_ inputValue: String) -> [String:Any] {
         var jsonObject = [String:Any]()
         let elementsOfObject = Analyzer.getElementsOfObject(from: inputValue)
-        _ = elementsOfObject.forEach {
+        elementsOfObject.forEach {
             let keyValue = $0.split(separator: ":").map {$0.trimmingCharacters(in: .whitespaces)}
             let key : String = String(describing: keyValue.first ?? "").replacingOccurrences(of: "\"", with: "")
             let value : Any = generateValueInObject(stringNotyetValue: String(describing: keyValue.last ?? ""))
