@@ -15,5 +15,3 @@ enum JSONData {
     case ObjectValue(Dictionary<String, JSONData>)
     case ArrayValue([JSONData])
 }
-
-
