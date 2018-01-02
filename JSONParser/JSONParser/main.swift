@@ -22,6 +22,7 @@ while runJSONParser {
     let convertedData = DataFactory().generateData(userInput)
     let numbersOfData = DataCounter().countNumberOfData(convertedData)
     
-    outputView.printResultOfData(numbersOfData)
+    outputView.printCountOfData(numbersOfData)
+    outputView.printShapeOfData(convertedData)
     
 }

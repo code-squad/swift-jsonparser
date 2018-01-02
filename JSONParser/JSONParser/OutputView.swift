@@ -20,7 +20,7 @@ struct OutputView {
         print(message.rawValue)
     }
     
-    func printResultOfData(_ countVal : MyCount) {
+    func printCountOfData(_ countVal : MyCount) {
         let countOfData = makeNumberMessage(countVal)
         if countVal.currentData == "dictionary"  {
             print("총 \(countVal.objectVal)개의 객체 데이터 중에 \(countOfData)포함되어 있습니다.")
@@ -28,6 +28,32 @@ struct OutputView {
         }
         let sumOfCount = countVal.boolVal + countVal.numberVal + countVal.boolVal + countVal.objectVal + countVal.arrayVal
         print("총 \(sumOfCount)개의 배열 데이터 중에 \(countOfData)포함되어 있습니다.")
+    }
+    
+    func printShapeOfData(_ userData : Any) {
+        var temp : String = ""
+        if userData is ObjectDictionary {
+            print(generateShapeOfObject(userData as! [String:Any]) + "}")
+            return
+        }
+        for oneData in userData as! [Any] {
+            if oneData is ObjectDictionary{
+                temp += generateShapeOfObject(oneData as! [String:Any])
+                temp += "    },"
+                continue
+            }
+            temp +=  "\n    \(oneData),"
+        }
+        print("[\(temp)\n]")
+    }
+    
+    private func generateShapeOfObject(_ userData : [String : Any]) -> String {
+        var temp : String = ""
+        let dataOfdictionary = Array(userData)
+        for index in 0..<dataOfdictionary.count {
+        temp += "    \"\(dataOfdictionary[index].key)\" : \(dataOfdictionary[index].value),\n"
+        }
+        return "{\n\(temp)"
     }
     
     private func makeNumberMessage(_ data : MyCount) -> String {

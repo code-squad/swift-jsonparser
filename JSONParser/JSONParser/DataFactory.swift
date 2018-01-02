@@ -30,30 +30,40 @@ struct DataFactory {
         var seperatedObeject : [String:Any] = [:]
         var temp : ( key : String, value : Any )
         for indexOfData in 0..<dataBeforeSeperating.count {
-            if isArray(data) == true {
+            if isArray(data) {
                 seperatedArray.append(makeOneData(dataBeforeSeperating[indexOfData]))
                 continue
             }
-            temp = makeObjectType(dataBeforeSeperating[indexOfData])
+            temp = generateOneObjectData(dataBeforeSeperating[indexOfData])
             seperatedObeject.updateValue(temp.value, forKey: temp.key)
         }
         guard isArray(data) == false else { return seperatedArray }
         return seperatedObeject
-        
     }
     
     private func makeOneData (_ oneData : String) -> Any {
         if isObject(oneData) == true {
             let temp = makeObjectType(oneData)
-            return [temp.key : temp.value]
+            return temp
         }
         guard isArray(oneData) == false else { return generateData(oneData) }
         guard isBoolType(oneData) == false else { return makeBoolType(oneData) }
         guard isStringType(oneData) == false else { return makeStringType(oneData) }
         return Int(oneData) ?? 0
     }
+
+    private func makeObjectType (_ oneData : String) -> ObjectDictionary {
+        var temp : ( key : String, value : Any )
+        var tempDic : ObjectDictionary = [:]
+        let seperatedObject = sliceData(oneData)
+        for index in 0..<seperatedObject.count {
+            temp = generateOneObjectData(seperatedObject[index])
+            tempDic.updateValue(temp.value, forKey: temp.key)
+        }
+        return tempDic
+    }
     
-    private func makeObjectType (_ oneData : String) -> (key : String, value : Any) {
+    private func generateOneObjectData(_ oneData : String) -> (key : String, value : Any) {
         var databeforeSeperating = oneData.split(separator: ":").map(String.init)
         let tempKey = sliceMarks(databeforeSeperating[0])
         let tempValue = makeOneData(databeforeSeperating[1])
@@ -93,16 +103,25 @@ struct DataFactory {
     }
     
     private func sliceData (_ data : String) -> [String] {
+        var temp : String = ""
         let dataWithoutMarks = sliceMarks(data)
         let valuesInArray = dataWithoutMarks.sliceByString(from: "[", to: "]")
-        let temp = dataWithoutMarks.replacingOccurrences(of: valuesInArray ?? "", with: " ", range: nil)
+        let valuesInObject = dataWithoutMarks.sliceByString(from: "{", to: "}")
+        temp = dataWithoutMarks.replacingOccurrences(of: valuesInArray ?? "", with: " ")
+        temp = temp.replacingOccurrences(of: valuesInObject ?? "", with: " ")
         var seperatedData = temp.split(separator: ",").map(String.init)
         for index in 0..<seperatedData.count {
-            if isArray(data) == true && seperatedData[index].contains("[") {
-               seperatedData[index] = "[" + (valuesInArray ?? "") + "]"
-               break
+            if isObject(seperatedData[index]) {
+                seperatedData[index] = "{\(valuesInObject ?? "")}"
             }
-            seperatedData[index] = seperatedData[index].replacingOccurrences(of: "]", with: valuesInArray ?? "" + "]")
+        }
+        for index in 0..<seperatedData.count {
+            if isArray(data) && seperatedData[index].contains("[") && isObject(seperatedData[index]) == false {
+                seperatedData[index] = "[" + (valuesInArray ?? "") + "]"
+                continue
+            }
+            guard isObject(data) == true else { continue }
+            seperatedData[index] = seperatedData[index].replacingOccurrences(of: "]", with: "\(valuesInArray ?? "")]")
         }
         return seperatedData
     }
