@@ -41,7 +41,7 @@ struct OutputView {
         }
     }
 
-    func showResult(_ countInfo: CountInfo, _ parseType: Parser.ParseTarget) {
+    func showResultMessage(_ countInfo: CountInfo, _ parseType: Parser.ParseTarget) {
         print("\(countInfo.countOfJSONData)개 \(selectType(parseType)) 데이터 중에 \(makeResultMessage(countInfo))가 포함되어 있습니다.")
     }
     

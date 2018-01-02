@@ -31,7 +31,7 @@ do {
 let counter = ValueCounter(targetToCount: convertedValues)
 let countInfo = counter.makeCountInfo()
 let outputView = OutputView()
-outputView.showResult(countInfo, parseTarget.parseType)
+outputView.showResultMessage(countInfo, parseTarget.parseType)
 
 
 
