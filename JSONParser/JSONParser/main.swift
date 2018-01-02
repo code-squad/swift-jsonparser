@@ -20,11 +20,11 @@ do {
 } catch let error as GrammarChecker.FormatError {
     switch error {
     case .invalidArray:
-        print(GrammarChecker.FormatError.invalidArray.description)
+        print(GrammarChecker.FormatError.invalidArray)
     case .invalidObject:
-        print(GrammarChecker.FormatError.invalidObject.description)
+        print(GrammarChecker.FormatError.invalidObject)
     case .invalidInput:
-        print(GrammarChecker.FormatError.invalidInput.description)
+        print(GrammarChecker.FormatError.invalidInput)
     }
 }
 

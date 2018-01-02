@@ -13,6 +13,15 @@ struct Parser {
     enum ParseTarget {
         case list
         case object
+        
+        var description: String {
+            switch self {
+            case .list:
+                return "배열"
+            case .object:
+                return "객체"
+            }
+        }
     }
     
     static func matchValues(_ target: (parseValue: [String], parseType: ParseTarget)) throws -> JSONData {

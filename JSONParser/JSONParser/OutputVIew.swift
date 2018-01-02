@@ -32,18 +32,17 @@ struct OutputView {
     }
     
     private func selectType(_ info: Parser.ParseTarget) -> String {
-        if info == Parser.ParseTarget.list {
-            return "배열 데이터"
+        
+        switch info {
+        case .list:
+            return info.description
+        case .object:
+            return info.description
         }
-        if info == Parser.ParseTarget.object {
-            return "객체 데이터"
-        }
-        return "데이터"
     }
-    
 
     func showResult(_ countInfo: CountInfo, _ parseType: Parser.ParseTarget) {
-        print("\(countInfo.countOfJSONData)개 \(selectType(parseType)) 중에 \(makeResultMessage(countInfo))가 포함되어 있습니다.")
+        print("\(countInfo.countOfJSONData)개 \(selectType(parseType)) 데이터 중에 \(makeResultMessage(countInfo))가 포함되어 있습니다.")
     }
     
 }

@@ -17,7 +17,7 @@ struct GrammarChecker {
     let objectValuePattern = "(\".*\"):((true|false)|(\\{.*\\})|(\\d+)|(\".*\")|(\\[.*\\]))"
     let nestedArrayPattern = "true|false|\".+?\"|(\\d+)"
 
-    enum FormatError: Error {
+    enum FormatError: Error, CustomStringConvertible {
         case invalidArray
         case invalidObject
         case invalidInput
