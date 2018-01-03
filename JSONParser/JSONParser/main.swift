@@ -31,9 +31,10 @@ do {
 let counter = ValueCounter(targetToCount: convertedValues)
 let countInfo = counter.makeCountInfo()
 let outputView = OutputView()
-outputView.showResultMessage(countInfo, parseTarget.parseType)
 let resultData = ResultData()
-print(resultData.make(convertedValues))
+let resultText = resultData.make(convertedValues)
+outputView.showResult(countInfo, parseTarget.parseType, text: resultText)
+
 
 
 
