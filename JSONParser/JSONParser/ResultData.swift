@@ -12,10 +12,14 @@ struct ResultData {
     
     func makeResultData (_ dataType: JSONData) -> String {
         if case let JSONData.ArrayValue(dataType) = dataType {
-            return listResult(dataType)
+            var printData = listResult(dataType)
+            printData.removeLast()
+            return printData
         }
         if case let JSONData.ObjectValue(dataType) = dataType {
-            return objectResult(dataType, depth: 1)
+            var printData = objectResult(dataType, depth: 1)
+            printData.removeLast()
+            return printData
         }
         return ""
     }
@@ -25,10 +29,11 @@ struct ResultData {
         resultText += "{"
         resultText += makeNewLine()
         for key in values.keys {
-            resultText += makeDepth(depth) + "\(key) : \(values[key]), "
+            let valueInObject = values[key] ?? JSONData.IntegerValue(0)
+            resultText += makeDepth(depth) + "\(key) : \(String(describing: valueInObject)), "
             resultText += makeNewLine()
         }
-        resultText += makeDepth(depth) + "}"
+        resultText += makeDepth(depth) + "},"
         resultText += makeNewLine()
         return resultText
     }
@@ -44,7 +49,7 @@ struct ResultData {
                 resultText += objectResult(value, depth: 2)
             }
         }
-        resultText += "]"
+        resultText += "],"
         return resultText
     }
     
