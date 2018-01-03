@@ -14,7 +14,7 @@ struct JsonPrintingMaker {
         return jsonType.readyforPrinting()
     }
    
-    static func makeObjectTypeForPrinting(_ jsonObjectType: Dictionary<String,Any>) -> String {
+    static func makeObjectTypeForPrinting(_ jsonObjectType: Dictionary<String,JSONType>) -> String {
         var result: String = ""
         result += "{" + makeNewLine()
         result += getValuesFromObject(jsonObjectType)
@@ -32,43 +32,28 @@ struct JsonPrintingMaker {
         return result
     }
     
-    private static func getValuesFromObject(_ jsonObjectType: Dictionary<String,Any>) -> String {
+    private static func getValuesFromObject(_ jsonObjectType: Dictionary<String,JSONType>) -> String {
         var result: String = ""
         _ = jsonObjectType.forEach {
-            var value = ""
-            if $0.value is String {
-                value = "\"" + String(describing: $0.value) + "\""
-            } else if let arrayOfJsonType = $0.value as? Array<String> {
-                value = makeArrayTypeForPrinting(arrayOfJsonType)
-            } else {
-                value = String(describing: $0.value)
-            }
+            let value = $0.value.makeValueFromObject()
             result += insertIndentation() + "\"\($0.key)\" : \(value)" + "," + makeNewLine()
         }
         return result
     }
     
-    private static func getValueFromArray(_ jsonArrayType: Array<Any>) -> String {
+    private static func getValueFromArray(_ jsonArrayType: Array<JSONType>) -> String {
         var result: String = ""
         _ = jsonArrayType.forEach {
-            if $0 is String {
-                result += insertIndentation() + String(describing: $0) + "," + makeNewLine()
-            } else if let jsonObjectType = $0 as? Dictionary<String,Any> {
-                result += makeObjectTypeForPrinting(jsonObjectType) + "," + makeNewLine()
-            } else if let arrayTypeInArray = $0 as? Array<String> {
-                result += makeArrayTypeForPrinting(arrayTypeInArray)
-            } else {
-                result += String(describing: $0)
-            }
+           result += $0.makeValueFromArray()
         }
         return result
     }
     
-    private static func insertIndentation () -> String {
+     static func insertIndentation () -> String {
         return "\t"
     }
     
-    private static func makeNewLine () -> String {
+     static func makeNewLine () -> String {
         return "\n"
     }
 }
