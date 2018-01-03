@@ -16,19 +16,19 @@ struct CountingJsonData {
     }
     
     //  객체타입의 카운팅 인스턴스 생성
-     static func getCountedObjectType(_ objectValue: [String:Any]) -> JsonData {
+    static func getCountedObjectType(_ objectValue: [String:JSONType]) -> JsonData {
         let (countOfNum, countOfBool, countOfString, countOfArray) = countOfValueTypeInObject(objectValue)
         return JsonData(countOfNum, countOfBool, countOfString, countOfArray)
     }
     
     //  배열 타입의 카운팅 인스턴스 생성
-     static func getCountedArrayType(_ arrayValue: [String]) -> JsonData {
+    static func getCountedArrayType(_ arrayValue: [String]) -> JsonData {
         var countOfNumber: Int = 0
         var countOfBool: Int = 0
         var countOfString: Int = 0
         var countOfObject: Int = 0
         var countOfofArray: Int = 0
-        _ = arrayValue.forEach {
+        arrayValue.forEach {
             if $0.hasPrefix("{") && $0.hasSuffix("}") { countOfObject += 1}
             else if $0.hasPrefix("[") && $0.hasSuffix("]") { countOfofArray += 1 }
             else if let _ = Int($0) { countOfNumber += 1}
@@ -39,12 +39,12 @@ struct CountingJsonData {
     }
     
     //  객체 내의 값의 타입 갯수를 세어 반환
-    static func countOfValueTypeInObject(_ objects: [String:Any]) -> (countOfNum: Int, countOfBool: Int, countOfString: Int, countOfArray: Int){
+    static func countOfValueTypeInObject(_ objects: [String:JSONType]) -> (countOfNum: Int, countOfBool: Int, countOfString: Int, countOfArray: Int){
         var countOfNumber: Int = 0
         var countOfBool: Int = 0
         var countOfString: Int = 0
         var countOfofArray: Int = 0
-        _ = objects.forEach {
+        objects.forEach {
             if let _ =  $0.value  as? Int {
                 countOfNumber += 1
             } else if let stringLikeArray = $0.value as? String, stringLikeArray.contains("[") {
