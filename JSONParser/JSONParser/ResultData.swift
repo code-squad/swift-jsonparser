@@ -10,7 +10,7 @@ import Foundation
 
 struct ResultData {
     
-    func decideFormat (_ dataType: JSONData) -> String {
+    func makeResultData (_ dataType: JSONData) -> String {
         if case let JSONData.ArrayValue(dataType) = dataType {
             return listResult(dataType)
         }
@@ -21,40 +21,40 @@ struct ResultData {
     }
     
     private func objectResult (_ values: [String:JSONData], depth: Int) -> String {
-        var text = ""
-        text += "{"
-        text += makeNewLine()
+        var resultText = ""
+        resultText += "{"
+        resultText += makeNewLine()
         for key in values.keys {
-            text += makeDepth(depth) + "\(key) : \(String(describing: values[key])), "
-            text += makeNewLine()
+            resultText += makeDepth(depth) + "\(key) : \(String(describing: values[key])), "
+            resultText += makeNewLine()
         }
-        text += makeDepth(depth) + "}"
-        text += makeNewLine()
-        return text
+        resultText += makeDepth(depth) + "}"
+        resultText += makeNewLine()
+        return resultText
     }
     
     private func nestedArray (_ value: [JSONData], depth: Int) -> String {
-        var text = ""
-        text += makeDepth(depth)
-        text += String(describing: value)
-        text += makeNewLine()
+        var resultText = ""
+        resultText += makeDepth(depth)
+        resultText += String(describing: value)
+        resultText += makeNewLine()
         
-        return text
+        return resultText
     }
     
     private func listResult (_ values: [JSONData]) -> String {
-        var text = ""
-        text += "["
+        var resultText = ""
+        resultText += "["
         for value in values {
             if case let JSONData.ArrayValue(value) = value {
-                text += nestedArray(value, depth: 1)
+                resultText += nestedArray(value, depth: 1)
             }
             if case let JSONData.ObjectValue(value) = value {
-                text += objectResult(value, depth: 2)
+                resultText += objectResult(value, depth: 2)
             }
         }
-        text += "]"
-        return text
+        resultText += "]"
+        return resultText
     }
     
     private func makeDepth(_ depth: Int) -> String{

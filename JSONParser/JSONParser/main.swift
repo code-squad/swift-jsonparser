@@ -33,7 +33,7 @@ let countInfo = counter.makeCountInfo()
 let outputView = OutputView()
 outputView.showResultMessage(countInfo, parseTarget.parseType)
 let resultData = ResultData()
-print(resultData.decideFormat(convertedValues))
+print(resultData.makeResultData(convertedValues))
 
 
 
