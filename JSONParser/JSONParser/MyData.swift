@@ -54,14 +54,14 @@ extension Dictionary : MyValues {
 
 extension String : MyValues {
     
-    enum Marks : String {
-        case whiteSpace = " "
-        case leftBracketOfObject = "{"
-        case rightBracketOfObject = "}"
-        case leftBracketOfArray = "["
-        case rightBracketOfArray = "]"
-        case markOfString = "\""
-        case markOfObject = ":"
+    struct Marks {
+        static let whiteSpace = " "
+        static let leftBracketOfObject = "{"
+        static let rightBracketOfObject = "}"
+        static let leftBracketOfArray = "["
+        static let rightBracketOfArray = "]"
+        static let markOfString = "\""
+        static let markOfObject = ":"
     }
     
     func sliceByString(from:String, to:String) -> String? {
@@ -74,7 +74,7 @@ extension String : MyValues {
     }
     
     func makeDataType(_ userData: String) -> MyValues {
-        return sliceOneMark(userData, mark: Marks.markOfString.rawValue)
+        return sliceOneMark(userData, mark: Marks.markOfString)
     }
     
     func checkDataType() -> MyValues {
@@ -91,23 +91,23 @@ extension String : MyValues {
     func sliceData () -> [String] {
         var temp : String = ""
         let dataWithoutMarks = sliceMarks(self)
-        let valuesInArray = dataWithoutMarks.sliceByString(from: Marks.leftBracketOfArray.rawValue, to: Marks.rightBracketOfArray.rawValue)
-        let valuesInObject = dataWithoutMarks.sliceByString(from: Marks.leftBracketOfObject.rawValue, to: Marks.rightBracketOfObject.rawValue)
-        temp = dataWithoutMarks.replacingOccurrences(of: valuesInArray ?? "", with: Marks.whiteSpace.rawValue)
-        temp = temp.replacingOccurrences(of: valuesInObject ?? "", with: Marks.whiteSpace.rawValue)
+        let valuesInArray = dataWithoutMarks.sliceByString(from: Marks.leftBracketOfArray, to: Marks.rightBracketOfArray)
+        let valuesInObject = dataWithoutMarks.sliceByString(from: Marks.leftBracketOfObject, to: Marks.rightBracketOfObject)
+        temp = dataWithoutMarks.replacingOccurrences(of: valuesInArray ?? "", with: Marks.whiteSpace)
+        temp = temp.replacingOccurrences(of: valuesInObject ?? "", with: Marks.whiteSpace)
         var seperatedData = temp.split(separator: ",").map(String.init)
         for index in 0..<seperatedData.count {
             if isObject(seperatedData[index]) {
-                seperatedData[index] = "\(Marks.leftBracketOfObject.rawValue)\(valuesInObject ?? "")\(Marks.rightBracketOfObject.rawValue)"
+                seperatedData[index] = "\(Marks.leftBracketOfObject)\(valuesInObject ?? "")\(Marks.rightBracketOfObject)"
             }
         }
         for index in 0..<seperatedData.count {
-            if isArray(self) && seperatedData[index].contains(Marks.leftBracketOfArray.rawValue) && isObject(seperatedData[index]) == false {
-                seperatedData[index] = Marks.leftBracketOfArray.rawValue + (valuesInArray ?? "") + Marks.rightBracketOfArray.rawValue
+            if isArray(self) && seperatedData[index].contains(Marks.leftBracketOfArray) && isObject(seperatedData[index]) == false {
+                seperatedData[index] = Marks.leftBracketOfArray + (valuesInArray ?? "") + Marks.rightBracketOfArray
                 continue
             }
             guard isObject(self) == true else { continue }
-            seperatedData[index] = seperatedData[index].replacingOccurrences(of: Marks.leftBracketOfArray.rawValue, with: "\(valuesInArray ?? "")\(Marks.rightBracketOfArray.rawValue)")
+            seperatedData[index] = seperatedData[index].replacingOccurrences(of: Marks.leftBracketOfArray, with: "\(valuesInArray ?? "")\(Marks.rightBracketOfArray)")
         }
         return seperatedData
     }
@@ -117,7 +117,7 @@ extension String : MyValues {
     }
     
     private func isStringType (_ oneData : String) -> Bool {
-        return oneData.first == Character(Marks.markOfString.rawValue) && oneData.last == Character(Marks.markOfString.rawValue)
+        return oneData.first == Character(Marks.markOfString) && oneData.last == Character(Marks.markOfString)
     }
     
     private func isBoolType (_ oneData : String) -> Bool {
@@ -125,15 +125,15 @@ extension String : MyValues {
     }
     
     private func isArray (_ oneData : String) -> Bool {
-        return oneData.first == Character(Marks.leftBracketOfArray.rawValue)
+        return oneData.first == Character(Marks.leftBracketOfArray)
     }
     
     private func isObject (_ oneData : String) -> Bool {
-        return oneData.first == Character(Marks.leftBracketOfObject.rawValue)
+        return oneData.first == Character(Marks.leftBracketOfObject)
     }
     
     func generateOneObjectData() -> (key : String, value : MyValues) {
-        var databeforeSeperating = self.split(separator: Character(Marks.markOfObject.rawValue)).map(String.init)
+        var databeforeSeperating = self.split(separator: Character(Marks.markOfObject)).map(String.init)
         let tempKey = self.sliceMarks(databeforeSeperating[0])
         let tempValue = self.checkDataType().makeDataType(databeforeSeperating[1])
         return (tempKey, tempValue)
@@ -149,7 +149,7 @@ extension String : MyValues {
     }
     
     func sliceMarks (_ userInput : String) -> String {
-        var userInputWithoutBracket = sliceOneMark(userInput, mark: Marks.whiteSpace.rawValue)
+        var userInputWithoutBracket = sliceOneMark(userInput, mark: Marks.whiteSpace)
         if isArray(userInputWithoutBracket) || isObject(userInputWithoutBracket) || isStringType(userInputWithoutBracket) {
             userInputWithoutBracket.removeFirst()
             userInputWithoutBracket.removeLast()
