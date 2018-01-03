@@ -12,18 +12,18 @@ import Foundation
 struct Analyzer {
     
     // 분석된 타입 인스턴스를 반환
-    static func makeAnalyzedTypeInstance (_ inputValue: String) -> JsonDataCommon{
+    static func makeAnalyzedTypeInstance (_ inputValue: String) -> JsonDataCommon & JSONType{
         return inputValue.first == "{" ? getJsonObject(inputValue) : getJsonArray(inputValue)
     }
     
     // 입력된 스트링값을 객체 문법규칙에 맞게 변환
-    private static func getJsonObject(_ inputValue: String) -> [String:Any] {
-        var jsonObject = [String:Any]()
+    private static func getJsonObject(_ inputValue: String) -> [String:JSONType] {
+        var jsonObject = [String:JSONType]()
         let elementsOfObject = Analyzer.getElementsOfObject(from: inputValue)
         elementsOfObject.forEach {
             let keyValue = $0.split(separator: ":").map {$0.trimmingCharacters(in: .whitespaces)}
             let key : String = String(describing: keyValue.first ?? "").replacingOccurrences(of: "\"", with: "")
-            let value : Any = generateValueInObject(stringNotyetValue: String(describing: keyValue.last ?? ""))
+            let value : JSONType = generateValueInObject(stringNotyetValue: String(describing: keyValue.last ?? ""))
             jsonObject.updateValue(value, forKey: key)
         }
         return jsonObject
@@ -43,7 +43,7 @@ struct Analyzer {
     }
     
     //  객체 내의 벨류생성
-    private static func generateValueInObject(stringNotyetValue: String) -> Any {
+    private static func generateValueInObject(stringNotyetValue: String) -> JSONType {
         if stringNotyetValue.hasPrefix("[") && stringNotyetValue.hasSuffix("]") { return stringNotyetValue }
         else if stringNotyetValue.starts(with: "\"") { return stringNotyetValue.replacingOccurrences(of: "\"", with: "")}
         else if let interger = Int(stringNotyetValue) { return interger }
