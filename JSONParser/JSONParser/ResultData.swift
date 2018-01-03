@@ -25,20 +25,11 @@ struct ResultData {
         resultText += "{"
         resultText += makeNewLine()
         for key in values.keys {
-            resultText += makeDepth(depth) + "\(key) : \(String(describing: values[key])), "
+            resultText += makeDepth(depth) + "\(key) : \(values[key]), "
             resultText += makeNewLine()
         }
         resultText += makeDepth(depth) + "}"
         resultText += makeNewLine()
-        return resultText
-    }
-    
-    private func nestedArray (_ value: [JSONData], depth: Int) -> String {
-        var resultText = ""
-        resultText += makeDepth(depth)
-        resultText += String(describing: value)
-        resultText += makeNewLine()
-        
         return resultText
     }
     
@@ -47,13 +38,22 @@ struct ResultData {
         resultText += "["
         for value in values {
             if case let JSONData.ArrayValue(value) = value {
-                resultText += nestedArray(value, depth: 1)
+                resultText += nestedList(value, depth: 1)
             }
             if case let JSONData.ObjectValue(value) = value {
                 resultText += objectResult(value, depth: 2)
             }
         }
         resultText += "]"
+        return resultText
+    }
+    
+    private func nestedList (_ value: [JSONData], depth: Int) -> String {
+        var resultText = ""
+        resultText += makeDepth(depth)
+        resultText += String(describing: value.description)
+        resultText += makeNewLine()
+        
         return resultText
     }
     
@@ -64,5 +64,5 @@ struct ResultData {
     private func makeNewLine() -> String {
         return "\n"
     }
-    
+
 }

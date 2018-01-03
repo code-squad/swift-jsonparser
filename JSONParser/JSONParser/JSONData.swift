@@ -15,3 +15,21 @@ enum JSONData {
     case ObjectValue(Dictionary<String, JSONData>)
     case ArrayValue([JSONData])
 }
+
+extension JSONData : CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .IntegerValue(let value):
+            return String(value)
+        case .StringValue(let value):
+            return value
+        case .BoolValue(let value):
+            return String(value)
+        case .ObjectValue(let value):
+            return String(describing: value)
+        case .ArrayValue(let value):
+            return String(describing: value)
+        }
+    }
+ }
+
