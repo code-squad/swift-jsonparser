@@ -42,14 +42,14 @@ struct DataFactory {
     }
     
     private func makeOneData (_ oneData : String) -> Any {
-        if isObject(oneData) == true {
-            let temp = makeObjectType(oneData)
-            return temp
+        switch oneData {
+        case let oneData where isObject(oneData) : return makeObjectType(oneData)
+        case let oneData where isArray(oneData) : return generateData(oneData)
+        case let oneData where isBoolType(oneData) : return makeBoolType(oneData)
+        case let oneData where isStringType(oneData) : return makeStringType(oneData)
+        default:
+            return Int(oneData) ?? 0
         }
-        guard isArray(oneData) == false else { return generateData(oneData) }
-        guard isBoolType(oneData) == false else { return makeBoolType(oneData) }
-        guard isStringType(oneData) == false else { return makeStringType(oneData) }
-        return Int(oneData) ?? 0
     }
 
     private func makeObjectType (_ oneData : String) -> ObjectDictionary {
