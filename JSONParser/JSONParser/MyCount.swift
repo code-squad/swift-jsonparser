@@ -29,11 +29,11 @@ extension Array : CountTypes {
         arrCount.currentData = "array"
         for oneData in self {
             switch oneData {
-            case is [String : Any] : arrCount.objectVal += 1
+            case is [String : MyValues] : arrCount.objectVal += 1
             case is String : arrCount.stringVal += 1
             case is Int : arrCount.numberVal += 1
             case is Bool : arrCount.boolVal += 1
-            case is [Any] : arrCount.arrayVal += 1
+            case is [MyValues] : arrCount.arrayVal += 1
             default : continue
             }
         }
@@ -51,7 +51,7 @@ extension Dictionary : CountTypes {
             case is String : dicCount.stringVal += 1
             case is Int : dicCount.numberVal += 1
             case is Bool : dicCount.boolVal += 1
-            case is [Any] : dicCount.arrayVal += 1
+            case is [MyValues] : dicCount.arrayVal += 1
             default : continue
             }
         }
