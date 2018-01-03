@@ -39,10 +39,10 @@ struct OutputView {
         for oneData in userData as! [Any] {
             if oneData is ObjectDictionary{
                 temp += generateShapeOfObject(oneData as! [String:Any])
-                temp += "    },"
+                temp += "\t},"
                 continue
             }
-            temp +=  "\n    \(oneData),"
+            temp +=  "\n\t\(oneData),"
         }
         print("[\(temp)\n]")
     }
@@ -51,7 +51,7 @@ struct OutputView {
         var temp : String = ""
         let dataOfdictionary = Array(userData)
         for index in 0..<dataOfdictionary.count {
-        temp += "    \"\(dataOfdictionary[index].key)\" : \(dataOfdictionary[index].value),\n"
+        temp += "\t\"\(dataOfdictionary[index].key)\" : \(dataOfdictionary[index].value),\n"
         }
         return "{\n\(temp)"
     }
