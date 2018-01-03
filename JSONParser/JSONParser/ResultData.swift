@@ -17,7 +17,7 @@ struct ResultData {
         return resultText
     }
     
-    func selectType(_ dataForResult: JSONData) -> String {
+    private func selectType(_ dataForResult: JSONData) -> String {
         var resultText = ""
         if case let JSONData.ArrayValue(dataForResult) = dataForResult {
             resultText += listText(dataForResult, 0)
@@ -32,7 +32,7 @@ struct ResultData {
         return ""
     }
     
-    func listText(_ values: [JSONData], _ depth: Int) -> String {
+    private func listText(_ values: [JSONData], _ depth: Int) -> String {
         var resultText = ""
         resultText += makeDepth(depth)
         resultText += "["
@@ -44,7 +44,7 @@ struct ResultData {
         return resultText
     }
     
-    func objectText(_ values: [String:JSONData], _ depth: Int) -> String {
+    private func objectText(_ values: [String:JSONData], _ depth: Int) -> String {
         var resultText = ""
         resultText += "{"
         resultText += makeNewLine()
@@ -63,7 +63,7 @@ struct ResultData {
         return resultText
     }
     
-    func makeValueText (_ value: JSONData) -> String {
+    private func makeValueText (_ value: JSONData) -> String {
         switch value {
         case let .IntegerValue(value): return String(describing: value)
         case let .StringValue(value): return String(describing: value)
