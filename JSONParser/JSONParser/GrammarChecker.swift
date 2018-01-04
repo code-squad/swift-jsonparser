@@ -42,8 +42,8 @@ struct GrammarChecker {
         return trimString
     }
     
-    func execute (_ userInput: String?) throws -> ([String],Parser.ParseTarget) {
-        let input = userInput ?? ""
+    func execute (_ input: String) throws -> ([String],Parser.ParseTarget) {
+        //let input = userInput ?? ""
         
         if input.hasPrefix("[") && input.hasSuffix("]") {
             if isValidArray(input) {
