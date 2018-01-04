@@ -17,7 +17,7 @@ struct InputView {
         var inputFileType = ""
         
         if arguments.count < 2 {
-            text = askUserInput() // optional
+            text = askUserInput()
             return text
         }
         if arguments.count >= 2 {

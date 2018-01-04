@@ -8,7 +8,6 @@
 
 
 let inputView = InputView()
-//let userInput = inputView.askUserInput()
 let fileInput = inputView.readFile()
 
 let grammarChecker = GrammarChecker()
