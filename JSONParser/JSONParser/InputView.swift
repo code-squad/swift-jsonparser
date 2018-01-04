@@ -10,12 +10,17 @@ import Foundation
 
 struct InputView {
     
-    func readInput() -> String {
-        let userJson = readLine()
-        guard let input = userJson else {
-            return ""
-        }
-        return input
+    func readConsoleInput() -> String {
+        return readLine() ?? ""
+    }
+    
+    func readFile(_ fileName : String) throws -> String {
+        let directory = FileManager.default.urls(for: .userDirectory, in: .localDomainMask).first
+        let userDirectoryPath = "Jack/proj/swift-jsonparser/JSONParser/JSONFile/"
+        let file = userDirectoryPath + fileName
+        guard let baseDirectory = directory else { return "" }
+        let filePath = baseDirectory.appendingPathComponent(file)
+        return try String(contentsOf : filePath, encoding : .utf8)
     }
     
 }

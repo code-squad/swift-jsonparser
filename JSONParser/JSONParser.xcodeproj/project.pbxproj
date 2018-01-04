@@ -52,9 +52,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04EAD68C1FFDD90E001DFF3E /* JSONFile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = JSONFile;
+			sourceTree = "<group>";
+		};
 		83AE2E031F8CAC2800F38CC9 = {
 			isa = PBXGroup;
 			children = (
+				04EAD68C1FFDD90E001DFF3E /* JSONFile */,
 				83AE2E0E1F8CAC2800F38CC9 /* JSONParser */,
 				83AE2E0D1F8CAC2800F38CC9 /* Products */,
 			);

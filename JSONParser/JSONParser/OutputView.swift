@@ -47,6 +47,15 @@ struct OutputView {
         print("[\(temp)\n]")
     }
     
+    func wrieFile(_ fileName : String) {
+        let directory = FileManager.default.urls(for: .userDirectory, in: .localDomainMask).first
+        let userDirectoryPath = "Jack/proj/swift-jsonparser/JSONParser/JSONFile/"
+        let file = userDirectoryPath + fileName
+        guard let baseDirectory = directory else { return "" }
+        let filePath = baseDirectory.appendingPathComponent(file).app
+       
+    }
+    
     private func generateShapeOfObject(_ userData : [String : Any]) -> String {
         var temp : String = ""
         let dataOfdictionary = Array(userData)
@@ -65,4 +74,5 @@ struct OutputView {
         if data.objectVal != 0 && data.currentData == "array" { temp += "객체 \(data.objectVal)개 "}
         return temp
     }
+    
 }
