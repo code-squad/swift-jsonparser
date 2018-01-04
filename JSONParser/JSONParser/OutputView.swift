@@ -59,8 +59,7 @@ struct OutputView {
         if tempFileName == "" {
             tempFileName = "output.json"
         }
-        guard let filePath = currentDirectory else { return }
-        try resultData.write(to: filePath.appendingPathComponent("/\(tempFileName)") , atomically: false, encoding: .utf8)
+        try resultData.write(toFile: currentDirectory + "/\(tempFileName)" , atomically: false, encoding: .utf8)
         self.printMessages(.fileMessege)
     }
     

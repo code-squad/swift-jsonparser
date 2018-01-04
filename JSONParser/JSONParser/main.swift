@@ -13,11 +13,10 @@ var runJSONParser : Bool = true
 var outputFileName = ""
 var userInput = ""
 var resultOfData : String = ""
-var currentDirectory = URL.init(string : FileManager.default.currentDirectoryPath)
+var currentDirectory = FileManager.default.currentDirectoryPath
 
 
 while runJSONParser {
-    
     if CommandLine.arguments.count == 1 {
         outputView.printMessages(.inputMessage)
         userInput = InputView().readConsoleInput()
@@ -25,6 +24,8 @@ while runJSONParser {
     }
     if CommandLine.arguments.count >= 2 {
         userInput = try InputView().readFile(CommandLine.arguments[1])
+    }
+    if CommandLine.arguments.count == 3 {
         outputFileName = CommandLine.arguments[2]
     }
     
@@ -39,8 +40,7 @@ while runJSONParser {
         outputView.printCountOfData(numbersOfData, false)
         outputView.printShapeOfData(convertedData, false)
         try outputView.writeFile(resultData: resultOfData, outputFileName)
-        CommandLine.arguments.removeSubrange(1...2)
-        continue
+        break
     }
     
     outputView.printCountOfData(numbersOfData, true)

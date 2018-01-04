@@ -15,8 +15,7 @@ struct InputView {
     }
     
     func readFile(_ fileName : String) throws -> String {
-        guard let filePath = currentDirectory else { return "" }
-        return try String(contentsOf : filePath.appendingPathComponent("/\(fileName)"), encoding : .utf8)
+        return try String(contentsOfFile : currentDirectory + "/\(fileName)", encoding : .utf8)
     }
     
 }
