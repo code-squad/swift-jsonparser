@@ -8,14 +8,14 @@
 
 
 let inputView = InputView()
-let fileInput = inputView.readFile()
+let commandLineInput = inputView.readCommandLine()
 
 let grammarChecker = GrammarChecker()
 var parseTarget = (parseValue: [String](), parseType: Parser.ParseTarget.list)
 var convertedValues : JSONData = JSONData.IntegerValue(0)
 
 do {
-    parseTarget = try grammarChecker.execute(fileInput)
+    parseTarget = try grammarChecker.execute(commandLineInput.I)
     convertedValues = try Parser.matchValues(parseTarget)
 } catch let error as GrammarChecker.FormatError {
     switch error {

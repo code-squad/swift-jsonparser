@@ -10,25 +10,39 @@ import Foundation
 
 struct InputView {
     
-    func readFile() -> String {
-        var text = ""
+    func readCommandLine() -> (I: String, O: String) {
         let arguments = CommandLine.arguments
-        var inputFileName = ""
-        var inputFileType = ""
+        var cmdInput = ""
+        var cmdOutput = ""
         
         if arguments.count < 2 {
-            text = askUserInput()
-            return text
+            cmdInput = askUserInput()
+            return (I:cmdInput,O:"")
         }
-        if arguments.count >= 2 {
-            print("test",arguments[1])
-
-            let inputFile = arguments[1].split(separator: ".")
-            inputFileName = String(inputFile[0])
-            inputFileType = String(inputFile[1])
-            let path = Bundle.main.path(forResource: inputFileName, ofType: inputFileType)
-            text = try! String(contentsOfFile:path!, encoding: String.Encoding.utf8)
+        if arguments.count == 2 {
+            cmdInput = readFile(String(arguments[1]))
+            return (I:cmdInput, O:cmdOutput)
         }
+        /*
+        if arguments.count > 2 {
+            cmdInput = readFile(String(arguments[1]))
+            cmdOutput = arguments[2]
+            return (I:cmdInput, O:cmdOutput)
+        }
+        */
+        return (I:cmdInput, O:cmdOutput)
+    }
+    
+    
+    func readFile(_ file: String) -> String {
+        var text = ""
+        
+        let inputFile = file.split(separator: ".")
+        let inputFileName = String(inputFile[0])
+        let inputFileType = String(inputFile[1])
+        let path = Bundle.main.path(forResource: inputFileName, ofType: inputFileType)
+        text = try! String(contentsOfFile:path!, encoding: String.Encoding.utf8)
+        
         return text
     }
     
