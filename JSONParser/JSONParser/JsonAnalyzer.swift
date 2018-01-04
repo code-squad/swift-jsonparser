@@ -13,7 +13,7 @@ struct Analyzer {
     
     // 분석된 타입 인스턴스를 반환
     static func makeAnalyzedTypeInstance (_ inputValue: String) -> JsonDataCommon & JSONType{
-        return inputValue.first == "{" ? getJsonObject(inputValue) : getJsonArray(inputValue)
+        return inputValue.first == "{" ? getJsonObject(inputValue) : getJSONArray(elements: getJsonElementArray(inputValue))
     }
     
     // 입력된 스트링값을 객체 문법규칙에 맞게 변환
@@ -23,14 +23,15 @@ struct Analyzer {
         elementsOfObject.forEach {
             let keyValue = $0.split(separator: ":").map {$0.trimmingCharacters(in: .whitespaces)}
             let key : String = String(describing: keyValue.first ?? "").replacingOccurrences(of: "\"", with: "")
-            let value : JSONType = generateValueInObject(stringNotyetValue: String(describing: keyValue.last ?? ""))
+            let value : JSONType = getEachValue(stringNotyetValue: String(describing: keyValue.last ?? ""))
             jsonObject.updateValue(value, forKey: key)
         }
         return jsonObject
     }
+    // getJsonObject(inputValue) : getJSONArray(elements: getJsonArray(inputValue))
     
     //  입력된 스트링값을 각 배열규칙에 맞게 변환
-    private static func getJsonArray(_ inputValue: String) -> Array<String> {
+    private static func getJsonElementArray(_ inputValue: String) -> Array<String> {
         var elementsFromArray : Array<String> = []
         var initialValue = inputValue
         initialValue = removeFirstAndLastCharacter(initialValue)
@@ -42,9 +43,19 @@ struct Analyzer {
         return elementsFromArray
     }
     
+    private static func getJSONArray(elements: Array<String>) -> [JSONType] {
+        var jsonArray = [JSONType]()
+        for element in elements {
+            jsonArray.append(getEachValue(stringNotyetValue: element))
+        }
+        return jsonArray
+    }
+
+    
     //  객체 내의 벨류생성
-    private static func generateValueInObject(stringNotyetValue: String) -> JSONType {
-        if stringNotyetValue.hasPrefix("[") && stringNotyetValue.hasSuffix("]") { return stringNotyetValue }
+    private static func getEachValue(stringNotyetValue: String) -> JSONType {
+        if stringNotyetValue.hasPrefix("[") && stringNotyetValue.hasSuffix("]") { return getJSONArray(elements: getJsonElementArray(stringNotyetValue)) }
+        else if stringNotyetValue.hasPrefix("{") { return getJsonObject(stringNotyetValue)}
         else if stringNotyetValue.starts(with: "\"") { return stringNotyetValue.replacingOccurrences(of: "\"", with: "")}
         else if let interger = Int(stringNotyetValue) { return interger }
         else if let boolean = Bool(stringNotyetValue) { return boolean }

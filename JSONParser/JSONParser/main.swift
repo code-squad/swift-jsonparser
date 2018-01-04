@@ -28,3 +28,4 @@ while true {
     // JsonDataType 출력
     OutputView.printJsonDataType(analyzedValue)
 }
+

@@ -120,10 +120,10 @@
 				C3D73E571FE7932A001B1C9C /* JsonGrammerRule.swift */,
 				C388CD661FE23A9B00DDC82A /* JsonGrammerChecker.swift */,
 				C3936BCC1FF1F5E70097A88C /* CountingJsonData.swift */,
-				C388CD641FDF745500DDC82A /* JsonData.swift */,
 				C3942F5C1FF604CA001CEFDC /* JsonCommon.swift */,
 				C388CD621FDE730B00DDC82A /* JsonAnalyzer.swift */,
 				C3936BD01FF493C20097A88C /* JsonPrintingMaker.swift */,
+				C388CD641FDF745500DDC82A /* JsonData.swift */,
 				C388CD601FDE710300DDC82A /* OutputView.swift */,
 			);
 			path = JSONParser;

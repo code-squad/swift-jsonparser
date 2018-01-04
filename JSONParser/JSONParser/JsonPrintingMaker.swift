@@ -13,47 +13,48 @@ struct JsonPrintingMaker {
     static func makeJsonTypeforPrinting(jsonType: JsonDataCommon) -> String {
         return jsonType.readyforPrinting()
     }
-   
-    static func makeObjectTypeForPrinting(_ jsonObjectType: Dictionary<String,JSONType>) -> String {
+    
+    static func makeObjectTypeForPrinting(_ jsonObjectType: Dictionary<String,JSONType>, innerIndent: Int, outerIndent: Int) -> String {
         var result: String = ""
         result += "{" + makeNewLine()
-        result += getValuesFromObject(jsonObjectType)
+        result += getValuesFromObject(jsonObjectType, indent: innerIndent)
         result.removeLast(2)
-        result += makeNewLine() + "}"
+        result += makeNewLine() + insertIndentation(indent: outerIndent) + "}"
+        // result += "\n" + String(repeating: "\t", count: depth) + "}"
         return result
     }
     
-    static func makeArrayTypeForPrinting(_ jsonArrayType: [String]) -> String {
+    static func makeArrayTypeForPrinting(_ jsonArrayType: [JSONType]) -> String {
         var result: String = ""
-        result += "[" + makeNewLine()
+        result += "["
         result += getValueFromArray(jsonArrayType)
-        result.removeLast(2)
+        result.removeLast(1)
         result += makeNewLine() + "]"
         return result
     }
     
-    private static func getValuesFromObject(_ jsonObjectType: Dictionary<String,JSONType>) -> String {
+    private static func getValuesFromObject(_ jsonObjectType: Dictionary<String,JSONType> , indent: Int) -> String {
         var result: String = ""
-        _ = jsonObjectType.forEach {
+        jsonObjectType.forEach {
             let value = $0.value.makeValueFromObject()
-            result += insertIndentation() + "\"\($0.key)\" : \(value)" + "," + makeNewLine()
+            result += insertIndentation(indent: indent) + "\"\($0.key)\" : \(value)" + "," + makeNewLine()
         }
         return result
     }
     
     private static func getValueFromArray(_ jsonArrayType: Array<JSONType>) -> String {
         var result: String = ""
-        _ = jsonArrayType.forEach {
-           result += $0.makeValueFromArray()
+        jsonArrayType.forEach {
+            result += $0.makeValueFromArray()
         }
         return result
     }
     
-     static func insertIndentation () -> String {
-        return "\t"
+    static func insertIndentation ( indent: Int) -> String {
+        return String(repeating: "\t", count: indent)
     }
     
-     static func makeNewLine () -> String {
+    static func makeNewLine () -> String {
         return "\n"
     }
 }

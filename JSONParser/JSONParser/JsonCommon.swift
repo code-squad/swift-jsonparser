@@ -15,21 +15,19 @@ protocol JsonDataCommon {
 }
 
 protocol JSONType {
-   func getJsontype () -> JSONType
-   func makeValueFromObject () -> String
-   func makeValueFromArray () -> String
+    func getJsontype () -> JSONType
+    func makeValueFromObject () -> String
+    func makeValueFromArray () -> String
 }
 
 extension Dictionary: JsonDataCommon, JSONType {
     func makeValueFromArray() -> String {
-        return JsonPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>) + "," + JsonPrintingMaker.makeNewLine()
+        return JsonPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>, innerIndent: 2, outerIndent: 2) + "," + JsonPrintingMaker.makeNewLine()
     }
     
     func makeValueFromObject() -> String {
-        return JsonPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>)
+        return JsonPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>, innerIndent: 1, outerIndent: 0)
     }
-    
-    
     
     func getJsontype() -> JSONType {
         return self as! Dictionary<String, JSONType>
@@ -40,17 +38,17 @@ extension Dictionary: JsonDataCommon, JSONType {
     }
     
     func readyforPrinting() -> String{
-        return JsonPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>)
+        return JsonPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>, innerIndent: 1, outerIndent: 0)
     }
 }
 
 extension Array: JsonDataCommon, JSONType {
     func makeValueFromArray() -> String {
-        return JsonPrintingMaker.makeArrayTypeForPrinting(self as! Array<String>)
+        return JsonPrintingMaker.insertIndentation(indent: 1) + String(describing: self as! [JSONType]) + ","
     }
     
     func makeValueFromObject() -> String {
-        return JsonPrintingMaker.makeArrayTypeForPrinting(self as! [String])
+        return String(describing: self as! [JSONType])
     }
     
     func getJsontype() -> JSONType {
@@ -58,17 +56,17 @@ extension Array: JsonDataCommon, JSONType {
     }
     
     func getCountedType() -> JsonData {
-        return CountingJsonData.getCountedArrayType(self as!  [String])
+        return CountingJsonData.getCountedArrayType(self as!  [JSONType])
     }
     
     func readyforPrinting() -> String{
-        return JsonPrintingMaker.makeArrayTypeForPrinting(self as! [String])
+        return JsonPrintingMaker.makeArrayTypeForPrinting(self as! [JSONType] )
     }
 }
 
 extension Int: JSONType {
     func makeValueFromArray() -> String {
-        return String(describing: self)
+        return String(describing: self) + ","
     }
     
     func makeValueFromObject() -> String {
@@ -82,7 +80,7 @@ extension Int: JSONType {
 
 extension String: JSONType {
     func makeValueFromArray() -> String {
-        return JsonPrintingMaker.insertIndentation() + String(describing: self) + "," + JsonPrintingMaker.makeNewLine()
+        return JsonPrintingMaker.insertIndentation(indent: 1) + "\"" + String(describing: self) + "\"" + ","
     }
     
     func makeValueFromObject() -> String {
@@ -96,7 +94,7 @@ extension String: JSONType {
 
 extension Bool: JSONType {
     func makeValueFromArray() -> String {
-        return String(describing: self)
+        return String(describing: self) + ","
     }
     
     func makeValueFromObject() -> String {
@@ -107,5 +105,3 @@ extension Bool: JSONType {
         return Bool(self)
     }
 }
-
-

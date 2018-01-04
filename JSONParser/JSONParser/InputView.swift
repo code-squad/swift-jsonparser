@@ -21,6 +21,7 @@ struct InputView {
             }
         }
     }
+    
     static func read() -> String {
         print (FrontMessage.ofWelcoming.description)
         if let unanalyzedValue = readLine() {

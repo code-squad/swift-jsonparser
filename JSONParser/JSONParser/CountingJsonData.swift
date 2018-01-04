@@ -22,18 +22,18 @@ struct CountingJsonData {
     }
     
     //  배열 타입의 카운팅 인스턴스 생성
-    static func getCountedArrayType(_ arrayValue: [String]) -> JsonData {
+    static func getCountedArrayType(_ arrayValue: [JSONType]) -> JsonData {
         var countOfNumber: Int = 0
         var countOfBool: Int = 0
         var countOfString: Int = 0
         var countOfObject: Int = 0
         var countOfofArray: Int = 0
         arrayValue.forEach {
-            if $0.hasPrefix("{") && $0.hasSuffix("}") { countOfObject += 1}
-            else if $0.hasPrefix("[") && $0.hasSuffix("]") { countOfofArray += 1 }
-            else if let _ = Int($0) { countOfNumber += 1}
-            else if let _ = Bool($0) { countOfBool += 1}
-            else if  let firstString = $0.first, firstString == "\"" {countOfString += 1}
+            if $0 is [String:JSONType] { countOfObject += 1}
+            else if $0 is [JSONType] { countOfofArray += 1 }
+            else if $0 is Int { countOfNumber += 1}
+            else if $0 is Bool { countOfBool += 1}
+            else if  $0 is String {countOfString += 1}
         }
         return JsonData(countOfNumber, countOfBool, countOfString, countOfObject, countOfofArray)
     }
