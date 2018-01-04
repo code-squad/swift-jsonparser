@@ -14,26 +14,32 @@ struct OutputView {
         case inputMessage = "분석할 JSON데이터를 입력하세요. 종료를 원하시면 q를 입력해주세요."
         case formatError = "지원하는 형식이 아닙니다. 다시 입력해주세요."
         case exitMessage = "종료합니다."
+        case fileError = "파일이 생성되지 않았습니다."
+        case fileMessege = "파일이 정상적으로 생성되었습니다."
     }
     
     func printMessages(_ message : Messages) {
         print(message.rawValue)
     }
     
-    func printCountOfData(_ countVal : MyCount) {
+    func printCountOfData(_ countVal : MyCount, _ printVal : Bool) {
+        var temp = ""
         let countOfData = makeNumberMessage(countVal)
         if countVal.currentData == "dictionary"  {
-            print("총 \(countVal.objectVal)개의 객체 데이터 중에 \(countOfData)포함되어 있습니다.")
+            temp = "총 \(countVal.objectVal)개의 객체 데이터 중에 \(countOfData)포함되어 있습니다.\n"
+            choosePrinting(outputString: temp, printVal)
             return
         }
         let sumOfCount = countVal.boolVal + countVal.numberVal + countVal.boolVal + countVal.objectVal + countVal.arrayVal
-        print("총 \(sumOfCount)개의 배열 데이터 중에 \(countOfData)포함되어 있습니다.")
+        temp = "총 \(sumOfCount)개의 배열 데이터 중에 \(countOfData)포함되어 있습니다.\n"
+        choosePrinting(outputString: temp, printVal)
+        return
     }
     
-    func printShapeOfData(_ userData : Any) {
+    func printShapeOfData(_ userData : Any, _ printVal : Bool) {
         var temp : String = ""
         if userData is ObjectDictionary {
-            print(generateShapeOfObject(userData as! [String:Any]) + "}")
+            choosePrinting(outputString: generateShapeOfObject(userData as! [String:Any]) + "}", printVal)
             return
         }
         for oneData in userData as! [Any] {
@@ -44,16 +50,32 @@ struct OutputView {
             }
             temp +=  "\n\t\(oneData),"
         }
-        print("[\(temp)\n]")
+        choosePrinting(outputString: "[\(temp)\n]", printVal)
+        return
     }
     
-    func wrieFile(_ fileName : String) {
+    func writeFile(resultData : String, _ fileName : String) throws {
+        var tempFileName = fileName
         let directory = FileManager.default.urls(for: .userDirectory, in: .localDomainMask).first
         let userDirectoryPath = "Jack/proj/swift-jsonparser/JSONParser/JSONFile/"
-        let file = userDirectoryPath + fileName
-        guard let baseDirectory = directory else { return "" }
-        let filePath = baseDirectory.appendingPathComponent(file).app
-       
+        if tempFileName == "" {
+            tempFileName = "output.json"
+        }
+        let file = userDirectoryPath + tempFileName
+        guard let baseDirectory = directory else {
+            self.printMessages(.fileError)
+            return
+        }
+        let filePath = baseDirectory.appendingPathComponent(file)
+        try resultData.write(to: filePath, atomically: false, encoding: .utf8)
+        self.printMessages(.fileMessege)
+    }
+    
+    private func choosePrinting (outputString : String,_ printVal : Bool) {
+        if printVal {
+            print(outputString)
+        }
+        resultOfData += outputString
     }
     
     private func generateShapeOfObject(_ userData : [String : Any]) -> String {
