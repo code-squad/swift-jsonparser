@@ -56,18 +56,11 @@ struct OutputView {
     
     func writeFile(resultData : String, _ fileName : String) throws {
         var tempFileName = fileName
-        let directory = FileManager.default.urls(for: .userDirectory, in: .localDomainMask).first
-        let userDirectoryPath = "Jack/proj/swift-jsonparser/JSONParser/JSONFile/"
         if tempFileName == "" {
             tempFileName = "output.json"
         }
-        let file = userDirectoryPath + tempFileName
-        guard let baseDirectory = directory else {
-            self.printMessages(.fileError)
-            return
-        }
-        let filePath = baseDirectory.appendingPathComponent(file)
-        try resultData.write(to: filePath, atomically: false, encoding: .utf8)
+        guard let filePath = currentDirectory else { return }
+        try resultData.write(to: filePath.appendingPathComponent("/\(tempFileName)") , atomically: false, encoding: .utf8)
         self.printMessages(.fileMessege)
     }
     

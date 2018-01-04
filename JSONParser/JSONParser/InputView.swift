@@ -15,12 +15,8 @@ struct InputView {
     }
     
     func readFile(_ fileName : String) throws -> String {
-        let directory = FileManager.default.urls(for: .userDirectory, in: .localDomainMask).first
-        let userDirectoryPath = "Jack/proj/swift-jsonparser/JSONParser/JSONFile/"
-        let file = userDirectoryPath + fileName
-        guard let baseDirectory = directory else { return "" }
-        let filePath = baseDirectory.appendingPathComponent(file)
-        return try String(contentsOf : filePath, encoding : .utf8)
+        guard let filePath = currentDirectory else { return "" }
+        return try String(contentsOf : filePath.appendingPathComponent("/\(fileName)"), encoding : .utf8)
     }
     
 }

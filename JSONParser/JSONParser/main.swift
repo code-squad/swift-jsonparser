@@ -13,7 +13,7 @@ var runJSONParser : Bool = true
 var outputFileName = ""
 var userInput = ""
 var resultOfData : String = ""
-
+var currentDirectory = URL.init(string : FileManager.default.currentDirectoryPath)
 
 
 while runJSONParser {
