@@ -13,7 +13,7 @@ struct InputView {
     func readCommandLine() -> (I: String, O: String) {
         let arguments = CommandLine.arguments
         var cmdInput = ""
-        var cmdOutput = ""
+        var cmdOutput = "default.json"
         
         if arguments.count < 2 {
             cmdInput = askUserInput()
@@ -23,13 +23,13 @@ struct InputView {
             cmdInput = readFile(String(arguments[1]))
             return (I:cmdInput, O:cmdOutput)
         }
-        /*
+        
         if arguments.count > 2 {
             cmdInput = readFile(String(arguments[1]))
             cmdOutput = arguments[2]
             return (I:cmdInput, O:cmdOutput)
         }
-        */
+        
         return (I:cmdInput, O:cmdOutput)
     }
     

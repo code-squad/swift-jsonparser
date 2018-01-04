@@ -34,6 +34,7 @@ let outputView = OutputView()
 let resultData = ResultData()
 let resultText = resultData.make(convertedValues)
 outputView.showResult(countInfo, parseTarget.parseType, text: resultText)
+outputView.makeOutputFile(text: resultText, file: commandLineInput.O)
 
 
 
