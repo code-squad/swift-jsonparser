@@ -10,22 +10,34 @@ import Foundation
 
 struct InputView {
     
-    func readCommandLine() -> (input: String, output: String) {
-        let arguments = CommandLine.arguments
+    enum InputError: Error, CustomStringConvertible {
+        case noFile
+        case voidFile
+        
+        var description: String {
+            switch self {
+            case .noFile:
+                return "입력하신 이름의 파일이 없습니다."
+            case .voidFile:
+                return "파일에 분석할 내용이 없습니다."
+            }
+        }
+    }
+    
+    func readCommandLine(_ arguments: [String]) throws -> (input: String, output: String) {
         var cmdInput = ""
         var cmdOutput = "default.json"
         
         if arguments.count < 2 {
-            cmdInput = askUserInput(message: "분석할 JSON 데이터를 입력하세요.")!
-            return (input:cmdInput,output:"")
+            throw InputError.noFile
         }
         if arguments.count == 2 {
-            cmdInput = readFile(String(arguments[1]))
+            cmdInput = try readFile(String(arguments[1]))
             return (input:cmdInput, output:cmdOutput)
         }
         
         if arguments.count > 2 {
-            cmdInput = readFile(String(arguments[1]))
+            cmdInput = try readFile(String(arguments[1]))
             cmdOutput = arguments[2]
             return (input:cmdInput, output:cmdOutput)
         }
@@ -34,22 +46,17 @@ struct InputView {
     }
     
     
-    func readFile(_ file: String) -> String {
+    func readFile(_ file: String) throws -> String {
         var text = ""
         
         let inputFile = file.split(separator: ".")
         let fileName = String(inputFile[0])
         let fileType = String(inputFile[1])
         let path = Bundle.main.path(forResource: fileName, ofType: fileType)
-        text = try! String(contentsOfFile:path!, encoding: String.Encoding.utf8)
+        text = try String(contentsOfFile:path!, encoding: String.Encoding.utf8)
         
         return text
     }
     
-    func askUserInput (message: String) -> String? {
-        print(message)
-        let userInput = readLine()
-        return userInput
-    }
 }
 
