@@ -35,7 +35,6 @@ struct InputView {
             cmdInput = try readFile(String(arguments[1]))
             return (input:cmdInput, output:cmdOutput)
         }
-        
         if arguments.count > 2 {
             cmdInput = try readFile(String(arguments[1]))
             cmdOutput = arguments[2]
@@ -53,8 +52,10 @@ struct InputView {
         let fileName = String(inputFile[0])
         let fileType = String(inputFile[1])
         let path = Bundle.main.path(forResource: fileName, ofType: fileType)
-        text = try String(contentsOfFile:path!, encoding: String.Encoding.utf8)
-        
+        guard let filePath = path else {
+            throw InputError.noFile
+        }
+        text = try String(contentsOfFile: filePath, encoding: String.Encoding.utf8)
         return text
     }
     
