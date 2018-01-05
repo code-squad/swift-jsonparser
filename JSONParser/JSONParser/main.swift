@@ -15,7 +15,7 @@ var parseTarget = (parseValue: [String](), parseType: Parser.ParseTarget.list)
 var convertedValues : JSONData = JSONData.IntegerValue(0)
 
 do {
-    parseTarget = try grammarChecker.execute(commandLineInput.I)
+    parseTarget = try grammarChecker.execute(commandLineInput.input)
     convertedValues = try Parser.matchValues(parseTarget)
 } catch let error as GrammarChecker.FormatError {
     switch error {
@@ -34,7 +34,7 @@ let outputView = OutputView()
 let resultData = ResultData()
 let resultText = resultData.make(convertedValues)
 outputView.showResult(countInfo, parseTarget.parseType, text: resultText)
-outputView.makeOutputFile(text: resultText, file: commandLineInput.O)
+outputView.makeOutputFile(text: resultText, file: commandLineInput.output)
 
 
 

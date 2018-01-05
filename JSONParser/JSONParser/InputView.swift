@@ -10,27 +10,27 @@ import Foundation
 
 struct InputView {
     
-    func readCommandLine() -> (I: String, O: String) {
+    func readCommandLine() -> (input: String, output: String) {
         let arguments = CommandLine.arguments
         var cmdInput = ""
         var cmdOutput = "default.json"
         
         if arguments.count < 2 {
             cmdInput = askUserInput()
-            return (I:cmdInput,O:"")
+            return (input:cmdInput,output:"")
         }
         if arguments.count == 2 {
             cmdInput = readFile(String(arguments[1]))
-            return (I:cmdInput, O:cmdOutput)
+            return (input:cmdInput, output:cmdOutput)
         }
         
         if arguments.count > 2 {
             cmdInput = readFile(String(arguments[1]))
             cmdOutput = arguments[2]
-            return (I:cmdInput, O:cmdOutput)
+            return (input:cmdInput, output:cmdOutput)
         }
         
-        return (I:cmdInput, O:cmdOutput)
+        return (input:cmdInput, output:cmdOutput)
     }
     
     
@@ -38,9 +38,9 @@ struct InputView {
         var text = ""
         
         let inputFile = file.split(separator: ".")
-        let inputFileName = String(inputFile[0])
-        let inputFileType = String(inputFile[1])
-        let path = Bundle.main.path(forResource: inputFileName, ofType: inputFileType)
+        let fileName = String(inputFile[0])
+        let fileType = String(inputFile[1])
+        let path = Bundle.main.path(forResource: fileName, ofType: fileType)
         text = try! String(contentsOfFile:path!, encoding: String.Encoding.utf8)
         
         return text
