@@ -16,7 +16,7 @@ struct InputView {
         var cmdOutput = "default.json"
         
         if arguments.count < 2 {
-            cmdInput = askUserInput()
+            cmdInput = askUserInput(message: "분석할 JSON 데이터를 입력하세요.")!
             return (input:cmdInput,output:"")
         }
         if arguments.count == 2 {
@@ -46,14 +46,10 @@ struct InputView {
         return text
     }
     
-    func askUserInput () -> String {
-        print("분석할 JSON 데이터를 입력하세요.")
+    func askUserInput (message: String) -> String? {
+        print(message)
         let userInput = readLine()
-        let input = userInput ?? ""
-        if input == "" {
-            return askUserInput()
-        }
-        return input
+        return userInput
     }
 }
 
