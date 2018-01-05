@@ -14,12 +14,14 @@ protocol JsonDataCommon {
     func getCountedType () -> JsonData
 }
 
+// 타입별 값을 가져오는 부분 추상화
 protocol JSONType {
     func getJsontype () -> JSONType
     func makeValueFromObject () -> String
     func makeValueFromArray () -> String
 }
 
+// 타입별 extension
 extension Dictionary: JsonDataCommon, JSONType {
     func makeValueFromArray() -> String {
         return JsonPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>, innerIndent: 2, outerIndent: 2) + "," + JsonPrintingMaker.makeNewLine()
@@ -71,11 +73,11 @@ extension Array: JsonDataCommon, JSONType {
         case 2:
             inPath = elements[1]
             outPath = Message.ofDefaultJSONFileName.description
-            return (in: inPath, out: outPath)
+            return (input: inPath, output: outPath)
         case 3:
             inPath = elements[1]
             outPath = elements[2]
-            return (in: inPath, out: outPath)
+            return (input: inPath, output: outPath)
         default:
             throw Message.ofFailedProcessingFile
         }
