@@ -14,6 +14,7 @@ struct OutputView {
         case inputMessage = "분석할 JSON데이터를 입력하세요. 종료를 원하시면 q를 입력해주세요."
         case formatError = "지원하는 형식이 아닙니다. 다시 입력해주세요."
         case exitMessage = "종료합니다."
+        case pathMessage = "경로를 지정해주세요. 입력하지 않으면 현재 주소에서 검색합니다."
         case fileError = "파일이 생성되지 않았습니다."
         case fileMessege = "파일이 정상적으로 생성되었습니다."
     }
@@ -54,12 +55,12 @@ struct OutputView {
         return
     }
     
-    func writeFile(resultData : String, _ fileName : String) throws {
+    func writeFile(resultData : String, _ fileName : String, _ userPath : String) throws {
         var tempFileName = fileName
         if tempFileName == "" {
             tempFileName = "output.json"
         }
-        try resultData.write(toFile: currentDirectory + "/\(tempFileName)" , atomically: false, encoding: .utf8)
+        try resultData.write(toFile: userPath + "/\(tempFileName)" , atomically: false, encoding: .utf8)
         self.printMessages(.fileMessege)
     }
     

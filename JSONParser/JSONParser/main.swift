@@ -8,11 +8,12 @@
 
 import Foundation
 
-var outputView : OutputView = OutputView()
+let outputView : OutputView = OutputView()
 var runJSONParser : Bool = true
 var outputFileName = ""
 var userInput = ""
 var resultOfData : String = ""
+var userDirectory = ""
 var currentDirectory = FileManager.default.currentDirectoryPath
 
 
@@ -23,12 +24,14 @@ while runJSONParser {
         guard userInput != "q" else { break }
     }
     if CommandLine.arguments.count >= 2 {
-        userInput = try InputView().readFile(CommandLine.arguments[1])
+        outputView.printMessages(.pathMessage)
+        userDirectory = InputView().readConsoleInput()
+        userInput = try InputView().readFile(CommandLine.arguments[1], userPath: userDirectory)
     }
     if CommandLine.arguments.count == 3 {
         outputFileName = CommandLine.arguments[2]
     }
-    
+
     guard GrammarChecker().isValid(userInput: userInput) else {
         outputView.printMessages(.formatError)
         continue
@@ -39,7 +42,7 @@ while runJSONParser {
     if CommandLine.arguments.count >= 2 {
         outputView.printCountOfData(numbersOfData, false)
         outputView.printShapeOfData(convertedData, false)
-        try outputView.writeFile(resultData: resultOfData, outputFileName)
+        try outputView.writeFile(resultData: resultOfData, outputFileName, currentDirectory)
         break
     }
     
