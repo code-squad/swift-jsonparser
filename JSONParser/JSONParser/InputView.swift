@@ -9,24 +9,33 @@
 import Foundation
 
 struct InputView {
-     enum FrontMessage {
-        case ofWelcoming
-        case ofEndingProgram
-        var description: String {
-            switch self {
-            case .ofWelcoming :
-                return "분석할 JSON 데이터를 입력하세요. quit입력시 종료됩니다"
-            case .ofEndingProgram :
-                return "quit"
-            }
+    static func read (_ argument: [String]) throws -> String {
+        if argument.count <= 1 {
+            let temp = readFromConsol()
+            return temp
+        } else if argument.count >= 2 {
+            let file = try argument.makeFileIOPath()
+            return try readFromFile(in: file.0)
         }
+        throw Message.ofFailedProcessingFile
     }
     
-    static func read() -> String {
-        print (FrontMessage.ofWelcoming.description)
+    private static func readFromConsol() -> String {
+        print (Message.ofWelcoming.description)
         if let unanalyzedValue = readLine() {
-            guard unanalyzedValue == FrontMessage.ofEndingProgram.description else { return unanalyzedValue }
+            guard unanalyzedValue == Message.ofEndingProgram.description else { return unanalyzedValue }
         }
-        return FrontMessage.ofEndingProgram.description
+        return Message.ofEndingProgram.description
+    }
+    
+    private static func readFromFile(in filePath: String) throws -> String {
+        let directory = FileManager.default.homeDirectoryForCurrentUser
+        var textFromFiles: String = ""
+        do {
+            textFromFiles = try String(contentsOf: directory.appendingPathComponent(filePath), encoding: .utf8)
+        } catch {
+            throw Message.ofFailedProcessingFile
+        }
+        return textFromFiles
     }
 }
