@@ -26,7 +26,7 @@ while runJSONParser {
     if CommandLine.arguments.count >= 2 {
         outputView.printMessages(.pathMessage)
         userDirectory = InputView().readConsoleInput()
-        userInput = try InputView().readFile(CommandLine.arguments[1], userPath: userDirectory)
+        userInput = try InputView().readFile(CommandLine.arguments[1], userPath: userDirectory != "" ? userDirectory : currentDirectory )
     }
     if CommandLine.arguments.count == 3 {
         outputFileName = CommandLine.arguments[2]

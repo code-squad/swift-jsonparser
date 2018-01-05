@@ -15,11 +15,7 @@ struct InputView {
     }
     
     func readFile(_ fileName : String, userPath : String) throws -> String {
-        var basePath = userPath
-        if userPath == "" {
-            basePath = currentDirectory
-        }
-        return try String(contentsOfFile :  basePath + "/\(fileName)", encoding : .utf8)
+        return try String(contentsOfFile :  userPath + "/\(fileName)", encoding : .utf8)
     }
     
 }
