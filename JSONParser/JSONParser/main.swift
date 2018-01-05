@@ -9,23 +9,23 @@
 import Foundation
 
 while true {
-    let unanalyzedValue = InputView.read()
-    if unanalyzedValue == InputView.FrontMessage.ofEndingProgram.description { break }
     var validString: String = ""
     do {
         // 문법체크
+        let unanalyzedValue = try InputView.read(ProcessInfo.processInfo.arguments)
+        if unanalyzedValue == Message.ofEndingProgram.description { break }
         validString += try GrammerChecker.makeValidString(values: unanalyzedValue)
-    } catch let error as GrammerChecker.ErrorOfJasonGrammer {
-        print (error.localizedDescription)
-        continue
+        // 분석된 Json 타입인스턴스 생성
+        let analyzedValue = Analyzer.makeAnalyzedTypeInstance(validString)
+        // JsonDataType 출력
+        try OutputView.printOut(analyzedValue, ProcessInfo.processInfo.arguments)
+    } catch Message.ofEndingProgram {
+        break
+    } catch Message.ofFailedProcessingFile {
+        print (Message.ofFailedProcessingFile.description)
+        break
+    } catch let error as Message {
+        print (error.description)
     }
-    // 분석된 Json 타입인스턴스 생성
-    let analyzedValue = Analyzer.makeAnalyzedTypeInstance(validString)
-    // Json타입 카운팅
-    let countedValue =  CountingJsonData.makeCountedTypeInstance(jsonType: analyzedValue)
-    // 카운팅 출력
-    OutputView.printCountedResult(countedValue)
-    // JsonDataType 출력
-    OutputView.printJsonDataType(analyzedValue)
 }
 

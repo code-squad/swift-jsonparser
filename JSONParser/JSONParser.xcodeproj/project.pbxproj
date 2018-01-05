@@ -28,6 +28,7 @@
 		C3942F5D1FF604CA001CEFDC /* JsonCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3942F5C1FF604CA001CEFDC /* JsonCommon.swift */; };
 		C3954B311FEA490E00057D15 /* TestAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3954B301FEA490E00057D15 /* TestAnalyzer.swift */; };
 		C3954B361FEA49BD00057D15 /* TestAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3954B301FEA490E00057D15 /* TestAnalyzer.swift */; };
+		C3AC5D2F1FFE7B0300CDFFA5 /* ProgramMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AC5D2E1FFE7B0300CDFFA5 /* ProgramMessage.swift */; };
 		C3D369641FEB4D4F001CA87D /* JsonGrammerChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C388CD661FE23A9B00DDC82A /* JsonGrammerChecker.swift */; };
 		C3D369651FEB4D53001CA87D /* JsonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C388CD641FDF745500DDC82A /* JsonData.swift */; };
 		C3D369661FEB4D56001CA87D /* JsonGrammerRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D73E571FE7932A001B1C9C /* JsonGrammerRule.swift */; };
@@ -64,6 +65,7 @@
 		C3954B2E1FEA490E00057D15 /* TestAnalyzer.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestAnalyzer.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3954B301FEA490E00057D15 /* TestAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAnalyzer.swift; sourceTree = "<group>"; };
 		C3954B321FEA490E00057D15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3AC5D2E1FFE7B0300CDFFA5 /* ProgramMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramMessage.swift; sourceTree = "<group>"; };
 		C3D73E571FE7932A001B1C9C /* JsonGrammerRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonGrammerRule.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +123,7 @@
 				C388CD661FE23A9B00DDC82A /* JsonGrammerChecker.swift */,
 				C3936BCC1FF1F5E70097A88C /* CountingJsonData.swift */,
 				C3942F5C1FF604CA001CEFDC /* JsonCommon.swift */,
+				C3AC5D2E1FFE7B0300CDFFA5 /* ProgramMessage.swift */,
 				C388CD621FDE730B00DDC82A /* JsonAnalyzer.swift */,
 				C3936BD01FF493C20097A88C /* JsonPrintingMaker.swift */,
 				C388CD641FDF745500DDC82A /* JsonData.swift */,
@@ -276,6 +279,7 @@
 				C388CD651FDF745500DDC82A /* JsonData.swift in Sources */,
 				C3936BD11FF493C20097A88C /* JsonPrintingMaker.swift in Sources */,
 				C3D73E581FE7932A001B1C9C /* JsonGrammerRule.swift in Sources */,
+				C3AC5D2F1FFE7B0300CDFFA5 /* ProgramMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
