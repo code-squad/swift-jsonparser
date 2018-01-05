@@ -8,8 +8,21 @@
 
 
 let inputView = InputView()
-let commandLineInput = inputView.readCommandLine()
-
+let arguments = CommandLine.arguments
+var commandLineInput = (input: "", output: "")
+do {
+    commandLineInput = try inputView.readCommandLine(arguments)
+} catch let error {
+    switch error {
+    case InputView.InputError.noFile:
+        print(InputView.InputError.noFile)
+    case InputView.InputError.voidFile:
+        print(InputView.InputError.voidFile)
+    default :
+        print(InputView.InputError.voidFile) //String init()에서의 에러
+    }
+}
+    
 let grammarChecker = GrammarChecker()
 var parseTarget = (parseValue: [String](), parseType: Parser.ParseTarget.list)
 var convertedValues : JSONData = JSONData.IntegerValue(0)
