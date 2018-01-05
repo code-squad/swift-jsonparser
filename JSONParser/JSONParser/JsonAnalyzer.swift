@@ -13,13 +13,13 @@ struct Analyzer {
     
     // 분석된 타입 인스턴스를 반환
     static func makeAnalyzedTypeInstance (_ inputValue: String) -> JsonDataCommon & JSONType{
-        return inputValue.first == "{" ? getJsonObject(inputValue) : getJSONArray(elements: getJsonElementArray(inputValue))
+        return inputValue.first == "{" ? getJsonObject(inputValue) : getJSONArray(elements: getJsonElementFromArray(inputValue))
     }
     
     // 입력된 스트링값을 객체 문법규칙에 맞게 변환
     private static func getJsonObject(_ inputValue: String) -> [String:JSONType] {
         var jsonObject = [String:JSONType]()
-        let elementsOfObject = Analyzer.getElementsOfObject(from: inputValue)
+        let elementsOfObject = Analyzer.getJsonElementsFromObject(from: inputValue)
         elementsOfObject.forEach {
             let keyValue = $0.split(separator: ":").map {$0.trimmingCharacters(in: .whitespaces)}
             let key : String = String(describing: keyValue.first ?? "").replacingOccurrences(of: "\"", with: "")
@@ -28,10 +28,9 @@ struct Analyzer {
         }
         return jsonObject
     }
-    // getJsonObject(inputValue) : getJSONArray(elements: getJsonArray(inputValue))
     
     //  입력된 스트링값을 각 배열규칙에 맞게 변환
-    private static func getJsonElementArray(_ inputValue: String) -> Array<String> {
+    private static func getJsonElementFromArray(_ inputValue: String) -> Array<String> {
         var elementsFromArray : Array<String> = []
         var initialValue = inputValue
         initialValue = removeFirstAndLastCharacter(initialValue)
@@ -54,7 +53,7 @@ struct Analyzer {
     
     //  객체 내의 벨류생성
     private static func getEachValue(stringNotyetValue: String) -> JSONType {
-        if stringNotyetValue.hasPrefix("[") && stringNotyetValue.hasSuffix("]") { return getJSONArray(elements: getJsonElementArray(stringNotyetValue)) }
+        if stringNotyetValue.hasPrefix("[") && stringNotyetValue.hasSuffix("]") { return getJSONArray(elements: getJsonElementFromArray(stringNotyetValue)) }
         else if stringNotyetValue.hasPrefix("{") { return getJsonObject(stringNotyetValue)}
         else if stringNotyetValue.starts(with: "\"") { return stringNotyetValue.replacingOccurrences(of: "\"", with: "")}
         else if let interger = Int(stringNotyetValue) { return interger }
@@ -80,7 +79,7 @@ struct Analyzer {
     }
     
     //  객체 내부에서 카운팅할 값들 추출
-    private static func getElementsOfObject(from input: String) -> Array<String> {
+    private static func getJsonElementsFromObject(from input: String) -> Array<String> {
         return getElementsOfMatchedWIthJsonGrammer(inputValue: input, pattern: JsonGrammerRule.ofNestedDictionary)
     }
     

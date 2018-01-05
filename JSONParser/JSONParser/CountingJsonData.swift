@@ -45,13 +45,10 @@ struct CountingJsonData {
         var countOfString: Int = 0
         var countOfofArray: Int = 0
         objects.forEach {
-            if let _ =  $0.value  as? Int {
-                countOfNumber += 1
-            } else if let stringLikeArray = $0.value as? String, stringLikeArray.contains("[") {
-                countOfofArray += 1
-            } else if let _ = $0.value as? Bool {
-                countOfBool += 1
-            }else if $0.value is String { countOfString += 1 }
+            if $0.value is Int { countOfNumber += 1 }
+            else if $0.value is [JSONType] { countOfofArray += 1 }
+            else if $0.value is Bool { countOfBool += 1 }
+            else if $0.value is String { countOfString += 1 }
         }
         return (countOfNumber, countOfBool, countOfString, countOfofArray)
     }

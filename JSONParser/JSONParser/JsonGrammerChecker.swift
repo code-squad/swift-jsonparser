@@ -10,19 +10,9 @@ import Foundation
 
 // Json 문법검사 구조체
 struct GrammerChecker {
-    enum ErrorOfJasonGrammer:  Error {
-        case invalidFormat
-        var localizedDescription: String {
-            switch self {
-            case .invalidFormat :
-                return "입력형식에 맞지 않습니다."
-            }
-        }
-    }
-    
     // 문법을 검사하여 통과시 배열로 반환
     static func makeValidString (values: String) throws -> String {
-        guard try checkIsValidJsonArrayPattern(values) || checkIsValidJsonObjectPattern(values) else { throw ErrorOfJasonGrammer.invalidFormat }
+        guard try checkIsValidJsonArrayPattern(values) || checkIsValidJsonObjectPattern(values) else { throw Message.ofInvalidFormat }
         return findJsonString(from: values)
     }
     
