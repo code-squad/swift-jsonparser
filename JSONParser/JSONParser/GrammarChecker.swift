@@ -43,7 +43,6 @@ struct GrammarChecker {
     }
     
     func execute (_ input: String) throws -> ([String],Parser.ParseTarget) {
-        //let input = userInput ?? ""
         
         if input.hasPrefix("[") && input.hasSuffix("]") {
             if isValidArray(input) {
