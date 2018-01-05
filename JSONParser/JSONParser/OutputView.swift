@@ -9,12 +9,12 @@
 import Foundation
 struct OutputView {
     static func printOut (_ inputString: JsonDataCommon & JSONType, _ argument: [String]) throws {
-        if argument.count <= 1 {
+        if argument.count < 2 {
             print(makeConsolResult(inputString))
         } else if argument.count >= 2 {
-            let file = try argument.makeFileIOPath()
+            let jsonFile = try argument.makeFileIOPath()
             let jsonType = JsonPrintingMaker.makeJsonTypeforPrinting(jsonType: inputString)
-            try makeOutputFile(jsonType, file.1)
+            try makeOutputFile(jsonType, jsonFile.1)
             throw Message.ofEndingProgram
 
         } else {
@@ -22,32 +22,32 @@ struct OutputView {
         }
     }
     
-    private static func makeConsolResult (_ analyzedValue: JsonDataCommon & JSONType) {
+    private static func makeConsolResult (_ analyzedValue: JsonDataCommon & JSONType) -> String {
         let countedValue =  CountingJsonData.makeCountedTypeInstance(jsonType: analyzedValue)
-        print(printCountedResult(countedValue))
-        print(printJsonDataType(analyzedValue))
+        let result = printCountedResult(countedValue) + JsonPrintingMaker.makeNewLine() + printJsonDataType(analyzedValue)
+        return result
     }
     
     private static func makeOutputFile(_ prettyJSONData: String, _ filePath: String) throws {
-        let dir = FileManager.default.homeDirectoryForCurrentUser
+        let directory = FileManager.default.homeDirectoryForCurrentUser
         do {
-            try prettyJSONData.write(to: dir.appendingPathComponent(filePath), atomically: false, encoding: .utf8)
+            try prettyJSONData.write(to: directory.appendingPathComponent(filePath), atomically: false, encoding: .utf8)
             print(Message.ofSuccessProcessingFile.description)
         } catch {
             throw Message.ofFailedProcessingFile
         }
     }
     
-    private static func printCountedResult (_ countedValue: JsonData) {
+    private static func printCountedResult (_ countedValue: JsonData) -> String {
         if countedValue.type == JsonData.CountingType.object {
-            print ("총 \(countedValue.total)개의 객체중 숫자 \(countedValue.ofNumericValue)개, 불값 \(countedValue.ofBooleanValue)개, 문자열 \(countedValue.ofStringValue)개, 배열 \(countedValue.ofArray)개가 있습니다.")
-        } else if countedValue.type == JsonData.CountingType.array {
-            print ("총 \(countedValue.total)개의 배열 데이터중 객체 \(countedValue.ofObject) 숫자 \(countedValue.ofNumericValue)개, 불값 \(countedValue.ofBooleanValue)개, 문자열 \(countedValue.ofStringValue)개, 배열 \(countedValue.ofArray)개가 있습니다.")
+            return ("총 \(countedValue.total)개의 객체중 숫자 \(countedValue.ofNumericValue)개, 불값 \(countedValue.ofBooleanValue)개, 문자열 \(countedValue.ofStringValue)개, 배열 \(countedValue.ofArray)개가 있습니다.")
+        } else {
+            return ("총 \(countedValue.total)개의 배열 데이터중 객체 \(countedValue.ofObject) 숫자 \(countedValue.ofNumericValue)개, 불값 \(countedValue.ofBooleanValue)개, 문자열 \(countedValue.ofStringValue)개, 배열 \(countedValue.ofArray)개가 있습니다.")
         }
     }
     
-    private static func printJsonDataType(_ jsonDataType: JsonDataCommon)  {
-        print(JsonPrintingMaker.makeJsonTypeforPrinting(jsonType: jsonDataType))
+    private static func printJsonDataType(_ jsonDataType: JsonDataCommon) -> String {
+        return JsonPrintingMaker.makeJsonTypeforPrinting(jsonType: jsonDataType)
     }
     
 }

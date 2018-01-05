@@ -20,7 +20,6 @@ struct JsonPrintingMaker {
         result += getValuesFromObject(jsonObjectType, indent: innerIndent)
         result.removeLast(2)
         result += makeNewLine() + insertIndentation(indent: outerIndent) + "}"
-        // result += "\n" + String(repeating: "\t", count: depth) + "}"
         return result
     }
     

@@ -11,11 +11,10 @@ import Foundation
 struct InputView {
     static func read (_ argument: [String]) throws -> String {
         if argument.count <= 1 {
-            let temp = readFromConsol()
-            return temp
+            return readFromConsol()
         } else if argument.count >= 2 {
-            let file = try argument.makeFileIOPath()
-            return try readFromFile(in: file.0)
+            let jsonFile = try argument.makeFileIOPath()
+            return try readFromFile(in: jsonFile.0)
         }
         throw Message.ofFailedProcessingFile
     }
