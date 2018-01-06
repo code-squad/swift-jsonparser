@@ -32,8 +32,7 @@ struct InputView {
         case file
     }
     
-    
-    func readCommandLine(_ arguments: [String]) throws -> (input: String, output: String) {
+    func readCommandLine(_ arguments: [String]) throws -> (input: String, output: String, type: InputType) {
         var cmdInput = ""
         var cmdOutput = ""
         
@@ -43,20 +42,20 @@ struct InputView {
                 throw InputError.voidInput
             }
             cmdInput = inputSting
-            return (input:cmdInput, output:cmdOutput)
+            return (input:cmdInput, output:cmdOutput, type: InputType.console)
         }
         if arguments.count == 2 {
             cmdInput = try readFile(String(arguments[1]))
             cmdOutput = "default.json"
-            return (input:cmdInput, output:cmdOutput)
+            return (input:cmdInput, output:cmdOutput, type: InputType.file)
         }
         if arguments.count > 2 {
             cmdInput = try readFile(String(arguments[1]))
             cmdOutput = arguments[2]
-            return (input:cmdInput, output:cmdOutput)
+            return (input:cmdInput, output:cmdOutput, type: InputType.file)
         }
         
-        return (input:cmdInput, output:cmdOutput)
+        return (input:cmdInput, output:cmdOutput, type: InputType.console)
     }
     
     
