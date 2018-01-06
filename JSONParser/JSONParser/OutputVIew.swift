@@ -46,11 +46,18 @@ struct OutputView {
         }
     }
 
-    func showResult(_ countInfo: CountInfo, _ parseType: Parser.ParseTarget, text resultText: String) {
+    func showResult(_ countInfo: CountInfo, _ parseType: Parser.ParseTarget, _ resultText: String, fileName: String) {
+        switch self.resultType {
+        case .console: consoleResult(countInfo, parseType, text: resultText)
+        case .file: makeFile(text: resultText, file: fileName)
+        }
+    }
+    
+    func consoleResult(_ countInfo: CountInfo, _ parseType: Parser.ParseTarget, text resultText: String) {
         print("\(countInfo.countOfJSONData)개 \(selectType(parseType)) 데이터 중에 \(makeResultMessage(countInfo))가 포함되어 있습니다.")
     }
     
-    func makeOutputFile(text resultText: String, file: String) {
+    func makeFile(text resultText: String, file: String) {
         let url = FileManager.default.currentDirectoryPath + "/" + file
         try! resultText.write(toFile: url, atomically: true, encoding: String.Encoding.utf8)
     }
