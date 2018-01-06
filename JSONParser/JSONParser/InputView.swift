@@ -60,17 +60,10 @@ struct InputView {
     
     
     func readFile(_ file: String) throws -> String {
-        var text = ""
-        
-        let inputFile = file.split(separator: ".")
-        let fileName = String(inputFile[0])
-        let fileType = String(inputFile[1])
-        let path = Bundle.main.path(forResource: fileName, ofType: fileType)
-        guard let filePath = path else {
-            throw InputError.noFile
-        }
-        text = try String(contentsOfFile: filePath, encoding: String.Encoding.utf8)
-        return text
+        let fileManager = FileManager.default
+        let pathF = fileManager.currentDirectoryPath + "/" + file
+        let contents = try String(contentsOfFile: pathF, encoding: String.Encoding.utf8)
+        return contents
     }
     
     func askUserInput(message: String) -> String? {
