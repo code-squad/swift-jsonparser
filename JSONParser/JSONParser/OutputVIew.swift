@@ -9,6 +9,11 @@
 import Foundation
 
 struct OutputView {
+    var resultType: InputView.InputType
+    
+    init(resultType: InputView.InputType) {
+        self.resultType = resultType
+    }
     
     private func makeResultMessage(_ info : CountInfo) -> String {
         var result = ""
