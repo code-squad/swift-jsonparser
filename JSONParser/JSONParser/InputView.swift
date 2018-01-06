@@ -59,5 +59,11 @@ struct InputView {
         return text
     }
     
+    func askUserInput(message: String) -> String? {
+        print(message)
+        let userInput = readLine()
+        return userInput
+    }
+    
 }
 
