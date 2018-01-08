@@ -8,32 +8,33 @@
 
 let inputView = InputView()
 let arguments = CommandLine.arguments
-var commandLineInput = (input: "", output: "", type: InputView.InputType.console)
-var isEnabledToParse: Bool = false
-do {
-    commandLineInput = try inputView.readCommandLine(arguments)
-    isEnabledToParse = true
-} catch let error {
-    switch error {
-    case InputView.InputError.noFile:
-        print(InputView.InputError.noFile)
-    case InputView.InputError.voidFile:
-        print(InputView.InputError.voidFile)
-    default :
-        print(InputView.InputError.voidFile) //String init()에서의 에러
-    }
-}
+var commandLineInput = (inputContents: "", outputPath: "", type: InputView.InputType.console)
+var runProgram : Bool = true
 
-if isEnabledToParse {
+while runProgram {
+    do {
+        commandLineInput = try inputView.readCommandLine(arguments)
+    } catch let error {
+        switch error {
+        case InputView.InputError.noFile:
+            print(InputView.InputError.noFile)
+        case InputView.InputError.voidFile:
+            print(InputView.InputError.voidFile)
+        default :
+            print(InputView.InputError.noFile
+            )
+        }
+        break
+    }
+    
     let grammarChecker = GrammarChecker()
     var parseTarget = (parseValue: [String](), parseType: Parser.ParseTarget.list)
     var convertedValues : JSONData = JSONData.IntegerValue(0)
-    var isEnabledToMakeOutput: Bool = false
     do {
-        parseTarget = try grammarChecker.execute(commandLineInput.input)
+        parseTarget = try grammarChecker.execute(commandLineInput.inputContents)
         convertedValues = try Parser.matchValues(parseTarget)
-        isEnabledToMakeOutput = true
     } catch let error as GrammarChecker.FormatError {
+        runProgram = false
         switch error {
         case .invalidArray:
             print(GrammarChecker.FormatError.invalidArray)
@@ -42,15 +43,21 @@ if isEnabledToParse {
         case .invalidInput:
             print(GrammarChecker.FormatError.invalidInput)
         }
+        break
     }
     
-    if isEnabledToMakeOutput {
-        let counter = ValueCounter(targetToCount: convertedValues)
-        let countInfo = counter.makeCountInfo()
-        let outputView = OutputView(resultType: commandLineInput.type)
-        let resultData = ResultData()
-        let resultText = resultData.make(convertedValues)
-        outputView.showResult(countInfo,parseTarget.parseType,resultText, fileName: commandLineInput.output)
+    let counter = ValueCounter(targetToCount: convertedValues)
+    let countInfo = counter.makeCountInfo()
+    let outputView = OutputView(resultType: commandLineInput.type)
+    let resultData = ResultData()
+    let resultText = resultData.make(convertedValues)
+    if commandLineInput.outputPath == "" {
+        outputView.consoleResult(countInfo, parseTarget.parseType, text: resultText)
+    } else {
+        outputView.makeFile(text: resultText, path: commandLineInput.outputPath)
     }
+    break
 }
+
+
 
