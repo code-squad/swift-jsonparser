@@ -32,33 +32,31 @@ struct InputView {
         case file
     }
     
-    func readCommandLine(_ arguments: [String]) throws -> (input: String, output: String, type: InputType) {
-        var cmdInput = ""
-        var cmdOutput = ""
+    func readCommandLine(_ arguments: [String]) throws -> (inputContents: String, outputPath: String, type: InputType) {
         let fileManager = FileManager.default
-        
+        let currentDirectory = fileManager.currentDirectoryPath + "/"
+
         if arguments.count < 2 {
             let userInput = askUserInput(message: "분석할 JSON 문자열을 입력하세요.")
-            guard let inputSting = userInput else {
+            guard let inputString = userInput else {
                 throw InputError.voidInput
             }
-            cmdInput = inputSting
-            return (input:cmdInput, output:cmdOutput, type: InputType.console)
+            return (inputContents: inputString, outputPath: "", type: InputType.console)
         }
         if arguments.count == 2 {
-            let inputFilePath = fileManager.currentDirectoryPath + "/" + String(arguments[1])
-            cmdInput = try readFile(inputFilePath)
-            cmdOutput = "default.json"
-            return (input:cmdInput, output:cmdOutput, type: InputType.file)
+            let inputFileContents = try readFile(currentDirectory + String(arguments[1]))
+            let outputPath = currentDirectory + "default.json"
+            
+            return (inputContents:inputFileContents, outputPath: outputPath, type: InputType.file)
         }
         if arguments.count > 2 {
-            let inputFilePath = fileManager.currentDirectoryPath + "/" + String(arguments[1])
-            cmdInput = try readFile(inputFilePath)
-            cmdOutput = arguments[2]
-            return (input:cmdInput, output:cmdOutput, type: InputType.file)
+            let inputFileContents = try readFile(currentDirectory + String(arguments[1]))
+            let outputPath = currentDirectory + String(arguments[2])
+            
+            return (inputContents: inputFileContents, outputPath: outputPath, type: InputType.file)
         }
         
-        return (input:cmdInput, output:cmdOutput, type: InputType.console)
+        return (inputContents: "", outputPath: "", type: InputType.console)
     }
     
     func readFile(_ path: String) throws -> String {
