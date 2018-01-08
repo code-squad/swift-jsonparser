@@ -35,6 +35,7 @@ struct InputView {
     func readCommandLine(_ arguments: [String]) throws -> (input: String, output: String, type: InputType) {
         var cmdInput = ""
         var cmdOutput = ""
+        let fileManager = FileManager.default
         
         if arguments.count < 2 {
             let userInput = askUserInput(message: "분석할 JSON 문자열을 입력하세요.")
@@ -45,12 +46,14 @@ struct InputView {
             return (input:cmdInput, output:cmdOutput, type: InputType.console)
         }
         if arguments.count == 2 {
-            cmdInput = try readFile(String(arguments[1]))
+            let inputFilePath = fileManager.currentDirectoryPath + "/" + String(arguments[1])
+            cmdInput = try readFile(inputFilePath)
             cmdOutput = "default.json"
             return (input:cmdInput, output:cmdOutput, type: InputType.file)
         }
         if arguments.count > 2 {
-            cmdInput = try readFile(String(arguments[1]))
+            let inputFilePath = fileManager.currentDirectoryPath + "/" + String(arguments[1])
+            cmdInput = try readFile(inputFilePath)
             cmdOutput = arguments[2]
             return (input:cmdInput, output:cmdOutput, type: InputType.file)
         }
@@ -58,11 +61,8 @@ struct InputView {
         return (input:cmdInput, output:cmdOutput, type: InputType.console)
     }
     
-    
-    func readFile(_ file: String) throws -> String {
-        let fileManager = FileManager.default
-        let pathF = fileManager.currentDirectoryPath + "/" + file
-        let contents = try String(contentsOfFile: pathF, encoding: String.Encoding.utf8)
+    func readFile(_ path: String) throws -> String {
+        let contents = try String(contentsOfFile: path, encoding: String.Encoding.utf8)
         return contents
     }
     
