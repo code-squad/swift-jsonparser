@@ -8,7 +8,7 @@
 
 let inputView = InputView()
 let arguments = CommandLine.arguments
-var commandLineInput = (inputContents: "", outputPath: "", type: InputView.InputType.console)
+var commandLineInput = (contents: "", outputPath: "", type: InputView.InputType.console)
 var runProgram : Bool = true
 
 while runProgram {
@@ -31,7 +31,7 @@ while runProgram {
     var parseTarget = (parseValue: [String](), parseType: Parser.ParseTarget.list)
     var convertedValues : JSONData = JSONData.IntegerValue(0)
     do {
-        parseTarget = try grammarChecker.execute(commandLineInput.inputContents)
+        parseTarget = try grammarChecker.execute(commandLineInput.contents)
         convertedValues = try Parser.matchValues(parseTarget)
     } catch let error as GrammarChecker.FormatError {
         runProgram = false

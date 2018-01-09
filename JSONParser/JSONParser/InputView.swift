@@ -32,7 +32,7 @@ struct InputView {
         case file
     }
     
-    func readCommandLine(_ arguments: [String]) throws -> (inputContents: String, outputPath: String, type: InputType) {
+    func readCommandLine(_ arguments: [String]) throws -> (contents: String, outputPath: String, type: InputType) {
         let fileManager = FileManager.default
         let currentDirectory = fileManager.currentDirectoryPath + "/"
 
@@ -41,22 +41,22 @@ struct InputView {
             guard let inputString = userInput else {
                 throw InputError.voidInput
             }
-            return (inputContents: inputString, outputPath: "", type: InputType.console)
+            return (contents: inputString, outputPath: "", type: InputType.console)
         }
         if arguments.count == 2 {
             let inputFileContents = try readFile(currentDirectory + String(arguments[1]))
             let outputPath = currentDirectory + "default.json"
             
-            return (inputContents:inputFileContents, outputPath: outputPath, type: InputType.file)
+            return (contents:inputFileContents, outputPath: outputPath, type: InputType.file)
         }
         if arguments.count > 2 {
             let inputFileContents = try readFile(currentDirectory + String(arguments[1]))
             let outputPath = currentDirectory + String(arguments[2])
             
-            return (inputContents: inputFileContents, outputPath: outputPath, type: InputType.file)
+            return (contents: inputFileContents, outputPath: outputPath, type: InputType.file)
         }
         
-        return (inputContents: "", outputPath: "", type: InputType.console)
+        return (contents: "", outputPath: "", type: InputType.console)
     }
     
     func readFile(_ path: String) throws -> String {
