@@ -49,8 +49,7 @@ while runProgram {
     let counter = ValueCounter(targetToCount: convertedValues)
     let countInfo = counter.makeCountInfo()
     let outputView = OutputView(resultType: commandLineInput.type)
-    let resultData = ResultData()
-    let resultText = resultData.make(convertedValues)
+    let resultText = ResultData().make(convertedValues)
     if commandLineInput.outputPath == "" {
         outputView.consoleResult(countInfo, parseTarget.parseType, text: resultText)
     } else {
