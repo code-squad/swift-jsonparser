@@ -34,15 +34,7 @@ while runProgram {
         parseTarget = try grammarChecker.execute(commandLineInput.contents)
         convertedValues = try Parser.matchValues(parseTarget)
     } catch let error as GrammarChecker.FormatError {
-        runProgram = false
-        switch error {
-        case .invalidArray:
-            print(GrammarChecker.FormatError.invalidArray)
-        case .invalidObject:
-            print(GrammarChecker.FormatError.invalidObject)
-        case .invalidInput:
-            print(GrammarChecker.FormatError.invalidInput)
-        }
+        print(error)
         break
     }
     
