@@ -10,7 +10,6 @@ import Foundation
 
 // 입력값을 분석해서 타입 갯수 객체를 생성
 struct Analyzer {
-    
     // 분석된 타입 인스턴스를 반환
     static func makeAnalyzedTypeInstance (_ inputValue: String) -> JSONDataCommon & JSONType{
         return inputValue.first == Character(ElementOfString.leftBrace.rawValue) ? getJsonObject(inputValue) : getJSONArray(elements: getJsonElementFromArray(inputValue))
@@ -119,5 +118,19 @@ struct Analyzer {
         input.removeLast()
         return input
     }
+}
+
+// Mark : Argument카운트에따라 메인에서 다르게 호출됨
+extension Analyzer {
+    static func makeConsolAnalyzedResult  (unanalyzedValue: String) throws -> JSONDataCommon & JSONType {
+        let validString = try GrammerChecker.makeValidString(values: unanalyzedValue)
+        let analyzedValue = self.makeAnalyzedTypeInstance(validString)
+        return analyzedValue
+    }
     
+    static func makeFileAnalyzedResult  (unanalyzedValue: String) throws -> JSONDataCommon & JSONType {
+        let validString = try GrammerChecker.makeValidString(values: unanalyzedValue)
+        let analyzedValue = self.makeAnalyzedTypeInstance(validString)
+        return analyzedValue
+    }
 }

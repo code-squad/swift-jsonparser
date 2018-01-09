@@ -10,26 +10,19 @@ import Foundation
 
 while true {
     do {
-        var unanalyzedValue: String = ""
-        // Mark : argument.count에 따른 인풋 분기
+        var unanalyzedValue: String = ElementOfString.emptyString.description
+        let url = FileManager.default.homeDirectoryForCurrentUser
         if CommandLine.arguments.count <= 1 {
             unanalyzedValue = try InputView.readFromConsole()
-        }
-        
-        if CommandLine.arguments.count >= 2 {
-            let jsonFile = try ProcessInfo.processInfo.arguments.makeFileIOPath()
-            unanalyzedValue = try InputView.readFromFile(in: jsonFile.0)
-        }
-        
-        let validString = try GrammerChecker.makeValidString(values: unanalyzedValue)
-        let analyzedValue = Analyzer.makeAnalyzedTypeInstance(validString)
-        
-         // Mark : argument.count에 따른 아웃풋 분기
-        if CommandLine.arguments.count <= 1 {
+            let analyzedValue = try Analyzer.makeConsolAnalyzedResult(unanalyzedValue: unanalyzedValue)
             OutputView.makeConsolResult(analyzedValue)
         }
+        
         if CommandLine.arguments.count >= 2 {
-            try OutputView.writeOutputFile(analyzedValue, CommandLine.arguments[1])
+            let jsonFile = try CommandLine.arguments.makeFileIOPath()
+            unanalyzedValue = try InputView.readFromFile(in: jsonFile.0, url: url)
+            let analyzedValue = try Analyzer.makeFileAnalyzedResult(unanalyzedValue: unanalyzedValue)
+            try OutputView.writeOutputFile(analyzedValue, outputFile: jsonFile.1, directory: url)
             throw Message.ofEndingProgram
         }
     } catch Message.ofEndingProgram {

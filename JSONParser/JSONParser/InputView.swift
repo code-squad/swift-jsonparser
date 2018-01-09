@@ -17,11 +17,10 @@ struct InputView {
         throw Message.ofEndingProgram
     }
     
-     static func readFromFile(in filePath: String) throws -> String {
-        let directory = FileManager.default.homeDirectoryForCurrentUser
+    static func readFromFile(in filePath: String, url: URL) throws -> String {
         var textFromFiles: String = ElementOfString.emptyString.rawValue
         do {
-            textFromFiles = try String(contentsOf: directory.appendingPathComponent(filePath), encoding: .utf8)
+            textFromFiles = try String(contentsOf: url.appendingPathComponent(filePath), encoding: .utf8)
         } catch {
             throw Message.ofFailedProcessingFile
         }

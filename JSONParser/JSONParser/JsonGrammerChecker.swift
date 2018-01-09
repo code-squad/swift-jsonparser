@@ -12,7 +12,7 @@ import Foundation
 struct GrammerChecker {
     // 문법을 검사하여 통과시 배열로 반환
     static func makeValidString (values: String) throws -> String {
-        guard try checkIsValidJsonArrayPattern(values) || checkIsValidJSONObjectPattern(values) else { throw Message.ofInvalidFormat }
+        guard try checkIsValidJSONArrayPattern(values) || checkIsValidJSONObjectPattern(values) else { throw Message.ofInvalidFormat }
         return findJSONString(from: values)
     }
     
