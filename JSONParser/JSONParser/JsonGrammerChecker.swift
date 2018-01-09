@@ -18,6 +18,7 @@ struct GrammerChecker {
             print (Message.ofInvalidFormat)
             return nil
         }
+
     }
     
     // JsonArray패턴에 맞는지 검사

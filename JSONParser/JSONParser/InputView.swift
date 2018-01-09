@@ -9,12 +9,12 @@
 import Foundation
 
 struct InputView {
-     static func readFromConsole() -> String? {
+     static func readFromConsole() -> String {
      print (Message.ofWelcoming)
         if let unanalyzedValue = readLine() {
             guard unanalyzedValue == Message.ofEndingProgram.description else { return unanalyzedValue }
         }
-        return nil
+        return Message.ofEndingProgram.description
     }
     
     static func readFromFile(in filePath: String, url: URL) throws -> String {

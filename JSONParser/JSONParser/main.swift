@@ -13,8 +13,9 @@ while true {
         var unanalyzedValue: String = ElementOfString.emptyString.description
         let url = FileManager.default.homeDirectoryForCurrentUser
         if CommandLine.arguments.count <= 1 {
-            guard let unAnalyzedValue = InputView.readFromConsole() else { break }
-            guard let analyzedValue = Analyzer.makeConsoleAnalyzedResult(unanalyzedValue: unAnalyzedValue) else { continue }
+            unanalyzedValue = InputView.readFromConsole()
+            guard unanalyzedValue != Message.ofEndingProgram.description else { break }
+            guard let analyzedValue = Analyzer.makeConsoleAnalyzedResult(unanalyzedValue: unanalyzedValue) else { continue }
             OutputView.makeConsoleResult(analyzedValue)
         } else {
             guard let jsonFile = InputView.makeInOutFile() else { break }
