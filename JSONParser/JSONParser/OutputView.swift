@@ -9,7 +9,7 @@
 import Foundation
 struct OutputView {
    
-     static func makeConsolResult (_ analyzedValue: JSONDataCommon & JSONType) {
+     static func makeConsoleResult (_ analyzedValue: JSONDataCommon & JSONType) {
         let countedValue =  CountingJSONData.makeCountedTypeInstance(JSONType: analyzedValue)
         let result = printCountedResult(countedValue) + JSONPrintingMaker.makeNewLine() + printJsonDataType(analyzedValue)
         print( result)

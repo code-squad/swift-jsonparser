@@ -122,7 +122,7 @@ struct Analyzer {
 
 // Mark : Argument카운트에따라 메인에서 다르게 호출됨
 extension Analyzer {
-    static func makeConsolAnalyzedResult  (unanalyzedValue: String) throws -> JSONDataCommon & JSONType {
+    static func makeConsoleAnalyzedResult  (unanalyzedValue: String) throws -> JSONDataCommon & JSONType {
         let validString = try GrammerChecker.makeValidString(values: unanalyzedValue)
         let analyzedValue = self.makeAnalyzedTypeInstance(validString)
         return analyzedValue

@@ -65,19 +65,19 @@ extension Array: JSONDataCommon, JSONType {
         return JSONPrintingMaker.makeArrayTypeForPrinting(self as! [JSONType] )
     }
     
-    func makeFileIOPath() throws -> (String, String) {
+    func makeInOutFile() throws -> (String, String) {
         let elements = self as! [String]
-        let inPath: String
-        let outPath: String
+        let inputFile: String
+        let outputFile: String
         switch elements.count {
         case 2:
-            inPath = elements[1]
-            outPath = Message.ofDefaultJSONFileName.description
-            return (input: inPath, output: outPath)
+            inputFile = elements[1]
+            outputFile = Message.ofDefaultJSONFileName.description
+            return (input: inputFile, output: outputFile)
         case 3:
-            inPath = elements[1]
-            outPath = elements[2]
-            return (input: inPath, output: outPath)
+            inputFile = elements[1]
+            outputFile = elements[2]
+            return (input: inputFile, output: outputFile)
         default:
             throw Message.ofFailedProcessingFile
         }

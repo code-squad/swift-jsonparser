@@ -14,12 +14,12 @@ while true {
         let url = FileManager.default.homeDirectoryForCurrentUser
         if CommandLine.arguments.count <= 1 {
             unanalyzedValue = try InputView.readFromConsole()
-            let analyzedValue = try Analyzer.makeConsolAnalyzedResult(unanalyzedValue: unanalyzedValue)
-            OutputView.makeConsolResult(analyzedValue)
+            let analyzedValue = try Analyzer.makeConsoleAnalyzedResult(unanalyzedValue: unanalyzedValue)
+            OutputView.makeConsoleResult(analyzedValue)
         }
         
         if CommandLine.arguments.count >= 2 {
-            let jsonFile = try CommandLine.arguments.makeFileIOPath()
+            let jsonFile = try CommandLine.arguments.makeInOutFile()
             unanalyzedValue = try InputView.readFromFile(in: jsonFile.0, url: url)
             let analyzedValue = try Analyzer.makeFileAnalyzedResult(unanalyzedValue: unanalyzedValue)
             try OutputView.writeOutputFile(analyzedValue, outputFile: jsonFile.1, directory: url)
