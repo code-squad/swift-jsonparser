@@ -24,7 +24,7 @@ protocol JSONType {
 // 타입별 extension
 extension Dictionary: JsonDataCommon, JSONType {
     func makeValueFromArray() -> String {
-        return JsonPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>, innerIndent: 2, outerIndent: 2) + "," + JsonPrintingMaker.makeNewLine()
+        return JsonPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>, innerIndent: 2, outerIndent: 2) + ElementOfString.comma.rawValue
     }
     
     func makeValueFromObject() -> String {
@@ -46,7 +46,7 @@ extension Dictionary: JsonDataCommon, JSONType {
 
 extension Array: JsonDataCommon, JSONType {
     func makeValueFromArray() -> String {
-        return JsonPrintingMaker.insertIndentation(indent: 1) + String(describing: self as! [JSONType]) + ","
+        return JsonPrintingMaker.insertIndentation(indent: 1) + String(describing: self as! [JSONType]) + ElementOfString.comma.rawValue
     }
     
     func makeValueFromObject() -> String {
@@ -86,7 +86,7 @@ extension Array: JsonDataCommon, JSONType {
 
 extension Int: JSONType {
     func makeValueFromArray() -> String {
-        return String(describing: self) + ","
+        return String(describing: self) + ElementOfString.comma.rawValue
     }
     
     func makeValueFromObject() -> String {
@@ -100,11 +100,11 @@ extension Int: JSONType {
 
 extension String: JSONType {
     func makeValueFromArray() -> String {
-        return JsonPrintingMaker.insertIndentation(indent: 1) + "\"" + String(describing: self) + "\"" + ","
+        return JsonPrintingMaker.insertIndentation(indent: 1) + ElementOfString.doubleQuotationMarks.rawValue + String(describing: self) + ElementOfString.doubleQuotationMarks.rawValue + ElementOfString.comma.rawValue
     }
     
     func makeValueFromObject() -> String {
-        return "\"" + String(describing: self) + "\""
+        return ElementOfString.doubleQuotationMarks.rawValue + String(describing: self) + ElementOfString.doubleQuotationMarks.rawValue
     }
     
     func getJsontype() -> JSONType {
@@ -114,7 +114,7 @@ extension String: JSONType {
 
 extension Bool: JSONType {
     func makeValueFromArray() -> String {
-        return String(describing: self) + ","
+        return String(describing: self) + ElementOfString.comma.rawValue
     }
     
     func makeValueFromObject() -> String {

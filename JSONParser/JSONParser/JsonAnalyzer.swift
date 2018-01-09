@@ -13,21 +13,22 @@ struct Analyzer {
     
     // 분석된 타입 인스턴스를 반환
     static func makeAnalyzedTypeInstance (_ inputValue: String) -> JsonDataCommon & JSONType{
-        return inputValue.first == "{" ? getJsonObject(inputValue) : getJSONArray(elements: getJsonElementFromArray(inputValue))
+        return inputValue.first == Character(ElementOfString.leftBrace.rawValue) ? getJsonObject(inputValue) : getJSONArray(elements: getJsonElementFromArray(inputValue))
     }
     
     // 입력된 스트링값을 객체 문법규칙에 맞게 변환
-    private static func getJsonObject(_ inputValue: String) -> [String:JSONType] {
+    private static func getJsonObject (_ inputValue: String) -> [String:JSONType] {
         var jsonObject = [String:JSONType]()
         let elementsOfObject = Analyzer.getJsonElementsFromObject(from: inputValue)
         elementsOfObject.forEach {
-            let keyValue = $0.split(separator: ":").map {$0.trimmingCharacters(in: .whitespaces)}
-            let key : String = String(describing: keyValue.first ?? "").replacingOccurrences(of: "\"", with: "")
-            let value : JSONType = getEachValue(stringNotyetValue: String(describing: keyValue.last ?? ""))
+            let keyValue = $0.split(separator: Character(ElementOfString.colon.rawValue)).map {$0.trimmingCharacters(in: .whitespaces)}
+            let key : String = String(describing: keyValue.first ?? ElementOfString.emptyString.rawValue).replacingOccurrences(of: ElementOfString.doubleQuotationMarks.rawValue, with: ElementOfString.emptyString.rawValue)
+            let value : JSONType = getEachValue(stringNotyetValue: String(describing: keyValue.last ?? ElementOfString.emptyString.rawValue))
             jsonObject.updateValue(value, forKey: key)
         }
         return jsonObject
     }
+    
     
     //  입력된 스트링값을 각 배열규칙에 맞게 변환
     private static func getJsonElementFromArray(_ inputValue: String) -> Array<String> {
@@ -49,16 +50,15 @@ struct Analyzer {
         }
         return jsonArray
     }
-
     
     //  객체 내의 벨류생성
     private static func getEachValue(stringNotyetValue: String) -> JSONType {
-        if stringNotyetValue.hasPrefix("[") && stringNotyetValue.hasSuffix("]") { return getJSONArray(elements: getJsonElementFromArray(stringNotyetValue)) }
-        else if stringNotyetValue.hasPrefix("{") { return getJsonObject(stringNotyetValue)}
-        else if stringNotyetValue.starts(with: "\"") { return stringNotyetValue.replacingOccurrences(of: "\"", with: "")}
+        if stringNotyetValue.hasPrefix(ElementOfString.leftSquareBracket.rawValue) { return getJSONArray(elements: getJsonElementFromArray(stringNotyetValue)) }
+        else if stringNotyetValue.hasPrefix(ElementOfString.leftBrace.rawValue) { return getJsonObject(stringNotyetValue)}
+        else if stringNotyetValue.starts(with: ElementOfString.doubleQuotationMarks.rawValue) { return stringNotyetValue.replacingOccurrences(of: ElementOfString.doubleQuotationMarks.rawValue, with: ElementOfString.emptyString.rawValue)}
         else if let interger = Int(stringNotyetValue) { return interger }
         else if let boolean = Bool(stringNotyetValue) { return boolean }
-        else { return ""}
+        else { return ElementOfString.emptyString.rawValue}
     }
     
     // Mark : 배열 및 객체 각각의 세부 값 추출 (어레이 스트링으로 추출됨)
@@ -108,7 +108,7 @@ struct Analyzer {
         return regex.stringByReplacingMatches(
             in: input,
             range: NSRange(location: 0, length: input.count),
-            withTemplate: ""
+            withTemplate: ElementOfString.emptyString.rawValue
         )
     }
     

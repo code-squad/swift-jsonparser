@@ -18,7 +18,7 @@ struct GrammerChecker {
     
     // JsonArray패턴에 맞는지 검사
     private static func checkIsValidJsonArrayPattern (_ stringValue: String)  throws -> Bool{
-        guard stringValue.starts(with: "[") else { return false }
+        guard stringValue.starts(with: ElementOfString.leftSquareBracket.rawValue) else { return false }
         let regex = try NSRegularExpression(pattern: JsonGrammerRule.ofNestedArray)
         let results = regex.matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count))
         return !results.isEmpty
@@ -26,7 +26,7 @@ struct GrammerChecker {
     
     // JsonObject패턴에 맞는지 검사
     private static func checkIsValidJsonObjectPattern (_ stringValue: String)  throws -> Bool{
-        guard stringValue.starts(with: "{") else { return false }
+        guard stringValue.starts(with: ElementOfString.leftBrace.rawValue) else { return false }
         let regex = try NSRegularExpression(pattern: JsonGrammerRule.ofNestedObject)
         let results = regex.matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count))
         return !results.isEmpty
@@ -34,7 +34,7 @@ struct GrammerChecker {
     
     // 문자열에서 공백만 제거
     private static func findJsonString (from validString: String) -> String{
-        let removedWhiteSpace = validString.filter { $0 != " " }
+        let removedWhiteSpace = validString.filter { $0 != Character(ElementOfString.whitespace.rawValue) }
         return removedWhiteSpace
     }
     
