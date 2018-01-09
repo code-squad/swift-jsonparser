@@ -9,60 +9,60 @@
 import Foundation
 
 // 출력 데이터 추상화 (카운팅 및 Json타입 형태)
-protocol JsonDataCommon {
+protocol JSONDataCommon {
     func readyforPrinting () -> String
-    func getCountedType () -> JsonData
+    func getCountedType () -> JSONData
 }
 
 // 타입별 값을 가져오는 부분 추상화
 protocol JSONType {
-    func getJsontype () -> JSONType
+    func getJSONtype () -> JSONType
     func makeValueFromObject () -> String
     func makeValueFromArray () -> String
 }
 
 // 타입별 extension
-extension Dictionary: JsonDataCommon, JSONType {
+extension Dictionary: JSONDataCommon, JSONType {
     func makeValueFromArray() -> String {
-        return JsonPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>, innerIndent: 2, outerIndent: 2) + ElementOfString.comma.rawValue
+        return JSONPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>, innerIndent: 2, outerIndent: 2) + ElementOfString.comma.rawValue
     }
     
     func makeValueFromObject() -> String {
-        return JsonPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>, innerIndent: 1, outerIndent: 0)
+        return JSONPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>, innerIndent: 1, outerIndent: 0)
     }
     
-    func getJsontype() -> JSONType {
+    func getJSONtype() -> JSONType {
         return self as! Dictionary<String, JSONType>
     }
     
-    func getCountedType() -> JsonData {
-        return CountingJsonData.getCountedObjectType(self as! Dictionary<String, JSONType>)
+    func getCountedType() -> JSONData {
+        return CountingJSONData.getCountedObjectType(self as! Dictionary<String, JSONType>)
     }
     
     func readyforPrinting() -> String{
-        return JsonPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>, innerIndent: 1, outerIndent: 0)
+        return JSONPrintingMaker.makeObjectTypeForPrinting(self as! Dictionary<String, JSONType>, innerIndent: 1, outerIndent: 0)
     }
 }
 
-extension Array: JsonDataCommon, JSONType {
+extension Array: JSONDataCommon, JSONType {
     func makeValueFromArray() -> String {
-        return JsonPrintingMaker.insertIndentation(indent: 1) + String(describing: self as! [JSONType]) + ElementOfString.comma.rawValue
+        return JSONPrintingMaker.insertIndentation(indent: 1) + String(describing: self as! [JSONType]) + ElementOfString.comma.rawValue
     }
     
     func makeValueFromObject() -> String {
         return String(describing: self as! [JSONType])
     }
     
-    func getJsontype() -> JSONType {
+    func getJSONtype() -> JSONType {
         return self as! [String]
     }
     
-    func getCountedType() -> JsonData {
-        return CountingJsonData.getCountedArrayType(self as!  [JSONType])
+    func getCountedType() -> JSONData {
+        return CountingJSONData.getCountedArrayType(self as!  [JSONType])
     }
     
     func readyforPrinting() -> String{
-        return JsonPrintingMaker.makeArrayTypeForPrinting(self as! [JSONType] )
+        return JSONPrintingMaker.makeArrayTypeForPrinting(self as! [JSONType] )
     }
     
     func makeFileIOPath() throws -> (String, String) {
@@ -93,21 +93,21 @@ extension Int: JSONType {
         return String(describing: self)
     }
     
-    func getJsontype() -> JSONType {
+    func getJSONtype() -> JSONType {
         return Int(self)
     }
 }
 
 extension String: JSONType {
     func makeValueFromArray() -> String {
-        return JsonPrintingMaker.insertIndentation(indent: 1) + ElementOfString.doubleQuotationMarks.rawValue + String(describing: self) + ElementOfString.doubleQuotationMarks.rawValue + ElementOfString.comma.rawValue
+        return JSONPrintingMaker.insertIndentation(indent: 1) + ElementOfString.doubleQuotationMarks.rawValue + String(describing: self) + ElementOfString.doubleQuotationMarks.rawValue + ElementOfString.comma.rawValue
     }
     
     func makeValueFromObject() -> String {
         return ElementOfString.doubleQuotationMarks.rawValue + String(describing: self) + ElementOfString.doubleQuotationMarks.rawValue
     }
     
-    func getJsontype() -> JSONType {
+    func getJSONtype() -> JSONType {
         return String(self)
     }
 }
@@ -121,7 +121,7 @@ extension Bool: JSONType {
         return String(describing: self)
     }
     
-    func getJsontype() -> JSONType {
+    func getJSONtype() -> JSONType {
         return Bool(self)
     }
 }

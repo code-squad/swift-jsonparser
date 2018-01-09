@@ -8,21 +8,21 @@
 
 import Foundation
 
-struct CountingJsonData {
+struct CountingJSONData {
     
     // 카운팅된 JsonData 인스턴스 생성
-    static func makeCountedTypeInstance (jsonType: JsonDataCommon) -> JsonData {
-        return jsonType.getCountedType()
+    static func makeCountedTypeInstance (JSONType: JSONDataCommon) -> JSONData {
+        return JSONType.getCountedType()
     }
     
     //  객체타입의 카운팅 인스턴스 생성
-    static func getCountedObjectType(_ objectValue: [String:JSONType]) -> JsonData {
+    static func getCountedObjectType(_ objectValue: [String:JSONType]) -> JSONData {
         let (countOfNum, countOfBool, countOfString, countOfArray) = countOfValueTypeInObject(objectValue)
-        return JsonData(countOfNum, countOfBool, countOfString, countOfArray)
+        return JSONData(countOfNum, countOfBool, countOfString, countOfArray)
     }
     
     //  배열 타입의 카운팅 인스턴스 생성
-    static func getCountedArrayType(_ arrayValue: [JSONType]) -> JsonData {
+    static func getCountedArrayType(_ arrayValue: [JSONType]) -> JSONData {
         var countOfNumber: Int = 0
         var countOfBool: Int = 0
         var countOfString: Int = 0
@@ -35,7 +35,7 @@ struct CountingJsonData {
             else if $0 is Bool { countOfBool += 1}
             else if  $0 is String {countOfString += 1}
         }
-        return JsonData(countOfNumber, countOfBool, countOfString, countOfObject, countOfofArray)
+        return JSONData(countOfNumber, countOfBool, countOfString, countOfObject, countOfofArray)
     }
     
     //  객체 내의 값의 타입 갯수를 세어 반환

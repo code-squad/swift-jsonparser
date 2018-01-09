@@ -9,7 +9,7 @@
 import Foundation
 
 // Json 문법 구조체
-struct JsonGrammerRule {
+struct JSONGrammerRule {
     static let ofString = "\\s*?\"[^\"]+\"\\s*?"
     static let ofInt = "\\s*?\\d+\\s*?"
     static let ofBool = "\\s*?(true|false)\\s*?"

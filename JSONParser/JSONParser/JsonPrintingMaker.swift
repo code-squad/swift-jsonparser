@@ -8,41 +8,41 @@
 
 import Foundation
 
-struct JsonPrintingMaker {
+struct JSONPrintingMaker {
     
-    static func makeJsonTypeforPrinting(jsonType: JsonDataCommon) -> String {
-        return jsonType.readyforPrinting()
+    static func makeJSONTypeforPrinting(JSONType: JSONDataCommon) -> String {
+        return JSONType.readyforPrinting()
     }
     
-    static func makeObjectTypeForPrinting(_ jsonObjectType: Dictionary<String,JSONType>, innerIndent: Int, outerIndent: Int) -> String {
+    static func makeObjectTypeForPrinting(_ JSONObjectType: Dictionary<String,JSONType>, innerIndent: Int, outerIndent: Int) -> String {
         var result: String = ElementOfString.emptyString.rawValue
         result += ElementOfString.leftBrace.rawValue + makeNewLine()
-        result += getValuesFromObject(jsonObjectType, indent: innerIndent)
+        result += getValuesFromObject(JSONObjectType, indent: innerIndent)
         result.removeLast(2)
         result += makeNewLine() + insertIndentation(indent: outerIndent) + ElementOfString.rightBrace.rawValue
         return result
     }
     
-    static func makeArrayTypeForPrinting(_ jsonArrayType: [JSONType]) -> String {
+    static func makeArrayTypeForPrinting(_ JSONArrayType: [JSONType]) -> String {
         var result: String = ElementOfString.emptyString.rawValue
         result += ElementOfString.leftSquareBracket.rawValue
-        result += getValueFromArray(jsonArrayType)
+        result += getValueFromArray(JSONArrayType)
         result.removeLast(1)
         result += makeNewLine() + ElementOfString.rightSquareBracket.rawValue
         return result
     }
     
-    private static func getValueFromArray(_ jsonArrayType: Array<JSONType>) -> String {
+    private static func getValueFromArray(_ JSONArrayType: Array<JSONType>) -> String {
         var result: String = ElementOfString.emptyString.rawValue
-        jsonArrayType.forEach {
+        JSONArrayType.forEach {
             result += $0.makeValueFromArray()
         }
         return result
     }
     
-    private static func getValuesFromObject(_ jsonObjectType: Dictionary<String,JSONType> , indent: Int) -> String {
+    private static func getValuesFromObject(_ JSONObjectType: Dictionary<String,JSONType> , indent: Int) -> String {
         var result: String = ElementOfString.emptyString.rawValue
-        jsonObjectType.forEach {
+        JSONObjectType.forEach {
             let value = $0.value.makeValueFromObject()
             result += insertIndentation(indent: indent) + makeKeyAndValueOfDictionary(key: $0.key, value: value)  + ElementOfString.comma.rawValue + makeNewLine()
         }

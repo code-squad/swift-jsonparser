@@ -12,7 +12,7 @@ import Foundation
 struct Analyzer {
     
     // 분석된 타입 인스턴스를 반환
-    static func makeAnalyzedTypeInstance (_ inputValue: String) -> JsonDataCommon & JSONType{
+    static func makeAnalyzedTypeInstance (_ inputValue: String) -> JSONDataCommon & JSONType{
         return inputValue.first == Character(ElementOfString.leftBrace.rawValue) ? getJsonObject(inputValue) : getJSONArray(elements: getJsonElementFromArray(inputValue))
     }
     
@@ -65,26 +65,26 @@ struct Analyzer {
     
     //  배열내부의 객체 추출
     private static func getObjectOfArray(from input: String) -> Array<String> {
-        return getElementsOfMatchedWIthJsonGrammer(inputValue: input, pattern: JsonGrammerRule.ofObject)
+        return getElementsOfMatchedWIthJSONGrammer(inputValue: input, pattern: JSONGrammerRule.ofObject)
     }
     
     //  배열내부의 배열 추출
     private static func getArrayOfArray(from input: String) -> Array<String> {
-        return getElementsOfMatchedWIthJsonGrammer(inputValue: input, pattern: JsonGrammerRule.ofArray)
+        return getElementsOfMatchedWIthJSONGrammer(inputValue: input, pattern: JSONGrammerRule.ofArray)
     }
     
     //  배열내부의 배열,객체 제외한 값 추출
     private static func getValueFromArray(from input: String) -> Array<String> {
-        return getElementsOfMatchedWIthJsonGrammer(inputValue: input, pattern: JsonGrammerRule.ofValue)
+        return getElementsOfMatchedWIthJSONGrammer(inputValue: input, pattern: JSONGrammerRule.ofValue)
     }
     
     //  객체 내부에서 카운팅할 값들 추출
     private static func getJsonElementsFromObject(from input: String) -> Array<String> {
-        return getElementsOfMatchedWIthJsonGrammer(inputValue: input, pattern: JsonGrammerRule.ofNestedDictionary)
+        return getElementsOfMatchedWIthJSONGrammer(inputValue: input, pattern: JSONGrammerRule.ofNestedDictionary)
     }
     
     // 문법과 매칭하여 값을 추출할 NS함수
-    private static func getElementsOfMatchedWIthJsonGrammer(inputValue: String, pattern: String) -> Array<String> {
+    private static func getElementsOfMatchedWIthJSONGrammer(inputValue: String, pattern: String) -> Array<String> {
         let regularExpression = try! NSRegularExpression(pattern: pattern)
         let matchedValue = regularExpression.matches(in: inputValue, range: NSRange(location:0, length:inputValue.count))
         let result = matchedValue.map {String(inputValue[Range($0.range, in: inputValue)!])}
@@ -94,12 +94,12 @@ struct Analyzer {
     // Mark : 매칭된 값 삭제
     //  이미 매칭된 객체를 삭제
     private static func removeMatchedObjectfromString (from input: String) -> String {
-        return removeAlreadyMatchedPattern(from: input, pattern: JsonGrammerRule.ofObject)
+        return removeAlreadyMatchedPattern(from: input, pattern: JSONGrammerRule.ofObject)
     }
     
     //  이미 매칭된 배열을 삭제
     private static func removeMatchedArrayfromString (from input: String) -> String {
-        return removeAlreadyMatchedPattern(from: input, pattern: JsonGrammerRule.ofArray)
+        return removeAlreadyMatchedPattern(from: input, pattern: JSONGrammerRule.ofArray)
     }
     
     // 문법과 매칭된 값을 삭제하는 NS함수
