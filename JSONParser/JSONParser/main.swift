@@ -13,18 +13,16 @@ while true {
         var unanalyzedValue: String = ElementOfString.emptyString.description
         let url = FileManager.default.homeDirectoryForCurrentUser
         if CommandLine.arguments.count <= 1 {
-            unanalyzedValue = try InputView.readFromConsole()
-            let analyzedValue = try Analyzer.makeConsoleAnalyzedResult(unanalyzedValue: unanalyzedValue)
+            guard let unAnalyzedValue = InputView.readFromConsole() else { break }
+            guard let analyzedValue = Analyzer.makeConsoleAnalyzedResult(unanalyzedValue: unAnalyzedValue) else { continue }
             OutputView.makeConsoleResult(analyzedValue)
         } else {
-            let jsonFile = try CommandLine.arguments.makeInOutFile()
+            guard let jsonFile = InputView.makeInOutFile() else { break }
             unanalyzedValue = try InputView.readFromFile(in: jsonFile.0, url: url)
-            let analyzedValue = try Analyzer.makeFileAnalyzedResult(unanalyzedValue: unanalyzedValue)
+            guard let analyzedValue = Analyzer.makeFileAnalyzedResult(unanalyzedValue: unanalyzedValue) else { continue }
             try OutputView.writeOutputFile(analyzedValue, outputFile: jsonFile.1, directory: url)
-            throw Message.ofEndingProgram
+            break
         }
-    } catch Message.ofEndingProgram {
-        break
     } catch Message.ofFailedProcessingFile {
         print (Message.ofFailedProcessingFile)
         break

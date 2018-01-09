@@ -9,12 +9,12 @@
 import Foundation
 
 struct InputView {
-     static func readFromConsole() throws -> String {
-        print (Message.ofWelcoming)
+     static func readFromConsole() -> String? {
+     print (Message.ofWelcoming)
         if let unanalyzedValue = readLine() {
             guard unanalyzedValue == Message.ofEndingProgram.description else { return unanalyzedValue }
         }
-        throw Message.ofEndingProgram
+        return nil
     }
     
     static func readFromFile(in filePath: String, url: URL) throws -> String {
@@ -25,5 +25,24 @@ struct InputView {
             throw Message.ofFailedProcessingFile
         }
         return textFromFiles
+    }
+    
+    static func makeInOutFile() -> (String, String)? {
+        let elements = CommandLine.arguments
+        let inputFile: String
+        let outputFile: String
+        switch elements.count {
+        case 2:
+            inputFile = elements[1]
+            outputFile = Message.ofDefaultJSONFileName.description
+            return (input: inputFile, output: outputFile)
+        case 3:
+            inputFile = elements[1]
+            outputFile = elements[2]
+            return (input: inputFile, output: outputFile)
+        default:
+            print (Message.ofFailedProcessingFile)
+            return nil
+        }
     }
 }
