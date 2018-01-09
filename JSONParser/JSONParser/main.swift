@@ -16,9 +16,7 @@ while true {
             unanalyzedValue = try InputView.readFromConsole()
             let analyzedValue = try Analyzer.makeConsoleAnalyzedResult(unanalyzedValue: unanalyzedValue)
             OutputView.makeConsoleResult(analyzedValue)
-        }
-        
-        if CommandLine.arguments.count >= 2 {
+        } else {
             let jsonFile = try CommandLine.arguments.makeInOutFile()
             unanalyzedValue = try InputView.readFromFile(in: jsonFile.0, url: url)
             let analyzedValue = try Analyzer.makeFileAnalyzedResult(unanalyzedValue: unanalyzedValue)

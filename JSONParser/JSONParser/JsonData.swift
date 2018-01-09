@@ -19,6 +19,15 @@ struct JSONData {
     enum CountingType {
         case object
         case array
+        
+        func printResultOfConting (countedValue : JSONData) -> String {
+            switch self {
+            case .object :
+                return  ("총 \(countedValue.total)개의 객체중 숫자 \(countedValue.ofNumericValue)개, 불값 \(countedValue.ofBooleanValue)개, 문자열 \(countedValue.ofStringValue)개, 배열 \(countedValue.ofArray)개가 있습니다.")
+            case .array :
+                return  ("총 \(countedValue.total)개의 배열 데이터중 객체 \(countedValue.ofObject) 숫자 \(countedValue.ofNumericValue)개, 불값 \(countedValue.ofBooleanValue)개, 문자열 \(countedValue.ofStringValue)개, 배열 \(countedValue.ofArray)개가 있습니다.")
+            }
+        }
     }
     
     // 객체타입 생성자

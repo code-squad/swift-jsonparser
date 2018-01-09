@@ -26,11 +26,7 @@ struct OutputView {
     }
     
     private static func printCountedResult (_ countedValue: JSONData) -> String {
-        if countedValue.type == JSONData.CountingType.object {
-            return ("총 \(countedValue.total)개의 객체중 숫자 \(countedValue.ofNumericValue)개, 불값 \(countedValue.ofBooleanValue)개, 문자열 \(countedValue.ofStringValue)개, 배열 \(countedValue.ofArray)개가 있습니다.")
-        } else {
-            return ("총 \(countedValue.total)개의 배열 데이터중 객체 \(countedValue.ofObject) 숫자 \(countedValue.ofNumericValue)개, 불값 \(countedValue.ofBooleanValue)개, 문자열 \(countedValue.ofStringValue)개, 배열 \(countedValue.ofArray)개가 있습니다.")
-        }
+        return countedValue.type.printResultOfConting(countedValue: countedValue)
     }
     
     private static func printJsonDataType(_ jsonDataType: JSONDataCommon) -> String {

@@ -10,7 +10,7 @@ import Foundation
 
 struct InputView {
      static func readFromConsole() throws -> String {
-        print (Message.ofWelcoming.description)
+        print (Message.ofWelcoming)
         if let unanalyzedValue = readLine() {
             guard unanalyzedValue == Message.ofEndingProgram.description else { return unanalyzedValue }
         }
