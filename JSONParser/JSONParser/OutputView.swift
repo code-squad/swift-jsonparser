@@ -14,9 +14,9 @@ struct OutputView {
         } else if argument.count >= 2 {
             let jsonFile = try argument.makeFileIOPath()
             let jsonType = JsonPrintingMaker.makeJsonTypeforPrinting(jsonType: inputString)
-            try makeOutputFile(jsonType, jsonFile.1)
+            try writeOutputFile(jsonType, jsonFile.1)
             throw Message.ofEndingProgram
-
+    
         } else {
             throw Message.ofFailedProcessingFile
         }
@@ -28,10 +28,10 @@ struct OutputView {
         return result
     }
     
-    private static func makeOutputFile(_ prettyJSONData: String, _ filePath: String) throws {
-        let directory = FileManager.default.homeDirectoryForCurrentUser
+    private static func writeOutputFile(_ jsonTypeData: String, _ unAnaluzedJsonFile: String) throws {
+        let outputUrl = URL(fileURLWithPath: unAnaluzedJsonFile)
         do {
-            try prettyJSONData.write(to: directory.appendingPathComponent(filePath), atomically: false, encoding: .utf8)
+            try jsonTypeData.write(to: outputUrl, atomically: false, encoding: .utf8)
             print(Message.ofSuccessProcessingFile.description)
         } catch {
             throw Message.ofFailedProcessingFile
