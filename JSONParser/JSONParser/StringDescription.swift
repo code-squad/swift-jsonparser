@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Message: Error {
+enum Message: Error, CustomStringConvertible {
     case ofWelcoming
     case ofEndingProgram
     case ofInvalidFormat

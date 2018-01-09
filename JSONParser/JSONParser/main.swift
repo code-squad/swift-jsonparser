@@ -28,7 +28,7 @@ while true {
     } catch Message.ofEndingProgram {
         break
     } catch Message.ofFailedProcessingFile {
-        print (Message.ofFailedProcessingFile.description)
+        print (Message.ofFailedProcessingFile)
         break
     } catch let error as Message {
         print (error)

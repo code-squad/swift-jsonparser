@@ -12,14 +12,14 @@ struct OutputView {
      static func makeConsoleResult (_ analyzedValue: JSONDataCommon & JSONType) {
         let countedValue =  CountingJSONData.makeCountedTypeInstance(JSONType: analyzedValue)
         let result = printCountedResult(countedValue) + JSONPrintingMaker.makeNewLine() + printJsonDataType(analyzedValue)
-        print( result)
+        print(result)
     }
     
     static func writeOutputFile(_ jsonTypeData: JSONDataCommon & JSONType, outputFile: String, directory: URL) throws {
         let jsonType = JSONPrintingMaker.makeJSONTypeforPrinting(JSONType: jsonTypeData)
         do {
             try jsonType.write(to: directory.appendingPathComponent(outputFile) , atomically: false, encoding: .utf8)
-            print(Message.ofSuccessProcessingFile.description)
+            print(Message.ofSuccessProcessingFile)
         } catch {
             throw Message.ofFailedProcessingFile
         }
