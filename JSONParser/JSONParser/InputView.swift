@@ -9,25 +9,15 @@
 import Foundation
 
 struct InputView {
-    static func read (_ argument: [String]) throws -> String {
-        if argument.count <= 1 {
-            return readFromConsole()
-        } else if argument.count >= 2 {
-            let jsonFile = try argument.makeFileIOPath()
-            return try readFromFile(in: jsonFile.0)
-        }
-        throw Message.ofFailedProcessingFile
-    }
-    
-    private static func readFromConsole() -> String {
+     static func readFromConsole() throws -> String {
         print (Message.ofWelcoming.description)
         if let unanalyzedValue = readLine() {
             guard unanalyzedValue == Message.ofEndingProgram.description else { return unanalyzedValue }
         }
-        return Message.ofEndingProgram.description
+        throw Message.ofEndingProgram
     }
     
-    private static func readFromFile(in filePath: String) throws -> String {
+     static func readFromFile(in filePath: String) throws -> String {
         let directory = FileManager.default.homeDirectoryForCurrentUser
         var textFromFiles: String = ElementOfString.emptyString.rawValue
         do {

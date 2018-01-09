@@ -8,30 +8,18 @@
 
 import Foundation
 struct OutputView {
-    static func printOut (_ inputString: JsonDataCommon & JSONType, _ argument: [String]) throws {
-        if argument.count < 2 {
-            print(makeConsolResult(inputString))
-        } else if argument.count >= 2 {
-            let jsonFile = try argument.makeFileIOPath()
-            let jsonType = JsonPrintingMaker.makeJsonTypeforPrinting(jsonType: inputString)
-            try writeOutputFile(jsonType, jsonFile.1)
-            throw Message.ofEndingProgram
-    
-        } else {
-            throw Message.ofFailedProcessingFile
-        }
-    }
-    
-    private static func makeConsolResult (_ analyzedValue: JsonDataCommon & JSONType) -> String {
+   
+     static func makeConsolResult (_ analyzedValue: JsonDataCommon & JSONType) {
         let countedValue =  CountingJsonData.makeCountedTypeInstance(jsonType: analyzedValue)
         let result = printCountedResult(countedValue) + JsonPrintingMaker.makeNewLine() + printJsonDataType(analyzedValue)
-        return result
+        print( result)
     }
     
-    private static func writeOutputFile(_ jsonTypeData: String, _ unAnaluzedJsonFile: String) throws {
+     static func writeOutputFile(_ jsonTypeData: JsonDataCommon & JSONType, _ unAnaluzedJsonFile: String) throws {
+        let jsonType = JsonPrintingMaker.makeJsonTypeforPrinting(jsonType: jsonTypeData)
         let outputUrl = URL(fileURLWithPath: unAnaluzedJsonFile)
         do {
-            try jsonTypeData.write(to: outputUrl, atomically: false, encoding: .utf8)
+            try jsonType.write(to: outputUrl, atomically: false, encoding: .utf8)
             print(Message.ofSuccessProcessingFile.description)
         } catch {
             throw Message.ofFailedProcessingFile

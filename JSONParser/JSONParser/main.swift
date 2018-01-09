@@ -9,23 +9,36 @@
 import Foundation
 
 while true {
-    var validString: String = ""
     do {
-        // 문법체크
-        let unanalyzedValue = try InputView.read(ProcessInfo.processInfo.arguments)
-        if unanalyzedValue == Message.ofEndingProgram.description { break }
-        validString += try GrammerChecker.makeValidString(values: unanalyzedValue)
-        // 분석된 Json 타입인스턴스 생성
+        var unanalyzedValue: String = ""
+        // Mark : argument.count에 따른 인풋 분기
+        if CommandLine.arguments.count <= 1 {
+            unanalyzedValue = try InputView.readFromConsole()
+        }
+        
+        if CommandLine.arguments.count >= 2 {
+            let jsonFile = try ProcessInfo.processInfo.arguments.makeFileIOPath()
+            unanalyzedValue = try InputView.readFromFile(in: jsonFile.0)
+        }
+        
+        let validString = try GrammerChecker.makeValidString(values: unanalyzedValue)
         let analyzedValue = Analyzer.makeAnalyzedTypeInstance(validString)
-        // JsonDataType 출력
-        try OutputView.printOut(analyzedValue, ProcessInfo.processInfo.arguments)
+        
+         // Mark : argument.count에 따른 아웃풋 분기
+        if CommandLine.arguments.count <= 1 {
+            OutputView.makeConsolResult(analyzedValue)
+        }
+        if CommandLine.arguments.count >= 2 {
+            try OutputView.writeOutputFile(analyzedValue, CommandLine.arguments[1])
+            throw Message.ofEndingProgram
+        }
     } catch Message.ofEndingProgram {
         break
     } catch Message.ofFailedProcessingFile {
         print (Message.ofFailedProcessingFile.description)
         break
     } catch let error as Message {
-        print (error.description)
+        print (error)
     }
 }
 
