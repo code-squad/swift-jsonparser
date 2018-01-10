@@ -14,12 +14,12 @@ struct InputView {
      return readLine() ?? ""
     }
     
-    static func readFromFile(in filePath: String, url: URL) throws -> String {
+    static func readFromFile(in filePath: String, url: URL) -> String {
         var textFromFiles: String = ElementOfString.emptyString.rawValue
         do {
             textFromFiles = try String(contentsOf: url.appendingPathComponent(filePath), encoding: .utf8)
         } catch {
-            throw Message.ofFailedProcessingFile
+            print (Message.ofFailedProcessingFile)
         }
         return textFromFiles
     }
