@@ -18,9 +18,9 @@ while true {
         OutputView.makeConsoleResult(analyzedValue)
     } else {
         guard let jsonFile = InputView.makeInOutFile() else { break }
-        unanalyzedValue = InputView.readFromFile(from: jsonFile.inputFile, url: url)
+        unanalyzedValue = InputView.readFromFile(file: jsonFile.inputFile, fromPath: url)
         guard let analyzedValue = Analyzer.makeFileAnalyzedResult(unanalyzedValue) else { break }
-        guard OutputView.writeOutputFile(analyzedValue, jsonFile.outputFile, url) else { break }
+        guard OutputView.writeOutputFile(jsonTypeData: analyzedValue, outputFile: jsonFile.outputFile, toPath: url) else { break }
         break
     }
 }
