@@ -14,17 +14,17 @@ struct InputView {
      return readLine() ?? ""
     }
     
-    static func readFromFile(in filePath: String, url: URL) -> String {
+    static func readFromFile(file InputFile: String, fromPath: URL) -> String {
         var textFromFiles: String = ElementOfString.emptyString.rawValue
         do {
-            textFromFiles = try String(contentsOf: url.appendingPathComponent(filePath), encoding: .utf8)
+            textFromFiles = try String(contentsOf: fromPath.appendingPathComponent(InputFile), encoding: .utf8)
         } catch {
             print (Message.ofFailedProcessingFile)
         }
         return textFromFiles
     }
     
-    static func makeInOutFile() -> (String, String)? {
+    static func makeInOutFile() -> (inputFile: String, outputFile: String)? {
         let elements = CommandLine.arguments
         let inputFile: String
         let outputFile: String
@@ -32,11 +32,11 @@ struct InputView {
         case 2:
             inputFile = elements[1]
             outputFile = Message.ofDefaultJSONFileName.description
-            return (input: inputFile, output: outputFile)
+            return (inputFile: inputFile, outputFile: outputFile)
         case 3:
             inputFile = elements[1]
             outputFile = elements[2]
-            return (input: inputFile, output: outputFile)
+            return (inputFile: inputFile, outputFile: outputFile)
         default:
             print (Message.ofFailedProcessingFile)
             return nil

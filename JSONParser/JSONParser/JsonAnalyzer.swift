@@ -122,13 +122,13 @@ struct Analyzer {
 
 // Mark : Argument카운트에따라 메인에서 다르게 호출됨
 extension Analyzer {
-    static func makeConsoleAnalyzedResult  (unanalyzedValue: String) -> (JSONDataCommon & JSONType)? {
+    static func makeConsoleAnalyzedResult  (_ unanalyzedValue: String) -> (JSONDataCommon & JSONType)? {
         guard let validString = GrammerChecker.makeValidString(values: unanalyzedValue) else { return nil }
         let analyzedValue = self.makeAnalyzedTypeInstance(validString)
         return analyzedValue
     }
     
-    static func makeFileAnalyzedResult  (unanalyzedValue: String) -> (JSONDataCommon & JSONType)? {
+    static func makeFileAnalyzedResult  (_ unanalyzedValue: String) -> (JSONDataCommon & JSONType)? {
         guard let validString = GrammerChecker.makeValidString(values: unanalyzedValue) else { return nil}
         let analyzedValue = self.makeAnalyzedTypeInstance(validString)
         return analyzedValue
