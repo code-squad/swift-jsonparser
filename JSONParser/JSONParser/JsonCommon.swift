@@ -64,24 +64,6 @@ extension Array: JSONDataCommon, JSONType {
     func readyforPrinting() -> String{
         return JSONPrintingMaker.makeArrayTypeForPrinting(self as! [JSONType] )
     }
-    
-    func makeInOutFile() throws -> (String, String) {
-        let elements = self as! [String]
-        let inputFile: String
-        let outputFile: String
-        switch elements.count {
-        case 2:
-            inputFile = elements[1]
-            outputFile = Message.ofDefaultJSONFileName.description
-            return (input: inputFile, output: outputFile)
-        case 3:
-            inputFile = elements[1]
-            outputFile = elements[2]
-            return (input: inputFile, output: outputFile)
-        default:
-            throw Message.ofFailedProcessingFile
-        }
-    }
 }
 
 extension Int: JSONType {
