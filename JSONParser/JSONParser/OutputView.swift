@@ -15,13 +15,15 @@ struct OutputView {
         print(result)
     }
     
-    static func writeOutputFile(_ jsonTypeData: JSONDataCommon & JSONType, outputFile: String, directory: URL) throws {
+    static func writeOutputFile(_ jsonTypeData: JSONDataCommon & JSONType, outputFile: String, directory: URL) -> Bool {
         let jsonType = JSONPrintingMaker.makeJSONTypeforPrinting(JSONType: jsonTypeData)
         do {
             try jsonType.write(to: directory.appendingPathComponent(outputFile) , atomically: false, encoding: .utf8)
             print(Message.ofSuccessProcessingFile)
+            return true
         } catch {
-            throw Message.ofFailedProcessingFile
+            print (Message.ofFailedProcessingFile)
+            return false
         }
     }
     
