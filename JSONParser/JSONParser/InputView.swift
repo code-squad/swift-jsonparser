@@ -9,7 +9,7 @@
 import Foundation
 
 struct InputView {
-
+    
     func readInput(_ message: String) -> String {
         print(message)
         let input = readLine()
@@ -17,16 +17,36 @@ struct InputView {
         return inputData
     }
     
-    func makeDataArray(_ input: String) -> Array<Any> {
+    func makeDataArray(_ input: String) -> [String]{
         let data = input.components(separatedBy: ", ")
-        var dataArray: [Any] = []
-        dataArray.append(data[0].dropFirst())
+        var dataArray: [String] = []
+        dataArray.append(String(data[0].dropFirst()))
         let last = data.count-1
         for index in 1..<last {
             dataArray.append(data[index])
         }
-        dataArray.append(data[last].dropLast())
+        dataArray.append(String(data[last].dropLast()))
         return dataArray
     }
-
+    
+    func countData(_ dataArray: Array<String>) -> (number: Int, string: Int, bool: Int){
+        var numberCount = 0
+        var stringCount = 0
+        var boolCount = 0
+        
+        for data in dataArray {
+            if data.contains("\"") {
+                stringCount += 1
+            } else if data == "true" || data == "false" {
+                boolCount += 1
+            } else {
+                numberCount += 1
+            }
+        }
+        return (numberCount, stringCount, boolCount)
+    }
+    
+    
+    
 }
+
