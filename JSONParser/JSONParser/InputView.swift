@@ -17,7 +17,7 @@ struct InputView {
         return inputData
     }
     
-    func makeDataArray(_ input: String) -> [String]{
+    func makeDataArray(_ input: String) -> [String] {
         let data = input.components(separatedBy: ", ")
         var dataArray: [String] = []
         dataArray.append(String(data[0].dropFirst()))
@@ -29,10 +29,11 @@ struct InputView {
         return dataArray
     }
     
-    func countData(_ dataArray: Array<String>) -> (number: Int, string: Int, bool: Int){
+    func countData(_ dataArray: Array<String>) -> (number: Int, string: Int, bool: Int, numberData: [String]) {
         var numberCount = 0
         var stringCount = 0
         var boolCount = 0
+        var numberData: [String] = []
         
         for data in dataArray {
             if data.contains("\"") {
@@ -40,10 +41,11 @@ struct InputView {
             } else if data == "true" || data == "false" {
                 boolCount += 1
             } else {
+                numberData.append(data)
                 numberCount += 1
             }
         }
-        return (numberCount, stringCount, boolCount)
+        return (numberCount, stringCount, boolCount, numberData)
     }
     
     
