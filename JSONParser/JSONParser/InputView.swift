@@ -17,38 +17,49 @@ struct InputView {
         return inputData
     }
     
-    func makeDataArray(_ input: String) -> [String] {
-        let data = input.components(separatedBy: ", ")
-        var dataArray: [String] = []
-        dataArray.append(String(data[0].dropFirst()))
-        let last = data.count-1
-        for index in 1..<last {
-            dataArray.append(data[index])
-        }
-        dataArray.append(String(data[last].dropLast()))
-        return dataArray
+    func separateByComma(_ input: String) -> [String] {
+        let inputData = input.components(separatedBy: ",")
+        return inputData
     }
     
-    func countData(_ dataArray: Array<String>) -> (number: Int, string: Int, bool: Int, numberData: [String]) {
-        var numberCount = 0
-        var stringCount = 0
-        var boolCount = 0
-        var numberData: [String] = []
+    func dropBrackets(_ inputData: [String]) -> [String] {
+        var data: [String] = []
+        data.append(String(inputData[0].dropFirst()))
+        let last = inputData.count-1
+        for index in 1..<last {
+            data.append(inputData[index])
+        }
+        data.append(String(inputData[last].dropLast()))
+        return data
+    }
+    
+    func removeWhiteSpace(_ inputData: [String]) -> [String] {
+        var data: [String] = []
+        for index in 0..<inputData.count {
+            data.append(inputData[index].trimmingCharacters(in: .whitespacesAndNewlines))
+        }
+        return data
+    }
+    
+    func makeDataArray(_ inputData: [String]) -> (number: [Int], string: [String], bool: [Bool]) {
+        var numberData: [Int] = []
+        var stringData: [String] = []
+        var boolData: [Bool] = []
         
-        for data in dataArray {
+        for data in inputData {
             if data.contains("\"") {
-                stringCount += 1
-            } else if data == "true" || data == "false" {
-                boolCount += 1
+                stringData.append(data)
+            } else if let boolInput = Bool.init(data) {
+                boolData.append(boolInput)
+            } else if let numberInput = Int.init(data) {
+                numberData.append(numberInput)
             } else {
-                numberData.append(data)
-                numberCount += 1
+                print("정확한 데이터 값으로 다시 입력하세요")
+                break
             }
         }
-        return (numberCount, stringCount, boolCount, numberData)
+        return (numberData, stringData, boolData)
     }
-    
-    
     
 }
 

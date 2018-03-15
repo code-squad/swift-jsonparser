@@ -10,19 +10,15 @@ import Foundation
 
 struct GrammarChecker {
     
-    func isFormInput(_ input: String) -> Bool {
-        return input.contains(", ")
-    }
-    
-    func isValidInput(_ numberData: [String]) -> Bool {
-        let validCharacter = CharacterSet.decimalDigits
-        var validValue: [String] = []
-        
-        for index in 0..<numberData.count {
-            validValue += numberData[index].components(separatedBy: validCharacter).filter{ $0 != "" }
-        }
-        return validValue.count == 0
-    }
+//    func isValidInput(_ numberData: [String]) -> Bool {
+//        let validCharacter = CharacterSet.decimalDigits
+//        var validValue: [String] = []
+//
+//        for index in 0..<numberData.count {
+//            validValue += numberData[index].components(separatedBy: validCharacter).filter{ $0 != "" }
+//        }
+//        return validValue.count == 0
+//    }
     
 }
 
