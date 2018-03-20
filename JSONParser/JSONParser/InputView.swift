@@ -10,15 +10,42 @@ import Foundation
 
 struct InputView {
     
-    func readInput(_ message: String) -> String {
+    func readInput(_ message: String) {
         print(message)
         let input = readLine()
-        guard let inputData = input else { return "" }
+        guard let inputData = input else { return }
+        checkBrackets(inputData)
+    }
+    
+    func checkBrackets(_ input: String) {
+        if input.hasPrefix("{") {
+            let data = separateByComma(input)
+            let inputData = separateByColon(data)
+            let dropBracktsData = dropBrackets(inputData)
+            let removeWhiteSpaceData = removeWhiteSpace(dropBracktsData)
+            makeDictionary(removeWhiteSpaceData)
+        }
+        if input.hasPrefix("[") {
+            let data = separateByBrackets(input)
+            makeDataArray(data)
+        }
+    }
+    
+    func separateByBrackets(_ input: String) -> [String] {
+        let inputData = input.components(separatedBy: "},")
         return inputData
     }
     
     func separateByComma(_ input: String) -> [String] {
         let inputData = input.components(separatedBy: ",")
+        return inputData
+    }
+    
+    func separateByColon(_ input: [String]) -> [String] {
+        var inputData: [String] = []
+        for data in input {
+            inputData += data.components(separatedBy: ":")
+        }
         return inputData
     }
     
@@ -40,26 +67,50 @@ struct InputView {
         }
         return data
     }
-    
-    func makeDataArray(_ inputData: [String]) -> (number: [Int], string: [String], bool: [Bool]) {
-        var numberData: [Int] = []
-        var stringData: [String] = []
-        var boolData: [Bool] = []
+
+    func makeDictionary(_ input: [String]) {
+        var numberData: [String:Int] = [:]
+        var stringData: [String:String] = [:]
+        var boolData: [String:Bool] = [:]
         
-        for data in inputData {
-            if data.contains("\"") {
-                stringData.append(data)
-            } else if let boolInput = Bool.init(data) {
-                boolData.append(boolInput)
-            } else if let numberInput = Int.init(data) {
-                numberData.append(numberInput)
-            } else {
-                print("정확한 데이터 값으로 다시 입력하세요")
-                break
+        for index in 0..<input.count {
+            if index % 2 == 1 {
+                if input[index].contains("\"") {
+                    stringData[input[index-1]] = input[index]
+                } else if let boolInput = Bool.init(input[index]) {
+                    boolData[input[index-1]] = boolInput
+                } else if let numberInput = Int.init(input[index]) {
+                    numberData[input[index-1]] = numberInput
+                }  else {
+                    print("정확한 데이터 값으로 다시 입력하세요")
+                    break
+                }
+            }
+            if index % 2 == 0 {
+                if !input[index].contains("\"") {
+                    print("정확한 데이터 값으로 다시 입력하세요")
+                    break
+                }
             }
         }
-        return (numberData, stringData, boolData)
+        ResultView().resultDicionaryMessage(numberData, stringData, boolData)
+    }
+    
+    func makeDataArray(_ input: [String]) {
+        var removeBracketsData = ""
+        
+        for data in input {
+            removeBracketsData = data.replacingOccurrences(of: "{", with: "").replacingOccurrences(of: "}", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+        }
+        let separateCommaData = separateByComma(removeBracketsData)
+        let separateColonData = separateByColon(separateCommaData)
+        let vaildInput = GrammarChecker().isValidInput(separateColonData)
+        
+        if vaildInput {
+            ResultView().resultArrayMessage(input)
+        } else {
+            print("정확한 데이터 값으로 다시 입력하세요")
+        }
     }
     
 }
-

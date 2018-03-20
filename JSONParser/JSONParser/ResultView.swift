@@ -10,38 +10,44 @@ import Foundation
 
 struct ResultView {
     
-    func isEmptyNumber(_ number: [Int]) -> String {
-        guard number.isEmpty else { return "숫자 \(number.count)개" }
+    func countNumber(_ number: [String:Int]) -> String {
+        guard number.values.isEmpty else { return "숫자 \(number.values.count)"}
         return ""
     }
     
-    func isEmptyString(_ string: [String]) -> String {
-        guard string.isEmpty else { return "문자열 \(string.count)개" }
+    func countString(_ string: [String:String]) -> String {
+        guard string.values.isEmpty else { return "문자 \(string.values.count)"}
         return ""
     }
     
-    func isEmptyBool(_ bool: [Bool]) -> String {
-        guard bool.isEmpty else { return "부울 \(bool.count)개" }
+    func countBool(_ bool: [String:Bool]) -> String {
+        guard bool.values.isEmpty else { return "부울 \(bool.values.count)"}
         return ""
     }
     
-    func resultMessage(_ numberArray: [Int],_ stringArray: [String],_ boolArray: [Bool],_ data: [String]) {
-        let number = isEmptyNumber(numberArray)
-        let string = isEmptyString(stringArray)
-        let bool = isEmptyBool(boolArray)
-        if !numberArray.isEmpty && !stringArray.isEmpty && !boolArray.isEmpty {
-            print("총 \(data.count)개의 데이터 중에 \(number), \(string), \(bool)가 포함되어 있습니다")
-        } else if !numberArray.isEmpty && !stringArray.isEmpty {
-            print("총 \(data.count)개의 데이터 중에 \(number), \(string)가 포함되어 있습니다")
-        } else if !numberArray.isEmpty && !boolArray.isEmpty {
-            print("총 \(data.count)개의 데이터 중에 \(number), \(bool)가 포함되어 있습니다")
-        } else if !stringArray.isEmpty && !boolArray.isEmpty {
-            print("총 \(data.count)개의 데이터 중에 \(string), \(bool)가 포함되어 있습니다")
-        } else if numberArray.isEmpty && stringArray.isEmpty && boolArray.isEmpty {
+    func resultDicionaryMessage(_ numberData: [String:Int],_ stringData: [String:String],_ boolData: [String:Bool]) {
+        let data = numberData.count + stringData.count + boolData.count
+        let number = countNumber(numberData)
+        let string = countString(stringData)
+        let bool = countBool(boolData)
+        if !numberData.isEmpty && !stringData.isEmpty && !boolData.isEmpty {
+            print("총 \(data)개의 객체 데이터 중에 \(number), \(string), \(bool)가 포함되어 있습니다")
+        } else if !numberData.isEmpty && !stringData.isEmpty {
+            print("총 \(data)개의 객체 데이터 중에 \(number), \(string)가 포함되어 있습니다")
+        } else if !numberData.isEmpty && !boolData.isEmpty {
+            print("총 \(data)개의 객체 데이터 중에 \(number), \(bool)가 포함되어 있습니다")
+        } else if !stringData.isEmpty && !boolData.isEmpty {
+            print("총 \(data)개의 객체 데이터 중에 \(string), \(bool)가 포함되어 있습니다")
+        } else if numberData.isEmpty && stringData.isEmpty && boolData.isEmpty {
             print("")
         } else {
-            print("총 \(data.count)개의 데이터 중에 \(number)\(string)\(bool)가 포함되어 있습니다")
+            print("총 \(data)개의 객체 데이터 중에 \(number)\(string)\(bool)가 포함되어 있습니다")
         }
     }
     
+    func resultArrayMessage(_ data: [String]) {
+        print("총 \(data.count)개의 배열 데이터 중에 객체 \(data.count)가 포함되어 있습니다.")
+    }
+
 }
+
