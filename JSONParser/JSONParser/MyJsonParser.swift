@@ -10,6 +10,54 @@ import Foundation
 
 struct MyJsonParser {
     
+    func checkBrackets(_ input: String) {
+        if input.hasPrefix("{") {
+            let data = separateByComma(input)
+            let inputData = separateByColon(data)
+            let removeBracketsData = removeBrackets(inputData)
+            let removeWhiteSpaceData = removeWhiteSpace(removeBracketsData)
+            let castingData = makeDictionary(removeWhiteSpaceData)
+            ResultView().resultDicionaryMessage(castingData)
+        } else if input.hasPrefix("[") {
+            let data = separateByBrackets(input)
+            ResultView().resultArrayMessage(data)
+        }
+    }
+    
+    func separateByComma(_ input: String) -> [String] {
+        let inputData = input.components(separatedBy: ",")
+        return inputData
+    }
+    
+    func separateByColon(_ input: [String]) -> [String] {
+        var inputData: [String] = []
+        for data in input {
+            inputData += data.components(separatedBy: ":")
+        }
+        return inputData
+    }
+    
+    func removeBrackets(_ input: [String]) -> [String] {
+        var removeBracketsData:[String] = []
+        for data in input {
+            removeBracketsData.append(data.replacingOccurrences(of: "{", with: "").replacingOccurrences(of: "}", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "\"", with: ""))
+        }
+        return removeBracketsData
+    }
+    
+    func removeWhiteSpace(_ inputData: [String]) -> [String] {
+        var data:[String] = []
+        for index in 0..<inputData.count {
+            data.append(inputData[index].trimmingCharacters(in: .whitespacesAndNewlines))
+        }
+        return data
+    }
+    
+    func separateByBrackets(_ input: String) -> [String] {
+        let inputData = input.components(separatedBy: "},")
+        return inputData
+    }
+    
     func makeDictionary(_ input: [String]) -> [String:Any] {
         var data: [String:String] = [:]
         for index in 0..<input.count {
@@ -36,3 +84,4 @@ struct MyJsonParser {
     }
     
 }
+
