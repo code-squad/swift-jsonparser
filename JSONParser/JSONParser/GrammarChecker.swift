@@ -10,13 +10,9 @@ import Foundation
 
 struct GrammarChecker {
     
-    func isValidInput(_ input: [String]) -> Bool {
-        for data in input {
-            if !data.contains("\"") && data == "true" || data == "false" || (Int.init(data) != nil) {
-                return true
-            }
-        }
-        return false
+    func isValidInput(_ input: String) -> Bool {
+        return input.contains("{") && input.contains("}") && input.contains(":")
     }
-
+    
 }
+
