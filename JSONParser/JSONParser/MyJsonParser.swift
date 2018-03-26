@@ -9,26 +9,29 @@
 import Foundation
 
 struct MyJsonParser {
-    
-    func checkBrackets(_ input: String) {
+
+    func checkBrackets(_ input: String) -> JSONData? {
         if input.hasPrefix("{") {
             let data = separateByComma(input)
             let inputData = separateByColon(data)
             let removeBracketsData = removeBrackets(inputData)
             let removeWhiteSpaceData = removeWhiteSpace(removeBracketsData)
             let castingData = makeDictionary(removeWhiteSpaceData)
-            ResultView().resultDicionaryMessage(castingData)
+            return castingData
         } else if input.hasPrefix("[") {
             let data = separateByBrackets(input)
-            ResultView().resultArrayMessage(data)
+            return data
         }
+        return nil
     }
     
+    //콤마 기준으로 나눔
     func separateByComma(_ input: String) -> [String] {
         let inputData = input.components(separatedBy: ",")
         return inputData
     }
     
+    //콜론 기준으로 나눔
     func separateByColon(_ input: [String]) -> [String] {
         var inputData: [String] = []
         for data in input {
@@ -37,6 +40,7 @@ struct MyJsonParser {
         return inputData
     }
     
+    //괄호 지우기
     func removeBrackets(_ input: [String]) -> [String] {
         var removeBracketsData:[String] = []
         for data in input {
@@ -45,6 +49,7 @@ struct MyJsonParser {
         return removeBracketsData
     }
     
+    //공백 지우기
     func removeWhiteSpace(_ inputData: [String]) -> [String] {
         var data:[String] = []
         for index in 0..<inputData.count {
@@ -53,11 +58,13 @@ struct MyJsonParser {
         return data
     }
     
+    //객체 기준으로 나누기
     func separateByBrackets(_ input: String) -> [String] {
         let inputData = input.components(separatedBy: "},")
         return inputData
     }
     
+    // 딕셔너리 반환
     func makeDictionary(_ input: [String]) -> [String:Any] {
         var data: [String:String] = [:]
         for index in 0..<input.count {
@@ -69,6 +76,7 @@ struct MyJsonParser {
         return castingData
     }
     
+    // 타입 캐스팅
     func typecasting(_ input: [String:String]) -> [String:Any] {
         var castingData: [String:Any] = [:]
         for (key,value) in input {
@@ -84,4 +92,5 @@ struct MyJsonParser {
     }
     
 }
+
 

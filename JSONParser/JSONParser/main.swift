@@ -12,9 +12,9 @@ while true {
     let message = "분석할 JSON 데이터를 입력하세요."
     let inputData = InputView().readInput(message)
     guard GrammarChecker().isValidInput(inputData) else { print("정확한 데이터 값으로 다시 입력하세요"); continue }
-    MyJsonParser().checkBrackets(inputData)
+    guard let jsonData = MyJsonParser().checkBrackets(inputData) else { break }
+    let resultView = ResultView()
+    resultView.resultMessage(jsonData)
 }
-
-
 
 

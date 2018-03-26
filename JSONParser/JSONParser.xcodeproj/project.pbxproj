@@ -12,6 +12,7 @@
 		D673EE102057636C0051192E /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D673EE0F2057636C0051192E /* ResultView.swift */; };
 		D67946E62060C18A00696BE9 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67946E52060C18A00696BE9 /* GrammarChecker.swift */; };
 		D67946E82062297500696BE9 /* MyJsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67946E72062297500696BE9 /* MyJsonParser.swift */; };
+		D68FEE302068E122003F50CB /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68FEE2F2068E122003F50CB /* JSONData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,7 @@
 		D673EE0F2057636C0051192E /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		D67946E52060C18A00696BE9 /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
 		D67946E72062297500696BE9 /* MyJsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyJsonParser.swift; sourceTree = "<group>"; };
+		D68FEE2F2068E122003F50CB /* JSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				D673EE0B20569EE00051192E /* InputView.swift */,
+				D68FEE2F2068E122003F50CB /* JSONData.swift */,
 				D67946E52060C18A00696BE9 /* GrammarChecker.swift */,
 				D673EE0F2057636C0051192E /* ResultView.swift */,
 				D67946E72062297500696BE9 /* MyJsonParser.swift */,
@@ -137,6 +140,7 @@
 				D673EE0C20569EE00051192E /* InputView.swift in Sources */,
 				D673EE102057636C0051192E /* ResultView.swift in Sources */,
 				D67946E62060C18A00696BE9 /* GrammarChecker.swift in Sources */,
+				D68FEE302068E122003F50CB /* JSONData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
