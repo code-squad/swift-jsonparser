@@ -11,10 +11,10 @@ import Foundation
 while true {
     let message = "분석할 JSON 데이터를 입력하세요."
     let inputData = InputView().readInput(message)
-    guard GrammarChecker().isValidInput(inputData) else { print("정확한 데이터 값으로 다시 입력하세요"); continue }
+    let grammarChecker = GrammarChecker.init(inputData)
+    guard grammarChecker.isValidFirstString() && grammarChecker.isValidLastString() && grammarChecker.isOverlappingObject() else { print("지원하지 않는 형식을 포함하고 있습니다."); continue }
     guard let jsonData = MyJsonParser().checkBrackets(inputData) else { break }
+    
     let resultView = ResultView()
     resultView.resultMessage(jsonData)
 }
-
-

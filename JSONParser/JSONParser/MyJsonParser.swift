@@ -9,14 +9,18 @@
 import Foundation
 
 struct MyJsonParser {
-
+    
     func checkBrackets(_ input: String) -> JSONData? {
+        let grammarChecker = GrammarChecker.init(input)
         if input.hasPrefix("{") {
             let data = separateByComma(input)
-            let inputData = separateByColon(data)
-            let removeBracketsData = removeBrackets(inputData)
-            let removeWhiteSpaceData = removeWhiteSpace(removeBracketsData)
+            let removeBracketsData = removeBrackets(data)
+            guard grammarChecker.isValidFirstQuotation(removeBracketsData) else { print("지원하지 않는 형식을 포함하고 있습니다."); return nil }
+            let separateByColonData = separateByColon(removeBracketsData)
+            let removeQuotationData = removeQuotation(separateByColonData)
+            let removeWhiteSpaceData = removeWhiteSpace(removeQuotationData)
             let castingData = makeDictionary(removeWhiteSpaceData)
+            guard grammarChecker.isValidDictionaryKey(data: castingData) else { print("지원하지 않는 형식을 포함하고 있습니다."); return nil }
             return castingData
         } else if input.hasPrefix("[") {
             let data = separateByBrackets(input)
@@ -25,10 +29,20 @@ struct MyJsonParser {
         return nil
     }
     
+    
     //콤마 기준으로 나눔
     func separateByComma(_ input: String) -> [String] {
         let inputData = input.components(separatedBy: ",")
         return inputData
+    }
+    
+    //괄호 지우기
+    func removeBrackets(_ input: [String]) -> [String] {
+        var removeBracketsData:[String] = []
+        for data in input {
+            removeBracketsData.append(data.replacingOccurrences(of: "{", with: "").replacingOccurrences(of: "}", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: "[", with: ""))
+        }
+        return removeBracketsData
     }
     
     //콜론 기준으로 나눔
@@ -40,11 +54,11 @@ struct MyJsonParser {
         return inputData
     }
     
-    //괄호 지우기
-    func removeBrackets(_ input: [String]) -> [String] {
+    //쌍따옴표 지우기
+    func removeQuotation(_ input: [String]) -> [String] {
         var removeBracketsData:[String] = []
         for data in input {
-            removeBracketsData.append(data.replacingOccurrences(of: "{", with: "").replacingOccurrences(of: "}", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "\"", with: ""))
+            removeBracketsData.append(data.replacingOccurrences(of: "\"", with: ""))
         }
         return removeBracketsData
     }
@@ -69,7 +83,9 @@ struct MyJsonParser {
         var data: [String:String] = [:]
         for index in 0..<input.count {
             if index % 2 == 0 {
-                data[input[index]] = input[index+1]
+                if GrammarChecker(input[index]).isValidDictionaryValue(data: input) {
+                    data[input[index]] = input[index+1]
+                } else { print("지원하지 않는 형식을 포함하고 있습니다.") }
             }
         }
         let castingData = typecasting(data)
