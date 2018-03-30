@@ -37,18 +37,9 @@ while true {
         var lexer = JSONLexer(input: input)
         let tokens = try lexer.lex()
         JSONParser.parse(tokens)
-    } catch JSONLexer.Error.invalidFormatLex{
-        print("유효하지 않은 포맷입니다 lex")
-    } catch JSONLexer.Error.invalidFormatBracket{
-        print("유효하지 않은 포맷입니다 bracket")
-    } catch JSONLexer.Error.invalidFormatDoubleQuote{
-        print("유효하지 않은 포맷입니다 DoubleQuote")
-    } catch JSONLexer.Error.invalidFormatNumber{
-        print("유효하지 않은 포맷입니다 Number")
-    } catch JSONLexer.Error.invalidFormatBool {
-        print("유효하지 않은 포맷입니다 Bool")
-    } catch JSONLexer.Error.invalidFormatGetDouble {
-        print("유효하지 않은 포맷입니다. GetDouble")
+    } catch let error {
+        print(error)
+        print("--------------")
     }
 }
 
