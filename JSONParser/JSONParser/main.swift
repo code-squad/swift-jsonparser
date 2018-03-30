@@ -36,7 +36,8 @@ while true {
         
         var lexer = JSONLexer(input: input)
         let tokens = try lexer.lex()
-        JSONParser.parse(tokens)
+        let (stringCount, boolCount, numberCount) = JSONParser.parse(tokens)
+        OutputView.printResult(stringCount, boolCount, numberCount)
     } catch let error {
         print(error)
         print("--------------")
