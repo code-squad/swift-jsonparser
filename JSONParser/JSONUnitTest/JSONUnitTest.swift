@@ -20,25 +20,100 @@ class JSONUnitTest: XCTestCase {
         super.tearDown()
     }
     
-    func testJSONParserNumbers() {
+    func checkTokens(_ tokens:[Token]) -> (Int, Int, Int){
+        var numberCount = 0
+        var stringCount = 0
+        var boolCount = 0
+        for token in tokens{
+            switch token {
+            case .string:
+                stringCount += 1
+            case .bool:
+                boolCount += 1
+            case .number:
+                numberCount += 1
+            }
+        }
+        return (numberCount, stringCount, boolCount)
+    }
+    
+    func testJSONLexerNumbersSuccess() {
         let input = "[ 10, 20, 30, 40, 50]"
         var lexer = JSONLexer(input: input)
         let tokens = try! lexer.lex()
-        XCTAssertEqual(tokens.count, 5, "should be equal")
+        let (numberCount, stringCount, boolCount) = checkTokens(tokens)
+        XCTAssertEqual(numberCount, 5, "should be equal")
+        XCTAssertEqual(stringCount, 0, "should be equal")
+        XCTAssertEqual(boolCount, 0, "should be equal")
     }
     
-    func testJSONParserNumbersAndStrings() {
+    
+    func testJSONLexerNumbersAndStringSuccess() {
         let input = "[ 10, \"20\", 30, 40, 50, \"sdf\"]"
         var lexer = JSONLexer(input: input)
         let tokens = try! lexer.lex()
-        XCTAssertEqual(tokens.count, 6, "should be equal")
+        let (numberCount, stringCount, boolCount) = checkTokens(tokens)
+        XCTAssertEqual(numberCount, 4, "should be equal")
+        XCTAssertEqual(stringCount, 2, "should be equal")
+        XCTAssertEqual(boolCount, 0, "should be equal")
     }
     
-    func testJSONParserNumbersAndStringsAndBools() {
+    func testJSONLexerNumbersAndStringsAndBoolsSuccess() {
         let input = "[ false, 10, \"2.0\", 30, 4.0, 50, \"sdf\"]"
         var lexer = JSONLexer(input: input)
         let tokens = try! lexer.lex()
-        print(tokens)
-        XCTAssertEqual(tokens.count, 7, "should be equal")
+        let (numberCount, stringCount, boolCount) = checkTokens(tokens)
+        XCTAssertEqual(numberCount, 4, "should be equal")
+        XCTAssertEqual(stringCount, 2, "should be equal")
+        XCTAssertEqual(boolCount, 1, "should be equal")
+    }
+    
+    
+    func testJSONLexerInvalidFormatLexExceptioin(){
+        let input = "sdf[ false, 10, \"2.0\", 30, 4.0, 50, \"sdf\""
+        var lexer = JSONLexer(input: input)
+        XCTAssertThrowsError(try lexer.lex()) { error in
+            print(error)
+        }
+    }
+    
+    func testJSONLexerInvalidFormatBracketLexExceptioin(){
+        let input = "[ false, 10, \"2.0\", 30, 4.0, 50, \"sdf\""
+        var lexer = JSONLexer(input: input)
+        XCTAssertThrowsError(try lexer.lex()) { error in
+            print(error)
+        }
+    }
+    
+    func testJSONLexerInvalidFormatDoubleQuoteLexExceptioin(){
+        let input = "[ false, 10, \"2.0, 30, 4.0, 50, \"sdf\""
+        var lexer = JSONLexer(input: input)
+        XCTAssertThrowsError(try lexer.lex()) { error in
+            print(error)
+        }
+    }
+    
+    func testJSONLexerInvalidFormatBoolLexExceptioin(){
+        let input = "[ falAse, 10, \"2.0, 30, 4.0, 50, \"sdf\""
+        var lexer = JSONLexer(input: input)
+        XCTAssertThrowsError(try lexer.lex()) { error in
+            print(error)
+        }
+    }
+    
+    func testJSONLexerInvalidFormatNumberLexExceptioin(){
+        let input = "[ false, 10, \"2.0\", 3-0, 4.0, 50, \"sdf\"]"
+        var lexer = JSONLexer(input: input)
+        XCTAssertThrowsError(try lexer.lex()) { error in
+            print(error)
+        }
+    }
+    
+    func testJSONLexerInvalidFormatDoubleLexExceptioin(){
+        let input = "[ false, 10, \"2.0\", 30, 4.-0, 50, \"sdf\"]"
+        var lexer = JSONLexer(input: input)
+        XCTAssertThrowsError(try lexer.lex()) { error in
+            print(error)
+        }
     }
 }
