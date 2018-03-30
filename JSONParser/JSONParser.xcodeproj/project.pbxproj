@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		972199FC206CE01D0099F99E /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972199FB206CE01D0099F99E /* InputView.swift */; };
+		972199FF206CE2D30099F99E /* JSONLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972199FE206CE2D30099F99E /* JSONLexer.swift */; };
+		97219A01206D1B200099F99E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97219A00206D1B200099F99E /* Extensions.swift */; };
+		97219A09206D1C3E0099F99E /* JSONUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97219A08206D1C3E0099F99E /* JSONUnitTest.swift */; };
+		97219A0E206D1C540099F99E /* JSONLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972199FE206CE2D30099F99E /* JSONLexer.swift */; };
+		97219A0F206D1C540099F99E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
+		97219A10206D1C540099F99E /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972199FB206CE01D0099F99E /* InputView.swift */; };
+		97219A11206D1C540099F99E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97219A00206D1B200099F99E /* Extensions.swift */; };
+		97219A13206D23D40099F99E /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97219A12206D23D40099F99E /* JSONParser.swift */; };
+		97219A14206D244E0099F99E /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97219A12206D23D40099F99E /* JSONParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,10 +36,23 @@
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		972199FB206CE01D0099F99E /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		972199FE206CE2D30099F99E /* JSONLexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONLexer.swift; sourceTree = "<group>"; };
+		97219A00206D1B200099F99E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		97219A06206D1C3D0099F99E /* JSONUnitTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONUnitTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		97219A08206D1C3E0099F99E /* JSONUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONUnitTest.swift; sourceTree = "<group>"; };
+		97219A0A206D1C3E0099F99E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97219A12206D23D40099F99E /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		83AE2E091F8CAC2800F38CC9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97219A03206D1C3D0099F99E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -44,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0E1F8CAC2800F38CC9 /* JSONParser */,
+				97219A07206D1C3D0099F99E /* JSONUnitTest */,
 				83AE2E0D1F8CAC2800F38CC9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0C1F8CAC2800F38CC9 /* JSONParser */,
+				97219A06206D1C3D0099F99E /* JSONUnitTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -59,10 +83,22 @@
 		83AE2E0E1F8CAC2800F38CC9 /* JSONParser */ = {
 			isa = PBXGroup;
 			children = (
+				972199FE206CE2D30099F99E /* JSONLexer.swift */,
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				972199FB206CE01D0099F99E /* InputView.swift */,
+				97219A00206D1B200099F99E /* Extensions.swift */,
+				97219A12206D23D40099F99E /* JSONParser.swift */,
 			);
 			path = JSONParser;
+			sourceTree = "<group>";
+		};
+		97219A07206D1C3D0099F99E /* JSONUnitTest */ = {
+			isa = PBXGroup;
+			children = (
+				97219A08206D1C3E0099F99E /* JSONUnitTest.swift */,
+				97219A0A206D1C3E0099F99E /* Info.plist */,
+			);
+			path = JSONUnitTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,18 +121,39 @@
 			productReference = 83AE2E0C1F8CAC2800F38CC9 /* JSONParser */;
 			productType = "com.apple.product-type.tool";
 		};
+		97219A05206D1C3D0099F99E /* JSONUnitTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97219A0B206D1C3E0099F99E /* Build configuration list for PBXNativeTarget "JSONUnitTest" */;
+			buildPhases = (
+				97219A02206D1C3D0099F99E /* Sources */,
+				97219A03206D1C3D0099F99E /* Frameworks */,
+				97219A04206D1C3D0099F99E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JSONUnitTest;
+			productName = JSONUnitTest;
+			productReference = 97219A06206D1C3D0099F99E /* JSONUnitTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		83AE2E041F8CAC2800F38CC9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0900;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = JK;
 				TargetAttributes = {
 					83AE2E0B1F8CAC2800F38CC9 = {
 						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
+					97219A05206D1C3D0099F99E = {
+						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -114,9 +171,20 @@
 			projectRoot = "";
 			targets = (
 				83AE2E0B1F8CAC2800F38CC9 /* JSONParser */,
+				97219A05206D1C3D0099F99E /* JSONUnitTest */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		97219A04206D1C3D0099F99E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		83AE2E081F8CAC2800F38CC9 /* Sources */ = {
@@ -124,7 +192,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				97219A14206D244E0099F99E /* JSONParser.swift in Sources */,
 				972199FC206CE01D0099F99E /* InputView.swift in Sources */,
+				972199FF206CE2D30099F99E /* JSONLexer.swift in Sources */,
+				97219A01206D1B200099F99E /* Extensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97219A02206D1C3D0099F99E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97219A0E206D1C540099F99E /* JSONLexer.swift in Sources */,
+				97219A0F206D1C540099F99E /* main.swift in Sources */,
+				97219A13206D23D40099F99E /* JSONParser.swift in Sources */,
+				97219A10206D1C540099F99E /* InputView.swift in Sources */,
+				97219A11206D1C540099F99E /* Extensions.swift in Sources */,
+				97219A09206D1C3E0099F99E /* JSONUnitTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +339,32 @@
 			};
 			name = Release;
 		};
+		97219A0C206D1C3E0099F99E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = JSONUnitTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rhino.JSONUnitTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		97219A0D206D1C3E0099F99E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = JSONUnitTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rhino.JSONUnitTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -272,6 +382,15 @@
 			buildConfigurations = (
 				83AE2E141F8CAC2800F38CC9 /* Debug */,
 				83AE2E151F8CAC2800F38CC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97219A0B206D1C3E0099F99E /* Build configuration list for PBXNativeTarget "JSONUnitTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97219A0C206D1C3E0099F99E /* Debug */,
+				97219A0D206D1C3E0099F99E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
