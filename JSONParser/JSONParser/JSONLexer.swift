@@ -6,7 +6,6 @@ JSON step1단계 같은 경우에는
 토큰 : string, number, bool
  
 [ 10, "jk", 4, "314", 9.9, "crong", false ]
-
  */
 import Foundation
 
@@ -58,7 +57,7 @@ struct JSONLexer {
             default: throw JSONLexer.Error.invalidFormatLex
             }
         }
-        return tokens
+        throw JSONLexer.Error.invalidFormatLex
     }
     
     private mutating func bracket() throws -> [Token] {
@@ -85,16 +84,16 @@ struct JSONLexer {
             default: throw JSONLexer.Error.invalidFormatBracket
             }
         }
-        return tokens
+        throw JSONLexer.Error.invalidFormatBracket
     }
     
     
     private mutating func doubleQuote() throws -> String {
         var value = ""
-        while let nextChracter = peek() {
-            switch nextChracter {
+        while let nextCharacter = peek() {
+            switch nextCharacter {
             case "a"..."z", "0"..."9", "A"..."Z", ".":
-                value.append(nextChracter)
+                value.append(nextCharacter)
                 advance()
             case "\"":
                 advance()
@@ -102,7 +101,7 @@ struct JSONLexer {
             default: throw JSONLexer.Error.invalidFormatDoubleQuote
             }
         }
-        return value
+        throw JSONLexer.Error.invalidFormatDoubleQuote
     }
     
    private mutating func getBool() throws -> Bool {
@@ -123,15 +122,13 @@ struct JSONLexer {
             default: throw JSONLexer.Error.invalidFormatBool
             }
         }
-        return value
+        throw JSONLexer.Error.invalidFormatBool
     }
     
     private func checkBool(_ rawValue:String) throws -> Bool{
-        var value = false
-        guard rawValue.toBool() != nil else {
+        guard let value = rawValue.toBool() else {
             throw JSONLexer.Error.invalidFormatBool
         }
-        value = rawValue.toBool()!
         return value
     }
     
@@ -156,7 +153,7 @@ struct JSONLexer {
             default: throw JSONLexer.Error.invalidFormatNumber
             }
         }
-        return value
+        throw JSONLexer.Error.invalidFormatNumber
     }
     
     private mutating func getDouble(_ number : String) throws -> Double {
@@ -175,7 +172,7 @@ struct JSONLexer {
             default: throw JSONLexer.Error.invalidFormatGetDouble
             }
         }
-        return try valueToDouble(value)
+        throw JSONLexer.Error.invalidFormatGetDouble
     }
     
     private func valueToDouble(_ rawValue : String ) throws -> Double {
