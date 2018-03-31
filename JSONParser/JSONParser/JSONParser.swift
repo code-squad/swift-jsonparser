@@ -10,22 +10,42 @@
 import Foundation
 
 struct JSONParser {
+    enum Error:Swift.Error{
+        case invalidToken
+    }
     
-    static func parse(_ tokens:[Token]) -> (Int, Int, Int) {
-        var numberCount = 0
-        var stringCount = 0
-        var boolCount = 0
-        for token in tokens{
-            switch token {
-            case .string:
-                stringCount += 1
-            case .bool:
-                boolCount += 1
-            case .number:
-                numberCount += 1
-            }
+    private var jsonData = JSONData()
+    private var token:Token
+    init(_ token:Token) {
+        self.token = token
+    }
+    
+    mutating func parse() throws -> JSONData{
+        
+        switch token {
+        case .JSONArray(let tokens):
+            jsonData.paranet = (tokens.count, "배열")
+            parseToken(tokens)
+        default:
+            throw JSONParser.Error.invalidToken
         }
         
-        return (stringCount, boolCount, numberCount)
+        return jsonData
+    }
+    
+   mutating private func parseToken(_ tokens:[Token]){
+        for token in tokens{
+            switch token {
+            case .JSONArray(let tokens) :
+                jsonData.arrayCount += 1
+                return parseToken(tokens)
+            case .string:
+                jsonData.stringCount += 1
+            case .bool:
+                jsonData.boolCount += 1
+            case .number:
+                jsonData.numberCount += 1
+            }
+        }
     }
 }

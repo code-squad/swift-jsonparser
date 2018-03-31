@@ -29,15 +29,6 @@ enum Token{
     case number(value:Double)
     case bool(value:Bool)
     case JSONArray(tokens:[Token])
-    
-        func value() -> [Token]{
-            switch self {
-            case .JSONArray(let tokens):
-                return tokens
-            case .number, .bool, .string:
-                return [self]
-        }
-    }
 }
 
 struct JSONLexer {
