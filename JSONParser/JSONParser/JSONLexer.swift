@@ -1,11 +1,26 @@
 /*
-컴파일러 1단계 어휘 분석
-어휘분석은 정해 놓은 어휘(lexicon)에 따라, 문자열을 token으로 나누는 행위
-JSON step1단계 같은 경우에는
-어휘 : 왼쪽대괄호, 오른쪽 대괄호, 쌍따옴표 왼쪽, 쌍따옴표 오른쪽, 콤마, 띄어쓰기
-토큰 : string, number, bool
+
+JSON step2
  
-[ 10, "jk", 4, "314", 9.9, "crong", false ]
+ 분석할 JSON 데이터를 입력하세요.
+ { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true }
+ 총 4개의 객체 데이터 중에 문자열 2개, 숫자 1개, 부울 1개가 포함되어 있습니다.
+ 
+ 분석할 JSON 데이터를 입력하세요.
+ [ { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true },
+ { "name" : "YOON JISU", "alias" : "crong", "level" : 4, "married" : true } ]
+ 총 2개의 배열 데이터 중에 객체 2개가 포함되어 있습니다.
+ 
+ 어휘추가 '{', "}', ':'
+ 토큰추가 JSONArray, JSONObject
+ 
+ key value로 값을 저장
+ key는 쌍따옴표로 이루어진 문자열 value는 문자열, 숫자, 부울
+ [ {}, {} ]
+ 
+어휘 : 왼쪽대괄호, 오른쪽 대괄호, 쌍따옴표 왼쪽, 쌍따옴표 오른쪽, 콤마, 띄어쓰기
+토큰 : string, number, bool, array
+
  */
 import Foundation
 
@@ -13,6 +28,16 @@ enum Token{
     case string(value:String)
     case number(value:Double)
     case bool(value:Bool)
+    case JSONArray(tokens:[Token])
+    
+        func value() -> [Token]{
+            switch self {
+            case .JSONArray(let tokens):
+                return tokens
+            case .number, .bool, .string:
+                return [self]
+        }
+    }
 }
 
 struct JSONLexer {
@@ -45,23 +70,24 @@ struct JSONLexer {
         position = input.index(after: position)
     }
     
-    mutating func lex() throws -> [Token] {
-        var tokens = [Token]()
+    mutating func lex() throws -> Token{
+        var token:Token = Token.JSONArray(tokens: [])
+        
         while let nextCharacter = peek(){
             // '[' 로 시작해야한다.
             switch nextCharacter {
             case " ": advance()
-            case "[": try tokens = bracket()
+            case "[": try token = bracket()
             case "]" where position == input.index(before: input.endIndex) :
-                return tokens
+                return token
             default: throw JSONLexer.Error.invalidFormatLex
             }
         }
         throw JSONLexer.Error.invalidFormatLex
     }
     
-    private mutating func bracket() throws -> [Token] {
-        var tokens = [Token]()
+    private mutating func bracket() throws -> Token {
+        var token:Token = Token.JSONArray(tokens: [])
         // bracket이면 다음 거
         advance()
         
@@ -69,24 +95,44 @@ struct JSONLexer {
             switch nextCharacter {
             case "0" ... "9":
                 let value = try getNumber()
-                tokens.append(.number(value: value))
+                token = try appendToken(token, value)
+                
             // 공백과 콤마는 다음으로
             case " ", ",": advance()
             case "\"":
                 advance()
                 let value = try doubleQuote()
-                tokens.append(.string(value: value))
+                token = try appendToken(token, value)
+                
             case "t", "T", "f","F":
                 let value = try getBool()
-                tokens.append(.bool(value: value))
+                token = try appendToken(token, value)
+                
             case "]" where position == input.index(before: input.endIndex) :
-                return tokens
+                return token
             default: throw JSONLexer.Error.invalidFormatBracket
             }
         }
         throw JSONLexer.Error.invalidFormatBracket
     }
     
+    private func appendToken(_ token:Token, _ value:Any) throws -> Token {
+        switch token {
+        case .JSONArray(var tokens):
+            if value is Double {
+                tokens.append(.number(value:value as! Double))
+            } else if value is String {
+                tokens.append(.string(value:value as! String))
+            } else if value is Bool {
+                tokens.append(.bool(value: value as! Bool))
+            } else {
+                throw JSONLexer.Error.invalidFormatBracket
+            }
+            return Token.JSONArray(tokens: tokens)
+        default: throw JSONLexer.Error.invalidFormatBracket
+            
+        }
+    }
     
     private mutating func doubleQuote() throws -> String {
         var value = ""
@@ -182,3 +228,4 @@ struct JSONLexer {
         return value
     }
 }
+

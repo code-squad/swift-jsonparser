@@ -90,8 +90,8 @@
 				97195510206E55E300AD2B55 /* OutputView.swift */,
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				972199FB206CE01D0099F99E /* InputView.swift */,
-				97219A00206D1B200099F99E /* Extensions.swift */,
 				97219A12206D23D40099F99E /* JSONParser.swift */,
+				97219A00206D1B200099F99E /* Extensions.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
