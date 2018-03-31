@@ -20,25 +20,6 @@ class JSONUnitTest: XCTestCase {
         super.tearDown()
     }
     
-    func checkTokens(_ tokens:[Token]) -> (Int, Int, Int){
-        var numberCount = 0
-        var stringCount = 0
-        var boolCount = 0
-        for token in tokens{
-            switch token {
-            case .string:
-                stringCount += 1
-            case .bool:
-                boolCount += 1
-            case .number:
-                numberCount += 1
-            case .JSONArray(let tokens):
-                return checkTokens(tokens)
-            }
-        }
-        return (numberCount, stringCount, boolCount)
-    }
-    
     func testJSONLexerNumbersSuccess() {
         let input = "[ 10, 20, 30, 40, 50]"
         var lexer = JSONLexer(input: input)
