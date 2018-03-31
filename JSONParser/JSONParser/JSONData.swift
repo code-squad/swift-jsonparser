@@ -13,5 +13,6 @@ struct JSONData{
     var stringCount = 0
     var boolCount = 0
     var arrayCount = 0
+    var objectCount = 0
     var paranet:(count:Int, name:String) = (0,"")
 }

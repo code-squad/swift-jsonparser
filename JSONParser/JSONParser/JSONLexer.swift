@@ -11,8 +11,8 @@ JSON step2
  { "name" : "YOON JISU", "alias" : "crong", "level" : 4, "married" : true } ]
  총 2개의 배열 데이터 중에 객체 2개가 포함되어 있습니다.
  
- 어휘추가 '{', "}', ':'
- 토큰추가 JSONArray, JSONObject
+ 어휘추가 '{', '}', ':'
+ 토큰추가 JSONObject
  
  key value로 값을 저장
  key는 쌍따옴표로 이루어진 문자열 value는 문자열, 숫자, 부울
@@ -24,18 +24,23 @@ JSON step2
  */
 import Foundation
 
+typealias JSONObject = (key:String, value:Token)
+
 enum Token{
     case string(value:String)
     case number(value:Double)
     case bool(value:Bool)
-    case JSONArray(tokens:[Token])
+    case jsonArray(tokens:[Token])
+    case jsonObject([JSONObject])
 }
+
 
 struct JSONLexer {
     
     enum Error:Swift.Error {
         case invalidFormatLex
         case invalidFormatBracket
+        case invalidFormatCurlyBrace
         case invalidFormatDoubleQuote
         case invalidFormatNumber
         case invalidFormatBool
@@ -62,14 +67,14 @@ struct JSONLexer {
     }
     
     mutating func lex() throws -> Token{
-        var token:Token = Token.JSONArray(tokens: [])
+        var token:Token = Token.jsonArray(tokens: [])
         
         while let nextCharacter = peek(){
-            // '[' 로 시작해야한다.
             switch nextCharacter {
-            case " ": advance()
+            case " ", ",": advance()
             case "[": try token = bracket()
-            case "]" where position == input.index(before: input.endIndex) :
+            case "{": try token = curlyBrace()
+            case "]" where position == input.index(before: input.endIndex), "}" where position == input.index(before: input.endIndex) :
                 return token
             default: throw JSONLexer.Error.invalidFormatLex
             }
@@ -77,8 +82,62 @@ struct JSONLexer {
         throw JSONLexer.Error.invalidFormatLex
     }
     
+    private mutating func curlyBrace() throws -> Token {
+        var token:Token = Token.jsonObject([])
+        var tempkey:String = ""
+        var tempValue:Any!
+        var isKey = true
+        advance()
+        while let nextChracter = peek() {
+            switch nextChracter {
+            case " ": advance()
+            case "\"" where isKey == true :
+                advance()
+                tempkey = try doubleQuote()
+            case ":": // key 담기
+                advance()
+                isKey = false
+            case "\"" where isKey == false :
+                advance()
+                tempValue = try doubleQuote()
+                isKey = true
+            case "0" ... "9":
+                tempValue = try getNumber()
+                isKey = true
+            case "t", "T", "f", "F":
+                tempValue = try getBool()
+                isKey = true
+            case ",":
+                advance()
+                token = try appendTokenToJSONObject(token, tempkey, tempValue)
+            case "}":
+                token = try appendTokenToJSONObject(token, tempkey, tempValue)
+                return token
+            default: throw JSONLexer.Error.invalidFormatCurlyBrace
+            }
+        }
+       throw JSONLexer.Error.invalidFormatCurlyBrace
+    }
+    
+    private func appendTokenToJSONObject(_ token:Token, _ key:String, _ value:Any) throws -> Token {
+        switch token {
+        case .jsonObject(var objects):
+            if value is Double {
+                objects.append((key, .number(value: value as! Double)))
+            } else if value is String {
+                objects.append((key, .string(value: value as! String)))
+            } else if value is Bool {
+                objects.append((key, .bool(value: value as! Bool)))
+            } else {
+                throw JSONLexer.Error.invalidFormatCurlyBrace
+            }
+            return Token.jsonObject(objects)
+        default: throw JSONLexer.Error.invalidFormatCurlyBrace
+        }
+    }
+    
     private mutating func bracket() throws -> Token {
-        var token:Token = Token.JSONArray(tokens: [])
+        var token:Token = Token.jsonArray(tokens: [])
         // bracket이면 다음 거
         advance()
         
@@ -86,19 +145,18 @@ struct JSONLexer {
             switch nextCharacter {
             case "0" ... "9":
                 let value = try getNumber()
-                token = try appendToken(token, value)
+                token = try appendTokenToJSONArray(token, value)
                 
             // 공백과 콤마는 다음으로
-            case " ", ",": advance()
+            case " ", ",", "}": advance()
             case "\"":
                 advance()
                 let value = try doubleQuote()
-                token = try appendToken(token, value)
+                token = try appendTokenToJSONArray(token, value)
                 
             case "t", "T", "f","F":
                 let value = try getBool()
-                token = try appendToken(token, value)
-                
+                token = try appendTokenToJSONArray(token, value)
             case "]" where position == input.index(before: input.endIndex) :
                 return token
             default: throw JSONLexer.Error.invalidFormatBracket
@@ -107,9 +165,9 @@ struct JSONLexer {
         throw JSONLexer.Error.invalidFormatBracket
     }
     
-    private func appendToken(_ token:Token, _ value:Any) throws -> Token {
+    private func appendTokenToJSONArray(_ token:Token, _ value:Any) throws -> Token {
         switch token {
-        case .JSONArray(var tokens):
+        case .jsonArray(var tokens):
             if value is Double {
                 tokens.append(.number(value:value as! Double))
             } else if value is String {
@@ -119,7 +177,7 @@ struct JSONLexer {
             } else {
                 throw JSONLexer.Error.invalidFormatBracket
             }
-            return Token.JSONArray(tokens: tokens)
+            return Token.jsonArray(tokens: tokens)
         default: throw JSONLexer.Error.invalidFormatBracket
             
         }
@@ -129,7 +187,7 @@ struct JSONLexer {
         var value = ""
         while let nextCharacter = peek() {
             switch nextCharacter {
-            case "a"..."z", "0"..."9", "A"..."Z", ".":
+            case "a"..."z", "0"..."9", "A"..."Z", ".", " ":
                 value.append(nextCharacter)
                 advance()
             case "\"":
@@ -179,13 +237,12 @@ struct JSONLexer {
                 value = 10 * value + digitValue
                 advance()
             case ",", " ":
-                advance()
                 return value
             case ".":
                 let valueWithDot = String(value)
                 advance()
                 value = try getDouble(valueWithDot)
-            case "]" where position == input.index(before: input.endIndex) :
+            case "]" where position == input.index(before: input.endIndex) ,"}" where position == input.index(before: input.endIndex) :
                 return value
             default: throw JSONLexer.Error.invalidFormatNumber
             }

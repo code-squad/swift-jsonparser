@@ -23,9 +23,12 @@ struct JSONParser {
     mutating func parse() throws -> JSONData{
         
         switch token {
-        case .JSONArray(let tokens):
+        case .jsonArray(let tokens):
             jsonData.paranet = (tokens.count, "배열")
             parseToken(tokens)
+        case .jsonObject(let object):
+            jsonData.paranet = (object.count, "객체")
+            parseToken(getTokens(object))
         default:
             throw JSONParser.Error.invalidToken
         }
@@ -36,9 +39,12 @@ struct JSONParser {
    mutating private func parseToken(_ tokens:[Token]){
         for token in tokens{
             switch token {
-            case .JSONArray(let tokens) :
+            case .jsonArray(let tokens) :
                 jsonData.arrayCount += 1
                 return parseToken(tokens)
+            case .jsonObject(let object) :
+                jsonData.objectCount += 1
+                return parseToken(getTokens(object))
             case .string:
                 jsonData.stringCount += 1
             case .bool:
@@ -47,5 +53,13 @@ struct JSONParser {
                 jsonData.numberCount += 1
             }
         }
+    }
+    
+    private func getTokens(_ jsonObject:[JSONObject]) -> [Token]{
+        var tokens = [Token]()
+        for token in jsonObject{
+            tokens.append(token.value)
+        }
+        return tokens
     }
 }
