@@ -10,25 +10,32 @@ import Foundation
 
 struct GrammarChecker {
     
-    let input: String
+    private let inputJSONData: String
     
-    init(_ input: String) {
-        self.input = input
+    init(_ inputJSONData: String) {
+        self.inputJSONData = inputJSONData
     }
     
     //첫번째 시작하는 문자가 괄호인지 체크
-    func isValidFirstString() -> Bool {
-        return self.input.hasPrefix("[") || self.input.hasPrefix("{")
+    private func isValidFirstString() -> Bool {
+        return self.inputJSONData.hasPrefix("[") || self.inputJSONData.hasPrefix("{")
     }
     
     //마지막 문자가 괄호인지 체크
-    func isValidLastString() -> Bool {
-        return self.input.hasSuffix("]") || self.input.hasSuffix("}")
+    private func isValidLastString() -> Bool {
+        return self.inputJSONData.hasSuffix("]") || self.inputJSONData.hasSuffix("}")
     }
     
     //객체 또는 배열이 중첩 인지 체크
     func isOverlappingObject() -> Bool {
-        guard self.input.contains(": [") || self.input.contains(":[") || self.input.contains(": {") || self.input.contains(":{") else { return true }
+        if isValidFirstString() && isValidLastString() {
+            let regex = try! NSRegularExpression(pattern: "[\\{|\\[\\\"a-z\\\"\\:|\\ \\[|\\{\\\"a-z\\\"\\:\\d|a-z|\\]|\\}|\\]|\\}]", options: [])
+            let matches = regex.matches(in: self.inputJSONData, options: [], range: NSRange(location: 0, length: self.inputJSONData.count))
+            if matches.count == self.inputJSONData.count {
+                return false
+            }
+            return true
+        }
         return false
     }
     
@@ -41,8 +48,8 @@ struct GrammarChecker {
     }
     
     //딕셔너리 키 문자 체크
-    func isValidDictionaryKey(data: [String: Any], filter: String = "[a-z]") -> Bool {
-        let regex = try! NSRegularExpression(pattern: filter, options: []) //options??
+    func isValidDictionaryKey(data: [String: Any]) -> Bool {
+        let regex = try! NSRegularExpression(pattern: "[a-z|A-Z]", options: [])
         for (key, _ ) in data {
             let list = regex.matches(in:key, options: [], range:NSRange.init(location: 0, length:key.count))
             if(list.count != key.count){
@@ -52,20 +59,6 @@ struct GrammarChecker {
         return true
     }
     
-    //딕셔너리 키 문자 또는 숫자 체크
-    func isValidDictionaryValue(data: [String], filter: String = "[a-z||\\d]") -> Bool {
-        let regex = try! NSRegularExpression(pattern: filter, options: []) //options??
-        for value in data {
-            let list = regex.matches(in: value, options: [], range:NSRange.init(location: 0, length: value.count))
-            if(list.count != value.count){
-                return false
-            }
-        }
-        return true
-    }
-    
-    
     
 }
-
 

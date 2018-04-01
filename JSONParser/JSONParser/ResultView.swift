@@ -10,7 +10,7 @@ import Foundation
 
 struct ResultView {
     
-    func resultMessage(_ data: JSONData) {
+    static func resultMessage(_ data: JSONData) {
         data.resultMessage()
     }
     

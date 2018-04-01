@@ -15,12 +15,16 @@ struct MyJsonParser {
         if input.hasPrefix("{") {
             let data = separateByComma(input)
             let removeBracketsData = removeBrackets(data)
-            guard grammarChecker.isValidFirstQuotation(removeBracketsData) else { print("지원하지 않는 형식을 포함하고 있습니다."); return nil }
+            guard grammarChecker.isValidFirstQuotation(removeBracketsData) else {
+                print("지원하지 않는 형식을 포함하고 있습니다.")
+                return nil }
             let separateByColonData = separateByColon(removeBracketsData)
             let removeQuotationData = removeQuotation(separateByColonData)
             let removeWhiteSpaceData = removeWhiteSpace(removeQuotationData)
             let castingData = makeDictionary(removeWhiteSpaceData)
-            guard grammarChecker.isValidDictionaryKey(data: castingData) else { print("지원하지 않는 형식을 포함하고 있습니다."); return nil }
+            guard grammarChecker.isValidDictionaryKey(data: castingData) else {
+                print("지원하지 않는 형식을 포함하고 있습니다.")
+                return nil }
             return castingData
         } else if input.hasPrefix("[") {
             let data = separateByBrackets(input)
@@ -72,7 +76,7 @@ struct MyJsonParser {
         return data
     }
     
-    //객체 기준으로 나누기
+    //객체 기준으로 나누기 (배열일때)
     func separateByBrackets(_ input: String) -> [String] {
         let inputData = input.components(separatedBy: "},")
         return inputData
@@ -81,14 +85,11 @@ struct MyJsonParser {
     // 딕셔너리 반환
     func makeDictionary(_ input: [String]) -> [String:Any] {
         var data: [String:String] = [:]
-        for index in 0..<input.count {
-            if index % 2 == 0 {
-                if GrammarChecker(input[index]).isValidDictionaryValue(data: input) {
-                    data[input[index]] = input[index+1]
-                } else { print("지원하지 않는 형식을 포함하고 있습니다.") }
-            }
+        
+        for even in stride(from: 0, to: input.count-1, by: 2) {
+            data[input[even]] = input[even+1]
         }
-        let castingData = typecasting(data)
+        let castingData = typecasting(data) //타입 캐스팅
         return castingData
     }
     
