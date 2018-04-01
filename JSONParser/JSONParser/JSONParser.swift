@@ -42,9 +42,8 @@ struct JSONParser {
             case .jsonArray(let tokens) :
                 jsonData.arrayCount += 1
                 return parseToken(tokens)
-            case .jsonObject(let object) :
+            case .jsonObject :
                 jsonData.objectCount += 1
-                return parseToken(getTokens(object))
             case .string:
                 jsonData.stringCount += 1
             case .bool:

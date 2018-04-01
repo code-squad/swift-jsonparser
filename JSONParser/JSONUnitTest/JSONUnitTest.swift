@@ -31,6 +31,7 @@ class JSONUnitTest: XCTestCase {
         XCTAssertEqual(jsonData.stringCount, 0, "should be equal")
         XCTAssertEqual(jsonData.boolCount, 0, "should be equal")
         XCTAssertEqual(jsonData.arrayCount, 0, "should be equal")
+        XCTAssertEqual(jsonData.objectCount, 0, "should be equal")
         XCTAssertEqual(jsonData.paranet.count, 5, "should be equal")
         XCTAssertEqual(jsonData.paranet.name, "배열", "should be equal")
         
@@ -48,6 +49,7 @@ class JSONUnitTest: XCTestCase {
         XCTAssertEqual(jsonData.stringCount, 2, "should be equal")
         XCTAssertEqual(jsonData.boolCount, 0, "should be equal")
         XCTAssertEqual(jsonData.arrayCount, 0, "should be equal")
+        XCTAssertEqual(jsonData.objectCount, 0, "should be equal")
         XCTAssertEqual(jsonData.paranet.count, 6, "should be equal")
         XCTAssertEqual(jsonData.paranet.name, "배열", "should be equal")
     }
@@ -63,6 +65,7 @@ class JSONUnitTest: XCTestCase {
         XCTAssertEqual(jsonData.stringCount, 2, "should be equal")
         XCTAssertEqual(jsonData.boolCount, 1, "should be equal")
         XCTAssertEqual(jsonData.arrayCount, 0, "should be equal")
+        XCTAssertEqual(jsonData.objectCount, 0, "should be equal")
         XCTAssertEqual(jsonData.paranet.count, 7, "should be equal")
         XCTAssertEqual(jsonData.paranet.name, "배열", "should be equal")
     }
@@ -78,12 +81,45 @@ class JSONUnitTest: XCTestCase {
         XCTAssertEqual(jsonData.stringCount, 2, "should be equal")
         XCTAssertEqual(jsonData.boolCount, 1, "should be equal")
         XCTAssertEqual(jsonData.arrayCount, 0, "should be equal")
+        XCTAssertEqual(jsonData.objectCount, 0, "should be equal")
         XCTAssertEqual(jsonData.paranet.count, 4, "should be equal")
         XCTAssertEqual(jsonData.paranet.name, "객체", "should be equal")
     }
     
+    func testJSONLexerObjectInArray(){
+        let input = "[{\"name\":\"KIm JUNG\", \"alias\":\"JK\", \"level\": 5, \"married\" : true }, { \"name\" : \"YOON JISU\",  \"alias\" : \"crong\", \"leve\", \"level\":4, \"married\":true}]"
+        var lexer = JSONLexer(input: input)
+        let token = try! lexer.lex()
+        var parser = JSONParser(token)
+        let jsonData = try! parser.parse()
+        
+        XCTAssertEqual(jsonData.numberCount, 0, "should be equal")
+        XCTAssertEqual(jsonData.stringCount, 0, "should be equal")
+        XCTAssertEqual(jsonData.boolCount, 0, "should be equal")
+        XCTAssertEqual(jsonData.arrayCount, 0, "should be equal")
+        XCTAssertEqual(jsonData.objectCount, 2, "should be equal")
+        XCTAssertEqual(jsonData.paranet.count, 2, "should be equal")
+        XCTAssertEqual(jsonData.paranet.name, "배열", "should be equal")
+        
+    }
     
-    func testJSONLexerInvalidFormatLexExceptioin(){
+    func testJSONLexerInvalidFormatObjectInArrayException(){
+        let input = "[{\"name\":\"KIm JUNG\", \"alias\":\"JK\", \"level\": 5, \"married\" : true }, { \"name\" : \"YOON JISU\",  \"alias\" : \"crong\", \"leve\", \"level\":4, \"married\":true]"
+        var lexer = JSONLexer(input: input)
+        XCTAssertThrowsError(try lexer.lex()) { error in
+            print(error)
+        }
+    }
+    
+    func testJSONLexerInvalidFormatObjectException(){
+        let input = "{ false, 10, \"2.0\", 30, 4.0, 50, \"sdf\""
+        var lexer = JSONLexer(input: input)
+        XCTAssertThrowsError(try lexer.lex()) { error in
+            print(error)
+        }
+    }
+    
+    func testJSONLexerInvalidFormatLexException(){
         let input = "sdf[ false, 10, \"2.0\", 30, 4.0, 50, \"sdf\""
         var lexer = JSONLexer(input: input)
         XCTAssertThrowsError(try lexer.lex()) { error in
@@ -91,7 +127,7 @@ class JSONUnitTest: XCTestCase {
         }
     }
     
-    func testJSONLexerInvalidFormatBracketLexExceptioin(){
+    func testJSONLexerInvalidFormatBracketLexException(){
         let input = "[ false, 10, \"2.0\", 30, 4.0, 50, \"sdf\""
         var lexer = JSONLexer(input: input)
         XCTAssertThrowsError(try lexer.lex()) { error in
@@ -99,7 +135,7 @@ class JSONUnitTest: XCTestCase {
         }
     }
     
-    func testJSONLexerInvalidFormatDoubleQuoteLexExceptioin(){
+    func testJSONLexerInvalidFormatDoubleQuoteLexException(){
         let input = "[ false, 10, \"2.0, 30, 4.0, 50, \"sdf\""
         var lexer = JSONLexer(input: input)
         XCTAssertThrowsError(try lexer.lex()) { error in
@@ -107,7 +143,7 @@ class JSONUnitTest: XCTestCase {
         }
     }
     
-    func testJSONLexerInvalidFormatBoolLexExceptioin(){
+    func testJSONLexerInvalidFormatBoolLexException(){
         let input = "[ falAse, 10, \"2.0, 30, 4.0, 50, \"sdf\""
         var lexer = JSONLexer(input: input)
         XCTAssertThrowsError(try lexer.lex()) { error in
@@ -115,7 +151,7 @@ class JSONUnitTest: XCTestCase {
         }
     }
     
-    func testJSONLexerInvalidFormatNumberLexExceptioin(){
+    func testJSONLexerInvalidFormatNumberLexException(){
         let input = "[ false, 10, \"2.0\", 3-0, 4.0, 50, \"sdf\"]"
         var lexer = JSONLexer(input: input)
         XCTAssertThrowsError(try lexer.lex()) { error in
@@ -123,7 +159,7 @@ class JSONUnitTest: XCTestCase {
         }
     }
     
-    func testJSONLexerInvalidFormatDoubleLexExceptioin(){
+    func testJSONLexerInvalidFormatDoubleLexException(){
         let input = "[ false, 10, \"2.0\", 30, 4.-0, 50, \"sdf\"]"
         var lexer = JSONLexer(input: input)
         XCTAssertThrowsError(try lexer.lex()) { error in

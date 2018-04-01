@@ -157,6 +157,9 @@ struct JSONLexer {
             case "t", "T", "f","F":
                 let value = try getBool()
                 token = try appendTokenToJSONArray(token, value)
+            case "{" :
+                let objectToken = try curlyBrace()
+                token = try appendTokenToJSONArray(token, objectToken)
             case "]" where position == input.index(before: input.endIndex) :
                 return token
             default: throw JSONLexer.Error.invalidFormatBracket
@@ -174,6 +177,12 @@ struct JSONLexer {
                 tokens.append(.string(value:value as! String))
             } else if value is Bool {
                 tokens.append(.bool(value: value as! Bool))
+            } else if value is Token {
+                
+                var jsonObjects:[JSONObject] = []
+                jsonObjects =  try getJsonObjects(value)
+                tokens.append(.jsonObject(jsonObjects))
+        
             } else {
                 throw JSONLexer.Error.invalidFormatBracket
             }
@@ -181,6 +190,23 @@ struct JSONLexer {
         default: throw JSONLexer.Error.invalidFormatBracket
             
         }
+    }
+    
+    private func getJsonObjects(_ value:Any) throws -> [JSONObject]{
+        guard let token = value as? Token else {
+            throw JSONLexer.Error.invalidFormatBracket
+        }
+        var tempjsonObjects:[JSONObject] = []
+        switch token {
+        case .jsonObject(let jsonObjects):
+            for jsonObject in jsonObjects {
+                tempjsonObjects.append(jsonObject)
+            }
+            return tempjsonObjects
+        default:
+            throw JSONLexer.Error.invalidFormatBracket
+        }
+
     }
     
     private mutating func doubleQuote() throws -> String {
@@ -208,7 +234,9 @@ struct JSONLexer {
             case "t", "T", "f","F", "a", "A", "l", "L", "s", "S", "e", "E", "r", "R", "u", "U":
                 rawValue.append(nextCharacter)
                 advance()
-            case ",", " ":
+            case " ":
+                advance()
+            case ",", "}":
                 value = try checkBool(rawValue)
                 return value
             case "]" where position == input.index(before: input.endIndex):
