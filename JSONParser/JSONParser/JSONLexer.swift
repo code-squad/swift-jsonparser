@@ -24,14 +24,12 @@ JSON step2
  */
 import Foundation
 
-typealias JSONObject = (key:String, value:Token)
-
 enum Token{
     case string(value:String)
     case number(value:Double)
     case bool(value:Bool)
     case jsonArray(tokens:[Token])
-    case jsonObject([JSONObject])
+    case jsonObject([String:Token])
 }
 
 
@@ -83,7 +81,7 @@ struct JSONLexer {
     }
     
     private mutating func curlyBrace() throws -> Token {
-        var token:Token = Token.jsonObject([])
+        var token:Token = Token.jsonObject([:])
         var tempkey:String = ""
         var tempValue:Any!
         var isKey = true
@@ -123,11 +121,11 @@ struct JSONLexer {
         switch token {
         case .jsonObject(var objects):
             if value is Double {
-                objects.append((key, .number(value: value as! Double)))
+                objects[key] = .number(value: value as! Double)
             } else if value is String {
-                objects.append((key, .string(value: value as! String)))
+                objects[key] = .string(value: value as! String)
             } else if value is Bool {
-                objects.append((key, .bool(value: value as! Bool)))
+                objects[key] = .bool(value: value as! Bool)
             } else {
                 throw JSONLexer.Error.invalidFormatCurlyBrace
             }
@@ -179,7 +177,7 @@ struct JSONLexer {
                 tokens.append(.bool(value: value as! Bool))
             } else if value is Token {
                 
-                var jsonObjects:[JSONObject] = []
+                var jsonObjects:[String:Token] = [:]
                 jsonObjects =  try getJsonObjects(value)
                 tokens.append(.jsonObject(jsonObjects))
         
@@ -192,15 +190,15 @@ struct JSONLexer {
         }
     }
     
-    private func getJsonObjects(_ value:Any) throws -> [JSONObject]{
+    private func getJsonObjects(_ value:Any) throws -> [String:Token]{
         guard let token = value as? Token else {
             throw JSONLexer.Error.invalidFormatBracket
         }
-        var tempjsonObjects:[JSONObject] = []
+        var tempjsonObjects:[String:Token] = [:]
         switch token {
         case .jsonObject(let jsonObjects):
             for jsonObject in jsonObjects {
-                tempjsonObjects.append(jsonObject)
+                tempjsonObjects[jsonObject.key] = jsonObject.value
             }
             return tempjsonObjects
         default:

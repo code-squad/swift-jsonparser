@@ -53,7 +53,7 @@ struct JSONParser {
         }
     }
     
-    private func getTokens(_ jsonObject:[JSONObject]) -> [Token]{
+    private func getTokens(_ jsonObject:[String:Token]) -> [Token]{
         var tokens = [Token]()
         for token in jsonObject{
             tokens.append(token.value)
