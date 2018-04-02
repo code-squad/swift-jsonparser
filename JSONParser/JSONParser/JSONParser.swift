@@ -39,10 +39,9 @@ struct JSONParser {
    mutating private func parseToken(_ tokens:[Token]){
         for token in tokens{
             switch token {
-            case .jsonArray(let tokens) :
+            case .jsonArray:
                 jsonData.arrayCount += 1
-                return parseToken(tokens)
-            case .jsonObject :
+            case .jsonObject:
                 jsonData.objectCount += 1
             case .string:
                 jsonData.stringCount += 1
