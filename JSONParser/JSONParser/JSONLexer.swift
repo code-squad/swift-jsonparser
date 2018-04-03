@@ -29,21 +29,14 @@ func ~=<T:Equatable>(pattern:[T], value:T) -> Bool {
     return pattern.contains(value)
 }
 
-extension Character {
-    var asciiValue: Int {
-        get {
-            let s = String(self).unicodeScalars
-            return Int(s[s.startIndex].value)
-        }
-    }
-}
+typealias JSONObject = Dictionary<String, Token>
 
 enum Token{
     case string(value:String)
     case number(value:Double)
     case bool(value:Bool)
     case jsonArray(tokens:[Token])
-    case jsonObject([String:Token])
+    case jsonObject(JSONObject)
 }
 
 struct JSONLexer {
@@ -202,7 +195,7 @@ struct JSONLexer {
                 tokens.append(.bool(value: value as! Bool))
             } else if value is Token {
                 
-                var jsonObjects:[String:Token] = [:]
+                var jsonObjects:JSONObject = [:]
                 jsonObjects =  try getJsonObjects(value)
                 tokens.append(.jsonObject(jsonObjects))
         
@@ -215,11 +208,11 @@ struct JSONLexer {
         }
     }
     
-    private func getJsonObjects(_ value:Any) throws -> [String:Token]{
+    private func getJsonObjects(_ value:Any) throws -> JSONObject{
         guard let token = value as? Token else {
             throw JSONLexer.Error.invalidFormatBracket
         }
-        var tempjsonObjects:[String:Token] = [:]
+        var tempjsonObjects:JSONObject = [:]
         switch token {
         case .jsonObject(let jsonObjects):
             for jsonObject in jsonObjects {
