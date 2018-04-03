@@ -43,12 +43,10 @@ struct JSONParser {
                 jsonData.arrayCount += 1
             case .jsonObject:
                 jsonData.objectCount += 1
-            case .string:
-                jsonData.stringCount += 1
-            case .bool:
-                jsonData.boolCount += 1
-            case .number:
-                jsonData.numberCount += 1
+            case .basicValue(let value):
+                if value is Double { jsonData.numberCount += 1 }
+                if value is String { jsonData.stringCount += 1 }
+                if value is Bool { jsonData.boolCount += 1 }
             }
         }
     }

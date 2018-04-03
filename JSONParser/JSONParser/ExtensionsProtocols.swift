@@ -29,3 +29,11 @@ extension Character {
         }
     }
 }
+
+protocol TokenBasicValueable {}
+
+extension Double : TokenBasicValueable {}
+
+extension String : TokenBasicValueable {}
+
+extension Bool : TokenBasicValueable {}

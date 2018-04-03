@@ -31,10 +31,8 @@ func ~=<T:Equatable>(pattern:[T], value:T) -> Bool {
 
 typealias JSONObject = Dictionary<String, Token>
 
-enum Token{
-    case string(value:String)
-    case number(value:Double)
-    case bool(value:Bool)
+enum Token:TokenBasicValueable{
+    case basicValue(value:TokenBasicValueable)
     case jsonArray(tokens:[Token])
     case jsonObject(JSONObject)
 }
@@ -101,7 +99,7 @@ struct JSONLexer {
     private mutating func curlyBrace() throws -> Token {
         var token:Token = Token.jsonObject([:])
         var tempkey:String = ""
-        var tempValue:Any!
+        var tempValue:TokenBasicValueable!
         var isKey = true
         advance()
         while let nextChracter = peek() {
@@ -135,18 +133,10 @@ struct JSONLexer {
        throw JSONLexer.Error.invalidFormatCurlyBrace
     }
     
-    private func appendTokenToJSONObject(_ token:Token, _ key:String, _ value:Any) throws -> Token {
+    private func appendTokenToJSONObject(_ token:Token, _ key:String, _ value:TokenBasicValueable) throws -> Token {
         switch token {
         case .jsonObject(var objects):
-            if value is Double {
-                objects[key] = .number(value: value as! Double)
-            } else if value is String {
-                objects[key] = .string(value: value as! String)
-            } else if value is Bool {
-                objects[key] = .bool(value: value as! Bool)
-            } else {
-                throw JSONLexer.Error.invalidFormatCurlyBrace
-            }
+            objects[key] = .basicValue(value:value)
             return Token.jsonObject(objects)
         default: throw JSONLexer.Error.invalidFormatCurlyBrace
         }
@@ -184,23 +174,15 @@ struct JSONLexer {
         throw JSONLexer.Error.invalidFormatBracket
     }
     
-    private func appendTokenToJSONArray(_ token:Token, _ value:Any) throws -> Token {
+    private func appendTokenToJSONArray(_ token:Token, _ value:TokenBasicValueable) throws -> Token {
         switch token {
         case .jsonArray(var tokens):
-            if value is Double {
-                tokens.append(.number(value:value as! Double))
-            } else if value is String {
-                tokens.append(.string(value:value as! String))
-            } else if value is Bool {
-                tokens.append(.bool(value: value as! Bool))
-            } else if value is Token {
-                
+            if value is Token {
                 var jsonObjects:JSONObject = [:]
                 jsonObjects =  try getJsonObjects(value)
                 tokens.append(.jsonObject(jsonObjects))
-        
             } else {
-                throw JSONLexer.Error.invalidFormatBracket
+                tokens.append(.basicValue(value: value))
             }
             return Token.jsonArray(tokens: tokens)
         default: throw JSONLexer.Error.invalidFormatBracket
