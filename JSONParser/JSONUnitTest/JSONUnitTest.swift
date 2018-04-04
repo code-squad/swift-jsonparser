@@ -166,4 +166,20 @@ class JSONUnitTest: XCTestCase {
             print(error)
         }
     }
+    
+    func testJSONLexerInvalidFormatObjectInArrayExceptionForStep3(){
+        let input = "[\"name\" : \"KIM JUNG\"]"
+        var lexer = JSONLexer(input: input)
+        XCTAssertThrowsError(try lexer.lex()) { error in
+            print(error)
+        }
+    }
+    
+    func testJSONLexerInvalidFormatArrayInObjectExceptionForStep3(){
+        let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
+        var lexer = JSONLexer(input: input)
+        XCTAssertThrowsError(try lexer.lex()) { error in
+            print(error)
+        }
+    }
 }
