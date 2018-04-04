@@ -189,23 +189,7 @@ struct JSONLexer {
             
         }
     }
-    
-    private func getJsonObjects(_ value:Any) throws -> JSONObject{
-        guard let token = value as? Token else {
-            throw JSONLexer.Error.invalidFormatBracket
-        }
-        var tempjsonObjects:JSONObject = [:]
-        switch token {
-        case .jsonObject(let jsonObjects):
-            for jsonObject in jsonObjects {
-                tempjsonObjects[jsonObject.key] = jsonObject.value
-            }
-            return tempjsonObjects
-        default:
-            throw JSONLexer.Error.invalidFormatBracket
-        }
-    }
-    
+
     private mutating func doubleQuote() throws -> String {
         var value = ""
         while let nextCharacter = peek() {
