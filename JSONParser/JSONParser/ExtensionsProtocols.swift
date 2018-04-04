@@ -30,10 +30,24 @@ extension Character {
     }
 }
 
-protocol TokenBasicValueable {}
+protocol TokenBasicValueable {
+    func getToken() -> Token
+}
 
-extension Double : TokenBasicValueable {}
+extension Double : TokenBasicValueable {
+    func getToken() -> Token {
+        return .number(value: self)
+    }
+}
 
-extension String : TokenBasicValueable {}
+extension String : TokenBasicValueable {
+    func getToken() -> Token {
+        return .string(value:self)
+    }
+}
 
-extension Bool : TokenBasicValueable {}
+extension Bool : TokenBasicValueable {
+    func getToken() -> Token {
+        return .bool(value:self)
+    }
+}

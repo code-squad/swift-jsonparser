@@ -31,10 +31,16 @@ func ~=<T:Equatable>(pattern:[T], value:T) -> Bool {
 
 typealias JSONObject = Dictionary<String, Token>
 
-enum Token:TokenBasicValueable{
-    case basicValue(value:TokenBasicValueable)
+enum Token:TokenBasicValueable {
+    case number(value:Double)
+    case string(value:String)
+    case bool(value:Bool)
     case jsonArray(tokens:[Token])
     case jsonObject(JSONObject)
+    
+    func getToken() -> Token {
+        return self
+    }
 }
 
 struct JSONLexer {
@@ -80,7 +86,7 @@ struct JSONLexer {
         position = input.index(after: position)
     }
     
-    mutating func lex() throws -> Token{
+    mutating func lex() throws -> Token {
         var token:Token = Token.jsonArray(tokens: [])
         
         while let nextCharacter = peek(){
@@ -136,8 +142,8 @@ struct JSONLexer {
     private func appendTokenToJSONObject(_ token:Token, _ key:String, _ value:TokenBasicValueable) throws -> Token {
         switch token {
         case .jsonObject(var objects):
-            objects[key] = .basicValue(value:value)
-            return Token.jsonObject(objects)
+            objects[key] = value.getToken()
+            return .jsonObject(objects)
         default: throw JSONLexer.Error.invalidFormatCurlyBrace
         }
     }
@@ -177,14 +183,8 @@ struct JSONLexer {
     private func appendTokenToJSONArray(_ token:Token, _ value:TokenBasicValueable) throws -> Token {
         switch token {
         case .jsonArray(var tokens):
-            if value is Token {
-                var jsonObjects:JSONObject = [:]
-                jsonObjects =  try getJsonObjects(value)
-                tokens.append(.jsonObject(jsonObjects))
-            } else {
-                tokens.append(.basicValue(value: value))
-            }
-            return Token.jsonArray(tokens: tokens)
+            tokens.append(value.getToken())
+            return .jsonArray(tokens: tokens)
         default: throw JSONLexer.Error.invalidFormatBracket
             
         }
