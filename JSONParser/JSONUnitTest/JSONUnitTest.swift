@@ -103,6 +103,38 @@ class JSONUnitTest: XCTestCase {
         
     }
     
+    func testJSONLexerArrayInObjectSuccessForStep4(){
+        let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
+        var lexer = JSONLexer(input: input)
+        let token = try! lexer.lex()
+        var parser = JSONParser(token)
+        let jsonData = try! parser.parse()
+        
+        XCTAssertEqual(jsonData.numberCount, 1, "should be equal")
+        XCTAssertEqual(jsonData.stringCount, 2, "should be equal")
+        XCTAssertEqual(jsonData.boolCount, 0, "should be equal")
+        XCTAssertEqual(jsonData.arrayCount, 1, "should be equal")
+        XCTAssertEqual(jsonData.objectCount, 0, "should be equal")
+        XCTAssertEqual(jsonData.paranet.count, 4, "should be equal")
+        XCTAssertEqual(jsonData.paranet.name, "객체", "should be equal")
+    }
+    
+    func testJSONLexerArrayAndObjectInArraySuccessForStep4(){
+        let input = "[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]"
+        var lexer = JSONLexer(input: input)
+        let token = try! lexer.lex()
+        var parser = JSONParser(token)
+        let jsonData = try! parser.parse()
+        
+        XCTAssertEqual(jsonData.numberCount, 0, "should be equal")
+        XCTAssertEqual(jsonData.stringCount, 0, "should be equal")
+        XCTAssertEqual(jsonData.boolCount, 0, "should be equal")
+        XCTAssertEqual(jsonData.arrayCount, 1, "should be equal")
+        XCTAssertEqual(jsonData.objectCount, 1, "should be equal")
+        XCTAssertEqual(jsonData.paranet.count, 2, "should be equal")
+        XCTAssertEqual(jsonData.paranet.name, "배열", "should be equal")
+    }
+    
     func testJSONLexerInvalidFormatObjectInArrayException(){
         let input = "[{\"name\":\"KIm JUNG\", \"alias\":\"JK\", \"level\": 5, \"married\" : true }, { \"name\" : \"YOON JISU\",  \"alias\" : \"crong\", \"leve\", \"level\":4, \"married\":true]"
         var lexer = JSONLexer(input: input)

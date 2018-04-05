@@ -69,6 +69,7 @@ struct JSONLexer {
     private let numbers:[Character] = ["0","1","2","3","4","5","6","7","8","9"]
     private let firstCharacterOfBool:[Character] = ["t", "T", "f", "F"]
     private let allCharacterOfBool:[Character] = ["t", "T", "f","F", "a", "A", "l", "L", "s", "S", "e", "E", "r", "R", "u", "U"]
+    private let apostrophe:Character = "'"
     
     init(input:String) {
         self.input = input
@@ -94,6 +95,8 @@ struct JSONLexer {
             case blank, comma : advance()
             case openBracket : try token = bracket()
             case openCurlyBrace : try token = curlyBrace()
+            // 끝이 아닐 때
+            case closeBracket : return token
             case closeBracket where position == input.index(before: input.endIndex), closeCurlyBrace where position == input.index(before: input.endIndex) :
                 return token
             default: throw JSONLexer.Error.invalidFormatLex
@@ -127,6 +130,11 @@ struct JSONLexer {
             case firstCharacterOfBool:
                 tempValue = try getBool()
                 isKey = true
+            case openBracket where isKey == false:
+                tempValue = try bracket()
+                isKey = true
+            case closeBracket:
+                advance()
             case comma :
                 advance()
                 token = try appendTokenToJSONObject(token, tempkey, tempValue)
@@ -172,6 +180,12 @@ struct JSONLexer {
             case openCurlyBrace :
                 let objectToken = try curlyBrace()
                 token = try appendTokenToJSONArray(token, objectToken)
+            case openBracket:
+                token = try appendTokenToJSONArray(token, bracket())
+            //배열이 부모가 아닐 때
+            case closeBracket :
+                return token
+            // 배열이 부모일 때
             case closeBracket where position == input.index(before: input.endIndex) :
                 return token
             default: throw JSONLexer.Error.invalidFormatBracket
@@ -198,7 +212,7 @@ struct JSONLexer {
                 throw JSONLexer.Error.invalidFormatDoubleQuote
             }
             switch nextCharacter {
-            case dot, blank:
+            case dot, blank, apostrophe:
                 value.append(nextCharacter)
                 advance()
             case _ where CharacterSet.alphanumerics.contains(unicodeScalarOfCharacter) :
