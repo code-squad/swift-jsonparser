@@ -11,10 +11,6 @@ import Foundation
 struct MyJsonParser {
     
     func checkBrackets(_ input: String) -> JSONData? {
-        let grammarChecker = GrammarChecker()
-        guard grammarChecker.isValidFirstString(input) && grammarChecker.isValidLastString(input) else {
-            print("지원하지 않는 형식을 포함하고 있습니다.")
-            return nil }
         if input.hasPrefix("{") {
             let removeWhiteSpaceData = removeWhiteSpace(input)
             let jsonData = checkColonAndBrackets(removeWhiteSpaceData)
@@ -32,21 +28,21 @@ struct MyJsonParser {
     
     /* inputValue start [ */
     //시작과 끝 괄호 [] drop
-    func dropBrackets(_ inputString: String) -> String {
+    private func dropBrackets(_ inputString: String) -> String {
         let dropFirst = inputString.dropFirst()
         let dropLast = dropFirst.dropLast()
         return String(dropLast)
     }
     
     //배열 카운트
-    func countOfArrayData(_ input: String) -> Int {
+    private func countOfArrayData(_ input: String) -> Int {
         let regex = try! NSRegularExpression(pattern: "\\[", options: [])
         let list = regex.matches(in:input, options: [], range:NSRange.init(location: 0, length:input.count))
         return list.count
     }
     
     //객체 카운트
-    func countOfObjectData(_ input: String) -> Int {
+    private func countOfObjectData(_ input: String) -> Int {
         let regex = try! NSRegularExpression(pattern: "\\{", options: [])
         let list = regex.matches(in:input, options: [], range:NSRange.init(location: 0, length:input.count))
         return list.count
@@ -54,37 +50,47 @@ struct MyJsonParser {
     
     /* inputValue start { */
     //:[ 중첩 배열인지 체크
-    func checkColonAndBrackets(_ inputString: String) -> [String:Any]?{
-        let grammarChecker = GrammarChecker()
+    func checkColonAndBrackets(_ inputString: String) -> [String:Any]? {
         // 중첩 배열인 경우
         if inputString.contains(":[") {
-            let data = separateByColonAndBrackets(inputString)
-            let seprateColonData = containOfColon(data.dictionary)
-            let removeBracketsData = removeBrackets(seprateColonData)
-            let dictionaryData = makeDictionary(removeBracketsData)
-            let nestedKey = nestedDataKey(data.dictionary)
-            let arrayData = makeNestedDictionary(nestedKey, data.array)
-            let jsonData = dictionaryData.merging(arrayData) { (current, _) in current }
-            return jsonData
+            return makeNestedArrayData(inputString)
             //중첩 배열이 아닌 경우
         } else {
-            let separateComma = separateByComma(inputString)
-            let removeBracketsData = removeBrackets(separateComma)
-            guard grammarChecker.isValidFirstQuotation(removeBracketsData) else {
-                print("지원하지 않는 형식을 포함하고 있습니다.")
-                return nil }
-            let removeQuotationData = removeQuotation(removeBracketsData)
-            let separateColon = separateByColon(removeQuotationData)
-            let jsonData = makeDictionary(separateColon)
-            guard grammarChecker.isValidDictionaryKey(data: jsonData) else {
-                print("지원하지 않는 형식을 포함하고 있습니다.")
-                return nil }
-            return jsonData
+            return makeObjectData(inputString)
         }
     }
     
+    //중첩 배열 Data
+    private func makeNestedArrayData(_ arrayData: String) -> [String:Any] {
+        let data = separateByColonAndBrackets(arrayData)
+        let seprateColonData = containOfColon(data.dictionary)
+        let removeBracketsData = removeBrackets(seprateColonData)
+        let dictionaryData = makeDictionary(removeBracketsData)
+        let nestedKey = nestedDataKey(data.dictionary)
+        let arrayData = makeNestedDictionary(nestedKey, data.array)
+        let jsonData = dictionaryData.merging(arrayData) { (current, _) in current }
+        return jsonData
+    }
+    
+    //객체 Data
+    private func makeObjectData(_ objectData: String) -> [String:Any]? {
+        let grammarChecker = GrammarChecker()
+        let separateComma = separateByComma(objectData)
+        let removeBracketsData = removeBrackets(separateComma)
+        guard grammarChecker.isValidFirstQuotation(removeBracketsData) else {
+            print("지원하지 않는 형식을 포함하고 있습니다.")
+            return nil }
+        let removeQuotationData = removeQuotation(removeBracketsData)
+        let separateColon = separateByColon(removeQuotationData)
+        let jsonData = makeDictionary(separateColon)
+        guard grammarChecker.isValidDictionaryKey(data: jsonData) else {
+            print("지원하지 않는 형식을 포함하고 있습니다.")
+            return nil }
+        return jsonData
+    }
+    
     //:[ 기준으로 나눔
-    func separateByColonAndBrackets(_ input: String) -> (dictionary: [String],array: [String]) {
+    private func separateByColonAndBrackets(_ input: String) -> (dictionary: [String],array: [String]) {
         var nestedData: [String] = []
         var dictionaryData: [String] = []
         //input :[ 으로 나누고
@@ -102,7 +108,7 @@ struct MyJsonParser {
     }
     
     //: 있는 데이터만 값 가져오기
-    func containOfColon(_ input: [String]) -> [String]{
+    private func containOfColon(_ input: [String]) -> [String]{
         var dictionaryData: [String] = []
         for data in input {
             if data.contains(":"){
@@ -113,7 +119,7 @@ struct MyJsonParser {
     }
     
     //: 없는 데이터인지 판단해서 중첩된 배열의 key 값 가져오기
-    func nestedDataKey(_ input: [String]) -> String {
+    private func nestedDataKey(_ input: [String]) -> String {
         var tempData = ""
         for data in input {
             if !data.contains(":") {
@@ -125,14 +131,14 @@ struct MyJsonParser {
     }
     
     //중첩배열 dictionary 만들기
-    func makeNestedDictionary(_ arrayKey: String,_ arrayValue: [String]) -> [String:Any] {
+    private func makeNestedDictionary(_ arrayKey: String,_ arrayValue: [String]) -> [String:Any] {
         var arrayData: [String:Any] = [:]
         arrayData[arrayKey] = arrayValue
         return arrayData
     }
     
     //콜론 기준으로 나눔
-    func separateByColon(_ input: [String]) -> [String] {
+    private func separateByColon(_ input: [String]) -> [String] {
         var inputData: [String] = []
         for data in input {
             inputData += data.components(separatedBy: ":")
@@ -141,19 +147,19 @@ struct MyJsonParser {
     }
     
     //공백 지우기
-    func removeWhiteSpace(_ inputData: String) -> String {
+    private func removeWhiteSpace(_ inputData: String) -> String {
         let removeWhiteSpaceData = inputData.replacingOccurrences(of: " ", with: "")
         return removeWhiteSpaceData
     }
     
     //콤마 기준으로 나눔
-    func separateByComma(_ input: String) -> [String] {
+    private func separateByComma(_ input: String) -> [String] {
         let inputData = input.components(separatedBy: ",")
         return inputData
     }
     
     //괄호 지우기
-    func removeBrackets(_ input: [String]) -> [String] {
+    private func removeBrackets(_ input: [String]) -> [String] {
         var removeBracketsData:[String] = []
         for data in input {
             removeBracketsData.append(data.replacingOccurrences(of: "{", with: "").replacingOccurrences(of: "}", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: "[", with: ""))
@@ -161,9 +167,8 @@ struct MyJsonParser {
         return removeBracketsData
     }
     
-    
     //따옴표 지우기
-    func removeQuotation(_ input: [String]) -> [String] {
+    private func removeQuotation(_ input: [String]) -> [String] {
         var removeQuotationData:[String] = []
         for data in input {
             removeQuotationData.append(data.replacingOccurrences(of: "\"", with: ""))
@@ -171,9 +176,8 @@ struct MyJsonParser {
         return removeQuotationData
     }
     
-    
     // 딕셔너리 반환
-    func makeDictionary(_ input: [String]) -> [String:Any] {
+    private func makeDictionary(_ input: [String]) -> [String:Any] {
         var data: [String:String] = [:]
         
         for even in stride(from: 0, to: input.count-1, by: 2) {
@@ -184,7 +188,7 @@ struct MyJsonParser {
     }
     
     // 타입 캐스팅
-    func typecasting(_ input: [String:String]) -> [String:Any] {
+    private func typecasting(_ input: [String:String]) -> [String:Any] {
         var castingData: [String:Any] = [:]
         for (key,value) in input {
             if let boolInput = Bool.init(value) {
@@ -197,6 +201,4 @@ struct MyJsonParser {
         }
         return castingData
     }
-    
-    
 }

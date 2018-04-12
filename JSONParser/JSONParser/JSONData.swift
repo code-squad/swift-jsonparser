@@ -9,12 +9,12 @@
 import Foundation
 
 protocol JSONData {
-    func resultMessage()
+    func resultView() -> ResultView
 }
 
 extension Dictionary: JSONData {
     
-    func resultMessage() {
+    func resultView() -> ResultView {
         var number = 0
         var string = 0
         var bool = 0
@@ -31,14 +31,7 @@ extension Dictionary: JSONData {
                 array += 1
             }
         }
-        
-        let resultView = ResultView()
-        let numberMessage = resultView.countOfNumber(number)
-        let stringMessage = resultView.countOfString(string)
-        let boolMessage = resultView.countOfBool(bool)
-        let arrayMessage = resultView.countOfArray(array)
-        
-        print("총 \(self.count)개의 객체 데이터 중에 \(numberMessage) \(stringMessage) \(boolMessage) \(arrayMessage)가 포함되어 있습니다")
+        return ResultView.init(number, string, bool, array)
         
     }
 }
@@ -53,12 +46,7 @@ struct ArrayData {
 }
 
 extension ArrayData: JSONData {
-    
-    func resultMessage() {
-        let resultView = ResultView()
-        let arrayMessage = resultView.countArrayOfArray(self.array)
-        let objectMessage = resultView.countOfObject(self.object)
-        
-        print("총 \(self.array + self.object)개의 배열 데이터 중에 \(arrayMessage) \(objectMessage)가 포함되어 있습니다.")
+    func resultView() -> ResultView {
+        return ResultView.init(self.array, self.object)
     }
 }
