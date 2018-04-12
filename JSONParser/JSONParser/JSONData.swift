@@ -9,12 +9,12 @@
 import Foundation
 
 protocol JSONData {
-    func resultView() -> ResultView
+    func resultView() -> MyDataCount
 }
 
 extension Dictionary: JSONData {
     
-    func resultView() -> ResultView {
+    func resultView() -> MyDataCount {
         var number = 0
         var string = 0
         var bool = 0
@@ -31,7 +31,7 @@ extension Dictionary: JSONData {
                 array += 1
             }
         }
-        return ResultView.init(number, string, bool, array)
+        return MyDataCount.init(number, string, bool, array)
         
     }
 }
@@ -46,7 +46,7 @@ struct ArrayData {
 }
 
 extension ArrayData: JSONData {
-    func resultView() -> ResultView {
-        return ResultView.init(self.array, self.object)
+    func resultView() -> MyDataCount {
+        return MyDataCount.init(self.array, self.object)
     }
 }

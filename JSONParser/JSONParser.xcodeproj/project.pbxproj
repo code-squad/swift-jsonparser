@@ -13,6 +13,7 @@
 		D67946E62060C18A00696BE9 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67946E52060C18A00696BE9 /* GrammarChecker.swift */; };
 		D67946E82062297500696BE9 /* MyJsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67946E72062297500696BE9 /* MyJsonParser.swift */; };
 		D68FEE302068E122003F50CB /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68FEE2F2068E122003F50CB /* JSONData.swift */; };
+		D6BBE45D207F4E8F000D5802 /* MyDataCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BBE45C207F4E8F000D5802 /* MyDataCount.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +36,7 @@
 		D67946E52060C18A00696BE9 /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
 		D67946E72062297500696BE9 /* MyJsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyJsonParser.swift; sourceTree = "<group>"; };
 		D68FEE2F2068E122003F50CB /* JSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
+		D6BBE45C207F4E8F000D5802 /* MyDataCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataCount.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				D67946E52060C18A00696BE9 /* GrammarChecker.swift */,
 				D673EE0F2057636C0051192E /* ResultView.swift */,
 				D67946E72062297500696BE9 /* MyJsonParser.swift */,
+				D6BBE45C207F4E8F000D5802 /* MyDataCount.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -135,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6BBE45D207F4E8F000D5802 /* MyDataCount.swift in Sources */,
 				D67946E82062297500696BE9 /* MyJsonParser.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				D673EE0C20569EE00051192E /* InputView.swift in Sources */,
