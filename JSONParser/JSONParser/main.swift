@@ -17,12 +17,8 @@ while true {
         continue }
     guard let jsonData = MyJsonParser().checkBrackets(inputData) else { break }
     let myDataCount = jsonData.countJSONData()
-    if let dictionaryData = jsonData as? Dictionary<String, Any> {
-        ResultView().objectMessage(dictionaryData, myDataCount)
-    }
-    if let arrayData = jsonData as? ArrayData {
-        ResultView().arrayMessage(arrayData, myDataCount)
-    }
+    let printMessage = jsonData.resultMessage(myDataCount)
+    ResultView().printMessage(printMessage)
 }
 
 
