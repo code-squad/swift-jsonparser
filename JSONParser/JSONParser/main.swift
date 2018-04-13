@@ -16,9 +16,15 @@ while true {
         print("지원하지 않는 형식을 포함하고 있습니다.")
         continue }
     guard let jsonData = MyJsonParser().checkBrackets(inputData) else { break }
-    let myDataCount = jsonData.resultView()
-    ResultView().resultMessage(jsonData, myDataCount)
+    let myDataCount = jsonData.countJSONData()
+    if let dictionaryData = jsonData as? Dictionary<String, Any> {
+        ResultView().objectMessage(dictionaryData, myDataCount)
+    }
+    if let arrayData = jsonData as? ArrayData {
+        ResultView().arrayMessage(arrayData, myDataCount)
+    }
 }
+
 
 
 
