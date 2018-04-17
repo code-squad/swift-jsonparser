@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+class Parser {
+    
+    let tokens: [Token]
+    var position = 0
+    
+    init(tokens: [Token]) {
+        self.tokens = tokens
+    }
+}
