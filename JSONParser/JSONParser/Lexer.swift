@@ -17,6 +17,7 @@ enum Token {
 class Lexer {
     enum Error: Swift.Error {
         case invalidCharacter(Character)
+        case invalidBooleanCharacter
     }
     
     private let input: String
@@ -70,14 +71,21 @@ class Lexer {
             switch nextCharacter {
             case "0"..."9":
                 // 숫자 문자가 등장하면 나머지숫자가져오기
-                let value = getNumber()
+                let value: Int = getNumber()
                 arrayTokens.append(.number(value))
             case space, comma:
                 advance()
             case "\"":
                 advance() // 큰따옴표 뒤부터 문자열
-                let characters = getCharacters()
+                let characters: String = getCharacters()
                 arrayTokens.append(.characters(characters))
+                advance() // 닫는 따옴표 뒤로 이동
+            case "f", "t":
+                guard let booleans: Bool = getBooleans() else {
+                    throw Lexer.Error.invalidBooleanCharacter
+                }
+                arrayTokens.append(.boolean(booleans))
+                advance()
             case closeBracket:
                 advance()
                 return arrayTokens
@@ -108,9 +116,9 @@ class Lexer {
     func getCharacters() -> String {
         var characters: String = ""
         while let nextCharacter = peek() {
+            // 닫는 따옴표를 만나기전까지 문자열로 저장
             switch nextCharacter {
             case "\"":
-                advance()
                 return characters
             default:
                 characters += String(nextCharacter)
@@ -121,4 +129,20 @@ class Lexer {
         return characters
     }
     
+    // t 또는 f는 'e'가 나올때까지 읽는다.
+    func getBooleans() -> Bool? {
+        var booleanText: String = ""
+        while let nextCharacter = peek() {
+            switch nextCharacter {
+            case "e":
+                booleanText += String(nextCharacter)
+                return Bool(booleanText)
+            default:
+                booleanText += String(nextCharacter)
+                advance()
+            }
+        }
+        
+        return Bool(booleanText)
+    }
 }
