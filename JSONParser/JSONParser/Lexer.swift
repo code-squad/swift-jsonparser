@@ -14,15 +14,16 @@ enum Token {
     case boolean(Bool)
 }
 
-struct Lexer {
+class Lexer {
     enum Error: Swift.Error {
         case invalidCharacter(Character)
     }
     
-    let input: String
-    var position: String.Index
-    
+    private let input: String
+    private var position: String.Index
     private let openBracket: Character = "["
+    private let closeBracket: Character = "]"
+    private let comma: Character = ","
     
     init(input: String) {
         self.input = input
@@ -30,29 +31,28 @@ struct Lexer {
     }
     
     // 입력된 문자를 확인.
-    func peek() -> Character? {
-        guard let self.position < input.endIndex else {
+    private func peek() -> Character? {
+        guard self.position < input.endIndex else {
             return nil
         }
         return input[self.position]
     }
     
     // 다음 문자로 체크하기 위해 index 이동
-    mutating func advance() {
-        assert(self.position < input.endIndex, "Cannot advance past endIndext")
+    private func advance() {
         self.position = self.input.index(after: self.position)
     }
     
-    // 실제 토큰을 얻기 위한 lex
-    func lex() throws -> [Token] {
-        var tokens = [Token]()
+    func lex() throws -> [[Token]] {
+        var tokens = [[Token]]()
         
         while let nextCharacter = self.peek() {
             switch nextCharacter {
             // array판단
             case openBracket:
                 // array가져오기
-                getArray()
+                advance()
+                try tokens.append(makeArrayTokens())
             default:
                 throw Lexer.Error.invalidCharacter(nextCharacter)
             }
@@ -61,8 +61,44 @@ struct Lexer {
         return tokens
     }
     
-    func getArray() {
+    // 배열일 경우 배열의 토큰 생성
+    func makeArrayTokens() throws -> [Token] {
+        var arrayTokens = [Token]()
         
+        while let nextCharacter = self.peek() {
+            switch nextCharacter {
+            case "0"..."9":
+                // 숫자 문자가 등장하면 나머지숫자가져오기
+                let value = getNumber()
+                arrayTokens.append(.number(value))
+            case " ", comma:
+                // 공백, "," 무시
+                advance()
+            case closeBracket:
+                advance()
+                return arrayTokens
+            default:
+                throw Lexer.Error.invalidCharacter(nextCharacter)
+            }
+        }
+        
+        return arrayTokens
+    }
+    
+    func getNumber() -> Int {
+        var value = 0
+        while let nextCharacter = peek() {
+            switch nextCharacter {
+            case "0"..."9":
+                let digitValue = Int(String(nextCharacter))!
+                value = 10 * value + digitValue
+                advance()
+            default:
+                return value
+            }
+        }
+        
+        return value
     }
     
 }

@@ -15,6 +15,12 @@ func main() {
     }
     
     let lexer: Lexer = Lexer(input: input)
+    do {
+        let token = try lexer.lex()
+        print(token)
+    } catch {
+        print("메인에러")
+    }
 }
 
 main()
