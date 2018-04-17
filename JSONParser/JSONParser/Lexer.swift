@@ -30,4 +30,10 @@ struct Lexer {
         }
         return input[self.position]
     }
+    
+    // 다음 문자로 체크하기 위해 index 이동
+    func advance() {
+        assert(self.position < input.endIndex, "Cannot advance past endIndext")
+        self.position = self.input.index(after: self.position)
+    }
 }
