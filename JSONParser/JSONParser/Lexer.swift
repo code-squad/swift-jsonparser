@@ -64,7 +64,7 @@ class Lexer {
     }
     
     // 배열일 경우 배열의 토큰 생성
-    func makeArrayTokens() throws -> [Token] {
+    private func makeArrayTokens() throws -> [Token] {
         var arrayTokens = [Token]()
         
         while let nextCharacter = peek() {
@@ -97,7 +97,7 @@ class Lexer {
         return arrayTokens
     }
     
-    func getNumber() -> Int {
+    private func getNumber() -> Int {
         var value = 0
         while let nextCharacter = peek() {
             switch nextCharacter {
@@ -113,7 +113,7 @@ class Lexer {
         return value
     }
     
-    func getCharacters() -> String {
+    private func getCharacters() -> String {
         var characters: String = ""
         while let nextCharacter = peek() {
             // 닫는 따옴표를 만나기전까지 문자열로 저장
@@ -130,7 +130,7 @@ class Lexer {
     }
     
     // t 또는 f는 'e'가 나올때까지 읽는다.
-    func getBooleans() -> Bool? {
+    private func getBooleans() -> Bool? {
         var booleanText: String = ""
         while let nextCharacter = peek() {
             switch nextCharacter {
