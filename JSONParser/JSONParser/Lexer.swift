@@ -10,7 +10,7 @@ import Foundation
 
 enum Token {
     case number(Int)
-    case text(String)
+    case characters(String)
     case boolean(Bool)
 }
 
@@ -24,6 +24,7 @@ class Lexer {
     private let openBracket: Character = "["
     private let closeBracket: Character = "]"
     private let comma: Character = ","
+    private let space: Character = " "
     
     init(input: String) {
         self.input = input
@@ -46,7 +47,7 @@ class Lexer {
     func lex() throws -> [[Token]] {
         var tokens = [[Token]]()
         
-        while let nextCharacter = self.peek() {
+        while let nextCharacter = peek() {
             switch nextCharacter {
             // array판단
             case openBracket:
@@ -65,15 +66,18 @@ class Lexer {
     func makeArrayTokens() throws -> [Token] {
         var arrayTokens = [Token]()
         
-        while let nextCharacter = self.peek() {
+        while let nextCharacter = peek() {
             switch nextCharacter {
             case "0"..."9":
                 // 숫자 문자가 등장하면 나머지숫자가져오기
                 let value = getNumber()
                 arrayTokens.append(.number(value))
-            case " ", comma:
-                // 공백, "," 무시
+            case space, comma:
                 advance()
+            case "\"":
+                advance() // 큰따옴표 뒤부터 문자열
+                let characters = getCharacters()
+                arrayTokens.append(.characters(characters))
             case closeBracket:
                 advance()
                 return arrayTokens
@@ -99,6 +103,22 @@ class Lexer {
         }
         
         return value
+    }
+    
+    func getCharacters() -> String {
+        var characters: String = ""
+        while let nextCharacter = peek() {
+            switch nextCharacter {
+            case "\"":
+                advance()
+                return characters
+            default:
+                characters += String(nextCharacter)
+                advance()
+            }
+        }
+        
+        return characters
     }
     
 }
