@@ -22,4 +22,12 @@ struct Lexer {
         self.input = input
         self.position = input.startIndex
     }
+    
+    // 입력된 문자를 확인.
+    func peek() -> Character? {
+        guard let self.position < input.endIndex else {
+            return nil
+        }
+        return input[self.position]
+    }
 }

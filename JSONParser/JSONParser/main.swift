@@ -8,3 +8,13 @@
 
 import Foundation
 
+func main() {
+    
+    guard let input = InputView.readInput(Question.askJSONData) else {
+        return
+    }
+    
+    let lexer: Lexer = Lexer(input: input)
+}
+
+main()
