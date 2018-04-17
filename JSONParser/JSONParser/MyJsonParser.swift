@@ -12,15 +12,14 @@ struct MyJsonParser {
     
     func checkBrackets(_ input: String) -> JSONData? {
         if input.hasPrefix("{") {
-            let removeWhiteSpaceData = removeWhiteSpace(input)
-            let jsonData = checkColonAndBrackets(removeWhiteSpaceData)
+            let jsonData = checkColonAndBrackets(input)
             return jsonData
         } else if input.hasPrefix("[") {
-            let removeWhiteSpaceData = removeWhiteSpace(input)
-            let dropBracketsData = dropBrackets(removeWhiteSpaceData)
+            let dropBracketsData = dropBrackets(input)
             let arrayCount = countOfArrayData(dropBracketsData)
             let objectCount = countOfObjectData(dropBracketsData)
-            let jsonData = ArrayData.init(array: arrayCount, object: objectCount)
+            let arrayData = makeArrayData(input)
+            let jsonData = ArrayData.init(arrayCount,objectCount,arrayData.array,arrayData.dictionary)
             return jsonData
         }
         return nil
@@ -48,54 +47,89 @@ struct MyJsonParser {
         return list.count
     }
     
+    //배열 데이터 만들기
+    private func makeArrayData(_ input: String) -> (array: [String], dictionary: [String:Any]) {
+        var dictionary: [String:Any] = [:]
+        var array: [String] = []
+        let separateByCommaData = separateByComma(input)
+        for data in separateByCommaData {
+            if data.contains(":") {
+                let dictionaryData = makeDictionaryData(data)
+                let objectData = makeObjectData(dictionaryData)
+                dictionary = dictionary.merging(objectData) { (current, _) in current }
+            } else {
+                array.append(data)
+            }
+        }
+        let arrayData = removeDataValue(array)
+        return (arrayData, dictionary)
+    }
+    
+    
+    
     /* inputValue start { */
     //:[ 중첩 배열인지 체크
-    func checkColonAndBrackets(_ inputString: String) -> [String:Any]? {
+    func checkColonAndBrackets(_ inputString: String) -> [String:Any] {
         // 중첩 배열인 경우
-        if inputString.contains(":[") {
+        if inputString.contains(":[") || inputString.contains(": ["){
             return makeNestedArrayData(inputString)
             //중첩 배열이 아닌 경우
         } else {
-            return makeObjectData(inputString)
+            let dictionaryData = makeDictionaryData(inputString)
+            return makeObjectData(dictionaryData)
         }
     }
     
     //중첩 배열 Data
     private func makeNestedArrayData(_ arrayData: String) -> [String:Any] {
-        let data = separateByColonAndBrackets(arrayData)
-        let seprateColonData = containOfColon(data.dictionary)
-        let removeBracketsData = removeBrackets(seprateColonData)
-        let dictionaryData = makeDictionary(removeBracketsData)
+        let input = separateByColonAndBrackets(arrayData)
+        let data = separateByColonOfNestedData(input)
+        let seprateColonData = separateByColon(data.dictionary)
+        let removeData = removeDataValue(seprateColonData)
+        let dictionaryData = makeDictionary(removeData)
         let nestedKey = nestedDataKey(data.dictionary)
         let arrayData = makeNestedDictionary(nestedKey, data.array)
         let jsonData = dictionaryData.merging(arrayData) { (current, _) in current }
         return jsonData
     }
     
-    //객체 Data
-    private func makeObjectData(_ objectData: String) -> [String:Any]? {
-        let grammarChecker = GrammarChecker()
-        let separateComma = separateByComma(objectData)
-        let removeBracketsData = removeBrackets(separateComma)
-        guard grammarChecker.isValidFirstQuotation(removeBracketsData) else {
-            print("지원하지 않는 형식을 포함하고 있습니다.")
-            return nil }
-        let removeQuotationData = removeQuotation(removeBracketsData)
-        let separateColon = separateByColon(removeQuotationData)
+    // "name":"hyun" 값 만들기
+    public func makeDictionaryData(_ input: String) -> [String] {
+        let separateComma = separateByComma(input)
+        let removeData = removeDataValue(separateComma)
+        return removeData
+    }
+    
+    // 객체 값 만들기
+    private func makeObjectData(_ dictionaryData: [String]) -> [String:Any] {
+        let separateColon = separateByColon(dictionaryData)
         let jsonData = makeDictionary(separateColon)
-        guard grammarChecker.isValidDictionaryKey(data: jsonData) else {
-            print("지원하지 않는 형식을 포함하고 있습니다.")
-            return nil }
         return jsonData
     }
     
+    //괄호 공백 지운 데이터 값
+    private func removeDataValue(_ inputdata: [String]) -> [String] {
+        let removeBracketsData = removeBrackets(inputdata)
+        let removeWhiteSpaceData = removeWhiteSpace(removeBracketsData)
+        return removeWhiteSpaceData
+    }
+    
     //:[ 기준으로 나눔
-    private func separateByColonAndBrackets(_ input: String) -> (dictionary: [String],array: [String]) {
+    private func separateByColonAndBrackets(_ input: String) -> [String] {
+        var separateData: [String] = []
+        if input.contains(":[") {
+            separateData.append(contentsOf: input.components(separatedBy: ":["))
+        } else if input.contains(": [") {
+            separateData.append(contentsOf: input.components(separatedBy: ": ["))
+        }
+        return separateData
+    }
+    
+    //:[ 기준으로 나눈 값 ,로 나눔
+    private func separateByColonOfNestedData(_ input: [String]) -> (dictionary: [String],array: [String]) {
         var nestedData: [String] = []
         var dictionaryData: [String] = []
-        //input :[ 으로 나누고
-        let separateData = input.components(separatedBy: ":[")
-        for data in separateData {
+        for data in input {
             //나눈 값에서 : 이 없으면 중첩 배열 값 ,로 나눠줌
             if !data.contains(":") {
                 nestedData += data.components(separatedBy: ",")
@@ -103,15 +137,18 @@ struct MyJsonParser {
                 dictionaryData += data.components(separatedBy: ",")
             }
         }
-        let arrayData = removeBrackets(nestedData)
+        let removeBracketsData = removeBrackets(nestedData)
+        let removeQuotationData = removeQuotation(removeBracketsData)
+        let arrayData = removeWhiteSpace(removeQuotationData)
         return (dictionaryData, arrayData)
     }
     
-    //: 있는 데이터만 값 가져오기
-    private func containOfColon(_ input: [String]) -> [String]{
+    
+    //: 기준으로 나눔
+    private func separateByColon(_ input: [String]) -> [String] {
         var dictionaryData: [String] = []
         for data in input {
-            if data.contains(":"){
+            if data.contains(":") {
                 dictionaryData += data.components(separatedBy: ":")
             }
         }
@@ -120,14 +157,13 @@ struct MyJsonParser {
     
     //: 없는 데이터인지 판단해서 중첩된 배열의 key 값 가져오기
     private func nestedDataKey(_ input: [String]) -> String {
-        var tempData = ""
+        var keyData = ""
         for data in input {
             if !data.contains(":") {
-                tempData += data
+                keyData += data
             }
         }
-        let nestedKey = tempData.replacingOccurrences(of: "\"", with: "")
-        return nestedKey
+        return keyData
     }
     
     //중첩배열 dictionary 만들기
@@ -137,19 +173,13 @@ struct MyJsonParser {
         return arrayData
     }
     
-    //콜론 기준으로 나눔
-    private func separateByColon(_ input: [String]) -> [String] {
-        var inputData: [String] = []
-        for data in input {
-            inputData += data.components(separatedBy: ":")
-        }
-        return inputData
-    }
-    
     //공백 지우기
-    private func removeWhiteSpace(_ inputData: String) -> String {
-        let removeWhiteSpaceData = inputData.replacingOccurrences(of: " ", with: "")
-        return removeWhiteSpaceData
+    private func removeWhiteSpace(_ input: [String]) -> [String] {
+        var trimmingData: [String] = []
+        for data in input {
+            trimmingData.append(data.trimmingCharacters(in: .whitespacesAndNewlines))
+        }
+        return trimmingData
     }
     
     //콤마 기준으로 나눔
@@ -160,16 +190,16 @@ struct MyJsonParser {
     
     //괄호 지우기
     private func removeBrackets(_ input: [String]) -> [String] {
-        var removeBracketsData:[String] = []
+        var removeBracketsData: [String] = []
         for data in input {
             removeBracketsData.append(data.replacingOccurrences(of: "{", with: "").replacingOccurrences(of: "}", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: "[", with: ""))
         }
         return removeBracketsData
     }
     
-    //따옴표 지우기
+    //"" 지우기
     private func removeQuotation(_ input: [String]) -> [String] {
-        var removeQuotationData:[String] = []
+        var removeQuotationData: [String] = []
         for data in input {
             removeQuotationData.append(data.replacingOccurrences(of: "\"", with: ""))
         }

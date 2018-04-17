@@ -14,6 +14,10 @@ struct ResultView {
         print(message)
     }
     
+    func printData(_ data: String) {
+        print(data)
+    }
+    
 }
 
 

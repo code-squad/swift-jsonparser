@@ -25,18 +25,6 @@ struct GrammarChecker {
         }
         return false
     }
-    
-    //딕셔너리 키 문자 체크
-    func isValidDictionaryKey(data: [String: Any]) -> Bool {
-        let regex = try! NSRegularExpression(pattern: "[a-z|A-Z]", options: [])
-        for (key, _ ) in data {
-            let list = regex.matches(in:key, options: [], range:NSRange.init(location: 0, length:key.count))
-            if list.count != key.count {
-                return false
-            }
-        }
-        return true
-    }
 }
 
 

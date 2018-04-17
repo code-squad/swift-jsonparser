@@ -13,6 +13,7 @@
 		D67946E62060C18A00696BE9 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67946E52060C18A00696BE9 /* GrammarChecker.swift */; };
 		D67946E82062297500696BE9 /* MyJsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67946E72062297500696BE9 /* MyJsonParser.swift */; };
 		D68FEE302068E122003F50CB /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68FEE2F2068E122003F50CB /* JSONData.swift */; };
+		D6B8F66E2085861D00B864B5 /* MyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B8F66D2085861D00B864B5 /* MyData.swift */; };
 		D6BBE45D207F4E8F000D5802 /* MyDataCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BBE45C207F4E8F000D5802 /* MyDataCount.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,7 @@
 		D67946E52060C18A00696BE9 /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
 		D67946E72062297500696BE9 /* MyJsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyJsonParser.swift; sourceTree = "<group>"; };
 		D68FEE2F2068E122003F50CB /* JSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
+		D6B8F66D2085861D00B864B5 /* MyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyData.swift; sourceTree = "<group>"; };
 		D6BBE45C207F4E8F000D5802 /* MyDataCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataCount.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,6 +78,7 @@
 				D673EE0F2057636C0051192E /* ResultView.swift */,
 				D67946E72062297500696BE9 /* MyJsonParser.swift */,
 				D6BBE45C207F4E8F000D5802 /* MyDataCount.swift */,
+				D6B8F66D2085861D00B864B5 /* MyData.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -145,6 +148,7 @@
 				D673EE102057636C0051192E /* ResultView.swift in Sources */,
 				D67946E62060C18A00696BE9 /* GrammarChecker.swift in Sources */,
 				D68FEE302068E122003F50CB /* JSONData.swift in Sources */,
+				D6B8F66E2085861D00B864B5 /* MyData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

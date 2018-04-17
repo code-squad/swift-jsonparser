@@ -15,10 +15,21 @@ while true {
     guard grammarChecker.isValidFirstString(inputData) && grammarChecker.isValidLastString(inputData) else {
         print("지원하지 않는 형식을 포함하고 있습니다.")
         continue }
-    guard let jsonData = MyJsonParser().checkBrackets(inputData) else { break }
+    let myJsonParser = MyJsonParser()
+    let dictionaryData = myJsonParser.makeDictionaryData(inputData)
+    guard grammarChecker.isValidFirstQuotation(dictionaryData) else {
+        print("지원하지 않는 형식을 포함하고 있습니다.")
+        continue
+    }
+    guard let jsonData = myJsonParser.checkBrackets(inputData) else { break }
     let myDataCount = jsonData.countJSONData()
     let printMessage = jsonData.resultMessage(myDataCount)
-    ResultView().printMessage(printMessage)
+    let resultView = ResultView()
+    resultView.printMessage(printMessage)
+    let myData = jsonData.makeMyData()
+    let myDataMessage = jsonData.resultData(myData)
+    resultView.printData(myDataMessage)
+    
 }
 
 
