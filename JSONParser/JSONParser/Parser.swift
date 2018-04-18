@@ -15,15 +15,15 @@ class Parser {
         case invalidToken(Token)
     }
     
-    let tokens: [Token]
-    var position = 0
+    private let tokens: [Token]
+    private var position = 0
     
     init(tokens: [Token]) {
         self.tokens = tokens
     }
     
     // 토큰이 남았는지 확인 및 토큰 반환
-    func getNextToken() -> Token? {
+    private func getNextToken() -> Token? {
         guard position < tokens.count else {
             return nil
         }
@@ -33,14 +33,14 @@ class Parser {
         return token
     }
     
-    func parse() throws -> JSONData {
+    func parse() throws -> Parsable {
         typealias Data = (numbers: [Int], characters: [String], booleans: [Bool])
         var data: Data = ([], [], [])
         
         while let token = getNextToken() {
             switch token {
-            case .list(let tokens):
-                let list: Data = getList(tokens)
+            case .list(let tokenList):
+                let list: Data = getList(tokenList)
                 data.numbers += list.numbers
                 data.characters += list.characters
                 data.booleans += list.booleans
@@ -52,7 +52,7 @@ class Parser {
         return JSONData(numbers: data.numbers, characters: data.characters, booleans: data.booleans)
     }
     
-    func getList(_ tokens: [Token]) -> ([Int], [String], [Bool]) {
+    private func getList(_ tokens: [Token]) -> ([Int], [String], [Bool]) {
         var numbers: [Int] = [Int]()
         var characters: [String] = [String]()
         var booleans: [Bool] = [Bool]()
