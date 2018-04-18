@@ -13,6 +13,9 @@ struct JSONData: JSONPrintable {
     private var numbers: [Int]
     private var characters: [String]
     private var booleans: [Bool]
+    let prefixOfCharacters: String = "문자열 "
+    let prefixOfNumbers: String = "숫자 "
+    let prefixOfBooleans: String = "부울 "
     
     init(_ numbers: [Int], _ characters: [String], _ booleans: [Bool]) {
         self.numbers = numbers
@@ -35,18 +38,4 @@ struct JSONData: JSONPrintable {
     func countBooleans() -> Int {
         return self.booleans.count
     }
-    
-    var prefixOfCharacters: String {
-        return "문자열 "
-    }
-    
-    var prefixOfNumbers: String {
-        return "숫자 "
-    }
-    
-    var prefixOfBooleans: String {
-        return "부울 "
-    }
-    
-    
 }
