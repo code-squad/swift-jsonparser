@@ -8,8 +8,12 @@
 
 import Foundation
 
-struct JSONData {
+struct JSONData: Parsable {
     var numbers: [Int]
     var characters: [String]
     var booleans: [Bool]
+    
+    var total: Int {
+        return self.numbers.count + self.characters.count + self.booleans.count
+    }
 }
