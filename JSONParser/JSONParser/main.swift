@@ -20,16 +20,12 @@ func main() {
         let parser: Parser = Parser(tokens: tokens)
         let jsonData: JSONData = try parser.parse()
         OutputView.printJSONData(jsonData)
-    } catch Lexer.Error.invalidCharacter(let character) {
-        print("Input contained an invalid character: \(character)")
-    } catch Lexer.Error.invalidBooleanCharacter {
-        print("Boolean input was wrong!")
-    } catch Parser.Error.unexpectedEndOfInput {
-        print("Unexpected end of input")
-    } catch Parser.Error.invalidToken(let token) {
-        print("Invalid token : \(token)")
+    } catch let error as Lexer.Error {
+        print(error.errorMessage)
+    } catch let error as Parser.Error {
+        print(error.errorMessage)
     } catch {
-        print("메인에러")
+        fatalError("Unexpected Error")
     }
 }
 

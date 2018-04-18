@@ -13,6 +13,15 @@ class Parser {
     enum Error: Swift.Error {
         case unexpectedEndOfInput
         case invalidToken(Token)
+        
+        var errorMessage: String {
+            switch self {
+            case .unexpectedEndOfInput:
+                return "Unexpected end of input"
+            case .invalidToken(let token):
+                return "Invalid token: \(token)"
+            }
+        }
     }
     
     private let tokens: [Token]

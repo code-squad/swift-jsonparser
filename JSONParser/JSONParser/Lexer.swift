@@ -19,6 +19,15 @@ class Lexer {
     enum Error: Swift.Error {
         case invalidCharacter(Character)
         case invalidBooleanCharacter
+        
+        var errorMessage: String {
+            switch self {
+            case .invalidBooleanCharacter:
+                return "Boolean input was wrong!"
+            case .invalidCharacter(let character):
+                return "Input contained an invalid character: \(character)"
+            }
+        }
     }
     
     private let input: String
