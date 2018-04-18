@@ -10,6 +10,9 @@
 		7300E62920848DE800C01312 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7300E62820848DE800C01312 /* InputView.swift */; };
 		739117732085CBC100C960D4 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739117722085CBC100C960D4 /* Lexer.swift */; };
 		739117772086729C00C960D4 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739117762086729C00C960D4 /* Parser.swift */; };
+		739117792086FC3800C960D4 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739117782086FC3800C960D4 /* JSONData.swift */; };
+		7391177B20871CB000C960D4 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7391177A20871CB000C960D4 /* OutputView.swift */; };
+		7391177D20871D2A00C960D4 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7391177C20871D2A00C960D4 /* Protocols.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +32,9 @@
 		7300E62820848DE800C01312 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		739117722085CBC100C960D4 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		739117762086729C00C960D4 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		739117782086FC3800C960D4 /* JSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
+		7391177A20871CB000C960D4 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
+		7391177C20871D2A00C960D4 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,6 +72,9 @@
 				7300E62820848DE800C01312 /* InputView.swift */,
 				739117722085CBC100C960D4 /* Lexer.swift */,
 				739117762086729C00C960D4 /* Parser.swift */,
+				739117782086FC3800C960D4 /* JSONData.swift */,
+				7391177A20871CB000C960D4 /* OutputView.swift */,
+				7391177C20871D2A00C960D4 /* Protocols.swift */,
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 			);
 			path = JSONParser;
@@ -131,8 +140,11 @@
 			files = (
 				739117772086729C00C960D4 /* Parser.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				7391177D20871D2A00C960D4 /* Protocols.swift in Sources */,
+				739117792086FC3800C960D4 /* JSONData.swift in Sources */,
 				739117732085CBC100C960D4 /* Lexer.swift in Sources */,
 				7300E62920848DE800C01312 /* InputView.swift in Sources */,
+				7391177B20871CB000C960D4 /* OutputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

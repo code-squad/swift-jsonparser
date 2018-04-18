@@ -11,9 +11,9 @@ import Foundation
 protocol JSONPrintable {
     var total: Int { get }
     
-    mutating func countCharacters() -> Int
-    mutating func countNumbers() -> Int
-    mutating func countBooleans() -> Int
+    func countCharacters() -> Int
+    func countNumbers() -> Int
+    func countBooleans() -> Int
     
     var prefixOfCharacters: String { get }
     var prefixOfNumbers: String { get }

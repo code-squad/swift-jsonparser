@@ -10,23 +10,29 @@ import Foundation
 
 struct JSONData: JSONPrintable {
 
-    var numbers: [Int]
-    var characters: [String]
-    var booleans: [Bool]
+    private var numbers: [Int]
+    private var characters: [String]
+    private var booleans: [Bool]
+    
+    init(_ numbers: [Int], _ characters: [String], _ booleans: [Bool]) {
+        self.numbers = numbers
+        self.characters = characters
+        self.booleans = booleans
+    }
     
     var total: Int {
         return numbers.count + characters.count + booleans.count
     }
     
-    mutating func countCharacters() -> Int {
+    func countCharacters() -> Int {
         return self.characters.count
     }
     
-    mutating func countNumbers() -> Int {
+    func countNumbers() -> Int {
         return self.numbers.count
     }
     
-    mutating func countBooleans() -> Int {
+    func countBooleans() -> Int {
         return self.booleans.count
     }
     

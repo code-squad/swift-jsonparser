@@ -18,9 +18,8 @@ func main() {
         let lexer: Lexer = Lexer(input: input)
         let tokens = try lexer.lex()
         let parser: Parser = Parser(tokens: tokens)
-        let jsonData: Parsable = try parser.parse()
-        print(jsonData)
-        
+        let jsonData: JSONData = try parser.parse()
+        OutputView.printJSONData(jsonData)
     } catch Lexer.Error.invalidCharacter(let character) {
         print("Input contained an invalid character: \(character)")
     } catch Lexer.Error.invalidBooleanCharacter {

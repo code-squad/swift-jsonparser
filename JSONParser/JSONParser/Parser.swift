@@ -33,7 +33,7 @@ class Parser {
         return token
     }
     
-    func parse() throws -> Parsable {
+    func parse() throws -> JSONData {
         typealias Data = (numbers: [Int], characters: [String], booleans: [Bool])
         var data: Data = ([], [], [])
         
@@ -49,7 +49,7 @@ class Parser {
             }
         }
         
-        return JSONData(numbers: data.numbers, characters: data.characters, booleans: data.booleans)
+        return JSONData(data.numbers, data.characters, data.booleans)
     }
     
     private func getList(_ tokens: [Token]) -> ([Int], [String], [Bool]) {
