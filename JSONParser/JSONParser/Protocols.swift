@@ -8,9 +8,14 @@
 
 import Foundation
 
-protocol Parsable {
-    var numbers: [Int] { get set }
-    var characters: [String] { get set }
-    var booleans: [Bool] { get set }
+protocol JSONPrintable {
     var total: Int { get }
+    
+    mutating func countCharacters() -> Int
+    mutating func countNumbers() -> Int
+    mutating func countBooleans() -> Int
+    
+    var prefixOfCharacters: String { get }
+    var prefixOfNumbers: String { get }
+    var prefixOfBooleans: String { get }
 }
