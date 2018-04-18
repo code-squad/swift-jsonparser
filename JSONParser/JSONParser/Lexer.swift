@@ -12,6 +12,7 @@ enum Token {
     case number(Int)
     case characters(String)
     case boolean(Bool)
+    case list(Array<Token>)
 }
 
 class Lexer {
@@ -45,8 +46,8 @@ class Lexer {
         self.position = self.input.index(after: self.position)
     }
     
-    func lex() throws -> [[Token]] {
-        var tokens = [[Token]]()
+    func lex() throws -> [Token] {
+        var tokens = [Token]()
         
         while let nextCharacter = peek() {
             switch nextCharacter {
@@ -54,7 +55,8 @@ class Lexer {
             case openBracket:
                 // array가져오기
                 advance()
-                try tokens.append(makeArrayTokens())
+                let list: [Token] = try makeListToken()
+                tokens.append(.list(list))
             default:
                 throw Lexer.Error.invalidCharacter(nextCharacter)
             }
@@ -64,37 +66,37 @@ class Lexer {
     }
     
     // 배열일 경우 배열의 토큰 생성
-    private func makeArrayTokens() throws -> [Token] {
-        var arrayTokens = [Token]()
+    private func makeListToken() throws -> [Token] {
+        var listToken = [Token]()
         
         while let nextCharacter = peek() {
             switch nextCharacter {
             case "0"..."9":
                 // 숫자 문자가 등장하면 나머지숫자가져오기
                 let value: Int = getNumber()
-                arrayTokens.append(.number(value))
+                listToken.append(.number(value))
             case space, comma:
                 advance()
             case "\"":
                 advance() // 큰따옴표 뒤부터 문자열
                 let characters: String = getCharacters()
-                arrayTokens.append(.characters(characters))
+                listToken.append(.characters(characters))
                 advance() // 닫는 따옴표 뒤로 이동
             case "f", "t":
                 guard let booleans: Bool = getBooleans() else {
                     throw Lexer.Error.invalidBooleanCharacter
                 }
-                arrayTokens.append(.boolean(booleans))
+                listToken.append(.boolean(booleans))
                 advance()
             case closeBracket:
                 advance()
-                return arrayTokens
+                return listToken
             default:
                 throw Lexer.Error.invalidCharacter(nextCharacter)
             }
         }
         
-        return arrayTokens
+        return listToken
     }
     
     private func getNumber() -> Int {
