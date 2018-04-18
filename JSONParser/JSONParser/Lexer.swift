@@ -8,13 +8,6 @@
 
 import Foundation
 
-enum Token {
-    case number(Int)
-    case characters(String)
-    case boolean(Bool)
-    case list(Array<Token>)
-}
-
 class Lexer {
     enum Error: Swift.Error {
         case invalidCharacter(Character)
@@ -55,8 +48,8 @@ class Lexer {
         self.position = self.input.index(after: self.position)
     }
     
-    func lex() throws -> [Token] {
-        var tokens = [Token]()
+    func lex() throws -> [String] {
+        var tokens = [String]()
         
         while let nextCharacter = peek() {
             switch nextCharacter {
@@ -64,8 +57,8 @@ class Lexer {
             case openBracket:
                 // array가져오기
                 advance()
-                let list: [Token] = try makeListToken()
-                tokens.append(.list(list))
+                let listToken = makeListToken()
+                tokens += listToken
             default:
                 throw Lexer.Error.invalidCharacter(nextCharacter)
             }
@@ -75,85 +68,30 @@ class Lexer {
     }
     
     // 배열일 경우 배열의 토큰 생성
-    private func makeListToken() throws -> [Token] {
-        var listToken = [Token]()
+    // 배열은 요소를 콤바로 구분한다.
+    private func makeListToken() -> [String] {
+        var listToken = [String]()
+        var tokenCarrier = "" // listToken에 의미있는 문자열단위(토큰) 전달
         
         while let nextCharacter = peek() {
             switch nextCharacter {
-            case "0"..."9":
-                // 숫자 문자가 등장하면 나머지숫자가져오기
-                let value: Int = getNumber()
-                listToken.append(.number(value))
-            case space, comma:
+            case comma:
+                // 콤마를 만나면 하나의 토큰으로 구분하여 토큰배열에 저장
+                listToken.append(tokenCarrier)
+                tokenCarrier.removeAll()
                 advance()
-            case "\"":
-                advance() // 큰따옴표 뒤부터 문자열
-                let characters: String = getCharacters()
-                listToken.append(.characters(characters))
-                advance() // 닫는 따옴표 뒤로 이동
-            case "f", "t":
-                guard let booleans: Bool = getBooleans() else {
-                    throw Lexer.Error.invalidBooleanCharacter
-                }
-                listToken.append(.boolean(booleans))
+            case space:
                 advance()
-            case closeBracket:
+            case closeBracket: // list 마지막 판단, 반환
                 advance()
+                listToken.append(tokenCarrier)
                 return listToken
             default:
-                throw Lexer.Error.invalidCharacter(nextCharacter)
+                tokenCarrier += String(nextCharacter)
+                advance()
             }
         }
         
         return listToken
-    }
-    
-    private func getNumber() -> Int {
-        var value = 0
-        while let nextCharacter = peek() {
-            switch nextCharacter {
-            case "0"..."9":
-                let digitValue = Int(String(nextCharacter))!
-                value = 10 * value + digitValue
-                advance()
-            default:
-                return value
-            }
-        }
-        
-        return value
-    }
-    
-    private func getCharacters() -> String {
-        var characters: String = ""
-        while let nextCharacter = peek() {
-            // 닫는 따옴표를 만나기전까지 문자열로 저장
-            switch nextCharacter {
-            case "\"":
-                return characters
-            default:
-                characters += String(nextCharacter)
-                advance()
-            }
-        }
-        
-        return characters
-    }
-    
-    // t 또는 f는 'e'가 나올때까지 읽는다.
-    private func getBooleans() -> Bool? {
-        var booleanText: String = ""
-        while let nextCharacter = peek() {
-            switch nextCharacter {
-            case "e":
-                booleanText += String(nextCharacter)
-                return Bool(booleanText)
-            default:
-                booleanText += String(nextCharacter)
-                advance()
-            }
-        }
-        
-        return Bool(booleanText)
     }
 }
