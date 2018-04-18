@@ -34,22 +34,22 @@ class Parser {
     }
     
     func parse() throws -> JSONData {
-        typealias Data = (numbers: [Int], characters: [String], booleans: [Bool])
-        var data: Data = ([], [], [])
+        typealias JSONAllowedData = (numbers: [Int], characters: [String], booleans: [Bool])
+        var jsonAllowedData: JSONAllowedData = ([], [], [])
         
         while let token = getNextToken() {
             switch token {
             case .list(let tokenList):
-                let list: Data = getList(tokenList)
-                data.numbers += list.numbers
-                data.characters += list.characters
-                data.booleans += list.booleans
+                let list: JSONAllowedData = getList(tokenList)
+                jsonAllowedData.numbers += list.numbers
+                jsonAllowedData.characters += list.characters
+                jsonAllowedData.booleans += list.booleans
             default:
                 throw Parser.Error.invalidToken(token)
             }
         }
         
-        return JSONData(data.numbers, data.characters, data.booleans)
+        return JSONData(jsonAllowedData.numbers, jsonAllowedData.characters, jsonAllowedData.booleans)
     }
     
     private func getList(_ tokens: [Token]) -> ([Int], [String], [Bool]) {
