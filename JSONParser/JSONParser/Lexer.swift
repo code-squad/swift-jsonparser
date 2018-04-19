@@ -30,6 +30,7 @@ class Lexer {
     private let comma: Character = ","
     private let space: Character = " "
     private let openCurlyBracket: Character = "{"
+    private let closeCurlyBracket: Character = "}"
     
     init(input: String) {
         self.input = input
@@ -96,11 +97,30 @@ class Lexer {
                 advance()
             }
         }
-        
         return listToken
     }
     
     func makeObjectToken() -> [String] {
+        var objectToken = [String]()
+        var tokenCarrier = ""
         
+        while let nextCharacter = peek() {
+            switch nextCharacter {
+            case comma:
+                objectToken.append(tokenCarrier)
+                tokenCarrier.removeAll()
+                advance()
+            case space:
+                advance()
+            case closeCurlyBracket: // object 마지막 판단
+                advance()
+                objectToken.append(tokenCarrier)
+                return objectToken
+            default:
+                tokenCarrier += String(nextCharacter)
+                advance()
+            }
+        }
+        return objectToken
     }
 }
