@@ -17,14 +17,24 @@ struct GrammarChecker {
     func isValidLastString(_ inputValue: String) -> Bool {
         return inputValue.hasSuffix("]") || inputValue.hasSuffix("}")
     }
-    
-    //괄호 지운 데이터를 파라미터로 받아서 " 따옴표 체크, : 콜론체크
-    func isValidFirstQuotation(_ quotationData: [String]) -> Bool {
-        for data in quotationData {
-            return data.hasPrefix("\"") && data.contains(":")
+
+    func isValidOfDictionary(_ dictionary: [String:Any]) -> Bool {
+        for (key, value) in dictionary {
+            
+            if value is Int || value is Bool && key.hasPrefix("\"") && key.hasSuffix("\"") {
+                continue
+            } else if value is String {
+                let stringValue = value as! String
+                if key.hasPrefix("\"") && key.hasSuffix("\"") && stringValue.hasPrefix("\"") && stringValue.hasSuffix("\"") {
+                    continue
+                } else {
+                    return false
+                }
+            }
         }
-        return false
+        return true
     }
+
 }
 
 

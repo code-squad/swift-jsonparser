@@ -54,8 +54,7 @@ struct MyJsonParser {
         let separateByCommaData = separateByComma(input)
         for data in separateByCommaData {
             if data.contains(":") {
-                let dictionaryData = makeDictionaryData(data)
-                let objectData = makeObjectData(dictionaryData)
+                let objectData = makeObjectData(data)
                 dictionary = dictionary.merging(objectData) { (current, _) in current }
             } else {
                 array.append(data)
@@ -65,18 +64,15 @@ struct MyJsonParser {
         return (arrayData, dictionary)
     }
     
-    
-    
     /* inputValue start { */
     //:[ 중첩 배열인지 체크
-    func checkColonAndBrackets(_ inputString: String) -> [String:Any] {
+    private func checkColonAndBrackets(_ inputString: String) -> [String:Any] {
         // 중첩 배열인 경우
         if inputString.contains(":[") || inputString.contains(": ["){
             return makeNestedArrayData(inputString)
             //중첩 배열이 아닌 경우
         } else {
-            let dictionaryData = makeDictionaryData(inputString)
-            return makeObjectData(dictionaryData)
+            return makeObjectData(inputString)
         }
     }
     
@@ -93,17 +89,12 @@ struct MyJsonParser {
         return jsonData
     }
     
-    // "name":"hyun" 값 만들기
-    public func makeDictionaryData(_ input: String) -> [String] {
-        let separateComma = separateByComma(input)
-        let removeData = removeDataValue(separateComma)
-        return removeData
-    }
-    
     // 객체 값 만들기
-    private func makeObjectData(_ dictionaryData: [String]) -> [String:Any] {
-        let separateColon = separateByColon(dictionaryData)
-        let jsonData = makeDictionary(separateColon)
+    private func makeObjectData(_ input: String) -> [String:Any] {
+        let separateComma = separateByComma(input)
+        let separateColon = separateByColon(separateComma)
+        let removeData = removeDataValue(separateColon)
+        let jsonData = makeDictionary(removeData)
         return jsonData
     }
     
@@ -142,7 +133,6 @@ struct MyJsonParser {
         let arrayData = removeWhiteSpace(removeQuotationData)
         return (dictionaryData, arrayData)
     }
-    
     
     //: 기준으로 나눔
     private func separateByColon(_ input: [String]) -> [String] {
