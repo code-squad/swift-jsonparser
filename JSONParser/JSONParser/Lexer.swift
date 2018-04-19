@@ -29,6 +29,7 @@ class Lexer {
     private let closeBracket: Character = "]"
     private let comma: Character = ","
     private let space: Character = " "
+    private let openCurlyBracket: Character = "{"
     
     init(input: String) {
         self.input = input
@@ -59,6 +60,10 @@ class Lexer {
                 advance()
                 let listToken = makeListToken()
                 tokens += listToken
+            case openCurlyBracket:
+                advance()
+                let objectToken = makeObjectToken()
+                tokens += objectToken
             default:
                 throw Lexer.Error.invalidCharacter(nextCharacter)
             }
@@ -93,5 +98,9 @@ class Lexer {
         }
         
         return listToken
+    }
+    
+    func makeObjectToken() -> [String] {
+        
     }
 }
