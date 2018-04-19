@@ -14,8 +14,10 @@ protocol JSONPrintable {
     func countCharacters() -> Int
     func countNumbers() -> Int
     func countBooleans() -> Int
+    func countObjects() -> Int
     
     var prefixOfCharacters: String { get }
     var prefixOfNumbers: String { get }
     var prefixOfBooleans: String { get }
+    var prefixOfObjects: String { get }
 }

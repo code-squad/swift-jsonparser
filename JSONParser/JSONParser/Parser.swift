@@ -50,7 +50,7 @@ class Parser {
     }
     
     func parse() throws -> JSONData {
-        typealias JSONAllowedData = (numbers: [Int], characters: [String], booleans: [Bool], object: [[String:JSONDataType]])
+        typealias JSONAllowedData = (numbers: [Int], characters: [String], booleans: [Bool], objects: [[String:JSONDataType]])
         var jsonAllowedData: JSONAllowedData = ([], [], [], [[:]])
         
         while let token: String = getNextToken() {
@@ -64,13 +64,10 @@ class Parser {
             case .boolean(let value):
                 jsonAllowedData.booleans.append(value)
             case .object(let value):
-                jsonAllowedData.object.append(value)
-            default:
-                print("default")
-                // object data처리
+                jsonAllowedData.objects.append(value)
             }
         }
-        return JSONData(jsonAllowedData.numbers, jsonAllowedData.characters, jsonAllowedData.booleans, jsonAllowedData.object)
+        return JSONData(jsonAllowedData.numbers, jsonAllowedData.characters, jsonAllowedData.booleans, jsonAllowedData.objects)
     }
     
     private func makeDataFrom(_ token: String) throws -> JSONDataType {
