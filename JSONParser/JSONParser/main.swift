@@ -19,7 +19,7 @@ func main() {
         let tokens = try lexer.lex()
         let parser: Parser = Parser(tokens: tokens)
         let jsonData: JSONData = try parser.parse()
-//        OutputView.printJSONData(jsonData)
+        OutputView.printJSONData(jsonData)
     } catch let error as Lexer.Error {
         print(error.errorMessage)
     } catch let error as Parser.Error {
