@@ -88,7 +88,6 @@ class Parser {
             }
             return JSONDataType.boolean(booleanData)
         case "{": // 객체 데이터 시작
-//            let objectData: [String:JSONDataType] = makeObjectData(token)
             makeObjectData(token)
             return JSONDataType.boolean(true)
         default:
@@ -143,5 +142,6 @@ class Parser {
     }
     
     func makeObjectData(_ token: String) {
+        
     }
 }
