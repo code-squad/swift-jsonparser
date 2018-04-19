@@ -12,7 +12,7 @@ enum JSONDataType {
     case number(Int)
     case characters(String)
     case boolean(Bool)
-//    case list(Array<JSONDataType>)
+//    case object([String:JSONDataType])
 }
 
 class Parser {
@@ -87,6 +87,10 @@ class Parser {
                 throw Parser.Error.invalidToken(token)
             }
             return JSONDataType.boolean(booleanData)
+        case "{": // 객체 데이터 시작
+//            let objectData: [String:JSONDataType] = makeObjectData(token)
+            makeObjectData(token)
+            return JSONDataType.boolean(true)
         default:
             throw Parser.Error.invalidToken(token)
         }
@@ -108,11 +112,15 @@ class Parser {
     
     private func makeCharactersData(_ token: String) -> String {
         var characters: String = ""
+        var saveStartFlag = false
         for nextCharacter in token {
             // 닫는 따옴표를 만나기전까지 문자열로 저장
             switch nextCharacter {
             case "\"":
-                return characters
+                if saveStartFlag {
+                    return characters
+                }
+                saveStartFlag = !saveStartFlag
             default:
                 characters += String(nextCharacter)
             }
@@ -122,7 +130,6 @@ class Parser {
     
     private func makeBooleanData(_ token: String) -> Bool? {
         var booleanText: String = ""
-        
         for nextCharacter in token {
             switch nextCharacter {
             case "e":
@@ -133,5 +140,8 @@ class Parser {
             }
         }
         return Bool(booleanText)
+    }
+    
+    func makeObjectData(_ token: String) {
     }
 }

@@ -62,7 +62,6 @@ class Lexer {
                 let listToken = makeListToken()
                 tokens += listToken
             case openCurlyBracket:
-                advance()
                 let objectToken = makeObjectToken()
                 tokens += objectToken
             default:
@@ -73,8 +72,7 @@ class Lexer {
         return tokens
     }
     
-    // 배열일 경우 배열의 토큰 생성
-    // 배열은 요소를 콤바로 구분한다.
+    // array 토큰, 구분 comma
     private func makeListToken() -> [String] {
         var listToken = [String]()
         var tokenCarrier = "" // listToken에 의미있는 문자열단위(토큰) 전달
@@ -100,6 +98,7 @@ class Lexer {
         return listToken
     }
     
+    // object 토큰, 구분 comma
     func makeObjectToken() -> [String] {
         var objectToken = [String]()
         var tokenCarrier = ""
@@ -113,6 +112,7 @@ class Lexer {
             case space:
                 advance()
             case closeCurlyBracket: // object 마지막 판단
+                tokenCarrier += String(nextCharacter)
                 advance()
                 objectToken.append(tokenCarrier)
                 return objectToken
