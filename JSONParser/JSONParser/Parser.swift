@@ -32,7 +32,7 @@ class Parser {
     
     private let tokens: [String]
     private var position = 0
-    private var makingObjectFlag = false
+    private var isObjectBeingMade = false
     
     init(tokens: [String]) {
         self.tokens = tokens
@@ -51,11 +51,18 @@ class Parser {
     
     func parse() throws -> JSONData {
         typealias JSONAllowedData = (numbers: [Int], characters: [String], booleans: [Bool], objects: [[String:JSONDataType]])
-        var jsonAllowedData: JSONAllowedData = ([], [], [], [[:]])
+        var jsonAllowedData: JSONAllowedData = ([], [], [], [])
         
         while let token: String = getNextToken() {
+            // object 데이터 생성이 진행 중이라면 토큰이 object타입으로 판단
+            // object 데이터 생성 메서드를 바로 호출
+            if isObjectBeingMade {
+                try makeObjectData(token)
+            }
+            
             // token 분석 - 이 토큰이 어떤 데이터인지(어떤 Token타입인지)
             let jsonDataType = try makeDataFrom(token)
+            
             switch jsonDataType {
             case .characters(let value):
                 jsonAllowedData.characters.append(value)
@@ -91,7 +98,7 @@ class Parser {
             }
             return JSONDataType.boolean(booleanData)
         case "{": // 객체 데이터 시작
-            self.makingObjectFlag = true
+            self.objectStartFlag = true
             let objectData: [String:JSONDataType] = try makeObjectData(token)
             return JSONDataType.object(objectData)
         default:
@@ -146,17 +153,19 @@ class Parser {
     }
     
     func makeObjectData(_ token: String) throws -> [String:JSONDataType] {
-        let keyValueString = token.split(separator: ":").map { String($0) }
-        let keyToken: String = keyValueString[0]
-        let valueToken: String = keyValueString[1]
-        return [makeKey(keyToken):try makeDataFrom(valueToken)]
+        // key와 value를 나눠서 token으로부터
+        let keyValue: [String] = token.split(separator: ":").map { String($0) }
+        let keyToken = keyValue[0]
+        let valueToken = keyValue[1]
+        
+        var key = makeObjectKeyFrom(keyToken)
     }
     
-    func makeKey(_ keyToken: String) -> String {
+    func makeObjectKeyFrom(_ keyToken: String) -> String {
         var key: String = ""
         for nextCharacter in keyToken {
             switch nextCharacter {
-            case "\"", "{":
+            case "{", "\"":
                 continue
             default:
                 key.append(nextCharacter)

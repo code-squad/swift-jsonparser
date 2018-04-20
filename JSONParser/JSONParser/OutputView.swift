@@ -28,6 +28,11 @@ struct OutputView {
             result += "\(jsonData.countBooleans())개,"
         }
         
+        if jsonData.countObjects() > 0 {
+            result += jsonData.prefixOfObjects
+            result += "\(jsonData.countObjects())개,"
+        }
+        
         result.removeLast()
         result += "가 포함되어 있습니다."
         
