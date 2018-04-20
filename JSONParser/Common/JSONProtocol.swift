@@ -6,4 +6,9 @@
 //  Copyright © 2018년 JK. All rights reserved.
 //
 
-import Foundation
+protocol JSONProtocol {
+    func countOfString() -> Int
+    func countOfNumber() -> Int
+    func countOfBoolean() -> Int
+    func getTotalCount() -> Int
+}
