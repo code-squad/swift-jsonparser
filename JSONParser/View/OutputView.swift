@@ -6,4 +6,17 @@
 //  Copyright © 2018년 JK. All rights reserved.
 //
 
-import Foundation
+struct OutputView {
+    
+    static func ask() {
+        print(JSONPASER_QUESTION_INPUT)
+    }
+    
+    static func errorMessage(of e: JSONPaserErorr) {
+        print(e.rawValue)
+    }
+    
+    static func resultShow(_ resultJSON: JSONData) {
+        print(resultJSON.descriptionShow())
+    }
+}
