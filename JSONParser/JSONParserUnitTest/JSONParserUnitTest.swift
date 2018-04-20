@@ -10,6 +10,9 @@ import XCTest
 
 class JSONParserUnitTest: XCTestCase {
     
+    let josnFormat: String = "[ 10, 21, 4, 314, 99, 0, 72 ]"
+    let jsonFormatRemoveSpace: String = "[10,21,4,314,99,0,72]"
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -20,16 +23,18 @@ class JSONParserUnitTest: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    // MARK : String+
+    
+    //String+ : 공백 제거
+    func test_removeSpacePass() {
+        let expectValue = josnFormat.trim()
+        XCTAssertEqual(jsonFormatRemoveSpace, expectValue)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    //String+ : 공백이 제거가 안된 값이랑 비교
+    func test_removeSplaceNoPass() {
+        let expectValue = josnFormat.trim()
+        XCTAssertNotEqual(josnFormat, expectValue)
     }
     
 }
