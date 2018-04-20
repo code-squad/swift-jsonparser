@@ -6,4 +6,11 @@
 //  Copyright © 2018년 JK. All rights reserved.
 //
 
-import Foundation
+struct InputView {
+    static func readInput() throws -> String {
+        guard let readInput = readLine() else {
+            throw JSONPaserErorr.isNil
+        }
+        return readInput
+    }
+}
