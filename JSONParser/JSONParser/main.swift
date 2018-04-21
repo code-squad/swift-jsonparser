@@ -9,7 +9,6 @@
 import Foundation
 
 func main() {
-    
     guard let input = InputView.readInput(Question.askJSONData), !input.isEmpty else {
         return
     }
@@ -20,6 +19,14 @@ func main() {
         let parser: Parser = Parser(token: token)
         let jsonData: JSONData = try parser.parse()
         OutputView.printJSONData(jsonData)
+        
+        // 제출시 콘솔확인용 print
+        print()
+        print("Tokens: ")
+        print(token)
+        print("---------------------------")
+        print("JSONData: ")
+        print(jsonData)
     } catch let error as Lexer.Error {
         print(error.errorMessage)
     } catch let error as Parser.Error {
