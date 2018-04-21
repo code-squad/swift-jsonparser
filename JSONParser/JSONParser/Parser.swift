@@ -12,7 +12,7 @@ enum JSONDataType {
     case number(Int)
     case characters(String)
     case boolean(Bool)
-    case object([[String:JSONDataType]])
+    case object([[[String:JSONDataType]]])
 }
 
 class Parser {
@@ -37,7 +37,7 @@ class Parser {
     }
 
     func parse() throws -> JSONData {
-        typealias JSONAllowedData = (numbers: [Int], characters: [String], booleans: [Bool], objects: [[String:JSONDataType]])
+        typealias JSONAllowedData = (numbers: [Int], characters: [String], booleans: [Bool], objects: [[[String:JSONDataType]]])
         var jsonAllowedData: JSONAllowedData = ([], [], [], [])
         
         // bool, number, string 데이터
@@ -59,7 +59,7 @@ class Parser {
         // object 데이터
         for token in token.objectToken {
             let jsonObjectData = try makeObjectData(token)
-            jsonAllowedData.objects += jsonObjectData
+            jsonAllowedData.objects.append(jsonObjectData)
         }
         
         return JSONData(jsonAllowedData.numbers, jsonAllowedData.characters, jsonAllowedData.booleans, jsonAllowedData.objects)

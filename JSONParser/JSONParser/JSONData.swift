@@ -13,20 +13,24 @@ struct JSONData: JSONPrintable {
     private var numbers: [Int]
     private var characters: [String]
     private var booleans: [Bool]
-    private var objects: [[String:JSONDataType]]
+    var objects: [[[String:JSONDataType]]]
     let prefixOfCharacters: String = "문자열 "
     let prefixOfNumbers: String = "숫자 "
     let prefixOfBooleans: String = "부울 "
     let prefixOfObjects: String = "객체 "
     
-    init(_ numbers: [Int], _ characters: [String], _ booleans: [Bool], _ objects: [[String:JSONDataType]]) {
+    init(_ numbers: [Int], _ characters: [String], _ booleans: [Bool], _ objects: [[[String:JSONDataType]]]) {
         self.numbers = numbers
         self.characters = characters
         self.booleans = booleans
         self.objects = objects
     }
     
-    var total: Int {
+    func total() -> Int {
+        if numbers.isEmpty && characters.isEmpty && booleans.isEmpty {
+            return objects.count
+        }
+        
         return numbers.count + characters.count + booleans.count + objects.count
     }
     
