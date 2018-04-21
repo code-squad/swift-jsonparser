@@ -12,7 +12,7 @@ enum JSONDataType {
     case number(Int)
     case characters(String)
     case boolean(Bool)
-    case object([String:JSONDataType])
+    case object([[String:JSONDataType]])
 }
 
 class Parser {
@@ -30,50 +30,38 @@ class Parser {
         }
     }
     
-    private let tokens: [String]
-    private var position = 0
-    private var isObjectBeingMade = false
-    
-    init(tokens: [String]) {
-        self.tokens = tokens
+    private let token: Token
+
+    init(token: Token) {
+        self.token = token
     }
-    
-    // 토큰이 남았는지 확인 및 토큰 반환
-    private func getNextToken() -> String? {
-        guard position < tokens.count else {
-            return nil
-        }
-        
-        let token = tokens[position]
-        position += 1
-        return token
-    }
-    
+
     func parse() throws -> JSONData {
         typealias JSONAllowedData = (numbers: [Int], characters: [String], booleans: [Bool], objects: [[String:JSONDataType]])
         var jsonAllowedData: JSONAllowedData = ([], [], [], [])
         
-        while let token: String = getNextToken() {
-            // object 데이터 생성이 진행 중이라면 토큰이 object타입으로 판단
-            // object 데이터 생성 메서드를 바로 호출
-            if isObjectBeingMade {
-                try makeObjectData(token)
-            }
+        // bool, number, string 데이터
+        for token in token.valueToken {
+            let jsonData = try makeDataFrom(token)
             
-            // token 분석 - 이 토큰이 어떤 데이터인지(어떤 Token타입인지)
-            let jsonDataType = try makeDataFrom(token)
-            
-            switch jsonDataType {
+            switch jsonData {
             case .characters(let value):
                 jsonAllowedData.characters.append(value)
             case .number(let value):
                 jsonAllowedData.numbers.append(value)
             case .boolean(let value):
                 jsonAllowedData.booleans.append(value)
-            case .object(let value):
-                jsonAllowedData.objects.append(value)
+            default:
+                throw Parser.Error.invalidToken(token)
             }
         }
+        
+        // object 데이터
+        for token in token.objectToken {
+            let jsonObjectData = try makeObjectData(token)
+            jsonAllowedData.objects += jsonObjectData
+        }
+        
         return JSONData(jsonAllowedData.numbers, jsonAllowedData.characters, jsonAllowedData.booleans, jsonAllowedData.objects)
     }
     
@@ -97,10 +85,6 @@ class Parser {
                 throw Parser.Error.invalidToken(token)
             }
             return JSONDataType.boolean(booleanData)
-        case "{": // 객체 데이터 시작
-            self.objectStartFlag = true
-            let objectData: [String:JSONDataType] = try makeObjectData(token)
-            return JSONDataType.object(objectData)
         default:
             throw Parser.Error.invalidToken(token)
         }
@@ -113,6 +97,8 @@ class Parser {
             case "0"..."9":
                 let digitValue = Int(String(nextCharacter))!
                 value = 10 * value + digitValue
+            case "}":
+                continue
             default:
                 throw Parser.Error.invalidToken(token)
             }
@@ -131,6 +117,8 @@ class Parser {
                     return characters
                 }
                 saveStartFlag = !saveStartFlag
+            case "}":
+                continue
             default:
                 characters += String(nextCharacter)
             }
@@ -145,6 +133,8 @@ class Parser {
             case "e":
                 booleanText += String(nextCharacter)
                 return Bool(booleanText)
+            case "}":
+                continue
             default:
                 booleanText += String(nextCharacter)
             }
@@ -152,13 +142,21 @@ class Parser {
         return Bool(booleanText)
     }
     
-    func makeObjectData(_ token: String) throws -> [String:JSONDataType] {
-        // key와 value를 나눠서 token으로부터
-        let keyValue: [String] = token.split(separator: ":").map { String($0) }
-        let keyToken = keyValue[0]
-        let valueToken = keyValue[1]
+    func makeObjectData(_ objectToken: [String]) throws -> [[String:JSONDataType]] {
         
-        var key = makeObjectKeyFrom(keyToken)
+        var objectData: [[String:JSONDataType]] = []
+        
+        for token in objectToken {
+            let keyValue: [String] = token.split(separator: ":").map { String($0) }
+            let keyToken = keyValue[0]
+            let valueToken = keyValue[1]
+            
+            let key: String = makeObjectKeyFrom(keyToken)
+            let value: JSONDataType = try makeObjectValueFrom(valueToken)
+            objectData.append([key:value])
+        }
+        
+        return objectData
     }
     
     func makeObjectKeyFrom(_ keyToken: String) -> String {
@@ -172,5 +170,28 @@ class Parser {
             }
         }
         return key
+    }
+    
+    func makeObjectValueFrom(_ valueToken: String) throws  -> JSONDataType {
+        guard let firstCharacter = valueToken.first else {
+            throw Parser.Error.invalidToken(valueToken)
+        }
+
+        // 들어온 데이터의 첫글자를 보고 어떤 데이터 타입인지 판단
+        switch firstCharacter {
+        case "0"..."9":
+            let numberData = try makeNumberData(valueToken)
+            return JSONDataType.number(numberData)
+        case "\"":
+            let charactersData = makeCharactersData(valueToken)
+            return JSONDataType.characters(charactersData)
+        case "f", "t":
+            guard let booleanData = makeBooleanData(valueToken) else {
+                throw Parser.Error.invalidToken(valueToken)
+            }
+            return JSONDataType.boolean(booleanData)
+        default:
+            throw Parser.Error.invalidToken(valueToken)
+        }
     }
 }
