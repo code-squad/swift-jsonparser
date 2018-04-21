@@ -50,52 +50,58 @@ class Lexer {
         self.position = self.input.index(after: self.position)
     }
     
-    func lex() throws -> [String] {
-        var tokens = [String]()
+    func lex() throws -> Token {
+        var token: Token = Token(valueToken: [], objectToken: [])
         
         while let nextCharacter = peek() {
             switch nextCharacter {
-            // array판단
-            case openBracket:
-                // array가져오기
+            case openBracket: // 입력이 array
                 advance()
-                let listToken = makeListToken()
-                tokens += listToken
-            case openCurlyBracket:
-                let objectToken = makeObjectToken()
-                tokens += objectToken
+                let listToken: Token = makeListToken()
+                token.valueToken += listToken.valueToken
+                token.objectToken += listToken.objectToken
+            case openCurlyBracket: // 입력이 object
+                token.objectToken.append(makeObjectToken())
             default:
                 throw Lexer.Error.invalidCharacter(nextCharacter)
             }
         }
         
-        return tokens
+        return token
     }
     
     // array 토큰, 구분 comma
-    private func makeListToken() -> [String] {
-        var listToken = [String]()
-        var tokenCarrier = "" // listToken에 의미있는 문자열단위(토큰) 전달
+    private func makeListToken() -> Token {
+        var token: Token = Token(valueToken: [], objectToken: [])
+        var tokenCarrier = "" // valueToken에 의미있는 문자열단위(토큰) 전달
         
         while let nextCharacter = peek() {
             switch nextCharacter {
             case comma:
                 // 콤마를 만나면 하나의 토큰으로 구분하여 토큰배열에 저장
-                listToken.append(tokenCarrier)
+                if tokenCarrier.isEmpty {
+                    advance()
+                    continue
+                }
+                token.valueToken.append(tokenCarrier)
                 tokenCarrier.removeAll()
                 advance()
             case space:
                 advance()
+            case openCurlyBracket: // 배열안에 객체가 포함되어 있을 때
+                token.objectToken.append(makeObjectToken())
             case closeBracket: // list 마지막 판단, 반환
+                if !tokenCarrier.isEmpty {
+                    token.valueToken.append(tokenCarrier)
+                }
                 advance()
-                listToken.append(tokenCarrier)
-                return listToken
+                return token
             default:
                 tokenCarrier += String(nextCharacter)
                 advance()
             }
         }
-        return listToken
+        return token
     }
     
     // object 토큰, 구분 comma
