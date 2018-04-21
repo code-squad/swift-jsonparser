@@ -13,7 +13,7 @@ struct JSONData: JSONPrintable {
     private var numbers: [Int]
     private var characters: [String]
     private var booleans: [Bool]
-    var objects: [[[String:JSONDataType]]]
+    private var objects: [[[String:JSONDataType]]]
     let prefixOfCharacters: String = "문자열 "
     let prefixOfNumbers: String = "숫자 "
     let prefixOfBooleans: String = "부울 "
@@ -26,12 +26,18 @@ struct JSONData: JSONPrintable {
         self.objects = objects
     }
     
-    func total() -> Int {
+    func total() -> String {
+        // 객체 데이터만 있는 경우
         if numbers.isEmpty && characters.isEmpty && booleans.isEmpty {
-            return objects.count
+            // 객체 데이터로 들어왔을 경우
+            if objects.count == 1 {
+                return String(objects[0].count) + "개의 객체"
+            }
+            // 객체가 배열 데이터로 들어왔을 경우
+            return String(objects.count) + "개의 배열"
         }
         
-        return numbers.count + characters.count + booleans.count + objects.count
+        return String(numbers.count + characters.count + booleans.count + objects.count) + "개의"
     }
     
     func countCharacters() -> Int {
@@ -49,4 +55,14 @@ struct JSONData: JSONPrintable {
     func countObjects() -> Int {
         return self.objects.count
     }
+    
+    func countObjectValue() -> Int {
+        
+        for element in objects[0] {
+            
+        }
+        
+    }
+    
+    
 }

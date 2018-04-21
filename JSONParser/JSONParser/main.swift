@@ -16,10 +16,10 @@ func main() {
     
     do {
         let lexer: Lexer = Lexer(input: input)
-        let tokens = try lexer.lex()
-        let parser: Parser = Parser(tokens: tokens)
+        let token: Token = try lexer.lex()
+        let parser: Parser = Parser(token: token)
         let jsonData: JSONData = try parser.parse()
-//        OutputView.printJSONData(jsonData)
+        OutputView.printJSONData(jsonData)
     } catch let error as Lexer.Error {
         print(error.errorMessage)
     } catch let error as Parser.Error {

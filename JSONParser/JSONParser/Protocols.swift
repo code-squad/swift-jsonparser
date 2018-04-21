@@ -9,8 +9,7 @@
 import Foundation
 
 protocol JSONPrintable {
-    var total: Int { get }
-    
+    func total() -> String
     func countCharacters() -> Int
     func countNumbers() -> Int
     func countBooleans() -> Int

@@ -11,28 +11,43 @@ import Foundation
 struct OutputView {
     
     static func printJSONData(_ jsonData: JSONPrintable) {
-        var result = "총 \(jsonData.total)개의 데이터 중에 "
+        var result = "총 \(jsonData.total()) 데이터 중에 "
         
-        if jsonData.countCharacters() > 0 {
-            result += jsonData.prefixOfCharacters
-            result += "\(jsonData.countCharacters())개,"
-        }
-        
-        if jsonData.countNumbers() > 0 {
-            result += jsonData.prefixOfNumbers
-            result += "\(jsonData.countNumbers())개,"
-        }
-        
-        if jsonData.countBooleans() > 0 {
-            result += jsonData.prefixOfBooleans
-            result += "\(jsonData.countBooleans())개,"
-        }
-        
-        if jsonData.countObjects() > 0 {
+        if jsonData.countObjects() == 1 {
+            if jsonData.countCharacters() > 0 {
+                result += jsonData.prefixOfCharacters
+                result += "\(jsonData.countCharacters())개,"
+            }
+            
+            if jsonData.countNumbers() > 0 {
+                result += jsonData.prefixOfNumbers
+                result += "\(jsonData.countNumbers())개,"
+            }
+            
+            if jsonData.countBooleans() > 0 {
+                result += jsonData.prefixOfBooleans
+                result += "\(jsonData.countBooleans())개,"
+            }
+        } else {
             result += jsonData.prefixOfObjects
             result += "\(jsonData.countObjects())개,"
+            
+            if jsonData.countCharacters() > 0 {
+                result += jsonData.prefixOfCharacters
+                result += "\(jsonData.countCharacters())개,"
+            }
+            
+            if jsonData.countNumbers() > 0 {
+                result += jsonData.prefixOfNumbers
+                result += "\(jsonData.countNumbers())개,"
+            }
+            
+            if jsonData.countBooleans() > 0 {
+                result += jsonData.prefixOfBooleans
+                result += "\(jsonData.countBooleans())개,"
+            }
         }
-        
+
         result.removeLast()
         result += "가 포함되어 있습니다."
         
