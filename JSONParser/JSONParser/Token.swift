@@ -9,6 +9,6 @@
 import Foundation
 
 struct Token {
-    var token: String
-    var objectToken: [String]
+    var valueToken: [String]
+    var objectToken: [[String]]
 }
