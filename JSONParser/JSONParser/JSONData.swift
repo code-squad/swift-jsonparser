@@ -8,61 +8,112 @@
 
 import Foundation
 
-struct JSONData: JSONPrintable {
+enum TotalDataType: String {
+    case list = "배열"
+    case object = "객체"
+}
 
+struct JSONData: JSONPrintable {
+    
     private var numbers: [Int]
     private var characters: [String]
     private var booleans: [Bool]
-    private var objects: [[[String:JSONDataType]]]
-    let prefixOfCharacters: String = "문자열 "
-    let prefixOfNumbers: String = "숫자 "
-    let prefixOfBooleans: String = "부울 "
-    let prefixOfObjects: String = "객체 "
+    private var objects: [[String:JSONDataType]]
+    private let prefixOfCharacters: String = "문자열 "
+    private let prefixOfNumbers: String = "숫자 "
+    private let prefixOfBooleans: String = "부울 "
+    private let prefixOfObjects: String = "객체 "
     
-    init(_ numbers: [Int], _ characters: [String], _ booleans: [Bool], _ objects: [[[String:JSONDataType]]]) {
+    init(_ numbers: [Int], _ characters: [String], _ booleans: [Bool], _ objects: [[String:JSONDataType]]) {
         self.numbers = numbers
         self.characters = characters
         self.booleans = booleans
         self.objects = objects
     }
     
-    func total() -> String {
-        // 객체 데이터만 있는 경우
-        if numbers.isEmpty && characters.isEmpty && booleans.isEmpty {
-            // 객체 데이터로 들어왔을 경우
-            if objects.count == 1 {
-                return String(objects[0].count) + "개의 객체"
-            }
-            // 객체가 배열 데이터로 들어왔을 경우
-            return String(objects.count) + "개의 배열"
+    func total() -> Int {
+        switch totalDataType() {
+        case .object:
+            return objects[0].count
+        case .list:
+            return objects.count + numbers.count + booleans.count + characters.count
         }
-        
-        return String(numbers.count + characters.count + booleans.count + objects.count) + "개의"
     }
     
-    func countCharacters() -> Int {
+    func totalDataType() -> TotalDataType {
+        // 객체 데이터
+        if numbers.isEmpty && booleans.isEmpty && characters.isEmpty && objects.count == 1 {
+            return TotalDataType.object
+        }
+        // 배열 데이터
+        return TotalDataType.list
+    }
+    
+    private func countCharacters() -> Int {
         return self.characters.count
     }
     
-    func countNumbers() -> Int {
+    private func countNumbers() -> Int {
         return self.numbers.count
     }
     
-    func countBooleans() -> Int {
+    private func countBooleans() -> Int {
         return self.booleans.count
     }
     
-    func countObjects() -> Int {
+    private func countObjects() -> Int {
         return self.objects.count
+    }   
+    
+    private func getFirstObject() -> [String:JSONDataType] {
+        return self.objects[0]
     }
     
-    func countObjectValue() -> Int {
+    private func countValueOfObject() -> (Int, Int, Int) {
+        var countNumbers = 0
+        var countBooleans = 0
+        var countCharacters = 0
         
-        for element in objects[0] {
-            
+        for value in self.objects[0].values {
+            switch value {
+            case .number:
+                countNumbers += 1
+            case .boolean:
+                countBooleans += 1
+            case .characters:
+                countCharacters += 1
+            default:
+                break
+            }
+        }
+        return (countNumbers, countBooleans, countCharacters)
+    }
+    
+    func countValueDescription() -> String {
+        var result = ""
+        let (numbersCount, booleanCount, charactersCount) = countValueOfObject()
+        
+        if charactersCount > 0 {
+            result += self.prefixOfCharacters
+            result += "\(charactersCount)개,"
         }
         
+        if numbersCount > 0 {
+            result += self.prefixOfNumbers
+            result += "\(numbersCount)개,"
+        }
+        
+        if booleanCount > 0 {
+            result += self.prefixOfBooleans
+            result += "\(booleanCount)개,"
+        }
+        return result
     }
     
-    
+    func countObjectDescription() -> String {
+        var result = ""
+        result += self.prefixOfObjects
+        result += "\(countObjects())개,"
+        return result
+    }
 }
