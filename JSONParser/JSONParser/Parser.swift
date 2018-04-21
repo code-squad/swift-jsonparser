@@ -37,9 +37,9 @@ class Paser {
         }
         
         switch first {
-            case "0"..."9": try setNumber(token)
-            case "\""     : try setString(token)
-            case "f", "t" : try setBoolean(token)
+            case "0"..."9"          : try setNumber(token)
+            case "\""               : try setString(token)
+            case "f", "t", "F", "T" : try setBoolean(token)
         default: throw JSONPaserErorr.isJsonPaser
         }
     }
@@ -71,7 +71,10 @@ class Paser {
     
     private func setNumber(_ numberToken: String) throws {
         try numberToken.pattenMatching(RegexPatten.NumberPatten.rawValue)
-        jsonDataModel.numbers.append(Int(numberToken)!)
+        guard let numberToken = Int(numberToken) else {
+            throw JSONPaserErorr.isNumber
+        }
+        jsonDataModel.numbers.append(numberToken)
     }
     
     private func setString(_ stringToken: String) throws {
@@ -81,6 +84,9 @@ class Paser {
     
     private func setBoolean(_ booleanToken: String) throws {
         try booleanToken.pattenMatching(RegexPatten.BooleanPaten.rawValue)
-        jsonDataModel.booleans.append(Bool(booleanToken)!)
+        guard let booleanTokne = Bool(booleanToken) else {
+            throw JSONPaserErorr.isBoolean
+        }
+        jsonDataModel.booleans.append(booleanTokne)
     }
 }
