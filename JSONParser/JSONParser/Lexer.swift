@@ -19,6 +19,7 @@ struct Lexer {
     func getToken() throws -> Queue<String> {
         let tokens = Queue<String>()
         var tokenValue : String = ""
+        
         while let token = lexer.dequeue() {
             switch token {
                 case TokenSplitUnit.startBracket.rawValue:
@@ -35,7 +36,7 @@ struct Lexer {
             }
         }
         
-        guard !tokens.empty() else {
+        if tokens.isEmpty() {
             throw JSONPaserErorr.isJsonLexer
         }
         
