@@ -8,7 +8,6 @@
 
 import Foundation
 
-struct Token {
+struct ArrayToken: Tokenizable {
     var valueToken: [String]
-    var objectToken: [[String]]
 }
