@@ -8,8 +8,10 @@
 
 // 규격이 일치하는지
 class Paser {
-    typealias JSONDataSaveFormat = (numbers: Array<Int>, strings: Array<String>, booleans: Array<Bool>)
-    var jsonDataModel = JSONDataSaveFormat([],[],[])
+    
+    var jsonQueue: Queue<Any> = Queue<Any>()
+    var rawArray: Array<Any> = Array<Any>()
+    
     private var tokens: Queue<String>
     private var tokenCapsule: Stack<String>
     
@@ -18,17 +20,21 @@ class Paser {
         self.tokenCapsule = Stack<String>()
     }
     
-    func parse() throws -> JSONData {
+    func parse() throws -> Array<Any> {
         while let token = tokens.dequeue() {
             switch token {
                 case String(TokenSplitUnit.startBracket.rawValue): tokenCapsule.push(token)
                 case String(TokenSplitUnit.endBrackert.rawValue): try isMatching(tokenCapsule.pop(), token)
-                case String(TokenSplitUnit.comma.rawValue): try isClose(tokens.font())
+                case String(TokenSplitUnit.comma.rawValue): try isClose(tokens.front())
             default: try setJSONData(token)
             }
         }
         
-        return JSONData(jsonDataModel.strings,jsonDataModel.numbers,jsonDataModel.booleans)
+        if !tokenCapsule.isEmpty() && !jsonQueue.isEmpty() {
+            throw JSONPaserErorr.isJsonPaser
+        }
+        
+        return rawArray
     }
     
     private func setJSONData(_ token: String) throws {
@@ -40,19 +46,19 @@ class Paser {
             case "0"..."9"          : try setNumber(token)
             case "\""               : try setString(token)
             case "f", "t", "F", "T" : try setBoolean(token)
-        default: throw JSONPaserErorr.isJsonPaser
+        default: throw JSONPaserErorr.notFirst
         }
     }
     
     private func isMatching(_ front: String?, _ end: String) throws {
         guard let font = front else {
-            throw JSONPaserErorr.isJsonPaser
+            throw JSONPaserErorr.isStartBracketCapsule
         }
         
         let capsule = font + end
         
         switch capsule {
-            case Capsule.Bracket.rawValue: break
+            case Capsule.Bracket.rawValue: try setArrayType()
         default: throw JSONPaserErorr.isJsonPaser
         }
     }
@@ -74,12 +80,12 @@ class Paser {
         guard let numberToken = Int(numberToken) else {
             throw JSONPaserErorr.isNumber
         }
-        jsonDataModel.numbers.append(numberToken)
+        jsonQueue.enqueue(numberToken)
     }
     
     private func setString(_ stringToken: String) throws {
         try stringToken.pattenMatching(RegexPatten.StringPatten.rawValue)
-        jsonDataModel.strings.append(stringToken)
+        jsonQueue.enqueue(stringToken)
     }
     
     private func setBoolean(_ booleanToken: String) throws {
@@ -87,6 +93,19 @@ class Paser {
         guard let booleanTokne = Bool(booleanToken) else {
             throw JSONPaserErorr.isBoolean
         }
-        jsonDataModel.booleans.append(booleanTokne)
+        jsonQueue.enqueue(booleanTokne)
     }
+    
+    // 반환 할 Array타입 생성
+    private func setArrayType() throws {
+        while let queue = jsonQueue.dequeue() {
+            rawArray.append(queue)
+        }
+        
+        // 아직 안 끝났으면 stack에 값을 저장
+        if !tokenCapsule.isEmpty() {
+            jsonQueue.enqueue(rawArray)
+        }
+    }
+
 }
