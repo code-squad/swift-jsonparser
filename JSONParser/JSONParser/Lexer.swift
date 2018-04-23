@@ -50,7 +50,7 @@ class Lexer {
         self.position = self.input.index(after: self.position)
     }
     
-    func lex() throws -> Token {
+    func lex() throws -> Tokenizable {
         var tokens: [String] = [String]()
         var tokenCarrier = "" // valueToken에 의미있는 문자열단위(토큰) 전달
         
@@ -63,24 +63,21 @@ class Lexer {
                 }
                 tokens.append(tokenCarrier)
                 tokenCarrier.removeAll()
-                advance()
             case space:
-                advance()
+                break
             case openCurlyBracket, openBracket:
                 tokens.append(String(nextCharacter))
                 tokenCarrier.removeAll()
-                advance()
             case closeBracket, closeCurlyBracket:
                 if !tokenCarrier.isEmpty {
                     tokens.append(tokenCarrier)
                     tokenCarrier.removeAll()
                 }
                 tokens.append(String(nextCharacter))
-                advance()
             default:
                 tokenCarrier += String(nextCharacter)
-                advance()
             }
+            advance()
         }
         return Token(tokens: tokens)
     }
