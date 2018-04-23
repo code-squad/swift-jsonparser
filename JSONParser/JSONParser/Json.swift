@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JSON {
+struct Json {
     
     typealias JSONDataSaveFormat = (numbers: Array<Int>, strings: Array<String>, booleans: Array<Bool>)
     static var jsonDataModel = JSONDataSaveFormat([],[],[])
