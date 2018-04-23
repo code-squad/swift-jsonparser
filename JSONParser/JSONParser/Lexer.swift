@@ -51,82 +51,37 @@ class Lexer {
     }
     
     func lex() throws -> Token {
-        var token: Token = Token(valueToken: [], objectToken: [])
-        
-        while let nextCharacter = peek() {
-            switch nextCharacter {
-            case openBracket: // 입력이 array
-                advance()
-                let listToken: Token = makeListToken()
-                token.valueToken += listToken.valueToken
-                token.objectToken += listToken.objectToken
-            case openCurlyBracket: // 입력이 object
-                token.objectToken.append(makeObjectToken())
-            default:
-                throw Lexer.Error.invalidCharacter(nextCharacter)
-            }
-        }
-        
-        return token
-    }
-    
-    // array 토큰, 구분 comma
-    private func makeListToken() -> Token {
-        var token: Token = Token(valueToken: [], objectToken: [])
+        var token = Token(tokens: [])
         var tokenCarrier = "" // valueToken에 의미있는 문자열단위(토큰) 전달
         
         while let nextCharacter = peek() {
             switch nextCharacter {
             case comma:
-                // 콤마를 만나면 하나의 토큰으로 구분하여 토큰배열에 저장
                 if tokenCarrier.isEmpty {
                     advance()
                     continue
                 }
-                token.valueToken.append(tokenCarrier)
+                token.add(token: tokenCarrier)
                 tokenCarrier.removeAll()
                 advance()
             case space:
                 advance()
-            case openCurlyBracket: // 배열안에 객체가 포함되어 있을 때
-                token.objectToken.append(makeObjectToken())
-            case closeBracket: // list 마지막 판단, 반환
-                if !tokenCarrier.isEmpty {
-                    token.valueToken.append(tokenCarrier)
-                }
+            case openCurlyBracket, openBracket:
+                token.add(token: String(nextCharacter))
+                tokenCarrier.removeAll()
                 advance()
-                return token
+            case closeBracket, closeCurlyBracket:
+                if !tokenCarrier.isEmpty {
+                    token.add(token: tokenCarrier)
+                    tokenCarrier.removeAll()
+                }
+                token.add(token: String(nextCharacter))
+                advance()
             default:
                 tokenCarrier += String(nextCharacter)
                 advance()
             }
         }
         return token
-    }
-    
-    // object 토큰, 구분 comma
-    func makeObjectToken() -> [String] {
-        var objectToken = [String]()
-        var tokenCarrier = ""
-        
-        while let nextCharacter = peek() {
-            switch nextCharacter {
-            case comma:
-                objectToken.append(tokenCarrier)
-                tokenCarrier.removeAll()
-                advance()
-            case space:
-                advance()
-            case closeCurlyBracket: // object 마지막 판단
-                tokenCarrier += String(nextCharacter)
-                advance()
-                objectToken.append(tokenCarrier)
-                return objectToken
-            default:
-                tokenCarrier += String(nextCharacter)
-                advance()
-            }
-        }
-        return objectToken
     }
 }
