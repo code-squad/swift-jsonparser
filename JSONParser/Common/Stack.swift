@@ -23,14 +23,14 @@ class Stack<T> {
     }
     
     func pop() -> T? {
-        return (!empty() ? self.stack.removeLast() : nil)
+        return isEmpty() ? nil : self.stack.removeLast()
     }
     
     func peek() -> T? {
-        return (!empty() ? self.stack[self.stack.count - 1] : nil) 
+        return isEmpty() ? nil : self.stack[self.stack.count - 1]
     }
     
-    func empty() -> Bool {
+    func isEmpty() -> Bool {
         return stack.count == 0
     }
 }

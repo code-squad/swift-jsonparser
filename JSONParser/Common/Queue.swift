@@ -21,14 +21,14 @@ class Queue<T> {
     }
     
     func dequeue() -> T? {
-        return (!empty() ? self.queue.remove(at: 0): nil)
+        return isEmpty() ? nil : self.queue.remove(at: 0)
     }
     
-    func font() -> T? {
-        return (!empty() ? self.queue[0] : nil)
+    func front() -> T? {
+        return isEmpty() ? nil : self.queue[0]
     }
     
-    func empty() -> Bool {
+    func isEmpty() -> Bool {
         return queue.count == 0
     }
     
