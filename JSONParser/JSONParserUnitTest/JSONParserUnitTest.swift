@@ -79,7 +79,7 @@ class JSONParserUnitTest: XCTestCase {
     func test_QueueEnqueue() {
         let expectQue = Queue<String>()
         expectQue.enqueue("value")
-        XCTAssertFalse(expectQue.empty())
+        XCTAssertFalse(expectQue.isEmpty())
     }
     
     // Queue : dequeue로 값이 나오는지 체크
@@ -94,29 +94,29 @@ class JSONParserUnitTest: XCTestCase {
         let expectQue = Queue<String>()
         expectQue.enqueue(inputValue)
         let _ = expectQue.dequeue()
-        XCTAssertTrue(expectQue.empty())
+        XCTAssertTrue(expectQue.isEmpty())
     }
     
     // Queue : front후 값이 나오는지 체크
     func test_QueueFrontEqual() {
         let expectQue = Queue<String>()
         expectQue.enqueue(inputValue)
-        XCTAssertEqual(inputValue, expectQue.font())
+        XCTAssertEqual(inputValue, expectQue.front())
     }
     
     // Queue : front 후 값이 있는지 체크
     func test_QueueForntEmpty() {
         let expectQue = Queue<String>()
         expectQue.enqueue(inputValue)
-        let _ = expectQue.font()
-        XCTAssertFalse(expectQue.empty())
+        let _ = expectQue.front()
+        XCTAssertFalse(expectQue.isEmpty())
     }
     
     // Queue : enqueue후 큐에 값이 들어 갔는지 체크
     func test_QueueEnqueueValue() {
         let expectQue = Queue<String>()
         expectQue.enqueue(inputValue)
-        XCTAssertFalse(expectQue.empty())
+        XCTAssertFalse(expectQue.isEmpty())
     }
     
     // MAKR : Stack
@@ -125,20 +125,20 @@ class JSONParserUnitTest: XCTestCase {
     func test_StackPush() {
         let expectStack = Stack<String>()
         expectStack.push(inputValue)
-        XCTAssertFalse(expectStack.empty())
+        XCTAssertFalse(expectStack.isEmpty())
     }
     
     // Stack : empty 체크 (값이 없을때)
     func test_StackEmptyValueTrue() {
         let expectStack = Stack<String>()
-        XCTAssertTrue(expectStack.empty())
+        XCTAssertTrue(expectStack.isEmpty())
     }
     
     // Stack : empty 체크 (값이 존재 할때)
     func test_StackEmptyValueFalse() {
         let expectStack = Stack<String>()
         expectStack.push(inputValue)
-        XCTAssertFalse(expectStack.empty())
+        XCTAssertFalse(expectStack.isEmpty())
     }
     
     // Stack : 값이 잘 나오는지 체크
@@ -169,7 +169,7 @@ class JSONParserUnitTest: XCTestCase {
         let expectStack = Stack<String>()
         expectStack.push(inputValue)
         let _ = expectStack.peek()
-        XCTAssertFalse(expectStack.empty())
+        XCTAssertFalse(expectStack.isEmpty())
     }
     
     //MARK : Lexer
@@ -219,7 +219,8 @@ class JSONParserUnitTest: XCTestCase {
         let expectLexer = Lexer(jsonFormat)
         let expectToken = try expectLexer.getToken()
         let expectParser = Paser(expectToken)
-        let jsonData = try expectParser.parse()
+        let parse = try expectParser.parse()
+        let jsonData = try Json.get(parse)
         XCTAssertEqual(7, jsonData.countOfNumber())
     }
     
@@ -229,7 +230,8 @@ class JSONParserUnitTest: XCTestCase {
         let expectLexer = Lexer(jsonStringData)
         let expectToken = try expectLexer.getToken()
         let expectParser = Paser(expectToken)
-        let jsonData = try expectParser.parse()
+        let parse = try expectParser.parse()
+        let jsonData = try Json.get(parse)
         XCTAssertEqual(2, jsonData.countOfString())
     }
     
@@ -239,7 +241,8 @@ class JSONParserUnitTest: XCTestCase {
         let expectLexer = Lexer(jsonBooleanData)
         let expectToken = try expectLexer.getToken()
         let expectParser = Paser(expectToken)
-        let jsonData = try expectParser.parse()
+        let parse = try expectParser.parse()
+        let jsonData = try Json.get(parse)
         XCTAssertEqual(2, jsonData.countOfBoolean())
     }
     
@@ -249,8 +252,9 @@ class JSONParserUnitTest: XCTestCase {
         let expectLexer = Lexer(jsonFormat)
         let expectToken = try expectLexer.getToken()
         let expectParser = Paser(expectToken)
-        let jsonData = try expectParser.parse()
-        
+        let parse = try expectParser.parse()
+        let jsonData = try Json.get(parse)
+
         XCTAssertEqual(1, jsonData.countOfString())
         XCTAssertEqual(1, jsonData.countOfNumber())
         XCTAssertEqual(1, jsonData.countOfBoolean())
