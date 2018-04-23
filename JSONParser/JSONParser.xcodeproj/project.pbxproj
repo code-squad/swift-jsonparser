@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		F9070E722086E0C300851E35 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9070E712086E0C300851E35 /* InputView.swift */; };
+		F94F9B20208DF1FB0083F5F9 /* Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94F9B1F208DF1FB0083F5F9 /* Json.swift */; };
+		F94F9B21208DFC490083F5F9 /* Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94F9B1F208DF1FB0083F5F9 /* Json.swift */; };
 		F98544B02088B69C0050742F /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98544AF2088B69C0050742F /* Queue.swift */; };
 		F98544B22088E5F40050742F /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98544B12088E5F40050742F /* Stack.swift */; };
-		F98544B42088F0270050742F /* enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98544B32088F0270050742F /* enums.swift */; };
+		F98544B42088F0270050742F /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98544B32088F0270050742F /* Enums.swift */; };
 		F98544B72088F9E50050742F /* JSONPaserErorr.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98544B62088F9E50050742F /* JSONPaserErorr.swift */; };
 		F99A39BB20885A520050A211 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99A39BA20885A520050A211 /* Lexer.swift */; };
 		F99A39BD20885A5C0050A211 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99A39BC20885A5C0050A211 /* Parser.swift */; };
@@ -25,7 +27,7 @@
 		F9F1FF9D2089ECED004AC26E /* JSONProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99A39C2208868B90050A211 /* JSONProtocol.swift */; };
 		F9F1FF9E2089ECED004AC26E /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98544AF2088B69C0050742F /* Queue.swift */; };
 		F9F1FF9F2089ECED004AC26E /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98544B12088E5F40050742F /* Stack.swift */; };
-		F9F1FFA02089ECED004AC26E /* enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98544B32088F0270050742F /* enums.swift */; };
+		F9F1FFA02089ECED004AC26E /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98544B32088F0270050742F /* Enums.swift */; };
 		F9F1FFA12089ECED004AC26E /* JSONPaserErorr.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98544B62088F9E50050742F /* JSONPaserErorr.swift */; };
 		F9F1FFA22089ECED004AC26E /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F1FF9B2089DB9C004AC26E /* Strings.swift */; };
 		F9F1FFA32089ECED004AC26E /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99A39BF208867F70050A211 /* JSONData.swift */; };
@@ -52,9 +54,10 @@
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		F9070E712086E0C300851E35 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		F920A2802085C11F002D161E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		F94F9B1F208DF1FB0083F5F9 /* Json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Json.swift; sourceTree = "<group>"; };
 		F98544AF2088B69C0050742F /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		F98544B12088E5F40050742F /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
-		F98544B32088F0270050742F /* enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enums.swift; sourceTree = "<group>"; };
+		F98544B32088F0270050742F /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		F98544B62088F9E50050742F /* JSONPaserErorr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPaserErorr.swift; sourceTree = "<group>"; };
 		F99A39BA20885A520050A211 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		F99A39BC20885A5C0050A211 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
@@ -114,6 +117,7 @@
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				F99A39BA20885A520050A211 /* Lexer.swift */,
 				F99A39BC20885A5C0050A211 /* Parser.swift */,
+				F94F9B1F208DF1FB0083F5F9 /* Json.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -142,7 +146,7 @@
 				F99A39C2208868B90050A211 /* JSONProtocol.swift */,
 				F98544AF2088B69C0050742F /* Queue.swift */,
 				F98544B12088E5F40050742F /* Stack.swift */,
-				F98544B32088F0270050742F /* enums.swift */,
+				F98544B32088F0270050742F /* Enums.swift */,
 				F98544B62088F9E50050742F /* JSONPaserErorr.swift */,
 				F9F1FF9B2089DB9C004AC26E /* Strings.swift */,
 			);
@@ -258,7 +262,7 @@
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				F98544B22088E5F40050742F /* Stack.swift in Sources */,
-				F98544B42088F0270050742F /* enums.swift in Sources */,
+				F98544B42088F0270050742F /* Enums.swift in Sources */,
 				F9070E722086E0C300851E35 /* InputView.swift in Sources */,
 				F98544B72088F9E50050742F /* JSONPaserErorr.swift in Sources */,
 				F99A39C0208867F70050A211 /* JSONData.swift in Sources */,
@@ -268,6 +272,7 @@
 				F99A39BB20885A520050A211 /* Lexer.swift in Sources */,
 				F99A3A0020889D560050A211 /* String+.swift in Sources */,
 				F99A39BD20885A5C0050A211 /* Parser.swift in Sources */,
+				F94F9B20208DF1FB0083F5F9 /* Json.swift in Sources */,
 				F9F1FF9A2089DA97004AC26E /* OutputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,10 +281,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F94F9B21208DFC490083F5F9 /* Json.swift in Sources */,
 				F9F1FF9D2089ECED004AC26E /* JSONProtocol.swift in Sources */,
 				F9F1FF9E2089ECED004AC26E /* Queue.swift in Sources */,
 				F9F1FF9F2089ECED004AC26E /* Stack.swift in Sources */,
-				F9F1FFA02089ECED004AC26E /* enums.swift in Sources */,
+				F9F1FFA02089ECED004AC26E /* Enums.swift in Sources */,
 				F9F1FFA12089ECED004AC26E /* JSONPaserErorr.swift in Sources */,
 				F9F1FFA22089ECED004AC26E /* Strings.swift in Sources */,
 				F9F1FFA32089ECED004AC26E /* JSONData.swift in Sources */,
