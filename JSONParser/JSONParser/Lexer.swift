@@ -50,7 +50,7 @@ class Lexer {
         self.position = self.input.index(after: self.position)
     }
     
-    func lex() throws -> Tokenizable {
+    func lex() throws -> TokenData {
         var tokens: [String] = [String]()
         var tokenCarrier = "" // valueToken에 의미있는 문자열단위(토큰) 전달
         
@@ -79,6 +79,6 @@ class Lexer {
             }
             advance()
         }
-        return Token(tokens: tokens)
+        return TokenData(tokens: tokens)
     }
 }

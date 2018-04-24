@@ -15,18 +15,13 @@ func main() {
     
     do {
         let lexer: Lexer = Lexer(input: input)
-        let token: Token = try lexer.lex()
-        let parser: Parser = Parser(token: token)
+        let tokenData: TokenData = try lexer.lex()
+        let parser: Parser = Parser(tokenData: tokenData)
         let jsonData: JSONData = try parser.parse()
-        OutputView.printJSONData(jsonData)
         
-        // 제출시 콘솔확인용 print
-        print()
-        print("Tokens: ")
-        print(token)
-        print("---------------------------")
-        print("JSONData: ")
-        print(jsonData)
+        if let jsonData = jsonData as? JSONPrintable {
+            OutputView.printJSONData(jsonData)
+        }
     } catch let error as Lexer.Error {
         print(error.errorMessage)
     } catch let error as Parser.Error {

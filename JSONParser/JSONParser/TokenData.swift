@@ -1,5 +1,5 @@
 //
-//  ListToken.swift
+//  TokenData.swift
 //  JSONParser
 //
 //  Created by moon on 2018. 4. 23..
@@ -13,7 +13,7 @@ enum TokenType {
     case listToken
 }
 
-struct Token: Tokenizable {
+struct TokenData: Token {
     
     private var tokens: [String]
     
@@ -21,7 +21,12 @@ struct Token: Tokenizable {
         self.tokens = tokens
     }
     
-    mutating func add(token: String) {
-        self.tokens.append(token)
+    func numberOfToken() -> Int {
+        return self.tokens.count
     }
+    
+    func getToken(index: Int) -> String {
+        return self.tokens[index]
+    }
+    
 }

@@ -13,6 +13,7 @@ enum JSONDataType {
     case characters(String)
     case boolean(Bool)
     case object([String:JSONDataType])
+    case array([JSONDataType])
 }
 
 class Parser {
@@ -30,43 +31,81 @@ class Parser {
         }
     }
     
-    private let token: Token
+    private let tokenData: Token
+    private var position = 0
 
-    init(token: Token) {
-        self.token = token
+    init(tokenData: Token) {
+        self.tokenData = tokenData
+    }
+    
+    private func getNextToken() throws -> String? {
+        guard position < self.tokenData.numberOfToken() else {
+            return nil
+        }
+        let token = self.tokenData.getToken(index: position)
+        position += 1
+        return token
     }
 
     func parse() throws -> JSONData {
-        typealias JSONAllowedData = (numbers: [Int], characters: [String], booleans: [Bool], objects: [[String:JSONDataType]])
-        var jsonAllowedData: JSONAllowedData = ([], [], [], [])
-        
-        // bool, number, string 데이터
-        for token in token.valueToken {
-            let jsonData = try makeDataFrom(token)
-            
-            switch jsonData {
-            case .characters(let value):
-                jsonAllowedData.characters.append(value)
-            case .number(let value):
-                jsonAllowedData.numbers.append(value)
-            case .boolean(let value):
-                jsonAllowedData.booleans.append(value)
+        while let token: String = try getNextToken() {
+            switch token {
+            case "[":
+                let arrayData: JSONDataType = try makeArrayJSONData()
+                return ArrayJSONData(jsonData: arrayData)
+            case "{":
+                let objectData: JSONDataType = try makeObjectJSONData()
+                return ObjectJSONData(jsonData: objectData)
             default:
                 throw Parser.Error.invalidToken(token)
             }
         }
-        // object 데이터
-        for token in token.objectToken {
-            jsonAllowedData.objects.append(try makeObjectData(token))
-        }
-        return JSONData(jsonAllowedData.numbers, jsonAllowedData.characters, jsonAllowedData.booleans, jsonAllowedData.objects)
+        
+        throw Parser.Error.unexpectedEndOfInput
     }
     
-    private func makeDataFrom(_ token: String) throws -> JSONDataType {
-        // 토큰의 첫글자를 분석하여 데이터화 시도
+    func makeArrayJSONData() throws -> JSONDataType {
+        var arrayJSONData: [JSONDataType] = [JSONDataType]()
+        
+        while let token: String = try getNextToken() {
+            switch token {
+            case "[": // 배열 안에 중첩 배열
+                arrayJSONData.append(try makeArrayJSONData())
+            case "]":
+                return JSONDataType.array(arrayJSONData)
+            case "{": // 배열 안에 객체
+                arrayJSONData.append(try makeObjectJSONData())
+            default:
+                arrayJSONData.append(try makeNormalData(token))
+            }
+        }
+        
+        return JSONDataType.array(arrayJSONData)
+    }
+    
+    func makeObjectJSONData() throws -> JSONDataType {
+        var objectJSONData: [String:JSONDataType] = [String:JSONDataType]()
+        
+        while let token: String = try getNextToken() {
+            if token == "}" {
+                break
+            }
+            let objectToken: [String] = token.split(separator: ":").map{ String($0) }
+            let valueToken = objectToken[1]
+            let key = objectToken[0]
+            let value: JSONDataType = try makeObjectValueFrom(valueToken)
+            objectJSONData[key] = value
+        }
+        
+        return JSONDataType.object(objectJSONData)
+    }
+    
+    func makeNormalData(_ token: String) throws -> JSONDataType {
+
         guard let firstCharacter = token.first else {
             throw Parser.Error.invalidToken(token)
         }
+        
         switch firstCharacter {
         case "0"..."9":
             // 토큰이 숫자로 시작하면 숫자 데이터
@@ -93,8 +132,6 @@ class Parser {
             case "0"..."9":
                 let digitValue = Int(String(nextCharacter))!
                 value = 10 * value + digitValue
-            case "}":
-                continue
             default:
                 throw Parser.Error.invalidToken(token)
             }
@@ -113,8 +150,6 @@ class Parser {
                     return characters
                 }
                 saveStartFlag = !saveStartFlag
-            case "}":
-                continue
             default:
                 characters += String(nextCharacter)
             }
@@ -129,40 +164,11 @@ class Parser {
             case "e":
                 booleanText += String(nextCharacter)
                 return Bool(booleanText)
-            case "}":
-                continue
             default:
                 booleanText += String(nextCharacter)
             }
         }
         return Bool(booleanText)
-    }
-    
-    func makeObjectData(_ objectToken: [String]) throws -> [String:JSONDataType] {
-        var objectData: [String:JSONDataType] = [:]
-        for token in objectToken {
-            let keyValue: [String] = token.split(separator: ":").map { String($0) }
-            let keyToken = keyValue[0]
-            let valueToken = keyValue[1]
-            
-            let key: String = makeObjectKeyFrom(keyToken)
-            let value: JSONDataType = try makeObjectValueFrom(valueToken)
-            objectData[key] = value
-        }
-        return objectData
-    }
-    
-    func makeObjectKeyFrom(_ keyToken: String) -> String {
-        var key: String = ""
-        for nextCharacter in keyToken {
-            switch nextCharacter {
-            case "{", "\"":
-                continue
-            default:
-                key.append(nextCharacter)
-            }
-        }
-        return key
     }
     
     func makeObjectValueFrom(_ valueToken: String) throws  -> JSONDataType {
@@ -182,6 +188,8 @@ class Parser {
                 throw Parser.Error.invalidToken(valueToken)
             }
             return JSONDataType.boolean(booleanData)
+        case "[":
+            return try makeArrayJSONData()
         default:
             throw Parser.Error.invalidToken(valueToken)
         }

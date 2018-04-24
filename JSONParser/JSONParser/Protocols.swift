@@ -9,8 +9,16 @@
 import Foundation
 
 protocol JSONPrintable {
-    func total() -> Int
-    func totalDataType() -> TotalDataType
-    func countValueDescription() -> String
-    func countObjectDescription() -> String
+    func totalDataCountDescription() -> String
+    func totalDataTypeDescription() -> String
+    func countDataDescription() -> String
+}
+
+protocol Token {
+    func numberOfToken() -> Int
+    func getToken(index: Int) -> String
+}
+
+protocol JSONData {
+    init(jsonData: JSONDataType)
 }

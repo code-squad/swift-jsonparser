@@ -9,19 +9,9 @@
 import Foundation
 
 struct OutputView {
-    
+    // 총 4개의 객체 데이터 중에 문자열 2개, 숫자 1개, 부울 1개가 포함되어 있습니다.
+    // 총 2개의 배열 데이터 중에 객체 2개가 포함되어 있습니다.
     static func printJSONData(_ jsonData: JSONPrintable) {
-        
-        let totalDataType: TotalDataType = jsonData.totalDataType()
-        var result = "총 \(jsonData.total())개의 \(totalDataType.rawValue) 데이터 중에 "
-        switch totalDataType {
-        case .list:
-            result += jsonData.countObjectDescription()
-        case .object:
-            result += jsonData.countValueDescription()
-        }
-        result.removeLast()
-        result += "가 포함되어 있습니다."
-        print(result)
+        print("\(jsonData.totalDataCountDescription())\(jsonData.countDataDescription())가 포함되어 있습니다.")
     }
 }
