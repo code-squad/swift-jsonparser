@@ -8,11 +8,6 @@
 
 import Foundation
 
-enum TokenType {
-    case objectToken
-    case listToken
-}
-
 struct TokenData: Token {
     
     private var tokens: [String]
@@ -28,5 +23,4 @@ struct TokenData: Token {
     func getToken(index: Int) -> String {
         return self.tokens[index]
     }
-    
 }
