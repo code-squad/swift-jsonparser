@@ -26,7 +26,7 @@ class Parser {
             case .unexpectedEndOfInput:
                 return "Unexpected end of input"
             case .invalidToken(let token):
-                return "Invalid token: \(token)"
+                return "지원하지 않는 형식을 포함하고 있습니다. : \(token)"
             }
         }
     }
@@ -60,7 +60,6 @@ class Parser {
                 throw Parser.Error.invalidToken(token)
             }
         }
-        
         throw Parser.Error.unexpectedEndOfInput
     }
     
@@ -85,8 +84,11 @@ class Parser {
     
     func makeObjectJSONData() throws -> JSONDataType {
         var objectJSONData: [String:JSONDataType] = [String:JSONDataType]()
-        
         while let token: String = try getNextToken() {
+            if token.contains("[") {
+                throw Parser.Error.invalidToken(token)
+            }
+            
             if token == "}" {
                 break
             }
@@ -103,6 +105,10 @@ class Parser {
     func makeNormalData(_ token: String) throws -> JSONDataType {
 
         guard let firstCharacter = token.first else {
+            throw Parser.Error.invalidToken(token)
+        }
+        
+        if token.contains(":") {
             throw Parser.Error.invalidToken(token)
         }
         
