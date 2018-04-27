@@ -31,6 +31,7 @@ class Lexer {
     private let space: Character = " "
     private let openCurlyBracket: Character = "{"
     private let closeCurlyBracket: Character = "}"
+    private let colon: Character = ":"
     
     init(input: String) {
         self.input = input
@@ -53,32 +54,33 @@ class Lexer {
     func lex() throws -> TokenData {
         var tokens: [String] = [String]()
         var tokenCarrier = "" // valueToken에 의미있는 문자열단위(토큰) 전달
+        var isSavingCharacters = false
         
         while let nextCharacter = peek() {
             switch nextCharacter {
             case comma:
-                if tokenCarrier.isEmpty {
-                    advance()
-                    continue
-                }
-                tokens.append(tokenCarrier)
+                if !tokenCarrier.isEmpty{ tokens.append(tokenCarrier) }
                 tokenCarrier.removeAll()
+            case "\"":
+                isSavingCharacters = !isSavingCharacters
             case space:
-                break
-            case openCurlyBracket, openBracket:
-                tokens.append(String(nextCharacter))
-                tokenCarrier.removeAll()
-            case closeBracket, closeCurlyBracket:
+                if isSavingCharacters {
+                    tokenCarrier.append(nextCharacter)
+                }
+            case colon, closeCurlyBracket, closeBracket:
                 if !tokenCarrier.isEmpty {
                     tokens.append(tokenCarrier)
                     tokenCarrier.removeAll()
                 }
                 tokens.append(String(nextCharacter))
+            case openBracket,openCurlyBracket:
+                tokens.append(String(nextCharacter))
             default:
-                tokenCarrier += String(nextCharacter)
+                tokenCarrier.append(nextCharacter)
             }
             advance()
         }
+        
         return TokenData(tokens: tokens)
     }
 }
