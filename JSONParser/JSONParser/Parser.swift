@@ -53,6 +53,9 @@ class Parser {
             case "{":
                 let objectData: JSONDataType = try makeObjectJSONData()
                 return ObjectJSONData(jsonData: objectData)
+            case "[":
+                let arrayData: JSONDataType = try makeArrayJSONData()
+                return ArrayJSONData(jsonData: arrayData)
             default:
                 throw Parser.Error.invalidToken(token)
             }
@@ -60,7 +63,25 @@ class Parser {
         throw Parser.Error.unexpectedEndOfInput
     }
     
-    func makeObjectJSONData() throws -> JSONDataType {
+    func makeArrayJSONData() throws -> JSONDataType {
+        var arrayJSONData: [JSONDataType] = [JSONDataType]()
+        while let token: String = try getNextToken() {
+            switch token {
+            case "{":
+                let objectData: JSONDataType = try makeObjectJSONData()
+                arrayJSONData.append(objectData)
+            case "]":
+                return JSONDataType.array(arrayJSONData)
+            case ":":
+                throw Parser.Error.invalidToken(token)
+            default:
+                arrayJSONData.append(try makeValue(token))
+            }
+        }
+        return JSONDataType.array(arrayJSONData)
+    }
+    
+    private func makeObjectJSONData() throws -> JSONDataType {
         var objectJSONData: [String:JSONDataType] = [String:JSONDataType]()
         var key: String = ""
         while let token: String = try getNextToken() {
@@ -69,7 +90,10 @@ class Parser {
                 return JSONDataType.object(objectJSONData)
             case ":":
                 // value만들기
-                objectJSONData[key] = try makeObjectValue()
+                guard let valueToken = try getNextToken() else {
+                    throw Parser.Error.unexpectedEndOfInput
+                }
+                objectJSONData[key] = try makeValue(valueToken)
             default:
                 // key만들기
                 key = try makeObjectKey(token)
@@ -79,24 +103,19 @@ class Parser {
         return JSONDataType.object(objectJSONData)
     }
     
-    func makeObjectKey(_ token: String) throws -> String {
+    private func makeObjectKey(_ token: String) throws -> String {
         guard try GrammarChecker.checkPattern(token: token, pattern: GrammarChecker.keyPattern) else {
             throw GrammarChecker.Error.invalidToken(token)
         }
         return token
     }
     
-    func makeObjectValue() throws -> JSONDataType {
-        guard let valueToken = try getNextToken() else {
-            throw Parser.Error.unexpectedEndOfInput
-        }
-        
+    private func makeValue(_ valueToken: String) throws -> JSONDataType {
         // 숫자
         if try GrammarChecker.checkPattern(token: valueToken, pattern: GrammarChecker.numberPattern) {
             let numberData = try makeNumberData(valueToken)
             return JSONDataType.number(numberData)
         }
-        
         // 부울
         if try GrammarChecker.checkPattern(token: valueToken, pattern: GrammarChecker.booleanPattern) {
             guard let booleanData = makeBooleanData(valueToken) else {
@@ -104,14 +123,11 @@ class Parser {
             }
             return JSONDataType.boolean(booleanData)
         }
-        
         // 문자열
         if try GrammarChecker.checkPattern(token: valueToken, pattern: GrammarChecker.charactersPattern) {
             let charactersData = makeCharactersData(valueToken)
             return JSONDataType.characters(charactersData)
         }
-        
-        print("e")
         throw Parser.Error.invalidToken(valueToken)
     }
     

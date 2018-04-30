@@ -18,13 +18,14 @@ func main() {
         let tokenData: TokenData = try lexer.lex()
         let parser: Parser = Parser(tokenData: tokenData)
         let jsonData: JSONData = try parser.parse()
-        
         if let jsonData = jsonData as? JSONPrintable {
             OutputView.printJSONData(jsonData)
         }
     } catch let error as Lexer.Error {
         print(error.errorMessage)
     } catch let error as Parser.Error {
+        print(error.errorMessage)
+    } catch let error as GrammarChecker.Error {
         print(error.errorMessage)
     } catch {
         fatalError("Unexpected Error")
