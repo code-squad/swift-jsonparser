@@ -62,6 +62,7 @@ class Lexer {
                 if !tokenCarrier.isEmpty{ tokens.append(tokenCarrier) }
                 tokenCarrier.removeAll()
             case "\"":
+                tokenCarrier.append(nextCharacter)
                 isSavingCharacters = !isSavingCharacters
             case space:
                 if isSavingCharacters {

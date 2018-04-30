@@ -50,9 +50,6 @@ class Parser {
     func parse() throws -> JSONData {
         while let token: String = try getNextToken() {
             switch token {
-            case "[":
-                let arrayData: JSONDataType = try makeArrayJSONData()
-                return ArrayJSONData(jsonData: arrayData)
             case "{":
                 let objectData: JSONDataType = try makeObjectJSONData()
                 return ObjectJSONData(jsonData: objectData)
@@ -63,72 +60,59 @@ class Parser {
         throw Parser.Error.unexpectedEndOfInput
     }
     
-    func makeArrayJSONData() throws -> JSONDataType {
-        var arrayJSONData: [JSONDataType] = [JSONDataType]()
-        
-        while let token: String = try getNextToken() {
-            switch token {
-            case "[": // 배열 안에 중첩 배열
-                arrayJSONData.append(try makeArrayJSONData())
-            case "]":
-                return JSONDataType.array(arrayJSONData)
-            case "{": // 배열 안에 객체
-                arrayJSONData.append(try makeObjectJSONData())
-            default:
-                arrayJSONData.append(try makeNormalData(token))
-            }
-        }
-        
-        return JSONDataType.array(arrayJSONData)
-    }
-    
     func makeObjectJSONData() throws -> JSONDataType {
         var objectJSONData: [String:JSONDataType] = [String:JSONDataType]()
+        var key: String = ""
         while let token: String = try getNextToken() {
-            if token.contains("[") {
-                throw Parser.Error.invalidToken(token)
+            switch token {
+            case "}":
+                return JSONDataType.object(objectJSONData)
+            case ":":
+                // value만들기
+                objectJSONData[key] = try makeObjectValue()
+            default:
+                // key만들기
+                key = try makeObjectKey(token)
             }
-            
-            if token == "}" {
-                break
-            }
-            let objectToken: [String] = token.split(separator: ":").map{ String($0) }
-            let valueToken = objectToken[1]
-            let key = objectToken[0]
-            let value: JSONDataType = try makeObjectValueFrom(valueToken)
-            objectJSONData[key] = value
         }
         
         return JSONDataType.object(objectJSONData)
     }
     
-    func makeNormalData(_ token: String) throws -> JSONDataType {
-
-        guard let firstCharacter = token.first else {
-            throw Parser.Error.invalidToken(token)
+    func makeObjectKey(_ token: String) throws -> String {
+        guard try GrammarChecker.checkPattern(token: token, pattern: GrammarChecker.keyPattern) else {
+            throw GrammarChecker.Error.invalidToken(token)
+        }
+        return token
+    }
+    
+    func makeObjectValue() throws -> JSONDataType {
+        guard let valueToken = try getNextToken() else {
+            throw Parser.Error.unexpectedEndOfInput
         }
         
-        if token.contains(":") {
-            throw Parser.Error.invalidToken(token)
-        }
-        
-        switch firstCharacter {
-        case "0"..."9":
-            // 토큰이 숫자로 시작하면 숫자 데이터
-            let numberData: Int = try makeNumberData(token)
+        // 숫자
+        if try GrammarChecker.checkPattern(token: valueToken, pattern: GrammarChecker.numberPattern) {
+            let numberData = try makeNumberData(valueToken)
             return JSONDataType.number(numberData)
-        case "\"":
-            // 토큰이 따옴표로 시작하면 문자열 데이터
-            let charactersData: String = makeCharactersData(token)
-            return JSONDataType.characters(charactersData)
-        case "f", "t":
-            guard let booleanData: Bool = makeBooleanData(token) else {
-                throw Parser.Error.invalidToken(token)
+        }
+        
+        // 부울
+        if try GrammarChecker.checkPattern(token: valueToken, pattern: GrammarChecker.booleanPattern) {
+            guard let booleanData = makeBooleanData(valueToken) else {
+                throw Parser.Error.invalidToken(valueToken)
             }
             return JSONDataType.boolean(booleanData)
-        default:
-            throw Parser.Error.invalidToken(token)
         }
+        
+        // 문자열
+        if try GrammarChecker.checkPattern(token: valueToken, pattern: GrammarChecker.charactersPattern) {
+            let charactersData = makeCharactersData(valueToken)
+            return JSONDataType.characters(charactersData)
+        }
+        
+        print("e")
+        throw Parser.Error.invalidToken(valueToken)
     }
     
     private func makeNumberData(_ token: String) throws -> Int {
@@ -176,28 +160,5 @@ class Parser {
         }
         return Bool(booleanText)
     }
-    
-    func makeObjectValueFrom(_ valueToken: String) throws  -> JSONDataType {
-        guard let firstCharacter = valueToken.first else {
-            throw Parser.Error.invalidToken(valueToken)
-        }
-        // 들어온 데이터의 첫글자를 보고 어떤 데이터 타입인지 판단
-        switch firstCharacter {
-        case "0"..."9":
-            let numberData = try makeNumberData(valueToken)
-            return JSONDataType.number(numberData)
-        case "\"":
-            let charactersData = makeCharactersData(valueToken)
-            return JSONDataType.characters(charactersData)
-        case "f", "t":
-            guard let booleanData = makeBooleanData(valueToken) else {
-                throw Parser.Error.invalidToken(valueToken)
-            }
-            return JSONDataType.boolean(booleanData)
-        case "[":
-            return try makeArrayJSONData()
-        default:
-            throw Parser.Error.invalidToken(valueToken)
-        }
-    }
+
 }
