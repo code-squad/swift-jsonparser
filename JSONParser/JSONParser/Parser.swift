@@ -72,13 +72,8 @@ class Parser {
         var arrayJSONData: [JSONDataType] = [JSONDataType]()
         while let token: String = try getNextToken() {
             switch token {
-            case openCurlyBracket:
-                let objectData: JSONDataType = try makeObjectJSONData()
-                arrayJSONData.append(objectData)
             case closeBracket:
                 return JSONDataType.array(arrayJSONData)
-            case colon:
-                throw Parser.Error.invalidToken(token)
             default:
                 arrayJSONData.append(try makeValue(token))
             }
@@ -116,6 +111,14 @@ class Parser {
     }
     
     private func makeValue(_ valueToken: String) throws -> JSONDataType {
+        // 중첩객체
+        if valueToken == openCurlyBracket {
+            return try makeObjectJSONData()
+        }
+        // 중첩배열
+        if valueToken == openBracket {
+            return try makeArrayJSONData()
+        }
         // 숫자
         if try GrammarChecker.checkPattern(token: valueToken, pattern: GrammarChecker.numberPattern) {
             let numberData = try makeNumberData(valueToken)
