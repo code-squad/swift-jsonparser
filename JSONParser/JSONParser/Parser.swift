@@ -33,6 +33,11 @@ class Parser {
     
     private let tokenData: Token
     private var position = 0
+    private let openBracket: String = "["
+    private let closeBracket: String = "]"
+    private let openCurlyBracket: String = "{"
+    private let closeCurlyBracket: String = "}"
+    private let colon: String = ":"
 
     init(tokenData: Token) {
         self.tokenData = tokenData
@@ -50,10 +55,10 @@ class Parser {
     func parse() throws -> JSONData {
         while let token: String = try getNextToken() {
             switch token {
-            case "{":
+            case openCurlyBracket:
                 let objectData: JSONDataType = try makeObjectJSONData()
                 return ObjectJSONData(jsonData: objectData)
-            case "[":
+            case openBracket:
                 let arrayData: JSONDataType = try makeArrayJSONData()
                 return ArrayJSONData(jsonData: arrayData)
             default:
@@ -67,12 +72,12 @@ class Parser {
         var arrayJSONData: [JSONDataType] = [JSONDataType]()
         while let token: String = try getNextToken() {
             switch token {
-            case "{":
+            case openCurlyBracket:
                 let objectData: JSONDataType = try makeObjectJSONData()
                 arrayJSONData.append(objectData)
-            case "]":
+            case closeBracket:
                 return JSONDataType.array(arrayJSONData)
-            case ":":
+            case colon:
                 throw Parser.Error.invalidToken(token)
             default:
                 arrayJSONData.append(try makeValue(token))
@@ -86,9 +91,9 @@ class Parser {
         var key: String = ""
         while let token: String = try getNextToken() {
             switch token {
-            case "}":
+            case closeCurlyBracket:
                 return JSONDataType.object(objectJSONData)
-            case ":":
+            case colon:
                 // value만들기
                 guard let valueToken = try getNextToken() else {
                     throw Parser.Error.unexpectedEndOfInput
