@@ -43,7 +43,7 @@ struct ObjectJSONData: JSONData, JSONPrintable {
     
     func countDataDescription() -> String {
         var result: String = ""
-        let (charactersCount, numberCount, booleanCount, objectCount) = calculateCountOfElements()
+        let (charactersCount, numberCount, booleanCount, objectCount, arrayCount) = calculateCountOfElements()
         
         if charactersCount > 0 {
             result += "문자열 \(charactersCount)개,"
@@ -61,15 +61,19 @@ struct ObjectJSONData: JSONData, JSONPrintable {
             result += "객체 \(objectCount)개,"
         }
         
+        if arrayCount > 0 {
+            result += "배열 \(arrayCount)개,"
+        }
         result.removeLast()
         return result
     }
     
-    private func calculateCountOfElements() -> (Int, Int, Int, Int) {
+    private func calculateCountOfElements() -> (Int, Int, Int, Int, Int) {
         var charactersCount = 0
         var numberCount = 0
         var booleanCount = 0
         var objectCount = 0
+        var arrayCount = 0
         
         for element in self.jsonData.values {
             switch element {
@@ -81,10 +85,10 @@ struct ObjectJSONData: JSONData, JSONPrintable {
                 booleanCount += 1
             case .object:
                 objectCount += 1
-            default:
-                break
+            case .array:
+                arrayCount += 1
             }
         }
-        return (charactersCount, numberCount, booleanCount, objectCount)
+        return (charactersCount, numberCount, booleanCount, objectCount, arrayCount)
     }
 }
