@@ -16,8 +16,8 @@ struct TokenData: TokenConvertible {
         self.tokens = tokens
     }
     
-    func numberOfToken() -> Int {
-        return self.tokens.count
+    func hasAvailableNextToken(position: Int) -> Bool {
+        return  position < self.tokens.count
     }
     
     func getToken(index: Int) -> String {

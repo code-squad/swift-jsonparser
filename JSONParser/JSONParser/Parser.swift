@@ -44,7 +44,7 @@ class Parser {
     }
     
     private func getNextToken() throws -> String? {
-        guard position < self.tokenData.numberOfToken() else {
+        guard tokenData.hasAvailableNextToken(position: self.position) else {
             return nil
         }
         let token = self.tokenData.getToken(index: position)

@@ -9,6 +9,6 @@
 import Foundation
 
 protocol TokenConvertible {
-    func numberOfToken() -> Int
+    func hasAvailableNextToken(position: Int) -> Bool
     func getToken(index: Int) -> String
 }
