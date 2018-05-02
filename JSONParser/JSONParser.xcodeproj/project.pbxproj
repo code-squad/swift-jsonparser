@@ -15,8 +15,6 @@
 		739117732085CBC100C960D4 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739117722085CBC100C960D4 /* Lexer.swift */; };
 		739117772086729C00C960D4 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739117762086729C00C960D4 /* Parser.swift */; };
 		7391177B20871CB000C960D4 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7391177A20871CB000C960D4 /* OutputView.swift */; };
-		73A5B06320996B26002ADC09 /* TokenConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A5B06220996B26002ADC09 /* TokenConvertible.swift */; };
-		73A5B06520996B65002ADC09 /* JSONPrintable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A5B06420996B65002ADC09 /* JSONPrintable.swift */; };
 		73A5B06720996EFC002ADC09 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A5B06620996EFC002ADC09 /* JSONData.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
@@ -42,8 +40,6 @@
 		739117722085CBC100C960D4 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		739117762086729C00C960D4 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		7391177A20871CB000C960D4 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
-		73A5B06220996B26002ADC09 /* TokenConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenConvertible.swift; sourceTree = "<group>"; };
-		73A5B06420996B65002ADC09 /* JSONPrintable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPrintable.swift; sourceTree = "<group>"; };
 		73A5B06620996EFC002ADC09 /* JSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -64,8 +60,6 @@
 			isa = PBXGroup;
 			children = (
 				73A5B06620996EFC002ADC09 /* JSONData.swift */,
-				73A5B06220996B26002ADC09 /* TokenConvertible.swift */,
-				73A5B06420996B65002ADC09 /* JSONPrintable.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -166,11 +160,9 @@
 				73407CD8208EBB5A00B22CB9 /* ArrayJSONData.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				73407CDA208EBB6600B22CB9 /* ObjectJSONData.swift in Sources */,
-				73A5B06520996B65002ADC09 /* JSONPrintable.swift in Sources */,
 				739117732085CBC100C960D4 /* Lexer.swift in Sources */,
 				7300E62920848DE800C01312 /* InputView.swift in Sources */,
 				7391177B20871CB000C960D4 /* OutputView.swift in Sources */,
-				73A5B06320996B26002ADC09 /* TokenConvertible.swift in Sources */,
 				73407CD4208DB4DB00B22CB9 /* TokenData.swift in Sources */,
 				732F87CD208F4075003CE11E /* GrammarChecker.swift in Sources */,
 			);

@@ -16,6 +16,11 @@ enum JSONDataValue {
     case array([JSONDataValue])
 }
 
+protocol TokenConvertible {
+    func hasAvailableNextToken(position: Int) -> Bool
+    func getToken(index: Int) -> String
+}
+
 class Parser {
     enum Error: Swift.Error {
         case unexpectedEndOfInput
