@@ -8,12 +8,12 @@
 
 import Foundation
 
-enum JSONDataType {
+enum JSONDataValue {
     case number(Int)
     case characters(String)
     case boolean(Bool)
-    case object([String:JSONDataType])
-    case array([JSONDataType])
+    case object([String:JSONDataValue])
+    case array([JSONDataValue])
 }
 
 class Parser {
@@ -31,7 +31,7 @@ class Parser {
         }
     }
     
-    private let tokenData: Token
+    private let tokenData: TokenConvertible
     private var position = 0
     private let openBracket: String = "["
     private let closeBracket: String = "]"
@@ -39,7 +39,7 @@ class Parser {
     private let closeCurlyBracket: String = "}"
     private let colon: String = ":"
 
-    init(tokenData: Token) {
+    init(tokenData: TokenConvertible) {
         self.tokenData = tokenData
     }
     
@@ -56,10 +56,10 @@ class Parser {
         while let token: String = try getNextToken() {
             switch token {
             case openCurlyBracket:
-                let objectData: JSONDataType = try makeObjectJSONData()
+                let objectData: JSONDataValue = try makeObjectJSONData()
                 return ObjectJSONData(jsonData: objectData)
             case openBracket:
-                let arrayData: JSONDataType = try makeArrayJSONData()
+                let arrayData: JSONDataValue = try makeArrayJSONData()
                 return ArrayJSONData(jsonData: arrayData)
             default:
                 throw Parser.Error.invalidToken(token)
@@ -68,26 +68,26 @@ class Parser {
         throw Parser.Error.unexpectedEndOfInput
     }
     
-    func makeArrayJSONData() throws -> JSONDataType {
-        var arrayJSONData: [JSONDataType] = [JSONDataType]()
+    func makeArrayJSONData() throws -> JSONDataValue {
+        var arrayJSONData: [JSONDataValue] = [JSONDataValue]()
         while let token: String = try getNextToken() {
             switch token {
             case closeBracket:
-                return JSONDataType.array(arrayJSONData)
+                return JSONDataValue.array(arrayJSONData)
             default:
                 arrayJSONData.append(try makeValue(token))
             }
         }
-        return JSONDataType.array(arrayJSONData)
+        return JSONDataValue.array(arrayJSONData)
     }
     
-    private func makeObjectJSONData() throws -> JSONDataType {
-        var objectJSONData: [String:JSONDataType] = [String:JSONDataType]()
+    private func makeObjectJSONData() throws -> JSONDataValue {
+        var objectJSONData: [String:JSONDataValue] = [String:JSONDataValue]()
         var key: String = ""
         while let token: String = try getNextToken() {
             switch token {
             case closeCurlyBracket:
-                return JSONDataType.object(objectJSONData)
+                return JSONDataValue.object(objectJSONData)
             case colon:
                 // value만들기
                 guard let valueToken = try getNextToken() else {
@@ -100,7 +100,7 @@ class Parser {
             }
         }
         
-        return JSONDataType.object(objectJSONData)
+        return JSONDataValue.object(objectJSONData)
     }
     
     private func makeObjectKey(_ token: String) throws -> String {
@@ -110,7 +110,7 @@ class Parser {
         return token
     }
     
-    private func makeValue(_ valueToken: String) throws -> JSONDataType {
+    private func makeValue(_ valueToken: String) throws -> JSONDataValue {
         // 중첩객체
         if valueToken == openCurlyBracket {
             return try makeObjectJSONData()
@@ -122,19 +122,19 @@ class Parser {
         // 숫자
         if try GrammarChecker.checkPattern(token: valueToken, pattern: GrammarChecker.numberPattern) {
             let numberData = try makeNumberData(valueToken)
-            return JSONDataType.number(numberData)
+            return JSONDataValue.number(numberData)
         }
         // 부울
         if try GrammarChecker.checkPattern(token: valueToken, pattern: GrammarChecker.booleanPattern) {
             guard let booleanData = makeBooleanData(valueToken) else {
                 throw Parser.Error.invalidToken(valueToken)
             }
-            return JSONDataType.boolean(booleanData)
+            return JSONDataValue.boolean(booleanData)
         }
         // 문자열
         if try GrammarChecker.checkPattern(token: valueToken, pattern: GrammarChecker.charactersPattern) {
             let charactersData = makeCharactersData(valueToken)
-            return JSONDataType.characters(charactersData)
+            return JSONDataValue.characters(charactersData)
         }
         throw Parser.Error.invalidToken(valueToken)
     }

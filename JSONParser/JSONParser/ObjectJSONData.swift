@@ -8,26 +8,11 @@
 
 import Foundation
 
-enum DataType {
-    case object
-    case array
-    
-    var description: String {
-        switch self {
-        case .array:
-            return "배열"
-        case .object:
-            return "객체"
-        }
-    }
-}
-
 struct ObjectJSONData: JSONData, JSONPrintable {
     
-    private let dataType: DataType = .object
-    private var jsonData: [String:JSONDataType] = [:]
+    private var jsonData: [String:JSONDataValue] = [:]
     
-    init(jsonData: JSONDataType) {
+    init(jsonData: JSONDataValue) {
         if case .object(let value) = jsonData {
             self.jsonData = value
         }
@@ -35,10 +20,6 @@ struct ObjectJSONData: JSONData, JSONPrintable {
     
     func totalDataCountDescription() -> String {
         return "총 \(jsonData.count)개의 객체 데이터 중에 "
-    }
-    
-    func totalDataTypeDescription() -> String {
-        return self.dataType.description
     }
     
     func countDataDescription() -> String {

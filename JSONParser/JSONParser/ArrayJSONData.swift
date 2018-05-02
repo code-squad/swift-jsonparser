@@ -11,10 +11,9 @@ import Foundation
 
 struct ArrayJSONData: JSONData, JSONPrintable {
     
-    private let dataType: DataType = .array
-    private var jsonData: [JSONDataType] = []
+    private var jsonData: [JSONDataValue] = []
     
-    init(jsonData: JSONDataType) {
+    init(jsonData: JSONDataValue) {
         if case .array(let value) = jsonData {
             self.jsonData = value
         }
@@ -22,10 +21,6 @@ struct ArrayJSONData: JSONData, JSONPrintable {
     
     func totalDataCountDescription() -> String {
         return "총 \(jsonData.count)개의 배열 데이터 중에 "
-    }
-    
-    func totalDataTypeDescription() -> String {
-        return self.dataType.description
     }
     
     func countDataDescription() -> String {

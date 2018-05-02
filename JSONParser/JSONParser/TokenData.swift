@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TokenData: Token {
+struct TokenData: TokenConvertible {
     
     private var tokens: [String]
     
