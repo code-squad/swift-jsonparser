@@ -72,4 +72,54 @@ struct ObjectJSONData: JSONData, JSONPrintable {
         }
         return (charactersCount, numberCount, booleanCount, objectCount, arrayCount)
     }
+    
+    func validateJSONData() -> String {
+        return self.makeJSONObjectFormat(indent: 1, self.jsonData)
+    }
+    
+    private func makeJSONObjectFormat(indent: Int, _ jsonObject: [String:JSONDataValue]) -> String {
+        var result: String = "{"
+        for (key, jsonDataValue) in jsonObject {
+            result += "\n"
+            result += String(repeating: "\t", count: indent)
+            switch jsonDataValue {
+            case .boolean(let value):
+                result += "\(key): \(value),"
+            case .characters(let value):
+                result += "\(key): \"\(value)\","
+            case .number(let value):
+                result += "\(key): \(value),"
+            case .object(let value):
+                result += "\(key): "
+                result += "\(makeJSONObjectFormat(indent: indent + 1, value)),"
+            case .array(let value):
+                result += "\(key): "
+                result += "\(makeJSONArrayFormat(value)),"
+            }
+        }
+        result.removeLast()
+        result += "\n"
+        result += String(repeating: "\t", count: indent - 1)
+        result += "}"
+        return result
+    }
+    
+    private func makeJSONArrayFormat(_ jsonArrayData: [JSONDataValue]) -> String {
+        var result = "["
+        for jsonData in jsonArrayData {
+            switch jsonData {
+            case .boolean(let value):
+                result += "\(value), "
+            case .characters(let value):
+                result += "\"\(value)\", "
+            case .number(let value):
+                result += "\(value), "
+            default:
+                break
+            }
+        }
+        result.removeLast(2)
+        result += "]"
+        return result
+    }
 }
