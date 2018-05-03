@@ -12,6 +12,7 @@ import Foundation
 struct ArrayJSONData: JSONData, JSONPrintable {
     
     private var jsonData: [JSONDataValue] = []
+    var jsonFormatter: JSONFormatter = JSONFormatter()
     
     init(jsonData: JSONDataValue) {
         if case .array(let value) = jsonData {
@@ -76,57 +77,6 @@ struct ArrayJSONData: JSONData, JSONPrintable {
     }
     
     func validateJSONData() -> String {
-        return self.makeJSONArrayFormat(indent: 1, self.jsonData)
-    }
-    
-    private func makeJSONArrayFormat(indent: Int, _ jsonArrayData: [JSONDataValue]) -> String {
-        var result = "["
-        for jsonData in jsonArrayData {
-            switch jsonData {
-            case .boolean(let value):
-                result += "\(value), "
-            case .characters(let value):
-                result += "\"\(value)\", "
-            case .number(let value):
-                result += "\(value), "
-            case .array(let value):
-                result += "\t\(makeJSONArrayFormat(indent: indent - 1, value)), "
-            case .object(let value):
-                result += "\(makeJSONObjectFormat(indent: indent + 1, value)), "
-            }
-        }
-        result.removeLast(2)
-        if indent == 1 {
-            result += "\n"
-        }
-        result += "]"
-        return result
-    }
-    
-    private func makeJSONObjectFormat(indent: Int, _ jsonObject: [String:JSONDataValue]) -> String {
-        var result: String = "{"
-        for (key, jsonDataValue) in jsonObject {
-            result += "\n"
-            result += String(repeating: "\t", count: indent)
-            switch jsonDataValue {
-            case .boolean(let value):
-                result += "\(key): \(value),"
-            case .characters(let value):
-                result += "\(key): \"\(value)\","
-            case .number(let value):
-                result += "\(key): \(value),"
-            case .object(let value):
-                result += "\(key): "
-                result += "\(makeJSONObjectFormat(indent: indent + 1, value)),"
-            case .array(let value):
-                result += "\(key): "
-                result += "\(makeJSONArrayFormat(indent: indent + 1, value)),"
-            }
-        }
-        result.removeLast()
-        result += "\n"
-        result += String(repeating: "\t", count: indent - 1)
-        result += "}"
-        return result
+        return self.jsonFormatter.makeJSONArrayFormat(indent: 1, self.jsonData)
     }
 }
