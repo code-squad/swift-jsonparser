@@ -1,25 +1,7 @@
 /*
 
-JSON step2
- 
- 분석할 JSON 데이터를 입력하세요.
- { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true }
- 총 4개의 객체 데이터 중에 문자열 2개, 숫자 1개, 부울 1개가 포함되어 있습니다.
- 
- 분석할 JSON 데이터를 입력하세요.
- [ { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true },
- { "name" : "YOON JISU", "alias" : "crong", "level" : 4, "married" : true } ]
- 총 2개의 배열 데이터 중에 객체 2개가 포함되어 있습니다.
- 
- 어휘추가 '{', '}', ':'
- 토큰추가 JSONObject
- 
- key value로 값을 저장
- key는 쌍따옴표로 이루어진 문자열 value는 문자열, 숫자, 부울
- [ {}, {} ]
- 
-어휘 : 왼쪽대괄호, 오른쪽 대괄호, 쌍따옴표 왼쪽, 쌍따옴표 오른쪽, 콤마, 띄어쓰기
-토큰 : string, number, bool, array
+// TODO:- JSON step4 피드백 1
+bracket(), curlyBrace() 내부에서 정규식을 써서 처리하도록 변경해보세요.
 
  
  */
@@ -49,13 +31,9 @@ struct JSONLexer {
         case invalidFormatLex
         case invalidFormatBracket
         case invalidFormatCurlyBrace
-        case invalidFormatDoubleQuote
-        case invalidFormatNumber
-        case invalidFormatBool
-        case invalidFormatGetDouble
     }
     
-    private let input:String
+    private var input:String
     private var position: String.Index
     private let blank:Character = " "
     private let comma:Character = ","
@@ -63,13 +41,6 @@ struct JSONLexer {
     private let closeBracket:Character = "]"
     private let openCurlyBrace:Character = "{"
     private let closeCurlyBrace:Character = "}"
-    private let colon:Character = ":"
-    private let dot:Character = "."
-    private let quotationMark:Character = "\""
-    private let numbers:[Character] = ["0","1","2","3","4","5","6","7","8","9"]
-    private let firstCharacterOfBool:[Character] = ["t", "T", "f", "F"]
-    private let allCharacterOfBool:[Character] = ["t", "T", "f","F", "a", "A", "l", "L", "s", "S", "e", "E", "r", "R", "u", "U"]
-    private let apostrophe:Character = "'"
     
     init(input:String) {
         self.input = input
@@ -107,44 +78,91 @@ struct JSONLexer {
     
     private mutating func curlyBrace() throws -> Token {
         var token:Token = Token.jsonObject([:])
-        var tempkey:String = ""
-        var tempValue:TokenBasicValueable!
-        var isKey = true
-        advance()
-        while let nextChracter = peek() {
-            switch nextChracter {
-            case blank : advance()
-            case quotationMark where isKey == true :
-                advance()
-                tempkey = try doubleQuote()
-            case colon : // key 담기
-                advance()
-                isKey = false
-            case quotationMark where isKey == false :
-                advance()
-                tempValue = try doubleQuote()
-                isKey = true
-            case numbers :
-                tempValue = try getNumber()
-                isKey = true
-            case firstCharacterOfBool:
-                tempValue = try getBool()
-                isKey = true
-            case openBracket where isKey == false:
-                tempValue = try bracket()
-                isKey = true
-            case closeBracket:
-                advance()
-            case comma :
-                advance()
-                token = try appendTokenToJSONObject(token, tempkey, tempValue)
-            case closeCurlyBrace :
-                token = try appendTokenToJSONObject(token, tempkey, tempValue)
-                return token
-            default: throw JSONLexer.Error.invalidFormatCurlyBrace
+        
+        let nestedObjectRegex = try NSRegularExpression(pattern: JSONPatterns.nestedObjectPattern)
+        let objectRegex = try NSRegularExpression(pattern:JSONPatterns.objectPattern)
+        let arrayRegex = try NSRegularExpression(pattern: JSONPatterns.arrayPattern)
+
+        if let objectFirstMatch = objectRegex.firstMatch(in: input, options: [], range: NSRange(location: 0, length: input.count)) {
+            if input == input[objectFirstMatch.range] {
+              token = try innerCurlyBrace()
+              position = input.index(before: input.endIndex)
+              return token
             }
         }
-       throw JSONLexer.Error.invalidFormatCurlyBrace
+        
+        if let nestedObjectFirstMatch = nestedObjectRegex.firstMatch(in: input, options: [], range: NSRange(location: 0, length: input.count)) {
+                let valuesInNestedObject = input[nestedObjectFirstMatch.range]
+            
+                let values = try matches(for: "\\s*\(JSONPatterns.stringPattern)\\s*:\\s*(\(JSONPatterns.stringPattern)|\(JSONPatterns.boolPattern)|\(JSONPatterns.arrayPattern)|\(JSONPatterns.numberPattern))", in: valuesInNestedObject)
+            
+                var key = ""
+                var tokenValue = ""
+            
+                for value in values {
+                    
+                    let splitedInKeyValue = value.split(separator: ":")
+                    key = splitedInKeyValue[0].trimmingCharacters(in: .whitespaces)
+                    tokenValue = splitedInKeyValue[1].trimmingCharacters(in: .whitespaces)
+
+                    if let _ = arrayRegex.firstMatch(in: tokenValue, options: [], range: NSRange(location: 0, length: tokenValue.count)) {
+                        input = tokenValue.trimmingCharacters(in: .whitespaces)
+                        let arrayToken = try innerBracket()
+                        token = try appendTokenToJSONObject(token, key, arrayToken)
+                        continue
+                    }
+                    
+                    
+                    if let numberValue = Double(tokenValue) {
+                        token = try appendTokenToJSONObject(token, key, numberValue)
+                        continue
+                    }
+                    if let boolValue = Bool(tokenValue) {
+                        token = try appendTokenToJSONObject(token, key, boolValue)
+                        continue
+                    }
+                    token = try appendTokenToJSONObject(token, key, tokenValue)
+            }
+        } else{
+            throw JSONLexer.Error.invalidFormatBracket
+        }
+
+        position = input.index(before: input.endIndex)
+        return token
+    }
+    
+    private mutating func innerCurlyBrace() throws -> Token {
+        var token:Token = Token.jsonObject([:])
+        let objectRegex = try NSRegularExpression(pattern:JSONPatterns.objectPattern)
+        
+        if let objectFirstMatch = objectRegex.firstMatch(in: input, options: [], range: NSRange(location: 0, length: input.count)) {
+            let valuesInObject = input[objectFirstMatch.range]
+            let values = try matches(for: "\\s*\(JSONPatterns.stringPattern)\\s*:\\s*(\(JSONPatterns.stringPattern)|\(JSONPatterns.boolPattern)|\(JSONPatterns.numberPattern))", in: valuesInObject)
+    
+            var key = ""
+            var tokenValue = ""
+    
+    
+            for value in values {
+                let splitedInKeyValue = value.split(separator: ":")
+                key = splitedInKeyValue[0].trimmingCharacters(in: .whitespaces)
+                tokenValue = splitedInKeyValue[1].trimmingCharacters(in: .whitespaces)
+                if let numberValue = Double(tokenValue) {
+                    token = try appendTokenToJSONObject(token, key, numberValue)
+                    continue
+                }
+                if let boolValue = Bool(tokenValue) {
+                    token = try appendTokenToJSONObject(token, key, boolValue)
+                    continue
+                }
+                token = try appendTokenToJSONObject(token, key, tokenValue)
+            }
+        } else {
+            throw JSONLexer.Error.invalidFormatCurlyBrace
+        }
+        
+        position = input.index(before: input.endIndex)
+        return token
     }
     
     private func appendTokenToJSONObject(_ token:Token, _ key:String, _ value:TokenBasicValueable) throws -> Token {
@@ -156,42 +174,110 @@ struct JSONLexer {
         }
     }
     
+    private func matches(for pattern: String, in text:String) throws -> [String] {
+        let regex = try NSRegularExpression(pattern: pattern, options: [])
+        let results = regex.matches(in: text, options: [], range: NSRange(location: 0, length: text.count))
+        return results.map { String(text[Range($0.range, in: text)!]) }
+    }
+    
     private mutating func bracket() throws -> Token {
         var token:Token = Token.jsonArray(tokens: [])
-        // bracket이면 다음 거
-        advance()
         
-        while let nextCharacter = peek() {
-            switch nextCharacter {
-            case numbers :
-                let value = try getNumber()
-                token = try appendTokenToJSONArray(token, value)
-                
-            // 공백과 콤마는 다음으로
-            case blank, comma, closeCurlyBrace: advance()
-            case quotationMark:
-                advance()
-                let value = try doubleQuote()
-                token = try appendTokenToJSONArray(token, value)
-                
-            case firstCharacterOfBool:
-                let value = try getBool()
-                token = try appendTokenToJSONArray(token, value)
-            case openCurlyBrace :
-                let objectToken = try curlyBrace()
-                token = try appendTokenToJSONArray(token, objectToken)
-            case openBracket:
-                token = try appendTokenToJSONArray(token, bracket())
-            //배열이 부모가 아닐 때
-            case closeBracket :
+        let nestedArrayRegex = try NSRegularExpression(pattern:JSONPatterns.nestedArrayPattern)
+        let arrayRegex = try NSRegularExpression(pattern: JSONPatterns.arrayPattern)
+
+        
+
+        if let arrayFirstMatch = arrayRegex.firstMatch(in: input, options: [], range: NSRange(location: 0, length: input.count)) {
+            // 매치 된 게 원래 거랑 같으면
+            if input == input[arrayFirstMatch.range] {
+                token = try innerBracket()
+                position = input.index(before: input.endIndex)
                 return token
-            // 배열이 부모일 때
-            case closeBracket where position == input.index(before: input.endIndex) :
-                return token
-            default: throw JSONLexer.Error.invalidFormatBracket
             }
         }
-        throw JSONLexer.Error.invalidFormatBracket
+        
+        if let nestedArrayFisrtMatch = nestedArrayRegex.firstMatch(in: input, options: [], range: NSRange(location: 0, length: input.count)) {
+            let valuesInNestedArray = input[nestedArrayFisrtMatch.range]
+            
+            let values = try matches(for: "(\(JSONPatterns.objectPattern)|\(JSONPatterns.arrayPattern)|\(JSONPatterns.stringPattern)|\(JSONPatterns.numberPattern)|\(JSONPatterns.boolPattern))", in: valuesInNestedArray)
+            
+            for value in values {
+                
+                let objectRegex = try NSRegularExpression(pattern: JSONPatterns.objectPattern)
+                
+                if let _ = objectRegex.firstMatch(in: value, options: [], range: NSRange(location: 0, length: value.count)) {
+                    input = value.trimmingCharacters(in: .whitespaces)
+                    token = try appendTokenToJSONArray(token, curlyBrace())
+                    continue
+                }
+                
+                if let _ = arrayRegex.firstMatch(in: value, options: [], range: NSRange(location: 0, length: value.count)) {
+                    input = value.trimmingCharacters(in: .whitespaces)
+                    token = try appendTokenToJSONArray(token, innerBracket())
+                    continue
+                }
+                
+                if let numberValue = Double(value) {
+                    token = try appendTokenToJSONArray(token, numberValue)
+                    continue
+                }
+                
+                if let boolValue = Bool(value) {
+                    token = try appendTokenToJSONArray(token, boolValue)
+                    continue
+                }
+                
+                // string
+                token = try appendTokenToJSONArray(token, value)
+            }
+        } else {
+            throw JSONLexer.Error.invalidFormatBracket
+        }
+        position = input.index(before: input.endIndex)
+        return token
+    }
+    
+    private mutating func innerBracket() throws -> Token {
+        var token:Token = Token.jsonArray(tokens: [])
+
+        let arrayRegex = try NSRegularExpression(pattern:JSONPatterns.arrayPattern)
+        if let firstMatch = arrayRegex.firstMatch(in: input, options: [], range: NSRange(location: 0, length: input.count)) {
+            // [(number|bool|string|object),(number|bool|string|object)] -> (number|bool|string|object),(number|bool|string|object)
+            let valuesInArray = input[firstMatch.range]
+            
+            
+            let values = try matches(for: "(\(JSONPatterns.objectPattern)|\(JSONPatterns.stringPattern)|\(JSONPatterns.numberPattern)|\(JSONPatterns.boolPattern))", in: valuesInArray)
+            
+            for value in values {
+                
+                let objectRegex = try NSRegularExpression(pattern: JSONPatterns.objectPattern)
+                
+                if let _ = objectRegex.firstMatch(in: value, options: [], range: NSRange(location: 0, length: value.count)) {
+                    input = value
+                    token = try appendTokenToJSONArray(token, curlyBrace())
+                    continue
+                }
+                
+                if let numberValue = Double(value) {
+                    token = try appendTokenToJSONArray(token, numberValue)
+                    continue
+                }
+                
+                if let boolValue = Bool(value) {
+                    token = try appendTokenToJSONArray(token, boolValue)
+                    continue
+                }
+                
+                // string
+                token = try appendTokenToJSONArray(token, value)
+                
+            }
+        } else {
+            throw JSONLexer.Error.invalidFormatBracket
+        }
+        position = input.index(before: input.endIndex)
+        return token
     }
     
     private func appendTokenToJSONArray(_ token:Token, _ value:TokenBasicValueable) throws -> Token {
@@ -202,108 +288,6 @@ struct JSONLexer {
         default: throw JSONLexer.Error.invalidFormatBracket
             
         }
-    }
-
-    private mutating func doubleQuote() throws -> String {
-        var value = ""
-        while let nextCharacter = peek() {
-            let asciiValueOfCharacter = nextCharacter.asciiValue
-            guard let unicodeScalarOfCharacter = Unicode.Scalar.init(asciiValueOfCharacter) else {
-                throw JSONLexer.Error.invalidFormatDoubleQuote
-            }
-            switch nextCharacter {
-            case dot, blank, apostrophe:
-                value.append(nextCharacter)
-                advance()
-            case _ where CharacterSet.alphanumerics.contains(unicodeScalarOfCharacter) :
-                value.append(nextCharacter)
-                advance()
-            case quotationMark:
-                advance()
-                return value
-            default: throw JSONLexer.Error.invalidFormatDoubleQuote
-            }
-        }
-        throw JSONLexer.Error.invalidFormatDoubleQuote
-    }
-    
-   private mutating func getBool() throws -> Bool {
-        var value:Bool = false
-        var rawValue:String = ""
-        
-        while let nextCharacter = peek() {
-            switch nextCharacter {
-            case allCharacterOfBool:
-                rawValue.append(nextCharacter)
-                advance()
-            case blank:
-                advance()
-            case comma, closeCurlyBrace:
-                value = try checkBool(rawValue)
-                return value
-            case closeBracket where position == input.index(before: input.endIndex):
-                value = try checkBool(rawValue)
-                return value
-            default: throw JSONLexer.Error.invalidFormatBool
-            }
-        }
-        throw JSONLexer.Error.invalidFormatBool
-    }
-    
-    private func checkBool(_ rawValue:String) throws -> Bool{
-        guard let value = rawValue.toBool() else {
-            throw JSONLexer.Error.invalidFormatBool
-        }
-        return value
-    }
-    
-    private mutating func getNumber() throws -> Double {
-        var value = 0.0
-        
-        while let nextChracter = peek() {
-            switch nextChracter {
-            case numbers :
-                let digitValue = Double(String(nextChracter))!
-                value = 10 * value + digitValue
-                advance()
-            case comma, blank:
-                return value
-            case dot:
-                let valueWithDot = String(value)
-                advance()
-                value = try getDouble(valueWithDot)
-            case closeBracket where position == input.index(before: input.endIndex) ,closeCurlyBrace where position == input.index(before: input.endIndex) :
-                return value
-            default: throw JSONLexer.Error.invalidFormatNumber
-            }
-        }
-        throw JSONLexer.Error.invalidFormatNumber
-    }
-    
-    private mutating func getDouble(_ number : String) throws -> Double {
-        var value = number
-        
-        while let nextChracter = peek() {
-            switch nextChracter {
-            case numbers :
-                value.append(nextChracter)
-                advance()
-            case comma, blank:
-                advance()
-                return try valueToDouble(value)
-            case closeBracket where position == input.index(before: input.endIndex) :
-                return try valueToDouble(value)
-            default: throw JSONLexer.Error.invalidFormatGetDouble
-            }
-        }
-        throw JSONLexer.Error.invalidFormatGetDouble
-    }
-    
-    private func valueToDouble(_ rawValue : String ) throws -> Double {
-        guard let value = Double(rawValue) else {
-            throw JSONLexer.Error.invalidFormatGetDouble
-        }
-        return value
     }
 }
 

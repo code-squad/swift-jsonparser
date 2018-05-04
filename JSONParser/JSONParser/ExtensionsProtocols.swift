@@ -21,6 +21,14 @@ extension String {
     }
 }
 
+extension String {
+    public subscript(aRange: NSRange) -> String {
+        let start = index(startIndex, offsetBy: aRange.location)
+        let end = index(start, offsetBy: aRange.length)
+        return String(self[start..<end])
+    }
+}
+
 extension Character {
     var asciiValue: Int {
         get {
