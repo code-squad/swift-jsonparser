@@ -11,26 +11,31 @@
 struct Lexer {
     
     private var lexer: Queue<Character>
+    private let tokens: Queue<String>
     
     init(_ lexerFormat: String) {
         self.lexer = Queue(Array(lexerFormat.trim()))
+        self.tokens = Queue<String>()
     }
     
     func getToken() throws -> Queue<String> {
-        let tokens = Queue<String>()
         var tokenValue : String = ""
         
         while let token = lexer.dequeue() {
             switch token {
-                case TokenSplitUnit.startBracket.rawValue:
+                case TokenSplitUnit.startBracket.char:
                     tokens.enqueue(String(token))
-                case TokenSplitUnit.endBrackert.rawValue:
-                    tokens.enqueue(tokenValue)
+                case TokenSplitUnit.endBrackert.char:
+                    tokenValue = setTokenValue(tokenValue)
                     tokens.enqueue(String(token))
-                case TokenSplitUnit.comma.rawValue:
-                    tokens.enqueue(tokenValue)
+                case TokenSplitUnit.startBrace.char:
                     tokens.enqueue(String(token))
-                    tokenValue.removeAll()
+                case TokenSplitUnit.endBrace.char:
+                    tokenValue = setTokenValue(tokenValue)
+                    tokens.enqueue(String(token))
+                case TokenSplitUnit.comma.char:
+                    tokenValue = setTokenValue(tokenValue)
+                    tokens.enqueue(String(token))
             default:
                 tokenValue += String(token)
             }
@@ -39,7 +44,14 @@ struct Lexer {
         if tokens.isEmpty() {
             throw JSONPaserErorr.isJsonLexer
         }
-        
         return tokens
+    }
+    
+    private func setTokenValue(_ tokenValue: String) -> String {
+        if !tokenValue.isEmpty {
+            tokens.enqueue(tokenValue)
+            return ""
+        }
+        return tokenValue
     }
 }
