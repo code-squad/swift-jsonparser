@@ -6,4 +6,17 @@
 //  Copyright © 2018년 JK. All rights reserved.
 //
 
-import Foundation
+struct JSONObjectArray: JSON {
+    
+    private let jsonGenertor = JSONGenerator()
+    private let jsonObjectArray: JSONType
+    
+    init?(_ jsonType: JSONType)  {
+        self.jsonObjectArray = jsonType
+        self.jsonGenertor.upwrapJSON(jsonObjectArray)
+    }
+    
+    func descriptionShow() -> String {
+        return self.jsonGenertor.descriptionMake()
+    }
+}
