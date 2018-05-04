@@ -6,4 +6,7 @@
 //  Copyright © 2018년 JK. All rights reserved.
 //
 
-import Foundation
+protocol JSON {
+    init?(_ jsonType: JSONType)
+    func descriptionShow() -> String
+}
