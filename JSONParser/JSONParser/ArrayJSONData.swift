@@ -12,7 +12,6 @@ import Foundation
 struct ArrayJSONData: JSONData, JSONPrintable {
     
     private var jsonData: [JSONDataValue] = []
-    var jsonFormatter: JSONFormatter = JSONFormatter()
     
     init(jsonData: JSONDataValue) {
         if case .array(let value) = jsonData {
@@ -77,6 +76,6 @@ struct ArrayJSONData: JSONData, JSONPrintable {
     }
     
     func validateJSONData() -> String {
-        return self.jsonFormatter.makeJSONArrayFormat(indent: 1, self.jsonData)
+        return self.makeJSONArrayFormat(indent: 1, self.jsonData)
     }
 }
