@@ -16,7 +16,7 @@ struct OutputView {
         print(e.rawValue)
     }
     
-    static func resultShow(_ resultJSON: JSONData) {
+    static func resultShow(_ resultJSON: JSON) {
         print(resultJSON.descriptionShow())
     }
 }
