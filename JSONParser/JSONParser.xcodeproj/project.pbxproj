@@ -12,7 +12,6 @@
 		73407CD4208DB4DB00B22CB9 /* TokenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73407CD3208DB4DB00B22CB9 /* TokenData.swift */; };
 		73407CD8208EBB5A00B22CB9 /* ArrayJSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73407CD7208EBB5A00B22CB9 /* ArrayJSONData.swift */; };
 		73407CDA208EBB6600B22CB9 /* ObjectJSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73407CD9208EBB6600B22CB9 /* ObjectJSONData.swift */; };
-		73711D53209AE50D00447805 /* JSONFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73711D52209AE50D00447805 /* JSONFormatter.swift */; };
 		739117732085CBC100C960D4 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739117722085CBC100C960D4 /* Lexer.swift */; };
 		739117772086729C00C960D4 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739117762086729C00C960D4 /* Parser.swift */; };
 		7391177B20871CB000C960D4 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7391177A20871CB000C960D4 /* OutputView.swift */; };
@@ -38,7 +37,6 @@
 		73407CD3208DB4DB00B22CB9 /* TokenData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenData.swift; sourceTree = "<group>"; };
 		73407CD7208EBB5A00B22CB9 /* ArrayJSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayJSONData.swift; sourceTree = "<group>"; };
 		73407CD9208EBB6600B22CB9 /* ObjectJSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectJSONData.swift; sourceTree = "<group>"; };
-		73711D52209AE50D00447805 /* JSONFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFormatter.swift; sourceTree = "<group>"; };
 		739117722085CBC100C960D4 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		739117762086729C00C960D4 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		7391177A20871CB000C960D4 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 				73407CD7208EBB5A00B22CB9 /* ArrayJSONData.swift */,
 				73407CD9208EBB6600B22CB9 /* ObjectJSONData.swift */,
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
-				73711D52209AE50D00447805 /* JSONFormatter.swift */,
 				73407CD3208DB4DB00B22CB9 /* TokenData.swift */,
 			);
 			path = JSONParser;
@@ -162,7 +159,6 @@
 				739117772086729C00C960D4 /* Parser.swift in Sources */,
 				73407CD8208EBB5A00B22CB9 /* ArrayJSONData.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
-				73711D53209AE50D00447805 /* JSONFormatter.swift in Sources */,
 				73407CDA208EBB6600B22CB9 /* ObjectJSONData.swift in Sources */,
 				739117732085CBC100C960D4 /* Lexer.swift in Sources */,
 				7300E62920848DE800C01312 /* InputView.swift in Sources */,
