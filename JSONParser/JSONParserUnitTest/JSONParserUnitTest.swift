@@ -12,7 +12,19 @@ class JSONParserUnitTest: XCTestCase {
     
     let jsonFormat: String = "[ 10, 21, 4, 314, 99, 0, 72 ]"
     let jsonFormatRemoveSpace: String = "[10,21,4,314,99,0,72]"
+
     let inputValue = "value"
+    
+    let objectExpectNumber: String = "{\"key\":123}"
+    let objectExpectString: String = "{\"key\":\"string\"}"
+    let objectExpectBool: String = "{\"key\":false}"
+    
+    let arrayExpectNumber: String = "[1,2,3,4,5]"
+    let arrayExpectString: String = "[\"string\",\"string\",\"string\",\"string\",\"string\"]"
+    let arrayExpectBool: String = "[false,true,false,true]"
+    
+    let arrayExpectAnyObject: String = "[{\"key_1\":\"value\"},{\"key_2\":123},{\"key_3\":false}]"
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -189,74 +201,59 @@ class JSONParserUnitTest: XCTestCase {
     
     // MARK : Parser
     
-    //  Parser : 객체 생성
-    func test_ParserInstanceCreate() throws {
-        let expectLexer = Lexer(jsonFormat)
-        let expectToken = try expectLexer.getToken()
-        let expectParser = Paser(expectToken)
-        XCTAssertNotNil(expectParser)
+    // Parser : objectArray 타입 확인
+    func test_숫자오브젝트() throws  {
+        let tokens = try Lexer(objectExpectNumber).getToken()
+        let expectOjbect = try Parser(tokens).parse()
+        let jsonobject = expectOjbect as? JSONObjectArray
+        XCTAssertNotNil(jsonobject)
     }
     
-    // Paser : 제대로 된 parse
-    func test_ParserPass() throws {
-        let expectLexer = Lexer(jsonFormat)
-        let expectToken = try expectLexer.getToken()
-        let expectParser = Paser(expectToken)
-        XCTAssertNoThrow(try expectParser.parse())
+    // parser : objectArray 타입 확인 value string
+    func test_문자오브젝트() throws {
+        let tokens = try Lexer(objectExpectString).getToken()
+        let expectOjbect = try Parser(tokens).parse()
+        let jsonobject = expectOjbect as? JSONObjectArray
+        XCTAssertNotNil(jsonobject)
     }
     
-    // Parser : 배열 안 형식이 아닐떄
-    func test_ParserNoArrayFormat() throws {
-        let unJsonFormat = "[ 10, 21, 4, 314, 99, 0, 72 "
-        let expectLexer = Lexer(unJsonFormat)
-        let expectToken = try expectLexer.getToken()
-        let expectParser = Paser(expectToken)
-        XCTAssertThrowsError(try expectParser.parse())
-    }
-
-    // Parser : 숫자 데이타에 저장되는지 체크
-    func test_ParserAfterSetNumberData() throws {
-        let expectLexer = Lexer(jsonFormat)
-        let expectToken = try expectLexer.getToken()
-        let expectParser = Paser(expectToken)
-        let parse = try expectParser.parse()
-        let jsonData = try Json.get(parse)
-        XCTAssertEqual(7, jsonData.countOfNumber())
+    // parser : ojbectArray 타입 확인 value boolean
+    func test_부울오브젝트() throws {
+        let tokens = try Lexer(objectExpectBool).getToken()
+        let expectOjbect = try Parser(tokens).parse()
+        let jsonobject = expectOjbect as? JSONObjectArray
+        XCTAssertNotNil(jsonobject)
     }
     
-    // Parser : 문자 데이터에 저장되는지 체크
-    func test_ParserAfterSetStringData() throws {
-        let jsonStringData = "[\"s\",\"string\"]"
-        let expectLexer = Lexer(jsonStringData)
-        let expectToken = try expectLexer.getToken()
-        let expectParser = Paser(expectToken)
-        let parse = try expectParser.parse()
-        let jsonData = try Json.get(parse)
-        XCTAssertEqual(2, jsonData.countOfString())
+    // Parser : JsonArray value : number
+    func test_숫자배열() throws {
+        let tokens = try Lexer(arrayExpectNumber).getToken()
+        let expectArray = try Parser(tokens).parse()
+        let jsonarray = expectArray as? JSONArray
+        XCTAssertNotNil(jsonarray)
     }
     
-    // Parser : 부울 데이터에 저장되는지 체크
-    func test_ParserAfterSetBooleanData() throws {
-        let jsonBooleanData = "[false, true]"
-        let expectLexer = Lexer(jsonBooleanData)
-        let expectToken = try expectLexer.getToken()
-        let expectParser = Paser(expectToken)
-        let parse = try expectParser.parse()
-        let jsonData = try Json.get(parse)
-        XCTAssertEqual(2, jsonData.countOfBoolean())
+    // Parser : JsonArray value : string
+    func test_문자배열() throws {
+        let tokens = try Lexer(arrayExpectString).getToken()
+        let expectArray = try Parser(tokens).parse()
+        let array = expectArray as? JSONArray
+        XCTAssertNotNil(array)
     }
     
-    // Parser : 숫자, 문자, 부울 분리 되어 저장되는지 체크
-    func test_ParserMutilSetData() throws {
-        let jsonFormat = "[\"false\", false, 123]"
-        let expectLexer = Lexer(jsonFormat)
-        let expectToken = try expectLexer.getToken()
-        let expectParser = Paser(expectToken)
-        let parse = try expectParser.parse()
-        let jsonData = try Json.get(parse)
-
-        XCTAssertEqual(1, jsonData.countOfString())
-        XCTAssertEqual(1, jsonData.countOfNumber())
-        XCTAssertEqual(1, jsonData.countOfBoolean())
+    // Parser : JsonArray value : boolean
+    func test_부울배열() throws {
+        let tokens = try Lexer(arrayExpectBool).getToken()
+        let expectArray = try Parser(tokens).parse()
+        let array = expectArray as? JSONArray
+        XCTAssertNotNil(array)
+    }
+    
+    // Parser : JsonArray value : Ojbect
+    func test_오브젝트배열() throws {
+        let tokens = try Lexer(arrayExpectAnyObject).getToken()
+        let expectArray = try Parser(tokens).parse()
+        let array = expectArray as? JSONArray
+        XCTAssertNotNil(array)
     }
 }
