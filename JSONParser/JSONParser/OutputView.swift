@@ -17,9 +17,36 @@ protocol JSONPrintable {
 }
 
 struct OutputView {
-    static func printJSONData(_ jsonData: JSONPrintable) {
+    enum Error: Swift.Error {
+        case writeFailToFile
+        case invalidNumberOfArguments
+        
+        var errorMessage: String {
+            switch self {
+            case .writeFailToFile:
+                return "파일쓰기 실패"
+            case .invalidNumberOfArguments:
+                return "터미널 실행 인자값 갯수 오류"
+            }
+        }
+    }
+    
+    static private let defaultOutputFileName = "output.json"
+    
+    static func printNumberOfJSONData(_ jsonData: JSONPrintable) {
         print("\(jsonData.totalDataCountDescription())\(jsonData.countDataDescription())가 포함되어 있습니다.")
+    }
+    
+    static func printJSONData(_ jsonData: JSONPrintable) {
         print(jsonData.validateJSONData())
+    }
+    
+    static func writeJSONData(_ jsonData: JSONPrintable, fileName: String?) throws {
+        let outputFileName: String = fileName ?? self.defaultOutputFileName
+        let outputFilePath: String = FileManager.default.currentDirectoryPath.appending("/\(outputFileName)")
+        guard let _ = try? jsonData.validateJSONData().write(toFile: outputFilePath, atomically: true, encoding: .utf8) else {
+            throw OutputView.Error.writeFailToFile
+        }
     }
 }
 
@@ -75,4 +102,5 @@ extension JSONPrintable {
         result += "]"
         return result
     }
+    
 }
