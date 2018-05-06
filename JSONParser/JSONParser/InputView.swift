@@ -17,6 +17,7 @@ struct InputView {
     enum Error: Swift.Error {
         case invalidInputFileName
         case readFailFromFile
+        case nilInput
         
         var errorMessage: String {
             switch self {
@@ -24,16 +25,16 @@ struct InputView {
                 return "파일이름이 잘못되었습니다."
             case .readFailFromFile:
                 return "파일로부터 Input 읽기 실패"
+            case .nilInput:
+                return "입력이 비었습니다."
             }
         }
     }
     
-    private static let defaultOutputFileName: String = "output.json"
-    
-    static func readInput(_ question: Question) -> String? {
+    static func readInput(_ question: Question) throws -> String {
         print(question.rawValue)
         guard let input = readLine() else {
-            return nil
+            throw InputView.Error.nilInput
         }
         
         return input
