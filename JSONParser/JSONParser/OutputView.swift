@@ -31,7 +31,7 @@ struct OutputView {
         }
     }
     
-    static private let defaultOutputFileName = "output.json"
+    static let defaultOutputFileName = "output.json"
     
     static func printNumberOfJSONData(_ jsonData: JSONPrintable) {
         print("\(jsonData.totalDataCountDescription())\(jsonData.countDataDescription())가 포함되어 있습니다.")
@@ -41,9 +41,8 @@ struct OutputView {
         print(jsonData.validateJSONData())
     }
     
-    static func writeJSONData(_ jsonData: JSONPrintable, fileName: String?) throws {
-        let outputFileName: String = fileName ?? self.defaultOutputFileName
-        let outputFilePath: String = FileManager.default.currentDirectoryPath.appending("/\(outputFileName)")
+    static func writeJSONData(_ jsonData: JSONPrintable, fileName: String) throws {
+        let outputFilePath: String = FileManager.default.currentDirectoryPath.appending("/\(fileName)")
         guard let _ = try? jsonData.validateJSONData().write(toFile: outputFilePath, atomically: true, encoding: .utf8) else {
             throw OutputView.Error.writeFailToFile
         }

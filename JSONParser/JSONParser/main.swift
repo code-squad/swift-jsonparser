@@ -22,7 +22,7 @@ func main(_ argc: Int32, _ arguments: [String]) {
             case 1:
                 OutputView.printJSONData(jsonData)
             case 2:
-                try OutputView.writeJSONData(jsonData, fileName: nil)
+                try OutputView.writeJSONData(jsonData, fileName: OutputView.defaultOutputFileName)
             case 3:
                 try OutputView.writeJSONData(jsonData, fileName: arguments[2])
             default:

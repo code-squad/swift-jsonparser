@@ -41,7 +41,7 @@ struct InputView {
     }
 
     static func readInputFromFile(_ inputFileName: String) throws -> String {
-        guard let fileURL = Bundle.main.path(forResource: inputFileName, ofType: nil) else {
+        guard let fileURL = Bundle.main.path(forResource: inputFileName, ofType: "json") else {
             throw InputView.Error.invalidInputFileName
         }
         guard let input = try? String(contentsOfFile: fileURL, encoding: .utf8) else {
