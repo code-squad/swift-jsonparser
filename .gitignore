@@ -65,3 +65,10 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
+
+# JSONParser
+#
+# runFile, input, output file
+JSONParser/JSONParser/input.json
+JSONParser/JSONParser/output.json
+JSONParser/JSONParser/JSONParser.exe
