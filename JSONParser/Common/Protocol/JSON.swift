@@ -7,6 +7,6 @@
 //
 
 protocol JSON {
-    init?(_ jsonType: JSONType)
-    func descriptionShow() -> String
+    func description() -> String
+    func calculationTypeCount() -> (Int, Int, Int, Int, Int)
 }
