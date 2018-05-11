@@ -1,11 +1,11 @@
+////
+////  Queue.swift
+////  JSONParser
+////
+////  Created by Jung seoung Yeo on 2018. 4. 19..
+////  Copyright © 2018년 JK. All rights reserved.
+////
 //
-//  Queue.swift
-//  JSONParser
-//
-//  Created by Jung seoung Yeo on 2018. 4. 19..
-//  Copyright © 2018년 JK. All rights reserved.
-//
-
 class Queue<T> {
     private var queue:[T]
     
@@ -29,7 +29,11 @@ class Queue<T> {
     }
     
     func isEmpty() -> Bool {
-        return queue.count == 0
+        return count == 0
+    }
+    
+    var count: Int {
+        return queue.count
     }
     
 }
