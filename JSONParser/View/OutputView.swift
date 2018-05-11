@@ -12,11 +12,11 @@ struct OutputView {
         print(JSONPASER_QUESTION_INPUT)
     }
     
-    static func errorMessage(of e: JSONPaserErorr) {
-        print(e.rawValue)
+    static func errorMessage(of e: JsonError) {
+        print(e.description)
     }
     
-    static func resultShow(_ resultJSON: JSON) {
-        print(resultJSON.descriptionShow())
+    static func showReuslt(_ json: JSON) {
+        print(json.description())
     }
 }
