@@ -9,7 +9,7 @@
 struct InputView {
     static func readInput() throws -> String {
         guard let readInput = readLine() else {
-            throw JSONPaserErorr.isNil
+            throw JsonError.isNil
         }
         return readInput
     }
