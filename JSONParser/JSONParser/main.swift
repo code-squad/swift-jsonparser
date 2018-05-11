@@ -12,14 +12,15 @@ import Foundation
 func main() throws {
     OutputView.ask()
     do {
-        let jsonFormat = try InputView.readInput()
-        let tokens = try Lexer(jsonFormat).getToken()
-        let parse = try Parser(tokens).parse()
-        OutputView.resultShow(parse)
+        let input = try InputView.readInput()
+        let lex = Lexer(input).lex()
+        let parse = try Parser(lex).parse()
+        OutputView.showReuslt(parse)
         
-    }catch let e as JSONPaserErorr {
+    }catch let e as JsonError {
         OutputView.errorMessage(of: e)
     }
 }
 
 try main()
+
