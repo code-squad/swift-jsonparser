@@ -13,10 +13,7 @@ extension String {
         return self.replacingOccurrences(of: " ", with: "")
     }
     
-    func pattenMatching(_ patten: String) throws {
-        let regex = try NSRegularExpression(pattern: patten, options: [])
-        if !(regex.matches(in: self, options: [], range: NSMakeRange(0, self.count)).count > 0) {
-            throw JSONPaserErorr.isRegex
-        }
+    func isMatching(expression: NSRegularExpression) -> Bool {
+        return expression.numberOfMatches(in: self, range: NSMakeRange(0, self.count)) > 0
     }
 }
