@@ -1,177 +1,200 @@
-//
-//  JSONPaser.swift
-//  JSONParser
-//
-//  Created by Jung seoung Yeo on 2018. 4. 19..
-//  Copyright © 2018년 JK. All rights reserved.
-//
+////
+////  JSONPaser.swift
+////  JSONParser
+////
+////  Created by Jung seoung Yeo on 2018. 4. 19..
+////  Copyright © 2018년 JK. All rights reserved.
+////
 
-class Parser {
+import Foundation
+
+struct Parser {
+    private let lexQueue: Queue<String>
+    private let tokenCapsule: Stack<String>
     
-    private var tokens: Queue<String>
-    private var tokenCapsule: Stack<String>
-
-    init(_ tokens: Queue<String>) {
-        self.tokens = tokens
+    init(_ lexQueue: Queue<String>){
+        self.lexQueue = lexQueue
         self.tokenCapsule = Stack<String>()
     }
     
-    func parse() throws -> JSON {
+    func isVaildLex() -> Bool {
+        return !lexQueue.isEmpty()
+    }
     
-        switch tokens.front() {
-            case TokenSplitUnit.startBracket.string:
-                guard let array = JSONArray(try arrayMaker()) else {
-                    throw JSONPaserErorr.isJsonPaser
-                }
-                return array
-            case TokenSplitUnit.startBrace.string:
-                guard let object = JSONObjectArray(try objectArrayMaker()) else {
-                    throw JSONPaserErorr.isJsonPaser
-                }
-                return object
+    func parse() throws -> JSON {
+        guard isVaildLex() else {
+            throw JsonError.isVilidLex
+        }
+        return try parseMaker()
+    }
+    
+    func parseMaker() throws -> JSON {
+    
+        let lexFront = lexQueue.front()
+        
+        switch lexFront {
+            case TokenForm.openBracket.str:
+                return JsonArray(try arrayMaker())
+            case TokenForm.openBrace.str:
+                return JsonObject(try objectMaker())
         default:
-            throw JSONPaserErorr.noStartToken
+            throw JsonError.isStartToken
         }
     }
     
-    private func arrayMaker() throws -> JSONType {
-        var jsonArray: [JSONType] = []
+    func arrayMaker() throws -> Type {
+        var array: [Type] = []
         
-        while let token = tokens.dequeue() {
+        while let token = lexQueue.dequeue() {
             switch token {
-                case TokenSplitUnit.startBracket.string:
+                case TokenForm.openBracket.str:
                     tokenCapsule.push(token)
-                    jsonArray.append(try arrayMaker())
-                case TokenSplitUnit.startBrace.string:
+                    try array.append(arrayMaker())
+                case TokenForm.closeBracket.str:
+                    try closeCapsule(token)
+                    if lexQueue.isEmpty() {
+                        break
+                    }
+                    continue
+                case TokenForm.openBrace.str:
                     tokenCapsule.push(token)
-                    jsonArray.append(try JSONType.Object(objectMaker()))
-                case TokenSplitUnit.colon.string, TokenSplitUnit.comma.string:
-                    try nextTokenChecker(front())
-                case TokenSplitUnit.endBrackert.string, TokenSplitUnit.endBrace.string:
-                    try noMatchingThrow(tokenCapsule.pop(), token)
+                    try array.append(objectMaker())
+                case TokenForm.closeBrace.str:
+                    try closeCapsule(token)
+                    if lexQueue.isEmpty() {
+                        break
+                    }
+                    continue
+                case TokenForm.comma.str:
+                    if lexQueue.isEmpty() {
+                        throw JsonError.isCommaNext
+                    }
+                    continue
+                case TokenForm.colon.str:
+                    throw JsonError.isToken
             default:
-                jsonArray.append(try setJSONData(token))
+                try array.append(jsonTypeMaker(token))
             }
         }
-
-        if !isClose() {
-            throw JSONPaserErorr.isCapsule
+        
+        if !lexQueue.isEmpty() {
+            throw JsonError.isClose
         }
-        return JSONType.Array(jsonArray)
+        
+        if !tokenCapsule.isEmpty() {
+            throw JsonError.isClose
+        }
+        
+        return Type.array(array)
     }
     
-    private func dequeue() throws -> String {
-        guard let token = tokens.dequeue() else {
-            throw JSONPaserErorr.isNil
+    func objectMaker() throws -> Type {
+        var object : [String: Type] = [:]
+        var key: String = ""
+        
+        while let token = lexQueue.dequeue() {
+            switch token {
+                case TokenForm.openBrace.str:
+                    tokenCapsule.push(token)
+                    continue
+                case TokenForm.closeBrace.str:
+                    try closeCapsule(token)
+                    return Type.object(object)
+                case TokenForm.colon.str:
+                    guard let nextToken = lexQueue.dequeue() else {
+                        throw JsonError.isNextToken
+                    }
+                    object[key] = try objectValueMaker(nextToken)
+                case TokenForm.comma.str:
+                if lexQueue.isEmpty() {
+                    throw JsonError.isCommaNext
+                }
+            default :
+                try key = objectKeyMaker(token)
+            }
+        }
+        
+        return Type.object(object)
+    }
+    
+    func objectKeyMaker(_ token: String) throws -> String {
+        guard token.isMatching(expression: NSRegularExpression(pattern: Regex.string.description)) else {
+            throw JsonError.isStringMatching
         }
         return token
     }
     
-    private func front() throws -> String {
-        guard let front = tokens.front() else {
-            throw JSONPaserErorr.isNil
+    func objectValueMaker(_ token: String) throws -> Type {
+        switch token {
+        case TokenForm.openBracket.str:
+            tokenCapsule.push(token)
+            return try arrayMaker()
+        case TokenForm.openBrace.str:
+            tokenCapsule.push(token)
+            return try objectMaker()
+        default:
+            return try jsonTypeMaker(token)
         }
-        return front
     }
-    
-    private func objectArrayMaker() throws -> JSONType {
-        var jsonOjbectArray: [[String: JSONType]] = []
 
-        while let token = tokens.front() {
-            switch token {
-            case TokenSplitUnit.startBrace.string:
-                try tokenCapsule.push(dequeue())
-            case TokenSplitUnit.comma.string:
-                if isClose() { break }
-                continue
-            case TokenSplitUnit.endBrace.string:
-                try noMatchingThrow(tokenCapsule.pop(), dequeue())
-            default:
-                jsonOjbectArray.append(try objectMaker())
-            }
-        }
-        if !isClose() {
-            throw JSONPaserErorr.isCapsule
-        }
-        return JSONType.ObjectArray(jsonOjbectArray)
-    }
-    
-    private func objectMaker() throws -> [String: JSONType] {
-        var jsonObject: [String: JSONType] = [:]
-        let object = try dequeue().split(separator: ":").map{ String($0) }
-        
-        let key = object[0]
-        let value = object[1]
-        jsonObject[key] = try setJSONData(value)
-        return jsonObject
-    }
-    
-    private func setJSONData(_ token: String) throws -> JSONType {
-        
-        guard let first = token.first else {
-            throw JSONPaserErorr.isNil
+    func jsonTypeMaker(_ token: String) throws -> Type {
+        guard let tokenFirst = token.first else {
+            throw JsonError.isTokenFirst
         }
         
-        switch first {
-            case "0"..."9"          : return try numberChecker(token)
-            case "\""               : return try stringChecker(token)
-            case "f", "t", "F", "T" : return try booleanChecker(token)
-        default: throw JSONPaserErorr.notFirst
+        switch tokenFirst {
+            case "0" ... "9":
+                return try makeNumber(token)
+            case "\"":
+                return try makeString(token)
+            case "t","f","T","F":
+                return try makeBoolean(token)
+        default:
+            throw JsonError.isToken
         }
     }
     
-    private func noMatchingThrow(_ front: String?, _ end: String) throws {
-        guard let font = front else {
-            throw JSONPaserErorr.isNil
+    func makeNumber(_ token: String) throws -> Type {
+        guard token.isMatching(expression: NSRegularExpression(pattern: Regex.number.description)) else {
+            throw JsonError.isNumberMatching
         }
-
-        let capsule = font + end
+        guard let number = Int(token) else {
+            throw JsonError.isConvertNumber
+        }
+        return Type.number(number)
+    }
+    
+    func makeString(_ token: String) throws -> Type {
+        guard token.isMatching(expression: NSRegularExpression(pattern: Regex.string.description)) else {
+            throw JsonError.isStringMatching
+        }
+        return Type.string(token)
+    }
+    
+    func makeBoolean(_ token: String) throws -> Type {
+        guard token.isMatching(expression: NSRegularExpression(pattern: Regex.boolean.description)) else {
+            throw JsonError.isNumberMatching
+        }
+        guard let boolean = Bool(token) else {
+            throw JsonError.isConvertBoolean
+        }
+        return Type.bool(boolean)
+    }
+    
+    func closeCapsule(_ closeToken: String) throws {
+        guard let openToken = tokenCapsule.pop() else {
+            throw JsonError.isOpenToken
+        }
+        
+        let capsule = openToken + closeToken
         
         switch capsule {
-            case Capsule.Bracket.rawValue: break
-            case Capsule.Brace.rawValue: break
-        default:
-            throw JSONPaserErorr.isJsonPaser
-        }
-    }
-    
-    private func numberChecker(_ numberToken: String) throws -> JSONType {
-        try numberToken.pattenMatching(RegexPatten.NumberPatten.rawValue)
-        
-        guard let number = Int(numberToken) else {
-            throw JSONPaserErorr.isNumber
-        }
-        return JSONType.Number(number)
-    }
-    
-    private func booleanChecker(_ booleanToken: String) throws -> JSONType {
-        try booleanToken.pattenMatching(RegexPatten.BooleanPaten.rawValue)
-        guard let boolean = Bool(booleanToken) else {
-            throw JSONPaserErorr.isBoolean
-        }
-        return JSONType.Boolean(boolean)
-    }
-    
-    private func stringChecker(_ stringToken: String) throws -> JSONType {
-        try stringToken.pattenMatching(RegexPatten.StringPatten.rawValue)
-        return JSONType.String(stringToken)
-    }
-
-    private func isClose() -> Bool {
-        if (tokens.isEmpty() == tokenCapsule.isEmpty()) && tokenCapsule.isEmpty() {
-            return true
-        }
-        return false
-    }
-    
-    private func nextTokenChecker(_ front: String) throws {
-        switch front {
-            case TokenSplitUnit.endBrackert.string: throw JSONPaserErorr.isNextToken
-            case "": throw JSONPaserErorr.isNextToken
-            case TokenSplitUnit.comma.string: throw JSONPaserErorr.isNextToken
-            case TokenSplitUnit.colon.string: throw JSONPaserErorr.isNextToken
-        default:
-            break
+            case JSONPARSER_BRACKET:
+                return
+            case JOSNPARSER_BRACE:
+                return
+            default:
+                throw JsonError.isClose
         }
     }
 }
