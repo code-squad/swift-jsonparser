@@ -7,3 +7,5 @@
 //
 
 let JSONPASER_QUESTION_INPUT = "JSON 형식을 입력해주세요 ex) [ 1, \"1\", false, \"false\"]"
+let JSONPARSER_BRACKET = "[]"
+let JOSNPARSER_BRACE = "{}"
