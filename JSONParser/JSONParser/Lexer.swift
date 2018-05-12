@@ -12,7 +12,7 @@ struct Lexer {
     private let lexQueue: Queue<String>
     
     init(_ inputData: String) {
-        self.inputQueue = Queue(Array(inputData))
+        self.inputQueue = Queue(Array(inputData.trim()))
         self.lexQueue = Queue<String>()
     }
     
