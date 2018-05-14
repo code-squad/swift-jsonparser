@@ -21,8 +21,8 @@ struct InputView {
     }
     
     /// 잘못된 입력일 경우 에러메세지 출력
-    func printErrorMessage(){
-        print ("에러입니다")
+    func printWrongInputMessage(){
+        print ("지원하지 않는 형태입니다.")
     }
     
 }
