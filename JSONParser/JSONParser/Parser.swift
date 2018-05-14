@@ -17,7 +17,7 @@ struct Parser {
         self.tokenCapsule = Stack<String>()
     }
     
-    func isVaildLex() -> Bool {
+    private func isVaildLex() -> Bool {
         return !lexQueue.isEmpty()
     }
     
@@ -28,7 +28,7 @@ struct Parser {
         return try parseMaker()
     }
     
-    func parseMaker() throws -> JSON {
+    private func parseMaker() throws -> JSON {
     
         let lexFront = lexQueue.front()
         
@@ -42,7 +42,7 @@ struct Parser {
         }
     }
     
-    func arrayMaker() throws -> Type {
+    private func arrayMaker() throws -> Type {
         var array: [Type] = []
         
         while let token = lexQueue.dequeue() {
@@ -77,18 +77,12 @@ struct Parser {
             }
         }
         
-        if !lexQueue.isEmpty() {
-            throw JsonError.isClose
-        }
-        
-        if !tokenCapsule.isEmpty() {
-            throw JsonError.isClose
-        }
+        try emptyChekcer()
         
         return Type.array(array)
     }
     
-    func objectMaker() throws -> Type {
+    private func objectMaker() throws -> Type {
         var object : [String: Type] = [:]
         var key: String = ""
         
@@ -114,17 +108,19 @@ struct Parser {
             }
         }
         
+        try emptyChekcer()
+        
         return Type.object(object)
     }
     
-    func objectKeyMaker(_ token: String) throws -> String {
+    private func objectKeyMaker(_ token: String) throws -> String {
         guard token.isMatching(expression: NSRegularExpression(pattern: Regex.string.description)) else {
             throw JsonError.isStringMatching
         }
         return token
     }
     
-    func objectValueMaker(_ token: String) throws -> Type {
+    private func objectValueMaker(_ token: String) throws -> Type {
         switch token {
         case TokenForm.openBracket.str:
             tokenCapsule.push(token)
@@ -137,24 +133,27 @@ struct Parser {
         }
     }
 
-    func jsonTypeMaker(_ token: String) throws -> Type {
+    private func jsonTypeMaker(_ token: String) throws -> Type {
         guard let tokenFirst = token.first else {
             throw JsonError.isTokenFirst
         }
         
         switch tokenFirst {
-            case "0" ... "9":
+            case TokenForm.startNumber.char ... TokenForm.endNumber.char:
                 return try makeNumber(token)
-            case "\"":
+            case TokenForm.quotes.char:
                 return try makeString(token)
-            case "t","f","T","F":
+            case TokenForm.capitalTrueStart.char,
+                 TokenForm.captitalFalseStart.char,
+                TokenForm.smallTrueStart.char,
+                TokenForm.samllFalseStart.char:
                 return try makeBoolean(token)
         default:
             throw JsonError.isToken
         }
     }
     
-    func makeNumber(_ token: String) throws -> Type {
+    private func makeNumber(_ token: String) throws -> Type {
         guard token.isMatching(expression: NSRegularExpression(pattern: Regex.number.description)) else {
             throw JsonError.isNumberMatching
         }
@@ -164,14 +163,14 @@ struct Parser {
         return Type.number(number)
     }
     
-    func makeString(_ token: String) throws -> Type {
+    private func makeString(_ token: String) throws -> Type {
         guard token.isMatching(expression: NSRegularExpression(pattern: Regex.string.description)) else {
             throw JsonError.isStringMatching
         }
         return Type.string(token)
     }
     
-    func makeBoolean(_ token: String) throws -> Type {
+    private func makeBoolean(_ token: String) throws -> Type {
         guard token.isMatching(expression: NSRegularExpression(pattern: Regex.boolean.description)) else {
             throw JsonError.isNumberMatching
         }
@@ -181,7 +180,7 @@ struct Parser {
         return Type.bool(boolean)
     }
     
-    func closeCapsule(_ closeToken: String) throws {
+    private func closeCapsule(_ closeToken: String) throws {
         guard let openToken = tokenCapsule.pop() else {
             throw JsonError.isOpenToken
         }
@@ -195,6 +194,16 @@ struct Parser {
                 return
             default:
                 throw JsonError.isClose
+        }
+    }
+    
+    private func emptyChekcer() throws {
+        if !lexQueue.isEmpty() {
+            throw JsonError.isClose
+        }
+        
+        if !tokenCapsule.isEmpty() {
+            throw JsonError.isClose
         }
     }
 }
