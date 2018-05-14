@@ -14,6 +14,12 @@ enum TokenForm {
     case colon
     case comma
     case quotes
+    case startNumber
+    case endNumber
+    case capitalTrueStart
+    case captitalFalseStart
+    case smallTrueStart
+    case samllFalseStart
     
     var char: Character{
         switch self {
@@ -31,7 +37,19 @@ enum TokenForm {
                 return ","
             case .quotes:
                 return "\""
-        }
+            case .startNumber:
+                return "0"
+            case .endNumber:
+                return "9"
+            case .capitalTrueStart:
+                return "T"
+            case .captitalFalseStart:
+                return "F"
+            case .smallTrueStart:
+                return "t"
+            case .samllFalseStart:
+                return "f"
+            }
     }
     
     var str: String {
@@ -50,6 +68,18 @@ enum TokenForm {
                 return ","
             case .quotes:
                 return "\""
+            case .startNumber:
+                return "0"
+            case .endNumber:
+                return "9"
+            case .capitalTrueStart:
+                return "T"
+            case .captitalFalseStart:
+                return "F"
+            case .smallTrueStart:
+                return "t"
+            case .samllFalseStart:
+                return "f"
         }
     }
     
