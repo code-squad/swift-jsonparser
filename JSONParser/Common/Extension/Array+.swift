@@ -10,9 +10,9 @@ extension Array: JSON {
     
     func description() -> String {
         
-        var descriptionValue = "총 \(self.count) 개의 배열 데이터 중에 "
+        let (stringCount, booleanCount, numberCount, objectCount, arrayCount, totalCount) = calculationTypeCount()
         
-        let (stringCount, booleanCount, numberCount, objectCount, arrayCount) = calculationTypeCount()
+         var descriptionValue = "총 \(totalCount) 개의 배열 데이터 중에 "
         
         if stringCount > 0 {
             descriptionValue += "문자열 \(stringCount)개 "
@@ -37,7 +37,8 @@ extension Array: JSON {
         return descriptionValue + "가 포함되어 있습니다."
     }
     
-    func calculationTypeCount() -> (Int, Int, Int, Int, Int) {
+    func calculationTypeCount() -> (Int, Int, Int, Int, Int, Int) {
+        var totalCount = 0
         var stringOfCount = 0
         var booleaOfnCount = 0
         var numberOfCount = 0
@@ -50,6 +51,7 @@ extension Array: JSON {
             
             if case .array(let arr)? = type {
                 for type in arr {
+                    totalCount += 1
                     switch type {                        
                         case .string(_):
                             stringOfCount += 1
@@ -65,6 +67,6 @@ extension Array: JSON {
                 }
             }
         }
-        return (stringOfCount, booleaOfnCount, numberOfCount, objectOfCount, arrayOfCount)
+        return (stringOfCount, booleaOfnCount, numberOfCount, objectOfCount, arrayOfCount, totalCount)
     }
 }
