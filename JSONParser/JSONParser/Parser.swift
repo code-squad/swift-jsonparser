@@ -34,9 +34,15 @@ struct Parser {
         
         switch lexFront {
             case TokenForm.openBracket.str:
-                return JsonArray(try arrayMaker())
+                if case .array(let arr) =  try arrayMaker() {
+                    return arr
+                }
+                throw JsonError.isStartToken
             case TokenForm.openBrace.str:
-                return JsonObject(try objectMaker())
+                if case .object(let obj) = try objectMaker() {
+                    return obj
+                }
+                throw JsonError.isStartToken
         default:
             throw JsonError.isStartToken
         }
