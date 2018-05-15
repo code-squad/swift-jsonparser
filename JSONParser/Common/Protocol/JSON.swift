@@ -8,5 +8,5 @@
 
 protocol JSON {
     func description() -> String
-    func calculationTypeCount() -> (Int, Int, Int, Int, Int)
+    func calculationTypeCount() -> (Int, Int, Int, Int, Int, Int)
 }
