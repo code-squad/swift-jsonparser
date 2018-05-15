@@ -11,6 +11,8 @@
 		F9070E722086E0C300851E35 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9070E712086E0C300851E35 /* InputView.swift */; };
 		F90EE42A20A95B8C00414F08 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90EE42920A95B8C00414F08 /* Array+.swift */; };
 		F90EE42C20A95B9600414F08 /* Dictionary+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90EE42B20A95B9600414F08 /* Dictionary+.swift */; };
+		F9643DDD20AABF63005ADE1A /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90EE42920A95B8C00414F08 /* Array+.swift */; };
+		F9643DDE20AABF63005ADE1A /* Dictionary+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90EE42B20A95B9600414F08 /* Dictionary+.swift */; };
 		F975208520A53B600044D0BD /* TokenForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F975208420A53B600044D0BD /* TokenForm.swift */; };
 		F975208720A5BC2F0044D0BD /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F975208620A5BC2F0044D0BD /* Regex.swift */; };
 		F97520A120A5C1700044D0BD /* JSONParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97520A020A5C1700044D0BD /* JSONParserTest.swift */; };
@@ -302,6 +304,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9643DDD20AABF63005ADE1A /* Array+.swift in Sources */,
+				F9643DDE20AABF63005ADE1A /* Dictionary+.swift in Sources */,
 				F97520B820A5C5920044D0BD /* NSRegularExpression+.swift in Sources */,
 				F97520A620A5C2480044D0BD /* Type.swift in Sources */,
 				F97520A720A5C2480044D0BD /* TokenForm.swift in Sources */,

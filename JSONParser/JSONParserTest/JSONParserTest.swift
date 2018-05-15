@@ -52,6 +52,12 @@ class JSONParserTest: XCTestCase {
     }
     
     // MAKR :: Lexer
+    func test_Make_Lexer() {
+        let expectedInput = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
+        let lexer = Lexer(expectedInput)
+        XCTAssertNotNil(lexer)
+    }
+    
     func test_렉서갯수검사() {
         let expectedInputNumber = "[123,123,123]"
         let numberLex = Lexer.init(expectedInputNumber).lex()
@@ -81,6 +87,13 @@ class JSONParserTest: XCTestCase {
     }
     
     // MAKR :: Parse
+    
+    func test_Make_Parser() {
+        let expectedInput = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
+        let lex = Lexer(expectedInput).lex()
+        let parser = Parser(lex)
+        XCTAssertNotNil(parser)
+    }
     
     func test_유효한렉서검사() throws {
         let expectedArray = "[123,123,123]"
