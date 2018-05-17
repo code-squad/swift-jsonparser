@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		045B1A7E20AD9CA30075391B /* JSON+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B1A7D20AD9CA30075391B /* JSON+.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		F9070E722086E0C300851E35 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9070E712086E0C300851E35 /* InputView.swift */; };
 		F90EE42A20A95B8C00414F08 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90EE42920A95B8C00414F08 /* Array+.swift */; };
@@ -56,6 +57,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		045B1A7D20AD9CA30075391B /* JSON+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSON+.swift"; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		F9070E712086E0C300851E35 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				F97520B620A5C31E0044D0BD /* NSRegularExpression+.swift */,
 				F90EE42920A95B8C00414F08 /* Array+.swift */,
 				F90EE42B20A95B9600414F08 /* Dictionary+.swift */,
+				045B1A7D20AD9CA30075391B /* JSON+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				F99A3A0020889D560050A211 /* String+.swift in Sources */,
 				F90EE42C20A95B9600414F08 /* Dictionary+.swift in Sources */,
 				F90EE42A20A95B8C00414F08 /* Array+.swift in Sources */,
+				045B1A7E20AD9CA30075391B /* JSON+.swift in Sources */,
 				F975208520A53B600044D0BD /* TokenForm.swift in Sources */,
 				F99A39BD20885A5C0050A211 /* Parser.swift in Sources */,
 				F9F1FF9A2089DA97004AC26E /* OutputView.swift in Sources */,
