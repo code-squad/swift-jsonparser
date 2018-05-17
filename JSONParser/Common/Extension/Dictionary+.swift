@@ -7,6 +7,7 @@
 //
 
 extension Dictionary: JSON {
+    
     func description() -> String {
         
         let (stringCount, booleanCount, numberCount, objectCount, arrayCount, totalCount) = calculationTypeCount()
@@ -71,53 +72,43 @@ extension Dictionary: JSON {
         return self as! [String : Type]
     }
     
-    private func arratFormMaker(_ a: [Type]) -> String {
-        var desciption = "\(TokenForm.openBracket.str)\n"
+    private func objectFormMaker(_ o: [String: Type], _ depth: Int = 0) -> String {
         
-        for element in a {
-            desciption += "\t"
-            switch element {
-            case .string(let s):
-                desciption += s
-            case .bool(let b):
-                desciption += "\t\(String(b))"
-            case .number(let n):
-                desciption += "\t\(String(n))"
-            case .array(let a):
-                desciption += arratFormMaker(a)
-            case .object(let o):
-                desciption += objectFormMaker(o)
-            }
-            desciption += "\n"
-        }
-        desciption += "\t"
-        desciption += "\(TokenForm.closeBracket.str)"
-        desciption += "\n"
-        return desciption
-    }
-    
-    private func objectFormMaker(_ o: [String: Type]) -> String {
-        var desription = "\(TokenForm.openBrace.str)\t"
+        var desription = makeDepth(depth) + "\(TokenForm.openBrace.str)\n"
         
         for key in o.keys {
             let value = o[key]!
             switch value {
             case .number(let n):
-                let value = key + "\t" + TokenForm.comma.str + "\t" + String(n)
+                let value = makeDepth(depth + 1) + key + "\t" + TokenForm.colon.str + "\t" + String(n)
                 desription += value
             case .string(let s):
-                let value = key + "\t" + TokenForm.comma.str + "\t" + s
+                let value = makeDepth(depth + 1) + key + "\t" + TokenForm.colon.str + "\t" + s
                 desription = value
             case .bool(let b):
-                let value = key + "\t" + TokenForm.comma.str + "\t"  + String(b)
+                let value = key + "\t" + TokenForm.colon.str + "\t"  + String(b)
                 desription = value
             case .object(let o):
-                desription += objectFormMaker(o)
+                 let value = makeDepth(depth + 1) + key + "\t" + TokenForm.colon.str + "\n" + objectFormMaker(o, depth + 1)
+                desription += value
             case .array(let a):
-                desription += arratFormMaker(a)
+                let value = makeDepth(depth + 1) + key + "\t" + TokenForm.colon.str + "\n"  + a.jsonFormMaker()
+                desription += value
             }
-            desription += "\t\(TokenForm.closeBrace.str)"
+            desription += "\n"
+            desription += makeDepth(depth)
+            desription += "\(TokenForm.closeBrace.str)"
         }
         return desription
+    }
+    
+    private func makeDepth(_ depth: Int) -> String {
+        var depthForm: String = ""
+        
+        for _ in 0 ..< depth {
+            depthForm += "\t"
+        }
+        
+        return depthForm
     }
 }

@@ -72,55 +72,46 @@ extension Array: JSON {
     }
     
     private func convertTypeArray(_ type: Type) -> [Type] {
-        return type.array!
+        if let typeArray = type.array {
+            return typeArray
+        }
+        return self as! [Type]
     }
     
-    private func arratFormMaker(_ a: [Type]) -> String {
-        var desciption = "\(TokenForm.openBracket.str)\n"
+    func arratFormMaker(_ a: [Type], _ depth: Int = 0) -> String {
+        
+        var desription = makeDepth(depth) + "\(TokenForm.openBracket.str)\n"
         
         for element in a {
-            desciption += "\t"
+            desription += makeDepth(depth)
             switch element {
                 case .string(let s):
-                    desciption += s
+                    desription += s
                 case .bool(let b):
-                    desciption += String(b)
+                    desription += makeDepth(depth + 1)
+                    desription += String(b)
                 case .number(let n):
-                    desciption += String(n)
+                    desription += makeDepth(depth + 1)
+                    desription += String(n)
                 case .array(let a):
-                    desciption += arratFormMaker(a)
+                    desription += arratFormMaker(a, depth + 1)
                 case .object(let o):
-                    desciption += objectFormMaker(o)
+                    desription += o.jsonFormMaker()
             }
-               desciption += "\n"
+               desription += "\n"
         }
-        
-        desciption += "\(TokenForm.closeBracket.str)"
-        return desciption
+        desription += makeDepth(depth)
+        desription += "\(TokenForm.closeBracket.str)"
+        return desription
     }
     
-    private func objectFormMaker(_ o: [String: Type]) -> String {
-        var desription = "\(TokenForm.openBrace.str)\t"
+    private func makeDepth(_ depth: Int) -> String {
+        var depthForm: String = ""
         
-        for key in o.keys {
-            let value = o[key]!
-            switch value {
-                case .number(let n):
-                    let value = key + "\t" + TokenForm.colon.str + "\t" + String(n)
-                    desription += value
-                case .string(let s):
-                    let value = key + "\t" + TokenForm.colon.str + "\t" + s
-                    desription = value
-                case .bool(let b):
-                    let value = key + "\t" + TokenForm.colon.str + "\t"  + String(b)
-                    desription = value
-                case .object(let o):
-                    desription += objectFormMaker(o)
-                case .array(let a):
-                    desription += arratFormMaker(a)
-                }
-                desription += "\t\(TokenForm.closeBrace.str)"
+        for _ in 0 ..< depth {
+            depthForm += "\t"
         }
-        return desription
+        
+        return depthForm
     }
 }
