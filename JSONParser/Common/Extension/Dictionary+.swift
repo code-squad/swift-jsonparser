@@ -71,44 +71,4 @@ extension Dictionary: JSON {
     private func convertType() -> [String: Type] {
         return self as! [String : Type]
     }
-    
-    private func objectFormMaker(_ o: [String: Type], _ depth: Int = 0) -> String {
-        
-        var desription = makeDepth(depth) + "\(TokenForm.openBrace.str)\n"
-        
-        for key in o.keys {
-            let value = o[key]!
-            switch value {
-            case .number(let n):
-                let value = makeDepth(depth + 1) + key + "\t" + TokenForm.colon.str + "\t" + String(n)
-                desription += value
-            case .string(let s):
-                let value = makeDepth(depth + 1) + key + "\t" + TokenForm.colon.str + "\t" + s
-                desription = value
-            case .bool(let b):
-                let value = key + "\t" + TokenForm.colon.str + "\t"  + String(b)
-                desription = value
-            case .object(let o):
-                 let value = makeDepth(depth + 1) + key + "\t" + TokenForm.colon.str + "\n" + objectFormMaker(o, depth + 1)
-                desription += value
-            case .array(let a):
-                let value = makeDepth(depth + 1) + key + "\t" + TokenForm.colon.str + "\n"  + a.jsonFormMaker()
-                desription += value
-            }
-            desription += "\n"
-            desription += makeDepth(depth)
-            desription += "\(TokenForm.closeBrace.str)"
-        }
-        return desription
-    }
-    
-    private func makeDepth(_ depth: Int) -> String {
-        var depthForm: String = ""
-        
-        for _ in 0 ..< depth {
-            depthForm += "\t"
-        }
-        
-        return depthForm
-    }
 }
