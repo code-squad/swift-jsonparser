@@ -16,7 +16,7 @@ func main() throws {
         let lex = Lexer(input).lex()
         let parse = try Parser(lex).parse()
         OutputView.showReuslt(parse)
-        
+        OutputView.showDesription(parse)
     }catch let e as JsonError {
         OutputView.errorMessage(of: e)
     }
