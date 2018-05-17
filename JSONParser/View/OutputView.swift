@@ -19,4 +19,8 @@ struct OutputView {
     static func showReuslt(_ json: JSON) {
         print(json.description())
     }
+    
+    static func showDesription(_ json: JSON) {
+        print(json.jsonFormMaker())
+    }
 }
