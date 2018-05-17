@@ -45,28 +45,82 @@ extension Array: JSON {
         var objectOfCount = 0
         var arrayOfCount = 0
         
-        
-        for element in self {
-            let type = element as? Type
-            
-            if case .array(let arr)? = type {
-                for type in arr {
-                    totalCount += 1
-                    switch type {                        
-                        case .string(_):
-                            stringOfCount += 1
-                        case .bool(_):
-                            booleaOfnCount += 1
-                        case .number(_):
-                            numberOfCount += 1
-                        case .object(_):
-                            objectOfCount += 1
-                        case .array(_):
-                            arrayOfCount += 1
-                    }
-                }
+        for type in convertTypeArray(converterType()) {
+            totalCount += 1
+            switch type {
+                case .string(_):
+                    stringOfCount += 1
+                case .bool(_):
+                    booleaOfnCount += 1
+                case .number(_):
+                    numberOfCount += 1
+                case .object(_):
+                    objectOfCount += 1
+                case .array(_):
+                    arrayOfCount += 1
             }
         }
         return (stringOfCount, booleaOfnCount, numberOfCount, objectOfCount, arrayOfCount, totalCount)
+    }
+    
+    func jsonFormMaker() -> String {
+        return arratFormMaker(convertTypeArray(converterType()))
+    }
+    
+    private func converterType() -> Type {
+        return self[0] as! Type
+    }
+    
+    private func convertTypeArray(_ type: Type) -> [Type] {
+        return type.array!
+    }
+    
+    private func arratFormMaker(_ a: [Type]) -> String {
+        var desciption = "\(TokenForm.openBracket.str)\n"
+        
+        for element in a {
+            desciption += "\t"
+            switch element {
+                case .string(let s):
+                    desciption += s
+                case .bool(let b):
+                    desciption += String(b)
+                case .number(let n):
+                    desciption += String(n)
+                case .array(let a):
+                    desciption += arratFormMaker(a)
+                case .object(let o):
+                    desciption += objectFormMaker(o)
+            }
+               desciption += "\n"
+        }
+        
+        desciption += "\(TokenForm.closeBracket.str)"
+        return desciption
+    }
+    
+    private func objectFormMaker(_ o: [String: Type]) -> String {
+        var desription = "\(TokenForm.openBrace.str)\t"
+        
+        for key in o.keys {
+            let value = o[key]!
+            switch value {
+                case .number(let n):
+                    let value = key + "\t" + TokenForm.colon.str + "\t" + String(n)
+                    desription += value
+                case .string(let s):
+                    let value = key + "\t" + TokenForm.colon.str + "\t" + s
+                    desription = value
+                case .bool(let b):
+                    let value = key + "\t" + TokenForm.colon.str + "\t"  + String(b)
+                    desription = value
+                case .object(let o):
+                    desription += objectFormMaker(o)
+                case .array(let a):
+                    desription += arratFormMaker(a)
+                }
+                desription += "\t\(TokenForm.closeBrace.str)"
+        }
+        return desription
     }
 }

@@ -37,7 +37,7 @@ extension Dictionary: JSON {
     }
     
     func calculationTypeCount() -> (Int, Int, Int, Int, Int, Int) {
-        var totalCount: Int = self.count
+        let totalCount: Int = self.count
         var stringOfCount: Int = 0
         var numberOfCount: Int = 0
         var booleanOfCount: Int = 0
@@ -61,5 +61,63 @@ extension Dictionary: JSON {
                 }
         }
         return (stringOfCount, booleanOfCount, numberOfCount, objectOfCount, arrayOfCount, totalCount)
+    }
+    
+    func jsonFormMaker() -> String {
+        return objectFormMaker(convertType())
+    }
+    
+    private func convertType() -> [String: Type] {
+        return self as! [String : Type]
+    }
+    
+    private func arratFormMaker(_ a: [Type]) -> String {
+        var desciption = "\(TokenForm.openBracket.str)\n"
+        
+        for element in a {
+            desciption += "\t"
+            switch element {
+            case .string(let s):
+                desciption += s
+            case .bool(let b):
+                desciption += "\t\(String(b))"
+            case .number(let n):
+                desciption += "\t\(String(n))"
+            case .array(let a):
+                desciption += arratFormMaker(a)
+            case .object(let o):
+                desciption += objectFormMaker(o)
+            }
+            desciption += "\n"
+        }
+        desciption += "\t"
+        desciption += "\(TokenForm.closeBracket.str)"
+        desciption += "\n"
+        return desciption
+    }
+    
+    private func objectFormMaker(_ o: [String: Type]) -> String {
+        var desription = "\(TokenForm.openBrace.str)\t"
+        
+        for key in o.keys {
+            let value = o[key]!
+            switch value {
+            case .number(let n):
+                let value = key + "\t" + TokenForm.comma.str + "\t" + String(n)
+                desription += value
+            case .string(let s):
+                let value = key + "\t" + TokenForm.comma.str + "\t" + s
+                desription = value
+            case .bool(let b):
+                let value = key + "\t" + TokenForm.comma.str + "\t"  + String(b)
+                desription = value
+            case .object(let o):
+                desription += objectFormMaker(o)
+            case .array(let a):
+                desription += arratFormMaker(a)
+            }
+            desription += "\t\(TokenForm.closeBrace.str)"
+        }
+        return desription
     }
 }
