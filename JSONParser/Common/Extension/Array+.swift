@@ -64,7 +64,7 @@ extension Array: JSON {
     }
     
     func jsonFormMaker() -> String {
-        return arratFormMaker(convertTypeArray(converterType()))
+        return arrayFormMaker(convertTypeArray(converterType()))
     }
     
     private func converterType() -> Type {
@@ -72,46 +72,6 @@ extension Array: JSON {
     }
     
     private func convertTypeArray(_ type: Type) -> [Type] {
-        if let typeArray = type.array {
-            return typeArray
-        }
-        return self as! [Type]
-    }
-    
-    func arratFormMaker(_ a: [Type], _ depth: Int = 0) -> String {
-        
-        var desription = makeDepth(depth) + "\(TokenForm.openBracket.str)\n"
-        
-        for element in a {
-            desription += makeDepth(depth)
-            switch element {
-                case .string(let s):
-                    desription += s
-                case .bool(let b):
-                    desription += makeDepth(depth + 1)
-                    desription += String(b)
-                case .number(let n):
-                    desription += makeDepth(depth + 1)
-                    desription += String(n)
-                case .array(let a):
-                    desription += arratFormMaker(a, depth + 1)
-                case .object(let o):
-                    desription += o.jsonFormMaker()
-            }
-               desription += "\n"
-        }
-        desription += makeDepth(depth)
-        desription += "\(TokenForm.closeBracket.str)"
-        return desription
-    }
-    
-    private func makeDepth(_ depth: Int) -> String {
-        var depthForm: String = ""
-        
-        for _ in 0 ..< depth {
-            depthForm += "\t"
-        }
-        
-        return depthForm
+        return type.array!
     }
 }
