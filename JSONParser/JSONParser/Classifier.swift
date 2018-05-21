@@ -11,7 +11,7 @@ import Foundation
 struct Classifier{
     
     /// 문자열을 받아서 목표문자의 위치 인덱스를 배열로 리턴
-    func surveyLetterPositions(letters : String, targetLetter : Character) -> [String.Index]? {
+    fileprivate func surveyLetterPositions(letters : String, targetLetter : Character) -> [String.Index]? {
         // 문자가 한개도 없으면 닐 리턴
         guard letters.index(of: targetLetter) != nil else{
             return nil
@@ -44,7 +44,7 @@ struct Classifier{
     }
     
     /// 문자열을 받아서 특정 캐릭터로 둘러쌓인 부분의 인덱스를 배열로 리턴
-    func surveyLetterRange(letters : String, targetLetter : Character) -> [Range<String.Index>]? {
+    fileprivate func surveyLetterRange(letters : String, targetLetter : Character) -> [Range<String.Index>]? {
         // 문자의 위치를 가진 배열 선언. 목표문자가 한개도 없으면 닐 리턴
         guard let letterIndexList = surveyLetterPositions(letters: letters, targetLetter: targetLetter) else {
             return nil
@@ -85,7 +85,7 @@ struct Classifier{
     }
     
     /// 인덱스배열과 레인지배열을 받아서 레인지범위 안에 있는 인덱스를 로외한 인댁스배열을 리턴
-    func removeDuplicatedIndexIn(indexRangeList : [Range<String.Index>], targetIndexes : [String.Index]) -> [String.Index]{
+    fileprivate func removeDuplicatedIndexIn(indexRangeList : [Range<String.Index>], targetIndexes : [String.Index]) -> [String.Index]{
         // 리턴용 인덱스 배열
         var resultIndexList : [String.Index] = []
         // 제거할 목표 인덱스 배열을 반복문에 넣는다
@@ -109,7 +109,7 @@ struct Classifier{
     }
     
     /// 문자열을 받아서 목표문자배열을 받아서 그 목표문자인덱스를 기준으로 나누어 레인지 인덱스 배열로 생성한다
-    func separateByIndexes(letters : String, targetIndexes : [String.Index]) -> [Range<String.Index>] {
+    fileprivate func separateByIndexes(letters : String, targetIndexes : [String.Index]) -> [Range<String.Index>] {
         // 쉼표 다음지점을 체크하기 위한 플래그
         var indexFlag = letters.startIndex
         // 결과 리턴용 배열
@@ -130,14 +130,8 @@ struct Classifier{
         return result
     }
     
-    
-    /// JSON 입력값을 받아서 , 기준으로 자르는 함수, " " 로 둘러쌓인 문자열 안의 , 는 자르지 않는다
-//    func surveyRangeByJSON(letters : String) -> [Range<String.Index>]{
-//        
-//    }
-    
     /// 문자열을 받아서 쉼표를 기준으로 나누어 레인지 인덱스 배열로 생성한다
-    func separateByCommaIndexes(letters : String) -> [Range<String.Index>] {
+    fileprivate func separateByCommaIndexes(letters : String) -> [Range<String.Index>] {
         // 쉼표 다음지점을 체크하기 위한 플래그
         var indexFlag = letters.startIndex
         // 결과 리턴용 배열
@@ -162,5 +156,78 @@ struct Classifier{
         // 결과를 리턴한다
         return result
     }
+    
+    /// JSON 입력값을 받아서 , 기준으로 자르는 함수, " " 로 둘러쌓인 문자열 안의 , 는 자르지 않는다
+        func surveyLettersByJSON(letters : String) -> [String]?{
+            // 결과 리턴용 변수
+            var result : [String] = []
+            // 문자열의 , 인덱스를 구한다
+            guard var commaIndexes = surveyLetterPositions(letters: letters, targetLetter: JSON.separater) else {
+                return nil
+            }
+            // " 로 둘러쌓인 범위인덱스를 구한다
+            guard let doubleQuatationIndexes = surveyLetterRange(letters: letters, targetLetter: JSON.letterWrapper) else {
+                return nil
+            }
+            // , 중 " 로 둘러쌓인 인덱스를 제외시킨다
+            commaIndexes = removeDuplicatedIndexIn(indexRangeList: doubleQuatationIndexes, targetIndexes: commaIndexes)
+            // , 를 기준으로 문자열을 나눈 범위인덱스를 구한다
+            let separatedByIndexex = separateByIndexes(letters: letters, targetIndexes: commaIndexes)
+            // , 인덱스를 기준으로 문자열을 나누어서 문자열로 리턴한다
+            for separatedByIndex in separatedByIndexex {
+                result.append(String(letters[separatedByIndex]))
+            }
+            // 결과를 리턴한다
+            return result
+        }
+    
+    /// 문자형 배열을 받아서 인트형으로 바뀔수 있는 개수를 리턴
+    func countNumberFrom(letters : [String]) -> Int {
+        // 결과값 리턴을 위한 카운트 변수
+        var countNumber = 0
+        // 문자형 배열을 반복한다
+        for number in letters {
+            // 인트형으로 변환이 가능하면
+            if Int(number) != nil {
+                // 결과값 +1 을 한다
+                countNumber += 1
+            }
+        }
+        // 결과값 리턴
+        return countNumber
+    }
+    
+    /// 문자형 배열을 받아서 false, true 에 맞는 항목이 몇개인지 리턴
+    func countBooleanFrom(letters : [String]) -> Int {
+        // 결과값 리턴을 위한 카운트 변수
+        var countBoolean = 0
+        // 문자형 배열을 반복한다
+        for boolean in letters {
+            // true or false 이면
+            if JSON.booleanType.contains(boolean) {
+                // 결과값 +1 을 한다
+                countBoolean += 1
+            }
+        }
+        // 결과값 리턴
+        return countBoolean
+    }
+    
+    /// 문자형 배열을 받아서 \" 로 둘라쌓인 항목이 몇개인지 리턴
+    func countDoubleQuatationLettersFrom(letters : [String]) -> Int {
+        // 결과값 리턴을 위한 카운트 변수
+        var countDoubleQuatation = 0
+        // 문자형 배열을 반복한다
+        for letter in letters {
+            // 처음과 끝이 \" 일 경우
+            if letter[letter.startIndex] == JSON.letterWrapper && letter[letter.endIndex] == JSON.letterWrapper {
+                // 결과값 +1 을 한다
+                countDoubleQuatation += 1
+            }
+        }
+        // 결과값 리턴
+        return countDoubleQuatation
+    }
+    
     
 }
