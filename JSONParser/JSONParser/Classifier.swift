@@ -220,7 +220,7 @@ struct Classifier{
         // 문자형 배열을 반복한다
         for letter in letters {
             // 처음과 끝이 \" 일 경우
-            if letter[letter.startIndex] == JSON.letterWrapper && letter[letter.endIndex] == JSON.letterWrapper {
+            if Checker.isLettersForJSON(letter: letter) {
                 // 결과값 +1 을 한다
                 countDoubleQuatation += 1
             }
@@ -228,6 +228,51 @@ struct Classifier{
         // 결과값 리턴
         return countDoubleQuatation
     }
+    /// 문자열을 받아서 JSON 타입으로 리턴
+    func transformLetterToValueOfJSON(letter:String) -> Any? {
+        // 인트형이 가능한지 체크. 변환가능하면 변환해서 추가
+        if Int(letter) != nil {
+            return Int(letter)!
+        }
+        // Bool 타입인지 체크. 가능하면 변환해서 추가
+        else if JSON.booleanType.contains(letter){
+            return Bool(letter)!
+        }
+        // " 로 둘러쌓인 문자열인지 체크 후 추가
+        else if Checker.isLettersForJSON(letter: letter){
+            return (letter)
+        }
+        // 어느것도 매칭되지 않는다면 닐 리턴
+        else {return nil}
+    }
     
+    /// 문자열 배열을 받아서 JSON 객체로 생성. 변환 불가능한 값이 있으면 닐 리턴
+    func transformLettersToJSON(letters:[String]) -> [Any]? {
+        // 결과 출력용 배열 선언
+        var result :[Any] = []
+        // 배열을 반복분에 넣는다
+        for letter in letters {
+            // JSON 에 추가 가능한지 체크. 변환가능하면 변환해서 추가
+            guard let transformedValue = transformLetterToValueOfJSON(letter: letter) else {
+                return nil
+            }
+            result.append(transformedValue)
+        }
+        // 결과 리턴
+        return result
+    }
     
+    /// 문자열을 받아서 JSON JSON 객체로 생성. 변환 불가능한 값이 있으면 닐 리턴
+    func transformLetterToJSON(letter:String) -> [Any]? {
+        // 문자열을 받아서 JSON 스타일로 배열화 한다
+        guard let letters = surveyLettersByJSON(letters: letter) else {
+            return nil
+        }
+        // 문자열 배열을 JSON 형태로 만든다
+        guard let transformedLetters =  transformLettersToJSON(letters: letters) else {
+            return nil
+        }
+        // 결과를 리턴한다
+        return transformedLetters
+    }
 }
