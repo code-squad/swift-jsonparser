@@ -27,7 +27,7 @@ func main(){
     
     // 출력 구조체 선언
     let outputView = OutputView()
-    outputView.printCountOfTypes(dataSet: json.getDataOfJSON())    
+    outputView.printCountOfTypes(json: json)
 }
 
 // 메인함수 실행
