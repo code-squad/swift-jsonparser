@@ -8,3 +8,28 @@
 
 import Foundation
 
+func main(){
+    // 입력담당 구조체 선언
+    let inputView = InputView()
+    // 유저입력을 받는다
+    let userInput = inputView.receiveUserInput()
+    
+    // 입력값을 분류해주는 구조체 선언
+    let classifier = Classifier()
+    // 입력값을 JSON 스타일로 나눔
+    guard let separatedData = classifier.transformLetterToJSON(letter: userInput) else {
+        inputView.printWrongInputMessage()
+        return ()
+    }
+    
+    // JSON 구조체 선언
+    let json = JSON(dataSetOfJSON: separatedData)
+    
+    // 출력 구조체 선언
+    let outputView = OutputView()
+    outputView.printCountOfTypes(dataSet: json.getDataOfJSON())    
+}
+
+// 메인함수 실행
+main()
+
