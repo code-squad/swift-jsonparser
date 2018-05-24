@@ -13,6 +13,13 @@
 		D56A859520B552FD00513621 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A859120B552FD00513621 /* OutputView.swift */; };
 		D56A859620B552FD00513621 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A859220B552FD00513621 /* InputView.swift */; };
 		D56A859820B5593700513621 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A859720B5593700513621 /* Checker.swift */; };
+		D56A85A020B6A1AC00513621 /* JSONTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A859F20B6A1AC00513621 /* JSONTest.swift */; };
+		D56A85A520B6A1BC00513621 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A859720B5593700513621 /* Checker.swift */; };
+		D56A85A620B6A21500513621 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
+		D56A85A720B6A21500513621 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A858F20B552FD00513621 /* JSON.swift */; };
+		D56A85A820B6A21500513621 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A859220B552FD00513621 /* InputView.swift */; };
+		D56A85A920B6A21500513621 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A859120B552FD00513621 /* OutputView.swift */; };
+		D56A85AA20B6A21500513621 /* Classifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A859020B552FD00513621 /* Classifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,10 +42,20 @@
 		D56A859120B552FD00513621 /* OutputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		D56A859220B552FD00513621 /* InputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		D56A859720B5593700513621 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
+		D56A859D20B6A1AC00513621 /* JSONTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D56A859F20B6A1AC00513621 /* JSONTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTest.swift; sourceTree = "<group>"; };
+		D56A85A120B6A1AC00513621 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		83AE2E091F8CAC2800F38CC9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D56A859A20B6A1AC00513621 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -52,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0E1F8CAC2800F38CC9 /* JSONParser */,
+				D56A859E20B6A1AC00513621 /* JSONTest */,
 				83AE2E0D1F8CAC2800F38CC9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0C1F8CAC2800F38CC9 /* JSONParser */,
+				D56A859D20B6A1AC00513621 /* JSONTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,13 +87,22 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
-				D56A858F20B552FD00513621 /* JSON.swift */,
-				D56A859720B5593700513621 /* Checker.swift */,
 				D56A859220B552FD00513621 /* InputView.swift */,
-				D56A859120B552FD00513621 /* OutputView.swift */,
 				D56A859020B552FD00513621 /* Classifier.swift */,
+				D56A859720B5593700513621 /* Checker.swift */,
+				D56A858F20B552FD00513621 /* JSON.swift */,
+				D56A859120B552FD00513621 /* OutputView.swift */,
 			);
 			path = JSONParser;
+			sourceTree = "<group>";
+		};
+		D56A859E20B6A1AC00513621 /* JSONTest */ = {
+			isa = PBXGroup;
+			children = (
+				D56A859F20B6A1AC00513621 /* JSONTest.swift */,
+				D56A85A120B6A1AC00513621 /* Info.plist */,
+			);
+			path = JSONTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -97,18 +125,39 @@
 			productReference = 83AE2E0C1F8CAC2800F38CC9 /* JSONParser */;
 			productType = "com.apple.product-type.tool";
 		};
+		D56A859C20B6A1AC00513621 /* JSONTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D56A85A220B6A1AC00513621 /* Build configuration list for PBXNativeTarget "JSONTest" */;
+			buildPhases = (
+				D56A859920B6A1AC00513621 /* Sources */,
+				D56A859A20B6A1AC00513621 /* Frameworks */,
+				D56A859B20B6A1AC00513621 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JSONTest;
+			productName = JSONTest;
+			productReference = D56A859D20B6A1AC00513621 /* JSONTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		83AE2E041F8CAC2800F38CC9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0900;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = JK;
 				TargetAttributes = {
 					83AE2E0B1F8CAC2800F38CC9 = {
 						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
+					D56A859C20B6A1AC00513621 = {
+						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -126,9 +175,20 @@
 			projectRoot = "";
 			targets = (
 				83AE2E0B1F8CAC2800F38CC9 /* JSONParser */,
+				D56A859C20B6A1AC00513621 /* JSONTest */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D56A859B20B6A1AC00513621 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		83AE2E081F8CAC2800F38CC9 /* Sources */ = {
@@ -141,6 +201,20 @@
 				D56A859620B552FD00513621 /* InputView.swift in Sources */,
 				D56A859320B552FD00513621 /* JSON.swift in Sources */,
 				D56A859520B552FD00513621 /* OutputView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D56A859920B6A1AC00513621 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D56A85AA20B6A21500513621 /* Classifier.swift in Sources */,
+				D56A85A020B6A1AC00513621 /* JSONTest.swift in Sources */,
+				D56A85A520B6A1BC00513621 /* Checker.swift in Sources */,
+				D56A85A820B6A21500513621 /* InputView.swift in Sources */,
+				D56A85A620B6A21500513621 /* main.swift in Sources */,
+				D56A85A720B6A21500513621 /* JSON.swift in Sources */,
+				D56A85A920B6A21500513621 /* OutputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,7 +269,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -246,7 +320,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -271,6 +345,36 @@
 			};
 			name = Release;
 		};
+		D56A85A320B6A1AC00513621 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3AMK47TW4P;
+				INFOPLIST_FILE = JSONTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = kr.codesquad.JSONTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		D56A85A420B6A1AC00513621 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3AMK47TW4P;
+				INFOPLIST_FILE = JSONTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = kr.codesquad.JSONTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -288,6 +392,15 @@
 			buildConfigurations = (
 				83AE2E141F8CAC2800F38CC9 /* Debug */,
 				83AE2E151F8CAC2800F38CC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D56A85A220B6A1AC00513621 /* Build configuration list for PBXNativeTarget "JSONTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D56A85A320B6A1AC00513621 /* Debug */,
+				D56A85A420B6A1AC00513621 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

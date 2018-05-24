@@ -2,7 +2,7 @@
 //  JSONTest.swift
 //  JSONTest
 //
-//  Created by Yoda Codd on 2018. 5. 17..
+//  Created by Yoda Codd on 2018. 5. 24..
 //  Copyright © 2018년 JK. All rights reserved.
 //
 
@@ -21,8 +21,9 @@ class JSONTest: XCTestCase {
     }
     
     func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let str = "\"as,34\""
+        let k = Checker.isLettersForJSON(letter: str)
+        XCTAssert(k)
     }
     
     func testPerformanceExample() {
