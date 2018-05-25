@@ -15,10 +15,15 @@ struct JSON {
     static let letterWrapper : Character = "\""
     // JSON 에서 Bool 타입을 표현하는 문자열의 배열
     static let booleanType = ["false", "true"]
-    // JSON 의 처음을 감싸는 배열 확인용 문자
-    static let startOfJSON = "["
-    // JSON 의 마지막을 감싸는 배열 확인용 문자
-    static let endOfJSON = "]"
+    // JSON 배열의 처음 문자
+    static let startOfArrayOfJSON = "["
+    // JSON 배열의 마지막 문자
+    static let endOfArrayOfJSON = "]"
+    // JSON 오브젝트의 처음 문자
+    static let startOfObjectOfJSON = "{"
+    // JSON 오브젝트의 마짐가 문자
+    static let endOfObjectOfJSON = "}"
+    
     
     // JSON 타입의 배열
     private let dataSetOfJSON : [Any] 
