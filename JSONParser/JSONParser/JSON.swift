@@ -24,7 +24,7 @@ struct JSON {
     // JSON 오브젝트의 마지막 문자
     static let endOfObjectOfJSON : Character  = "}"
     // JSON 오브젝트에서 키와 값을 나누는 문자
-    static let sepataterForObject : Character = ":"
+    static let separaterForObject : Character = ":"
     
     
     // 문자열 배열을 받아서 JSON 데이터형으로 바꿔서 리턴한다
