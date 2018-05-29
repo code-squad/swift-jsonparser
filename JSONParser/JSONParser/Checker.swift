@@ -132,7 +132,7 @@ struct Checker {
     }
     
     /// 문자열을 받아서 {} 로 둘러싸여 있는지 체크
-    private func checkWrappedObjectStyle(letter : String) -> Bool {
+    func checkWrappedObjectStyle(letter : String) -> Bool {
         // 입력받은 문자열의 앞위가 {} 인지 체크한다
         if letter[letter.startIndex] == JSON.startOfObjectOfJSON && letter[letter.index(before:letter.endIndex)] == JSON.endOfObjectOfJSON {
             // 맞으면 앞뒤 두글자를 제외한 나머지 리턴. { } 와 그 사이의 빈칸을 제외
@@ -145,8 +145,8 @@ struct Checker {
         }
     }
     
-    /// 문자열을 받아서 JSON 의 데이터에 들어갈수 있는지 체크
-    private func checkDataTypeForJSON(letter : String) -> Bool {
+    /// 문자열을 받아서 JSON 의 객체형 데이터에 들어갈수 있는지 체크
+    private func checkDataTypeForJSONObject(letter : String) -> Bool {
         // 인트형이 가능한지 체크
         if Int(letter) != nil {
             return true
@@ -173,25 +173,19 @@ struct Checker {
         let keyOfObject = String(separatedObject[0]).trimmingCharacters(in: .whitespaces)
         // 키 부분이 " 로 둘러싸여있는지 체크
         guard isLettersForJSON(letter: keyOfObject) == true else {
+            // "" 로 둘러쌓여 있지 않다면 거짓 리턴
             return false
         }
         // 키 부분 변수를 추출. 앞뒤 공백 제거
         let valueOfObject = String(separatedObject[1]).trimmingCharacters(in: .whitespaces)
         // 값 부분이 JSON 의 데이터형인지 체크
-        return checkDataTypeForJSON(letter: valueOfObject)        
+        return checkDataTypeForJSONObject(letter: valueOfObject)
         }
     
-    
-    /// 문자열을 받아서 객체형인지 체크
-    func checkObjectForJSON(letter: String) -> Bool {
-        // 맨 앞뒤가 {} 인지 체크
-        guard checkWrappedObjectStyle(letter: letter) == true else {
-            return false
-        }
-        // 맞다면 {} 를 제거
-        let withoutWrapper = String(letter[letter.index(letter.startIndex, offsetBy: 1)..<letter.index(letter.endIndex, offsetBy: -1)])
+    /// {} 로 둘러 쌓이지 않은 문자열을 받아서 객체형인지 체크
+    func checkUnWrappedObjectForJSON(letter: String) -> Bool {
         // , 를 기준으로 나눠서 배열로 만는다
-        let separatedByComma = withoutWrapper.split(separator: JSON.separater)
+        let separatedByComma = letter.split(separator: JSON.separater)
         // 각 키와 밸류를 반복문에 넣어서 JSON 타입이 맞는지 체크
         for object in separatedByComma {
             if checkObjectKeyValue(letter: String(object)) == false {
@@ -202,37 +196,16 @@ struct Checker {
         return true
     }
     
-    /// JSON 배열형인지 체크. 배열을 받아서 첫항목의 첫문자가 [ , 마지막 항목의 마지막 문자가 ] 이면 참 리턴.
-    func checkWrappedArrayOfJSON(array : [String]) -> Bool {
-        // 첫 항목 변수처리
-        let firstLetter = array[0]
-        // 첫 항목의 첫 문자가 [ 인지 체크
-        let isFirstCharacterMatched = firstLetter[firstLetter.startIndex] == JSON.startOfArrayOfJSON
-        // 마지막 항목 변수처리
-        let lastLetter = array[array.count-1]
-        // 마지막 항목의 마지막 문자가 ] 인지 체크
-        let isLastCharacterMatched = lastLetter[lastLetter.index(lastLetter.endIndex, offsetBy: -1)] == JSON.endOfArrayOfJSON
-        // 두 항목 모두 참이여야 참 리턴
-        return isFirstCharacterMatched && isLastCharacterMatched
+    /// {} 로 둘러쌓인 문자열을 받아서 객체형인지 체크
+    func checkWrappedObjectForJSON(letter: String) -> Bool {
+        // 맨 앞뒤가 {} 인지 체크
+        guard checkWrappedObjectStyle(letter: letter) == true else {
+            return false
+        }
+        // 맞다면 {} 를 제거
+        let withoutWrapper = String(letter[letter.index(letter.startIndex, offsetBy: 1)..<letter.index(letter.endIndex, offsetBy: -1)])
+        // {} 가 없는 객체형 체크 함수를 리턴한다
+        return checkUnWrappedObjectForJSON(letter: withoutWrapper)
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 }
