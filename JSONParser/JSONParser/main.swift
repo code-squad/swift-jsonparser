@@ -17,17 +17,21 @@ func main(){
     // 입력값을 분류해주는 구조체 선언
     let classifier = Classifier()
     // 입력값을 JSON 스타일로 나눔
-    guard let separatedData = classifier.transformLetterToJSON(letter: userInput) else {
+    guard let separatedLetters = classifier.surveyLettersByJSON(letters: userInput) else {
         inputView.printWrongInputMessage()
         return ()
     }
     
     // JSON 구조체 선언
-    let json = JSON(dataSetOfJSON: separatedData)
+    let json = JSON()
+    // JSON Data 생성
+    guard let dataOfJSON = json.transformLetterToJSON(letters: separatedLetters) else {
+        return ()
+    }
     
     // 출력 구조체 선언
     let outputView = OutputView()
-    outputView.printCountOfTypes(json: json)
+    outputView.printCountOfTypes(json: dataOfJSON)
 }
 
 // 메인함수 실행
