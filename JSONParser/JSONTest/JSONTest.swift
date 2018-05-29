@@ -21,10 +21,40 @@ class JSONTest: XCTestCase {
     }
     
     func testExample() {
-        let str = "\"as,34\""
-        let k = Checker.isLettersForJSON(letter: str)
-        XCTAssert(k)
+        let checker = Checker()
+//        let input = "[{ \"name\" : \"KIM JUNG\", \"level\" : 5, \"married\" : true }, 4, false, \"sd, true, {\"dsf\" : 4} f\"]"
+        let input = "{ \"name\" : \"KIM JUNG\", \"level\" : 5, \"married\" : true }"
+        let classifier = Classifier()
+        
+        let separated = classifier.surveyLettersByJSON(letters: input)!
+        let json = JSON()
+        let result = json.transformLetterToJSON(letters: separated)
+        print (result?.countValues())
+        XCTAssert(separated == separated )
     }
+    func testMain() {
+        let input = "[{ \"name\" : \"KIM JUNG\", \"level\" : 5, \"married\" : true }, 4, false, \"sd, true, {\"dsf\" : 4} f\"]"
+//        let input = "{ \"name\" : \"KIM JUNG\", \"level\" : 5, \"married\" : true }"
+        // 입력값을 분류해주는 구조체 선언
+        let classifier = Classifier()
+        // 입력값을 JSON 스타일로 나눔
+        guard let separatedLetters = classifier.surveyLettersByJSON(letters: input) else {
+            print("잘못된 입력")
+            return ()
+        }
+        
+        // JSON 구조체 선언
+        let json = JSON()
+        // JSON Data 생성
+        guard let dataOfJSON = json.transformLetterToJSON(letters: separatedLetters) else {
+            return ()
+        }
+        
+        // 출력 구조체 선언
+        let outputView = OutputView()
+        outputView.printCountOfTypes(json: dataOfJSON)
+    }
+    
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
