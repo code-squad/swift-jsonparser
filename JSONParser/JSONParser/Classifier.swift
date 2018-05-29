@@ -43,12 +43,8 @@ struct Classifier{
         return result
     }
     
-    /// 문자열을 받아서 특정 캐릭터로 둘러쌓인 부분의 인덱스를 배열로 리턴
-    private func surveyLetterRange(letters : String, targetLetter : Character) -> [Range<String.Index>]? {
-        // 문자의 위치를 가진 배열 선언. 목표문자가 한개도 없으면 닐 리턴
-        guard let letterIndexList = surveyLetterPositions(letters: letters, targetLetter: targetLetter) else {
-            return nil
-        }
+    /// 문자열을 받고 인덱스 배열을 받아서 인덱스로 둘러쌓인 문자열 범위를 리턴한다
+    private func surveyWrappedRange(letters : String, letterIndexList : [String.Index]) -> [Range<String.Index>]? {
         // 범위를 구해야 하기 때문에 문자의 개수가 짝수인지 체크
         guard letterIndexList.count % 2 == 0 else {
             // 홀수면 닐 리턴
@@ -70,7 +66,7 @@ struct Classifier{
                 headLetterIndex = letterIndex
                 // 플래그를 오프
                 readyForHead = false
-            // 이미 앞쪽 인덱스가 존재한다면
+                // 이미 앞쪽 인덱스가 존재한다면
             } else {
                 // 뒤쪽 인덱스를 포함하도록 인덱스+1 을 입력
                 tailLetterIndex = letters.index(after:letterIndex)
@@ -82,6 +78,16 @@ struct Classifier{
         }
         // 결과를 리턴한다
         return result
+    }
+    
+    /// 문자열을 받아서 특정 캐릭터로 둘러쌓인 부분의 인덱스를 배열로 리턴
+    private func surveyLetterRange(letters : String, targetLetter : Character) -> [Range<String.Index>]? {
+        // 문자의 위치를 가진 배열 선언. 목표문자가 한개도 없으면 닐 리턴
+        guard let letterIndexList = surveyLetterPositions(letters: letters, targetLetter: targetLetter) else {
+            return nil
+        }
+        // 인덱스로 둘러쌓인 인덱스 레인지 배열을 리턴해주는 함수를 리턴한다
+        return surveyWrappedRange(letters: letters, letterIndexList: letterIndexList)
     }
     
     /// 인덱스배열과 레인지배열을 받아서 레인지범위 안에 있는 인덱스를 제외한 인댁스배열을 리턴
@@ -108,6 +114,7 @@ struct Classifier{
         return resultIndexList
     }
     
+    
     /// 문자열과 인덱스배열을 받아서 그 인덱스를 기준으로 나누어 레인지 인덱스 배열로 생성한다
     private func separateByIndexes(letters : String, targetIndexes : [String.Index]) -> [Range<String.Index>] {
         // 쉼표 다음지점을 체크하기 위한 플래그
@@ -129,78 +136,71 @@ struct Classifier{
         // 결과를 리턴한다
         return result
     }
-    
-    /// JSON 입력값을 받아서 , 기준으로 자르는 함수, " " 로 둘러쌓인 문자열 안의 , 는 자르지 않는다
-        private func surveyLettersByJSON(letters : String) -> [String]?{
-            // 결과 리턴용 변수
-            var result : [String] = []
-            // 문자열의 , 인덱스를 구한다
-            guard var commaIndexes = surveyLetterPositions(letters: letters, targetLetter: JSON.separater) else {
-                return nil
-            }
-            // " 로 둘러쌓인 범위인덱스를 구한다
-            guard let doubleQuatationIndexes = surveyLetterRange(letters: letters, targetLetter: JSON.letterWrapper) else {
-                return nil
-            }
-            // , 중 " 로 둘러쌓인 인덱스를 제외시킨다
-            commaIndexes = removeDuplicatedIndexIn(indexRangeList: doubleQuatationIndexes, targetIndexes: commaIndexes)
-            // , 를 기준으로 문자열을 나눈 범위인덱스를 구한다
-            let separatedByIndexex = separateByIndexes(letters: letters, targetIndexes: commaIndexes)
-            // , 인덱스를 기준으로 문자열을 나누어서 문자열로 리턴한다
-            for separatedByIndex in separatedByIndexex {
-                result.append(String(letters[separatedByIndex]))
-            }
-            // 결과를 리턴한다
-            return result
-        }
-    
-    /// 문자열을 받아서 JSON 타입으로 리턴
-    private func transformLetterToValueOfJSON(letter:String) -> Any? {
-        // 인트형이 가능한지 체크. 변환가능하면 변환해서 추가
-        if Int(letter) != nil {
-            return Int(letter)!
-        }
-        // Bool 타입인지 체크. 가능하면 변환해서 추가
-        else if JSON.booleanType.contains(letter){
-            return Bool(letter)!
-        }
-        // " 로 둘러쌓인 문자열인지 체크 후 추가
-        else if Checker.isLettersForJSON(letter: letter){
-            return (letter)
-        }
-        // 어느것도 매칭되지 않는다면 닐 리턴
-        else {
+    /// 문자열을 입력받아서 { } 로 둘러쌓인 부분을 범위인덱스 배열로 리턴한다
+    private func surveyObjectRanges(letters : String) -> [Range<String.Index>]?{
+        // { 와 } 각각 인덱스 배열을 만든다
+        guard let headIndexes = surveyLetterPositions(letters: letters, targetLetter: JSON.startOfObjectOfJSON) else {
             return nil
         }
+        guard let tailIndexes = surveyLetterPositions(letters: letters, targetLetter: JSON.endOfObjectOfJSON) else {
+            return nil
+        }
+        // 체크 구조체 선언
+        let checker = Checker()
+        //  { } 의 위치에 문제는 없는지 체크한다
+        guard checker.checkOrderBetween(headIndexes: headIndexes, tailIndexes: tailIndexes) else {
+            return nil
+        }
+        // 두 배열을 머리-꼬리,머리-꼬리 순으로 합친다
+        let objectIndexes = checker.combineByOrder(headIndexes: headIndexes, tailIndexes: tailIndexes)
+        // 인덱스 배열로 둘러쌓인 인덱서 범위 배열로 리턴해주는 함수를 리턴한다
+        return surveyWrappedRange(letters: letters, letterIndexList: objectIndexes)
     }
     
-    /// 문자열 배열을 받아서 JSON 객체로 생성. 변환 불가능한 값이 있으면 닐 리턴
-    private func transformLettersToJSON(letters:[String]) -> [Any]? {
-        // 결과 출력용 배열 선언
-        var result :[Any] = []
-        // 배열을 반복분에 넣는다
-        for letter in letters {
-            // JSON 에 추가 가능한지 체크. 변환가능하면 변환해서 추가
-            guard let transformedValue = transformLetterToValueOfJSON(letter: letter) else {
+    /// JSON 입력값을 받아서 , 기준으로 자르는 함수, " " 로 둘러쌓인 문자열 안의 , 는 자르지 않는다
+    func surveyLettersByJSON(letters : String) -> [String]?{
+        // 체크 구조체 선언
+        let checker = Checker()
+        // 맨앞뒤 문자를 제거해서 처리하기 편하게 만든다
+        let cuttedLetters = String(letters[letters.index(after: letters.startIndex)..<letters.index(before: letters.endIndex)])
+        // 입력값이 배열 혹은 객체 형태여야만 함.
+        guard checker.checkArrayForJSON(letter: letters) || checker.checkWrappedObjectStyle(letter: letters) else {
+            // 둘 다 아닐경우 닐 리턴
+            return nil
+        }
+        // 배열형인지 객체형인지를 알려줄 변수
+        let typeOfJSON = String(letters[letters.startIndex])
+        // 결과 리턴용 변수
+        var result : [String] = []
+        // 문자열의 , 인덱스를 구한다
+        guard var commaIndexes = surveyLetterPositions(letters: cuttedLetters, targetLetter: JSON.separater) else {
+            return nil
+        }
+        // " 로 둘러쌓인 범위인덱스를 구한다
+        guard let doubleQuatationIndexes = surveyLetterRange(letters: cuttedLetters, targetLetter: JSON.letterWrapper) else {
+            return nil
+        }
+        // , 중 " 로 둘러쌓인 인덱스를 제외시킨다
+        commaIndexes = removeDuplicatedIndexIn(indexRangeList: doubleQuatationIndexes, targetIndexes: commaIndexes)
+        // 배열형일 경우 추가로  { } 관련 인덱스 작업을 해준다
+        if checker.checkArrayForJSON(letter: letters) {
+            // { } 로 둘러쌓인 범위인덱스를 구한다
+            guard let objectIndexes = surveyObjectRanges(letters: cuttedLetters) else {
                 return nil
             }
-            result.append(transformedValue)
+            // , 중 {} 로 둘러쌓인 인덱스를 제외시킨다
+            commaIndexes = removeDuplicatedIndexIn(indexRangeList: objectIndexes, targetIndexes: commaIndexes)
         }
-        // 결과 리턴
+        // , 를 기준으로 문자열을 나눈 범위인덱스를 구한다
+        let separatedByIndexes = separateByIndexes(letters: cuttedLetters, targetIndexes: commaIndexes)
+        // , 인덱스를 기준으로 문자열을 나누어서 문자열로 리턴한다
+        for separatedByIndex in separatedByIndexes {
+            result.append(String(cuttedLetters[separatedByIndex]))
+        }
+        // 결과 타입을 배열에 넣어준다
+        result.insert(typeOfJSON, at: 0)
+        // 결과를 리턴한다
         return result
     }
     
-    /// 문자열을 받아서 JSON JSON 객체로 생성. 변환 불가능한 값이 있으면 닐 리턴
-    func transformLetterToJSON(letter:String) -> [Any]? {
-        // 문자열을 받아서 JSON 스타일로 배열화 한다
-        guard let letters = surveyLettersByJSON(letters: letter) else {
-            return nil
-        }
-        // 문자열 배열을 JSON 형태로 만든다
-        guard let transformedLetters =  transformLettersToJSON(letters: letters) else {
-            return nil
-        }
-        // 결과를 리턴한다
-        return transformedLetters
-    }
 }
