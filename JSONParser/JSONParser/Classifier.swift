@@ -161,23 +161,19 @@ struct Classifier{
     func surveyLettersByJSON(letters : String) -> [String]?{
         // 체크 구조체 선언
         let checker = Checker()
-        // 맨앞뒤 문자를 제거해서 처리하기 편하게 만든다
-        let cuttedLetters = String(letters[letters.index(after: letters.startIndex)..<letters.index(before: letters.endIndex)])
         // 입력값이 배열 혹은 객체 형태여야만 함.
         guard checker.checkArrayForJSON(letter: letters) || checker.checkWrappedObjectStyle(letter: letters) else {
             // 둘 다 아닐경우 닐 리턴
             return nil
         }
-        // 배열형인지 객체형인지를 알려줄 변수
-        let typeOfJSON = String(letters[letters.startIndex])
         // 결과 리턴용 변수
         var result : [String] = []
         // 문자열의 , 인덱스를 구한다
-        guard var commaIndexes = surveyLetterPositions(letters: cuttedLetters, targetLetter: JSONParser.separater) else {
+        guard var commaIndexes = surveyLetterPositions(letters: letters, targetLetter: JSONParser.separater) else {
             return nil
         }
         // " 로 둘러쌓인 범위인덱스를 구한다
-        guard let doubleQuatationIndexes = surveyLetterRange(letters: cuttedLetters, targetLetter: JSONParser.letterWrapper) else {
+        guard let doubleQuatationIndexes = surveyLetterRange(letters: letters, targetLetter: JSONParser.letterWrapper) else {
             return nil
         }
         // , 중 " 로 둘러쌓인 인덱스를 제외시킨다
@@ -185,22 +181,19 @@ struct Classifier{
         // 배열형일 경우 추가로  { } 관련 인덱스 작업을 해준다
         if checker.checkArrayForJSON(letter: letters) {
             // { } 로 둘러쌓인 범위인덱스를 구한다
-            guard let objectIndexes = surveyObjectRanges(letters: cuttedLetters) else {
+            guard let objectIndexes = surveyObjectRanges(letters: letters) else {
                 return nil
             }
             // , 중 {} 로 둘러쌓인 인덱스를 제외시킨다
             commaIndexes = removeDuplicatedIndexIn(indexRangeList: objectIndexes, targetIndexes: commaIndexes)
         }
         // , 를 기준으로 문자열을 나눈 범위인덱스를 구한다
-        let separatedByIndexes = separateByIndexes(letters: cuttedLetters, targetIndexes: commaIndexes)
+        let separatedByIndexes = separateByIndexes(letters: letters, targetIndexes: commaIndexes)
         // , 인덱스를 기준으로 문자열을 나누어서 문자열로 리턴한다
         for separatedByIndex in separatedByIndexes {
-            result.append(String(cuttedLetters[separatedByIndex]))
+            result.append(String(letters[separatedByIndex]))
         }
-        // 결과 타입을 배열에 넣어준다
-        result.insert(typeOfJSON, at: 0)
         // 결과를 리턴한다
         return result
     }
-    
 }
