@@ -158,7 +158,7 @@ struct Classifier{
     }
     
     /// JSON 입력값을 받아서 , 기준으로 자르는 함수, " " 로 둘러쌓인 문자열 안의 , 는 자르지 않는다
-    func surveyLettersByJSON(letters : String) -> [String]?{
+    func separateForJSON(letters : String) -> [String]?{
         // 체크 구조체 선언
         let checker = Checker()
         // 입력값이 배열 혹은 객체 형태여야만 함.
@@ -178,7 +178,7 @@ struct Classifier{
         }
         // , 중 " 로 둘러쌓인 인덱스를 제외시킨다
         commaIndexes = removeDuplicatedIndexIn(indexRangeList: doubleQuatationIndexes, targetIndexes: commaIndexes)
-        // 배열형일 경우 추가로  { } 관련 인덱스 작업을 해준다
+        // 배열형일 경우 추가로 { } 관련 인덱스 작업을 해준다
         if checker.checkArrayForJSON(letter: letters) {
             // { } 로 둘러쌓인 범위인덱스를 구한다
             guard let objectIndexes = surveyObjectRanges(letters: letters) else {
@@ -195,5 +195,21 @@ struct Classifier{
         }
         // 결과를 리턴한다
         return result
+    }
+    
+    /// 문자열을 받아서 맨 앞뒤 글자를 자르고 분류함수로 보낸다. 분류후 함수에 잘랐던 맨 앞글자를 insert 해서 리턴한다.
+    func surveyForJSON(letters : String) -> [String]?{
+        // , 를 기준으로 자른다
+        guard var separatedLetters = separateForJSON(letters: letters) else {
+            return nil
+        }
+        // 맨 앞의 분류자를 변수처리한다. 결과값에선 삭제한다.
+        let flag = separatedLetters[0].removeFirst()
+        // 맨 앞에 분류자를 넣어준다
+        separatedLetters.insert(String(flag), at: 0)
+        // 맨뒤의 분류자를 삭제한다
+        separatedLetters[separatedLetters.count-1].removeLast()
+        // 결과를 리턴한다
+        return separatedLetters
     }
 }
