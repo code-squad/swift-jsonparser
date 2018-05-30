@@ -9,14 +9,6 @@
 import Foundation
 
 struct Checker {
-    /// 인트형 타입
-    let typeInt : Int.Type = Int.self
-    /// 문자형 타입
-    let typeString : String.Type = String.self
-    /// Bool 타입
-    let typeBool : Bool.Type = Bool.self
-    /// 객체형 타입
-    private let emptyObject : [String:Any] = [:]
     
     
     /// 문자열을 받아서 JSON 문자형인지 체크
@@ -25,77 +17,10 @@ struct Checker {
         return letter[letter.startIndex] == JSON.letterWrapper && letter[letter.index(before:letter.endIndex)] == JSON.letterWrapper
     }
     
-    /// 문자열을 받아서 JSON 객체의 문자형인지 체크
-//    func checkObjectForJSON(letter : String) -> Bool {
-//        // 문자열의 첫번쨰와 마지막이 " 이면 참
-//        return letter[letter.startIndex] == JSON.startOfObjectOfJSON && letter[letter.index(before:letter.endIndex)] == JSON.endOfObjectOfJSON
-//    }
-    
     /// 문자열을 받아서 JSON 배열의 문자형인지 체크
     func checkArrayForJSON(letter : String) -> Bool {
         // 문자열의 첫번쨰와 마지막이 " 이면 참
         return letter[letter.startIndex] == JSON.startOfArrayOfJSON && letter[letter.index(before:letter.endIndex)] == JSON.endOfArrayOfJSON
-    }
-    
-    /// JSON 배열 데이터중 입력받은 자료형 타입이 몇개인지 리턴
-    private func countType(targetType : Any.Type, dataArray: [Any]) -> Int {
-        // 결과값 변수 선언
-        var countOfLetter = 0
-        // JSON 배열을 반복문에 넣는다
-        for data in dataArray {
-            if ObjectIdentifier(type(of: data)) == ObjectIdentifier(targetType) {
-                countOfLetter += 1
-            }
-        }
-        return countOfLetter
-    }
-    
-    /// JSON 객체 데이터중 입력받은 자료형 타입이 몇개인지 리턴
-    private func countType(targetType : Any.Type, dataObject: [String:Any]) -> Int {
-        // 결과값 변수 선언
-        var countOfLetter = 0
-        // JSON 배열을 반복문에 넣는다
-        for data in dataObject.values {
-            if ObjectIdentifier(type(of: data)) == ObjectIdentifier(targetType) {
-                countOfLetter += 1
-            }
-        }
-        return countOfLetter
-    }
-    // 타겟이 배열인 경우
-    /// 입력한 배열에 인트형이 몇개인지 리턴
-    func countIntFrom(targetArray : [Any]) -> Int {
-        return countType(targetType: typeInt, dataArray: targetArray)
-    }
-    
-    /// 입력한 배열에 인트형이 몇개인지 리턴
-    func countStringFrom(targetArray : [Any]) -> Int {
-        return countType(targetType: typeString, dataArray: targetArray)
-    }
-    
-    /// 입력한 배열에 인트형이 몇개인지 리턴
-    func countBoolFrom(targetArray : [Any]) -> Int {
-        return countType(targetType: typeBool, dataArray: targetArray)
-    }
-    
-    /// 입력한 배열에 인트형이 몇개인지 리턴
-    func countObjectFrom(targetArray : [Any]) -> Int {
-        return countType(targetType: type(of: emptyObject), dataArray: targetArray)
-    }
-    // 타겟이 객체인 경우
-    /// 입력한 객체에 인트형이 몇개인지 리턴
-    func countIntFrom(targetObject : [String:Any]) -> Int {
-        return countType(targetType: typeInt, dataObject: targetObject)
-    }
-    
-    /// 입력한 객체에 인트형이 몇개인지 리턴
-    func countStringFrom(targetObject : [String:Any]) -> Int {
-        return countType(targetType: typeString, dataObject: targetObject)
-    }
-    
-    /// 입력한 객체에 인트형이 몇개인지 리턴
-    func countBoolFrom(targetObject : [String:Any]) -> Int {
-        return countType(targetType: typeBool, dataObject: targetObject)
     }
     
     /// 머리배열과 꼬리배열을 받아서 머리-꼬리 순서대로 배열을 합쳐서 리턴한다
