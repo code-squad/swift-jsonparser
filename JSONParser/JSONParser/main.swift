@@ -26,7 +26,7 @@ func main(){
     let jsonParser = JSONParser()
     
     // JSON Data 생성
-    guard let dataOfJSON = jsonParser.transformLetterToJSON(letters: separatedLetters) else {
+    guard let dataOfJSON = jsonParser.transform(letters: separatedLetters) else {
         return ()
     }
     
