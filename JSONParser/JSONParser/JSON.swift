@@ -26,6 +26,17 @@ struct JSON {
     // JSON 오브젝트에서 키와 값을 나누는 문자
     static let separaterForObject : Character = ":"
     
+    // JSON 데이터로 들어갈 수 있는 종류
+    // 인트형 타입
+    static let typeInt : Int.Type = Int.self
+    // 문자형 타입
+    static let typeString : String.Type = String.self
+    // Bool 타입
+    static let typeBool : Bool.Type = Bool.self
+    // 객체형 타입
+    static private let emptyObject : [String:Any] = [:]
+    static let typeObject = type(of: emptyObject)
+    
     
     /// 문자열을 받아서 JSON 타입으로 리턴
     private func transformLetterToDataOfJSONObject(letter:String) -> Any? {
