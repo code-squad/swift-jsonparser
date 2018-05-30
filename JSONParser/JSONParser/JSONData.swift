@@ -102,7 +102,7 @@ struct JSONObject : JSONCount {
     /// JSON 배열 데이터중 입력받은 자료형 별로 변수에 추가.
     mutating func countType() -> Bool {
         // JSON 배열을 반복문에 넣는다
-        for data in dataSetOfJSON {
+        for data in dataSetOfJSON.values {
             // 각 항목별 체크
             switch ObjectIdentifier(type(of: data)) {
             // 인트형일 경우
