@@ -1,5 +1,5 @@
 //
-//  JSON.swift
+//  JSONParser.swift
 //  JSONParser
 //
 //  Created by Yoda Codd on 2018. 5. 21..
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JSON {
+struct JSONParser {
     // JSON 에서 데이터를 나누는 단위
     static let separater : Character = ","
     // JSON 에서 문자열을 감싸는 단위
@@ -47,7 +47,7 @@ struct JSON {
             return Int(letter)!
         }
             // Bool 타입인지 체크. 가능하면 변환해서 추가
-        else if JSON.booleanType.contains(letter){
+        else if JSONParser.booleanType.contains(letter){
             return Bool(letter)!
         }
             // " 로 둘러쌓인 문자열인지 체크 후 추가
@@ -63,7 +63,7 @@ struct JSON {
     /// 키:벨류 로 붙어있는 문자열을 받아서 키부분 리턴
     private func extractKeyFromObjectLetter(letter: String) -> String {
         // : 을 기준으로 문자열을 자른다
-        let separatedLetter = letter.split(separator: JSON.separaterForObject)
+        let separatedLetter = letter.split(separator: JSONParser.separaterForObject)
         // 키 부분의 공백을 지워주고 변수화 한다
         let key = separatedLetter[0].trimmingCharacters(in: .whitespaces)
         // " 을 제외한 나머지 문자열을 내보낸다
@@ -73,7 +73,7 @@ struct JSON {
     /// 키:벨류 로 붙어있는 문자열을 받아서 벨류 부분 리턴
     private func extractValueFromObjectLetter(letter: String) -> Any {
         // : 을 기준으로 문자열을 자른다
-        let separatedLetter = letter.split(separator: JSON.separaterForObject)
+        let separatedLetter = letter.split(separator: JSONParser.separaterForObject)
         // 키 부분의 공백을 지워주고 변수화 한다
         let value = separatedLetter[1].trimmingCharacters(in: .whitespaces)
         // " 을 제외한 나머지 문자열을 내보낸다. 앞부분에서 체크 했음으로 강제 래핑
@@ -100,7 +100,7 @@ struct JSON {
         // 뒤에서 함수에 사용할 문자형 배열 선언
         var separatedByComma : [String] = []
         // , 를 기준으로 나눠서 배열로 만는다
-        let separatedSubSequencesByComma = letter.split(separator: JSON.separater)
+        let separatedSubSequencesByComma = letter.split(separator: JSONParser.separater)
         // 문자열로 전환한다
         for subSequence in separatedSubSequencesByComma {
             separatedByComma.append(String(subSequence))

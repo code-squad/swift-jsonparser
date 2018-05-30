@@ -14,13 +14,13 @@ struct Checker {
     /// 문자열을 받아서 JSON 문자형인지 체크
     func isLettersForJSON(letter : String) -> Bool {
         // 문자열의 첫번쨰와 마지막이 " 이면 참
-        return letter[letter.startIndex] == JSON.letterWrapper && letter[letter.index(before:letter.endIndex)] == JSON.letterWrapper
+        return letter[letter.startIndex] == JSONParser.letterWrapper && letter[letter.index(before:letter.endIndex)] == JSONParser.letterWrapper
     }
     
     /// 문자열을 받아서 JSON 배열의 문자형인지 체크
     func checkArrayForJSON(letter : String) -> Bool {
         // 문자열의 첫번쨰와 마지막이 " 이면 참
-        return letter[letter.startIndex] == JSON.startOfArrayOfJSON && letter[letter.index(before:letter.endIndex)] == JSON.endOfArrayOfJSON
+        return letter[letter.startIndex] == JSONParser.startOfArrayOfJSON && letter[letter.index(before:letter.endIndex)] == JSONParser.endOfArrayOfJSON
     }
     
     /// 머리배열과 꼬리배열을 받아서 머리-꼬리 순서대로 배열을 합쳐서 리턴한다
@@ -59,7 +59,7 @@ struct Checker {
     /// 문자열을 받아서 {} 로 둘러싸여 있는지 체크
     func checkWrappedObjectStyle(letter : String) -> Bool {
         // 입력받은 문자열의 앞위가 {} 인지 체크한다
-        if letter[letter.startIndex] == JSON.startOfObjectOfJSON && letter[letter.index(before:letter.endIndex)] == JSON.endOfObjectOfJSON {
+        if letter[letter.startIndex] == JSONParser.startOfObjectOfJSON && letter[letter.index(before:letter.endIndex)] == JSONParser.endOfObjectOfJSON {
             // 맞으면 앞뒤 두글자를 제외한 나머지 리턴. { } 와 그 사이의 빈칸을 제외
             return true
         }
@@ -77,7 +77,7 @@ struct Checker {
             return true
         }
             // Bool 타입인지 체크.
-        else if JSON.booleanType.contains(letter){
+        else if JSONParser.booleanType.contains(letter){
             return true
         }
             // " 로 둘러쌓인 문자열인지 체크
@@ -93,7 +93,7 @@ struct Checker {
     /// 문자열을 받아서 : 를 기준으로 나누고 각 항목이 객체타입에 맞는지 체크
     private func checkObjectKeyValue(letter : String) -> Bool {
         // : 를 기준으로 나눈다
-        let separatedObject = letter.split(separator: JSON.separaterForObject)
+        let separatedObject = letter.split(separator: JSONParser.separaterForObject)
         // 키 부분 변수를 추출. 앞뒤로 빈칸이 있으니 제거해준다
         let keyOfObject = String(separatedObject[0]).trimmingCharacters(in: .whitespaces)
         // 키 부분이 " 로 둘러싸여있는지 체크
@@ -110,7 +110,7 @@ struct Checker {
     /// {} 로 둘러 쌓이지 않은 문자열을 받아서 객체형인지 체크
     func checkUnWrappedObjectForJSON(letter: String) -> Bool {
         // , 를 기준으로 나눠서 배열로 만는다
-        let separatedByComma = letter.split(separator: JSON.separater)
+        let separatedByComma = letter.split(separator: JSONParser.separater)
         // 각 키와 밸류를 반복문에 넣어서 JSON 타입이 맞는지 체크
         for object in separatedByComma {
             if checkObjectKeyValue(letter: String(object)) == false {

@@ -45,13 +45,13 @@ struct JSONArray : JSONCount {
             // 각 항목별 체크
             switch ObjectIdentifier(type(of: data)) {
             // 인트형일 경우
-            case ObjectIdentifier(JSON.typeInt) : countOfInt += 1
+            case ObjectIdentifier(JSONParser.typeInt) : countOfInt += 1
             // 문자형일 경우
-            case ObjectIdentifier(JSON.typeString) : countOfString += 1
+            case ObjectIdentifier(JSONParser.typeString) : countOfString += 1
             // Bool형일 경우
-            case ObjectIdentifier(JSON.typeBool) : countOfBool += 1
+            case ObjectIdentifier(JSONParser.typeBool) : countOfBool += 1
             // 객체형일 경우
-            case ObjectIdentifier(JSON.typeObject) : countOfObject += 1
+            case ObjectIdentifier(JSONParser.typeObject) : countOfObject += 1
             // 그 외의 경우
             default : return false
             }
@@ -106,11 +106,11 @@ struct JSONObject : JSONCount {
             // 각 항목별 체크
             switch ObjectIdentifier(type(of: data)) {
             // 인트형일 경우
-            case ObjectIdentifier(JSON.typeInt) : countOfInt += 1
+            case ObjectIdentifier(JSONParser.typeInt) : countOfInt += 1
             // 문자형일 경우
-            case ObjectIdentifier(JSON.typeString) : countOfString += 1
+            case ObjectIdentifier(JSONParser.typeString) : countOfString += 1
             // Bool형일 경우
-            case ObjectIdentifier(JSON.typeBool) : countOfBool += 1
+            case ObjectIdentifier(JSONParser.typeBool) : countOfBool += 1
             // 그 외의 경우
             default : return false
             }

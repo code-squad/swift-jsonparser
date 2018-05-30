@@ -139,10 +139,10 @@ struct Classifier{
     /// 문자열을 입력받아서 { } 로 둘러쌓인 부분을 범위인덱스 배열로 리턴한다
     private func surveyObjectRanges(letters : String) -> [Range<String.Index>]?{
         // { 와 } 각각 인덱스 배열을 만든다
-        guard let headIndexes = surveyLetterPositions(letters: letters, targetLetter: JSON.startOfObjectOfJSON) else {
+        guard let headIndexes = surveyLetterPositions(letters: letters, targetLetter: JSONParser.startOfObjectOfJSON) else {
             return nil
         }
-        guard let tailIndexes = surveyLetterPositions(letters: letters, targetLetter: JSON.endOfObjectOfJSON) else {
+        guard let tailIndexes = surveyLetterPositions(letters: letters, targetLetter: JSONParser.endOfObjectOfJSON) else {
             return nil
         }
         // 체크 구조체 선언
@@ -173,11 +173,11 @@ struct Classifier{
         // 결과 리턴용 변수
         var result : [String] = []
         // 문자열의 , 인덱스를 구한다
-        guard var commaIndexes = surveyLetterPositions(letters: cuttedLetters, targetLetter: JSON.separater) else {
+        guard var commaIndexes = surveyLetterPositions(letters: cuttedLetters, targetLetter: JSONParser.separater) else {
             return nil
         }
         // " 로 둘러쌓인 범위인덱스를 구한다
-        guard let doubleQuatationIndexes = surveyLetterRange(letters: cuttedLetters, targetLetter: JSON.letterWrapper) else {
+        guard let doubleQuatationIndexes = surveyLetterRange(letters: cuttedLetters, targetLetter: JSONParser.letterWrapper) else {
             return nil
         }
         // , 중 " 로 둘러쌓인 인덱스를 제외시킨다

@@ -23,9 +23,10 @@ func main(){
     }
     
     // JSON 구조체 선언
-    let json = JSON()
+    let jsonParser = JSONParser()
+    
     // JSON Data 생성
-    guard let dataOfJSON = json.transformLetterToJSON(letters: separatedLetters) else {
+    guard let dataOfJSON = jsonParser.transformLetterToJSON(letters: separatedLetters) else {
         return ()
     }
     
