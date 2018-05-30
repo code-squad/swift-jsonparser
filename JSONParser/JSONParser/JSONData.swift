@@ -10,7 +10,10 @@ import Foundation
 
 /// JSON 데이터들이 준수하게 될 프로토콜 선언
 protocol JSONCount {
-    func countValues() -> String
+    func countInt() -> Int
+    func countString() -> Int
+    func countBool() -> Int
+    func countObject() -> Int?
 }
 
 /// JSON 배열타입 데이터
@@ -19,26 +22,61 @@ struct JSONArray : JSONCount {
     private let dataSetOfJSON : [Any]
     
     // 생성자
-    init(dataSetOfJSON : [Any]){
+    init?(dataSetOfJSON : [Any]){
         self.dataSetOfJSON = dataSetOfJSON
+        if countType() == false {
+            return nil
+        }
+    }
+    
+    // 배열의 인트형 개수
+    var countOfInt = 0
+    // 배열의 문자형 개수
+    var countOfString = 0
+    // 배열의 Bool형 개수
+    var countOfBool = 0
+    // 배열의 객체형 개수
+    var countOfObject = 0
+    
+    /// JSON 배열 데이터중 입력받은 자료형 별로 변수에 추가.
+    mutating func countType() -> Bool {
+        // JSON 배열을 반복문에 넣는다
+        for data in dataSetOfJSON {
+            // 각 항목별 체크
+            switch ObjectIdentifier(type(of: data)) {
+            // 인트형일 경우
+            case ObjectIdentifier(JSON.typeInt) : countOfInt += 1
+            // 문자형일 경우
+            case ObjectIdentifier(JSON.typeString) : countOfString += 1
+            // Bool형일 경우
+            case ObjectIdentifier(JSON.typeBool) : countOfBool += 1
+            // 객체형일 경우
+            case ObjectIdentifier(JSON.typeObject) : countOfObject += 1
+            // 그 외의 경우
+            default : return false
+            }
+        }
+        return true
     }
     
     // 프로토콜을 준수한다
-    func countValues() -> String {
-        let checker = Checker()
-        
-        let countOfNumber = checker.countIntFrom(targetArray: dataSetOfJSON)
-        // 문자형 타입의 개수를 받을 변수 선언
-        let countOfLetter = checker.countStringFrom(targetArray: dataSetOfJSON)
-        // Bool 형 타입의 개수를 받을 변수 선언
-        let countOfBool = checker.countBoolFrom(targetArray: dataSetOfJSON)
-        // 객체 타입 개수를 받을 변수 선언
-        let countOfObject = checker.countObjectFrom(targetArray: dataSetOfJSON)
-        // 합계 계산
-        let totalCount = countOfNumber + countOfLetter + countOfBool + countOfObject
-        // 요구조건의 형태대로 출력
-        return ("총 \(totalCount)개의 배열 데이터 중에 문자열 \(countOfLetter)개, 숫자 \(countOfNumber)개, 부울 \(countOfBool)개, 객체 \(countOfObject)개가 포함되어 있습니다.")
+    /// 인트형 개수 리턴
+    func countInt() -> Int {
+        return self.countOfInt
     }
+    /// 문자형 개수 리턴
+    func countString() -> Int {
+        return self.countOfString
+    }
+    /// Bool형 개수 리턴
+    func countBool() -> Int {
+        return self.countOfBool
+    }
+    /// 객체형 개수 리턴
+    func countObject() -> Int? {
+        return self.countOfObject
+    }
+    
 }
 
 /// JSON Object 타입
@@ -47,23 +85,55 @@ struct JSONObject : JSONCount {
     private let dataSetOfJSON : [String : Any]
     
     // 생성자
-    init(dataSetOfJSON : [String : Any]){
+    init?(dataSetOfJSON : [String : Any]){
         self.dataSetOfJSON = dataSetOfJSON
+        if countType() == false {
+            return nil
+        }
     }
     
-    // 프로토콜을 준수. 데이터 타입을 종류별로 카운트 해서 리턴
-    func countValues() -> String {
-        let checker = Checker()
-        // 숫자형 타입의 개수를 받을 변수 선언
-        let countOfNumber = checker.countIntFrom(targetObject: dataSetOfJSON)
-        // 문자형 타입의 개수를 받을 변수 선언
-        let countOfLetter = checker.countStringFrom(targetObject: dataSetOfJSON)
-        // Bool 형 타입의 개수를 받을 변수 선언
-        let countOfBool = checker.countBoolFrom(targetObject: dataSetOfJSON)
-        // 합계 계산
-        let totalCount = countOfNumber + countOfLetter + countOfBool
-        // 요구조건의 형태대로 출력
-        return ("총 \(totalCount)개의 데이터 중에 문자열 \(countOfLetter)개, 숫자 \(countOfNumber)개, 부울 \(countOfBool)개가 포함되어 있습니다.")
+    // 배열의 인트형 개수
+    var countOfInt = 0
+    // 배열의 문자형 개수
+    var countOfString = 0
+    // 배열의 Bool형 개수
+    var countOfBool = 0
+    
+    /// JSON 배열 데이터중 입력받은 자료형 별로 변수에 추가.
+    mutating func countType() -> Bool {
+        // JSON 배열을 반복문에 넣는다
+        for data in dataSetOfJSON {
+            // 각 항목별 체크
+            switch ObjectIdentifier(type(of: data)) {
+            // 인트형일 경우
+            case ObjectIdentifier(JSON.typeInt) : countOfInt += 1
+            // 문자형일 경우
+            case ObjectIdentifier(JSON.typeString) : countOfString += 1
+            // Bool형일 경우
+            case ObjectIdentifier(JSON.typeBool) : countOfBool += 1
+            // 그 외의 경우
+            default : return false
+            }
+        }
+        return true
+    }
+    
+    // 프로토콜을 준수한다
+    /// 인트형 개수 리턴
+    func countInt() -> Int {
+        return self.countOfInt
+    }
+    /// 문자형 개수 리턴
+    func countString() -> Int {
+        return self.countOfString
+    }
+    /// Bool형 개수 리턴
+    func countBool() -> Int {
+        return self.countOfBool
+    }
+    /// 객체형 변수는 없으니 닐 리턴
+    func countObject() -> Int? {
+        return nil
     }
 }
 
