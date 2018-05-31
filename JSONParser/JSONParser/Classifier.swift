@@ -200,9 +200,13 @@ struct Classifier{
         }
         // 맨 앞의 분류자를 변수처리한다. 결과값에선 삭제한다.
         let flag = separatedLetters[0].removeFirst()
+        // 맨 앞에 공백이 남기때문에 한번 더 지워준다
+        separatedLetters[0].removeFirst()
         // 맨 앞에 분류자를 넣어준다
         separatedLetters.insert(String(flag), at: 0)
         // 맨뒤의 분류자를 삭제한다
+        separatedLetters[separatedLetters.count-1].removeLast()
+        // 맨뒤의 공백을 삭제한다
         separatedLetters[separatedLetters.count-1].removeLast()
         // 결과를 리턴한다
         return separatedLetters

@@ -154,7 +154,7 @@ struct JSONParser {
     /// 문자열을 받아서 JSON 객체로 생성. 변환 불가능한 값이 있으면 닐 리턴
     func transform(letters:[String]) -> JSONCount? {
         // 첫번째 배열을 받아서 어떤 형태인지 파악한다
-        let typeOfJSON = letters[letters.startIndex]
+        let typeOfJSON = letters[0]
         // 배열분류자 를 제외한 나머지 배열을 입력받는다
         var dataOfJSON = letters
         dataOfJSON.remove(at: 0)
