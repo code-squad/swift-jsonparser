@@ -11,6 +11,7 @@
 		D555D57820BD6D1000153BAA /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A85AB20B7D35E00513621 /* JSONData.swift */; };
 		D555D57920BE8BBE00153BAA /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A858F20B552FD00513621 /* JSONParser.swift */; };
 		D555D57A20BE8E3A00153BAA /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A858F20B552FD00513621 /* JSONParser.swift */; };
+		D555D57C20BFE2D000153BAA /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D555D57B20BFE2D000153BAA /* GrammarChecker.swift */; };
 		D56A859420B552FD00513621 /* Classifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A859020B552FD00513621 /* Classifier.swift */; };
 		D56A859520B552FD00513621 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A859120B552FD00513621 /* OutputView.swift */; };
 		D56A859620B552FD00513621 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A859220B552FD00513621 /* InputView.swift */; };
@@ -39,6 +40,7 @@
 /* Begin PBXFileReference section */
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		D555D57B20BFE2D000153BAA /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
 		D56A858F20B552FD00513621 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		D56A859020B552FD00513621 /* Classifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classifier.swift; sourceTree = "<group>"; };
 		D56A859120B552FD00513621 /* OutputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				D56A858F20B552FD00513621 /* JSONParser.swift */,
 				D56A85AB20B7D35E00513621 /* JSONData.swift */,
 				D56A859120B552FD00513621 /* OutputView.swift */,
+				D555D57B20BFE2D000153BAA /* GrammarChecker.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				D56A859820B5593700513621 /* Checker.swift in Sources */,
 				D555D57920BE8BBE00153BAA /* JSONParser.swift in Sources */,
+				D555D57C20BFE2D000153BAA /* GrammarChecker.swift in Sources */,
 				D56A859420B552FD00513621 /* Classifier.swift in Sources */,
 				D56A859620B552FD00513621 /* InputView.swift in Sources */,
 				D56A85AC20B7D35E00513621 /* JSONData.swift in Sources */,
