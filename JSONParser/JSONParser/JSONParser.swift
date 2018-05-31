@@ -1,4 +1,4 @@
-1//
+//
 //  JSONParser.swift
 //  JSONParser
 //
@@ -40,8 +40,6 @@ struct JSONParser {
     
     /// 문자열을 받아서 JSON 타입으로 리턴
     private func transformLetterToDataOfJSONObject(letter:String) -> Any? {
-        // 체크 구조체를 선언한다
-        let checker = Checker()
         // 인트형이 가능한지 체크. 변환가능하면 변환해서 추가
         if Int(letter) != nil {
             return Int(letter)!
@@ -51,7 +49,7 @@ struct JSONParser {
             return Bool(letter)!
         }
             // " 로 둘러쌓인 문자열인지 체크 후 추가
-        else if checker.isLettersForJSON(letter: letter){
+        else if Checker.isLettersForJSON(letter: letter){
             return (letter)
         }
             // 어느것도 매칭되지 않는다면 닐 리턴
@@ -119,10 +117,8 @@ struct JSONParser {
     
     /// 문자열을 받아서 JSON 타입으로 리턴
     private func transformLetterToDataOfJSONArray(letter:String) -> Any? {
-        // 체크 구조체를 선언한다
-        let checker = Checker()
         // {} 로 둘러쌓인 문자열인지 체크 후 추가
-        if checker.checkWrappedObjectForJSON(letter: letter){
+        if Checker.checkWrappedObjectForJSON(letter: letter){
             return transformLetterToJSONObjectWithWrapper(letter: letter)
         }
         // 객체형을 제외한 데이터 타입 리턴함수 사용

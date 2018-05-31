@@ -12,19 +12,24 @@ struct Checker {
     
     
     /// 문자열을 받아서 JSON 문자형인지 체크
-    func isLettersForJSON(letter : String) -> Bool {
+    static func isLettersForJSON(letter : String) -> Bool {
         // 문자열의 첫번쨰와 마지막이 " 이면 참
         return letter[letter.startIndex] == JSONParser.letterWrapper && letter[letter.index(before:letter.endIndex)] == JSONParser.letterWrapper
     }
     
-    /// 문자열을 받아서 JSON 배열의 문자형인지 체크
-    func checkArrayForJSON(letter : String) -> Bool {
+    /// 문자열을 받아서 JSON 배열의 문자형인지 맨앞뒤 문자를 체크
+    static func checkArrayForJSON(letter : String) -> Bool {
         // 문자열의 첫번쨰와 마지막이 " 이면 참
-        return letter[letter.startIndex] == JSONParser.startOfArrayOfJSON && letter[letter.index(before:letter.endIndex)] == JSONParser.endOfArrayOfJSON
+        return checkWrappedBy(letter: letter, headWrapper: JSONParser.startOfArrayOfJSON, tailWrapper: JSONParser.endOfArrayOfJSON)
+    }
+    
+    /// 문자열을 받아서 JSON 객체령의 문자형인지 맨앞뒤 문자를 체크
+    static func checkWrappedObjectStyle(letter : String) -> Bool {
+        return checkWrappedBy(letter: letter, headWrapper: JSONParser.startOfObjectOfJSON, tailWrapper: JSONParser.endOfObjectOfJSON)
     }
     
     /// 머리배열과 꼬리배열을 받아서 머리-꼬리 순서대로 배열을 합쳐서 리턴한다
-    func combineByOrder(headIndexes: [String.Index], tailIndexes: [String.Index]) -> [String.Index] {
+    static func combineByOrder(headIndexes: [String.Index], tailIndexes: [String.Index]) -> [String.Index] {
         // 리턴용 배열 선언
         var totalIndexes : [String.Index] = []
         // 개수만큼 반복문 진행
@@ -38,7 +43,7 @@ struct Checker {
     }
     
     /// 머리 인덱스 배열과 꼬리 인덱스 배열을 받아서 머리~꼬리 사이에 다른 머리나 꼬리가 없는지 체크
-    func checkOrderBetween(headIndexes: [String.Index], tailIndexes: [String.Index]) -> Bool {
+    static func checkOrderBetween(headIndexes: [String.Index], tailIndexes: [String.Index]) -> Bool {
         // 두 배열의 카운트가 같아야됨
         guard headIndexes.count == tailIndexes.count else {
             return false
@@ -57,21 +62,13 @@ struct Checker {
     }
     
     /// 문자열을 받아서 {} 로 둘러싸여 있는지 체크
-    func checkWrappedObjectStyle(letter : String) -> Bool {
-        // 입력받은 문자열의 앞위가 {} 인지 체크한다
-        if letter[letter.startIndex] == JSONParser.startOfObjectOfJSON && letter[letter.index(before:letter.endIndex)] == JSONParser.endOfObjectOfJSON {
-            // 맞으면 앞뒤 두글자를 제외한 나머지 리턴. { } 와 그 사이의 빈칸을 제외
-            return true
-        }
-        // {} 로 둘러싸여있지 않으면
-        else {
-            // 닐 리턴
-            return false
-        }
+    static func checkWrappedBy(letter : String, headWrapper: Character, tailWrapper: Character) -> Bool {
+        // 입력받은 문자열의 앞위가 지정케릭터 인지 체크한다
+        return letter[letter.startIndex] == headWrapper && letter[letter.index(before:letter.endIndex)] == tailWrapper
     }
     
     /// 문자열을 받아서 JSON 의 객체형 데이터에 들어갈수 있는지 체크
-    private func checkDataTypeForJSONObject(letter : String) -> Bool {
+    private static func checkDataTypeForJSONObject(letter : String) -> Bool {
         // 인트형이 가능한지 체크
         if Int(letter) != nil {
             return true
@@ -91,7 +88,7 @@ struct Checker {
     }
     
     /// 문자열을 받아서 : 를 기준으로 나누고 각 항목이 객체타입에 맞는지 체크
-    private func checkObjectKeyValue(letter : String) -> Bool {
+    private static func checkObjectKeyValue(letter : String) -> Bool {
         // : 를 기준으로 나눈다
         let separatedObject = letter.split(separator: JSONParser.separaterForObject)
         // 키 부분 변수를 추출. 앞뒤로 빈칸이 있으니 제거해준다
@@ -108,7 +105,7 @@ struct Checker {
         }
     
     /// {} 로 둘러 쌓이지 않은 문자열을 받아서 객체형인지 체크
-    func checkUnWrappedObjectForJSON(letter: String) -> Bool {
+    static func checkUnWrappedObjectForJSON(letter: String) -> Bool {
         // , 를 기준으로 나눠서 배열로 만는다
         let separatedByComma = letter.split(separator: JSONParser.separater)
         // 각 키와 밸류를 반복문에 넣어서 JSON 타입이 맞는지 체크
@@ -122,9 +119,9 @@ struct Checker {
     }
     
     /// {} 로 둘러쌓인 문자열을 받아서 객체형인지 체크
-    func checkWrappedObjectForJSON(letter: String) -> Bool {
+    static func checkWrappedObjectForJSON(letter: String) -> Bool {
         // 맨 앞뒤가 {} 인지 체크
-        guard checkWrappedObjectStyle(letter: letter) == true else {
+        guard checkWrappedBy(letter: letter, headWrapper: JSONParser.startOfObjectOfJSON, tailWrapper: JSONParser.endOfObjectOfJSON) == true else {
             return false
         }
         // 맞다면 {} 를 제거

@@ -145,24 +145,20 @@ struct Classifier{
         guard let tailIndexes = surveyLetterPositions(letters: letters, targetLetter: JSONParser.endOfObjectOfJSON) else {
             return nil
         }
-        // 체크 구조체 선언
-        let checker = Checker()
         //  { } 의 위치에 문제는 없는지 체크한다
-        guard checker.checkOrderBetween(headIndexes: headIndexes, tailIndexes: tailIndexes) else {
+        guard Checker.checkOrderBetween(headIndexes: headIndexes, tailIndexes: tailIndexes) else {
             return nil
         }
         // 두 배열을 머리-꼬리,머리-꼬리 순으로 합친다
-        let objectIndexes = checker.combineByOrder(headIndexes: headIndexes, tailIndexes: tailIndexes)
+        let objectIndexes = Checker.combineByOrder(headIndexes: headIndexes, tailIndexes: tailIndexes)
         // 인덱스 배열로 둘러쌓인 인덱서 범위 배열로 리턴해주는 함수를 리턴한다
         return surveyWrappedRange(letters: letters, letterIndexList: objectIndexes)
     }
     
     /// JSON 입력값을 받아서 , 기준으로 자르는 함수, " " 로 둘러쌓인 문자열 안의 , 는 자르지 않는다
     func separateForJSON(letters : String) -> [String]?{
-        // 체크 구조체 선언
-        let checker = Checker()
         // 입력값이 배열 혹은 객체 형태여야만 함.
-        guard checker.checkArrayForJSON(letter: letters) || checker.checkWrappedObjectStyle(letter: letters) else {
+        guard Checker.checkArrayForJSON(letter: letters) || Checker.checkWrappedObjectStyle(letter: letters) else {
             // 둘 다 아닐경우 닐 리턴
             return nil
         }
@@ -179,7 +175,7 @@ struct Classifier{
         // , 중 " 로 둘러쌓인 인덱스를 제외시킨다
         commaIndexes = removeDuplicatedIndexIn(indexRangeList: doubleQuatationIndexes, targetIndexes: commaIndexes)
         // 배열형일 경우 추가로 { } 관련 인덱스 작업을 해준다
-        if checker.checkArrayForJSON(letter: letters) {
+        if Checker.checkArrayForJSON(letter: letters) {
             // { } 로 둘러쌓인 범위인덱스를 구한다
             guard let objectIndexes = surveyObjectRanges(letters: letters) else {
                 return nil
