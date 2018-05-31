@@ -9,8 +9,6 @@
 import Foundation
 
 struct Checker {
-    
-    
     /// 문자열을 받아서 JSON 문자형인지 체크
     static func isLettersForJSON(letter : String) -> Bool {
         // 문자열의 첫번쨰와 마지막이 " 이면 참
@@ -128,6 +126,5 @@ struct Checker {
         let withoutWrapper = String(letter[letter.index(letter.startIndex, offsetBy: 1)..<letter.index(letter.endIndex, offsetBy: -1)])
         // {} 가 없는 객체형 체크 함수를 리턴한다
         return checkUnWrappedObjectForJSON(letter: withoutWrapper)
-    }
-    
+    }    
 }

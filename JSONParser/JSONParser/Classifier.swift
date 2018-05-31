@@ -8,8 +8,7 @@
 
 import Foundation
 
-struct Classifier{
-    
+struct Classifier{    
     /// 문자열을 받아서 목표문자의 위치 인덱스를 배열로 리턴
     private func surveyLetterPositions(letters : String, targetLetter : Character) -> [String.Index]? {
         // 문자가 한개도 없으면 닐 리턴

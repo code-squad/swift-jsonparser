@@ -8,8 +8,7 @@
 
 import Foundation
 
-struct InputView {
-    
+struct InputView {    
     /// 사용자 입력값을 받는 함수
     func receiveUserInput() -> String{
         // 입력을 위한 안내 메세지 출력
