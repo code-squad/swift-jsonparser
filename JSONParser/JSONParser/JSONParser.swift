@@ -41,8 +41,8 @@ struct JSONParser {
     /// 문자열을 받아서 JSON 타입으로 리턴
     private func transformLetterToDataOfJSONObject(letter:String) -> Any? {
         // 인트형이 가능한지 체크. 변환가능하면 변환해서 추가
-        if Int(letter) != nil {
-            return Int(letter)!
+        if let intLetter = Int(letter) {
+            return intLetter
         }
             // Bool 타입인지 체크. 가능하면 변환해서 추가
         else if JSONParser.booleanType.contains(letter){
