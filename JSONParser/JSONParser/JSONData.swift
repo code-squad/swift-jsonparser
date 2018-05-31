@@ -10,10 +10,7 @@ import Foundation
 
 /// JSON 데이터들이 준수하게 될 프로토콜 선언
 protocol JSONCount {
-    func countInt() -> Int
-    func countString() -> Int
-    func countBool() -> Int
-    func countObject() -> Int?
+    func countTypes() -> (int: Int, string: Int, bool: Int, object: Int?)
 }
 
 /// JSON 배열타입 데이터
@@ -60,23 +57,9 @@ struct JSONArray : JSONCount {
     }
     
     // 프로토콜을 준수한다
-    /// 인트형 개수 리턴
-    func countInt() -> Int {
-        return self.countOfInt
+    func countTypes() -> (int: Int, string: Int, bool: Int, object: Int?) {
+        return (countOfInt,countOfString,countOfBool,countOfObject)
     }
-    /// 문자형 개수 리턴
-    func countString() -> Int {
-        return self.countOfString
-    }
-    /// Bool형 개수 리턴
-    func countBool() -> Int {
-        return self.countOfBool
-    }
-    /// 객체형 개수 리턴
-    func countObject() -> Int? {
-        return self.countOfObject
-    }
-    
 }
 
 /// JSON Object 타입
@@ -92,12 +75,14 @@ struct JSONObject : JSONCount {
         }
     }
     
-    // 배열의 인트형 개수
+    // 객체의 인트형 개수
     var countOfInt = 0
-    // 배열의 문자형 개수
+    // 객체의 문자형 개수
     var countOfString = 0
-    // 배열의 Bool형 개수
+    // 객체의 Bool형 개수
     var countOfBool = 0
+    // 객체의 객체형 개수. 있을수 없기 때문에 닐 처리
+    var countOfObject : Int? = nil
     
     /// JSON 배열 데이터중 입력받은 자료형 별로 변수에 추가.
     mutating func countType() -> Bool {
@@ -119,21 +104,8 @@ struct JSONObject : JSONCount {
     }
     
     // 프로토콜을 준수한다
-    /// 인트형 개수 리턴
-    func countInt() -> Int {
-        return self.countOfInt
-    }
-    /// 문자형 개수 리턴
-    func countString() -> Int {
-        return self.countOfString
-    }
-    /// Bool형 개수 리턴
-    func countBool() -> Int {
-        return self.countOfBool
-    }
-    /// 객체형 변수는 없으니 닐 리턴
-    func countObject() -> Int? {
-        return nil
+    func countTypes() -> (int: Int, string: Int, bool: Int, object: Int?) {
+        return (countOfInt,countOfString,countOfBool,countOfObject)
     }
 }
 

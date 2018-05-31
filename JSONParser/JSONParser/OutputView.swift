@@ -11,14 +11,8 @@ import Foundation
 struct OutputView {
     /// JSON 데이터를 받아서 각 항목이 몇개인지 출력
     func printCountOfTypes(json: JSONCount) {
-        // 인트형 개수를 받는다
-        let countOfInt = json.countInt()
-        // 문자형 개수를 받는다
-        let countOfString = json.countString()
-        // Bool형 개수를 받는다
-        let countOfBool = json.countBool()
-        // 객체형 개수를 받는다
-        let countOfObject = json.countObject()
+        // 타입별로 개수를 받는다
+        let (countOfInt, countOfString, countOfBool, countOfObject)  = json.countTypes()
         
         // 객체형의 경우 객체개수가 닐값이므로 조건문을 준다
         if countOfObject == nil {
