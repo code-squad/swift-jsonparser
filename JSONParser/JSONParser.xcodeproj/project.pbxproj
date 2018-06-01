@@ -12,6 +12,7 @@
 		D555D57920BE8BBE00153BAA /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A858F20B552FD00513621 /* JSONParser.swift */; };
 		D555D57A20BE8E3A00153BAA /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A858F20B552FD00513621 /* JSONParser.swift */; };
 		D555D57C20BFE2D000153BAA /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D555D57B20BFE2D000153BAA /* GrammarChecker.swift */; };
+		D555D57D20C0F39000153BAA /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D555D57B20BFE2D000153BAA /* GrammarChecker.swift */; };
 		D56A859420B552FD00513621 /* Classifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A859020B552FD00513621 /* Classifier.swift */; };
 		D56A859520B552FD00513621 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A859120B552FD00513621 /* OutputView.swift */; };
 		D56A859620B552FD00513621 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A859220B552FD00513621 /* InputView.swift */; };
@@ -223,6 +224,7 @@
 				D56A85A520B6A1BC00513621 /* Checker.swift in Sources */,
 				D56A85A820B6A21500513621 /* InputView.swift in Sources */,
 				D56A85A620B6A21500513621 /* main.swift in Sources */,
+				D555D57D20C0F39000153BAA /* GrammarChecker.swift in Sources */,
 				D555D57820BD6D1000153BAA /* JSONData.swift in Sources */,
 				D56A85A920B6A21500513621 /* OutputView.swift in Sources */,
 			);
