@@ -200,6 +200,7 @@ struct Classifier{
         }
         // 맨 앞의 분류자를 변수처리한다. 결과값에선 삭제한다.
         let flag = separatedLetters[0].removeFirst()
+        
         // 맨 앞에 공백이 남기때문에 한번 더 지워준다
         separatedLetters[0].removeFirst()
         // 맨 앞에 분류자를 넣어준다
