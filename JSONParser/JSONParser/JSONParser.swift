@@ -69,13 +69,13 @@ struct JSONParser {
     }
     
     /// 키:벨류 로 붙어있는 문자열을 받아서 벨류 부분 리턴
-    private func extractValueFromObjectLetter(letter: String) -> Any {
+    private func extractValueFromObjectLetter(letter: String) -> Any? {
         // : 을 기준으로 문자열을 자른다
         let separatedLetter = letter.split(separator: JSONParser.separaterForObject)
         // 키 부분의 공백을 지워주고 변수화 한다
         let value = separatedLetter[1].trimmingCharacters(in: .whitespaces)
-        // " 을 제외한 나머지 문자열을 내보낸다. 앞부분에서 체크 했음으로 강제 래핑
-        return transformLetterToDataOfJSONObject(letter: value)!
+        // " 을 제외한 나머지 문자열을 내보낸다.
+        return transformLetterToDataOfJSONObject(letter: value)
     }
     
     /// , 로 나눠진 객체형 배열을 객체형 으로 만들어서 리턴
@@ -90,7 +90,9 @@ struct JSONParser {
         for object in letters {
             // 키:벨류 형태의 문자열을 받아서 결과 객체에 추가한다
             let key = extractKeyFromObjectLetter(letter: String(object))
-            let value = extractValueFromObjectLetter(letter: String(object))
+            guard let value = extractValueFromObjectLetter(letter: String(object)) else {
+                return nil
+            }
             result[key] = value
         }
         // 결과를 리턴한다
@@ -152,11 +154,6 @@ struct JSONParser {
         return result
     }
     
-    /// 문자열 배열을 받아서 JSON 배열로 생성. 변환 불가능한 값이 있으면 닐 리턴
-    private func transformLettersToJSONObject(letters:[String]) -> [String:Any]? {
-        return combineSeparatedJSONObeject(letters: letters)
-    }
-    
     /// 문자열을 받아서 JSON 객체로 생성. 변환 불가능한 값이 있으면 닐 리턴
     func transform(letters:[String]) -> JSONCount? {
         // 첫번째 배열을 받아서 어떤 형태인지 파악한다
@@ -176,7 +173,7 @@ struct JSONParser {
         // 객체 형태면
         else if typeOfJSON == "{" {
             // 문자열 배열을 JSON 객체 형태로 만든다
-            guard let transformedLetters =  transformLettersToJSONObject(letters: dataOfJSON) else {
+            guard let transformedLetters =  combineSeparatedJSONObeject(letters: dataOfJSON) else {
                 return nil
             }
             // 결과를 리턴한다
