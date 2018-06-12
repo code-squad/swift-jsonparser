@@ -22,11 +22,12 @@ func main(){
         return ()
     }
     
-    // JSON 구조체 선언
+    // JSON 파서 구조체 선언
     let jsonParser = JSONParser()
     
     // JSON Data 생성
     guard let dataOfJSON = jsonParser.transform(letters: separatedLetters) else {
+        inputView.printWrongInputMessage()
         return ()
     }
     
