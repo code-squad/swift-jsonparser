@@ -39,17 +39,17 @@ struct JSONParser {
     
     
     /// 문자열을 받아서 JSON 타입으로 리턴
-    private func transformLetterToDataOfJSONObject(letter:String) -> Any? {
+     func transformLetterToDataOfJSONObject(letter:String) -> Any? {
         // 인트형이 가능한지 체크. 변환가능하면 변환해서 추가
-        if let intLetter = Int(letter) {
-            return intLetter
+        if GrammarChecker.checkIntType(letter: letter) {
+            return Int(letter)
         }
             // Bool 타입인지 체크. 가능하면 변환해서 추가
-        else if JSONParser.booleanType.contains(letter){
+        else if GrammarChecker.checkBoolType(letter: letter){
             return Bool(letter)!
         }
             // " 로 둘러쌓인 문자열인지 체크 후 추가
-        else if Checker.isLettersForJSON(letter: letter){
+        else if GrammarChecker.checkStringType(letter: letter){
             return (letter)
         }
             // 어느것도 매칭되지 않는다면 닐 리턴
@@ -79,10 +79,14 @@ struct JSONParser {
     }
     
     /// , 로 나눠진 객체형 배열을 객체형 으로 만들어서 리턴
-    private func combineSeparatedJSONObeject(letters: [String]) -> [String:Any] {
+    private func combineSeparatedJSONObeject(letters: [String]) -> [String:Any]? {
+        // 입력값이 JSON 객체형 데이터 인지 체크
+        guard GrammarChecker.checkObjectValueTypes(types: letters) == true else {
+            return nil
+        }
         // 결과용 JSON 객체형을 선언한다
         var result : [String:Any] = [:]
-        // 각 키와 밸류를 반복문에 넣어서 JSON 타입이 맞는지 체크
+        // 각 키와 밸류를 반복문에 넣어서 JSON 객체형으로 리턴
         for object in letters {
             // 키:벨류 형태의 문자열을 받아서 결과 객체에 추가한다
             let key = extractKeyFromObjectLetter(letter: String(object))
@@ -93,7 +97,7 @@ struct JSONParser {
         return result
     }
     
-    /// {} 로 둘러 쌓이지 않은 문자열을 받아서 객체형인지 체크
+    /// {} 로 둘러 쌓이지 않은 문자열을 받아서 객체형으로 리턴
     private func transformLetterToJSONObjectWithoutWrapper(letter: String) -> [String:Any]? {
         // 뒤에서 함수에 사용할 문자형 배열 선언
         var separatedByComma : [String] = []
@@ -103,6 +107,8 @@ struct JSONParser {
         for subSequence in separatedSubSequencesByComma {
             separatedByComma.append(String(subSequence))
         }
+        // 마지막 항의 뒷공백을 삭제. 마지막 문자가 공백이 아닐경우 체크문에서 false 리턴
+        separatedByComma[separatedByComma.count-1].removeLast()
         // 각 키와 밸류를 반복문에 넣어서 JSON 타입이 맞는지 체크, 결과를 리턴한다
         return combineSeparatedJSONObeject(letters: separatedByComma)
     }
@@ -117,8 +123,8 @@ struct JSONParser {
     
     /// 문자열을 받아서 JSON 타입으로 리턴
     private func transformLetterToDataOfJSONArray(letter:String) -> Any? {
-        // {} 로 둘러쌓인 문자열인지 체크 후 추가
-        if Checker.checkWrappedObjectForJSON(letter: letter){
+        // {} 로 둘러쌓인 객체형인지 체크 후 추가
+        if GrammarChecker.checkObjectType(letter: letter){
             return transformLetterToJSONObjectWithWrapper(letter: letter)
         }
         // 객체형을 제외한 데이터 타입 리턴함수 사용
