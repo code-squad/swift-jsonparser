@@ -103,14 +103,15 @@ struct JSONParser {
     private func transformLetterToJSONObjectWithoutWrapper(letter: String) -> [String:Any]? {
         // 뒤에서 함수에 사용할 문자형 배열 선언
         var separatedByComma : [String] = []
-        // , 를 기준으로 나눠서 배열로 만는다
+        // , 를 기준으로 나눠서 배열로 만든다
         let separatedSubSequencesByComma = letter.split(separator: JSONParser.separater)
-        // 문자열로 전환한다
+        // , 기준으로 나눠진 배열을 반복문에 넣는다
         for subSequence in separatedSubSequencesByComma {
-            separatedByComma.append(String(subSequence))
+            // 나눠진 데이터의 앞뒤 공백을 제거한다
+            let data = String(subSequence).trimmingCharacters(in: .whitespaces)
+            // 앞뒤 공백 제거된 데이터를 결과에 추가한다
+            separatedByComma.append(data)
         }
-        // 마지막 항의 뒷공백을 삭제. 마지막 문자가 공백이 아닐경우 체크문에서 false 리턴
-        separatedByComma[separatedByComma.count-1].removeLast()
         // 각 키와 밸류를 반복문에 넣어서 JSON 타입이 맞는지 체크, 결과를 리턴한다
         return combineSeparatedJSONObeject(letters: separatedByComma)
     }
