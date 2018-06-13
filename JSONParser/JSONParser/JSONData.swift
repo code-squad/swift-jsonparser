@@ -13,13 +13,21 @@ protocol JSONCount {
     func countTypes() -> (int: Int, string: Int, bool: Int, object: Int?)
 }
 
+/// JSON 에서 사용할 데이터 타입들을 선언
+enum JSONData {
+    case number(Int)
+    case boolean(Bool)
+    case letter(String)
+    case object([String:JSONData])
+}
+
 /// JSON 배열타입 데이터
 struct JSONArray : JSONCount {
     // 데이터를 배열로 담는다
-    private let dataSetOfJSON : [Any]
+    private let dataSetOfJSON : [JSONData]
     
     // 생성자
-    init?(dataSetOfJSON : [Any]){
+    init?(dataSetOfJSON : [JSONData]){
         self.dataSetOfJSON = dataSetOfJSON
         if countType() == false {
             return nil
@@ -40,21 +48,20 @@ struct JSONArray : JSONCount {
         // JSON 배열을 반복문에 넣는다
         for data in dataSetOfJSON {
             // 각 항목별 체크
-            switch ObjectIdentifier(type(of: data)) {
+            switch data {
             // 인트형일 경우
-            case ObjectIdentifier(JSONParser.typeInt) : countOfInt += 1
+            case .number(_) : countOfInt += 1
             // 문자형일 경우
-            case ObjectIdentifier(JSONParser.typeString) : countOfString += 1
+            case .letter(_) : countOfString += 1
             // Bool형일 경우
-            case ObjectIdentifier(JSONParser.typeBool) : countOfBool += 1
+            case .boolean(_) : countOfBool += 1
             // 객체형일 경우
-            case ObjectIdentifier(JSONParser.typeObject) : countOfObject += 1
-            // 그 외의 경우
-            default : return false
+            case .object(_) : countOfObject += 1
             }
         }
         return true
     }
+    
     
     // 프로토콜을 준수한다
     func countTypes() -> (int: Int, string: Int, bool: Int, object: Int?) {
@@ -65,10 +72,10 @@ struct JSONArray : JSONCount {
 /// JSON Object 타입
 struct JSONObject : JSONCount {
     // 데이터를 딕셔너리로 담는다
-    private let dataSetOfJSON : [String : Any]
+    private let dataSetOfJSON : [String : JSONData]
     
     // 생성자
-    init?(dataSetOfJSON : [String : Any]){
+    init?(dataSetOfJSON : [String : JSONData]){
         self.dataSetOfJSON = dataSetOfJSON
         if countType() == false {
             return nil
@@ -89,13 +96,13 @@ struct JSONObject : JSONCount {
         // JSON 배열을 반복문에 넣는다
         for data in dataSetOfJSON.values {
             // 각 항목별 체크
-            switch ObjectIdentifier(type(of: data)) {
+            switch data {
             // 인트형일 경우
-            case ObjectIdentifier(JSONParser.typeInt) : countOfInt += 1
+            case .number(_) : countOfInt += 1
             // 문자형일 경우
-            case ObjectIdentifier(JSONParser.typeString) : countOfString += 1
+            case .letter(_) : countOfString += 1
             // Bool형일 경우
-            case ObjectIdentifier(JSONParser.typeBool) : countOfBool += 1
+            case .boolean(_) : countOfBool += 1
             // 그 외의 경우
             default : return false
             }
