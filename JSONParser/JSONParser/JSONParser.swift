@@ -34,23 +34,23 @@ struct JSONParser {
     // Bool 타입
     static let typeBool : Bool.Type = Bool.self
     // 객체형 타입
-    static private let emptyObject : [String:Any] = [:]
+    static private let emptyObject : [String:JSONData] = [:]
     static let typeObject = type(of: emptyObject)
     
     
     /// 문자열을 받아서 JSON 타입으로 리턴
-     func transformLetterToDataOfJSONObject(letter:String) -> Any? {
+     func transformLetterToDataOfJSONObject(letter:String) -> JSONData? {
         // 인트형이 가능한지 체크. 변환가능하면 변환해서 추가
         if GrammarChecker.checkIntType(letter: letter) {
-            return Int(letter)
+            return JSONData.number(Int(letter)!)
         }
             // Bool 타입인지 체크. 가능하면 변환해서 추가
         else if GrammarChecker.checkBoolType(letter: letter){
-            return Bool(letter)!
+            return JSONData.boolean(Bool(letter)!)
         }
             // " 로 둘러쌓인 문자열인지 체크 후 추가
         else if GrammarChecker.checkStringType(letter: letter){
-            return (letter)
+            return JSONData.letter(letter)
         }
             // 어느것도 매칭되지 않는다면 닐 리턴
         else {
@@ -69,7 +69,7 @@ struct JSONParser {
     }
     
     /// 키:벨류 로 붙어있는 문자열을 받아서 벨류 부분 리턴
-    private func extractValueFromObjectLetter(letter: String) -> Any? {
+    private func extractValueFromObjectLetter(letter: String) -> JSONData? {
         // : 을 기준으로 문자열을 자른다
         let separatedLetter = letter.split(separator: JSONParser.separaterForObject)
         // 키 부분의 공백을 지워주고 변수화 한다
@@ -79,13 +79,13 @@ struct JSONParser {
     }
     
     /// , 로 나눠진 객체형 배열을 객체형 으로 만들어서 리턴
-    private func combineSeparatedJSONObeject(letters: [String]) -> [String:Any]? {
+    private func combineSeparatedJSONObeject(letters: [String]) -> [String:JSONData]? {
         // 입력값이 JSON 객체형 데이터 인지 체크
         guard GrammarChecker.checkObjectValueTypes(types: letters) == true else {
             return nil
         }
         // 결과용 JSON 객체형을 선언한다
-        var result : [String:Any] = [:]
+        var result : [String:JSONData] = [:]
         // 각 키와 밸류를 반복문에 넣어서 JSON 객체형으로 리턴
         for object in letters {
             // 키:벨류 형태의 문자열을 받아서 결과 객체에 추가한다
@@ -100,7 +100,7 @@ struct JSONParser {
     }
     
     /// {} 로 둘러 쌓이지 않은 문자열을 받아서 객체형으로 리턴
-    private func transformLetterToJSONObjectWithoutWrapper(letter: String) -> [String:Any]? {
+    private func transformLetterToJSONObjectWithoutWrapper(letter: String) -> [String:JSONData]? {
         // 뒤에서 함수에 사용할 문자형 배열 선언
         var separatedByComma : [String] = []
         // , 를 기준으로 나눠서 배열로 만든다
@@ -117,7 +117,7 @@ struct JSONParser {
     }
     
     /// {} 로 둘러쌓인 문자열을 받아서 JSON 객체형으로 리턴
-    private func transformLetterToJSONObjectWithWrapper(letter: String) -> [String:Any]? {
+    private func transformLetterToJSONObjectWithWrapper(letter: String) -> [String:JSONData]? {
         // 앞의 함수에서 체크된 대로 {} 를 제거
         let withoutWrapper = String(letter[letter.index(letter.startIndex, offsetBy: 1)..<letter.index(letter.endIndex, offsetBy: -1)])
         // {} 가 없는 객체형 체크 함수를 리턴한다
@@ -125,10 +125,13 @@ struct JSONParser {
     }
     
     /// 문자열을 받아서 JSON 타입으로 리턴
-    private func transformLetterToDataOfJSONArray(letter:String) -> Any? {
+    private func transformLetterToDataOfJSONArray(letter:String) -> JSONData? {
         // {} 로 둘러쌓인 객체형인지 체크 후 추가
         if GrammarChecker.checkObjectType(letter: letter){
-            return transformLetterToJSONObjectWithWrapper(letter: letter)
+            guard let jsonData = transformLetterToJSONObjectWithWrapper(letter: letter) else {
+                return nil
+            }
+            return JSONData.object(jsonData)
         }
         // 객체형을 제외한 데이터 타입 리턴함수 사용
         guard let transformedData = transformLetterToDataOfJSONObject(letter: letter) else {
@@ -140,9 +143,9 @@ struct JSONParser {
     }    
     
     /// 문자열 배열을 받아서 JSON 배열로 생성. 변환 불가능한 값이 있으면 닐 리턴
-    private func transformLettersToJSONArray(letters:[String]) -> [Any]? {
+    private func transformLettersToJSONArray(letters:[String]) -> [JSONData]? {
         // 결과 출력용 배열 선언
-        var result :[Any] = []
+        var result :[JSONData] = []
         // 배열을 반복분에 넣는다
         for letter in letters {
             // JSON 에 추가 가능한지 체크. 변환가능하면 변환해서 추가
