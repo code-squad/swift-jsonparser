@@ -10,7 +10,14 @@ import Foundation
 
 /// JSON 데이터들이 준수하게 될 프로토콜 선언
 protocol JSONCount {
-    func countTypes() -> (int: Int, string: Int, bool: Int, object: Int?)
+    // 배열의 인트형 개수
+    var countOfInt : Int { get }
+    // 배열의 문자형 개수
+    var countOfString : Int { get }
+    // 배열의 Bool형 개수
+    var countOfBool : Int { get }
+    // 배열의 객체형 개수
+    var countOfObject : Int? { get }
 }
 
 /// JSON 에서 사용할 데이터 타입들을 선언
@@ -23,6 +30,7 @@ enum JSONData {
 
 /// JSON 배열타입 데이터
 struct JSONArray : JSONCount {
+    
     // 데이터를 배열로 담는다
     private let dataSetOfJSON : [JSONData]
     
@@ -41,7 +49,7 @@ struct JSONArray : JSONCount {
     // 배열의 Bool형 개수
     var countOfBool = 0
     // 배열의 객체형 개수
-    var countOfObject = 0
+    var countOfObject : Int? = 0
     
     /// JSON 배열 데이터중 입력받은 자료형 별로 변수에 추가.
     mutating func countType() -> Bool {
@@ -56,7 +64,7 @@ struct JSONArray : JSONCount {
             // Bool형일 경우
             case .boolean(_) : countOfBool += 1
             // 객체형일 경우
-            case .object(_) : countOfObject += 1
+            case .object(_) : countOfObject! += 1
             }
         }
         return true
