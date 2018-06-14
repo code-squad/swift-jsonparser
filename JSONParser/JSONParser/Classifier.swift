@@ -156,11 +156,6 @@ struct Classifier{
     
     /// JSON 입력값을 받아서 , 기준으로 자르는 함수, " " 로 둘러쌓인 문자열 안의 , 는 자르지 않는다
     func separateForJSON(letters : String) -> [String]?{
-        // 입력값이 배열 혹은 객체 형태여야만 함.
-        guard Checker.checkArrayForJSON(letter: letters) || Checker.checkWrappedObjectStyle(letter: letters) else {
-            // 둘 다 아닐경우 닐 리턴
-            return nil
-        }
         // 결과 리턴용 변수
         var result : [String] = []
         // 문자열의 , 인덱스를 구한다
@@ -194,22 +189,27 @@ struct Classifier{
     
     /// 문자열을 받아서 맨 앞뒤 글자를 자르고 분류함수로 보낸다. 분류후 함수에 잘랐던 맨 앞글자를 insert 해서 리턴한다.
     func surveyForJSON(letters : String) -> [String]?{
-        // , 를 기준으로 자른다
-        guard var separatedLetters = separateForJSON(letters: letters) else {
+        // 첫 글자와 마지막 글자로 객체 혹은 배열형인지 체크한다
+        guard Checker.checkArrayForJSON(letter: letters) || Checker.checkWrappedObjectStyle(letter: letters) else {
+            // 둘 다 아닐경우 닐 리턴
             return nil
         }
-        // 맨 앞의 분류자를 변수처리한다. 결과값에선 삭제한다.
-        let flag = separatedLetters[0].removeFirst()
         
-        // 맨 앞에 공백이 남기때문에 한번 더 지워준다
-        separatedLetters[0].removeFirst()
-        // 맨 앞에 분류자를 넣어준다
-        separatedLetters.insert(String(flag), at: 0)
-        // 맨뒤의 분류자를 삭제한다
-        separatedLetters[separatedLetters.count-1].removeLast()
-        // 맨뒤의 공백을 삭제한다
-        separatedLetters[separatedLetters.count-1].removeLast()
-        // 결과를 리턴한다
+        // 첫글자를 구분자에 입력
+        guard let classifier = letters.first else {
+            return nil
+        }
+        
+        // 첫 글자와 마지막 글제를 제외한 문자열 생성
+        let cuttedLetters = String(letters[letters.index(letters.startIndex, offsetBy: 2)..<letters.index(letters.endIndex, offsetBy: -2)])
+        
+        // 제거된 문자열을 자르는 함수에 입력
+        var separatedLetters = separateForJSON(letters: cuttedLetters)
+        
+        // 나눠진 문자형 배열 맨 앞에 분류자 추가
+        separatedLetters!.insert(String(classifier), at: 0)
+        
+        // 결과물 리턴
         return separatedLetters
     }
 }
