@@ -156,12 +156,12 @@ struct Classifier{
     
     /// 객체형 문자열의 범위를 리턴한다
     private func surveyObjectRanges(letters : String) -> [Range<String.Index>]? {
-        return surveyRanges(letters: letters, headLetter: JSONParser.startOfObjectOfJSON, tailLetter: JSONParser.startOfObjectOfJSON)
+        return surveyRanges(letters: letters, headLetter: JSONParser.startOfObjectOfJSON, tailLetter: JSONParser.endOfObjectOfJSON)
     }
     
     /// 배열형 문자열의 범위를 리턴한다
     private func surveyArrayRanges(letters : String) -> [Range<String.Index>]? {
-        return surveyRanges(letters: letters, headLetter: JSONParser.startOfArrayOfJSON, tailLetter: JSONParser.startOfArrayOfJSON)
+        return surveyRanges(letters: letters, headLetter: JSONParser.startOfArrayOfJSON, tailLetter: JSONParser.endOfArrayOfJSON)
     }
     
     /// JSON 입력값을 받아서 , 기준으로 자르는 함수, " " 로 둘러쌓인 문자열 안의 , 는 자르지 않는다
@@ -220,10 +220,12 @@ struct Classifier{
         let cuttedLetters = String(letters[letters.index(letters.startIndex, offsetBy: 2)..<letters.index(letters.endIndex, offsetBy: -2)])
         
         // 제거된 문자열을 자르는 함수에 입력
-        var separatedLetters = separateForJSON(letters: cuttedLetters)
+        guard var separatedLetters = separateForJSON(letters: cuttedLetters) else {
+            return nil
+        }
         
         // 나눠진 문자형 배열 맨 앞에 분류자 추가
-        separatedLetters!.insert(String(classifier), at: 0)
+        separatedLetters.insert(String(classifier), at: 0)
         
         // 결과물 리턴
         return separatedLetters
