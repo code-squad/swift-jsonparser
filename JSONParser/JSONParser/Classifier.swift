@@ -135,16 +135,16 @@ struct Classifier{
         // 결과를 리턴한다
         return result
     }
-    /// 문자열을 입력받아서 { } 로 둘러쌓인 부분을 범위인덱스 배열로 리턴한다
-    private func surveyObjectRanges(letters : String) -> [Range<String.Index>]?{
-        // { 와 } 각각 인덱스 배열을 만든다
-        guard let headIndexes = surveyLetterPositions(letters: letters, targetLetter: JSONParser.startOfObjectOfJSON) else {
+    /// 문자열을 입력받아서 앞문자 뒷문자 로 둘러쌓인 부분을 범위인덱스 배열로 리턴한다
+    private func surveyRanges(letters : String, headLetter : Character, tailLetter : Character) -> [Range<String.Index>]? {
+        // head 와 tail 각각 인덱스 배열을 만든다
+        guard let headIndexes = surveyLetterPositions(letters: letters, targetLetter: headLetter ) else {
             return nil
         }
-        guard let tailIndexes = surveyLetterPositions(letters: letters, targetLetter: JSONParser.endOfObjectOfJSON) else {
+        guard let tailIndexes = surveyLetterPositions(letters: letters, targetLetter: tailLetter) else {
             return nil
         }
-        //  { } 의 위치에 문제는 없는지 체크한다
+        //  위치에 문제는 없는지 체크한다
         guard Checker.checkOrderBetween(headIndexes: headIndexes, tailIndexes: tailIndexes) else {
             return nil
         }
@@ -152,6 +152,16 @@ struct Classifier{
         let objectIndexes = Checker.combineByOrder(headIndexes: headIndexes, tailIndexes: tailIndexes)
         // 인덱스 배열로 둘러쌓인 인덱서 범위 배열로 리턴해주는 함수를 리턴한다
         return surveyWrappedRange(letters: letters, letterIndexList: objectIndexes)
+    }
+    
+    /// 객체형 문자열의 범위를 리턴한다
+    private func surveyObjectRanges(letters : String) -> [Range<String.Index>]? {
+        return surveyRanges(letters: letters, headLetter: JSONParser.startOfObjectOfJSON, tailLetter: JSONParser.startOfObjectOfJSON)
+    }
+    
+    /// 배열형 문자열의 범위를 리턴한다
+    private func surveyArrayRanges(letters : String) -> [Range<String.Index>]? {
+        return surveyRanges(letters: letters, headLetter: JSONParser.startOfArrayOfJSON, tailLetter: JSONParser.startOfArrayOfJSON)
     }
     
     /// JSON 입력값을 받아서 , 기준으로 자르는 함수, " " 로 둘러쌓인 문자열 안의 , 는 자르지 않는다
@@ -168,12 +178,20 @@ struct Classifier{
         }
         // , 중 " 로 둘러쌓인 인덱스를 제외시킨다
         commaIndexes = removeDuplicatedIndexIn(indexRangeList: doubleQuatationIndexes, targetIndexes: commaIndexes)
+        
         // { } 로 둘러쌓인 범위인덱스를 구한다
         guard let objectIndexes = surveyObjectRanges(letters: letters) else {
             return nil
         }
         // , 중 {} 로 둘러쌓인 인덱스를 제외시킨다
         commaIndexes = removeDuplicatedIndexIn(indexRangeList: objectIndexes, targetIndexes: commaIndexes)
+        
+        // [ ] 로 둘러쌓인 범위인덱스를 구한다
+        guard let ArrayIndexes = surveyArrayRanges(letters: letters) else {
+            return nil
+        }
+        // , 중 [] 로 둘러쌓인 인덱스를 제외시킨다
+        commaIndexes = removeDuplicatedIndexIn(indexRangeList: ArrayIndexes, targetIndexes: commaIndexes)
         
         // , 를 기준으로 문자열을 나눈 범위인덱스를 구한다
         let separatedByIndexes = separateByIndexes(letters: letters, targetIndexes: commaIndexes)
