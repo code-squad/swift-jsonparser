@@ -39,7 +39,7 @@ struct OutputView {
         }
         
         // 총 합을 구한다
-        let totalCount = countOfInt + countOfString + countOfBool
+        let totalCount = countOfInt + countOfString + countOfBool + countOfObject + countOfArray
         
         // 요구조건의 형태대로 출력
         print("총 \(totalCount)개의 \(json.type) 데이터 중에\(resultMessage)\(endMessage)")
