@@ -92,7 +92,7 @@ struct JSONArray : JSONCount {
 /// JSON Object 타입
 struct JSONObject : JSONCount {
     // 객체임을 표시한다
-    var type = "겍체"
+    var type = "객체"
     
     // 데이터를 딕셔너리로 담는다
     private let dataSetOfJSON : [String : JSONData]
