@@ -22,7 +22,7 @@ protocol JSONCount {
     var countOfArray : Int { get }
     
     // 배열인지 객체인지 표시하는 문자열
-    let type : String { get }
+    var type : String { get }
 }
 
 /// JSON 에서 사용할 데이터 타입들을 선언
