@@ -37,6 +37,21 @@ struct JSONParser {
     static private let emptyObject : [String:JSONData] = [:]
     static let typeObject = type(of: emptyObject)
     
+    /// 입력받은 문자열을 , 로 나눈 뒤 앞뒤 공백을 제거해서 배열로 리턴
+    private func separate(letter : String, separator: Character) -> [String]{
+        // 뒤에서 함수에 사용할 문자형 배열 선언
+        var separatedByComma : [String] = []
+        // , 를 기준으로 나눠서 배열로 만든다
+        let separatedSubSequencesByComma = letter.split(separator: separator)
+        // , 기준으로 나눠진 배열을 반복문에 넣는다
+        for subSequence in separatedSubSequencesByComma {
+            // 나눠진 데이터의 앞뒤 공백을 제거한다
+            let data = String(subSequence).trimmingCharacters(in: .whitespaces)
+            // 앞뒤 공백 제거된 데이터를 결과에 추가한다
+            separatedByComma.append(data)
+        }
+        return separatedByComma
+    }
     
     /// 문자열을 받아서 JSON 타입으로 리턴
      func transformLetterToDataOfJSONObject(letter:String) -> JSONData? {
@@ -52,10 +67,43 @@ struct JSONParser {
         else if GrammarChecker.checkStringType(letter: letter){
             return JSONData.letter(letter)
         }
+            // [] 배열인지 체크 후 추가
+        else if  GrammarChecker.checkArrayType(letter: letter) {
+            guard let jsonData = transformArray(letter: letter) else {
+                return nil
+            }
+            return jsonData
+        }
             // 어느것도 매칭되지 않는다면 닐 리턴
         else {
             return nil
         }
+    }
+    
+    /// []가 삭제된 배열형 문자열을 받아서 배열형 JSONData 로 리턴한다
+    private func transformArrayDatas(letter: String) -> JSONData?{
+        // 문자열을 자른 결과
+        let separatedData = separate(letter: letter, separator: JSONParser.separater)
+        // 나눠진 문자열을 데이터의 JSON 데이터로 변환한다
+        var dataSet : [JSONData] = []
+        // 자른 문자열을 데이터화 시킨다
+        for data in separatedData {
+            guard let transformedData = transformLetterToDataOfJSONObject(letter: data) else {
+                return nil
+            }
+            dataSet.append(transformedData)
+        }
+        // 결과용 변수 선언
+        let result : JSONData = .array(dataSet)
+        // 결과 리턴
+        return result
+        
+    }
+    
+    /// [] 로 시작하는 문자열을 받아서 맨앞뒤를 제거하고 데이터화해주는 함수에 입력
+    private func transformArray(letter : String) -> JSONData? {
+        let cuttedLetter = String(letter[letter.index(letter.startIndex, offsetBy: 1)..<letter.index(letter.endIndex, offsetBy: -1)])
+        return transformArrayDatas(letter: cuttedLetter)
     }
     
     /// 키:벨류 로 붙어있는 문자열을 받아서 키부분 리턴
@@ -101,17 +149,8 @@ struct JSONParser {
     
     /// {} 로 둘러 쌓이지 않은 문자열을 받아서 객체형으로 리턴
     private func transformLetterToJSONObjectWithoutWrapper(letter: String) -> [String:JSONData]? {
-        // 뒤에서 함수에 사용할 문자형 배열 선언
-        var separatedByComma : [String] = []
-        // , 를 기준으로 나눠서 배열로 만든다
-        let separatedSubSequencesByComma = letter.split(separator: JSONParser.separater)
-        // , 기준으로 나눠진 배열을 반복문에 넣는다
-        for subSequence in separatedSubSequencesByComma {
-            // 나눠진 데이터의 앞뒤 공백을 제거한다
-            let data = String(subSequence).trimmingCharacters(in: .whitespaces)
-            // 앞뒤 공백 제거된 데이터를 결과에 추가한다
-            separatedByComma.append(data)
-        }
+        // , 기준으로 문자열을 나누고 앞뒤공백을 없앤다
+        let separatedByComma = separate(letter: letter, separator: JSONParser.separater)
         // 각 키와 밸류를 반복문에 넣어서 JSON 타입이 맞는지 체크, 결과를 리턴한다
         return combineSeparatedJSONObeject(letters: separatedByComma)
     }
@@ -133,12 +172,13 @@ struct JSONParser {
             }
             return JSONData.object(jsonData)
         }
+        
         // 객체형을 제외한 데이터 타입 리턴함수 사용
         guard let transformedData = transformLetterToDataOfJSONObject(letter: letter) else {
             // {} 이 외에 어느것도 매칭되지 않는다면 닐 리턴
             return nil
         }
-        // 결롸를 리턴
+        // 결과를 리턴
         return transformedData
     }    
     
