@@ -16,9 +16,10 @@ struct OutputView {
         let countOfString = json.countOfString
         let countOfBool = json.countOfBool
         let countOfObject = json.countOfObject
+        let countOfArray = json.countOfArray
         
         // 결과 출력용 메세지
-        var resultMessage = "개의 객체 데이터 중에"
+        var resultMessage = " 데이터 중에"
         let endMessage = "가 포합되어 있습니다."
         // 0개 이상의 경우 메세지를 추가한다
         if countOfInt > 0 {
@@ -30,27 +31,17 @@ struct OutputView {
         if countOfBool > 0 {
             resultMessage += " 부울 \(countOfBool)개,"
         }
+        if countOfObject > 0 {
+            resultMessage += " 객체 \(countOfObject)개,"
+        }
+        if countOfArray > 0 {
+            resultMessage += " 배열 \(countOfArray)개,"
+        }
         
-        // 객체형의 경우 객체개수가 닐값이므로 조건문을 준다
-        if countOfObject == nil {
-            // 총 합을 구한다
-            let totalCount = countOfInt + countOfString + countOfBool
-            // 메세지의 마지막 , 를 삭제한다
-            resultMessage.removeLast()
-            // 요구조건의 형태대로 출력
-            print("총 \(totalCount)\(resultMessage)\(endMessage)")
-        }
-        else {
-            // 총 합을 구한다
-            let totalCount = countOfInt + countOfString + countOfBool + countOfObject!
-            // 0개 이상의 경우 메세지를 추가한다
-            if countOfObject! > 0 {
-                resultMessage += " 객체 \(countOfObject!),"
-            }
-            // 메세지의 마지막 , 를 삭제한다
-            resultMessage.removeLast()
-            // 요구조건의 형태대로 출력
-            print("총 \(totalCount)\(resultMessage)\(endMessage)")
-        }
+        // 총 합을 구한다
+        let totalCount = countOfInt + countOfString + countOfBool
+        
+        // 요구조건의 형태대로 출력
+        print("총 \(totalCount)개의 \(json.type) 데이터 중에\(resultMessage)\(endMessage)")
     }
 }
