@@ -10,7 +10,7 @@ import Foundation
 
 struct Classifier{    
     /// 문자열을 받아서 목표문자의 위치 인덱스를 배열로 리턴
-    private func surveyLetterPositions(letters : String, targetLetter : Character) -> [String.Index]? {
+     func surveyLetterPositions(letters : String, targetLetter : Character) -> [String.Index]? {
         // 문자가 한개도 없으면 닐 리턴
         guard letters.index(of: targetLetter) != nil else{
             return nil
@@ -115,7 +115,7 @@ struct Classifier{
     
     
     /// 문자열과 인덱스배열을 받아서 그 인덱스를 기준으로 나누어 레인지 인덱스 배열로 생성한다
-    private func separateByIndexes(letters : String, targetIndexes : [String.Index]) -> [Range<String.Index>] {
+     func separateByIndexes(letters : String, targetIndexes : [String.Index]) -> [Range<String.Index>] {
         // 쉼표 다음지점을 체크하기 위한 플래그
         var indexFlag = letters.startIndex
         // 결과 리턴용 배열
