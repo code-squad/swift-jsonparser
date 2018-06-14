@@ -168,15 +168,13 @@ struct Classifier{
         }
         // , 중 " 로 둘러쌓인 인덱스를 제외시킨다
         commaIndexes = removeDuplicatedIndexIn(indexRangeList: doubleQuatationIndexes, targetIndexes: commaIndexes)
-        // 배열형일 경우 추가로 { } 관련 인덱스 작업을 해준다
-        if Checker.checkArrayForJSON(letter: letters) {
-            // { } 로 둘러쌓인 범위인덱스를 구한다
-            guard let objectIndexes = surveyObjectRanges(letters: letters) else {
-                return nil
-            }
-            // , 중 {} 로 둘러쌓인 인덱스를 제외시킨다
-            commaIndexes = removeDuplicatedIndexIn(indexRangeList: objectIndexes, targetIndexes: commaIndexes)
+        // { } 로 둘러쌓인 범위인덱스를 구한다
+        guard let objectIndexes = surveyObjectRanges(letters: letters) else {
+            return nil
         }
+        // , 중 {} 로 둘러쌓인 인덱스를 제외시킨다
+        commaIndexes = removeDuplicatedIndexIn(indexRangeList: objectIndexes, targetIndexes: commaIndexes)
+        
         // , 를 기준으로 문자열을 나눈 범위인덱스를 구한다
         let separatedByIndexes = separateByIndexes(letters: letters, targetIndexes: commaIndexes)
         // , 인덱스를 기준으로 문자열을 나누어서 문자열로 리턴한다
