@@ -38,7 +38,7 @@ struct JSONParser {
     static let typeObject = type(of: emptyObject)
     
     /// 입력받은 문자열을 , 로 나눈 뒤 앞뒤 공백을 제거해서 배열로 리턴
-    private func separate(letter : String, separator: Character) -> [String]{
+    private func separate(letter : String, separator: Character = JSONParser.separater) -> [String]{
         // 뒤에서 함수에 사용할 문자형 배열 선언
         var separatedByComma : [String] = []
         // , 를 기준으로 나눠서 배열로 만든다
@@ -101,7 +101,7 @@ struct JSONParser {
         // 문자열의 분류자를 자른다
         let cuttedLetter = cutClassifier(letter: letter)
         // 문자열을 , 를 기준으로 자른다
-        let separatedData = separate(letter: cuttedLetter, separator: JSONParser.separater)
+        let separatedData = separate(letter: cuttedLetter)
         
         return makeJSONArrayType(array: separatedData)
     }
@@ -150,7 +150,7 @@ struct JSONParser {
     /// {} 로 둘러 쌓이지 않은 문자열을 받아서 객체형으로 리턴
     private func transformLetterToJSONObjectWithoutWrapper(letter: String) -> [String:JSONData]? {
         // , 기준으로 문자열을 나누고 앞뒤공백을 없앤다
-        let separatedByComma = separate(letter: letter, separator: JSONParser.separater)
+        let separatedByComma = separate(letter: letter)
         // 각 키와 밸류를 반복문에 넣어서 JSON 타입이 맞는지 체크, 결과를 리턴한다
         return combineSeparatedJSONObeject(letters: separatedByComma)
     }
