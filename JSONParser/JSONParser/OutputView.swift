@@ -37,7 +37,8 @@ struct OutputView {
         if countOfArray > 0 {
             resultMessage += " 배열 \(countOfArray)개,"
         }
-        
+        // 맨 뒤의 , 를 삭제한다.
+        resultMessage.removeLast()
         // 총 합을 구한다
         let totalCount = countOfInt + countOfString + countOfBool + countOfObject + countOfArray
         
