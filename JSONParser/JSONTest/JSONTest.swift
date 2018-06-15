@@ -25,7 +25,7 @@ class JSONTest: XCTestCase {
         let str = [ "[", "{ \"name\" : \"KIM JUNG\", \"level\" : 5, \"married\" : true }"]
         let js = JSONParser()
         let flag = js.transform(letters: str)
-//        print( flag)
+//        NSLog( flag)
         XCTAssert(flag != nil)
     }
     
@@ -45,16 +45,16 @@ class JSONTest: XCTestCase {
         let classifier = Classifier()
         // 입력값을 JSON 스타일로 나눔
         guard let separatedLetters = classifier.surveyForJSON(letters: input) else {
-            print("잘못된 입력")
+            NSLog("잘못된 입력")
             XCTAssert(false)
             return ()
         }
-        print (separatedLetters)
+        NSLog (separatedLetters[1])
         // JSON 구조체 선언
         let json = JSONParser()
         // JSON Data 생성
         guard let dataOfJSON = json.transform(letters: separatedLetters) else {
-            print("지원하지 않는 형식을 포함하고 있습니다.")
+            NSLog("지원하지 않는 형식을 포함하고 있습니다.")
             XCTAssert(false)
             return ()
         }
@@ -75,7 +75,7 @@ class JSONTest: XCTestCase {
 //        let str = "true"
 //        let regexed = gram.extractRegexed(regexTry: GrammarChecker.regexBool, originLetter: str)
         
-        print(regexed)
+        NSLog(regexed![0])
         
 //        let result = gram.checkObjectType(letter: str)
         XCTAssert(str == regexed!.first)
