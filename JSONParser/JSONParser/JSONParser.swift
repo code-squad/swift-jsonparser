@@ -45,16 +45,14 @@ struct JSONParser {
         let separatedSubSequencesByComma = letter.split(separator: separator)
         // , 기준으로 나눠진 배열을 반복문에 넣는다
         for subSequence in separatedSubSequencesByComma {
-            // 나눠진 데이터의 앞뒤 공백을 제거한다
-            let data = String(subSequence).trimmingCharacters(in: .whitespaces)
             // 앞뒤 공백 제거된 데이터를 결과에 추가한다
-            separatedByComma.append(data)
+            separatedByComma.append(String(subSequence).trimmingCharacters(in: .whitespaces))
         }
         return separatedByComma
     }
     
     /// 문자열을 받아서 JSON 타입으로 리턴
-     func transformLetterToDataOfJSONObject(letter:String) -> JSONData? {
+     func transformValue(letter:String) -> JSONData? {
         // 인트형이 가능한지 체크. 변환가능하면 변환해서 추가
         if GrammarChecker.checkIntType(letter: letter) {
             return JSONData.number(Int(letter)!)
@@ -74,10 +72,8 @@ struct JSONParser {
             }
             return jsonData
         }
-            // 어느것도 매칭되지 않는다면 닐 리턴
-        else {
-            return nil
-        }
+        // 어느것도 매칭되지 않는다면 닐 리턴
+        return nil
     }
     
     /// 문자열 배열을 받아서 배열형 JSONData 로 리턴한다
@@ -86,7 +82,7 @@ struct JSONParser {
         var dataSet : [JSONData] = []
         // 자른 문자열을 데이터화 시킨다
         for letter in array {
-            guard let transformedData = transformLetterToDataOfJSONObject(letter: letter) else {
+            guard let transformedData = transformValue(letter: letter) else {
                 return nil
             }
             dataSet.append(transformedData)
@@ -127,7 +123,7 @@ struct JSONParser {
         // 키 부분의 공백을 지워주고 변수화 한다
         let value = separatedLetter[1].trimmingCharacters(in: .whitespaces)
         // " 을 제외한 나머지 문자열을 내보낸다.
-        return transformLetterToDataOfJSONObject(letter: value)
+        return transformValue(letter: value)
     }
     
     /// , 로 나눠진 객체형 배열을 객체형 으로 만들어서 리턴
@@ -168,7 +164,7 @@ struct JSONParser {
     }
     
     /// 문자열을 받아서 JSON 타입으로 리턴
-    private func transformLetterToDataOfJSONArray(letter:String) -> JSONData? {
+    private func transformValueOfJSONArray(letter:String) -> JSONData? {
         // {} 로 둘러쌓인 객체형인지 체크 후 추가
         if GrammarChecker.checkObjectType(letter: letter){
             guard let jsonData = transformLetterToJSONObjectWithWrapper(letter: letter) else {
@@ -178,7 +174,7 @@ struct JSONParser {
         }
         
         // 객체형을 제외한 데이터 타입 리턴함수 사용
-        guard let transformedData = transformLetterToDataOfJSONObject(letter: letter) else {
+        guard let transformedData = transformValue(letter: letter) else {
             // {} 이 외에 어느것도 매칭되지 않는다면 닐 리턴
             return nil
         }
@@ -193,7 +189,7 @@ struct JSONParser {
         // 배열을 반복분에 넣는다
         for letter in letters {
             // JSON 에 추가 가능한지 체크. 변환가능하면 변환해서 추가
-            guard let transformedValue = transformLetterToDataOfJSONArray(letter: letter) else {
+            guard let transformedValue = transformValueOfJSONArray(letter: letter) else {
                 return nil
             }
             result.append(transformedValue)
