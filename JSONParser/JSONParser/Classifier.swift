@@ -170,7 +170,7 @@ struct Classifier{
         var result : [String] = []
         // 문자열의 , 인덱스를 구한다
         guard var commaIndexes = surveyLetterPositions(letters: letters, targetLetter: JSONParser.separater) else {
-            return nil
+            return [letters]
         }
         // " 로 둘러쌓인 범위인덱스를 구한다
         guard let doubleQuatationIndexes = surveyLetterRange(letters: letters, targetLetter: JSONParser.letterWrapper) else {
