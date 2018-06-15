@@ -80,30 +80,34 @@ struct JSONParser {
         }
     }
     
-    /// []가 삭제된 배열형 문자열을 받아서 배열형 JSONData 로 리턴한다
-    private func transformArrayDatas(letter: String) -> JSONData?{
-        // 문자열을 자른 결과
-        let separatedData = separate(letter: letter, separator: JSONParser.separater)
+    /// 문자열 배열을 받아서 배열형 JSONData 로 리턴한다
+    private func makeJSONArrayType(array: [String]) -> JSONData?{
         // 나눠진 문자열을 데이터의 JSON 데이터로 변환한다
         var dataSet : [JSONData] = []
         // 자른 문자열을 데이터화 시킨다
-        for data in separatedData {
-            guard let transformedData = transformLetterToDataOfJSONObject(letter: data) else {
+        for letter in array {
+            guard let transformedData = transformLetterToDataOfJSONObject(letter: letter) else {
                 return nil
             }
             dataSet.append(transformedData)
         }
-        // 결과용 변수 선언
-        let result : JSONData = .array(dataSet)
         // 결과 리턴
-        return result
-        
+        return .array(dataSet)
+    }
+    
+    /// 입력받은 문자열의 앞뒤 1 문자씩 자르고 리턴
+    private func cutClassifier(letter: String) -> String {
+        return String(letter[letter.index(letter.startIndex, offsetBy: 1)..<letter.index(letter.endIndex, offsetBy: -1)])
     }
     
     /// [] 로 시작하는 문자열을 받아서 맨앞뒤를 제거하고 데이터화해주는 함수에 입력
     private func transformArray(letter : String) -> JSONData? {
-        let cuttedLetter = String(letter[letter.index(letter.startIndex, offsetBy: 1)..<letter.index(letter.endIndex, offsetBy: -1)])
-        return transformArrayDatas(letter: cuttedLetter)
+        // 문자열의 분류자를 자른다
+        let cuttedLetter = cutClassifier(letter: letter)
+        // 문자열을 , 를 기준으로 자른다
+        let separatedData = separate(letter: cuttedLetter, separator: JSONParser.separater)
+        
+        return makeJSONArrayType(array: separatedData)
     }
     
     /// 키:벨류 로 붙어있는 문자열을 받아서 키부분 리턴
