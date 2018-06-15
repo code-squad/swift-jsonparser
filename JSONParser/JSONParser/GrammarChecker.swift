@@ -29,13 +29,13 @@ struct GrammarChecker {
     // 참거짓 체크용 정규식
     static let regexBool = typeOfBool()
     // 객체의 키와 밸류 정규식
-    static let regexObjectValue = "\\\".+?\\\" : (true|false|\\\".+?\\\"|[0-9]*)"
+    static let regexObjectValue = "\\\".+?\\\" : (true|false|"+"\\[\\s?"+regexArrayValue+"(,\\s?"+regexArrayValue+")*\\s?\\]"+"|\\\".+?\\\"|[0-9]*)"
     // 객체 체크용 정규식. 키와 벨류 사이에 , 를 추가
     static let regexObject = "^\\{ "+regexObjectValue+"(, "+regexObjectValue+")* \\}$"
     // 배열데이터 체크용 정규식
     static let regexArrayValue = "(true|false|\\\".+?\\\"|[0-9]*)"
     // 배열 체크용 정규식
-    static let regexArray = "^\\[ "+regexArrayValue+"(, "+regexArrayValue+")* \\]$"
+    static let regexArray = "^\\[\\s?"+regexArrayValue+"(,\\s?"+regexArrayValue+")*\\s?\\]$"
     
     /// 문자열과 정규식을 받아서 정규식화 된 문자열 배열을 리턴한다
     static func extractRegexed(regexTry : String, originLetter: String) -> [String]? {
