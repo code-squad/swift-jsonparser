@@ -36,8 +36,8 @@ class JSONTest: XCTestCase {
     }
     
     func testMain() {
-        let input = "[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]"
-//                let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [ \"hana\", \"hayul\", \"haun\" ] }"
+//        let input = "[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]"
+                let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [ \"hana\", \"hayul\", \"haun\" ] }"
         
         // 입력값을 분류해주는 구조체 선언
         let classifier = Classifier()
