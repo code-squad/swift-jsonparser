@@ -179,14 +179,15 @@ struct Classifier{
             commaIndexes = removeDuplicatedIndexIn(indexRangeList: doubleQuatationIndexes, targetIndexes: commaIndexes)
         }
         // { } 로 둘러쌓인 범위인덱스가 있다면 구한다
-        if let objectIndexes = surveyObjectRanges(letters: letters)  {// , 중 {} 로 둘러쌓인 인덱스를 제외시킨다
+        if let objectIndexes = surveyObjectRanges(letters: letters)  {
+            // , 중 {} 로 둘러쌓인 인덱스를 제외시킨다
             commaIndexes = removeDuplicatedIndexIn(indexRangeList: objectIndexes, targetIndexes: commaIndexes)
         }
         // [ ] 로 둘러쌓인 범위인덱스가 있다면 구한다
         if let ArrayIndexes = surveyArrayRanges(letters: letters)  {
             // , 중 [] 로 둘러쌓인 인덱스를 제외시킨다
             commaIndexes = removeDuplicatedIndexIn(indexRangeList: ArrayIndexes, targetIndexes: commaIndexes)
-        }        
+        }
         // , 를 기준으로 문자열을 나눈 범위인덱스를 구한다
         let separatedByIndexes = separateByIndexes(letters: letters, targetIndexes: commaIndexes)
         // , 인덱스를 기준으로 문자열을 나누어서 문자열로 리턴한다
