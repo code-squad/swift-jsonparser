@@ -25,14 +25,12 @@ class JSONTest: XCTestCase {
         let str = [ "[", "{ \"name\" : \"KIM JUNG\", \"level\" : 5, \"married\" : true }"]
         let js = JSONParser()
         let flag = js.transform(letters: str)
-//        NSLog( flag)
         XCTAssert(flag != nil)
     }
     
     func testcheckWrappedBy() {
         let a = "{ \"name\" : \"KIM JUNG\", \"level\" : 5, \"married\" : true }"
         let regexedLetter = GrammarChecker.extractRegexed(regexTry: GrammarChecker.regexObject, originLetter: a)
-//        print(regexedLetter)
 //        let b = GrammarChecker.checkObjectType(letter: a)
         XCTAssert(a==regexedLetter!.first)
     }
@@ -45,7 +43,6 @@ class JSONTest: XCTestCase {
         let classifier = Classifier()
         // 입력값을 JSON 스타일로 나눔
         guard let separatedLetters = classifier.surveyForJSON(letters: input) else {
-            NSLog("잘못된 입력")
             XCTAssert(false)
             return ()
         }
@@ -54,7 +51,6 @@ class JSONTest: XCTestCase {
         let json = JSONParser()
         // JSON Data 생성
         guard let dataOfJSON = json.transform(letters: separatedLetters) else {
-            NSLog("지원하지 않는 형식을 포함하고 있습니다.")
             XCTAssert(false)
             return ()
         }
@@ -74,8 +70,6 @@ class JSONTest: XCTestCase {
         
 //        let str = "true"
 //        let regexed = gram.extractRegexed(regexTry: GrammarChecker.regexBool, originLetter: str)
-        
-        NSLog(regexed![0])
         
 //        let result = gram.checkObjectType(letter: str)
         XCTAssert(str == regexed!.first)
