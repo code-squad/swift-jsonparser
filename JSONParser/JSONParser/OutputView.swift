@@ -12,11 +12,11 @@ struct OutputView {
     /// JSON 데이터를 받아서 각 항목이 몇개인지 출력
     func printCountOfTypes(json: JSONCount) {
         // 타입별로 개수를 받는다
-        let countOfInt = json.countOfInt
-        let countOfString = json.countOfString
-        let countOfBool = json.countOfBool
-        let countOfObject = json.countOfObject
-        let countOfArray = json.countOfArray
+        let countOfInt = json.jsonCounter.countOfInt
+        let countOfString = json.jsonCounter.countOfString
+        let countOfBool = json.jsonCounter.countOfBool
+        let countOfObject = json.jsonCounter.countOfObject
+        let countOfArray = json.jsonCounter.countOfArray
         
         // 결과 출력용 메세지
         var resultMessage = " 데이터 중에"
