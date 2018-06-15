@@ -170,29 +170,23 @@ struct Classifier{
         var result : [String] = []
         // 문자열의 , 인덱스를 구한다
         guard var commaIndexes = surveyLetterPositions(letters: letters, targetLetter: JSONParser.separater) else {
+            // , 가 문자열에 한개도 없으면 입력문자열 그대로 리턴
             return [letters]
         }
-        // " 로 둘러쌓인 범위인덱스를 구한다
-        guard let doubleQuatationIndexes = surveyLetterRange(letters: letters, targetLetter: JSONParser.letterWrapper) else {
-            return nil
+        // " 로 로 둘러쌓인 범위가 있다면
+        if let doubleQuatationIndexes = surveyLetterRange(letters: letters, targetLetter: JSONParser.letterWrapper) {
+            // , 중 " 로 둘러쌓인 인덱스를 제외시킨다
+            commaIndexes = removeDuplicatedIndexIn(indexRangeList: doubleQuatationIndexes, targetIndexes: commaIndexes)
         }
-        // , 중 " 로 둘러쌓인 인덱스를 제외시킨다
-        commaIndexes = removeDuplicatedIndexIn(indexRangeList: doubleQuatationIndexes, targetIndexes: commaIndexes)
-        
-        // { } 로 둘러쌓인 범위인덱스를 구한다
-        guard let objectIndexes = surveyObjectRanges(letters: letters) else {
-            return nil
+        // { } 로 둘러쌓인 범위인덱스가 있다면 구한다
+        if let objectIndexes = surveyObjectRanges(letters: letters)  {// , 중 {} 로 둘러쌓인 인덱스를 제외시킨다
+            commaIndexes = removeDuplicatedIndexIn(indexRangeList: objectIndexes, targetIndexes: commaIndexes)
         }
-        // , 중 {} 로 둘러쌓인 인덱스를 제외시킨다
-        commaIndexes = removeDuplicatedIndexIn(indexRangeList: objectIndexes, targetIndexes: commaIndexes)
-        
-        // [ ] 로 둘러쌓인 범위인덱스를 구한다
-        guard let ArrayIndexes = surveyArrayRanges(letters: letters) else {
-            return nil
-        }
-        // , 중 [] 로 둘러쌓인 인덱스를 제외시킨다
-        commaIndexes = removeDuplicatedIndexIn(indexRangeList: ArrayIndexes, targetIndexes: commaIndexes)
-        
+        // [ ] 로 둘러쌓인 범위인덱스가 있다면 구한다
+        if let ArrayIndexes = surveyArrayRanges(letters: letters)  {
+            // , 중 [] 로 둘러쌓인 인덱스를 제외시킨다
+            commaIndexes = removeDuplicatedIndexIn(indexRangeList: ArrayIndexes, targetIndexes: commaIndexes)
+        }        
         // , 를 기준으로 문자열을 나눈 범위인덱스를 구한다
         let separatedByIndexes = separateByIndexes(letters: letters, targetIndexes: commaIndexes)
         // , 인덱스를 기준으로 문자열을 나누어서 문자열로 리턴한다
