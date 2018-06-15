@@ -35,9 +35,8 @@ class JSONTest: XCTestCase {
         XCTAssert(a==regexedLetter!.first)
     }
     
-    func testMain() {
-//        let input = "[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]"
-                let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [ \"hana\", \"hayul\", \"haun\" ] }"
+    func testMainObject() {
+        let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
         
         // 입력값을 분류해주는 구조체 선언
         let classifier = Classifier()
@@ -46,7 +45,31 @@ class JSONTest: XCTestCase {
             XCTAssert(false)
             return ()
         }
-        NSLog (separatedLetters[1])
+        // JSON 구조체 선언
+        let json = JSONParser()
+        // JSON Data 생성
+        guard let dataOfJSON = json.transform(letters: separatedLetters) else {
+            XCTAssert(false)
+            return ()
+        }
+        
+        // 출력 구조체 선언
+        let outputView = OutputView()
+        outputView.printCountOfTypes(json: dataOfJSON)
+        XCTAssert(true)
+    }
+    
+    func testMainArray() {
+        let input = "[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]"
+        
+        // 입력값을 분류해주는 구조체 선언
+        let classifier = Classifier()
+        // 입력값을 JSON 스타일로 나눔
+        guard let separatedLetters = classifier.surveyForJSON(letters: input) else {
+            XCTAssert(false)
+            return ()
+        }
+        
         // JSON 구조체 선언
         let json = JSONParser()
         // JSON Data 생성
