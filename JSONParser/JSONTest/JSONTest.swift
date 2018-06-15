@@ -38,8 +38,9 @@ class JSONTest: XCTestCase {
     }
     
     func testMain() {
-        let input = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"
-//        let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : 5 }"
+        let input = "[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]"
+//                let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [ \"hana\", \"hayul\", \"haun\" ] }"
+        
         // 입력값을 분류해주는 구조체 선언
         let classifier = Classifier()
         // 입력값을 JSON 스타일로 나눔
@@ -65,17 +66,27 @@ class JSONTest: XCTestCase {
     }
     
     func test_Regex(){
-        let str = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        let regexed = GrammarChecker.extractRegexed(regexTry: GrammarChecker.regexObject, originLetter: str)
+//        let str = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
+        let str = "\"children\" : [\"hana\", \"hayul\", \"haun\"]"
+//        let str = "[\"hana\", \"hayul\", \"haun\"]"
+//        let str = "a"
+        let regexed = GrammarChecker.extractRegexed(regexTry: GrammarChecker.regexObjectValue, originLetter: str)
         
 //        let str = "true"
 //        let regexed = gram.extractRegexed(regexTry: GrammarChecker.regexBool, originLetter: str)
         
-//        print(regexed)
+        print(regexed)
         
 //        let result = gram.checkObjectType(letter: str)
         XCTAssert(str == regexed!.first)
         
+    }
+    
+    func test_wrapper(){
+        let input = "[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]"
+        //        let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
+        
+        XCTAssert( Checker.checkArrayForJSON(letter: input) )
     }
     
     func testPerformanceExample() {
