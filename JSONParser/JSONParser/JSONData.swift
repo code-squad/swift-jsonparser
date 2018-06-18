@@ -15,6 +15,10 @@ protocol JSONCount {
     
     // JSONData 를 저장하는 변수
     var dataSetOfJSON : JSONData { get }
+    
+    
+    // JSONData 의 분석정보를 담는 클래스
+    var jsonInformation : JSONInformation { get }
 }
 
 /// JSON 에서 사용할 데이터 타입들을 선언
@@ -25,14 +29,39 @@ enum JSONData {
     case letter(String)
     case object([String:JSONData])
     case array([JSONData])
+}
+
+/// 배열과 객체의 분석정보를 가지는 클래스
+class JSONInformation {
+    // 인트형 개수
+    var countOfInt = 0
+    // 문자형 개수
+    var countOfString = 0
+    // Bool형 개수
+    var countOfBool = 0
+    // 객체형 개수
+    var countOfObject = 0
+    // 배열형 개수
+    var countOfArray = 0
+    // 내용을 JSON 스타일로 출력하게될 변수
+    var detailOfJSON = ""
+}
+
+/// JSON 배열,객체의 수퍼클래스
+class JSON {
+    // JSONData 의 분석정보를 담는 클래스
+    var jsonInformation = JSONInformation()
     
+    // 분석정보를 입력받는 함수
+    func getInformation(jsonInformation: JSONInformation){
+        self.jsonInformation = jsonInformation
+    }
 }
 
 /// JSON 배열타입 데이터
-class JSONArray : JSONCount {
+class JSONArray :  JSON, JSONCount {
     // 배열임을 표시한다
     var type = "배열"
-    
     // 데이터를 배열로 담는다
     let dataSetOfJSON : JSONData
     
@@ -43,7 +72,7 @@ class JSONArray : JSONCount {
 }
 
 /// JSON Object 타입
-class JSONObject : JSONCount {
+class JSONObject :  JSON, JSONCount {
     // 객체임을 표시한다
     var type = "객체"
     
