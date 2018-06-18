@@ -54,13 +54,13 @@ class JSONTest: XCTestCase {
         }
         
         // 출력 구조체 선언
-        let outputView = OutputView()
-        outputView.printCountOfTypes(json: dataOfJSON)
+        var outputView = OutputView()
+        outputView.printJSON(json: dataOfJSON)
         XCTAssert(true)
     }
     
     func testMainArray() {
-        let input = "[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]"
+        let input = "[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ], 3, true ]"
         
         // 입력값을 분류해주는 구조체 선언
         let classifier = Classifier()
@@ -79,8 +79,8 @@ class JSONTest: XCTestCase {
         }
         
         // 출력 구조체 선언
-        let outputView = OutputView()
-        outputView.printCountOfTypes(json: dataOfJSON)
+        var outputView = OutputView()
+        outputView.printJSON(json: dataOfJSON)
         XCTAssert(true)
     }
     

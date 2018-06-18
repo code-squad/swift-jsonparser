@@ -32,8 +32,8 @@ func main(){
     }
     
     // 출력 구조체 선언
-    let outputView = OutputView()
-    outputView.printCountOfTypes(json: dataOfJSON)
+    var outputView = OutputView()
+    outputView.printJSON(json: dataOfJSON)
 }
 
 // 메인함수 실행
