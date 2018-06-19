@@ -16,9 +16,8 @@ protocol JSONCount {
     // JSONData 를 저장하는 변수
     var dataSetOfJSON : JSONData { get }
     
-    
     // JSONData 의 분석정보를 담는 클래스
-    var jsonInformation : JSONInformation { get }
+    var jsonInformation : JSONInformation { get set }
 }
 
 /// JSON 에서 사용할 데이터 타입들을 선언
@@ -56,6 +55,7 @@ class JSON {
     func getInformation(jsonInformation: JSONInformation){
         self.jsonInformation = jsonInformation
     }
+    // 타입 입력받는 함수
 }
 
 /// JSON 배열타입 데이터
