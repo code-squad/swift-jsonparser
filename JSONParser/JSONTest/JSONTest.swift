@@ -36,7 +36,7 @@ class JSONTest: XCTestCase {
     }
     
     func testMainObject() {
-        let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
+        let input = "{ \"name\" : \"KIM JUNG\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
         
         // 입력값을 분류해주는 구조체 선언
         let classifier = Classifier()
@@ -46,9 +46,9 @@ class JSONTest: XCTestCase {
             return ()
         }
         // JSON 구조체 선언
-        let json = JSONParser()
+        var json = JSONParser()
         // JSON Data 생성
-        guard let dataOfJSON = json.transform(letters: separatedLetters) else {
+        guard var dataOfJSON = json.make(letters: separatedLetters) else {
             XCTAssert(false)
             return ()
         }
@@ -56,7 +56,12 @@ class JSONTest: XCTestCase {
         // 출력 구조체 선언
         var outputView = OutputView()
         outputView.printJSON(json: dataOfJSON)
-        XCTAssert(true)
+        
+        if dataOfJSON.jsonInformation.countOfObject == 0 && dataOfJSON.jsonInformation.countOfArray == 1  && dataOfJSON.type == "객체" && dataOfJSON.jsonInformation.countOfBool == 0 && dataOfJSON.jsonInformation.countOfInt == 1 && dataOfJSON.jsonInformation.countOfString == 1 {
+            XCTAssert(true)
+        } else {
+            XCTAssert(false)
+        }
     }
     
     func testMainArray() {
@@ -71,9 +76,9 @@ class JSONTest: XCTestCase {
         }
         
         // JSON 구조체 선언
-        let json = JSONParser()
+        var json = JSONParser()
         // JSON Data 생성
-        guard let dataOfJSON = json.transform(letters: separatedLetters) else {
+        guard let dataOfJSON = json.make(letters: separatedLetters) else {
             XCTAssert(false)
             return ()
         }
@@ -81,7 +86,12 @@ class JSONTest: XCTestCase {
         // 출력 구조체 선언
         var outputView = OutputView()
         outputView.printJSON(json: dataOfJSON)
-        XCTAssert(true)
+        
+        if dataOfJSON.jsonInformation.countOfObject == 1 && dataOfJSON.jsonInformation.countOfArray == 1  && dataOfJSON.type == "배열" && dataOfJSON.jsonInformation.countOfBool == 1 && dataOfJSON.jsonInformation.countOfInt == 1 {
+            XCTAssert(true)
+        } else {
+            XCTAssert(false)
+        }
     }
     
     func test_Regex(){
