@@ -226,5 +226,179 @@ struct JSONParser {
         // 배열, 객체 형태도 아니면 닐 리턴
         else { return nil }        
     }
+    
+    /// JSONCount 를 받아서 분석결과 리턴
+    mutating func analyze(jsonCount: JSONCount ) -> JSONInformation {
+        analyzeInformation(jsonData: jsonCount.dataSetOfJSON)
+        return getInformation()
+    }
+    
+    /// 문자열을 받아서 JSON 분석된 객체로 생성
+    mutating func make(letters:[String]) -> JSONCount? {
+        // 문자열을 받아서 JSONCount 로 생성
+        guard var jsonCount = transform(letters: letters) else {
+            return nil
+        }
+        
+        // 생성된 JSON을 분석
+        analyzeInformation(jsonData: jsonCount.dataSetOfJSON)
+        let jsonInformaion = getInformation()
+        // 분석된 결과를 입력
+        jsonCount.jsonInformation = jsonInformaion
+        //결과물 리턴
+        return jsonCount
+    }
+    
+    /// 분석결과를 클래스로 생성,리턴
+    func getInformation() -> JSONInformation {
+        let jsonInformation = JSONInformation()
+        jsonInformation.countOfInt = countOfInt
+        jsonInformation.countOfBool = countOfBool
+        jsonInformation.countOfString = countOfString
+        jsonInformation.countOfArray = countOfArray
+        jsonInformation.countOfObject = countOfObject
+        jsonInformation.detailOfJSON = detailOfJSON
+        return jsonInformation
+    }
+    
+    // 인트형 개수
+    var countOfInt = 0
+    // 문자형 개수
+    var countOfString = 0
+    // Bool형 개수
+    var countOfBool = 0
+    // 객체형 개수
+    var countOfObject = 0
+    // 배열형 개수
+    var countOfArray = 0
+    // 객체형 출력시 앞의 공백을 저장하는 변수
+    var tabSize = 0
+    // 내용을 JSON 스타일로 출력하게될 변수
+    var detailOfJSON = ""
+    
+    /// 탭사이즈가 1이면 인트 카운트 변수를 +1 해준다
+    mutating func plusIntCount(){
+        if tabSize == 1 {
+            countOfInt += 1
+        }
+    }
+    /// 탭사이즈가 1이면 문자열 카운트 변수를 +1 해준다
+    mutating func plusStringCount(){
+        if tabSize == 1 {
+            countOfString += 1
+        }
+    }
+    /// 탭사이즈가 1이면 Bool 카운트 변수를 +1 해준다
+    mutating func plusBoolCount(){
+        if tabSize == 1 {
+            countOfBool += 1
+        }
+    }
+    /// 탭사이즈가 1이면 배열 카운트 변수를 +1 해준다
+    mutating func plusArrayCount(){
+        if tabSize == 1 {
+            countOfArray += 1
+        }
+    }
+    /// 탭사이즈가 1이면 객체 카운트 변수를 +1 해준다
+    mutating func plusObjectCount(){
+        if tabSize == 1 {
+            countOfObject += 1
+        }
+    }
+    
+    /// 줄바꿈 + 탭 * 탭사이즈 를 리턴해주는 함수
+    func newLine() -> String {
+        // 결과 출력용 변수
+        var result = "\n"
+        // 탭사이즈가 0 이하 일 경우 탭 없이 리턴한다
+        if tabSize < 1 {
+            return result
+        }
+        // 1부터 tabSize 횟수만큼 \t 을 더해준다
+        for _ in 1...tabSize {
+            result += "\t"
+        }
+        // 결과를 리턴한다
+        return result
+    }
+    
+    /// 프린트를 위한 함수
+    mutating func makePrint(json: JSONData) -> String{
+        // json 을 반복문에 switch case 에 넣는다
+        switch json {
+        case .array(let array) :
+            // [ 로 배열 출력문을 시작한다
+            var result = " ["
+            // 카운트 함수를 실행한다
+            plusArrayCount()
+            // 배열 시작시 탭 추가
+            tabSize += 1
+            for value in array {
+                // 값만 추가한다
+                result += makePrint(json: value)
+                // 마지막 문자가 } 일 경우 , 이후에 줄바꿈을 추가한다
+                if result.last == "}" {
+                    result += ","+newLine()
+                } // 이외에는 줄바꿈 없이 , 만 추가한다
+                else {
+                    result += ","
+                }
+            }
+            // 마지막 , 를 삭제한다
+            result.removeLast()
+            // 배열 종료시 탭 줄임
+            tabSize -= 1
+            // 마지막에 ], 를 추가하고 리턴한다
+            return result+" ]"
+            
+        case .object(let object) :
+            // { 로 결과출력문을 시작한다
+            var result = " {"
+            // 카운트 함수를 실행한다
+            plusObjectCount()
+            // 객체 시작시 탭추가
+            tabSize += 1
+            // 뉴라인 + 추가된 탭 추가
+            result += newLine()
+            // 객체를 반복문에 넣는다
+            for value in object {
+                // 결과 메세지에 키 : 밸류, 순으로 추가
+                result += " \"\(value.key)\" :" + makePrint(json: value.value) + ","
+                // 뉴라인 후 탭사이즈 추가
+                result += newLine()
+            }
+            // 마지막의 줄바꿈문자, 탭사이즈, 콤마 를 삭제한다
+            result.removeLast(tabSize+2)
+            // 객체가 끝났기 때문에 탭사이즈를 줄여준다
+            tabSize -= 1
+            // 마지막에 뉴라인, 탭사이즈, } 를 추가하고 리턴한다
+            return result+newLine()+" }"
+        // 그 외의 경우는 바로 리턴해준다
+        case .letter(let string) :
+            // 카운트 함수를 실행한다
+            plusStringCount()
+            return (" \(string)")
+        case .boolean(let bool) :
+            // 카운트 함수를 실행한다
+            plusBoolCount()
+            return (" \(bool)")
+        case .number(let number) :
+            // 카운트 함수를 실행한다
+            plusIntCount()
+            return (" \(number)")
+        }
+    }
+    
+    /// JSON을 받아서 분석한다. 타입개수, 프린트문 생성
+    mutating func analyzeInformation(jsonData: JSONData){
+        // 내용 출력용 변수에 내용 입력
+        detailOfJSON = makePrint(json: jsonData)
+        // 마지막 문자가 ] 인 경우 줄바꿈을 추가해 준다
+        if detailOfJSON.last == "]" {
+            detailOfJSON.removeLast()
+            detailOfJSON += "\n ]"
+        }
+    }
 }
 
