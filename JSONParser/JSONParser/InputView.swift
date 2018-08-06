@@ -11,17 +11,23 @@ import Foundation
 struct InputView {
     struct InputValidator {
         static func isValidFormat(target: String) -> Bool {
-            var bracketsStack = target.filter {$0 == "[" || $0 == "]"}
-            var rightClosedBracketsStack:[String] = []
-            while bracketsStack.count != 0 {
-                let item = String(bracketsStack.removeLast()) // count != 0이란 것이 증명
-                if item == "]" {
-                    rightClosedBracketsStack.append(item)
-                }else if rightClosedBracketsStack.count != 0 {
-                    rightClosedBracketsStack.removeLast()
+            return checkBracketsPair(target, left: "[", right: "]") && checkBracketsPair(target, left: "{", right: "}")
+        }
+        
+        static func checkBracketsPair(_ target: String, left: String, right: String) -> Bool {
+            var leftBracketsStack = target.filter {$0 == Character(left) || $0 == Character(right)}
+            var rightBracketStack:[String] = []
+            
+            while leftBracketsStack.count != 0 {
+                let item = String(leftBracketsStack.removeLast()) // count != 0이란 것이 증명
+                if item == right {
+                    rightBracketStack.append(item)
+                }else if rightBracketStack.count != 0 {
+                    rightBracketStack.removeLast()
                 }
             }
-            return rightClosedBracketsStack.count == 0
+            
+            return rightBracketStack.count == 0
         }
     }
     
