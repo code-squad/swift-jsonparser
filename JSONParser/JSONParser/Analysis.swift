@@ -17,8 +17,8 @@ struct Analysis {
      2.{}
      */
     
-    public static func analysisJsonObject(to jsonData:String) -> Json {
-        var json = Json.init()
+    public static func analysisJsonObject(to jsonData:String) -> JsonArray {
+        var json = JsonArray.init()
         let data = jsonData.trimmingCharacters(in: .whitespacesAndNewlines)
         let elements:[String] = data.components(separatedBy: "{")
         
@@ -35,8 +35,8 @@ struct Analysis {
         return json
     }
     
-    public static func analysisJsonSimple(to jsonData:String) -> Json {
-        var json = Json.init()
+    public static func analysisJsonSimple(to jsonData:String) -> JsonArray {
+        var json = JsonArray.init()
         let elements:[String] = jsonData.components(separatedBy: ",")
         let allowCharacterSet = CharacterSet.init(charactersIn: "1234567890")
         for e in elements {
@@ -53,28 +53,45 @@ struct Analysis {
         return json
     }
     
-    // 분석 함수
-    public static func analysisJson(to jsonData:String) -> Json {
-        var json = Json.init()
+    public static func analysisJsonDictionary(to jsonData:String) -> JsonObject {
+        let temp1 = jsonData.components(separatedBy: ",")
+        var json = JsonObject.init()
+        for temp2 in temp1 {
+            let temp3 = temp2.components(separatedBy: ":")
+            if var first = temp3.first , var last = temp3.last {
+                first = first.trimmingCharacters(in: .whitespacesAndNewlines)
+                last = last.trimmingCharacters(in: .whitespacesAndNewlines)
+                json.addDictionary(key: first, value: last)
+            }
+        }
         
+        return json
+    }
+    
+    // 분석 함수
+    public static func analysisJson(to jsonData:String) -> JsonProtocol {
+        // jsonData를 아래서 remove 할 수 없어서 아래와 같이 변수에 넣었습니다.
         var data = jsonData
         
         if data.hasPrefix("["){
+            // 배열데이터
             data.removeFirst()
             data.removeLast()
             
             let jsonArray = data.trimmingCharacters(in: .whitespacesAndNewlines)
             if jsonArray.hasPrefix("{") {
-                json = analysisJsonObject(to: data)
+                let object = analysisJsonObject(to: data)
+                return object
             }else{
-                json = analysisJsonSimple(to: data)
+                let simple = analysisJsonSimple(to: data)
+                return simple
             }
-            
-        }else if data.hasPrefix("{") {
-            // 구현해야함
-            print("객체데이터!")
+        }else{
+            // 객체데이터
+            data.removeFirst()
+            data.removeLast()
+            let dictionary = analysisJsonDictionary(to: data)
+            return dictionary
         }
-        
-        return json
     }
 }

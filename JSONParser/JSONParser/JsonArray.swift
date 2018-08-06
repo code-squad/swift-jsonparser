@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonArray {
+struct JsonArray:JsonProtocol {
     private var string:Array<String>
     private var int:Array<Int>
     private var bool:Array<Bool>

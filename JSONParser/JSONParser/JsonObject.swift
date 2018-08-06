@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonObject {
+struct JsonObject:JsonProtocol {
     private var dictionary:[String:Any]
     
     init() {

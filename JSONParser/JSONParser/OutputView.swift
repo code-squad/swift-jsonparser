@@ -9,11 +9,19 @@
 import Foundation
 
 struct OutputView {
-    public static func printJson(to json:Json){
+    public static func printJson(to json:JsonProtocol){
         let (string,int,bool,object) = json.count()
         
         let totalCount = string + int + bool + object
-        var message = "총 \(totalCount)개의 데이터 중에 "
+        var message = ""
+        
+        if json is JsonObject {
+            message = "총 \(totalCount)개의 객체 데이터 중에 "
+        }
+        if json is JsonArray {
+            message = "총 \(totalCount)개의 배열 데이터 중에 "
+        }
+        
         if string > 0 {
             message = message + "문자열 \(string)개,"
         }
