@@ -22,11 +22,11 @@ struct Analysis {
         for e in elements {
             let element = e.trimmingCharacters(in: .whitespacesAndNewlines)
             if element.contains("true") || element.contains("false"){
-                json.addBool()
+                json.addBool(element: element)
             }else if element.trimmingCharacters(in: allowCharacterSet).isEmpty {
-                json.addInt()
+                json.addInt(element: element)
             }else {
-                json.addString()
+                json.addString(element: element)
             }
         }
         return json

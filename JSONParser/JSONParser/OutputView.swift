@@ -10,20 +10,21 @@ import Foundation
 
 struct OutputView {
     public static func printJson(to json:Json){
-        var counts = json.countJson()
-        var message = ""
-        if let totalCount = counts.removeValue(forKey: "총") {
-            message = "총 \(totalCount)개의 데이터 중에 "
-        }
+        let (string,int,bool) = json.count()
         
-        for count in counts {
-            if count.value > 0 {
-                message = message + "\(count.key) \(count.value)개,"
-            }
+        let totalCount = string + int + bool
+        var message = "총 \(totalCount)개의 데이터 중에 "
+        if string > 0 {
+            message = message + "문자열 \(string)개,"
+        }
+        if int > 0 {
+            message = message + "숫자 \(int)개,"
+        }
+        if bool > 0 {
+            message = message + "부울 \(bool)개,"
         }
         message.removeLast() // 마지막 , 는 제거 합니다.
         message = message + "가 포함되어 있습니다."
         print(message)
     }
-    
 }

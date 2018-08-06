@@ -9,36 +9,54 @@
 import Foundation
 
 struct Json {
-    private var string:Int
-    private var int:Int
-    private var bool:Int
-    private var total:Int
-
+    private var string:Array<String>
+    private var int:Array<Int>
+    private var bool:Array<Bool>
+    
     init() {
-        self.string = 0
-        self.int = 0
-        self.bool = 0
-        self.total = 0
+        self.string = []
+        self.int = []
+        self.bool = []
     }
     
-    public mutating func addString() {
-        self.string = self.string + 1
+    public mutating func addString(element:String) {
+        self.string.append(element)
     }
     
-    public mutating func addInt() {
-        self.int = self.int + 1
+    public mutating func addInt(element:String) {
+        if let convertInt = Int(element) {
+            self.int.append(convertInt)
+        }
     }
     
-    public mutating func addBool() {
-        self.bool = self.bool + 1
+    public mutating func addBool(element:String) {
+        if element == "true" {
+            self.bool.append(true)
+        }else {
+            self.bool.append(false)
+        }
+        
     }
     
-    public func countJson() -> Dictionary<String,Int> {
-        var counts : [String: Int] = [:]
-        counts.updateValue(self.string, forKey: "문자열")
-        counts.updateValue(self.int, forKey: "숫자")
-        counts.updateValue(self.bool, forKey: "부울")
-        counts.updateValue(self.string + self.int + self.bool, forKey: "총")
+    public func count() -> (Int,Int,Int) {
+        let string = self.string.count
+        let int = self.int.count
+        let bool = self.bool.count
+        
+        return (string, int, bool)
+    }
+    
+    public func datas() -> Array<Any> {
+        var counts = Array<Any>()
+        for string in self.string {
+            counts.append(string)
+        }
+        for int in self.int {
+            counts.append(int)
+        }
+        for bool in self.bool {
+            counts.append(bool)
+        }
         return counts
     }
 }
