@@ -12,11 +12,13 @@ struct Json {
     private var string:Array<String>
     private var int:Array<Int>
     private var bool:Array<Bool>
+    private var object:Array<Any>
     
     init() {
         self.string = []
         self.int = []
         self.bool = []
+        self.object = []
     }
     
     public mutating func addString(element:String) {
@@ -35,14 +37,18 @@ struct Json {
         }else {
             self.bool.append(false)
         }
-        
     }
     
-    public func count() -> (Int,Int,Int) {
+    public mutating func addObject(element:String) {
+        self.object.append(element)
+    }
+    
+    public func count() -> (Int,Int,Int,Int) {
         let string = self.string.count
         let int = self.int.count
         let bool = self.bool.count
+        let object = self.object.count
         
-        return (string, int, bool)
+        return (string, int, bool, object)
     }
 }
