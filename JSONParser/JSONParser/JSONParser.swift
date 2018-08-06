@@ -9,7 +9,7 @@
 import Foundation
 
 struct JSONParser {
-    private var elements: [String]
+    private (set) var elements: [String]
     private (set) var strings: [String] = []
     private (set) var integers: [Int] = []
     private (set) var booleans: [Bool] = []
