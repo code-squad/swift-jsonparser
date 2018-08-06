@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4709771C2112EBBD0031CEC8 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709771B2112EBBD0031CEC8 /* InputView.swift */; };
+		4709771E2112EF3F0031CEC8 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709771D2112EF3F0031CEC8 /* OutputView.swift */; };
+		470977202112EFA00031CEC8 /* Analysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709771F2112EFA00031CEC8 /* Analysis.swift */; };
+		4709772221157C460031CEC8 /* Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709772121157C460031CEC8 /* Json.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +27,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4709771B2112EBBD0031CEC8 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		4709771D2112EF3F0031CEC8 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
+		4709771F2112EFA00031CEC8 /* Analysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analysis.swift; sourceTree = "<group>"; };
+		4709772121157C460031CEC8 /* Json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Json.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +66,10 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
+				4709771B2112EBBD0031CEC8 /* InputView.swift */,
+				4709771D2112EF3F0031CEC8 /* OutputView.swift */,
+				4709771F2112EFA00031CEC8 /* Analysis.swift */,
+				4709772121157C460031CEC8 /* Json.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -89,7 +101,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0900;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = JK;
 				TargetAttributes = {
 					83AE2E0B1F8CAC2800F38CC9 = {
@@ -121,6 +133,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				4709772221157C460031CEC8 /* Json.swift in Sources */,
+				470977202112EFA00031CEC8 /* Analysis.swift in Sources */,
+				4709771C2112EBBD0031CEC8 /* InputView.swift in Sources */,
+				4709771E2112EF3F0031CEC8 /* OutputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +157,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -148,6 +165,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -198,6 +216,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -205,6 +224,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

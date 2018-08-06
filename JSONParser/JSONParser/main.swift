@@ -8,3 +8,21 @@
 
 import Foundation
 
+
+func analyzeJson() -> Bool {
+    // 입력받기
+    let inputValue = InputView.readInput()
+    // 입력값 비어있는지 확인
+    guard let input = InputView.isEmpty(to: inputValue) else { return true }
+    
+    // 분석하기 (분석하기 전에 지원범위 확인 or 분석이후 지원범위 확인)
+    let json = Analysis.analysisJson(to: input)
+    // 출력하기
+    OutputView.printJson(to: json)
+    return false
+}
+
+var analyze = true
+while analyze {
+    analyze = analyzeJson()
+}
