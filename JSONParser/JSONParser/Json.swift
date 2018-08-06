@@ -45,18 +45,4 @@ struct Json {
         
         return (string, int, bool)
     }
-    
-    public func datas() -> Array<Any> {
-        var counts = Array<Any>()
-        for string in self.string {
-            counts.append(string)
-        }
-        for int in self.int {
-            counts.append(int)
-        }
-        for bool in self.bool {
-            counts.append(bool)
-        }
-        return counts
-    }
 }
