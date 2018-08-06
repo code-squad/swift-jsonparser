@@ -10,44 +10,24 @@ import Foundation
 
 struct InputView {
     struct InputValidator {
-        private var elements: [String] = []
-        
-        var result: [String]? {
-            return elements.count == 0 ? nil : elements
-        }
-        
-        init?(input: String) {
-            if !isValidFormat(target: input) { return nil }
-            self.elements = parse(from: input)
-        }
-        
-        func isValidFormat(target: String) -> Bool {
-            var brackets = target.filter {$0 == "[" || $0 == "]"}
-            var rightClosedBrackets:[String] = []
-            while brackets.count != 0 {
-                let item = String(brackets.removeLast()) // count != 0이란 것이 증명
+        static func isValidFormat(target: String) -> Bool {
+            var bracketsStack = target.filter {$0 == "[" || $0 == "]"}
+            var rightClosedBracketsStack:[String] = []
+            while bracketsStack.count != 0 {
+                let item = String(bracketsStack.removeLast()) // count != 0이란 것이 증명
                 if item == "]" {
-                    rightClosedBrackets.append(item)
-                }else if rightClosedBrackets.count != 0 {
-                    rightClosedBrackets.removeLast()
+                    rightClosedBracketsStack.append(item)
+                }else if rightClosedBracketsStack.count != 0 {
+                    rightClosedBracketsStack.removeLast()
                 }
             }
-            return rightClosedBrackets.count == 0
-        }
-        
-        func parse(from target: String) -> [String] {
-            var rawValue = target
-            rawValue = rawValue.replacingOccurrences(of: " ", with: "")
-            rawValue = rawValue.replacingOccurrences(of: "]", with: "")
-            rawValue = rawValue.replacingOccurrences(of: "[", with: "")
-            return rawValue.split(separator: ",").map {String($0)}
+            return rightClosedBracketsStack.count == 0
         }
     }
     
-    static func read() -> [String]? {
+    static func read() -> String? {
         print("분석할 JSON 데이터를 입력하세요.")
         guard let data = readLine() else { return nil }
-        guard let result = InputValidator(input: data)?.result else { return nil }
-        return result
+        return InputValidator.isValidFormat(target: data) ? data : nil
     }
 }
