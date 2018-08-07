@@ -15,9 +15,9 @@ struct OutputView {
         
         if results.count == 1 {
             displayResult += displayPrefix(results[0].totalDataCounts) ?? ""
-            displayResult += displayValue(results[0].resultDict[JSONKey.String], description: JSONKey.String.rawValue) ?? ""
-            displayResult += displayValue(results[0].resultDict[JSONKey.Integer], description: JSONKey.Integer.rawValue) ?? ""
-            displayResult += displayValue(results[0].resultDict[JSONKey.Boolean], description: JSONKey.Boolean.rawValue) ?? ""
+            displayResult += displayValue(results[0].resultDict[JSONValueType.string]?.count, type: JSONValueType.string) ?? ""
+            displayResult += displayValue(results[0].resultDict[JSONValueType.int]?.count, type: JSONValueType.int) ?? ""
+            displayResult += displayValue(results[0].resultDict[JSONValueType.bool]?.count, type: JSONValueType.bool) ?? ""
             displayResult += displayPostFix(results[0].totalDataCounts) ?? ""
         }else{
             displayResult += displayObjects(results.count)
@@ -33,9 +33,9 @@ struct OutputView {
         return total != 0 ? "총 \(total)개의 데이터 중에 " : nil
     }
     
-    private static func displayValue(_ count: Int?, description: String) -> String? {
+    private static func displayValue<T: RawRepresentable>(_ count: Int?, type: T) -> String? where T.RawValue == String {
         guard let count = count else { return nil }
-        return count != 0 ? description + " \(count)개 " : nil
+        return count != 0 ? type.rawValue + " \(count)개 " : nil
     }
     
     private static func displayPostFix(_ total: Int) -> String? {
