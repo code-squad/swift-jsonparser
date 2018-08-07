@@ -20,16 +20,16 @@ struct OutputView {
         var displayResult = ""
         
         if parsedObjects.count == 1 {
-            displayResult += displayPrefix(parsedObjects[0].result.count) ?? ""
-            displayResult += displayValues(parsedObjects[0].result)
-            displayResult += displayPostFix(parsedObjects[0].result.count) ?? ""
+            displayResult += displayPrefix(parsedObjects[0].result.count + parsedObjects[0].list.count) ?? ""
+            displayResult += displayValues(parsedObjects[0])
+            displayResult += displayPostFix(parsedObjects[0].result.count + parsedObjects[0].list.count) ?? ""
         }else{
             displayResult += displayObjects(parsedObjects.count)
         }
         print(displayResult)
     }
     
-    private static func displayValues(_ jsonObjects: [String:String]) -> String {
+    private static func displayValues(_ jsonObjects: JSONParser.JSONParsedResult) -> String {
         let typeCountingResult = checkTypeOfValues(jsonObjects)
         let displayableCountOfStrings = displayValue(typeCountingResult.stringsCount, type: JSONValueType.string) ?? ""
         let displayableCountOfIntegers = displayValue(typeCountingResult.integersCount, type: JSONValueType.int) ?? ""
@@ -38,11 +38,20 @@ struct OutputView {
         return displayableCountOfStrings + displayableCountOfIntegers + displayableCountOfBooleans
     }
     
-    private static func checkTypeOfValues(_ jsonObjects: [String:String]) -> (stringsCount: Int, integersCount: Int, booleansCount: Int) {
+    private static func checkTypeOfValues(_ jsonObjects: JSONParser.JSONParsedResult) -> (stringsCount: Int, integersCount: Int, booleansCount: Int) {
+        
         var stringsCount: Int = 0
         var integersCount: Int = 0
         var booleansCount: Int = 0
-        jsonObjects.forEach { (_, value) in
+        
+        countingType(of: jsonObjects.result.values.map{String($0)}, &stringsCount, &integersCount, &booleansCount)
+        countingType(of: jsonObjects.list, &stringsCount, &integersCount, &booleansCount)
+        
+        return (stringsCount, integersCount, booleansCount)
+    }
+
+    private static func countingType(of values: [String], _ stringsCount: inout Int, _ integersCount: inout Int, _ booleansCount: inout Int) {
+        values.forEach {value in
             switch value {
             case let value where value.contains("\""): stringsCount += 1
             case let value where Int(value) != nil : integersCount += 1
@@ -50,7 +59,6 @@ struct OutputView {
             default: return
             }
         }
-        return (stringsCount, integersCount, booleansCount)
     }
     
     private static func displayObjects(_ count: Int) -> String {
