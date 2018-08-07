@@ -9,22 +9,22 @@
 import Foundation
 
 // MARK: 값에 따른 JSON내 키-값 쌍을 분류해주기 위한 Key 
-enum JSONKey: String {
-    case String = "문자열"
-    case Integer = "숫자"
-    case Boolean = "부울"
+enum JSONValueType: String {
+    case string = "문자열"
+    case int = "숫자"
+    case bool = "부울"
 }
 
 struct JSONParser {
     // JSON Parsed Result
     struct JSONParsedResult {
         private (set) var totalDataCounts: Int
-        private (set) var resultDict: [JSONKey:[[String:Any]]] = [:]
+        private (set) var resultDict: [JSONValueType:[[String:Any]]] = [:]
         
         init(listOfStrings: [[String:String]], listOfIntegers: [[String:Int]], listOfBooleans: [[String:Bool]]) {
-            resultDict[.String] = listOfStrings
-            resultDict[.Integer] = listOfIntegers
-            resultDict[.Boolean] = listOfBooleans
+            resultDict[.string] = listOfStrings
+            resultDict[.int] = listOfIntegers
+            resultDict[.bool] = listOfBooleans
             self.totalDataCounts = listOfStrings.count + listOfIntegers.count + listOfBooleans.count
         }
     }
