@@ -9,13 +9,13 @@
 import Foundation
 
 struct JsonObject:JsonProtocol {
-    private var object:[String:Any]
+    private var object:[String:String]
     
     init() {
         self.object = [:]
     }
     
-    public mutating func addObject(key:String, value:Any) {
+    public mutating func addObject(key:String, value:String) {
         self.object.updateValue(value, forKey: key)
     }
     
@@ -27,11 +27,11 @@ struct JsonObject:JsonProtocol {
         
         for ( _ , value) in self.object {
             let allowCharacterSet = CharacterSet.init(charactersIn: "1234567890")
-            if (value as AnyObject).hasPrefix("{") {
+            if value.hasPrefix("{") {
                 object = object + 1
-            }else if (value as AnyObject).contains("true") || (value as AnyObject).contains("false"){
+            }else if value.contains("true") || value.contains("false"){
                 bool = bool + 1
-            }else if (value as AnyObject).trimmingCharacters(in: allowCharacterSet).isEmpty {
+            }else if value.trimmingCharacters(in: allowCharacterSet).isEmpty {
                 int = int + 1
             }else {
                 string = string + 1
