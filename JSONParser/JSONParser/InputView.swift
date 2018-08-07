@@ -11,29 +11,24 @@ import Foundation
 struct InputView {
     struct InputValidator {
         static func isValidFormat(target: String) -> Bool {
-            return checkBracketsPair(target, left: "[", right: "]") && checkBracketsPair(target, left: "{", right: "}")
+            return checkBracketsPair(target)
         }
         
-        static func checkBracketsPair(_ target: String, left: String, right: String) -> Bool {
-            let onlyData = target.filter {$0 != Character(left) && $0 != Character(right)}
-            if onlyData.count == 0 { // 데이터가 없으면 틀린 형식
-                return false
-            }
-            
-            let brackets = target.filter {$0 == Character(left) || $0 == Character(right)}
-            if brackets.count == 0 { // 괄호가 없어도 틀린 형식
-                return false
-            }
-            
+        static func checkBracketsPair(_ target: String) -> Bool {
+            let onlyData = target.filter {$0 != Character("{") && $0 != Character("}") && $0 != Character("[") && $0 != Character("]")}
+            let brackets = target.filter { !onlyData.contains($0)}
             var bracketStack: [Character] = []
             for bracket in brackets {
-                if bracket == Character(left){
+                if bracket == Character("{") || bracket == Character("[") {
                     bracketStack.append(bracket)
                 }else {
                     if bracketStack.isEmpty {
                         return false
                     }
-                    bracketStack.removeLast()
+                    let top = bracketStack.last
+                    if (top == "{" && bracket == "}") || (top == "[" && bracket == "]") {
+                        bracketStack.removeLast()
+                    }
                 }
             }
             
