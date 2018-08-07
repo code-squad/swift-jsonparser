@@ -54,7 +54,7 @@ struct Analysis {
             if var first = temp3.first , var last = temp3.last {
                 first = first.trimmingCharacters(in: .whitespacesAndNewlines)
                 last = last.trimmingCharacters(in: .whitespacesAndNewlines)
-                json.addDictionary(key: first, value: last)
+                json.addObject(key: first, value: last)
             }
         }
         

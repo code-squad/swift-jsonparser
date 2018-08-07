@@ -9,14 +9,14 @@
 import Foundation
 
 struct JsonObject:JsonProtocol {
-    private var dictionary:[String:Any]
+    private var object:[String:Any]
     
     init() {
-        self.dictionary = [:]
+        self.object = [:]
     }
     
-    public mutating func addDictionary(key:String, value:Any) {
-        self.dictionary.updateValue(value, forKey: key)
+    public mutating func addObject(key:String, value:Any) {
+        self.object.updateValue(value, forKey: key)
     }
     
     public func count() -> (Int,Int,Int,Int) {
@@ -25,7 +25,7 @@ struct JsonObject:JsonProtocol {
         var bool = 0
         var object = 0
         
-        for ( _ , value) in self.dictionary {
+        for ( _ , value) in self.object {
             let allowCharacterSet = CharacterSet.init(charactersIn: "1234567890")
             if (value as AnyObject).contains("true") || (value as AnyObject).contains("false"){
                 bool = bool + 1
