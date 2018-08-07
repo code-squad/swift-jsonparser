@@ -8,24 +8,13 @@
 
 import Foundation
 
-// MARK: 값에 따른 JSON내 키-값 쌍을 분류해주기 위한 Key 
-enum JSONValueType: String {
-    case string = "문자열"
-    case int = "숫자"
-    case bool = "부울"
-}
-
 struct JSONParser {
     // JSON Parsed Result
     struct JSONParsedResult {
-        private (set) var totalDataCounts: Int
-        private (set) var resultDict: [JSONValueType:[[String:Any]]] = [:]
+        private (set) var result: [String:String]
         
-        init(listOfStrings: [[String:String]], listOfIntegers: [[String:Int]], listOfBooleans: [[String:Bool]]) {
-            resultDict[.string] = listOfStrings
-            resultDict[.int] = listOfIntegers
-            resultDict[.bool] = listOfBooleans
-            self.totalDataCounts = listOfStrings.count + listOfIntegers.count + listOfBooleans.count
+        init(results: [String:String]) {
+            self.result = results
         }
     }
     
@@ -68,25 +57,13 @@ struct JSONParser {
     }
     // Parsing
     private static func parse(from elements : [String]) -> JSONParsedResult{
-        // elements - ["asdf:123",  ... ]
-        var stringTypeValues: [[String:String]] = []
-        var integersTypeValues: [[String:Int]] = []
-        var booleansTypeValues: [[String:Bool]] = []
-        
+        // elements - ["asdf:123",  ... ]= []
+        var parsedJSONObjects: [String:String] = [:]
         elements.forEach { (element) in
             let keyAndValue = element.split(separator: ":").map {String($0)}
             if keyAndValue.count != 2 { return }
-            switch keyAndValue[1] {
-            case let value where value.contains("\""):
-                stringTypeValues.append([keyAndValue[0]:keyAndValue[1]])
-            case let value where Int(value) != nil:
-                integersTypeValues.append([keyAndValue[0]:Int(keyAndValue[1])!])
-            case let value where Bool(value) != nil:
-                booleansTypeValues.append([keyAndValue[0]:Bool(keyAndValue[1])!])
-            default: return
-            }
+            parsedJSONObjects[keyAndValue[0]] = keyAndValue[1]
         }
-        
-        return JSONParsedResult(listOfStrings: stringTypeValues, listOfIntegers: integersTypeValues, listOfBooleans: booleansTypeValues)
+        return JSONParsedResult(results: parsedJSONObjects)
     }
 }
