@@ -8,21 +8,49 @@
 
 import Foundation
 
+enum JSONValueType: String {
+    case string = "문자열"
+    case int = "숫자"
+    case bool = "부울"
+}
+
 struct OutputView {
     
-    static func display(from results: [JSONParser.JSONParsedResult]) {
+    static func display(from parsedObjects: [JSONParser.JSONParsedResult]) {
         var displayResult = ""
         
-        if results.count == 1 {
-            displayResult += displayPrefix(results[0].totalDataCounts) ?? ""
-            displayResult += displayValue(results[0].resultDict[JSONValueType.string]?.count, type: JSONValueType.string) ?? ""
-            displayResult += displayValue(results[0].resultDict[JSONValueType.int]?.count, type: JSONValueType.int) ?? ""
-            displayResult += displayValue(results[0].resultDict[JSONValueType.bool]?.count, type: JSONValueType.bool) ?? ""
-            displayResult += displayPostFix(results[0].totalDataCounts) ?? ""
+        if parsedObjects.count == 1 {
+            displayResult += displayPrefix(parsedObjects[0].result.count) ?? ""
+            displayResult += displayValues(parsedObjects[0].result)
+            displayResult += displayPostFix(parsedObjects[0].result.count) ?? ""
         }else{
-            displayResult += displayObjects(results.count)
+            displayResult += displayObjects(parsedObjects.count)
         }
         print(displayResult)
+    }
+    
+    private static func displayValues(_ jsonObjects: [String:String]) -> String {
+        let typeCountingResult = checkTypeOfValues(jsonObjects)
+        let displayableCountOfStrings = displayValue(typeCountingResult.stringsCount, type: JSONValueType.string) ?? ""
+        let displayableCountOfIntegers = displayValue(typeCountingResult.integersCount, type: JSONValueType.int) ?? ""
+        let displayableCountOfBooleans = displayValue(typeCountingResult.booleansCount, type: JSONValueType.bool) ?? ""
+        
+        return displayableCountOfStrings + displayableCountOfIntegers + displayableCountOfBooleans
+    }
+    
+    private static func checkTypeOfValues(_ jsonObjects: [String:String]) -> (stringsCount: Int, integersCount: Int, booleansCount: Int) {
+        var stringsCount: Int = 0
+        var integersCount: Int = 0
+        var booleansCount: Int = 0
+        jsonObjects.forEach { (_, value) in
+            switch value {
+            case let value where value.contains("\""): stringsCount += 1
+            case let value where Int(value) != nil : integersCount += 1
+            case let value where Bool(value) != nil : booleansCount += 1
+            default: return
+            }
+        }
+        return (stringsCount, integersCount, booleansCount)
     }
     
     private static func displayObjects(_ count: Int) -> String {
@@ -33,8 +61,7 @@ struct OutputView {
         return total != 0 ? "총 \(total)개의 데이터 중에 " : nil
     }
     
-    private static func displayValue<T: RawRepresentable>(_ count: Int?, type: T) -> String? where T.RawValue == String {
-        guard let count = count else { return nil }
+    private static func displayValue<T: RawRepresentable>(_ count: Int, type: T) -> String? where T.RawValue == String {
         return count != 0 ? type.rawValue + " \(count)개 " : nil
     }
     
