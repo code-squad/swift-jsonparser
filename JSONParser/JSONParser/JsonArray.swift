@@ -9,45 +9,34 @@
 import Foundation
 
 struct JsonArray:JsonProtocol {
-    private var string:Array<String>
-    private var int:Array<Int>
-    private var bool:Array<Bool>
-    private var object:Array<Any>
+    private var array:Array<Any>
     
     init() {
-        self.string = []
-        self.int = []
-        self.bool = []
-        self.object = []
+        self.array = []
     }
     
-    public mutating func addString(element:String) {
-        self.string.append(element)
-    }
-    
-    public mutating func addInt(element:String) {
-        if let convertInt = Int(element) {
-            self.int.append(convertInt)
-        }
-    }
-    
-    public mutating func addBool(element:String) {
-        if element == "true" {
-            self.bool.append(true)
-        }else {
-            self.bool.append(false)
-        }
-    }
-    
-    public mutating func addObject(element:String) {
-        self.object.append(element)
+    public mutating func addArray(element:String) {
+        self.array.append(element)
     }
     
     public func count() -> (Int,Int,Int,Int) {
-        let string = self.string.count
-        let int = self.int.count
-        let bool = self.bool.count
-        let object = self.object.count
+        var string = 0
+        var int = 0
+        var bool = 0
+        var object = 0
+        
+        for element in self.array {
+            let allowCharacterSet = CharacterSet.init(charactersIn: "1234567890")
+            if (element as AnyObject).contains("true") || (element as AnyObject).contains("false"){
+                bool = bool + 1
+            }else if (element as AnyObject).trimmingCharacters(in: allowCharacterSet).isEmpty {
+                int = int + 1
+            }else if (element as AnyObject).hasPrefix("{") {
+                object = object + 1
+            }else {
+                string = string + 1
+            }
+        }
         
         return (string, int, bool, object)
     }

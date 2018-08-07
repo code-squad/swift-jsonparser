@@ -28,7 +28,7 @@ struct Analysis {
                 if element.hasSuffix(",") {
                     element.removeLast()
                 }
-                json.addObject(element: "{ \(element)")
+                json.addArray(element: "{ \(element)")
             }
         }
         
@@ -38,16 +38,9 @@ struct Analysis {
     public static func analysisJsonSimple(to jsonData:String) -> JsonArray {
         var json = JsonArray.init()
         let elements:[String] = jsonData.components(separatedBy: ",")
-        let allowCharacterSet = CharacterSet.init(charactersIn: "1234567890")
         for e in elements {
             let element = e.trimmingCharacters(in: .whitespacesAndNewlines)
-            if element.contains("true") || element.contains("false"){
-                json.addBool(element: element)
-            }else if element.trimmingCharacters(in: allowCharacterSet).isEmpty {
-                json.addInt(element: element)
-            }else {
-                json.addString(element: element)
-            }
+            json.addArray(element: element)
         }
         
         return json
