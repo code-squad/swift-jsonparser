@@ -9,14 +9,24 @@
 import Foundation
 
 struct JsonArray:JsonProtocol {
-    private var array:Array<String>
+    private var array:Array<TypeProtocol>
     
     init() {
         self.array = []
     }
     
     public mutating func addArray(element:String) {
-        self.array.append(element)
+        let allowCharacterSet = CharacterSet.init(charactersIn: "1234567890")
+        // 객체 {} 의 경우에는 String 으로 저장합니다.
+        if element.hasPrefix("{") {
+            self.array.append(element)
+        }else if element.contains("true") || element.contains("false"){
+            self.array.append(Bool(element)!)
+        }else if element.trimmingCharacters(in: allowCharacterSet).isEmpty {
+            self.array.append(Int(element)!)
+        }else {
+            self.array.append(element)
+        }
     }
     
     public func count() -> (Int,Int,Int,Int) {
@@ -26,18 +36,16 @@ struct JsonArray:JsonProtocol {
         var object = 0
         
         for element in self.array {
-            let allowCharacterSet = CharacterSet.init(charactersIn: "1234567890")
-            if element.hasPrefix("{") {
+            if let string = element as? String , string.hasPrefix("{") {
                 object = object + 1
-            }else if element.contains("true") || element.contains("false"){
+            }else if element is Bool {
                 bool = bool + 1
-            }else if element.trimmingCharacters(in: allowCharacterSet).isEmpty {
+            }else if element is Int {
                 int = int + 1
             }else {
                 string = string + 1
             }
         }
-        
         return (string, int, bool, object)
     }
 }

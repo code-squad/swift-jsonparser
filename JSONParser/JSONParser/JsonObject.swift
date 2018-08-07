@@ -9,14 +9,21 @@
 import Foundation
 
 struct JsonObject:JsonProtocol {
-    private var object:[String:String]
+    private var object:[String:TypeProtocol]
     
     init() {
         self.object = [:]
     }
     
     public mutating func addObject(key:String, value:String) {
-        self.object.updateValue(value, forKey: key)
+        let allowCharacterSet = CharacterSet.init(charactersIn: "1234567890")
+        if value.contains("true") || value.contains("false"){
+            self.object.updateValue(Bool(value)!, forKey: key)
+        }else if value.trimmingCharacters(in: allowCharacterSet).isEmpty {
+            self.object.updateValue(Int(value)!, forKey: key)
+        }else {
+            self.object.updateValue(value, forKey: key)
+        }
     }
     
     public func count() -> (Int,Int,Int,Int) {
@@ -26,20 +33,16 @@ struct JsonObject:JsonProtocol {
         var object = 0
         
         for ( _ , value) in self.object {
-            let allowCharacterSet = CharacterSet.init(charactersIn: "1234567890")
-            if value.hasPrefix("{") {
+            if let string = value as? String , string.hasPrefix("{") {
                 object = object + 1
-            }else if value.contains("true") || value.contains("false"){
+            }else if value is Bool {
                 bool = bool + 1
-            }else if value.trimmingCharacters(in: allowCharacterSet).isEmpty {
+            }else if value is Int {
                 int = int + 1
             }else {
                 string = string + 1
             }
-        }
-        
+        }   
         return (string, int, bool, object)
     }
-    
-    
 }
