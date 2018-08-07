@@ -27,12 +27,12 @@ struct JsonArray:JsonProtocol {
         
         for element in self.array {
             let allowCharacterSet = CharacterSet.init(charactersIn: "1234567890")
-            if (element as AnyObject).contains("true") || (element as AnyObject).contains("false"){
+            if (element as AnyObject).hasPrefix("{") {
+                object = object + 1
+            }else if (element as AnyObject).contains("true") || (element as AnyObject).contains("false"){
                 bool = bool + 1
             }else if (element as AnyObject).trimmingCharacters(in: allowCharacterSet).isEmpty {
                 int = int + 1
-            }else if (element as AnyObject).hasPrefix("{") {
-                object = object + 1
             }else {
                 string = string + 1
             }
