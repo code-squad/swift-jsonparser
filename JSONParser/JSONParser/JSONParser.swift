@@ -11,12 +11,10 @@ import Foundation
 struct JSONParser {
     // JSON Parsed Result
     struct JSONParsedResult {
-        private (set) var result: [String:String]
-        private (set) var list: [String]
+        private (set) var results: [Any]
         
-        init(results: [String:String], list: [String]) {
-            self.result = results
-            self.list = list
+        init(results: [Any]) {
+            self.results = results
         }
     }
     
@@ -59,17 +57,16 @@ struct JSONParser {
     }
     // Parsing
     private static func parse(from elements : [String]) -> JSONParsedResult{
-        // elements - ["asdf:123",  ... ]= []
-        var parsedJSONObjects: [String:String] = [:]
-        var listOfValues: [String] = []
+        var results: [Any] = []
         elements.forEach { (element) in
             if !element.contains(":") {
-                listOfValues.append(element)
+                results.append(element) // 단순 값의 나열에 해당하는 요소
                 return
             }
-            let keyAndValue = element.split(separator: ":").map {String($0)}
-            parsedJSONObjects[keyAndValue[0]] = keyAndValue[1]
+            let rawPair = element.split(separator: ":").map {String($0)}
+            let pair: [String:String] = [rawPair[0]:rawPair[1]]
+            results.append(pair)
         }
-        return JSONParsedResult(results: parsedJSONObjects, list: listOfValues)
+        return JSONParsedResult(results: results)
     }
 }
