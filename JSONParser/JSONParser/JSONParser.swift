@@ -11,7 +11,7 @@ import Foundation
 struct JSONParser {
     // JSON Parsed Result
     struct JSONParsedResult {
-        private (set) var results: [Any]
+        var results: [Any]
         
         init(results: [Any]) {
             self.results = results
