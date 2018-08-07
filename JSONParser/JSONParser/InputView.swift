@@ -15,19 +15,29 @@ struct InputView {
         }
         
         static func checkBracketsPair(_ target: String, left: String, right: String) -> Bool {
-            var leftBracketsStack = target.filter {$0 == Character(left) || $0 == Character(right)}
-            var rightBracketStack:[String] = []
+            let onlyData = target.filter {$0 != Character(left) && $0 != Character(right)}
+            if onlyData.count == 0 { // 데이터가 없으면 틀린 형식
+                return false
+            }
             
-            while leftBracketsStack.count != 0 {
-                let item = String(leftBracketsStack.removeLast()) // count != 0이란 것이 증명
-                if item == right {
-                    rightBracketStack.append(item)
-                }else if rightBracketStack.count != 0 {
-                    rightBracketStack.removeLast()
+            let brackets = target.filter {$0 == Character(left) || $0 == Character(right)}
+            if brackets.count == 0 { // 괄호가 없어도 틀린 형식
+                return false
+            }
+            
+            var bracketStack: [Character] = []
+            for bracket in brackets {
+                if bracket == Character(left){
+                    bracketStack.append(bracket)
+                }else {
+                    if bracketStack.isEmpty {
+                        return false
+                    }
+                    bracketStack.removeLast()
                 }
             }
             
-            return rightBracketStack.count == 0
+            return bracketStack.count == 0
         }
     }
     

@@ -10,7 +10,10 @@ import Foundation
 
 struct Main {
     static func start(){
-        guard let input = InputView.read() else { return }
+        guard let input = InputView.read() else {
+            print("올바르지 않은 형식입니다.")
+            return
+        }
         let result = JSONParser.result(from: input)
         OutputView.display(from: result)
     }
