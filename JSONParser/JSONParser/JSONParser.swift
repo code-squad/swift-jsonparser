@@ -12,9 +12,11 @@ struct JSONParser {
     // JSON Parsed Result
     struct JSONParsedResult {
         private (set) var result: [String:String]
+        private (set) var list: [String]
         
-        init(results: [String:String]) {
+        init(results: [String:String], list: [String]) {
             self.result = results
+            self.list = list
         }
     }
     
@@ -59,11 +61,15 @@ struct JSONParser {
     private static func parse(from elements : [String]) -> JSONParsedResult{
         // elements - ["asdf:123",  ... ]= []
         var parsedJSONObjects: [String:String] = [:]
+        var listOfValues: [String] = []
         elements.forEach { (element) in
+            if !element.contains(":") {
+                listOfValues.append(element)
+                return
+            }
             let keyAndValue = element.split(separator: ":").map {String($0)}
-            if keyAndValue.count != 2 { return }
             parsedJSONObjects[keyAndValue[0]] = keyAndValue[1]
         }
-        return JSONParsedResult(results: parsedJSONObjects)
+        return JSONParsedResult(results: parsedJSONObjects, list: listOfValues)
     }
 }
