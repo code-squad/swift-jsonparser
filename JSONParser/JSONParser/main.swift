@@ -19,6 +19,11 @@ func analyzeJson() -> Bool {
         print("{} or [] 개수가 일치하지 않습니다. 다시 입력하세요.")
         return true
     }
+    // 패턴 확인
+    guard Analysis.checkPattern(to: input) else {
+        print("패턴이 일치하지 않습니다. 다시 입력하세요.")
+        return true
+    }
     
     // 분석하기 (분석하기 전에 지원범위 확인 or 분석이후 지원범위 확인)
     let json = Analysis.analysisJson(to: input)
