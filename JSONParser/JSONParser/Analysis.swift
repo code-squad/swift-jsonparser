@@ -87,4 +87,29 @@ struct Analysis {
             return dictionary
         }
     }
+    
+    // [] or {} 쌍 검사
+    public static func checkPair(to jsonData:String) -> Bool {
+        let countPrefix1 = jsonData.contains("{")
+        let countPrefix2 = jsonData.contains("[")
+        let countSuffix1 = jsonData.contains("}")
+        let countSuffix2 = jsonData.contains("]")
+        guard countPrefix1 == countSuffix1 && countPrefix2 == countSuffix2 else { return false }
+        return true
+    }
+    
 }
+
+extension String {
+    func contains(_ find: String) -> Int{
+        var count = 0
+        for char in self {
+            if find.contains(char) {
+                count = count + 1
+            }
+        }
+        return count
+    }
+}
+
+
