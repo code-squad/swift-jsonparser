@@ -11,7 +11,7 @@ import Foundation
 struct Main {
     static func start(){
         guard let input = InputView.read() else {
-            print("올바르지 않은 형식입니다.")
+            print("지원하지 않는 형식을 포함하고 있습니다.")
             return
         }
         let result = JSONParser.result(from: input)
