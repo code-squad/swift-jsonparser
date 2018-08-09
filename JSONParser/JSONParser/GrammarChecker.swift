@@ -70,4 +70,26 @@ extension String {
         }
         return count
     }
+    
+    func hashtags() -> [String]{
+        if let regex = try? NSRegularExpression(pattern: "#[a-z0-9]+", options: .caseInsensitive){
+            let string = self as NSString
+            
+            return regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).map {
+                string.substring(with: $0.range).replacingOccurrences(of: "#", with: "").lowercased()
+            }
+        }
+        
+        return []
+    }
+    
+    // 숫자 검사 : 있으면 return true OR 없으면 return false
+    func hasNumber() -> Bool {
+        if let regex = try? NSRegularExpression(pattern: "^[0-9]*$", options: []){
+            let string = self as NSString
+            let result = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
+            guard result else { return true }
+        }
+        return false
+    }
 }

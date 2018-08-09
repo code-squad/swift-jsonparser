@@ -16,10 +16,9 @@ struct JsonObject:JsonProtocol {
     }
     
     public mutating func addObject(key:String, value:String) {
-        let allowCharacterSet = CharacterSet.init(charactersIn: "1234567890")
         if value.contains("true") || value.contains("false"){
             self.object.updateValue(Bool(value)!, forKey: key)
-        }else if value.trimmingCharacters(in: allowCharacterSet).isEmpty {
+        }else if value.hasNumber(){
             self.object.updateValue(Int(value)!, forKey: key)
         }else {
             self.object.updateValue(value, forKey: key)

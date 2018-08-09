@@ -16,13 +16,13 @@ struct JsonArray:JsonProtocol {
     }
     
     public mutating func addArray(element:String) {
-        let allowCharacterSet = CharacterSet.init(charactersIn: "1234567890")
         // 객체 {} 의 경우에는 String 으로 저장합니다.
         if element.hasPrefix("{") {
             self.array.append(element)
         }else if element.contains("true") || element.contains("false"){
             self.array.append(Bool(element)!)
-        }else if element.trimmingCharacters(in: allowCharacterSet).isEmpty {
+        }else if element.hasNumber() {
+            print("element : \(element)")
             self.array.append(Int(element)!)
         }else {
             self.array.append(element)
