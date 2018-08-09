@@ -30,8 +30,7 @@ struct OutputView {
     }
     
     private static func displayValues(_ objects: JSONParser.JSONParsedResult) -> String {
-        let values = parsingValue(from: objects)
-        let typeCountingResult = countingType(of: values)
+        let typeCountingResult = countingType(of: objects)
         let displayableCountOfStrings = displayValue(typeCountingResult.stringsCount, type: JSONValueType.string) ?? ""
         let displayableCountOfIntegers = displayValue(typeCountingResult.integersCount, type: JSONValueType.int) ?? ""
         let displayableCountOfBooleans = displayValue(typeCountingResult.booleansCount, type: JSONValueType.bool) ?? ""
@@ -39,32 +38,17 @@ struct OutputView {
         return displayableCountOfStrings + displayableCountOfIntegers + displayableCountOfBooleans
     }
     
-    private static func parsingValue(from objects: JSONParser.JSONParsedResult) -> [String] {
-        var values:[String] = []
-        
-        objects.results.forEach { (element) in
-            if let pair = element as? [String:String] {
-                values.append(pair.values.first!)
-            }
-            
-            if let value = element as? String {
-                values.append(value)
-            }
-        }
-        return values
-    }
-    
-    private static func countingType(of values: [String]) -> (stringsCount: Int, integersCount: Int, booleansCount: Int) {
+    private static func countingType(of objects: JSONParser.JSONParsedResult) -> (stringsCount: Int, integersCount: Int, booleansCount: Int) {
         var stringsCount: Int = 0
         var integersCount: Int = 0
         var booleansCount: Int = 0
         
-        values.forEach {value in
-            switch value {
-            case let value where value.contains("\""): stringsCount += 1
-            case let value where Int(value) != nil : integersCount += 1
-            case let value where Bool(value) != nil : booleansCount += 1
-            default: return
+        objects.results.forEach {
+            guard let type = $0.typeOfValue else { return }
+            switch type {
+            case .string: stringsCount += 1
+            case .int: integersCount += 1
+            case .bool: booleansCount += 1
             }
         }
         return (stringsCount, integersCount, booleansCount)
