@@ -11,7 +11,7 @@ import Foundation
 struct JSONString {
     private var value: String
     var isValid: Bool {
-        return !isNested && !isPairInArray
+        return !isNested && !isPairInArray && isValidBracketPairs
     }
     
     private var isNested: Bool {
@@ -29,6 +29,27 @@ struct JSONString {
         }
         
         return false
+    }
+    
+    private var isValidBracketPairs: Bool {
+        let onlyData = value.filter {$0 != Character("{") && $0 != Character("}") && $0 != Character("[") && $0 != Character("]")}
+        let brackets = value.filter { !onlyData.contains($0)}
+        var bracketStack: [Character] = []
+        for bracket in brackets {
+            if bracket == Character("{") || bracket == Character("[") {
+                bracketStack.append(bracket)
+            }else {
+                if bracketStack.isEmpty {
+                    return false
+                }
+                let top = bracketStack.last
+                if (top == "{" && bracket == "}") || (top == "[" && bracket == "]") {
+                    bracketStack.removeLast()
+                }
+            }
+        }
+        
+        return bracketStack.count == 0
     }
     
     init(_ value: String) {
