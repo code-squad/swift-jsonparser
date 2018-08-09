@@ -13,9 +13,7 @@ protocol JsonProtocol {
     func count() -> (Int,Int,Int,Int)
 }
 
-protocol TypeProtocol {
-    init()
-}
+protocol TypeProtocol {}
 
 extension String:TypeProtocol{}
 extension Int:TypeProtocol{}
