@@ -18,7 +18,7 @@ struct JsonObject:JsonProtocol {
     public mutating func addObject(key:String, value:String) {
         if value.isBool(){
             self.object.updateValue(Bool(value)!, forKey: key)
-        }else if value.hasNumber(){
+        }else if value.isNumber(){
             self.object.updateValue(Int(value)!, forKey: key)
         }else {
             self.object.updateValue(value, forKey: key)

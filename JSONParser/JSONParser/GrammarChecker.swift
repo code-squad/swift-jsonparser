@@ -84,7 +84,7 @@ extension String {
     }
     
     // 숫자 검사 : 있으면 return true OR 없으면 return false
-    func hasNumber() -> Bool {
+    func isNumber() -> Bool {
         if let regex = try? NSRegularExpression(pattern: "^[0-9]*$", options: []){
             let string = self as NSString
             let result = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
