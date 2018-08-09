@@ -71,18 +71,6 @@ extension String {
         return count
     }
     
-    func hashtags() -> [String]{
-        if let regex = try? NSRegularExpression(pattern: "#[a-z0-9]+", options: .caseInsensitive){
-            let string = self as NSString
-            
-            return regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).map {
-                string.substring(with: $0.range).replacingOccurrences(of: "#", with: "").lowercased()
-            }
-        }
-        
-        return []
-    }
-    
     // 숫자 검사 : 있으면 return true OR 없으면 return false
     func isNumber() -> Bool {
         if let regex = try? NSRegularExpression(pattern: "^[0-9]*$", options: []){
@@ -103,7 +91,7 @@ extension String {
         return false
     }
     
-    // Array 검사 : [ 시작 or ] 끝 찾기
+    // Object 검사 : { 시작 or } 끝 찾기
     func isObject() -> Bool {
         if let regex = try? NSRegularExpression(pattern: "[^{|}$]", options: []){
             let string = self as NSString
@@ -113,7 +101,7 @@ extension String {
         return false
     }
     
-    // Object 검사 : { 시작 or } 끝 찾기
+    // Array 검사 : [ 시작 or ] 끝 찾기
     func isArray() -> Bool {
         if let regex = try? NSRegularExpression(pattern: "[^[|]$]", options: []){
             let string = self as NSString
