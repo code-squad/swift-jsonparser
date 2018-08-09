@@ -8,25 +8,18 @@
 
 import Foundation
 
-protocol JSONElementProtocol {
-    var typeOfValue: JSONValueType? { get }
+protocol JSONElementProtocol {}
+protocol JSONValueProtocol: JSONElementProtocol {}
+protocol JSONObjectProtocol: JSONElementProtocol {
+    var value: JSONValueProtocol {get}
 }
 
-extension String: JSONElementProtocol {
-    var typeOfValue: JSONValueType? {
-        switch self {
-        case let value where value.contains("\""): return .string
-        case let value where Int(value) != nil: return .int
-        case let value where Bool(value) != nil: return .bool
-        default: return nil
-        }
-    }
-}
-
-extension Dictionary: JSONElementProtocol where Value == String, Key == String {
-    var typeOfValue: JSONValueType? {
-        guard let value = self.values.first else { return nil }
-        return value.typeOfValue
+extension String: JSONValueProtocol {}
+extension Int: JSONValueProtocol {}
+extension Bool: JSONValueProtocol {}
+extension Dictionary: JSONObjectProtocol where Key == String, Value == JSONValueProtocol {
+    var value: JSONValueProtocol {
+        return self.values.first!
     }
 }
 
