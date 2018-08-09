@@ -8,12 +8,39 @@
 
 import Foundation
 
+protocol JSONElementProtocol {
+    var typeOfValue: JSONValueType? { get }
+}
+
+extension String: JSONElementProtocol {
+    var typeOfValue: JSONValueType? {
+        switch self {
+        case let value where value.contains("\""): return .string
+        case let value where Int(value) != nil: return .int
+        case let value where Bool(value) != nil: return .bool
+        default: return nil
+        }
+    }
+}
+
+extension Dictionary: JSONElementProtocol where Value == String, Key == String {
+    var typeOfValue: JSONValueType? {
+        guard let value = self.values.first else { return nil }
+        switch value {
+        case let value where value.contains("\""): return .string
+        case let value where Int(value) != nil: return .int
+        case let value where Bool(value) != nil: return .bool
+        default: return nil
+        }
+    }
+}
+
 struct JSONParser {
     // JSON Parsed Result
     struct JSONParsedResult {
-        var results: [Any]
+        var results: [JSONElementProtocol]
         
-        init(results: [Any]) {
+        init(results: [JSONElementProtocol]) {
             self.results = results
         }
     }
@@ -57,7 +84,7 @@ struct JSONParser {
     }
     // Parsing
     private static func parse(from elements : [String]) -> JSONParsedResult{
-        var results: [Any] = []
+        var results: [JSONElementProtocol] = []
         elements.forEach { (element) in
             if !element.contains(":") {
                 results.append(element) // 단순 값의 나열에 해당하는 요소
