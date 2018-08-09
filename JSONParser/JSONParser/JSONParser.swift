@@ -9,19 +9,11 @@
 import Foundation
 
 protocol JSONElementProtocol {}
-protocol JSONValueProtocol: JSONElementProtocol {}
-protocol JSONObjectProtocol: JSONElementProtocol {
-    var value: JSONValueProtocol {get}
-}
 
-extension String: JSONValueProtocol {}
-extension Int: JSONValueProtocol {}
-extension Bool: JSONValueProtocol {}
-extension Dictionary: JSONObjectProtocol where Key == String, Value == JSONValueProtocol {
-    var value: JSONValueProtocol {
-        return self.values.first!
-    }
-}
+extension String: JSONElementProtocol {}
+extension Int: JSONElementProtocol {}
+extension Bool: JSONElementProtocol {}
+extension Dictionary: JSONElementProtocol where Key == String, Value == JSONElementProtocol {}
 
 struct JSONParser {
     // JSON Parsed Result
@@ -72,7 +64,7 @@ struct JSONParser {
     }
     
     //MARK: 값 추출
-    private static func extractValue(from value: String) -> JSONValueProtocol? {
+    private static func extractValue(from value: String) -> JSONElementProtocol? {
         switch value {
         case let value where value.contains("\""): return value
         case let value where Int(value) != nil : return Int(value)
