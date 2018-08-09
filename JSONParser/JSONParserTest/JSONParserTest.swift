@@ -22,51 +22,51 @@ class JSONParserFormatTest: XCTestCase {
     
     func testSingleObject(){
         let object = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        XCTAssertTrue(object.isValid, "This is not a valid form")
+        XCTAssertTrue(JSONString(object).isValid, "This is not a valid form")
     }
     
     func testObjectsInArray(){
         let objectsInArray = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"
-        XCTAssertTrue(objectsInArray.isValid, "This is not a valid form")
+        XCTAssertTrue(JSONString(objectsInArray).isValid, "This is not a valid form")
     }
     
     func testNestedFormWithSpace() {
         let nested = "{ [ ] }"
-        XCTAssertFalse(nested.isValid, "This is not a nested form")
+        XCTAssertFalse(JSONString(nested).isValid, "This is not a nested form")
     }
     
     func testCurlyBracketsNestedFormWithSpace(){
         let nested = "{ { } }"
-        XCTAssertFalse(nested.isValid, "This is not a nested form")
+        XCTAssertFalse(JSONString(nested).isValid, "This is not a nested form")
     }
     
     func testNestedFormWithoutSpace() {
         let nested = "{[]}"
-        XCTAssertFalse(nested.isValid, "This is not a nested form")
+        XCTAssertFalse(JSONString(nested).isValid, "This is not a nested form")
     }
     
     func testCurlyBracketsNestedFormWithoutSpace() {
         let nested = "{{}}"
-        XCTAssertFalse(nested.isValid, "This is not a nested form")
+        XCTAssertFalse(JSONString(nested).isValid, "This is not a nested form")
     }
     
     func testNestedFormat(){
         let nested = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
-        XCTAssertFalse(nested.isValid, "This is not a nested form")
+        XCTAssertFalse(JSONString(nested).isValid, "This is not a nested form")
     }
     
     func testPairsInArrayWithSpace(){
         let pairsInArray = "[ don : 1\"23 ]"
-        XCTAssertFalse(pairsInArray.isValid, "This is not a pairInArray form")
+        XCTAssertFalse(JSONString(pairsInArray).isValid, "This is not a pairInArray form")
     }
     
     func testPairsInArrayWithoutSpace(){
         let pairsInArray = "[don:1\"23]"
-        XCTAssertFalse(pairsInArray.isValid, "This is not a pairInArray form")
+        XCTAssertFalse(JSONString(pairsInArray).isValid, "This is not a pairInArray form")
     }
     
     func testPairsInArrayFormat(){
         let pairsInArray = "[ \"name\" : \"KIM JUNG\" ]"
-        XCTAssertFalse(pairsInArray.isValid, "This is not a pairInArray form")
+        XCTAssertFalse(JSONString(pairsInArray).isValid, "This is not a pairInArray form")
     }
 }

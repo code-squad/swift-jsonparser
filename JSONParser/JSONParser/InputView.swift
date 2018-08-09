@@ -11,7 +11,7 @@ import Foundation
 struct InputView {
     struct InputValidator {
         static func isValidFormat(target: String) -> Bool {
-            return checkBracketsPair(target) && target.isValid
+            return checkBracketsPair(target) && JSONString(target).isValid
         }
         
         static func checkBracketsPair(_ target: String) -> Bool {
