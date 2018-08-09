@@ -10,6 +10,7 @@
 		3E365EBE2113F8D0005808C2 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E365EBD2113F8D0005808C2 /* InputView.swift */; };
 		3E365EC02113F98D005808C2 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E365EBF2113F98D005808C2 /* JSONParser.swift */; };
 		3E8724DA2117DBC500708426 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8724D92117DBC500708426 /* OutputView.swift */; };
+		3E8C7321211BD8B400E68533 /* FormatValidationString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8C7320211BD8B400E68533 /* FormatValidationString.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		3E365EBD2113F8D0005808C2 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		3E365EBF2113F98D005808C2 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		3E8724D92117DBC500708426 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
+		3E8C7320211BD8B400E68533 /* FormatValidationString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatValidationString.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,6 +69,7 @@
 				3E365EBD2113F8D0005808C2 /* InputView.swift */,
 				3E365EBF2113F98D005808C2 /* JSONParser.swift */,
 				3E8724D92117DBC500708426 /* OutputView.swift */,
+				3E8C7320211BD8B400E68533 /* FormatValidationString.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -132,6 +135,7 @@
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				3E365EBE2113F8D0005808C2 /* InputView.swift in Sources */,
 				3E365EC02113F98D005808C2 /* JSONParser.swift in Sources */,
+				3E8C7321211BD8B400E68533 /* FormatValidationString.swift in Sources */,
 				3E8724DA2117DBC500708426 /* OutputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
