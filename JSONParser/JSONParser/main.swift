@@ -15,12 +15,12 @@ func analyzeJson() -> Bool {
     // 입력값 비어있는지 확인
     guard let input = InputView.isEmpty(to: inputValue) else { return true }
     // {} or [] 쌍 확인
-    guard Analysis.checkPair(to: input) else {
+    guard GrammarChecker.checkPair(to: input) else {
         print("{} or [] 개수가 일치하지 않습니다. 다시 입력하세요.")
         return true
     }
     // 패턴 확인
-    guard Analysis.checkPattern(to: input) else {
+    guard GrammarChecker.checkPattern(to: input) else {
         print("패턴이 일치하지 않습니다. 다시 입력하세요.")
         return true
     }
