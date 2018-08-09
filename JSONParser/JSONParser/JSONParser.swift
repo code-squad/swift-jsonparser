@@ -70,17 +70,32 @@ struct JSONParser {
         target = target.replacingOccurrences(of: "}", with: "")
         return target.split(separator: ",").map {String($0)}
     }
-    // Parsing
+    
+    //MARK: 값 추출
+    private static func extractValue(from value: String) -> JSONValueProtocol? {
+        switch value {
+        case let value where value.contains("\""): return value
+        case let value where Int(value) != nil : return Int(value)
+        case let value where Bool(value) != nil : return Bool(value)
+        default: return nil
+        }
+    }
+    
+    //MARK: Parsing
     private static func parse(from elements : [String]) -> JSONParsedResult{
         var results: [JSONElementProtocol] = []
         elements.forEach { (element) in
             if !element.contains(":") {
-                results.append(element) // 단순 값의 나열에 해당하는 요소
+                if let value = extractValue(from: element) {
+                    results.append(value) // 단순 값의 나열에 해당하는 요소
+                }
                 return
             }
             let rawPair = element.split(separator: ":").map {String($0)}
-            let pair: [String:String] = [rawPair[0]:rawPair[1]]
-            results.append(pair)
+            if let value = extractValue(from: rawPair[1]) {
+                let pair = [rawPair[0]:value]
+                results.append(pair)
+            }
         }
         return JSONParsedResult(results: results)
     }
