@@ -66,13 +66,13 @@ struct Analysis {
         // jsonData를 아래서 remove 할 수 없어서 아래와 같이 변수에 넣었습니다.
         var data = jsonData
         
-        if data.hasPrefix("["){
+        if data.isArray(){
             // 배열데이터
             data.removeFirst()
             data.removeLast()
             
             let jsonArray = data.trimmingCharacters(in: .whitespacesAndNewlines)
-            if jsonArray.hasPrefix("{") {
+            if jsonArray.isObject(){
                 let object = analysisJsonObject(to: data)
                 return object
             }else{

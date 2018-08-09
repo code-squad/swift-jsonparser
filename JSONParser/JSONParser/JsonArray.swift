@@ -17,7 +17,7 @@ struct JsonArray:JsonProtocol {
     
     public mutating func addArray(element:String) {
         // 객체 {} 의 경우에는 String 으로 저장합니다.
-        if element.hasPrefix("{") {
+        if element.isObject() {
             self.array.append(element)
         }else if element.isBool(){
             self.array.append(Bool(element)!)
@@ -36,7 +36,7 @@ struct JsonArray:JsonProtocol {
         var object = 0
         
         for element in self.array {
-            if let string = element as? String , string.hasPrefix("{") {
+            if let string = element as? String , string.isObject() {
                 object = object + 1
             }else if element is Bool {
                 bool = bool + 1

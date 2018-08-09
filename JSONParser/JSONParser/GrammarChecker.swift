@@ -102,4 +102,25 @@ extension String {
         }
         return false
     }
+    
+    // Array 검사 : [ 시작 or ] 끝 찾기
+    func isObject() -> Bool {
+        if let regex = try? NSRegularExpression(pattern: "[^{|}$]", options: []){
+            let string = self as NSString
+            let result = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
+            guard result else { return true }
+        }
+        return false
+    }
+    
+    // Object 검사 : { 시작 or } 끝 찾기
+    func isArray() -> Bool {
+        if let regex = try? NSRegularExpression(pattern: "[^[|]$]", options: []){
+            let string = self as NSString
+            let result = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
+            guard result else { return true }
+        }
+        return false
+    }
+    
 }
