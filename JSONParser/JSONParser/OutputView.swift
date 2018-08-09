@@ -44,13 +44,18 @@ struct OutputView {
         var booleansCount: Int = 0
         
         objects.results.forEach {
-            guard let type = $0.typeOfValue else { return }
-            switch type {
-            case .string: stringsCount += 1
-            case .int: integersCount += 1
-            case .bool: booleansCount += 1
+            var value = $0
+            if let object = $0 as? JSONObjectProtocol {
+                value = object.value
+            }
+            switch value {
+            case let type where type is String: stringsCount += 1
+            case let type where type is Int: integersCount += 1
+            case let type where type is Bool: booleansCount += 1
+            default: return
             }
         }
+        
         return (stringsCount, integersCount, booleansCount)
     }
     
