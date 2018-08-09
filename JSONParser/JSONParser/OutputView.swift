@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum JSONValueType: String {
+enum AvailableJSONType: String {
     case string = "문자열"
     case int = "숫자"
     case bool = "부울"
