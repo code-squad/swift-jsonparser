@@ -56,32 +56,32 @@ class UnitTestJSONParser: XCTestCase {
     
     func testCheckPattern_Fail1(){
         let input = "[{{,}}]"
-        let isFalse = GrammarChecker.checkPattern(to: input)
+        let isFalse = GrammarChecker.checkException(to: input)
         XCTAssertFalse(isFalse)
     }
     
     func testCheckPattern_Fail2(){
         let input = "{[[,]]}"
-        let isFalse = GrammarChecker.checkPattern(to: input)
+        let isFalse = GrammarChecker.checkException(to: input)
         XCTAssertFalse(isFalse)
     }
     
     func testCheckPattern_Fail3(){
         let input = "{][[[]]}"
-        let isFalse = GrammarChecker.checkPattern(to: input)
+        let isFalse = GrammarChecker.checkException(to: input)
         XCTAssertFalse(isFalse)
     }
     
     func testCheckPattern_Fail4(){
         let input = "[}{]"
-        let isFalse = GrammarChecker.checkPattern(to: input)
+        let isFalse = GrammarChecker.checkException(to: input)
         XCTAssertFalse(isFalse)
     }
     
-    func testCheckPattern_Pass1(){
+    func testCheckPattern_Fail5(){
         let input = "{[],[]}"
-        let isTrue = GrammarChecker.checkPattern(to: input)
-        XCTAssertTrue(isTrue)
+        let isFalse = GrammarChecker.checkException(to: input)
+        XCTAssertFalse(isFalse)
     }
 
 }
