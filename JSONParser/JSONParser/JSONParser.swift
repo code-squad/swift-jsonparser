@@ -26,12 +26,7 @@ extension String: JSONElementProtocol {
 extension Dictionary: JSONElementProtocol where Value == String, Key == String {
     var typeOfValue: JSONValueType? {
         guard let value = self.values.first else { return nil }
-        switch value {
-        case let value where value.contains("\""): return .string
-        case let value where Int(value) != nil: return .int
-        case let value where Bool(value) != nil: return .bool
-        default: return nil
-        }
+        return value.typeOfValue
     }
 }
 
