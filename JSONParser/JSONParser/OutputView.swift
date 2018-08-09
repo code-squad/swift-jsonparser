@@ -45,8 +45,8 @@ struct OutputView {
         
         objects.results.forEach {
             var value = $0
-            if let object = $0 as? JSONObjectProtocol {
-                value = object.value
+            if let object = $0 as? [String:JSONElementProtocol] {
+                value = object.values.first!
             }
             switch value {
             case let type where type is String: stringsCount += 1
