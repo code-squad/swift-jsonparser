@@ -19,7 +19,7 @@ struct JsonArray:JsonProtocol {
         // 객체 {} 의 경우에는 String 으로 저장합니다.
         if element.hasPrefix("{") {
             self.array.append(element)
-        }else if element.contains("true") || element.contains("false"){
+        }else if element.isBool(){
             self.array.append(Bool(element)!)
         }else if element.hasNumber() {
             print("element : \(element)")

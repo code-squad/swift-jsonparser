@@ -92,4 +92,14 @@ extension String {
         }
         return false
     }
+    
+    // Bool 검사 : 맞으면 return true OR 아니면 return false
+    func isBool() -> Bool {
+        if let regex = try? NSRegularExpression(pattern: "^true|false*$", options: []){
+            let string = self as NSString
+            let result = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
+            guard result else { return true }
+        }
+        return false
+    }
 }

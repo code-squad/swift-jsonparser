@@ -16,7 +16,7 @@ struct JsonObject:JsonProtocol {
     }
     
     public mutating func addObject(key:String, value:String) {
-        if value.contains("true") || value.contains("false"){
+        if value.isBool(){
             self.object.updateValue(Bool(value)!, forKey: key)
         }else if value.hasNumber(){
             self.object.updateValue(Int(value)!, forKey: key)
