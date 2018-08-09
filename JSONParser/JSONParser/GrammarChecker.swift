@@ -81,42 +81,42 @@ extension String {
     
     // 숫자 검사 : 있으면 return true OR 없으면 return false
     func isNumber() -> Bool {
+        var result = false
         if let regex = try? NSRegularExpression(pattern: "^[0-9]*$", options: []){
             let string = self as NSString
-            let result = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
-            guard result else { return true }
+            result = !regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
         }
-        return false
+        return result
     }
     
     // Bool 검사 : 맞으면 return true OR 아니면 return false
     func isBool() -> Bool {
+        var result = false
         if let regex = try? NSRegularExpression(pattern: "^true|false*$", options: []){
             let string = self as NSString
-            let result = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
-            guard result else { return true }
+            result = !regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
         }
-        return false
+        return result
     }
     
     // Object 검사 : { 시작 or } 끝 찾기
     func isObject() -> Bool {
+        var result = false
         if let regex = try? NSRegularExpression(pattern: "\\{.*?\\}", options: []){
             let string = self as NSString
-            let result = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
-            guard result else { return true }
+            result = !regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
         }
-        return false
+        return result
     }
     
     // Array 검사 : [ 시작 or ] 끝 찾기
     func isArray() -> Bool {
+        var result = false
         if let regex = try? NSRegularExpression(pattern: "\\[.*?\\]", options: []){
             let string = self as NSString
-            let result = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
-            guard result else { return true }
+            result = !regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
         }
-        return false
+        return result
     }
     
     // [] 배열 안에 ":" 형식 검사 : 있으면 return true OR 없으면 return false
@@ -124,30 +124,33 @@ extension String {
         self.removeFirst()
         self.removeLast()
         
+        var result = false
+        
         let elements = self.components(separatedBy: ",")
         for element in elements {
             if let regex = try? NSRegularExpression(pattern: "[:]", options: []){
                 let string = element as NSString
-                let result = regex.matches(in: element, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
-                guard result else { return true }
+                result = !regex.matches(in: element, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
             }
         }
-        return false
+        return result
     }
     
     // {} 객체 안에 [] or {} 형식 검사 : 있으면 return true OR 없으면 reutrn false
     mutating func hasArrayInObject() -> Bool {
         self.removeFirst()
         self.removeLast()
+        
+        var result = false
+        
         let elements = self.components(separatedBy: ",")
         for element in elements {
             if let regex = try? NSRegularExpression(pattern: "(\\[|\\])", options: []){
                 let string = element as NSString
-                let result = regex.matches(in: element, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
-                guard result else { return true }
+                result = !regex.matches(in: element, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
             }
         }
-        return false
+        return result
     }
     
     /*
