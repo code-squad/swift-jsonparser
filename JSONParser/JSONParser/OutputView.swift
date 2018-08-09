@@ -31,9 +31,9 @@ struct OutputView {
     
     private static func displayValues(_ objects: JSONParser.JSONParsedResult) -> String {
         let typeCountingResult = countingType(of: objects)
-        let displayableCountOfStrings = displayValue(typeCountingResult.stringsCount, type: JSONValueType.string) ?? ""
-        let displayableCountOfIntegers = displayValue(typeCountingResult.integersCount, type: JSONValueType.int) ?? ""
-        let displayableCountOfBooleans = displayValue(typeCountingResult.booleansCount, type: JSONValueType.bool) ?? ""
+        let displayableCountOfStrings = displayValue(typeCountingResult.stringsCount, type: AvailableJSONType.string) ?? ""
+        let displayableCountOfIntegers = displayValue(typeCountingResult.integersCount, type: AvailableJSONType.int) ?? ""
+        let displayableCountOfBooleans = displayValue(typeCountingResult.booleansCount, type: AvailableJSONType.bool) ?? ""
         
         return displayableCountOfStrings + displayableCountOfIntegers + displayableCountOfBooleans
     }
@@ -44,15 +44,10 @@ struct OutputView {
         var booleansCount: Int = 0
         
         objects.results.forEach {
-            var value = $0
-            if let object = $0 as? [String:JSONElementProtocol] {
-                value = object.values.first!
-            }
-            switch value {
-            case let type where type is String: stringsCount += 1
-            case let type where type is Int: integersCount += 1
-            case let type where type is Bool: booleansCount += 1
-            default: return
+            switch $0.value {
+            case .string: stringsCount += 1
+            case .int: integersCount += 1
+            case .bool: booleansCount += 1
             }
         }
         

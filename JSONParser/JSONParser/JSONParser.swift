@@ -8,12 +8,40 @@
 
 import Foundation
 
-protocol JSONElementProtocol {}
+protocol JSONElementProtocol {
+    var value: AvailableJSONType {get}
+}
 
-extension String: JSONElementProtocol {}
-extension Int: JSONElementProtocol {}
-extension Bool: JSONElementProtocol {}
-extension Dictionary: JSONElementProtocol where Key == String, Value == JSONElementProtocol {}
+extension String {
+    var actualValue: JSONElementProtocol? {
+        switch self {
+        case let value where value.contains("\""): return value
+        case let value where Int(value) != nil : return Int(value)
+        case let value where Bool(value) != nil : return Bool(value)
+        default: return nil
+        }
+    }
+}
+extension String: JSONElementProtocol {
+    var value: AvailableJSONType {
+        return .string
+    }
+}
+extension Int: JSONElementProtocol {
+    var value: AvailableJSONType {
+        return .int
+    }
+}
+extension Bool: JSONElementProtocol {
+    var value: AvailableJSONType {
+        return .bool
+    }
+}
+extension Dictionary: JSONElementProtocol where Key == String, Value == JSONElementProtocol {
+    var value: AvailableJSONType {
+        return self.values.first!.value
+    }
+}
 
 struct JSONParser {
     // JSON Parsed Result
@@ -63,28 +91,18 @@ struct JSONParser {
         return target.split(separator: ",").map {String($0)}
     }
     
-    //MARK: 값 추출
-    private static func extractValue(from value: String) -> JSONElementProtocol? {
-        switch value {
-        case let value where value.contains("\""): return value
-        case let value where Int(value) != nil : return Int(value)
-        case let value where Bool(value) != nil : return Bool(value)
-        default: return nil
-        }
-    }
-    
     //MARK: Parsing
     private static func parse(from elements : [String]) -> JSONParsedResult{
         var results: [JSONElementProtocol] = []
         elements.forEach { (element) in
             if !element.contains(":") {
-                if let value = extractValue(from: element) {
+                if let value = element.actualValue {
                     results.append(value) // 단순 값의 나열에 해당하는 요소
                 }
                 return
             }
             let rawPair = element.split(separator: ":").map {String($0)}
-            if let value = extractValue(from: rawPair[1]) {
+            if let value = rawPair[1].actualValue {
                 let pair = [rawPair[0]:value]
                 results.append(pair)
             }
