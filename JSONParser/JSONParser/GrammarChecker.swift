@@ -9,8 +9,40 @@
 import Foundation
 
 struct GrammarChecker {
+    
+    public static func checkException(to inputValue:String) -> Bool {
+        
+        var input = inputValue
+        
+        // 배열 형식 검사
+        guard input.unsupportedArrayTypes() else {
+            print("지원하지 않는 배열 형식을 포함하고 있습니다.")
+            return false
+        }
+        
+        // 객체 형식 검사
+        guard input.unsupportedObjectTypes() else {
+            print("지원하지 않는 객체 형식을 포함하고 있습니다.")
+            return false
+        }
+        
+        // {} or [] 쌍 확인
+        guard GrammarChecker.checkPair(to: input) else {
+            print("{} or [] 개수가 일치하지 않습니다. 다시 입력하세요.")
+            return false
+        }
+        
+        // 패턴 확인
+        guard GrammarChecker.checkPattern(to: input) else {
+            print("패턴이 일치하지 않습니다. 다시 입력하세요.")
+            return false
+        }
+        
+        return true
+    }
+    
     // [] or {} 쌍 검사
-    public static func checkPair(to jsonData:String) -> Bool {
+    private static func checkPair(to jsonData:String) -> Bool {
         let countPrefix1 = jsonData.contains("{")
         let countPrefix2 = jsonData.contains("[")
         let countSuffix1 = jsonData.contains("}")
@@ -20,7 +52,7 @@ struct GrammarChecker {
     }
     
     // [] or {} 패턴 검사
-    public static func checkPattern(to jsonData:String) -> Bool {
+    private static func checkPattern(to jsonData:String) -> Bool {
         var data = jsonData
         
         data.removeFirst()
