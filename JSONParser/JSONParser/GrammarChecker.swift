@@ -76,6 +76,7 @@ extension String {
      대괄호 \\[ or \\]
      따옴표 \"
      모든문자(특수문자,공백포함) .*?
+     패턴 중간 공백 제외하고 체크 [?!\\s]
      */
     
     // 숫자 검사 : 있으면 return true OR 없으면 return false
@@ -100,7 +101,7 @@ extension String {
     
     // Object 검사 : { 시작 or } 끝 찾기
     func isObject() -> Bool {
-        if let regex = try? NSRegularExpression(pattern: "[^{|}$]", options: []){
+        if let regex = try? NSRegularExpression(pattern: "\\{.*?\\}", options: []){
             let string = self as NSString
             let result = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
             guard result else { return true }
@@ -110,7 +111,7 @@ extension String {
     
     // Array 검사 : [ 시작 or ] 끝 찾기
     func isArray() -> Bool {
-        if let regex = try? NSRegularExpression(pattern: "[^[|]$]", options: []){
+        if let regex = try? NSRegularExpression(pattern: "\\[.*?\\]", options: []){
             let string = self as NSString
             let result = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
             guard result else { return true }
@@ -138,10 +139,8 @@ extension String {
     mutating func hasArrayInObject() -> Bool {
         self.removeFirst()
         self.removeLast()
-        print(self)
         let elements = self.components(separatedBy: ",")
         for element in elements {
-            print("element : \(element)")
             if let regex = try? NSRegularExpression(pattern: "(\\[|\\])", options: []){
                 let string = element as NSString
                 let result = regex.matches(in: element, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
@@ -154,15 +153,15 @@ extension String {
     /*
      [] 배열안에 형식 검사 : 있으면 return true OR 없으면 reutrn false
      [ "모든문자(특수문자,공백포함)" : "모든문자(특수문자,공백포함)" ]
-     [ "name" : "KIM JUNG" ]
-     
+     Pass : [ { }, { } ]
+     Fail : [ "" : "" ]
      ** 띄어쓰기 또한 .*? 를 이용하여 패턴검사하였습니다.
      
      정의한 형식이 맞다면 return false OR 아니라면 return false
      */
     mutating func unsupportedArrayTypes() -> Bool {
         var result = false
-        if let regex = try? NSRegularExpression(pattern: "\\[.*?\".*?\".*?:.*?\".*?\".*?\\]", options: .caseInsensitive){
+        if let regex = try? NSRegularExpression(pattern: "\\[[?!\\s]\".*?\".*?:.*?\".*?\".*?\\]", options: .caseInsensitive){
             let string = self as NSString
             result = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
         }

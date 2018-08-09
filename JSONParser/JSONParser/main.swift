@@ -17,13 +17,13 @@ func analyzeJson() -> Bool {
 
     // 배열 형식 검사
     guard input.unsupportedArrayTypes() else {
-        print("지원하지 않는 형식을 포함하고 있습니다.")
+        print("지원하지 않는 배열 형식을 포함하고 있습니다.")
         return true
     }
     
     // 객체 형식 검사
     guard input.unsupportedObjectTypes() else {
-        print("지원하지 않는 형식을 포함하고 있습니다.")
+        print("지원하지 않는 객체 형식을 포함하고 있습니다.")
         return true
     }
     
