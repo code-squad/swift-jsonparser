@@ -12,44 +12,44 @@ class UnitTestJSONParser: XCTestCase {
     
     func testCheckArray_Pass1(){
         var input = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"
-        let isTrue = input.unsupportedArrayTypes()
+        let isTrue = input.supportedArrayTypes()
         XCTAssertTrue(isTrue)
     }
     
     func testCheckArray_Pass2(){
         var input = "[ 10, 21, 4, 314, 99, 0, 72 ]"
-        let isTrue = input.unsupportedArrayTypes()
+        let isTrue = input.supportedArrayTypes()
         XCTAssertTrue(isTrue)
     }
     
     func testCheckArray_Pass3(){
         var input = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let isTrue = input.unsupportedArrayTypes()
+        let isTrue = input.supportedArrayTypes()
         XCTAssertTrue(isTrue)
     }
     
     func testCheckArray_Pass4(){
         var input = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true },{ \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"
-        let isTrue = input.unsupportedArrayTypes()
+        let isTrue = input.supportedArrayTypes()
         XCTAssertTrue(isTrue)
     }
     
     func testCheckArray_Fail1(){
         var input = "[ \"name\" : \"KIM JUNG\" ]"
-        let isFail = input.unsupportedArrayTypes()
+        let isFail = input.supportedArrayTypes()
         print(isFail)
         XCTAssertFalse(isFail)
     }
     
     func testCheckObject_Pass1(){
         var input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        let isTrue = input.unsupportedArrayTypes()
+        let isTrue = input.supportedObjectTypes()
         XCTAssertTrue(isTrue)
     }
     
     func testCheckObject_Pass2(){
         var input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        let isTrue = input.unsupportedArrayTypes()
+        let isTrue = input.supportedObjectTypes()
         XCTAssertTrue(isTrue)
     }
 
