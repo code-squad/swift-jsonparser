@@ -161,40 +161,6 @@ extension String {
         return result
     }
     
-    // [] 배열 안에 ":" 형식 검사 : 있으면 return true OR 없으면 return false
-    mutating func hasObjectInArray() -> Bool {
-        self.removeFirst()
-        self.removeLast()
-        
-        var result = false
-        
-        let elements = self.components(separatedBy: ",")
-        for element in elements {
-            if let regex = try? NSRegularExpression(pattern: "[:]", options: []){
-                let string = element as NSString
-                result = !regex.matches(in: element, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
-            }
-        }
-        return result
-    }
-    
-    // {} 객체 안에 [] or {} 형식 검사 : 있으면 return true OR 없으면 reutrn false
-    mutating func hasArrayInObject() -> Bool {
-        self.removeFirst()
-        self.removeLast()
-        
-        var result = false
-        
-        let elements = self.components(separatedBy: ",")
-        for element in elements {
-            if let regex = try? NSRegularExpression(pattern: "(\\[|\\])", options: []){
-                let string = element as NSString
-                result = !regex.matches(in: element, options: [], range: NSRange(location: 0, length: string.length)).isEmpty
-            }
-        }
-        return result
-    }
-    
     func supportedArrayTypes() -> Bool {
         /*
          1. 공백제거

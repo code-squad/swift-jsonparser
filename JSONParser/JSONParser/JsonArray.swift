@@ -22,7 +22,6 @@ struct JsonArray:JsonProtocol {
         }else if element.isBool(){
             self.array.append(Bool(element)!)
         }else if element.isNumber() {
-            print("element : \(element)")
             self.array.append(Int(element)!)
         }else {
             self.array.append(element)
