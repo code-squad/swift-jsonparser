@@ -30,83 +30,12 @@ struct GrammarChecker {
             }
         }
         
-        // {} or [] 쌍 확인
-        guard GrammarChecker.checkPair(to: input) else {
-            print("{} or [] 개수가 일치하지 않습니다. 다시 입력하세요.")
-            return false
-        }
-        
-        // 패턴 확인
-        guard GrammarChecker.checkPattern(to: input) else {
-            print("패턴이 일치하지 않습니다. 다시 입력하세요.")
-            return false
-        }
-        
         return true
     }
     
-    // [] or {} 쌍 검사
-    private static func checkPair(to jsonData:String) -> Bool {
-        let countPrefix1 = jsonData.contains("{")
-        let countPrefix2 = jsonData.contains("[")
-        let countSuffix1 = jsonData.contains("}")
-        let countSuffix2 = jsonData.contains("]")
-        guard countPrefix1 == countSuffix1 && countPrefix2 == countSuffix2 else { return false }
-        return true
-    }
-    
-    // [] or {} 패턴 검사
-    private static func checkPattern(to jsonData:String) -> Bool {
-        var data = jsonData
-        
-        data.removeFirst()
-        data.removeLast()
-        
-        var before = ""
-        /*
-         [{{,}}]
-         {[[,]]}
-         {][[[]]}
-         [}{]
-         {[],[]}
-         */
-        for d in data {
-            // 3 : } or ] 이게 처음부터 나오면 형태 잘못된 것 입니다.
-            if before.isEmpty && (d == "}" || d == "]"){
-                return false
-            }
-            // 1 : { or [ 이면 before에 값을 저장함
-            if d == "{" || d == "[" {
-                before = String(d)
-            }
-            // 2 : ] or } 이면 before에 동일한 형태가 있는지 확인
-            if d == "}" || d == "]" {
-                if d == "}" && before == "{" {
-                    // Pass : before 초기화
-                    before = ""
-                }else if d == "]" && before == "[" {
-                    // Pass : before 초기화
-                    before = ""
-                }else {
-                    return false
-                }
-            }
-        }
-        return true
-    }
 }
 
 extension String {
-    func contains(_ find: String) -> Int{
-        var count = 0
-        for char in self {
-            if find.contains(char) {
-                count = count + 1
-            }
-        }
-        return count
-    }
-    
     /*
      TIP
      대괄호 \\[ or \\]
@@ -117,6 +46,7 @@ extension String {
      문자 or 숫자 or 부울 검사 : (\".*?\"|true|false|[0-9])
      띄어쓰기 \\s
      띄어쓰기가 있거나 없거나 [\\s]?
+     숫자 (\\d)+
      */
     
     // 숫자 검사 : 있으면 return true OR 없으면 return false
@@ -177,13 +107,15 @@ extension String {
         
         var patternCount = 0
         
-        if let regex = try? NSRegularExpression(pattern: "(\\{.*?\\}|(\\d)+|\".*?\"|true|false)", options: .caseInsensitive){
+        let objectRegex = "[\\s]?\\{[\\s]?\".*?\"[\\s]?:[\\s]?(\".*?\"|[0-9]|true|false)[\\s]?\\}[\\s]?"
+        
+        if let regex = try? NSRegularExpression(pattern: "(\(objectRegex)|(\\d)+|\".*?\"|true|false)", options: .caseInsensitive){
             let string = self as NSString
             
             let regexMatches = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).map {
                 string.substring(with: $0.range)
             }
-            
+            print("regexMatches : \(regexMatches.count)")
             if regexMatches.count > 1 {
                 // 4-1
                 patternCount = regexMatches.count
