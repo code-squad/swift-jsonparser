@@ -9,28 +9,21 @@
 import Foundation
 
 struct GrammarChecker {
+    public static func checkException(to inputValue:String) throws {
     
-    public static func checkException(to inputValue:String) -> Bool {
-        
-        let input = inputValue
-        
         // 배열 형식 검사
-        if input.isArray() {
-            guard input.supportedArrayTypes() else {
-                print("지원하지 않는 배열 형식을 포함하고 있습니다.")
-                return false
+        if inputValue.isArray() {
+            guard inputValue.supportedArrayTypes() else {
+                throw JsonError.unSupportedArrayPattern
             }
         }
         
         // 객체 형식 검사
-        if input.isObject() {
-            guard input.supportedObjectTypes() else {
-                print("지원하지 않는 객체 형식을 포함하고 있습니다.")
-                return false
+        if inputValue.isObject() {
+            guard inputValue.supportedObjectTypes() else {
+                throw JsonError.unSupportedObjectPattern
             }
         }
-        
-        return true
     }
     
 }
