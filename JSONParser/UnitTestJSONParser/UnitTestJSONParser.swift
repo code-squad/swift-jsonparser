@@ -10,49 +10,66 @@ import XCTest
 
 class UnitTestJSONParser: XCTestCase {
     
-    func testCheckArray_Pass1(){
+    func testArray_Pass_객체데이터2개한개(){
+        let input = "[{\"name\":\"oing\"},{\"name\":\"oing2\"}]"
+        let isTrue = GrammarChecker.checkException(to: input)
+        XCTAssertTrue(isTrue)
+    }
+    
+    func testArray_Pass_객체데이터2개여러개(){
         var input = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"
-        let isTrue = input.supportedArrayTypes()
+        let isTrue = GrammarChecker.checkException(to: input)
         XCTAssertTrue(isTrue)
     }
     
-    func testCheckArray_Pass2(){
+    func testArray_Pass_숫자(){
         var input = "[ 10, 21, 4, 314, 99, 0, 72 ]"
-        let isTrue = input.supportedArrayTypes()
+        let isTrue = GrammarChecker.checkException(to: input)
         XCTAssertTrue(isTrue)
     }
     
-    func testCheckArray_Pass3(){
+    func testArray_Pass_문자숫자부울(){
         var input = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let isTrue = input.supportedArrayTypes()
+        let isTrue = GrammarChecker.checkException(to: input)
         XCTAssertTrue(isTrue)
     }
     
-    func testCheckArray_Pass4(){
-        var input = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true },{ \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"
-        let isTrue = input.supportedArrayTypes()
-        XCTAssertTrue(isTrue)
-    }
-    
-    func testCheckArray_Fail1(){
+    func testArray_Fail_객체형식이상할때(){
         var input = "[ \"name\" : \"KIM JUNG\" ]"
-        let isFail = input.supportedArrayTypes()
+        let isFail = GrammarChecker.checkException(to: input)
         print(isFail)
         XCTAssertFalse(isFail)
     }
     
-    func testCheckObject_Pass1(){
+    func testObject_Pass_객체데이터3개(){
         var input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        let isTrue = input.supportedObjectTypes()
+        let isTrue = GrammarChecker.checkException(to: input)
         XCTAssertTrue(isTrue)
     }
     
-    func testCheckObject_Pass2(){
-        var input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        let isTrue = input.supportedObjectTypes()
+    func testArray_Pass_배열데이터안에_대괄호짝이상해도_통과되는지(){
+        let input = "[{\"name\":\"[oingbong[]\"}]"
+        let isTrue = GrammarChecker.checkException(to: input)
         XCTAssertTrue(isTrue)
     }
-
+    
+    func testArray_Pass_배열데이터안에_중괄호짝이상해도_통과되는지(){
+        let input = "[{\"name\":\"[oingbong{{}}}}}}}}\"}]"
+        let isTrue = GrammarChecker.checkException(to: input)
+        XCTAssertTrue(isTrue)
+    }
+    
+    func testObject_Pass_객체데이터안에_대괄호짝이상해도_통과되는지(){
+        let input = "{\"name\":\"[oingbong[]\"}"
+        let isTrue = GrammarChecker.checkException(to: input)
+        XCTAssertTrue(isTrue)
+    }
+    
+    func testObject_Pass_객체데이터안에_중괄호짝이상해도_통과되는지(){
+        let input = "{\"name\":\"[oingbong{}}{{}}\"}"
+        let isTrue = GrammarChecker.checkException(to: input)
+        XCTAssertTrue(isTrue)
+    }
     
     func testCheckPattern_Fail1(){
         let input = "[{{,}}]"
