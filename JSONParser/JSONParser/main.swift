@@ -16,19 +16,7 @@ func analyzeJson() -> Bool {
     guard let input = InputView.isEmpty(to: inputValue) else { return true }
 
     // 예외처리
-    do {
-        try GrammarChecker.checkException(to: input)
-    } catch JsonError.unSupportedArrayPattern {
-        print("지원하지 않는 배열 형식을 포함하고 있습니다.")
-        return true
-    } catch JsonError.unSupportedObjectPattern {
-        print("지원하지 않는 객체 형식을 포함하고 있습니다.")
-        return true
-    } catch {
-        // 해당 부분은 Default 형식으로 추가해주도록 체크되고 있습니다.
-        print("판단되지 않은 에러발생")
-        return true
-    }
+    guard GrammarChecker.checkException(to: input) else { return true }
     
     // 분석하기
     let json = Analysis.analysisJson(to: input)

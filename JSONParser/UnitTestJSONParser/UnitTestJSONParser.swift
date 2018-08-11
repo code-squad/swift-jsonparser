@@ -17,32 +17,32 @@ class UnitTestJSONParser: XCTestCase {
     }
     
     func testArray_Pass_객체데이터2개여러개(){
-        var input = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"
+        let input = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"
         let isTrue = GrammarChecker.checkException(to: input)
         XCTAssertTrue(isTrue)
     }
     
     func testArray_Pass_숫자(){
-        var input = "[ 10, 21, 4, 314, 99, 0, 72 ]"
+        let input = "[ 10, 21, 4, 314, 99, 0, 72 ]"
         let isTrue = GrammarChecker.checkException(to: input)
         XCTAssertTrue(isTrue)
     }
     
     func testArray_Pass_문자숫자부울(){
-        var input = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
+        let input = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
         let isTrue = GrammarChecker.checkException(to: input)
         XCTAssertTrue(isTrue)
     }
     
     func testArray_Fail_객체형식이상할때(){
-        var input = "[ \"name\" : \"KIM JUNG\" ]"
+        let input = "[ \"name\" : \"KIM JUNG\" ]"
         let isFail = GrammarChecker.checkException(to: input)
         print(isFail)
         XCTAssertFalse(isFail)
     }
     
     func testObject_Pass_객체데이터3개(){
-        var input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
+        let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
         let isTrue = GrammarChecker.checkException(to: input)
         XCTAssertTrue(isTrue)
     }
