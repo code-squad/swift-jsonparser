@@ -115,7 +115,7 @@ extension String {
             let regexMatches = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).map {
                 string.substring(with: $0.range)
             }
-            print("regexMatches : \(regexMatches.count)")
+            
             if regexMatches.count > 1 {
                 // 4-1
                 patternCount = regexMatches.count
