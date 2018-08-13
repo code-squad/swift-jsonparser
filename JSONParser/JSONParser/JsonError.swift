@@ -12,12 +12,14 @@ enum JsonError : Error {
     case unSupportedArrayPattern
     case unSupportedObjectPattern
     
-    func description() -> String {
+    func isError() -> Bool {
         switch self {
         case .unSupportedArrayPattern:
-            return "지원하지 않는 배열 형식을 포함하고 있습니다."
+            print("지원하지 않는 배열 형식을 포함하고 있습니다.")
+            return true
         case .unSupportedObjectPattern:
-            return "지원하지 않는 객체 형식을 포함하고 있습니다."
+            print("지원하지 않는 객체 형식을 포함하고 있습니다.")
+            return true
         }
     }
 }

@@ -19,11 +19,9 @@ func analyzeJson() -> Bool {
     do {
         try GrammarChecker.isValidate(to: input)
     } catch JsonError.unSupportedArrayPattern {
-        print(JsonError.unSupportedArrayPattern.description())
-        return true
+        return JsonError.unSupportedArrayPattern.isError()
     } catch JsonError.unSupportedObjectPattern {
-        print(JsonError.unSupportedObjectPattern.description())
-        return true
+        return JsonError.unSupportedObjectPattern.isError()
     } catch {
         // 해당 부분은 Default 형식으로 추가해주도록 체크되고 있습니다.
         print("판단되지 않은 에러발생")
