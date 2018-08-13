@@ -87,16 +87,14 @@ extension String {
     func supportedArrayTypes() -> Bool {
         /*
          1. 공백제거
-         2. [] 제거
+
          3. 첫번째 정규식에서 객체 | 문자 | 숫자 | 부울 개수 구함
          4-1. (1개 초과시) 두번째 정규식에서 3번의 개수 -1 만큼 반복되는 정규식과 ,(콤마)를 같이 세트로 묶고 마지막에 하나 더 정규식을 붙여줘서 형식이 맞으면 true 아니면 false
          4-2. (1개) 바로 정규식 표현 맞는 것으로 확인
          4-3. (0개) 값이 없으므로 false
          5. 기존의 문자열이랑 비교하여 일치하면 true 일치안하면 false
          */
-        var array = self.trimmingCharacters(in: .whitespaces) // 1
-        array.removeFirst() // 2
-        array.removeLast()
+        let array = self.trimmingCharacters(in: .whitespaces) // 1
         
         var patternCount = 0
         
@@ -129,13 +127,12 @@ extension String {
                 string.substring(with: $0.range)
             }
             
-            for regexMatch in regexMatches {
-                // 5
-                if array == regexMatch {
-                    return true
-                }else {
-                    return false
-                }
+            // 5
+            let regexMatch = "[" + regexMatches[0] + "]"
+            if array == regexMatch {
+                return true
+            }else {
+                return false
             }
         }
         
@@ -145,7 +142,7 @@ extension String {
     func supportedObjectTypes() -> Bool {
         /*
          1. 공백제거
-         2. {} 제거
+
          3. 첫번째 정규식에서 "string" : "value" 형식 개수 구함
          4-1. (1개 초과시) 두번째 정규식에서 3번의 개수 -1 만큼 반복되는 정규식과 ,(콤마)를 같이 세트로 묶고 마지막에 하나 더 정규식을 붙여줘서 형식이 맞으면 true 아니면 false
          4-2. (1개) 바로 정규식 표현 맞는 것으로 확인
@@ -153,9 +150,7 @@ extension String {
          5. 기존의 문자열이랑 비교하여 일치하면 true 일치안하면 false
          */
         
-        var object = self.trimmingCharacters(in: .whitespaces) // 1
-        object.removeFirst() // 2
-        object.removeLast()
+        let object = self.trimmingCharacters(in: .whitespaces) // 1
         
         var patternCount = 0
 
@@ -187,14 +182,13 @@ extension String {
             let regexMatches = regex.matches(in: object, options: [], range: NSRange(location: 0, length: string.length)).map {
                 string.substring(with: $0.range)
             }
-            
-            for regexMatch in regexMatches {
-                // 5
-                if object == regexMatch {
-                    return true
-                }else {
-                    return false
-                }
+
+            // 5
+            let regexMatch = "{" + regexMatches[0] + "}"
+            if object == regexMatch {
+                return true
+            }else {
+                return false
             }
         }
         
