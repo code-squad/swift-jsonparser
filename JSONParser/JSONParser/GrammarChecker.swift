@@ -10,26 +10,7 @@ import Foundation
 
 struct GrammarChecker {
     
-    public static func isValidate(to input:String) -> Bool {
-        do {
-            try checkForm(to: input)
-        } catch JsonError.unSupportedArrayPattern {
-            print("지원하지 않는 배열 형식을 포함하고 있습니다.")
-            return false
-        } catch JsonError.unSupportedObjectPattern {
-            print("지원하지 않는 객체 형식을 포함하고 있습니다.")
-            return false
-        } catch {
-            // 해당 부분은 Default 형식으로 추가해주도록 체크되고 있습니다.
-            print("판단되지 않은 에러발생")
-            return false
-        }
-        
-        return true
-    }
-    
-    public static func checkForm(to inputValue:String) throws {
-    
+    public static func isValidate(to inputValue:String) throws {
         // 배열 형식 검사
         if inputValue.isArray() {
             guard inputValue.supportedArrayTypes() else {
