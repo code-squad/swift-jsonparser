@@ -36,11 +36,11 @@ enum JSONRegex {
     }
 }
 
-enum JSONType {
+enum JSONValueType {
     case string(String)
     case int(Int)
     case bool(Bool)
-    case object([String:JSONType])
+    case object([String:JSONValueType])
 }
 
 struct Formatter {
@@ -51,30 +51,49 @@ struct Formatter {
     }
     
     // 형식이 올바르지 않다면 nil을 반환
-    func isValidTokens() -> [JSONType]?{
-        var validTokens: [JSONType] = []
+    func isValidTokens() -> JSONType?{
+        var validTokens: [JSONValueType] = []
         
         for token in tokens {
             if JSONRegex.string.isValid(target: token) {
-                validTokens.append(JSONType.string(token))
+                validTokens.append(JSONValueType.string(token))
             }else if JSONRegex.int.isValid(target: token) {
-                validTokens.append(JSONType.int(Int(token)!))
+                validTokens.append(JSONValueType.int(Int(token)!))
             }else if JSONRegex.bool.isValid(target: token) {
-                validTokens.append(JSONType.bool(Bool(token)!))
+                validTokens.append(JSONValueType.bool(Bool(token)!))
             }else if JSONRegex.object.isValid(target: token) {
                 let object = generateObject(from: token)
-                validTokens.append(JSONType.object(object))
+                validTokens.append(JSONValueType.object(object))
             }else{
                 return nil
             }
         }
         
-        return validTokens
+        return generateJSON(validTokens)
+    }
+    
+    private func generateJSON(_ values: [JSONValueType]) -> JSONType {
+        var objects = 0
+        var others = 0
+        values.forEach {
+            switch $0 {
+            case .object(_):
+                objects += 1
+            default:
+                others += 1
+            }
+        }
+        
+        if objects == 1 && others == 0 {
+            return JSONObject(values.first!)
+        }
+        
+        return JSONArray(values)
     }
     
     // *Object format이라는게 증명됨
-    private func generateObject(from target: String) -> [String:JSONType] {
-        var values: [String:JSONType] = [:]
+    private func generateObject(from target: String) -> [String:JSONValueType] {
+        var values: [String:JSONValueType] = [:]
         var value = ""
         var isString = false
         var isKey = false
@@ -92,7 +111,7 @@ struct Formatter {
                 if isString {
                     value += String(character)  // 문자열의 일부면 추가
                 }else {
-                    values[key] = generateJSONType(value)
+                    values[key] = generateJSONValueType(value)
                     value = ""                  // 초기화
                     key = ""                    // 초기화
                 }
@@ -107,7 +126,7 @@ struct Formatter {
                 if isString {
                     value += String(character)  // 문자열의 일부면 추가
                 }else {
-                    values[key] = generateJSONType(value)
+                    values[key] = generateJSONValueType(value)
                     value = ""                  // 값 초기화
                 }
             case Components.colon.value:
@@ -126,16 +145,16 @@ struct Formatter {
         return values
     }
     
-    private func generateJSONType(_ value: String) -> JSONType {
+    private func generateJSONValueType(_ value: String) -> JSONValueType {
         if let value = Int(value) {
-            return JSONType.int(value)
+            return JSONValueType.int(value)
         }
         
         if let value = Bool(value) {
-            return JSONType.bool(value)
+            return JSONValueType.bool(value)
         }
         
         // *Object format 이라는게 증명됨
-        return JSONType.string(value)
+        return JSONValueType.string(value)
     }
 }
