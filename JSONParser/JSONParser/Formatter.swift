@@ -37,14 +37,9 @@ enum JSONRegex {
 }
 
 struct Formatter {
-    private var tokens: [String]
-    
-    init(tokens: [String]) {
-        self.tokens = tokens
-    }
     
     // 형식이 올바르지 않다면 nil을 반환
-    func isValidTokens() -> JSONType?{
+    static func isValid(_ tokens: [String]) -> JSONType?{
         var validTokens: [JSONValueType] = []
         
         for token in tokens {
@@ -66,7 +61,7 @@ struct Formatter {
         return generateJSON(validTokens)
     }
     
-    private func generateJSON(_ values: [JSONValueType]) -> JSONType {
+    private static func generateJSON(_ values: [JSONValueType]) -> JSONType {
         var objects = 0
         var others = 0
         values.forEach {
@@ -86,7 +81,7 @@ struct Formatter {
     }
     
     // *Object format이라는게 증명됨
-    private func generateObject(from target: String) -> [String:JSONValueType] {
+    private static func generateObject(from target: String) -> [String:JSONValueType] {
         var values: [String:JSONValueType] = [:]
         var value = ""
         var isString = false
@@ -139,7 +134,7 @@ struct Formatter {
         return values
     }
     
-    private func generateJSONValueType(_ value: String) -> JSONValueType {
+    private static func generateJSONValueType(_ value: String) -> JSONValueType {
         if let value = Int(value) {
             return JSONValueType.int(value)
         }

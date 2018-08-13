@@ -41,14 +41,7 @@ enum Components {
 }
 
 struct Tokenizer {
-    
-    private var target: String
-    
-    init(target: String) {
-        self.target = target
-    }
-
-    func parse() -> [String] {
+    static func parse(_ target: String) -> [String] {
         var values:[String] = []
         var token = ""
         var isString = false
