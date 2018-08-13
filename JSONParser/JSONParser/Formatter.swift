@@ -17,11 +17,11 @@ enum JSONRegex {
     var pattern: String {
         switch self {
         case .string:
-            return "\".*\""
+            return "^\".*\"$"
         case .int:
             return "^[0-9]+$"
         case .bool:
-            return "(false|true)"
+            return "(^false|^true)"
         case .object:
             return "^\\{\\s*\".*\"\\s*:\\s*(true|false|[0-9]+|\".*\")\\s*(,\\s*\".*\"\\s*:\\s*(true|false|[0-9]+|\".*\")\\s*)*\\}$"
         }
@@ -48,15 +48,16 @@ struct Formatter {
         var validTokens: [JSONValueType] = []
         
         for token in tokens {
-            if JSONRegex.string.isValid(target: token) {
-                validTokens.append(JSONValueType.string(token))
+            
+            if JSONRegex.object.isValid(target: token) {
+                let object = generateObject(from: token)
+                validTokens.append(JSONValueType.object(object))
             }else if JSONRegex.int.isValid(target: token) {
                 validTokens.append(JSONValueType.int(Int(token)!))
             }else if JSONRegex.bool.isValid(target: token) {
                 validTokens.append(JSONValueType.bool(Bool(token)!))
-            }else if JSONRegex.object.isValid(target: token) {
-                let object = generateObject(from: token)
-                validTokens.append(JSONValueType.object(object))
+            }else if JSONRegex.string.isValid(target: token) {
+                validTokens.append(JSONValueType.string(token))
             }else{
                 return nil
             }
@@ -143,8 +144,8 @@ struct Formatter {
             return JSONValueType.int(value)
         }
         
-        if let value = Bool(value) {
-            return JSONValueType.bool(value)
+        if value == "false" || value == "true" {
+            return JSONValueType.bool(Bool(value)!)
         }
         
         // *Object format 이라는게 증명됨
