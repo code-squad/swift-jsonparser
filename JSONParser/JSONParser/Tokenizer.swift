@@ -8,21 +8,46 @@
 
 import Foundation
 
+enum Components {
+    case arrayOpener
+    case arrayCloser
+    case objectOpener
+    case objectCloser
+    case space
+    case doubleQuote
+    case comma
+    case colon
+    
+    var value: Character {
+        switch self {
+        case .arrayOpener:
+            return "["
+        case .arrayCloser:
+            return "]"
+        case .objectOpener:
+            return "{"
+        case .objectCloser:
+            return "}"
+        case .space:
+            return " "
+        case .doubleQuote:
+            return "\""
+        case .comma:
+            return ","
+        case .colon:
+            return ":"
+        }
+    }
+}
+
 struct Tokenizer {
-    private let arrayOpener: Character = "["
-    private let arrayCloser: Character = "]"
-    private let objectOpener: Character = "{"
-    private let objectCloser: Character = "}"
-    private let space: Character = " "
-    private let doubleQuote: Character = "\""
-    private let comma: Character = ","
     
     private var target: String
     
     init(target: String) {
         self.target = target
     }
-    
+
     func parse() -> [String] {
         var values:[String] = []
         var token = ""
@@ -31,23 +56,23 @@ struct Tokenizer {
         
         for particle in target {
             switch particle {
-            case arrayOpener:
+            case Components.arrayOpener.value:
                 if isString || isObject {
                     token += String(particle)
                 }
-            case arrayCloser, comma:
+            case Components.arrayCloser.value, Components.comma.value:
                 if isString || isObject {
                     token += String(particle)
                 }else {
                     values.append(token)
                     token = ""
                 }
-            case objectOpener:
+            case Components.objectOpener.value:
                 if !isString {
                     isObject = !isObject
                 }
                 token += String(particle)
-            case objectCloser:
+            case Components.objectCloser.value:
                 token += String(particle)
                 if isObject {
                     isObject = !isObject
@@ -56,10 +81,10 @@ struct Tokenizer {
                     values.append(token)
                     token = ""
                 }
-            case doubleQuote:
+            case Components.doubleQuote.value:
                 isString = !isString
                 token += String(particle)
-            case space:
+            case Components.space.value:
                 if isString || isObject {
                     token += String(particle)
                 }
