@@ -81,7 +81,7 @@ struct JSONObject: JSONType {
             }
         default: break
         }
-    
+        // 단일 객체이므로 객체의 값은 0으로 반환
         return (string, int, bool, 0)
     }
     

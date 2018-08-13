@@ -43,7 +43,7 @@ struct Formatter {
         var validTokens: [JSONValueType] = []
         
         for token in tokens {
-            
+            // 타입을 검사 후 해당 타입의 형식에 일치한다면 associated value에 포함시켜 enum 객체 생성
             if JSONRegex.object.isValid(target: token) {
                 let object = generateObject(from: token)
                 validTokens.append(JSONValueType.object(object))
@@ -54,7 +54,7 @@ struct Formatter {
             }else if JSONRegex.string.isValid(target: token) {
                 validTokens.append(JSONValueType.string(token))
             }else{
-                return nil
+                return nil // 토큰들 중 하나라도 형식에 맞지 않는것이 있다면 바로 nil을 반환하여 올바르지 않은 형식이 포함되어 있음을 알림
             }
         }
         
@@ -62,6 +62,7 @@ struct Formatter {
     }
     
     private static func generateJSON(_ values: [JSONValueType]) -> JSONType {
+        // 분류된 값들로 Array인지 단일 Object인지 판단
         var objects = 0
         var others = 0
         values.forEach {
@@ -72,7 +73,7 @@ struct Formatter {
                 others += 1
             }
         }
-        
+        // 객체가 단 하나만 존재한다면 이는 단일 객체로 판단
         if objects == 1 && others == 0 {
             return JSONObject(values.first!)
         }

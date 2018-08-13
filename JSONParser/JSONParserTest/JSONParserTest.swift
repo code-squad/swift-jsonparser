@@ -19,7 +19,7 @@ class JSONParserFormatTest: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
+    /*
     func testSingleObject(){
         let object = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
         XCTAssertTrue(JSONString(object).isValid, "This is not a valid form")
@@ -69,4 +69,5 @@ class JSONParserFormatTest: XCTestCase {
         let pairsInArray = "[ \"name\" : \"KIM JUNG\" ]"
         XCTAssertFalse(JSONString(pairsInArray).isValid, "This is not a pairInArray form")
     }
+     */
 }
