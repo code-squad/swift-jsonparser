@@ -36,13 +36,6 @@ enum JSONRegex {
     }
 }
 
-enum JSONValueType {
-    case string(String)
-    case int(Int)
-    case bool(Bool)
-    case object([String:JSONValueType])
-}
-
 struct Formatter {
     private var tokens: [String]
     

@@ -13,6 +13,15 @@ protocol JSONType {
     var result: (string:Int, int:Int, bool:Int, object: Int) { get }
 }
 
+
+enum JSONValueType {
+    case string(String)
+    case int(Int)
+    case bool(Bool)
+    case object([String:JSONValueType])
+}
+
+
 struct JSONArray: JSONType {
     var prefix: String {
         return "배열안에는"
