@@ -72,9 +72,9 @@ struct JSONObject: JSONType {
                 switch type {
                 case .string(_):
                     string += 1
-                case .bool(_):
-                    int += 1
                 case .int(_):
+                    int += 1
+                case .bool(_):
                     bool += 1
                 default: return
                 }
