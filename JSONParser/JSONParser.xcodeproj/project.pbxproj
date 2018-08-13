@@ -12,6 +12,7 @@
 		3E4339A7211F24CB0090041D /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4339A6211F24CB0090041D /* Tokenizer.swift */; };
 		3E8724DA2117DBC500708426 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8724D92117DBC500708426 /* OutputView.swift */; };
 		3E8C7329211BD97400E68533 /* JSONParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8C7328211BD97400E68533 /* JSONParserTest.swift */; };
+		3EA5F39B21219896006BD804 /* JSONType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA5F39A21219896006BD804 /* JSONType.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		3E8C7326211BD97400E68533 /* JSONParserTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONParserTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E8C7328211BD97400E68533 /* JSONParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParserTest.swift; sourceTree = "<group>"; };
 		3E8C732A211BD97400E68533 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3EA5F39A21219896006BD804 /* JSONType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONType.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,6 +94,7 @@
 				3E8724D92117DBC500708426 /* OutputView.swift */,
 				3E4339A6211F24CB0090041D /* Tokenizer.swift */,
 				3E3105F2212158580058361E /* Formatter.swift */,
+				3EA5F39A21219896006BD804 /* JSONType.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				3EA5F39B21219896006BD804 /* JSONType.swift in Sources */,
 				3E4339A7211F24CB0090041D /* Tokenizer.swift in Sources */,
 				3E365EBE2113F8D0005808C2 /* InputView.swift in Sources */,
 				3E8724DA2117DBC500708426 /* OutputView.swift in Sources */,
