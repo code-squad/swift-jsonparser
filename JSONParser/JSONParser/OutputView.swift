@@ -8,65 +8,36 @@
 
 import Foundation
 
-enum AvailableJSONType: String {
-    case string = "문자열"
-    case int = "숫자"
-    case bool = "부울"
-}
-
 struct OutputView {
     
-    static func display(from parsedObjects: [JSONParser.JSONParsedResult]) {
-        var displayResult = ""
-        
-        if parsedObjects.count == 1 {
-            displayResult += displayPrefix(parsedObjects[0].results.count) ?? ""
-            displayResult += displayValues(parsedObjects[0])
-            displayResult += displayPostFix(parsedObjects[0].results.count) ?? ""
-        }else{
-            displayResult += displayObjects(parsedObjects.count)
-        }
-        print(displayResult)
+    static func display(_ values: JSONType){
+        print(text(from: values))
     }
     
-    private static func displayValues(_ objects: JSONParser.JSONParsedResult) -> String {
-        let typeCountingResult = countingType(of: objects)
-        let displayableCountOfStrings = displayValue(typeCountingResult.stringsCount, type: AvailableJSONType.string) ?? ""
-        let displayableCountOfIntegers = displayValue(typeCountingResult.integersCount, type: AvailableJSONType.int) ?? ""
-        let displayableCountOfBooleans = displayValue(typeCountingResult.booleansCount, type: AvailableJSONType.bool) ?? ""
+    private static func text(from value: JSONType) -> String {
+        var text = ""
+        let result = value.result
+        text += value.prefix
         
-        return displayableCountOfStrings + displayableCountOfIntegers + displayableCountOfBooleans
-    }
-    
-    private static func countingType(of objects: JSONParser.JSONParsedResult) -> (stringsCount: Int, integersCount: Int, booleansCount: Int) {
-        var stringsCount: Int = 0
-        var integersCount: Int = 0
-        var booleansCount: Int = 0
-        
-        objects.results.forEach {
-            switch $0.value {
-            case .string: stringsCount += 1
-            case .int: integersCount += 1
-            case .bool: booleansCount += 1
-            }
+        if result.string > 0 {
+            text += " 문자열 \(result.string)개 "
         }
         
-        return (stringsCount, integersCount, booleansCount)
-    }
-    
-    private static func displayObjects(_ count: Int) -> String {
-        return "총 \(count)개의 배열 데이터 중에 객체 \(count)개가 포함되어 있습니다."
-    }
-    
-    private static func displayPrefix(_ total: Int) -> String? {
-        return total != 0 ? "총 \(total)개의 데이터 중에 " : nil
-    }
-    
-    private static func displayValue<T: RawRepresentable>(_ count: Int, type: T) -> String? where T.RawValue == String {
-        return count != 0 ? type.rawValue + " \(count)개 " : nil
-    }
-    
-    private static func displayPostFix(_ total: Int) -> String? {
-        return total != 0 ? "가 포함되어 있습니다." : nil
+        if result.int > 0 {
+            text += " 정수 \(result.int)개 "
+        }
+        
+        if result.bool > 0 {
+            text += " 부울 \(result.bool)개 "
+        }
+        
+        if result.object > 0 {
+            text += " 객체 \(result.object)개 "
+        }
+        
+        text += "가 존재합니다."
+        
+        return text
     }
 }
+
