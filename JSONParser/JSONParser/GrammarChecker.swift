@@ -10,7 +10,7 @@ import Foundation
 
 struct GrammarChecker {
     
-    public static func checkException(to input:String) -> Bool {
+    public static func isValidate(to input:String) -> Bool {
         do {
             try checkForm(to: input)
         } catch JsonError.unSupportedArrayPattern {

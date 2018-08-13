@@ -16,7 +16,7 @@ func analyzeJson() -> Bool {
     guard let input = InputView.isEmpty(to: inputValue) else { return true }
 
     // 예외처리
-    guard GrammarChecker.checkException(to: input) else { return true }
+    guard GrammarChecker.isValidate(to: input) else { return true }
     
     // 분석하기
     let json = Analysis.analysisJson(to: input)
