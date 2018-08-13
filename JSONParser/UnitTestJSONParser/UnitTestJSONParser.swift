@@ -37,7 +37,6 @@ class UnitTestJSONParser: XCTestCase {
     func testArray_Fail_객체형식이상할때(){
         let input = "[ \"name\" : \"KIM JUNG\" ]"
         let isFail = GrammarChecker.checkException(to: input)
-        print(isFail)
         XCTAssertFalse(isFail)
     }
     
