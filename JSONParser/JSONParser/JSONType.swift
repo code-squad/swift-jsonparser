@@ -10,7 +10,7 @@ import Foundation
 
 protocol JSONType {
     var prefix: String { get }
-    var result: (string:Int, int:Int, bool:Int, object: Int) { get }
+    var result: (string:Int, int:Int, bool:Int, object: Int, array: Int) { get }
 }
 
 
@@ -19,6 +19,7 @@ enum JSONValueType {
     case int(Int)
     case bool(Bool)
     case object([String:JSONValueType])
+    case array([JSONValueType])
 }
 
 
@@ -28,11 +29,12 @@ struct JSONArray: JSONType {
     }
     var values: [JSONValueType] = []
     
-    var result: (string: Int, int: Int, bool: Int, object: Int) {
+    var result: (string: Int, int: Int, bool: Int, object: Int, array: Int) {
         var string = 0
         var int = 0
         var bool = 0
         var object = 0
+        var array = 0
         
         values.forEach {
             switch $0 {
@@ -44,10 +46,12 @@ struct JSONArray: JSONType {
                 bool += 1
             case .object(_):
                 object += 1
+            case .array(_):
+                array += 1
             }
         }
         
-        return (string, int, bool, object)
+        return (string, int, bool, object, array)
     }
     
     init(_ values: [JSONValueType]){
@@ -61,14 +65,16 @@ struct JSONObject: JSONType {
     }
     var value: JSONValueType
     
-    var result: (string: Int, int: Int, bool: Int, object: Int) {
+    var result: (string: Int, int: Int, bool: Int, object: Int, array: Int) {
         var string = 0
         var int = 0
         var bool = 0
+        var object = 0
+        var array = 0
         
         switch value {
-        case .object(let object):
-            object.values.forEach { (type) in
+        case .object(let jsonObject):
+            jsonObject.values.forEach { (type) in
                 switch type {
                 case .string(_):
                     string += 1
@@ -76,13 +82,16 @@ struct JSONObject: JSONType {
                     int += 1
                 case .bool(_):
                     bool += 1
-                default: return
+                case .object(_):
+                    object += 1
+                case .array(_):
+                    array += 1
                 }
             }
         default: break
         }
         // 단일 객체이므로 객체의 값은 0으로 반환
-        return (string, int, bool, 0)
+        return (string, int, bool, object, array)
     }
     
     init(_ value: JSONValueType){
