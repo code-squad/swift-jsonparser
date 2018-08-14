@@ -9,6 +9,15 @@
 import Foundation
 
 struct OutputView {
+    public static func printErrorMessage(error:JsonError){
+        switch error {
+        case .unSupportedArrayPattern:
+            print("지원하지 않는 배열 형식을 포함하고 있습니다.")
+        case .unSupportedObjectPattern:
+            print("지원하지 않는 객체 형식을 포함하고 있습니다.")
+        }
+    }
+    
     public static func printJson(to json:JsonProtocol){
         let (string,int,bool,object) = json.count()
         
