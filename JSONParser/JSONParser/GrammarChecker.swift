@@ -85,118 +85,57 @@ extension String {
     }
     
     func supportedArrayTypes() -> Bool {
-        /*
-         1. 공백제거
-
-         3. 첫번째 정규식에서 객체 | 문자 | 숫자 | 부울 개수 구함
-         4-1. (1개 초과시) 두번째 정규식에서 3번의 개수 -1 만큼 반복되는 정규식과 ,(콤마)를 같이 세트로 묶고 마지막에 하나 더 정규식을 붙여줘서 형식이 맞으면 true 아니면 false
-         4-2. (1개) 바로 정규식 표현 맞는 것으로 확인
-         4-3. (0개) 값이 없으므로 false
-         5-1. 형식에 맞지 않으면 false (ex: 위에서는 "":"" 형태가 "" 각자로만 읽혀져서 카운트가 됬지만 실제로는 완전한 객체형태가 아니므로 걸러냅니다.)
-         5-2. 기존의 문자열이랑 비교하여 일치하면 true 일치안하면 false
-         */
-        let array = self.trimmingCharacters(in: .whitespaces) // 1
+        var result = false
         
-        var patternCount = 0
+        let stringWithSpecial = "\".*?\""
+        let string = "\"[\\w]+\""
+        let int = "[0-9]+"
+        let boolTrue = "true"
+        let boolFalse = "false"
+        let object = "\\{[\\s]?\(stringWithSpecial)[\\s]?:[\\s]?(\(stringWithSpecial)|\(int)|\(boolTrue)|\(boolFalse))[\\s]?\\}"
+        let arrayValue = "\\[.*?\\]"
+        let allValueOfArray = "(\(string)|\(int)|\(boolTrue)|\(boolFalse)|\(object)|\(arrayValue))"
+        let arrayPattern = "[\\s]?\\[[\\s]?([\\s]?\(allValueOfArray)\\,?[\\s]?)+[\\s]?\\][\\s]?"
         
-        let objectRegex = "[\\s]?\\{[\\s]?\".*?\"[\\s]?:[\\s]?(\".*?\"|[0-9]|true|false)[\\s]?\\}[\\s]?"
         
-        if let regex = try? NSRegularExpression(pattern: "(\(objectRegex)|(\\d)+|\".*?\"|true|false)", options: .caseInsensitive){
+        // 4-1 : 값이 1개 이상일때만 실행됩니다.
+        if let regex = try? NSRegularExpression(pattern: arrayPattern){
             let string = self as NSString
             
             let regexMatches = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).map {
                 string.substring(with: $0.range)
             }
             
-            if regexMatches.count > 1 {
-                // 4-1
-                patternCount = regexMatches.count
-            }else if regexMatches.count == 1 {
-                // 4-2 : 1개 값만 있는 정규식으로 맞습니다.
-                return true
-            }else {
-                // 4-3 : 값이 없으므로 지원하지 않습니다.
-                return false
+            if regexMatches.count > 0 {
+                result = true
             }
+            
         }
         
-        // 4-1 : 값이 1개 이상일때만 실행됩니다.
-        if let regex = try? NSRegularExpression(pattern: "[\\s]?((\\{.*?\\}|(\\d)+|\".*?\"|true|false)[\\s]?,[\\s]?){\(patternCount-1)}[\\s]?(\\{.*?\\}|(\\d)+|\".*?\"|true|false)[\\s]?", options: .caseInsensitive){
-            let string = array as NSString
-            
-            let regexMatches = regex.matches(in: array, options: [], range: NSRange(location: 0, length: string.length)).map {
-                string.substring(with: $0.range)
-            }
-            
-            // 5-1
-            guard regexMatches.count > 0 else { return false }
-            
-            // 5-2
-            let regexMatch = "[" + regexMatches[0] + "]"
-            if array == regexMatch {
-                return true
-            }else {
-                return false
-            }
-        }
-        
-        return false
+        return result
     }
     
-    func supportedObjectTypes() -> Bool {
-        /*
-         1. 공백제거
-
-         3. 첫번째 정규식에서 "string" : "value" 형식 개수 구함
-         4-1. (1개 초과시) 두번째 정규식에서 3번의 개수 -1 만큼 반복되는 정규식과 ,(콤마)를 같이 세트로 묶고 마지막에 하나 더 정규식을 붙여줘서 형식이 맞으면 true 아니면 false
-         4-2. (1개) 바로 정규식 표현 맞는 것으로 확인
-         4-3. (0개) 값이 없으므로 false
-         5. 기존의 문자열이랑 비교하여 일치하면 true 일치안하면 false
-         */
+    func supportedObjectTypes() -> Bool {        
+        var result = false
         
-        let object = self.trimmingCharacters(in: .whitespaces) // 1
+        let string = "\"[\\w]+\""
+        let allValueOfObject = ".*?"
+        let objectPattern = "[\\s]?\\{[\\s]?\(string)[\\s]?:([\\s]?\(allValueOfObject)\\,?[\\s]?)+[\\s]?\\}[\\s]?"
         
-        var patternCount = 0
-
-        // 3
-        if let regex = try? NSRegularExpression(pattern: "[\\s]?\".*?\"[\\s]?:[\\s]?(\".*?\"|[0-9]|true|false)[\\s]?", options: .caseInsensitive){
-            let string = object as NSString
-
-            let regexMatches = regex.matches(in: object, options: [], range: NSRange(location: 0, length: string.length)).map {
+        if let regex = try? NSRegularExpression(pattern: objectPattern){
+            let string = self as NSString
+            
+            let regexMatches = regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).map {
                 string.substring(with: $0.range)
             }
-            
-            if regexMatches.count > 1 {
-                // 4-1
-                patternCount = regexMatches.count
-            }else if regexMatches.count == 1 {
-                // 4-2 : 1개 값만 있는 정규식으로 맞습니다.
-                return true
-            }else {
-                // 4-3 : 값이 없으므로 지원하지 않습니다.
-                return false
+
+            if regexMatches.count > 0 {
+                result = true
             }
             
         }
         
-        // 4-1 : 값이 1개 이상일때만 실행됩니다.
-        if let regex = try? NSRegularExpression(pattern: "([\\s]?\".*?\"[\\s]?:[\\s]?(\".*?\"|[0-9]|true|false)[\\s]?,[\\s]?){\(patternCount-1)}[\\s]?([\\s]?\".*?\"[\\s]?:[\\s]?(\".*?\"|[0-9]|true|false)[\\s]?)", options: .caseInsensitive){
-            let string = object as NSString
-            
-            let regexMatches = regex.matches(in: object, options: [], range: NSRange(location: 0, length: string.length)).map {
-                string.substring(with: $0.range)
-            }
-
-            // 5
-            let regexMatch = "{" + regexMatches[0] + "}"
-            if object == regexMatch {
-                return true
-            }else {
-                return false
-            }
-        }
-        
-        return false
+        return result
     }
     
     

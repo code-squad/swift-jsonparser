@@ -36,8 +36,28 @@ class UnitTestJSONParser: XCTestCase {
             XCTAssertEqual(error as? JsonError, JsonError.unSupportedArrayPattern)
         }
     }
+    
+    func testObject_Pass_객체데이터1개(){
+        let input = "{ \"level\" : 5 }"
+        XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
+    }
+    
+    func testObject_Pass_객체데이터2개(){
+        let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\" }"
+        XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
+    }
+    
+    func testObject_Pass_객체데이터2개_StringWithInt(){
+        let input = "{ \"name\" : \"KIM JUNG\", \"level\" : 5 }"
+        XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
+    }
 
     func testObject_Pass_객체데이터3개(){
+        let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5 }"
+        XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
+    }
+    
+    func testObject_Pass_객체데이터4개(){
         let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
         XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
     }
@@ -59,6 +79,36 @@ class UnitTestJSONParser: XCTestCase {
 
     func testObject_Pass_객체데이터안에_중괄호짝이상해도_통과되는지(){
         let input = "{\"name\":\"[oingbong{}}{{}}\"}"
+        XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
+    }
+    
+    func testArray_Pass_1(){
+        let input = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, {\"name\":\"dd\"}, [1234,\"name\",true] ]"
+        XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
+    }
+    
+    func testArray_Pass_2(){
+        let input = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, {\"name\":\"dd\"} ]"
+        XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
+    }
+    
+    func testArray_Pass_3(){
+        let input = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, [1234,\"name\",true] ]"
+        XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
+    }
+    
+    func testArray_Pass_4(){
+        let input = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, {\"name\":\"dd\"}, [1234] ]"
+        XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
+    }
+    
+    func testArray_Pass_5(){
+        let input = "[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]"
+        XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
+    }
+    
+    func testObject_Pass_1(){
+        let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
         XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
     }
     
