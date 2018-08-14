@@ -92,7 +92,8 @@ extension String {
          4-1. (1개 초과시) 두번째 정규식에서 3번의 개수 -1 만큼 반복되는 정규식과 ,(콤마)를 같이 세트로 묶고 마지막에 하나 더 정규식을 붙여줘서 형식이 맞으면 true 아니면 false
          4-2. (1개) 바로 정규식 표현 맞는 것으로 확인
          4-3. (0개) 값이 없으므로 false
-         5. 기존의 문자열이랑 비교하여 일치하면 true 일치안하면 false
+         5-1. 형식에 맞지 않으면 false (ex: 위에서는 "":"" 형태가 "" 각자로만 읽혀져서 카운트가 됬지만 실제로는 완전한 객체형태가 아니므로 걸러냅니다.)
+         5-2. 기존의 문자열이랑 비교하여 일치하면 true 일치안하면 false
          */
         let array = self.trimmingCharacters(in: .whitespaces) // 1
         
@@ -127,7 +128,10 @@ extension String {
                 string.substring(with: $0.range)
             }
             
-            // 5
+            // 5-1
+            guard regexMatches.count > 0 else { return false }
+            
+            // 5-2
             let regexMatch = "[" + regexMatches[0] + "]"
             if array == regexMatch {
                 return true
