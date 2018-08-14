@@ -41,7 +41,7 @@ enum Components {
 }
 
 struct Tokenizer {
-    static func parse(_ target: String) -> [String] {
+    static func parse(_ target: String) throws -> [String] {
         var values:[String] = []
         var token = ""
         var isString = false
@@ -84,6 +84,9 @@ struct Tokenizer {
             default:
                 token += String(particle)
             }
+        }
+        if values.count == 0 {
+            throw JSONParserError.invalidInput
         }
         return values
     }

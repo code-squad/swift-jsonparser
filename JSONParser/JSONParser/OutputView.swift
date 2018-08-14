@@ -14,6 +14,17 @@ struct OutputView {
         print(text(from: values))
     }
     
+    static func display(_ error: JSONParserError) {
+        switch error {
+        case .invalidFormat:
+            print("지원하지 않는 포맷이 포함되어 있습니다.")
+        case .invalidInput:
+            print("입력 값이 유효하지 않습니다.")
+        case .unexpected:
+            print("예상치 못한 오류가 발생하였습니다.")
+        }
+    }
+    
     private static func text(from value: JSONType) -> String {
         var text = ""
         let result = value.result

@@ -10,12 +10,17 @@ import Foundation
 
 struct Main {
     static func start(){
-        guard let input = InputView.read() else { return }
-        let tokens = Tokenizer.parse(input)
-        if let values = Formatter.generateJSON(from: tokens){
+        do {
+            let input = try InputView.read()
+            let tokens = try Tokenizer.parse(input)
+            let values = try Formatter.generateJSON(from: tokens)
             OutputView.display(values)
-        }else {
-            print("지원하지 않는 형식이 포함되어 있습니다.")
+        }catch JSONParserError.invalidFormat {
+            OutputView.display(.invalidFormat)
+        }catch JSONParserError.invalidInput {
+            OutputView.display(.invalidInput)
+        }catch {
+            OutputView.display(.unexpected)
         }
     }
 }

@@ -53,11 +53,13 @@ enum JSONRegex {
 struct Formatter {
     
     // 형식이 올바르지 않다면 nil을 반환
-    static func generateJSON(from tokens: [String]) -> JSONType? {
+    static func generateJSON(from tokens: [String]) throws -> JSONType {
         var values: [JSONValueType] = []
         
         for token in tokens {
-            guard let format = JSONRegex.format(of: token) else { return nil }
+            guard let format = JSONRegex.format(of: token) else {
+                throw JSONParserError.invalidFormat
+            }
             switch format {
             case .string:
                 values.append(JSONValueType.string(token))
