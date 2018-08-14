@@ -10,14 +10,7 @@ import Foundation
 
 struct OutputView {
     public static func printErrorMessage(error:JsonError){
-        switch error {
-        case .unSupportedArrayPattern:
-            print(JsonError.unSupportedArrayPattern.description())
-        case .unSupportedObjectPattern:
-            print(JsonError.unSupportedObjectPattern.description())
-        case .unknown:
-            print(JsonError.unknown.description())
-        }
+        print(error.description())
     }
     
     public static func printJson(to json:JsonProtocol){
