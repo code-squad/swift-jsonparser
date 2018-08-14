@@ -17,7 +17,7 @@ enum JSONRegex {
     var pattern: String {
         switch self {
         case .string:
-            return "^\".*\"$"
+            return "^\"(?!.*\"\\s*:\\s*).*\"$"
         case .int:
             return "^[0-9]+$"
         case .bool:
