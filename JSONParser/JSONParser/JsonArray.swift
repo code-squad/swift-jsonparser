@@ -9,7 +9,7 @@
 import Foundation
 
 struct JsonArray:JsonProtocol {
-    private var array:Array<TypeProtocol>
+    private var array:Array<JsonType>
     
     init() {
         self.array = []
@@ -18,13 +18,13 @@ struct JsonArray:JsonProtocol {
     public mutating func addArray(element:String) {
         // 객체 {} 의 경우에는 String 으로 저장합니다.
         if element.isObject() {
-            self.array.append(element)
+            self.array.append(JsonType.object(element))
         }else if element.isBool(){
-            self.array.append(Bool(element)!)
+            self.array.append(JsonType.bool(Bool(element)!))
         }else if element.isNumber() {
-            self.array.append(Int(element)!)
+            self.array.append(JsonType.int(Int(element)!))
         }else {
-            self.array.append(element)
+            self.array.append(JsonType.string(element))
         }
     }
     
@@ -35,14 +35,15 @@ struct JsonArray:JsonProtocol {
         var object = 0
         
         for element in self.array {
-            if let string = element as? String , string.isObject() {
-                object = object + 1
-            }else if element is Bool {
-                bool = bool + 1
-            }else if element is Int {
-                int = int + 1
-            }else {
+            switch element {
+            case .string:
                 string = string + 1
+            case .int:
+                int = int + 1
+            case .bool:
+                bool = bool + 1
+            case .object:
+                object = object + 1
             }
         }
         return (string, int, bool, object)

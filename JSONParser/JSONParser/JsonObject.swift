@@ -9,19 +9,21 @@
 import Foundation
 
 struct JsonObject:JsonProtocol {
-    private var object:[String:TypeProtocol]
+    private var object:[String:JsonType]
     
     init() {
         self.object = [:]
     }
     
     public mutating func addObject(key:String, value:String) {
-        if value.isBool(){
-            self.object.updateValue(Bool(value)!, forKey: key)
+        if value.isObject(){
+            self.object.updateValue(JsonType.object(value), forKey: key)
+        }else if value.isBool(){
+            self.object.updateValue(JsonType.bool(Bool(value)!), forKey: key)
         }else if value.isNumber(){
-            self.object.updateValue(Int(value)!, forKey: key)
+            self.object.updateValue(JsonType.int(Int(value)!), forKey: key)
         }else {
-            self.object.updateValue(value, forKey: key)
+            self.object.updateValue(JsonType.string(value), forKey: key)
         }
     }
     
@@ -32,16 +34,18 @@ struct JsonObject:JsonProtocol {
         var object = 0
         
         for ( _ , value) in self.object {
-            if let string = value as? String , string.hasPrefix("{") {
-                object = object + 1
-            }else if value is Bool {
-                bool = bool + 1
-            }else if value is Int {
-                int = int + 1
-            }else {
+            switch value {
+            case .string:
                 string = string + 1
+            case .int:
+                int = int + 1
+            case .bool:
+                bool = bool + 1
+            case .object:
+                object = object + 1
             }
-        }   
+        }
         return (string, int, bool, object)
     }
+    
 }

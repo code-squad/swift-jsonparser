@@ -13,8 +13,9 @@ protocol JsonProtocol {
     func count() -> (Int,Int,Int,Int)
 }
 
-protocol TypeProtocol {}
-
-extension String:TypeProtocol{}
-extension Int:TypeProtocol{}
-extension Bool:TypeProtocol{}
+enum JsonType {
+    case string(String)
+    case int(Int)
+    case bool(Bool)
+    case object(String)
+}
