@@ -13,8 +13,10 @@ enum JSONRegex {
     case int
     case bool
     case object
+    case array
     
     var pattern: String {
+        let availableValuesPattern = "false|true|[0-9]+|\".*\""
         switch self {
         case .string:
             return "^\"(?!.*\"\\s*:\\s*).*\"$"
@@ -23,7 +25,11 @@ enum JSONRegex {
         case .bool:
             return "(^false|^true)"
         case .object:
-            return "^\\{\\s*\".*\"\\s*:\\s*(true|false|[0-9]+|\".*\")\\s*(,\\s*\".*\"\\s*:\\s*(true|false|[0-9]+|\".*\")\\s*)*\\}$"
+            let valuePattern = "(\(availableValuesPattern)|\\[\\s*(\(availableValuesPattern))\\s*(,\\s*(\(availableValuesPattern)))*\\s*\\])"
+            return "^\\{\\s*\".*\"\\s*:\\s*\(valuePattern)\\s*(,\\s*\".*\"\\s*:\\s*\(valuePattern)\\s*)*\\}$"
+        case .array:
+            let objectInArrayPattern = "\\{\\s*\".*\"\\s*:\\s*(\(availableValuesPattern))\\s*(,\\s*\".*\"\\s*:\\s*(\(availableValuesPattern))\\s*)*\\}"
+            return "^\\[\\s*(\(availableValuesPattern)|(\(objectInArrayPattern)))\\s*(,\\s*(\(availableValuesPattern)|(\(objectInArrayPattern))))*\\s*\\]$"
         }
     }
     
@@ -45,6 +51,8 @@ enum JSONRegex {
             return .bool
         case let value where JSONRegex.object.isValid(target: value):
             return .object
+        case let value where JSONRegex.array.isValid(target: value):
+            return .array
         default: return nil
         }
     }
@@ -70,6 +78,8 @@ struct Formatter {
             case .object:
                 let object = generateObject(from: token)
                 values.append(JSONValueType.object(object))
+            case .array:
+                print("Array")
             }
         }
         
