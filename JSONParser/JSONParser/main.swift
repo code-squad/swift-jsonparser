@@ -15,10 +15,8 @@ struct Main {
             let tokens = try Tokenizer.parse(input)
             let values = try Formatter.generateJSON(from: tokens)
             OutputView.display(values)
-        }catch JSONParserError.invalidFormat {
-            OutputView.display(.invalidFormat)
-        }catch JSONParserError.invalidInput {
-            OutputView.display(.invalidInput)
+        }catch let error as JSONParserError {
+            OutputView.display(error)
         }catch {
             OutputView.display(.unexpected)
         }
