@@ -15,7 +15,7 @@ struct OutputView {
     }
     
     static func display(_ error: JSONParserError) {
-        print(error.description)
+        print(error)
     }
     
     private static func text(from value: JSONType) -> String {

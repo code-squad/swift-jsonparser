@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum JSONParserError: Error {
+enum JSONParserError: Error, CustomStringConvertible {
     case invalidInput
     case invalidFormat
     case unexpected
