@@ -9,7 +9,6 @@
 import Foundation
 
 protocol JsonProtocol {
-    init()
     func count() -> (Int,Int,Int,Int)
 }
 
