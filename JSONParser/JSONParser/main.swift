@@ -12,7 +12,7 @@ struct Main {
     static func start(){
         guard let input = InputView.read() else { return }
         let tokens = Tokenizer.parse(input)
-        if let values = Formatter.isValid(tokens){
+        if let values = Formatter.generateJSON(from: tokens){
             OutputView.display(values)
         }else {
             print("지원하지 않는 형식이 포함되어 있습니다.")
