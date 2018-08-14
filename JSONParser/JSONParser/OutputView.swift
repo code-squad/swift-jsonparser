@@ -14,9 +14,9 @@ struct OutputView {
     }
     
     public static func printJson(to json:JsonProtocol){
-        let (string,int,bool,object) = json.count()
+        let (string,int,bool,object,array) = json.count()
         
-        let totalCount = string + int + bool + object
+        let totalCount = string + int + bool + object + array
         var message = ""
         
         if json is JsonObject {
@@ -37,6 +37,9 @@ struct OutputView {
         }
         if object > 0 {
             message = message + "객체 \(object)개,"
+        }
+        if array > 0 {
+            message = message + "배열 \(array)개,"
         }
         message.removeLast() // 마지막 , 는 제거 합니다.
         message = message + "가 포함되어 있습니다."

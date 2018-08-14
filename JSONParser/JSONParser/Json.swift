@@ -9,7 +9,7 @@
 import Foundation
 
 protocol JsonProtocol {
-    func count() -> (Int,Int,Int,Int)
+    func count() -> (Int,Int,Int,Int,Int)
 }
 
 enum JsonType {
@@ -17,4 +17,5 @@ enum JsonType {
     case int(Int)
     case bool(Bool)
     case object(String)
+    case array([JsonType])
 }

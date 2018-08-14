@@ -27,11 +27,12 @@ struct JsonObject:JsonProtocol {
         }
     }
     
-    public func count() -> (Int,Int,Int,Int) {
+    public func count() -> (Int,Int,Int,Int,Int) {
         var string = 0
         var int = 0
         var bool = 0
         var object = 0
+        var array = 0
         
         for ( _ , value) in self.object {
             switch value {
@@ -43,9 +44,11 @@ struct JsonObject:JsonProtocol {
                 bool = bool + 1
             case .object:
                 object = object + 1
+            case .array:
+                array = array + 1
             }
         }
-        return (string, int, bool, object)
+        return (string, int, bool, object, array)
     }
     
 }
