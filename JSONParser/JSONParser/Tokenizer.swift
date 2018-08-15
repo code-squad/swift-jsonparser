@@ -41,7 +41,7 @@ enum Components {
 }
 
 struct Tokenizer {
-    static func parse(_ target: String) throws -> [String] {
+    static func parse(_ target: String) throws -> (tokens: [String], type: JSONType) {
         var value = target
         var values:[String] = []
         var token = ""
@@ -49,10 +49,16 @@ struct Tokenizer {
         var isObject = false
         var isArray = false
         var doubleQuoteCount = 0 // " " 속 " 를 판단하기 위해
+        var type: JSONType
         
         if target.first == Components.arrayOpener.value && target.last == Components.arrayCloser.value {
             value.removeFirst()
             value.removeLast()
+            type = JSONArray()
+        }else if target.first == Components.objectOpener.value && target.last == Components.objectCloser.value {
+            type = JSONObject()
+        }else {
+            throw JSONParserError.invalidFormat
         }
         
         for particle in value {
@@ -107,6 +113,6 @@ struct Tokenizer {
         if values.count == 0 {
             throw JSONParserError.invalidInput
         }
-        return values
+        return (values,type)
     }
 }
