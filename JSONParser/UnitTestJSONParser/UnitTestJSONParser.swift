@@ -146,5 +146,20 @@ class UnitTestJSONParser: XCTestCase {
             XCTAssertEqual(error as? JsonError, JsonError.unSupportedObjectPattern)
         }
     }
+    
+    func testObject_Pass_객체안에배열(){
+        let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
+        XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
+    }
+    
+    func testObject_Pass_객체안에객체(){
+        let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, , {\"name\":\"oing\"} }"
+        XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
+    }
+    
+    func testArray_Pass_배열안에배열(){
+        let input = "[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]"
+        XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
+    }
 
 }
