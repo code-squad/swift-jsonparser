@@ -16,7 +16,9 @@ enum JSONRegex {
     case array
     
     var pattern: String {
-        let availableValuesPattern = "false|true|[0-9]+|\".*\""
+        let valuesPattern = "false|true|[0-9]+|\".*\""
+        let singleArrayPattern = "\\[\\s*(\(valuesPattern))(,\\s*(\(valuesPattern)))*\\s*\\]"
+        let singleObjectPattern = "\\{\\s*\".*\"\\s*:\\s*(\(valuesPattern))\\s*(,\\s*\".*\"\\s*:\\s*(\(valuesPattern))\\s*)*\\}"
         switch self {
         case .string:
             return "^\"(?!.*\"\\s*:\\s*).*\"$"
@@ -25,11 +27,11 @@ enum JSONRegex {
         case .bool:
             return "(^false|^true)"
         case .object:
-            let valuePattern = "(\(availableValuesPattern)|\\[\\s*(\(availableValuesPattern))\\s*(,\\s*(\(availableValuesPattern)))*\\s*\\])"
-            return "^\\{\\s*\".*\"\\s*:\\s*\(valuePattern)\\s*(,\\s*\".*\"\\s*:\\s*\(valuePattern)\\s*)*\\}$"
+            let nestedObject = "^\\{\\s*\".*\"\\s*:\\s*(\(singleObjectPattern)|\(singleArrayPattern)|\(valuesPattern))\\s*(,\\s*\".*\"\\s*:\\s*(\(singleObjectPattern)|\(singleArrayPattern)|\(valuesPattern))\\s*)*\\}$"
+            return nestedObject
         case .array:
-            let objectInArrayPattern = "\\{\\s*\".*\"\\s*:\\s*(\(availableValuesPattern))\\s*(,\\s*\".*\"\\s*:\\s*(\(availableValuesPattern))\\s*)*\\}"
-            return "^\\[\\s*(\(availableValuesPattern)|(\(objectInArrayPattern)))\\s*(,\\s*(\(availableValuesPattern)|(\(objectInArrayPattern))))*\\s*\\]$"
+            let nestedArrayPattern = "^\\[\\s*(\(valuesPattern)|(\(singleObjectPattern)|\(singleArrayPattern)))\\s*(,\\s*(\(valuesPattern)|(\(singleObjectPattern)|\(singleArrayPattern))))*\\s*\\]$"
+            return nestedArrayPattern
         }
     }
     
