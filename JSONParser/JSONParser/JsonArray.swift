@@ -15,17 +15,8 @@ struct JsonArray:JsonProtocol {
         self.array = []
     }
     
-    public mutating func addArray(element:String) {
-        // 객체 {} 의 경우에는 String 으로 저장합니다.
-        if element.isObject() {
-            self.array.append(JsonType.object(element))
-        }else if element.isBool(){
-            self.array.append(JsonType.bool(Bool(element)!))
-        }else if element.isNumber() {
-            self.array.append(JsonType.int(Int(element)!))
-        }else {
-            self.array.append(JsonType.string(element))
-        }
+    init(jsonArray : [JsonType]) {
+        self.array = jsonArray
     }
     
     public func count() -> (Int,Int,Int,Int,Int) {

@@ -15,16 +15,8 @@ struct JsonObject:JsonProtocol {
         self.object = [:]
     }
     
-    public mutating func addObject(key:String, value:String) {
-        if value.isObject(){
-            self.object.updateValue(JsonType.object(value), forKey: key)
-        }else if value.isBool(){
-            self.object.updateValue(JsonType.bool(Bool(value)!), forKey: key)
-        }else if value.isNumber(){
-            self.object.updateValue(JsonType.int(Int(value)!), forKey: key)
-        }else {
-            self.object.updateValue(JsonType.string(value), forKey: key)
-        }
+    init(jsonObject : [String:JsonType]) {
+        self.object = jsonObject
     }
     
     public func count() -> (Int,Int,Int,Int,Int) {
