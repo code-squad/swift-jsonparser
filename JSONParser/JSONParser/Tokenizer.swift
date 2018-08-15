@@ -116,6 +116,7 @@ struct Tokenizer {
         return (values,type)
     }
     
+    // 객체 형식의 문자열에서 키-값 쌍을 추출하여 딕셔너리의 형태로 반환
     static func parseObject(_ target: String) -> [String:String] {
         var value = target
         value.removeFirst()

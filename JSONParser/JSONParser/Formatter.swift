@@ -62,24 +62,24 @@ struct Formatter {
     static func generateJSON(from tokens: [String], _ type: JSONType) throws -> JSONType {
         var json = type
         
-        if json is JSONArray {
+        if json is JSONArray { // 배열의 형태라면 바로 값들로부터 JSONValue를 생성 시도
             do {
                 json.values = try generateJSONValue(from: tokens)
             }catch let err {
                 throw err
             }
-        }else if json is JSONObject {
-            let object = tokens[0]
-            let parsedObject = Tokenizer.parseObject(object)
-            let keys = parsedObject.keys.map {String($0)}
-            let values = parsedObject.values.map {String($0)}
+        }else if json is JSONObject { // 단일 객체의 형태라면 먼저 객체 안에서 키-값 쌍을 딕셔너리 형태로 묶어 추출
+            let object = tokens[0] // 단일 객체이니 0 번째 인덱스
+            let parsedObject = Tokenizer.parseObject(object) // 객체에서 키-값 쌍을 분리하여 하나의 딕셔너리로 추출
+            let keys = parsedObject.keys.map {String($0)} // [키]를 따로 추출
+            let values = parsedObject.values.map {String($0)} // [값]을 따로 추출
             do {
                 var object:[String:JSONValueType] = [:]
-                let validJSONTypeValues = try generateJSONValue(from: values)
-                for (index, value) in keys.enumerated() {
+                let validJSONTypeValues = try generateJSONValue(from: values) // 따로 추출한 [값]으로부터 JSONValue 추출, 이중 중첩 탐지.
+                for (index, value) in keys.enumerated() { // 이중 중첩이 존재하지 않는다면 따로 추출한 키와 생성한 JSONValue 배열로 딕셔너리 생성
                     object[value] = validJSONTypeValues[index]
                 }
-                json.values = [JSONValueType.object(object)]
+                json.values = [JSONValueType.object(object)] // 해당 딕셔너리를 다시 JSONValue로 wrapping하여 최종 JSONType의 values로 할당
             }catch let err {
                 throw err
             }
@@ -88,10 +88,11 @@ struct Formatter {
         return json
     }
     
+    // 인자로 넘어오는 토큰들로부터 JSONValueType 배열 타입을 반환
     private static func generateJSONValue(from tokens: [String]) throws -> [JSONValueType] {
         var values: [JSONValueType] = []
         for token in tokens {
-            guard let format = JSONRegex.format(of: token) else {
+            guard let format = JSONRegex.format(of: token) else { // 형식이 맞지 않는 포멧이 존재한다면 throw 에러
                 throw JSONParserError.invalidFormat
             }
             switch format {
@@ -103,14 +104,14 @@ struct Formatter {
                 values.append(JSONValueType.bool(Bool(token)!))
             case .object:
                 do {
-                    let object = try generateObject(from: token)
+                    let object = try generateObject(from: token) // 토큰의 형식이 객체 형식이라면 JSONValueType.object로 wrapping / 이중 중첩이라면 throw 에러
                     values.append(JSONValueType.object(object))
                 }catch let err {
                     throw err
                 }
             case .array:
                 do {
-                    let array = try generateArray(from: token)
+                    let array = try generateArray(from: token) // 토큰의 형식이 객체 형식이라면 JSONValueType.array로 wrapping / 이중 중첩이라면 throw 에러
                     values.append(JSONValueType.array(array))
                 }catch let err {
                     throw err
@@ -120,6 +121,7 @@ struct Formatter {
         return values
     }
     
+    // 토큰의 형식이 배열 형식이라면 JSONValue.array로 wrapping하기 위해 가공
     private static func generateArray(from target: String) throws -> [JSONValueType] {
         var rawArray = target
         rawArray.removeFirst()
@@ -143,7 +145,7 @@ struct Formatter {
                     value += String(character)
                 }else {
                     do {
-                        try values.append(generateJSONValueType(from: value))
+                        try values.append(wrapUp(with: value)) // 값이 어떤 형식의 값인지 판단후 해당 값을 JSONValue.해당값형식으로 wrapping
                         value = ""
                     }catch let err {
                         throw err
@@ -155,7 +157,7 @@ struct Formatter {
         }
         if value != "" {
             do {
-                try values.append(generateJSONValueType(from: value))
+                try values.append(wrapUp(with: value))
             }catch let err {
                 throw err
             }
@@ -163,6 +165,7 @@ struct Formatter {
         return values
     }
     
+    // 토큰의 형식이 객체 형식이라면 JSONValue.object로 wrapping하기 위해 가공
     private static func generateObject(from target: String) throws -> [String:JSONValueType] {
         var values: [String:JSONValueType] = [:]
         var value = ""
@@ -183,7 +186,7 @@ struct Formatter {
                     value += String(character)  // 문자열의 일부면 추가
                 }else {
                     do {
-                        values[key] = try generateJSONValueType(from: value)
+                        values[key] = try wrapUp(with: value)
                         value = ""              // 초기화
                         key = ""
                     }catch let err {
@@ -202,7 +205,7 @@ struct Formatter {
                     value += String(character)  // 문자열의 일부면 추가
                 }else {
                     do {
-                        values[key] = try generateJSONValueType(from: value)
+                        values[key] = try wrapUp(with: value)
                         value = ""
                     } catch let err {
                         throw err
@@ -224,7 +227,13 @@ struct Formatter {
         return values
     }
     
-    private static func generateJSONValueType(from token: String) throws -> JSONValueType {
+    /*
+    - 이 함수를 호출하는 경우
+     1. JSONArray의 형식으로 배열안에 배열이나 객체가 있을경우 해당 형식에 대해서만 호출
+     2. JSONObject로 단일 객체 형식으로 객체안의 키-값 쌍 중 [값]에 배열이나 객체가 있을 경우 해당 형식에 대해서만 호출
+     즉 이중 중첩을 판단하는 메소드
+     */
+    private static func wrapUp(with token: String) throws -> JSONValueType {
         guard let format = JSONRegex.format(of: token) else {
             throw JSONParserError.invalidFormat
         }
