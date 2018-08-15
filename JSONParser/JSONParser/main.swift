@@ -12,8 +12,8 @@ struct Main {
     static func start(){
         do {
             let input = try InputView.read()
-            let result = try Tokenizer.parse(input)
-            let values = try Formatter.generateJSON(from: result.tokens, result.type)
+            let tokens = try Tokenizer.parse(input)
+            let values = try Formatter.generateJSON(from: tokens)
             OutputView.display(values)
         }catch let error as JSONParserError {
             OutputView.display(error)
