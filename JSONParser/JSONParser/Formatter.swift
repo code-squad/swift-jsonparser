@@ -106,6 +106,41 @@ struct Formatter {
         return JSONArray(values)
     }
     
+    private static func generateArray(from target: String) -> [JSONValueType] {
+        var rawArray = target
+        rawArray.removeFirst()
+        rawArray.removeLast()
+        
+        var values: [JSONValueType] = []
+        var value = ""
+        var isString = false
+        
+        for character in rawArray {
+            switch character {
+            case Components.doubleQuote.value:
+                isString = !isString
+                value += String(character)
+            case Components.space.value :
+                if isString {
+                    value += String(character)
+                }
+            case Components.comma.value:
+                if isString {
+                    value += String(character)
+                }else {
+                    values.append(generateJSONValueType(value))
+                    value = ""
+                }
+            default:
+                value += String(character)
+            }
+        }
+        if value != "" {
+            values.append(generateJSONValueType(value))
+        }
+        return values
+    }
+    
     // *Object format이라는게 증명됨
     private static func generateObject(from target: String) -> [String:JSONValueType] {
         var values: [String:JSONValueType] = [:]
