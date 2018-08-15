@@ -17,8 +17,6 @@ enum JSONRegex {
     
     var pattern: String {
         let valuesPattern = "false|true|[0-9]+|\".*\""
-        let singleArrayPattern = "\\[\\s*(\(valuesPattern))(,\\s*(\(valuesPattern)))*\\s*\\]"
-        let singleObjectPattern = "\\{\\s*\".*\"\\s*:\\s*(\(valuesPattern))\\s*(,\\s*\".*\"\\s*:\\s*(\(valuesPattern))\\s*)*\\}"
         switch self {
         case .string:
             return "^\"(?!.*\"\\s*:\\s*).*\"$"
@@ -27,11 +25,9 @@ enum JSONRegex {
         case .bool:
             return "(^false|^true)"
         case .object:
-            let nestedObject = "^\\{\\s*\".*\"\\s*:\\s*(\(singleObjectPattern)|\(singleArrayPattern)|\(valuesPattern))\\s*(,\\s*\".*\"\\s*:\\s*(\(singleObjectPattern)|\(singleArrayPattern)|\(valuesPattern))\\s*)*\\}$"
-            return nestedObject
+            return "^\\{\\s*\".*\"\\s*:\\s*(\(valuesPattern))\\s*(,\\s*\".*\"\\s*:\\s*(\(valuesPattern))\\s*)*\\}$"
         case .array:
-            let nestedArrayPattern = "^\\[\\s*(\(valuesPattern)|(\(singleObjectPattern)|\(singleArrayPattern)))\\s*(,\\s*(\(valuesPattern)|(\(singleObjectPattern)|\(singleArrayPattern))))*\\s*\\]$"
-            return nestedArrayPattern
+            return "^\\[\\s*(\(valuesPattern))(,\\s*(\(valuesPattern)))*\\s*\\]$"
         }
     }
     
@@ -63,9 +59,37 @@ enum JSONRegex {
 struct Formatter {
     
     // 형식이 올바르지 않다면 nil을 반환
-    static func generateJSON(from tokens: [String]) throws -> JSONType {
-        var values: [JSONValueType] = []
+    static func generateJSON(from tokens: [String], _ type: JSONType) throws -> JSONType {
+        var json = type
         
+        if json is JSONArray {
+            do {
+                json.values = try generateJSONValue(from: tokens)
+            }catch let err {
+                throw err
+            }
+        }else if json is JSONObject {
+            let object = tokens[0]
+            let parsedObject = Tokenizer.parseObject(object)
+            let keys = parsedObject.keys.map {String($0)}
+            let values = parsedObject.values.map {String($0)}
+            do {
+                var object:[String:JSONValueType] = [:]
+                let validJSONTypeValues = try generateJSONValue(from: values)
+                for (index, value) in keys.enumerated() {
+                    object[value] = validJSONTypeValues[index]
+                }
+                json.values = [JSONValueType.object(object)]
+            }catch let err {
+                throw err
+            }
+        }
+        
+        return json
+    }
+    
+    private static func generateJSONValue(from tokens: [String]) throws -> [JSONValueType] {
+        var values: [JSONValueType] = []
         for token in tokens {
             guard let format = JSONRegex.format(of: token) else {
                 throw JSONParserError.invalidFormat
@@ -78,37 +102,25 @@ struct Formatter {
             case .bool:
                 values.append(JSONValueType.bool(Bool(token)!))
             case .object:
-                let object = generateObject(from: token)
-                values.append(JSONValueType.object(object))
+                do {
+                    let object = try generateObject(from: token)
+                    values.append(JSONValueType.object(object))
+                }catch let err {
+                    throw err
+                }
             case .array:
-                print("Array")
+                do {
+                    let array = try generateArray(from: token)
+                    values.append(JSONValueType.array(array))
+                }catch let err {
+                    throw err
+                }
             }
         }
-        
-        return generateJSONType(values)
+        return values
     }
     
-    private static func generateJSONType(_ values: [JSONValueType]) -> JSONType {
-        // 분류된 값들로 Array인지 단일 Object인지 판단
-        var objects = 0
-        var others = 0
-        values.forEach {
-            switch $0 {
-            case .object(_):
-                objects += 1
-            default:
-                others += 1
-            }
-        }
-        // 객체가 단 하나만 존재한다면 이는 단일 객체로 판단
-        if objects == 1 && others == 0 {
-            return JSONObject(values.first!)
-        }
-        
-        return JSONArray(values)
-    }
-    
-    private static func generateArray(from target: String) -> [JSONValueType] {
+    private static func generateArray(from target: String) throws -> [JSONValueType] {
         var rawArray = target
         rawArray.removeFirst()
         rawArray.removeLast()
@@ -130,21 +142,28 @@ struct Formatter {
                 if isString {
                     value += String(character)
                 }else {
-                    values.append(generateJSONValueType(value))
-                    value = ""
+                    do {
+                        try values.append(generateJSONValueType(from: value))
+                        value = ""
+                    }catch let err {
+                        throw err
+                    }
                 }
             default:
                 value += String(character)
             }
         }
         if value != "" {
-            values.append(generateJSONValueType(value))
+            do {
+                try values.append(generateJSONValueType(from: value))
+            }catch let err {
+                throw err
+            }
         }
         return values
     }
     
-    // *Object format이라는게 증명됨
-    private static func generateObject(from target: String) -> [String:JSONValueType] {
+    private static func generateObject(from target: String) throws -> [String:JSONValueType] {
         var values: [String:JSONValueType] = [:]
         var value = ""
         var isString = false
@@ -163,9 +182,13 @@ struct Formatter {
                 if isString {
                     value += String(character)  // 문자열의 일부면 추가
                 }else {
-                    values[key] = generateJSONValueType(value)
-                    value = ""                  // 초기화
-                    key = ""                    // 초기화
+                    do {
+                        values[key] = try generateJSONValueType(from: value)
+                        value = ""              // 초기화
+                        key = ""
+                    }catch let err {
+                        throw err
+                    }
                 }
             case Components.space.value:
                 if isString {
@@ -178,8 +201,12 @@ struct Formatter {
                 if isString {
                     value += String(character)  // 문자열의 일부면 추가
                 }else {
-                    values[key] = generateJSONValueType(value)
-                    value = ""                  // 값 초기화
+                    do {
+                        values[key] = try generateJSONValueType(from: value)
+                        value = ""
+                    } catch let err {
+                        throw err
+                    }
                 }
             case Components.colon.value:
                 if isString {
@@ -197,16 +224,22 @@ struct Formatter {
         return values
     }
     
-    private static func generateJSONValueType(_ value: String) -> JSONValueType {
-        if let value = Int(value) {
-            return JSONValueType.int(value)
+    private static func generateJSONValueType(from token: String) throws -> JSONValueType {
+        guard let format = JSONRegex.format(of: token) else {
+            throw JSONParserError.invalidFormat
         }
         
-        if value == "false" || value == "true" {
-            return JSONValueType.bool(Bool(value)!)
+        switch format {
+        case .string:
+            return JSONValueType.string(token)
+        case .int:
+            return JSONValueType.int(Int(token)!)
+        case .bool:
+            return JSONValueType.bool(Bool(token)!)
+        case .object:
+            throw JSONParserError.invalidFormat
+        case .array:
+            throw JSONParserError.invalidFormat
         }
-        
-        // *Object format 이라는게 증명됨
-        return JSONValueType.string(value)
     }
 }
