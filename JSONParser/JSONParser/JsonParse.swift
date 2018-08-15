@@ -10,23 +10,9 @@ import Foundation
 
 struct JsonParse {
     public static func parseJsonObject(to jsonData:String) -> [String:JsonType] {
-        let string = "\"[\\w]+\""
-        let stringWithSpecial = "\".*?\""
-        let int = "[0-9]+"
-        let boolTrue = "true"
-        let boolFalse = "false"
-        let object = "\\{[\\s]?\(stringWithSpecial)[\\s]?:[\\s]?(\(stringWithSpecial)|\(int)|\(boolTrue)|\(boolFalse))[\\s]?\\}"
-        let arrayValue = "\\[.*?\\]"
-        let allValueOfArray = "(\(stringWithSpecial)|\(int)|\(boolTrue)|\(boolFalse)|\(object)|\(arrayValue))"
-        
-        let objectPattern = "[\\s]?\(string)[\\s]?:[\\s]?\(allValueOfArray)[\\s]?"
-        
-        let objectKeyPattern = "[\\s]?\(string)[\\s]?:[\\s]?"
-        let objectValuePattern = "[\\s]?:[\\s]?\(allValueOfArray)[\\s]?"
-        
         var jsonObject = [String:JsonType]()
         
-        if let regex = try? NSRegularExpression(pattern: objectPattern){
+        if let regex = try? NSRegularExpression(pattern: Regex.objectPatternSmallObject()){
             let string = jsonData as NSString
             
             let regexMatches = regex.matches(in: jsonData, options: [], range: NSRange(location: 0, length: string.length)).map {
@@ -38,7 +24,7 @@ struct JsonParse {
                 var value = ""
                 
                 // key parse
-                if let regexKey = try? NSRegularExpression(pattern: objectKeyPattern){
+                if let regexKey = try? NSRegularExpression(pattern: Regex.objectKeyPattern()){
                     let string = regexMatch as NSString
                     
                     let keyRegexMatches = regexKey.matches(in: regexMatch, options: [], range: NSRange(location: 0, length: string.length)).map {
@@ -50,7 +36,7 @@ struct JsonParse {
                     }
                 }
                 // value parse
-                if let regexValue = try? NSRegularExpression(pattern: objectValuePattern){
+                if let regexValue = try? NSRegularExpression(pattern: Regex.objectValuePattern()){
                     let string = regexMatch as NSString
                     
                     let valueRegexMatches = regexValue.matches(in: regexMatch, options: [], range: NSRange(location: 0, length: string.length)).map {
@@ -95,18 +81,9 @@ struct JsonParse {
     }
     
     public static func parseJsonArray(to jsonData:String) -> [JsonType] {
-        let stringWithSpecial = "\".*?\""
-        let string = "\"[\\w]+\""
-        let int = "[0-9]+"
-        let boolTrue = "true"
-        let boolFalse = "false"
-        let object = "\\{[\\s]?\(stringWithSpecial)[\\s]?:[\\s]?(\(stringWithSpecial)|\(int)|\(boolTrue)|\(boolFalse))[\\s]?\\}"
-        let arrayValue = "\\[.*?\\]"
-        let allValueOfArray = "(\(string)|\(int)|\(boolTrue)|\(boolFalse)|\(object)|\(arrayValue))"
-        
         var jsonArray = [JsonType]()
         
-        if let regex = try? NSRegularExpression(pattern: allValueOfArray){
+        if let regex = try? NSRegularExpression(pattern: Regex.arrayPatternSmallArray()){
             let string = jsonData as NSString
             
             let regexMatches = regex.matches(in: jsonData, options: [], range: NSRange(location: 0, length: string.length)).map {
