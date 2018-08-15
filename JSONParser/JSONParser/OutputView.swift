@@ -39,6 +39,10 @@ struct OutputView {
             text += " 객체 \(result.object)개 "
         }
         
+        if result.array > 0 {
+            text += " 배열 \(result.array)개 "
+        }
+        
         text += "가 존재합니다."
         
         return text
