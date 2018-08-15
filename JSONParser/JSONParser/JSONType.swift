@@ -9,6 +9,7 @@
 import Foundation
 
 protocol JSONType {
+    var values: [JSONValueType] { set get }
     var prefix: String { get }
     var result: (string:Int, int:Int, bool:Int, object: Int, array: Int) { get }
 }
@@ -53,17 +54,13 @@ struct JSONArray: JSONType {
         
         return (string, int, bool, object, array)
     }
-    
-    init(_ values: [JSONValueType]){
-        self.values = values
-    }
 }
 
 struct JSONObject: JSONType {
     var prefix: String {
         return "객체안에는"
     }
-    var value: JSONValueType
+    var values: [JSONValueType] = []
     
     var result: (string: Int, int: Int, bool: Int, object: Int, array: Int) {
         var string = 0
@@ -72,7 +69,7 @@ struct JSONObject: JSONType {
         var object = 0
         var array = 0
         
-        switch value {
+        switch values[0] {
         case .object(let jsonObject):
             jsonObject.values.forEach { (type) in
                 switch type {
@@ -92,9 +89,5 @@ struct JSONObject: JSONType {
         }
         // 단일 객체이므로 객체의 값은 0으로 반환
         return (string, int, bool, object, array)
-    }
-    
-    init(_ value: JSONValueType){
-        self.value = value
     }
 }
