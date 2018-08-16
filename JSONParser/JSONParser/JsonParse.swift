@@ -12,7 +12,7 @@ struct JsonParse {
     public static func parseJsonObject(to jsonData:String) -> [String:JsonType] {
         var jsonObject = [String:JsonType]()
         
-        if let regex = try? NSRegularExpression(pattern: Regex.objectPatternSmallObject()){
+        if let regex = try? NSRegularExpression(pattern: Regex.objectPatternSmallObject){
             let string = jsonData as NSString
             
             let regexMatches = regex.matches(in: jsonData, options: [], range: NSRange(location: 0, length: string.length)).map {
@@ -24,7 +24,7 @@ struct JsonParse {
                 var value = ""
                 
                 // key parse
-                if let regexKey = try? NSRegularExpression(pattern: Regex.objectKeyPattern()){
+                if let regexKey = try? NSRegularExpression(pattern: Regex.objectKeyPattern){
                     let string = regexMatch as NSString
                     
                     let keyRegexMatches = regexKey.matches(in: regexMatch, options: [], range: NSRange(location: 0, length: string.length)).map {
@@ -36,7 +36,7 @@ struct JsonParse {
                     }
                 }
                 // value parse
-                if let regexValue = try? NSRegularExpression(pattern: Regex.objectValuePattern()){
+                if let regexValue = try? NSRegularExpression(pattern: Regex.objectValuePattern){
                     let string = regexMatch as NSString
                     
                     let valueRegexMatches = regexValue.matches(in: regexMatch, options: [], range: NSRange(location: 0, length: string.length)).map {
@@ -83,7 +83,7 @@ struct JsonParse {
     public static func parseJsonArray(to jsonData:String) -> [JsonType] {
         var jsonArray = [JsonType]()
         
-        if let regex = try? NSRegularExpression(pattern: Regex.arrayPatternSmallArray()){
+        if let regex = try? NSRegularExpression(pattern: Regex.arrayPatternSmallArray){
             let string = jsonData as NSString
             
             let regexMatches = regex.matches(in: jsonData, options: [], range: NSRange(location: 0, length: string.length)).map {

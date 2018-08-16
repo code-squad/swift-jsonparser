@@ -29,22 +29,22 @@ struct Regex {
     private static let boolTrue = "true"
     private static let boolFalse = "false"
     private static let array = "\\[.*?\\]"
-    private static func object() -> String { return "\\{[\\s]?\(stringWithWildcard)[\\s]?:[\\s]?(\(stringWithWildcard)|\(int)|\(boolTrue)|\(boolFalse))[\\s]?\\}" }
-    private static func allValueOfArray() -> String { return "(\(string)|\(int)|\(boolTrue)|\(boolFalse)|\(object())|\(array))" }
-    private static func allValueOfArrayWithWildCard() -> String { return "(\(stringWithWildcard)|\(int)|\(boolTrue)|\(boolFalse)|\(object())|\(array))" }
+    private static let object = "\\{[\\s]?\(stringWithWildcard)[\\s]?:[\\s]?(\(stringWithWildcard)|\(int)|\(boolTrue)|\(boolFalse))[\\s]?\\}"
+    private static let allValueOfArray = "(\(string)|\(int)|\(boolTrue)|\(boolFalse)|\(object)|\(array))"
+    private static let allValueOfArrayWithWildCard = "(\(stringWithWildcard)|\(int)|\(boolTrue)|\(boolFalse)|\(object)|\(array))"
     
     // For GrammarChecker
-    public static func isNumber() -> String { return "^\(int)$" }
-    public static func isBool() -> String { return "^\(boolTrue)|\(boolFalse)*$" }
-    public static func isObject() -> String { return "^\\{\(wildcard)\\}$" }
-    public static func isArray() -> String { return "^\\[\(wildcard)\\]$" }
-    public static func arrayPattern() -> String { return "[\\s]?\\[[\\s]?([\\s]?\(allValueOfArray())\\,?[\\s]?)+[\\s]?\\][\\s]?" }
-    public static func objectPatternBigObject() -> String { return "[\\s]?\\{[\\s]?\(string)[\\s]?:([\\s]?\(wildcard)\\,?[\\s]?)+[\\s]?\\}[\\s]?" }
+    public static let numberType = "^\(int)$"
+    public static let boolType = "^\(boolTrue)|\(boolFalse)*$"
+    public static let objectType = "^\\{\(wildcard)\\}$"
+    public static let arrayType = "^\\[\(wildcard)\\]$"
+    public static let arrayPattern = "[\\s]?\\[[\\s]?([\\s]?\(allValueOfArray)\\,?[\\s]?)+[\\s]?\\][\\s]?"
+    public static let objectPatternBigObject = "[\\s]?\\{[\\s]?\(string)[\\s]?:([\\s]?\(wildcard)\\,?[\\s]?)+[\\s]?\\}[\\s]?"
     
     // For Parse
-    public static func objectPatternSmallObject() -> String { return "[\\s]?\(string)[\\s]?:[\\s]?\(allValueOfArrayWithWildCard())[\\s]?" }
-    public static func objectKeyPattern() -> String { return "[\\s]?\(string)[\\s]?:[\\s]?" }
-    public static func objectValuePattern() -> String { return "[\\s]?:[\\s]?\(allValueOfArrayWithWildCard())[\\s]?" }
-    public static func arrayPatternSmallArray() -> String { return "(\(string)|\(int)|\(boolTrue)|\(boolFalse)|\(object())|\(array))" }
-    
+    public static let objectPatternSmallObject = "[\\s]?\(string)[\\s]?:[\\s]?\(allValueOfArrayWithWildCard)[\\s]?"
+    public static let objectKeyPattern = "[\\s]?\(string)[\\s]?:[\\s]?"
+    public static let objectValuePattern = "[\\s]?:[\\s]?\(allValueOfArrayWithWildCard)[\\s]?"
+    public static let arrayPatternSmallArray = "(\(string)|\(int)|\(boolTrue)|\(boolFalse)|\(object)|\(array))"
+
 }
