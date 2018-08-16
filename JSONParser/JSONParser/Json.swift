@@ -8,8 +8,8 @@
 
 import Foundation
 
-protocol JsonProtocol {
-    func count() -> (Int,Int,Int,Int,Int)
+protocol Jsonable {
+    func countData() -> (Int,Int,Int,Int,Int)
 }
 
 enum JsonType {

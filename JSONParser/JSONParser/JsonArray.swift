@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonArray:JsonProtocol {
+struct JsonArray:Jsonable {
     private var array:Array<JsonType>
     
     init() {
@@ -19,7 +19,7 @@ struct JsonArray:JsonProtocol {
         self.array = jsonArray
     }
     
-    public func count() -> (Int,Int,Int,Int,Int) {
+    public func countData() -> (Int,Int,Int,Int,Int) {
         var string = 0
         var int = 0
         var bool = 0

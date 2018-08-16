@@ -10,7 +10,7 @@ import Foundation
 
 struct Analysis {
     // 분석 함수
-    public static func analysisJson(to jsonData:String) -> JsonProtocol {
+    public static func analysisJson(to jsonData:String) -> Jsonable {
         // jsonData를 아래서 remove 할 수 없어서 아래와 같이 변수에 넣었습니다.
         var data = jsonData
         

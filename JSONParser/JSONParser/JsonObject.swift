@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonObject:JsonProtocol {
+struct JsonObject:Jsonable {
     private var object:[String:JsonType]
     
     init() {
@@ -19,7 +19,7 @@ struct JsonObject:JsonProtocol {
         self.object = jsonObject
     }
     
-    public func count() -> (Int,Int,Int,Int,Int) {
+    public func countData() -> (Int,Int,Int,Int,Int) {
         var string = 0
         var int = 0
         var bool = 0

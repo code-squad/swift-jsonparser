@@ -13,8 +13,8 @@ struct OutputView {
         print(error.description())
     }
     
-    public static func printJson(to json:JsonProtocol){
-        let (string,int,bool,object,array) = json.count()
+    public static func printJson(to json:Jsonable){
+        let (string,int,bool,object,array) = json.countData()
         
         let totalCount = string + int + bool + object + array
         var message = ""
