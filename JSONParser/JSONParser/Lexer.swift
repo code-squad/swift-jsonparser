@@ -47,29 +47,20 @@ struct Lexer {
         self.rawValue = rawValue
     }
     
-    var type: JSONType {
-        if rawValue.first == Components.arrayOpener.value && rawValue.last == Components.arrayCloser.value {
-            return JSONArray()
-        }
-        
-        return JSONObject()
-    }
-    
     var tokens: [String] {
-        var target = rawValue
         var values:[String] = []
         var token = ""
         var isString = false
         var isObject = false
         var isArray = false
         var doubleQuoteCount = 0 // " " 속 " 를 판단하기 위해
+        var currentIndex = rawValue.startIndex
         
-        if target.first == Components.arrayOpener.value && target.last == Components.arrayCloser.value {
-            target.removeFirst()
-            target.removeLast()
-        }
-        
-        for particle in target {
+        values.append(String(rawValue[currentIndex])) // 객체인지 배열인지를 판단할 첫 토큰 추가
+        while true {
+            guard let nextIndex = next(after: currentIndex) else { break }
+            currentIndex = nextIndex
+            let particle = rawValue[currentIndex]
             switch particle {
             case Components.arrayOpener.value:          // 배열의 시작
                 if !isString {
@@ -77,9 +68,11 @@ struct Lexer {
                 }
                 token += String(particle)
             case Components.arrayCloser.value:
-                token += String(particle)
-                if !isString {
-                    isArray = !isArray
+                if currentIndex != rawValue.index(before: rawValue.endIndex) {
+                    token += String(particle)
+                    if !isString {
+                        isArray = !isArray
+                    }
                 }
             case Components.comma.value:
                 if isString && doubleQuoteCount % 2 == 1 {
@@ -99,9 +92,11 @@ struct Lexer {
                 }
                 token += String(particle)
             case Components.objectCloser.value:
-                token += String(particle)
-                if isObject {
-                    isObject = !isObject                // 현재 객체의 토큰 값이 진행중이라면 객체가 끝났다는 것을 의미
+                if currentIndex != rawValue.index(before: rawValue.endIndex){
+                    token += String(particle)
+                    if isObject {
+                        isObject = !isObject                // 현재 객체의 토큰 값이 진행중이라면 객체가 끝났다는 것을 의미
+                    }
                 }
             case Components.doubleQuote.value:
                 isString = !isString                    // 문자열의 시작과 끝을 의미
@@ -115,6 +110,7 @@ struct Lexer {
                 token += String(particle)
             }
         }
+        
         if token != "" {
             values.append(token)
         }
@@ -122,78 +118,10 @@ struct Lexer {
         return values
     }
     
-    static func extractPairs(from target: String) -> [String:String] {
-        var value = target
-        value.removeFirst()
-        value.removeLast()
-        
-        var values:[String:String] = [:]
-        var token = ""
-        var key = ""
-        var isString = false
-        var isObject = false
-        var isArray = false
-        var isKey = true
-        var doubleQuoteCount = 0 // " " 속 " 를 판단하기 위해
-        
-        for particle in value {
-            switch particle {
-            case Components.arrayOpener.value:          // 배열의 시작
-                if !isString {
-                    isArray = !isArray
-                }
-                token += String(particle)
-            case Components.arrayCloser.value:
-                token += String(particle)
-                if !isString {
-                    isArray = !isArray
-                }
-            case Components.comma.value:
-                if isString && doubleQuoteCount % 2 == 1 {
-                    isString = false                    // "의 개수가 홀수라면 문자열이 끝났음에도 그 다음을 문자열로 판단하기 때문에
-                }
-                
-                if isString || isObject || isArray {
-                    token += String(particle)           // 문자열의 일부이거나 객체라면 토큰에 추가
-                }else {
-                    values[key] = token
-                    token = ""
-                    doubleQuoteCount = 0
-                }
-            case Components.colon.value:
-                if isString || isObject {
-                    token += String(particle)
-                }else {
-                    isKey = !isKey
-                    key = token
-                    token = ""
-                }
-            case Components.objectOpener.value:
-                if !isString {                          // 문자열의 일부라면 토큰에 추가
-                    isObject = !isObject
-                }
-                token += String(particle)
-            case Components.objectCloser.value:
-                token += String(particle)
-                if isObject {
-                    isObject = !isObject                // 현재 객체의 토큰 값이 진행중이라면 객체가 끝났다는 것을 의미
-                }
-            case Components.doubleQuote.value:
-                isString = !isString                    // 문자열의 시작과 끝을 의미
-                token += String(particle)
-                doubleQuoteCount += 1
-            case Components.space.value:
-                if isString || isObject || isArray {    // 문자열의 일부이거나 객체라면 토큰에 추가
-                    token += String(particle)
-                }
-            default:
-                token += String(particle)
-            }
+    private func next(after index: String.Index) -> String.Index? {
+        if index < rawValue.index(before: rawValue.endIndex) {
+            return rawValue.index(after: index)
         }
-        if token != "" {
-            values[key] = token
-        }
-        
-        return values
+        return nil
     }
 }
