@@ -94,11 +94,14 @@ struct JsonParse {
                 if regexMatch.isObject() {
                     jsonArray.append(JsonType.object(regexMatch))
                 }else if regexMatch.isArray() {
-                    jsonArray.append(JsonType.array([JsonType.string(regexMatch)]))
+                    let array = makeArray(to: regexMatch)
+                    jsonArray.append(JsonType.array(array))
                 }else if regexMatch.isBool() {
-                    jsonArray.append(JsonType.bool(Bool(regexMatch)!))
+                    let bool = makeBool(to: regexMatch)
+                    jsonArray.append(JsonType.bool(bool))
                 }else if regexMatch.isNumber() {
-                    jsonArray.append(JsonType.int(Int(regexMatch)!))
+                    let int = makeInt(to: regexMatch)
+                    jsonArray.append(JsonType.int(int))
                 }else {
                     jsonArray.append(JsonType.string(regexMatch))
                 }
@@ -107,4 +110,17 @@ struct JsonParse {
         
         return jsonArray
     }
+    
+    private static func makeBool(to data:String) -> Bool {
+        return Bool(data)!
+    }
+    
+    private static func makeInt(to data:String) -> Int {
+        return Int(data)!
+    }
+    
+    private static func makeArray(to data:String) -> Array<JsonType> {
+        return [JsonType.string(data)]
+    }
+    
 }
