@@ -59,19 +59,28 @@ enum JSONRegex {
 struct Formatter {
     
     // 형식이 올바르지 않다면 nil을 반환
-    static func parse(from tokens: [String], to type: JSONType) throws -> JSONType {
-        var json = type
+    static func parse(from tokens: [String]) throws -> JSONType {
+        var tokens = tokens
+        guard let typeIdentifier = tokens.first else { throw JSONParserError.invalidFormat }
+        tokens.removeFirst()
+        var json = parseType(from: typeIdentifier)
         if json is JSONArray { // 배열의 형태라면 바로 값들로부터 JSONValue를 생성 시도
             do {
                 json.values = try generateJSONValue(from: tokens)
             }catch let err {
                 throw err
             }
-        }else if json is JSONObject { // 단일 객체의 형태라면 먼저 객체 안에서 키-값 쌍을 딕셔너리 형태로 묶어 추출
-            let object = tokens[0] // 단일 객체이니 0 번째 인덱스
-            let parsedObject = Lexer.extractPairs(from: object) // 객체에서 키-값 쌍을 분리하여 하나의 딕셔너리로 추출
-            let keys = parsedObject.keys.map {String($0)} // [키]를 따로 추출
-            let values = parsedObject.values.map {String($0)} // [값]을 따로 추출
+        }else if json is JSONObject {
+            // 객체 안의 키-값 쌍도 나뉘어져
+            var rawObject:[String:String] = [:]
+            for token in tokens {
+                guard let pair = extractPair(from: token) else { throw JSONParserError.invalidFormat}
+                rawObject[pair.key] = pair.value
+            }
+            
+            let keys = rawObject.keys.map {String($0)}
+            let values = rawObject.values.map {String($0)}
+            
             do {
                 var object:[String:JSONValueType] = [:]
                 let validJSONTypeValues = try generateJSONValue(from: values) // 따로 추출한 [값]으로부터 JSONValue 추출, 이중 중첩 탐지.
@@ -85,6 +94,10 @@ struct Formatter {
         }
         
         return json
+    }
+    
+    private static func parseType(from identifier: String) -> JSONType {
+        return identifier == String(Components.arrayOpener.value) ? JSONArray() : JSONObject()
     }
     
     // 인자로 넘어오는 토큰들로부터 JSONValueType 배열 타입을 반환
@@ -224,6 +237,28 @@ struct Formatter {
         }
         
         return values
+    }
+    
+    private static func extractPair(from target: String) -> (key: String, value: String)? {
+        var currentIndex = target.startIndex
+        var isString = false
+        while currentIndex != target.endIndex {
+            let particle = target[currentIndex]
+            switch particle {
+            case Components.doubleQuote.value:
+                isString = !isString
+                currentIndex = target.index(after: currentIndex)
+            case Components.colon.value:
+                if isString {
+                    currentIndex = target.index(after: currentIndex)
+                }else{
+                    return (String(target[target.startIndex..<currentIndex]), String(target[target.index(after: currentIndex)..<target.endIndex]))
+                }
+            default:
+                currentIndex = target.index(after: currentIndex)
+            }
+        }
+        return nil
     }
     
     /*
