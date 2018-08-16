@@ -12,8 +12,10 @@ struct Main {
     static func start(){
         do {
             let input = try InputView.read()
-            let result = try Tokenizer.parse(input)
-            let values = try Formatter.generateJSON(from: result.tokens, result.type)
+            let lexer = Lexer(for: input)
+            let tokens = lexer.tokens
+            let type = lexer.type
+            let values = try Formatter.parse(from: tokens, to: type)
             OutputView.display(values)
         }catch let error as JSONParserError {
             OutputView.display(error)

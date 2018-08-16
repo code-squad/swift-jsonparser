@@ -59,9 +59,8 @@ enum JSONRegex {
 struct Formatter {
     
     // 형식이 올바르지 않다면 nil을 반환
-    static func generateJSON(from tokens: [String], _ type: JSONType) throws -> JSONType {
+    static func parse(from tokens: [String], to type: JSONType) throws -> JSONType {
         var json = type
-        
         if json is JSONArray { // 배열의 형태라면 바로 값들로부터 JSONValue를 생성 시도
             do {
                 json.values = try generateJSONValue(from: tokens)
@@ -70,7 +69,7 @@ struct Formatter {
             }
         }else if json is JSONObject { // 단일 객체의 형태라면 먼저 객체 안에서 키-값 쌍을 딕셔너리 형태로 묶어 추출
             let object = tokens[0] // 단일 객체이니 0 번째 인덱스
-            let parsedObject = Tokenizer.parseObject(object) // 객체에서 키-값 쌍을 분리하여 하나의 딕셔너리로 추출
+            let parsedObject = Lexer.extractPairs(from: object) // 객체에서 키-값 쌍을 분리하여 하나의 딕셔너리로 추출
             let keys = parsedObject.keys.map {String($0)} // [키]를 따로 추출
             let values = parsedObject.values.map {String($0)} // [값]을 따로 추출
             do {
