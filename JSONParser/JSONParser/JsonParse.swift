@@ -38,7 +38,8 @@ struct JsonParse {
             
             // save [String:JsonType]
             if value.isObject() {
-                jsonObject.updateValue(JsonType.object(value), forKey: key)
+                let object = makeObject(to: value)
+                jsonObject.updateValue(JsonType.object(object), forKey: key)
             }else if value.isArray() {
                 let array = makeArray(to: value)
                 jsonObject.updateValue(JsonType.array(array), forKey: key)
@@ -127,7 +128,8 @@ struct JsonParse {
         
         for regexMatch in regexMatches {
             if regexMatch.isObject() {
-                jsonArray.append(JsonType.object(regexMatch))
+                let object = makeObject(to: regexMatch)
+                jsonArray.append(JsonType.object(object))
             }else if regexMatch.isArray() {
                 let array = makeArray(to: regexMatch)
                 jsonArray.append(JsonType.array(array))
@@ -153,8 +155,33 @@ struct JsonParse {
         return Int(data)!
     }
     
-    private static func makeArray(to data:String) -> Array<JsonType> {
+    private static func makeArray(to data:String) -> [JsonType] {
         return [JsonType.string(data)]
+    }
+    
+    private static func makeObject(to data:String) -> [String:JsonType] {
+        guard let key = parseKey(to: data) else { return [String:JsonType]() }
+        guard let value = parseValue(to: data) else { return [String:JsonType]() }
+        
+        var object = [String:JsonType]()
+        
+        if value.isObject() {
+            let smallObject = makeObject(to: value)
+            object.updateValue(JsonType.object(smallObject), forKey: key)
+        }else if value.isArray() {
+            let array = makeArray(to: value)
+            object.updateValue(JsonType.array(array), forKey: key)
+        }else if value.isBool() {
+            let bool = makeBool(to: value)
+            object.updateValue(JsonType.bool(bool), forKey: key)
+        }else if value.isNumber() {
+            let int = makeInt(to: value)
+            object.updateValue(JsonType.int(int), forKey: key)
+        }else {
+            object.updateValue(JsonType.string(value), forKey: key)
+        }
+        
+        return object
     }
     
 }
