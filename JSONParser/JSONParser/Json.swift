@@ -12,7 +12,7 @@ protocol Jsonable {
     func countData() -> (Int,Int,Int,Int,Int)
 }
 
-enum JsonType {
+enum JsonType:Equatable {
     case string(String)
     case int(Int)
     case bool(Bool)

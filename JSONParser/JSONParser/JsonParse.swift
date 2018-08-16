@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonParse {
+struct JsonParse:Equatable {
     public static func parseJsonObject(to jsonData:String) -> [String:JsonType] {
         var jsonObject = [String:JsonType]()
         
