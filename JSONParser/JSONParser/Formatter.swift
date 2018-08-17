@@ -71,26 +71,17 @@ struct Formatter {
                 throw err
             }
         }else if json is JSONObject {
-            // 객체 안의 키-값 쌍도 나뉘어져
-            var rawObject:[String:String] = [:]
+            var object:[String:JSONValueType] = [:]
             for token in tokens {
-                guard let pair = extractPair(from: token) else { throw JSONParserError.invalidFormat}
-                rawObject[pair.key] = pair.value
-            }
-            
-            let keys = rawObject.keys.map {String($0)}
-            let values = rawObject.values.map {String($0)}
-            
-            do {
-                var object:[String:JSONValueType] = [:]
-                let validJSONTypeValues = try generateJSONValue(from: values) // 따로 추출한 [값]으로부터 JSONValue 추출, 이중 중첩 탐지.
-                for (index, value) in keys.enumerated() { // 이중 중첩이 존재하지 않는다면 따로 추출한 키와 생성한 JSONValue 배열로 딕셔너리 생성
-                    object[value] = validJSONTypeValues[index]
+                guard let pair = extractPair(from: token) else { throw JSONParserError.invalidFormat }
+                do {
+                    let validJSONValueTypes = try generateJSONValue(from: [pair.value])
+                    object[pair.key] = validJSONValueTypes[0]
+                } catch let err {
+                    throw err
                 }
-                json.values = [JSONValueType.object(object)] // 해당 딕셔너리를 다시 JSONValue로 wrapping하여 최종 JSONType의 values로 할당
-            }catch let err {
-                throw err
             }
+            json.values = [JSONValueType.object(object)]
         }
         
         return json
