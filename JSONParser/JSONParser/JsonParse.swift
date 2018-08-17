@@ -10,7 +10,7 @@ import Foundation
 
 struct JsonParse:Equatable {
     
-    public static func parseJsonObject(to jsonData:String) -> [String:JsonType] {
+    public static func makeObject(to jsonData:String) -> [String:JsonType] {
         
         var elements = jsonData.trimmingCharacters(in: .whitespaces)
         
@@ -26,13 +26,13 @@ struct JsonParse:Equatable {
                 string.substring(with: $0.range)
             }
             
-            jsonObject = makeJsonObject(to: regexMatches)
+            jsonObject = parseObject(to: regexMatches)
         }
         
         return jsonObject
     }
     
-    private static func makeJsonObject(to regexMatches:[String]) -> [String:JsonType] {
+    private static func parseObject(to regexMatches:[String]) -> [String:JsonType] {
         var jsonObject = [String:JsonType]()
         
         for regexMatch in regexMatches {
@@ -45,10 +45,10 @@ struct JsonParse:Equatable {
             
             // save [String:JsonType]
             if value.isObject() {
-                let object = parseJsonObject(to: value)
+                let object = makeObject(to: value)
                 jsonObject.updateValue(JsonType.object(object), forKey: key)
             }else if value.isArray() {
-                let array = parseJsonArray(to: value)
+                let array = makeArray(to: value)
                 jsonObject.updateValue(JsonType.array(array), forKey: key)
             }else if value.isBool() {
                 let bool = makeBool(to: value)
@@ -64,7 +64,7 @@ struct JsonParse:Equatable {
         return jsonObject
     }
     
-    public static func parseJsonArray(to jsonData:String) -> [JsonType] {
+    public static func makeArray(to jsonData:String) -> [JsonType] {
         
         var elements = jsonData.trimmingCharacters(in: .whitespaces)
         
@@ -80,21 +80,21 @@ struct JsonParse:Equatable {
                 string.substring(with: $0.range)
             }
             
-            jsonArray = makeJsonArray(to: regexMatches)
+            jsonArray = parseArray(to: regexMatches)
         }
         
         return jsonArray
     }
     
-    private static func makeJsonArray(to regexMatches:[String]) -> [JsonType] {
+    private static func parseArray(to regexMatches:[String]) -> [JsonType] {
         var jsonArray = [JsonType]()
         
         for regexMatch in regexMatches {
             if regexMatch.isObject() {
-                let object = parseJsonObject(to: regexMatch)
+                let object = makeObject(to: regexMatch)
                 jsonArray.append(JsonType.object(object))
             }else if regexMatch.isArray() {
-                let array = parseJsonArray(to: regexMatch)
+                let array = makeArray(to: regexMatch)
                 jsonArray.append(JsonType.array(array))
             }else if regexMatch.isBool() {
                 let bool = makeBool(to: regexMatch)

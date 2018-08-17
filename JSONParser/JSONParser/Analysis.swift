@@ -14,7 +14,7 @@ struct Analysis {
         // 배열데이터
         if jsonData.isArray(){
             // parse
-            let parseArray = JsonParse.parseJsonArray(to: jsonData)
+            let parseArray = JsonParse.makeArray(to: jsonData)
             
             // make
             let jsonArray = JsonArray.init(jsonArray: parseArray)
@@ -23,7 +23,7 @@ struct Analysis {
         // 객체데이터
         }else{
             // parse
-            let parseObject = JsonParse.parseJsonObject(to: jsonData)
+            let parseObject = JsonParse.makeObject(to: jsonData)
             
             // make
             let jsonObject = JsonObject.init(jsonObject: parseObject)

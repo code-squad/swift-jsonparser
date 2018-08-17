@@ -162,17 +162,17 @@ class UnitTestJSONParser: XCTestCase {
         XCTAssertNoThrow(try GrammarChecker.isValidate(to: input))
     }
     
-    func test_parseJsonObject_Pass(){
+    func test_makeObject_Pass(){
         let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5 }"
         var object = [String:JsonType]()
         object.updateValue(JsonType.string("\"KIM JUNG\""), forKey: "\"name\"")
         object.updateValue(JsonType.string("\"JK\""), forKey: "\"alias\"")
         let intValue = JsonParse.makeInt(to: "5")
         object.updateValue(JsonType.int(intValue), forKey: "\"level\"")
-        XCTAssertEqual(JsonParse.parseJsonObject(to: input), object)
+        XCTAssertEqual(JsonParse.makeObject(to: input), object)
     }
     
-    func test_parseJsonArray_Pass(){
+    func test_makeArray_Pass(){
         let input = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
         var array = [JsonType]()
         let intValue1 = JsonParse.makeInt(to: "10")
@@ -186,20 +186,20 @@ class UnitTestJSONParser: XCTestCase {
         array.append(JsonType.int(intValue3))
         array.append(JsonType.string("\"crong\""))
         array.append(JsonType.bool(boolValue))
-        XCTAssertEqual(JsonParse.parseJsonArray(to: input), array)
+        XCTAssertEqual(JsonParse.makeArray(to: input), array)
     }
     
-    func test_parseJsonArray_Pass_배열안에객체배열중첩일때(){
+    func test_makeArray_Pass_배열안에객체배열중첩일때(){
         let input = "[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]"
         var array = [JsonType]()
-        let objectValue = JsonParse.parseJsonObject(to: "{ \"name\" : \"master's course\", \"opened\" : true }")
+        let objectValue = JsonParse.makeObject(to: "{ \"name\" : \"master's course\", \"opened\" : true }")
         array.append(JsonType.object(objectValue))
-        let arrayValue = JsonParse.parseJsonArray(to: "[ \"java\", \"javascript\", \"swift\" ]")
+        let arrayValue = JsonParse.makeArray(to: "[ \"java\", \"javascript\", \"swift\" ]")
         array.append(JsonType.array(arrayValue))
-        XCTAssertEqual(JsonParse.parseJsonArray(to: input), array)
+        XCTAssertEqual(JsonParse.makeArray(to: input), array)
     }
     
-    func test_parseJsonArray_Pass_배열안에배열중첩일때(){
+    func test_makeArray_Pass_배열안에배열중첩일때(){
         let input = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, [ \"java\", \"javascript\", \"swift\" ] ]"
         var array = [JsonType]()
         let intValue1 = JsonParse.makeInt(to: "10")
@@ -213,12 +213,12 @@ class UnitTestJSONParser: XCTestCase {
         array.append(JsonType.int(intValue3))
         array.append(JsonType.string("\"crong\""))
         array.append(JsonType.bool(boolValue))
-        let arrayValue = JsonParse.parseJsonArray(to: "[ \"java\", \"javascript\", \"swift\" ]")
+        let arrayValue = JsonParse.makeArray(to: "[ \"java\", \"javascript\", \"swift\" ]")
         array.append(JsonType.array(arrayValue))
-        XCTAssertEqual(JsonParse.parseJsonArray(to: input), array)
+        XCTAssertEqual(JsonParse.makeArray(to: input), array)
     }
     
-    func test_parseJsonArray_Pass_배열안에객체중첩일때(){
+    func test_makeArray_Pass_배열안에객체중첩일때(){
         let input = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true } ]"
         var array = [JsonType]()
         let intValue1 = JsonParse.makeInt(to: "10")
@@ -232,33 +232,33 @@ class UnitTestJSONParser: XCTestCase {
         array.append(JsonType.int(intValue3))
         array.append(JsonType.string("\"crong\""))
         array.append(JsonType.bool(boolValue))
-        let objectValue = JsonParse.parseJsonObject(to: "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }")
+        let objectValue = JsonParse.makeObject(to: "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }")
         array.append(JsonType.object(objectValue))
-        XCTAssertEqual(JsonParse.parseJsonArray(to: input), array)
+        XCTAssertEqual(JsonParse.makeArray(to: input), array)
     }
     
-    func test_parseJsonObject_Pass_객체안에배열중첩일때(){
+    func test_makeObject_Pass_객체안에배열중첩일때(){
         let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
         var object = [String:JsonType]()
         object.updateValue(JsonType.string("\"KIM JUNG\""), forKey: "\"name\"")
         object.updateValue(JsonType.string("\"JK\""), forKey: "\"alias\"")
         let intValue = JsonParse.makeInt(to: "5")
         object.updateValue(JsonType.int(intValue), forKey: "\"level\"")
-        let arrayValue = JsonParse.parseJsonArray(to: "[\"hana\", \"hayul\", \"haun\"]")
+        let arrayValue = JsonParse.makeArray(to: "[\"hana\", \"hayul\", \"haun\"]")
         object.updateValue(JsonType.array(arrayValue), forKey: "\"children\"")
-        XCTAssertEqual(JsonParse.parseJsonObject(to: input), object)
+        XCTAssertEqual(JsonParse.makeObject(to: input), object)
     }
     
-    func test_parseJsonObject_Pass_객체안에객체중첩일때(){
+    func test_makeObject_Pass_객체안에객체중첩일때(){
         let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true } }"
         var object = [String:JsonType]()
         object.updateValue(JsonType.string("\"KIM JUNG\""), forKey: "\"name\"")
         object.updateValue(JsonType.string("\"JK\""), forKey: "\"alias\"")
         let intValue = JsonParse.makeInt(to: "5")
         object.updateValue(JsonType.int(intValue), forKey: "\"level\"")
-        let objectValue = JsonParse.parseJsonObject(to: "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }")
+        let objectValue = JsonParse.makeObject(to: "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }")
         object.updateValue(JsonType.object(objectValue), forKey: "\"children\"")
-        XCTAssertEqual(JsonParse.parseJsonObject(to: input), object)
+        XCTAssertEqual(JsonParse.makeObject(to: input), object)
     }
     
     
