@@ -9,13 +9,20 @@
 import Foundation
 
 struct JsonParse:Equatable {
+    
     public static func parseJsonObject(to jsonData:String) -> [String:JsonType] {
+        
+        var elements = jsonData.trimmingCharacters(in: .whitespaces)
+        
+        elements.removeFirst()
+        elements.removeLast()
+        
         var jsonObject = [String:JsonType]()
         
         if let regex = try? NSRegularExpression(pattern: Regex.objectPatternSmallObject){
-            let string = jsonData as NSString
+            let string = elements as NSString
             
-            let regexMatches = regex.matches(in: jsonData, options: [], range: NSRange(location: 0, length: string.length)).map {
+            let regexMatches = regex.matches(in: elements, options: [], range: NSRange(location: 0, length: string.length)).map {
                 string.substring(with: $0.range)
             }
             
@@ -38,10 +45,10 @@ struct JsonParse:Equatable {
             
             // save [String:JsonType]
             if value.isObject() {
-                let object = makeObject(to: value)
+                let object = parseJsonObject(to: value)
                 jsonObject.updateValue(JsonType.object(object), forKey: key)
             }else if value.isArray() {
-                let array = makeArray(to: value)
+                let array = parseJsonArray(to: value)
                 jsonObject.updateValue(JsonType.array(array), forKey: key)
             }else if value.isBool() {
                 let bool = makeBool(to: value)
@@ -52,10 +59,55 @@ struct JsonParse:Equatable {
             }else {
                 jsonObject.updateValue(JsonType.string(value), forKey: key)
             }
-            
         }
         
         return jsonObject
+    }
+    
+    public static func parseJsonArray(to jsonData:String) -> [JsonType] {
+        
+        var elements = jsonData.trimmingCharacters(in: .whitespaces)
+        
+        elements.removeFirst()
+        elements.removeLast()
+        
+        var jsonArray = [JsonType]()
+        
+        if let regex = try? NSRegularExpression(pattern: Regex.arrayPatternSmallArray){
+            let string = elements as NSString
+            
+            let regexMatches = regex.matches(in: elements, options: [], range: NSRange(location: 0, length: string.length)).map {
+                string.substring(with: $0.range)
+            }
+            
+            jsonArray = makeJsonArray(to: regexMatches)
+        }
+        
+        return jsonArray
+    }
+    
+    private static func makeJsonArray(to regexMatches:[String]) -> [JsonType] {
+        var jsonArray = [JsonType]()
+        
+        for regexMatch in regexMatches {
+            if regexMatch.isObject() {
+                let object = parseJsonObject(to: regexMatch)
+                jsonArray.append(JsonType.object(object))
+            }else if regexMatch.isArray() {
+                let array = parseJsonArray(to: regexMatch)
+                jsonArray.append(JsonType.array(array))
+            }else if regexMatch.isBool() {
+                let bool = makeBool(to: regexMatch)
+                jsonArray.append(JsonType.bool(bool))
+            }else if regexMatch.isNumber() {
+                let int = makeInt(to: regexMatch)
+                jsonArray.append(JsonType.int(int))
+            }else {
+                jsonArray.append(JsonType.string(regexMatch))
+            }
+        }
+        
+        return jsonArray
     }
     
     private static func trimColon(first:String , last:String) -> (String, String) {
@@ -107,81 +159,12 @@ struct JsonParse:Equatable {
         return nil
     }
     
-    public static func parseJsonArray(to jsonData:String) -> [JsonType] {
-        var jsonArray = [JsonType]()
-        
-        if let regex = try? NSRegularExpression(pattern: Regex.arrayPatternSmallArray){
-            let string = jsonData as NSString
-            
-            let regexMatches = regex.matches(in: jsonData, options: [], range: NSRange(location: 0, length: string.length)).map {
-                string.substring(with: $0.range)
-            }
-            
-            jsonArray = makeJsonArray(to: regexMatches)
-        }
-        
-        return jsonArray
-    }
-    
-    private static func makeJsonArray(to regexMatches:[String]) -> [JsonType] {
-        var jsonArray = [JsonType]()
-        
-        for regexMatch in regexMatches {
-            if regexMatch.isObject() {
-                let object = makeObject(to: regexMatch)
-                jsonArray.append(JsonType.object(object))
-            }else if regexMatch.isArray() {
-                let array = makeArray(to: regexMatch)
-                jsonArray.append(JsonType.array(array))
-            }else if regexMatch.isBool() {
-                let bool = makeBool(to: regexMatch)
-                jsonArray.append(JsonType.bool(bool))
-            }else if regexMatch.isNumber() {
-                let int = makeInt(to: regexMatch)
-                jsonArray.append(JsonType.int(int))
-            }else {
-                jsonArray.append(JsonType.string(regexMatch))
-            }
-        }
-        
-        return jsonArray
-    }
-    
-    private static func makeBool(to data:String) -> Bool {
+    public static func makeBool(to data:String) -> Bool {
         return Bool(data)!
     }
     
-    private static func makeInt(to data:String) -> Int {
+    public static func makeInt(to data:String) -> Int {
         return Int(data)!
-    }
-    
-    private static func makeArray(to data:String) -> [JsonType] {
-        return [JsonType.string(data)]
-    }
-    
-    private static func makeObject(to data:String) -> [String:JsonType] {
-        guard let key = parseKey(to: data) else { return [String:JsonType]() }
-        guard let value = parseValue(to: data) else { return [String:JsonType]() }
-        
-        var object = [String:JsonType]()
-        
-        if value.isObject() {
-            let smallObject = makeObject(to: value)
-            object.updateValue(JsonType.object(smallObject), forKey: key)
-        }else if value.isArray() {
-            let array = makeArray(to: value)
-            object.updateValue(JsonType.array(array), forKey: key)
-        }else if value.isBool() {
-            let bool = makeBool(to: value)
-            object.updateValue(JsonType.bool(bool), forKey: key)
-        }else if value.isNumber() {
-            let int = makeInt(to: value)
-            object.updateValue(JsonType.int(int), forKey: key)
-        }else {
-            object.updateValue(JsonType.string(value), forKey: key)
-        }
-        
-        return object
     }
     
 }

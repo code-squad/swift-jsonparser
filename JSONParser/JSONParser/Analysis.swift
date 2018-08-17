@@ -11,28 +11,19 @@ import Foundation
 struct Analysis {
     // 분석 함수
     public static func analysisJson(to jsonData:String) -> Jsonable {
-        // jsonData를 아래서 remove 할 수 없어서 아래와 같이 변수에 넣었습니다.
-        var data = jsonData
-        
-        if data.isArray(){
-            // 배열데이터
-            data.removeFirst()
-            data.removeLast()
-            
+        // 배열데이터
+        if jsonData.isArray(){
             // parse
-            let parseArray = JsonParse.parseJsonArray(to: data)
+            let parseArray = JsonParse.parseJsonArray(to: jsonData)
             
             // make
             let jsonArray = JsonArray.init(jsonArray: parseArray)
             return jsonArray
-            
+        
+        // 객체데이터
         }else{
-            // 객체데이터
-            data.removeFirst()
-            data.removeLast()
-            
             // parse
-            let parseObject = JsonParse.parseJsonObject(to: data)
+            let parseObject = JsonParse.parseJsonObject(to: jsonData)
             
             // make
             let jsonObject = JsonObject.init(jsonObject: parseObject)
