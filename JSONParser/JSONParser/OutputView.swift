@@ -52,15 +52,25 @@ struct OutputView {
     }
     
     private static func presentResult(of json: JSONType) -> String {
-        var text = ""
         if json is JSONObject {
             let object = json.values[0]
             return presentValue(from: object)
         }
         
         let array = json.values
-        
-        return ""
+        return presentArray(from: array)
+    }
+    
+    private static func presentArray(from array: [JSONValueType]) -> String {
+        var text = "["
+        for (index, element) in array.enumerated() {
+            text += presentValue(from: element)
+            if index != array.count - 1 {
+                text += ","
+            }
+        }
+        text += "]"
+        return text
     }
     
     private static func presentObject(from objects: [[String:JSONValueType]]) -> String {
@@ -101,7 +111,7 @@ struct OutputView {
         case .object(let objectValue):
             return presentObject(from: objectValue)
         case .array(let arrayValue):
-            return "array"
+            return presentArray(from: arrayValue)
         }
     }
     
