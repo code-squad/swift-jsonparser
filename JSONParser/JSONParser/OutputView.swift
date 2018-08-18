@@ -10,7 +10,8 @@ import Foundation
 
 struct OutputView {
     
-    private static var stage: Int = 0
+    private static var stageOfObject: Int = 0
+    private static var stageOfArray: Int = 0
     
     static func display(_ values: JSONType){
         print(text(from: values))
@@ -62,20 +63,27 @@ struct OutputView {
     }
     
     private static func presentArray(from array: [JSONValueType]) -> String {
-        var text = "["
+        var text = "\(stageOfArray > 0 ? "\n" : "")\(tab(at: stageOfArray - 1))["
         for (index, element) in array.enumerated() {
+            
+            switch element {
+            case .array(_), .object(_):
+                stageOfArray += 1
+            default: break
+            }
+            
             text += presentValue(from: element)
             if index != array.count - 1 {
                 text += ","
             }
         }
-        text += "]"
+        text += "]\(stageOfArray > 0 ? "\n" : "")"
         return text
     }
     
     private static func presentObject(from objects: [[String:JSONValueType]]) -> String {
-        stage += 1
-        let currentStage = stage
+        stageOfObject += 1
+        let currentStage = stageOfObject + stageOfArray
         
         var text = "{"
         for (index, object) in objects.enumerated() {
