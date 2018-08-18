@@ -71,17 +71,17 @@ struct Formatter {
                 throw err
             }
         }else if json is JSONObject {
-            var object:[String:JSONValueType] = [:]
+            var objects:[[String:JSONValueType]] = []
             for token in tokens {
                 guard let pair = extractPair(from: token) else { throw JSONParserError.invalidFormat }
                 do {
                     let validJSONValueTypes = try generateJSONValue(from: [pair.value])
-                    object[pair.key] = validJSONValueTypes[0]
+                    objects.append([pair.key:validJSONValueTypes[0]])
                 } catch let err {
                     throw err
                 }
             }
-            json.values = [JSONValueType.object(object)]
+            json.values = [JSONValueType.object(objects)]
         }
         
         return json
@@ -169,8 +169,8 @@ struct Formatter {
     }
     
     // 토큰의 형식이 객체 형식이라면 JSONValue.object로 wrapping하기 위해 가공
-    private static func generateObject(from target: String) throws -> [String:JSONValueType] {
-        var values: [String:JSONValueType] = [:]
+    private static func generateObject(from target: String) throws -> [[String:JSONValueType]] {
+        var values: [[String:JSONValueType]] = []
         var value = ""
         var isString = false
         var isKey = false
@@ -189,7 +189,7 @@ struct Formatter {
                     value += String(character)  // 문자열의 일부면 추가
                 }else {
                     do {
-                        values[key] = try wrapUp(with: value)
+                        values.append([key: try wrapUp(with: value)])
                         value = ""              // 초기화
                         key = ""
                     }catch let err {
@@ -208,8 +208,9 @@ struct Formatter {
                     value += String(character)  // 문자열의 일부면 추가
                 }else {
                     do {
-                        values[key] = try wrapUp(with: value)
+                        values.append([key: try wrapUp(with: value)])
                         value = ""
+                        key = ""
                     } catch let err {
                         throw err
                     }

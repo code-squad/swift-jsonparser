@@ -19,7 +19,7 @@ enum JSONValueType {
     case string(String)
     case int(Int)
     case bool(Bool)
-    case object([String:JSONValueType])
+    case object([[String:JSONValueType]])
     case array([JSONValueType])
 }
 
@@ -70,9 +70,10 @@ struct JSONObject: JSONType {
         var array = 0
         
         switch values[0] {
-        case .object(let jsonObject):
-            jsonObject.values.forEach { (type) in
-                switch type {
+        case .object(let objects):
+            objects.forEach {
+                let objectValues = $0.values.map {$0}
+                switch objectValues[0] {
                 case .string(_):
                     string += 1
                 case .int(_):
