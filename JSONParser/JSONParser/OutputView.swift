@@ -10,8 +10,11 @@ import Foundation
 
 struct OutputView {
     
+    private static var stage: Int = 0
+    
     static func display(_ values: JSONType){
         print(text(from: values))
+        print(presentResult(of: values))
     }
     
     static func display(_ error: JSONParserError) {
@@ -46,6 +49,74 @@ struct OutputView {
         text += "가 존재합니다."
         
         return text
+    }
+    
+    private static func presentResult(of json: JSONType) -> String {
+        var text = ""
+        if json is JSONObject {
+            let object = json.values[0]
+            return presentValue(from: object)
+        }
+        
+        let array = json.values
+        
+        return ""
+    }
+    
+    private static func presentObject(from objects: [[String:JSONValueType]]) -> String {
+        stage += 1
+        let currentStage = stage
+        
+        var text = "{"
+        for (index, object) in objects.enumerated() {
+            text += presentPair(from: object, stage: currentStage)
+            
+            if index != objects.count - 1 {
+                text += ","
+            }
+        }
+        
+        text += "\n\(tab(at: currentStage - 1))}"
+        
+        return text
+    }
+    
+    private static func presentPair(from pair: [String:JSONValueType], stage: Int) -> String {
+        var text = ""
+        let keys = pair.keys.map {String($0)}
+        let values = pair.values.map {$0}
+        
+        text += "\n\(tab(at: stage))\(keys[0]) : \(presentValue(from: values[0]))"
+        return text
+    }
+    
+    private static func presentValue(from value: JSONValueType) -> String {
+        switch value {
+        case .string(let stringValue):
+            return stringValue
+        case .int(let integerValue):
+            return "\(integerValue)"
+        case .bool(let booleanValue):
+            return "\(booleanValue)"
+        case .object(let objectValue):
+            return presentObject(from: objectValue)
+        case .array(let arrayValue):
+            return "array"
+        }
+    }
+    
+    private static func tab(at stage: Int) -> String {
+        if stage < 0 {
+            return ""
+        }
+        
+        var tabs = ""
+        
+        for _ in (0..<stage) {
+            tabs += "\t"
+        }
+        
+        return tabs
     }
 }
 
