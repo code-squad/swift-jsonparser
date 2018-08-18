@@ -29,7 +29,7 @@ struct Regex {
     private static let boolTrue = "true"
     private static let boolFalse = "false"
     private static let array = "\\[.*?\\]"
-    private static let object = "\\{[\\s]?\(stringWithWildcard)[\\s]?:[\\s]?(\(stringWithWildcard)|\(int)|\(boolTrue)|\(boolFalse))[\\s]?\\}"
+    private static let object = "\\{[\\s]?\(stringWithWildcard)[\\s]?:[\\s]?(\(stringWithWildcard)|\(int)|\(boolTrue)|\(boolFalse)|\(array))[\\s]?\\}"
     private static let allValueOfArray = "(\(string)|\(int)|\(boolTrue)|\(boolFalse)|\(object)|\(array))"
     private static let allValueOfArrayWithWildCard = "(\(stringWithWildcard)|\(int)|\(boolTrue)|\(boolFalse)|\(object)|\(array))"
     
