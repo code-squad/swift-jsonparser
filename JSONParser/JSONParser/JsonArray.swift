@@ -42,4 +42,17 @@ struct JsonArray:Jsonable {
         }
         return (string, int, bool, object, array)
     }
+    
+    public func generateData() -> String {
+        /*
+         배열 안에 string, int, bool 중에 하나라도 있는 경우 : 시작 intent 0
+         배열 안에 object, array 만 있는 경우 : 시작 intent 1
+         */
+        var intent = 1
+        let (string,int,bool,_,_) = self.countData()
+        if string > 1 || int > 1 || bool > 1 {
+            intent = 0
+        }
+        return self.makeArray(intent: intent, elements: self.array)
+    }
 }

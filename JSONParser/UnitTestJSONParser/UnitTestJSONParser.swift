@@ -261,10 +261,68 @@ class UnitTestJSONParser: XCTestCase {
         XCTAssertEqual(JsonParse.makeObject(to: input), object)
     }
     
+    func test_main_Array_Pass(){
+        let input = "[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]"
+        let example = """
+        [{
+                \"name\": \"master's course\",
+                \"opened\": true
+            },
+            [\"java\", \"javascript\", \"swift\"]
+        ]
+        """
+        print(example)
+        XCTAssertFalse(analyzeJson(to: input))
+    }
+//    [ 10, "jk", 4, "314", 99, "crong", false, [ 10, "jk", 4, "314", 99, "crong", false ] , { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true } ]
+    func test_main_Array_Pass2(){
+        let input = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, [ 10, \"jk\", 4, \"314\", 99, \"crong\", false ] , { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true } ]"
+        let example = """
+        [10, "jk", 4, "314", 99, "crong", false, [10, "jk", 4, "314", 99, "crong", false], {
+            "name": "KIM JUNG",
+            "alias": "JK",
+            "level": 5,
+            "married": true
+        }]
+        """
+        print(example)
+        XCTAssertFalse(analyzeJson(to: input))
+    }
     
+    func test_main_Object_Pass(){
+        let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
+        let example = """
+        {
+            \"name\": \"KIM JUNG\",
+            \"alias\": \"JK\",
+            \"level\": 5,
+            "children": [\"hana\", \"hayul\", \"haun\"]
+        }
+        """
+        print(example)
+        XCTAssertFalse(analyzeJson(to: input))
+    }
+//    { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "children" : ["hana", "hayul", "haun"], "object" : { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "children" : ["hana", "hayul", "haun"] } }
     
-    
-    
+    func test_main_Object_Pass2(){
+        let input = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"], \"object\" : { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] } }"
+        let example = """
+        {
+            "name": "KIM JUNG",
+            "alias": "JK",
+            "level": 5,
+            "children": ["hana", "hayul", "haun"],
+            "object": {
+                "name": "KIM JUNG",
+                "alias": "JK",
+                "level": 5,
+                "children": ["hana", "hayul", "haun"]
+            }
+        }
+        """
+        print(example)
+        XCTAssertFalse(analyzeJson(to: input))
+    }
     
     
     
