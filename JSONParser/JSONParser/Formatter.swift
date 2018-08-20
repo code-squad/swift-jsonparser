@@ -63,32 +63,27 @@ struct Formatter {
         var tokens = tokens
         guard let typeIdentifier = tokens.first else { throw JSONParserError.invalidFormat }
         tokens.removeFirst()
-        var json = parseType(from: typeIdentifier)
-        if json is JSONArray { // 배열의 형태라면 바로 값들로부터 JSONValue를 생성 시도
+        
+        if typeIdentifier == String(Components.arrayOpener.value) { // Array
             do {
-                json.values = try generateJSONValue(from: tokens)
+                let values = try generateJSONValue(from: tokens)
+                return JSONArray(values: JSONValueType.array(values))
             }catch let err {
                 throw err
             }
-        }else if json is JSONObject {
-            var objects:[[String:JSONValueType]] = []
-            for token in tokens {
-                guard let pair = extractPair(from: token) else { throw JSONParserError.invalidFormat }
-                do {
-                    let validJSONValueTypes = try generateJSONValue(from: [pair.value])
-                    objects.append([pair.key:validJSONValueTypes[0]])
-                } catch let err {
-                    throw err
-                }
-            }
-            json.values = [JSONValueType.object(objects)]
         }
         
-        return json
-    }
-    
-    private static func parseType(from identifier: String) -> JSONType {
-        return identifier == String(Components.arrayOpener.value) ? JSONArray() : JSONObject()
+        var objects:[[String:JSONValueType]] = []
+        for token in tokens {
+            guard let pair = extractPair(from: token) else { throw JSONParserError.invalidFormat }
+            do {
+                let validJSONValueTypes = try generateJSONValue(from: [pair.value])
+                objects.append([pair.key:validJSONValueTypes[0]])
+            } catch let err {
+                throw err
+            }
+        }
+        return JSONObject(values: JSONValueType.object(objects))
     }
     
     // 인자로 넘어오는 토큰들로부터 JSONValueType 배열 타입을 반환
