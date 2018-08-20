@@ -15,16 +15,16 @@ struct OutputView {
     
     public static func printJson(from json:Jsonable){
         // 객체 데이터 종류 출력하기
-        countJson(to: json)
+        countJson(from: json)
         // 객체 원본 출력하기
-        convertString(to: json)
+        convertString(from: json)
     }
     
-    private static func convertString(to data:Jsonable) {
+    private static func convertString(from data:Jsonable) {
         print(data.generateData())
     }
     
-    private static func countJson(to data:Jsonable){
+    private static func countJson(from data:Jsonable){
         let (string,int,bool,object,array) = data.countData()
         
         let totalCount = string + int + bool + object + array
