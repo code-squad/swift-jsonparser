@@ -53,6 +53,37 @@ struct JsonArray:Jsonable {
         if string > 1 || int > 1 || bool > 1 {
             intent = 0
         }
+//        return self.makeArray(intent: intent, elements: self.array)
         return self.makeArray(intent: intent, elements: self.array)
     }
+    
+    public func makeArray(intent : Int, elements:[JsonType]) -> String {
+        var message = "["
+        for value in elements {
+            if message.hasSuffix("}, ") {
+                message += "\n"
+                message += "\t"
+            }
+            switch value {
+            case .string(let element):
+                message += "\(element), "
+            case .int(let element):
+                message += "\(String(element)), "
+            case .bool(let element):
+                message += "\(String(element)), "
+            case .object(let element):
+                let jsonObject = JsonObject.init()
+                message += "\(jsonObject.makeObject(intent: intent + 1, elements: element)), "
+            case .array(let element):
+                message += "\(self.makeArray(intent: intent + 1, elements: element)), "
+            }
+        }
+        message.removeLast(2) // for remove last ","
+        if message.hasSuffix("]") {
+            message += "\n"
+        }
+        message += "]"
+        return message
+    }
+    
 }

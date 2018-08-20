@@ -44,6 +44,41 @@ struct JsonObject:Jsonable {
     }
     
     public func generateData() -> String {
+//        return self.makeObject(intent: 1, elements: self.object)
         return self.makeObject(intent: 1, elements: self.object)
     }
+    
+    public func makeObject(intent : Int, elements : [String:JsonType]) -> String {
+        var message = "{"
+        message += "\n"
+        for (key,value) in elements {
+            for _ in 0..<intent {
+                message += "\t"
+            }
+            switch value {
+            case .string(let element):
+                message += "\(key) : \(element),"
+            case .int(let element):
+                message += "\(key) : \(String(element)),"
+            case .bool(let element):
+                message += "\(key) : \(String(element)),"
+            case .object(let element):
+                message += "\(key) : "
+                message += "\(self.makeObject(intent: intent + 1, elements: element)),"
+            case .array(let element):
+                message += "\(key) : "
+                let jsonArray = JsonArray.init()
+                message += "\(jsonArray.makeArray(intent: intent + 1, elements: element)),"
+            }
+            message += "\n"
+        }
+        message.removeLast(2) // for remove last "," (뒤에서 두번째 index를 삭제)
+        message += "\n"
+        for _ in 0..<intent-1 {
+            message += "\t"
+        }
+        message += "}"
+        return message
+    }
+    
 }
