@@ -54,21 +54,9 @@ struct JsonObject:Jsonable {
             for _ in 0..<intent {
                 message += "\t"
             }
-            switch value {
-            case .string(let element):
-                message += "\(key) : \(element),"
-            case .int(let element):
-                message += "\(key) : \(String(element)),"
-            case .bool(let element):
-                message += "\(key) : \(String(element)),"
-            case .object(let element):
-                message += "\(key) : "
-                message += "\(self.makeObject(intent: intent + 1, elements: element)),"
-            case .array(let element):
-                message += "\(key) : "
-                let jsonArray = JsonArray.init()
-                message += "\(jsonArray.makeArray(intent: intent + 1, elements: element)),"
-            }
+            let typeValue = value.description(intent: intent)
+            message += "\(key) : "
+            message += "\(typeValue),"
             message += "\n"
         }
         message.removeLast(2) // for remove last "," (뒤에서 두번째 index를 삭제)

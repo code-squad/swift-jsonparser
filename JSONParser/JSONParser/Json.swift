@@ -19,4 +19,21 @@ enum JsonType:Equatable {
     case bool(Bool)
     case object([String:JsonType])
     case array([JsonType])
+    
+    func description(intent: Int) -> String {
+        switch self {
+        case .string(let element):
+            return element
+        case .int(let element):
+            return String(element)
+        case .bool(let element):
+            return String(element)
+        case .object(let element):
+            let jsonObject = JsonObject.init()
+            return jsonObject.makeObject(intent: intent + 1, elements: element)
+        case .array(let element):
+            let jsonArray = JsonArray.init()
+            return jsonArray.makeArray(intent: intent + 1, elements: element)
+        }
+    }
 }

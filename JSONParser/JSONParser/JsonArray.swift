@@ -58,24 +58,13 @@ struct JsonArray:Jsonable {
     
     public func makeArray(intent : Int, elements:[JsonType]) -> String {
         var message = "["
-        for value in elements {
+        for element in elements {
             if message.hasSuffix("}, ") {
                 message += "\n"
                 message += "\t"
             }
-            switch value {
-            case .string(let element):
-                message += "\(element), "
-            case .int(let element):
-                message += "\(String(element)), "
-            case .bool(let element):
-                message += "\(String(element)), "
-            case .object(let element):
-                let jsonObject = JsonObject.init()
-                message += "\(jsonObject.makeObject(intent: intent + 1, elements: element)), "
-            case .array(let element):
-                message += "\(self.makeArray(intent: intent + 1, elements: element)), "
-            }
+            let typeValue = element.description(intent: intent)
+            message += "\(typeValue), "
         }
         message.removeLast(2) // for remove last ","
         if message.hasSuffix("]") {
