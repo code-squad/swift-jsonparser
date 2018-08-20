@@ -53,13 +53,7 @@ struct OutputView {
     }
     
     private static func presentResult(of json: JSONType) -> String {
-        if json is JSONObject {
-            let object = json.values[0]
-            return presentValue(from: object)
-        }
-        
-        let array = json.values
-        return presentArray(from: array)
+        return presentValue(from: json.values)
     }
     
     private static func presentArray(from array: [JSONValueType]) -> String {
