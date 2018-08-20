@@ -53,7 +53,6 @@ struct JsonArray:Jsonable {
         if string > 1 || int > 1 || bool > 1 {
             intent = 0
         }
-//        return self.makeArray(intent: intent, elements: self.array)
         return self.makeArray(intent: intent, elements: self.array)
     }
     

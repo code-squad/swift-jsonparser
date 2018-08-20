@@ -44,7 +44,6 @@ struct JsonObject:Jsonable {
     }
     
     public func generateData() -> String {
-//        return self.makeObject(intent: 1, elements: self.object)
         return self.makeObject(intent: 1, elements: self.object)
     }
     
