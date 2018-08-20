@@ -33,7 +33,7 @@ func analyzeJson(to inputValue:String?) -> Bool {
     let json = Analysis.analysisJson(to: input)
 
     // 객체 정보 출력하기
-    OutputView.printJson(to: json)
+    OutputView.printJson(from: json)
     
     return false
 }

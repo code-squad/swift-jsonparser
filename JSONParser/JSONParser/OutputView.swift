@@ -13,7 +13,7 @@ struct OutputView {
         print(error.description())
     }
     
-    public static func printJson(to json:Jsonable){
+    public static func printJson(from json:Jsonable){
         // 객체 데이터 종류 출력하기
         countJson(to: json)
         // 객체 원본 출력하기
@@ -24,16 +24,16 @@ struct OutputView {
         print(data.generateData())
     }
     
-    private static func countJson(to json:Jsonable){
-        let (string,int,bool,object,array) = json.countData()
+    private static func countJson(to data:Jsonable){
+        let (string,int,bool,object,array) = data.countData()
         
         let totalCount = string + int + bool + object + array
         var message = ""
         
-        if json is JsonObject {
+        if data is JsonObject {
             message = "총 \(totalCount)개의 객체 데이터 중에 "
         }
-        if json is JsonArray {
+        if data is JsonArray {
             message = "총 \(totalCount)개의 배열 데이터 중에 "
         }
         
