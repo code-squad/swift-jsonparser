@@ -48,10 +48,10 @@ while analyze {
     let arguments = CommandLine.arguments
     var inputValue:String? = ""
     
-    let outputFile:String = arguments.count > 2 ? arguments[2] : "output.json"
     if arguments.count >= 2 {
         do {
             try inputValue = InputView.readFile(inputFile: arguments[1])
+            let outputFile:String = arguments.count > 2 ? arguments[2] : "output.json"
             analyze = analyzeJson(to: inputValue, outputFileName: outputFile)
         } catch JsonError.fileNotFound {
             OutputView.printErrorMessage(error: JsonError.fileNotFound)
@@ -59,6 +59,6 @@ while analyze {
         }
     } else {
         inputValue = InputView.readInput()
-        analyze = analyzeJson(to: inputValue, outputFileName: outputFile)
+        analyze = analyzeJson(to: inputValue, outputFileName: nil)
     }
 }
