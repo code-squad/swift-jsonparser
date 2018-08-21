@@ -8,8 +8,8 @@
 
 import Foundation
 
-func analyzeJson(to inputValue:String?) -> Bool {
-    
+//func analyzeJson(to inputValue:String?) -> Bool {
+func analyzeJson(to inputValue:String?, outputFileName:String?) -> Bool {
     // 입력값 비어있는지 확인
     guard let input = InputView.isEmpty(to: inputValue) else { return true }
 
@@ -34,6 +34,11 @@ func analyzeJson(to inputValue:String?) -> Bool {
     // 객체 정보 출력하기
     OutputView.printJson(from: json)
     
+    // 객체 파일 생성
+    if let fileName = outputFileName {
+        OutputView.writeFile(outputFile: fileName, from: json)
+    }
+    
     return false
 }
 
@@ -43,17 +48,17 @@ while analyze {
     let arguments = CommandLine.arguments
     var inputValue:String? = ""
     
-    let outputFile:String? = arguments.count > 2 ? arguments[2] : nil
+    let outputFile:String = arguments.count > 2 ? arguments[2] : "output.json"
     if arguments.count >= 2 {
         do {
-            try inputValue = InputView.readFile(inputFile: arguments[1], outputFile: outputFile)
-            analyze = analyzeJson(to: inputValue)
+            try inputValue = InputView.readFile(inputFile: arguments[1])
+            analyze = analyzeJson(to: inputValue, outputFileName: outputFile)
         } catch JsonError.fileNotFound {
             OutputView.printErrorMessage(error: JsonError.fileNotFound)
             analyze = false
         }
     } else {
         inputValue = InputView.readInput()
-        analyze = analyzeJson(to: inputValue)
+        analyze = analyzeJson(to: inputValue, outputFileName: outputFile)
     }
 }
