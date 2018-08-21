@@ -27,19 +27,4 @@ struct OutputView {
     private static func countJson(from data:Jsonable){
         print(data.countDataWithMessage())
     }
-    
-    public static func writeFile(outputFile fileName: String, from data:Jsonable) {
-        do {
-            let fileManager = FileManager()
-            let path = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            
-            let filePath = path.appendingPathComponent(fileName)
-            
-            let text = data.generateData()
-            
-            try text.write(to: filePath, atomically: false, encoding: .utf8)
-        } catch {
-            OutputView.printErrorMessage(error: JsonError.unableToCreateFile)
-        }
-    }
 }

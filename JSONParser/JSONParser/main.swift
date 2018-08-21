@@ -34,8 +34,8 @@ func analyzeJson(to inputValue:String?) -> Bool {
     OutputView.printJson(from: json)
     
     // 객체 파일 생성
-    if let fileName = OutputFile.name {
-        OutputView.writeFile(outputFile: fileName, from: json)
+    if let fileName = File.outputFileName {
+        File.writeFile(outputFile: fileName, from: json)
     }
     
     return false
@@ -49,8 +49,8 @@ while analyze {
     
     if arguments.count >= 2 {
         do {
-            try inputValue = InputView.readFile(inputFile: arguments[1])
-            OutputFile.name = arguments.count > 2 ? arguments[2] : "output.json"
+            try inputValue = File.readFile(inputFile: arguments[1])
+            File.outputFileName = arguments.count > 2 ? arguments[2] : "output.json"
             analyze = analyzeJson(to: inputValue)
         } catch JsonError.fileNotFound {
             OutputView.printErrorMessage(error: JsonError.fileNotFound)
