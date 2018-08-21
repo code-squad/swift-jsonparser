@@ -25,4 +25,22 @@ struct InputView {
         return inputValue
     }
     
+    public static func readFile(inputFile: String , outputFile: String?) throws -> String {
+        let fileManager = FileManager()
+        
+        do {
+            var path = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            path.appendPathComponent(inputFile)
+            path.appendPathComponent("d")
+            let contents = try String(contentsOf: path)
+            return contents
+        } catch {
+            throw JsonError.fileNotFound
+        }
+    }
+    
+    public static func writeFile() {
+        
+    }
+    
 }

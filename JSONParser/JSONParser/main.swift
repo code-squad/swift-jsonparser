@@ -9,7 +9,6 @@
 import Foundation
 
 func analyzeJson(to inputValue:String?) -> Bool {
-    // 입력받기
     
     // 입력값 비어있는지 확인
     guard let input = InputView.isEmpty(to: inputValue) else { return true }
@@ -40,6 +39,21 @@ func analyzeJson(to inputValue:String?) -> Bool {
 
 var analyze = true
 while analyze {
-    let inputValue = InputView.readInput()
-    analyze = analyzeJson(to: inputValue)
+    // 파일 or 프로젝트 내부 실행 분기
+    let arguments = CommandLine.arguments
+    var inputValue:String? = ""
+    
+    let outputFile:String? = arguments.count > 2 ? arguments[2] : nil
+    if arguments.count >= 2 {
+        do {
+            try inputValue = InputView.readFile(inputFile: arguments[1], outputFile: outputFile)
+            analyze = analyzeJson(to: inputValue)
+        } catch JsonError.fileNotFound {
+            OutputView.printErrorMessage(error: JsonError.fileNotFound)
+            analyze = false
+        }
+    } else {
+        inputValue = InputView.readInput()
+        analyze = analyzeJson(to: inputValue)
+    }
 }

@@ -36,7 +36,7 @@
 		83AE2E0A1F8CAC2800F38CC9 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
+			dstPath = /usr/share/man/man1;
 			dstSubfolderSpec = 0;
 			files = (
 			);
@@ -49,7 +49,7 @@
 		4709771D2112EF3F0031CEC8 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		4709771F2112EFA00031CEC8 /* Analysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analysis.swift; sourceTree = "<group>"; };
 		4709772121157C460031CEC8 /* JsonArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonArray.swift; sourceTree = "<group>"; };
-		47097725211823E40031CEC8 /* JsonObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonObject.swift; sourceTree = "<group>"; };
+		47097725211823E40031CEC8 /* JsonObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JsonObject.swift; path = JSONParser/JsonObject.swift; sourceTree = SOURCE_ROOT; };
 		47097727211831C90031CEC8 /* Json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Json.swift; sourceTree = "<group>"; };
 		4709772B211BC5B80031CEC8 /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
 		47097749211C185A0031CEC8 /* UnitTestJSONParser.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTestJSONParser.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
