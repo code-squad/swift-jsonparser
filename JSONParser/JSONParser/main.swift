@@ -11,7 +11,10 @@ import Foundation
 struct JSONParser {
     static func run() {
         let jsonString = InputView.readInput()
-        let stringArray = JSONGenerator.stringArray(jsonString)
+        guard let stringArray = JSONGenerator.extractStringArray(from: jsonString) else {
+            OutputView.notifyIssue()
+            return
+        }
         OutputView.showTypeCountOf(JSON: stringArray)
     }
 }

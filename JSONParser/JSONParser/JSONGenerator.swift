@@ -9,5 +9,10 @@
 import Foundation
 
 struct JSONGenerator {
-    static let stringArray = { (jsonString: String) -> [String] in return jsonString.removeWhiteSpaces().trimSquareBrackets().splitByComma() }
+    private static let stringArray = { (jsonString: String) -> [String] in return jsonString.removeWhiteSpaces().trimSquareBrackets().splitByComma() }
+    
+    static func extractStringArray(from jsonString: String) -> [String]? {
+        guard jsonString.hasSideSquareBrackets() else { return nil }
+        return stringArray(jsonString)
+    }
 }

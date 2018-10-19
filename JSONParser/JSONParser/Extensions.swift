@@ -12,6 +12,9 @@ extension String {
     func removeWhiteSpaces() -> String {
         return self.components(separatedBy: .whitespaces).joined()
     }
+    func hasSideSquareBrackets() -> Bool {
+        return (self.count > 1 && self.first == "[" && self.last == "]")
+    }
     func trimSquareBrackets() -> String {
         return self.trimmingCharacters(in: CharacterSet(charactersIn: "[]"))
     }
