@@ -30,7 +30,7 @@ struct DoubleInspector: TypeInspector {
 }
 
 struct BooleanInspector: TypeInspector {
-    private static let boolExpression = Set(["True", "true", "False", "false"])
+    private static let boolExpression = Set(["true", "false"])
     private static func isBoolExpression(_ text: String) -> Bool? {
         return boolExpression.contains(text) ? true : nil
     }
