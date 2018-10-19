@@ -10,7 +10,7 @@ import Foundation
 
 struct OutputView {
     private struct Message {
-        static let invalidJSON = "JSON 규격이 아닙니다."
+        static let invalidForm = "지원하는 규격이 아닙니다."
         
         struct countResult {
             static let typeString = "문자열"
@@ -53,6 +53,6 @@ struct OutputView {
     }
     
     static func notifyIssue() {
-        print(Message.invalidJSON)
+        print(Message.invalidForm)
     }
 }
