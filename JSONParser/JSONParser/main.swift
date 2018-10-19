@@ -8,3 +8,12 @@
 
 import Foundation
 
+struct JSONParser {
+    static func run() {
+        let jsonString = InputView.readInput()
+        let stringArray = JSONGenerator.stringArray(jsonString)
+        let dataCount = stringArray.count
+    }
+}
+
+JSONParser.run()
