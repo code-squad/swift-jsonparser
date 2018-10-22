@@ -15,6 +15,9 @@ extension String {
     func hasSideSquareBrackets() -> Bool {
         return (self.count > 1 && self.first == "[" && self.last == "]")
     }
+    func hasDoubleQuotation() -> Bool {
+        return (self.count > 1 && self.first == "\"" && self.last == self.first)
+    }
     func trimSquareBrackets() -> String {
         return self.trimmingCharacters(in: CharacterSet(charactersIn: "[]"))
     }
