@@ -8,6 +8,13 @@
 
 import Foundation
 
+public enum typeName: String {
+    case string = "문자열"
+    case int = "숫자"
+    case bool = "부울"
+    case none = ""
+}
+
 struct TypeInspector {
     static func countType(of jsonArray: [Any?]) -> [String: Int] {
         var typeCount: [String: Int] = [:]
@@ -16,13 +23,13 @@ struct TypeInspector {
         for value in jsonArray {
             switch value {
             case is String:
-                typeCount["문자열"] = (typeCount["문자열"] ?? defaultValue) + count
+                typeCount[typeName.string.rawValue] = (typeCount[typeName.string.rawValue] ?? defaultValue) + count
             case is Int:
-                typeCount["숫자"] = (typeCount["숫자"] ?? defaultValue) + count
+                typeCount[typeName.int.rawValue] = (typeCount[typeName.int.rawValue] ?? defaultValue) + count
             case is Bool:
-                typeCount["부울"] = (typeCount["부울"] ?? defaultValue) + count
+                typeCount[typeName.bool.rawValue] = (typeCount[typeName.bool.rawValue] ?? defaultValue) + count
             default:
-                typeCount["nil"] = (typeCount["nil"] ?? defaultValue) + count
+                continue
             }
         }
         return typeCount
