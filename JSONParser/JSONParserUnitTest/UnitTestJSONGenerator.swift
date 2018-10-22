@@ -11,25 +11,33 @@ import XCTest
 class UnitTestJSONGenerator: XCTestCase {
     override func setUp() {}
     override func tearDown() {}
+    
+    func testMakeJSONArrayNil_whenStringHasNoTwoSquareBrackets() {
+        let jsonStringWithOneSquareBracket = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false"
+        XCTAssertNil(JSONGenerator.makeJSONArray(from: jsonStringWithOneSquareBracket))
+    }
 
-    func testExtractStringArray_whenValid() {
-        let jsonString = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let jsonStringArray = ["10", "\"jk\"", "4", "\"314\"", "99", "\"crong\"", "false"]
-        XCTAssertEqual(JSONGenerator.extractStringArray(from: jsonString), jsonStringArray)
+    func testJSONArrayStoresRightType_Int() {
+        let jsonString = "[ 10, \"jk\", 4, \"314\", 99, false, a ]"
+        let jsonArray = JSONGenerator.makeJSONArray(from: jsonString)
+        XCTAssertTrue(jsonArray?[0] is Int)
     }
     
-    func testExtractNil_whenNoSideSquareBracke() {
-        let noSideSquareBracket = "10, \"jk\", 4, \"314\", 99, \"crong\""
-        XCTAssertNil(JSONGenerator.extractStringArray(from: noSideSquareBracket))
+    func testJSONArrayStoresRightType_String() {
+        let jsonString = "[ 10, \"jk\", 4, \"314\", 99, false, a ]"
+        let jsonArray = JSONGenerator.makeJSONArray(from: jsonString)
+        XCTAssertTrue(jsonArray?[1] is String)
     }
     
-    func testExtractNil_whenOneLeftSideSquareBracke() {
-        let oneLeftSideSquareBracket = "[10, \"jk\", 4, \"314\", 99, \"crong\""
-        XCTAssertNil(JSONGenerator.extractStringArray(from: oneLeftSideSquareBracket))
+    func testJSONArrayStoresRightType_Bool() {
+        let jsonString = "[ 10, \"jk\", 4, \"314\", 99, false, a ]"
+        let jsonArray = JSONGenerator.makeJSONArray(from: jsonString)
+        XCTAssertTrue(jsonArray?[5] is Bool)
     }
     
-    func testExtractNil_whenOneRightSideSquareBracke() {
-        let oneRightSideSquareBracket = "10, \"jk\", 4, \"314\", 99, \"crong\"]"
-        XCTAssertNil(JSONGenerator.extractStringArray(from: oneRightSideSquareBracket))
+    func testJSONArrayStoresRightType_Nil() {
+        let jsonString = "[ 10, \"jk\", 4, \"314\", 99, false, a ]"
+        let jsonArray = JSONGenerator.makeJSONArray(from: jsonString)
+        XCTAssertNil(jsonArray?[6])
     }
 }

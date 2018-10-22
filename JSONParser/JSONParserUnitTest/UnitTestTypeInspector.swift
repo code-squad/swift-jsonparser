@@ -9,31 +9,24 @@
 import XCTest
 
 class UnitTestTypeInspector: XCTestCase {
-    override func setUp() {}
+    var jsonArray: [Any?] = []
+    var typeCount: [String: Int] = [:]
+    
+    override func setUp() {
+        jsonArray = [10, "jk", 4, "314", 99, "crong", false, nil]
+        typeCount = TypeInspector.countType(of: jsonArray)
+    }
     override func tearDown() {}
     
     func testCountStringType() {
-        let jsonStringArray = ["10", "\"jk\"", "4", "\"314\"", "99", "\"crong\"", "false", "a"]
-        XCTAssertEqual(StringInspector.countType(in: jsonStringArray), 3)
+        XCTAssertEqual(typeCount[typeName.string.rawValue], 3)
     }
-    
+
     func testCountNumber() {
-        let jsonStringArray = ["10", "\"jk\"", "4", "\"314\"", "99", "\"crong\"", "false", "a"]
-        XCTAssertEqual(DoubleInspector.countType(in: jsonStringArray), 3)
-    }
-    
-    func testCountNumberIncludingDouble() {
-        let jsonIncludingDouble = ["\"314\"", "99.12", "\"crong\"", "false"]
-        XCTAssertEqual(DoubleInspector.countType(in: jsonIncludingDouble), 1)
+        XCTAssertEqual(typeCount[typeName.int.rawValue], 3)
     }
     
     func testCountBool() {
-        let jsonStringArray = ["10", "\"jk\"", "4", "\"314\"", "99", "\"crong\"", "false", "a"]
-        XCTAssertEqual(BooleanInspector.countType(in: jsonStringArray), 1)
-    }
-    
-    func testCountOnlyValidBool() {
-        let jsonIncludeInvalidBool = ["flase", "ttrue", "Truee", "false"]
-        XCTAssertEqual(BooleanInspector.countType(in: jsonIncludeInvalidBool), 1)
+        XCTAssertEqual(typeCount[typeName.bool.rawValue], 1)
     }
 }

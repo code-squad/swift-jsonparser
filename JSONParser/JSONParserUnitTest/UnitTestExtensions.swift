@@ -33,6 +33,21 @@ class UnitTestExtensions: XCTestCase {
         XCTAssertTrue(jsonString.hasSideSquareBrackets())
     }
     
+    func testHasTwoDoubleQuotation() {
+        let stringSurroundedDoubleQuotation = "\"jamie\""
+        XCTAssertTrue(stringSurroundedDoubleQuotation.hasDoubleQuotation())
+    }
+    
+    func testHasOneDoubleQuotation() {
+        let stringSurroundedOneDoubleQuotation = "\"jamie"
+        XCTAssertFalse(stringSurroundedOneDoubleQuotation.hasDoubleQuotation())
+    }
+    
+    func testHasNoDoubleQuotation() {
+        let stringSurroundedOneDoubleQuotation = "jamie"
+        XCTAssertFalse(stringSurroundedOneDoubleQuotation.hasDoubleQuotation())
+    }
+    
     func testTrimSquareBrackets() {
         let trimmedSquareBrackets = " 10, \"jk\", 4, \"314\", 99, \"crong\", false "
         let jsonString = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
