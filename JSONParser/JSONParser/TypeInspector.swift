@@ -8,33 +8,24 @@
 
 import Foundation
 
-protocol TypeInspector {
-    static func countType(in stringArray: [String]) -> Int
+struct TypeInspector {
+    static func countType(of jsonArray: [Any?]) -> [String: Int] {
+        var typeCount: [String: Int] = [:]
+        let defaultValue = 0
+        let count = 1
+        for value in jsonArray {
+            switch value {
+            case is String:
+                typeCount["문자열"] = (typeCount["문자열"] ?? defaultValue) + count
+            case is Int:
+                typeCount["숫자"] = (typeCount["숫자"] ?? defaultValue) + count
+            case is Bool:
+                typeCount["부울"] = (typeCount["부울"] ?? defaultValue) + count
+            default:
+                typeCount["nil"] = (typeCount["nil"] ?? defaultValue) + count
+            }
+        }
+        return typeCount
+    }
 }
 
-struct StringInspector: TypeInspector {
-    private static let doubleQuotation: Character = "\""
-    private static func hasDoubleQuotation(_ text: String) -> Bool {
-        return (text.count > 1 && text.first == doubleQuotation && text.last == doubleQuotation)
-    }
-    static func countType(in stringArray: [String]) -> Int {
-        let typeArray = stringArray.map({ hasDoubleQuotation($0) ? $0.trimDoubleQuotation() : nil })
-        return typeArray.compactMap({ $0 }).count
-    }
-}
-
-struct DoubleInspector: TypeInspector {
-    static func countType(in stringArray: [String]) -> Int {
-        return stringArray.compactMap({ Double($0) }).count
-    }
-}
-
-struct BooleanInspector: TypeInspector {
-    private static let boolExpression = Set(["true", "false"])
-    private static func isBoolExpression(_ text: String) -> Bool? {
-        return boolExpression.contains(text) ? true : nil
-    }
-    static func countType(in stringArray: [String]) -> Int {
-        return stringArray.compactMap({ Bool($0) }).count
-    }
-}
