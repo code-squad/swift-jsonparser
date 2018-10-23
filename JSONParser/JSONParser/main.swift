@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct JSONParser {
+struct Main {
     static func run() {
         let jsonString = InputView.readInput()
-        guard let jsonArray: [Any?] = JSONGenerator.makeJSONArray(from: jsonString) else {
+        guard let jsonArray: [Any?] = JSONParser.makeJSONArray(from: jsonString) else {
             OutputView.notifyIssue()
             return
         }
@@ -19,4 +19,4 @@ struct JSONParser {
     }
 }
 
-JSONParser.run()
+Main.run()

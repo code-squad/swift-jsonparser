@@ -11,11 +11,11 @@
 		A3D86F8F21786A2C0044CFD9 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F8E21786A2C0044CFD9 /* InputView.swift */; };
 		A3D86F9121786A3D0044CFD9 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F9021786A3D0044CFD9 /* OutputView.swift */; };
 		A3D86F93217872D20044CFD9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F92217872D20044CFD9 /* Extensions.swift */; };
-		A3D86F952178749B0044CFD9 /* JSONGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F942178749B0044CFD9 /* JSONGenerator.swift */; };
+		A3D86F952178749B0044CFD9 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F942178749B0044CFD9 /* JSONParser.swift */; };
 		A3D86F9721787C7C0044CFD9 /* TypeInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F9621787C7C0044CFD9 /* TypeInspector.swift */; };
-		A3D86F9F2179AB2A0044CFD9 /* UnitTestJSONGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F9E2179AB2A0044CFD9 /* UnitTestJSONGenerator.swift */; };
+		A3D86F9F2179AB2A0044CFD9 /* UnitTestJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F9E2179AB2A0044CFD9 /* UnitTestJSONParser.swift */; };
 		A3D86FA42179AB610044CFD9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F92217872D20044CFD9 /* Extensions.swift */; };
-		A3D86FA52179AB680044CFD9 /* JSONGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F942178749B0044CFD9 /* JSONGenerator.swift */; };
+		A3D86FA52179AB680044CFD9 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F942178749B0044CFD9 /* JSONParser.swift */; };
 		A3D86FA62179AB6C0044CFD9 /* TypeInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F9621787C7C0044CFD9 /* TypeInspector.swift */; };
 		A3D86FA82179ABB40044CFD9 /* UnitTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86FA72179ABB40044CFD9 /* UnitTestExtensions.swift */; };
 		A3D86FAA2179ABC50044CFD9 /* UnitTestTypeInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86FA92179ABC50044CFD9 /* UnitTestTypeInspector.swift */; };
@@ -39,10 +39,10 @@
 		A3D86F8E21786A2C0044CFD9 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		A3D86F9021786A3D0044CFD9 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		A3D86F92217872D20044CFD9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		A3D86F942178749B0044CFD9 /* JSONGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONGenerator.swift; sourceTree = "<group>"; };
+		A3D86F942178749B0044CFD9 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		A3D86F9621787C7C0044CFD9 /* TypeInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeInspector.swift; sourceTree = "<group>"; };
 		A3D86F9C2179AB2A0044CFD9 /* JSONParserUnitTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONParserUnitTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A3D86F9E2179AB2A0044CFD9 /* UnitTestJSONGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestJSONGenerator.swift; sourceTree = "<group>"; };
+		A3D86F9E2179AB2A0044CFD9 /* UnitTestJSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestJSONParser.swift; sourceTree = "<group>"; };
 		A3D86FA02179AB2A0044CFD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3D86FA72179ABB40044CFD9 /* UnitTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestExtensions.swift; sourceTree = "<group>"; };
 		A3D86FA92179ABC50044CFD9 /* UnitTestTypeInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestTypeInspector.swift; sourceTree = "<group>"; };
@@ -91,7 +91,7 @@
 				A3D86F8E21786A2C0044CFD9 /* InputView.swift */,
 				A3D86F9021786A3D0044CFD9 /* OutputView.swift */,
 				A3D86F92217872D20044CFD9 /* Extensions.swift */,
-				A3D86F942178749B0044CFD9 /* JSONGenerator.swift */,
+				A3D86F942178749B0044CFD9 /* JSONParser.swift */,
 				A3D86F9621787C7C0044CFD9 /* TypeInspector.swift */,
 			);
 			path = JSONParser;
@@ -100,7 +100,7 @@
 		A3D86F9D2179AB2A0044CFD9 /* JSONParserUnitTest */ = {
 			isa = PBXGroup;
 			children = (
-				A3D86F9E2179AB2A0044CFD9 /* UnitTestJSONGenerator.swift */,
+				A3D86F9E2179AB2A0044CFD9 /* UnitTestJSONParser.swift */,
 				A3D86FA02179AB2A0044CFD9 /* Info.plist */,
 				A3D86FA72179ABB40044CFD9 /* UnitTestExtensions.swift */,
 				A3D86FA92179ABC50044CFD9 /* UnitTestTypeInspector.swift */,
@@ -200,7 +200,7 @@
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				A3D86F9721787C7C0044CFD9 /* TypeInspector.swift in Sources */,
-				A3D86F952178749B0044CFD9 /* JSONGenerator.swift in Sources */,
+				A3D86F952178749B0044CFD9 /* JSONParser.swift in Sources */,
 				A3D86F8F21786A2C0044CFD9 /* InputView.swift in Sources */,
 				A3D86F9121786A3D0044CFD9 /* OutputView.swift in Sources */,
 				A3D86F93217872D20044CFD9 /* Extensions.swift in Sources */,
@@ -211,10 +211,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3D86FA52179AB680044CFD9 /* JSONGenerator.swift in Sources */,
+				A3D86FA52179AB680044CFD9 /* JSONParser.swift in Sources */,
 				A3D86FAA2179ABC50044CFD9 /* UnitTestTypeInspector.swift in Sources */,
 				A3D86FA82179ABB40044CFD9 /* UnitTestExtensions.swift in Sources */,
-				A3D86F9F2179AB2A0044CFD9 /* UnitTestJSONGenerator.swift in Sources */,
+				A3D86F9F2179AB2A0044CFD9 /* UnitTestJSONParser.swift in Sources */,
 				A3D86FA42179AB610044CFD9 /* Extensions.swift in Sources */,
 				A3D86FA62179AB6C0044CFD9 /* TypeInspector.swift in Sources */,
 			);

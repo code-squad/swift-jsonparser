@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JSONGenerator {
+struct JSONParser {
     private static let stringArray = { (jsonString: String) -> [String] in return jsonString.removeWhiteSpaces().trimSquareBrackets().splitByComma() }
     
     private static func extractStringArray(from jsonString: String) -> [String]? {
