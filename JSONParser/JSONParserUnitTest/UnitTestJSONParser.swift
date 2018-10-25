@@ -12,32 +12,23 @@ class UnitTestJSONParser: XCTestCase {
     override func setUp() {}
     override func tearDown() {}
     
-    func testMakeJSONArrayNil_whenStringHasNoTwoSquareBrackets() {
-        let jsonStringWithOneSquareBracket = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false"
-        XCTAssertNil(JSONParser.makeJSONArray(from: jsonStringWithOneSquareBracket))
-    }
-
-    func testJSONArrayStoresRightType_Int() {
-        let jsonString = "[ 10, \"jk\", 4, \"314\", 99, false, a ]"
-        let jsonArray = JSONParser.makeJSONArray(from: jsonString)
-        XCTAssertTrue(jsonArray?[0] is Int)
+    func testParseNil_whenColonNotIncludedProperlyInJSONObject() {
+        let jsonString = "{ \"name\"  \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
+        XCTAssertNil(JSONParser.parse(jsonString))
     }
     
-    func testJSONArrayStoresRightType_String() {
-        let jsonString = "[ 10, \"jk\", 4, \"314\", 99, false, a ]"
-        let jsonArray = JSONParser.makeJSONArray(from: jsonString)
-        XCTAssertTrue(jsonArray?[1] is String)
+    func testParseNil_whenKeyValueNotSatisfiedInJSONObject() {
+        let jsonString = "{ \"name\" : \"KIM JUNG\",:, \"level\" : 5, \"married\" : true }"
+        XCTAssertNil(JSONParser.parse(jsonString))
     }
     
-    func testJSONArrayStoresRightType_Bool() {
-        let jsonString = "[ 10, \"jk\", 4, \"314\", 99, false, a ]"
-        let jsonArray = JSONParser.makeJSONArray(from: jsonString)
-        XCTAssertTrue(jsonArray?[5] is Bool)
+    func testParseNil_whenKeyHasNoDoubleQuotationInJSONObject() {
+        let jsonString = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, married : true }"
+        XCTAssertNil(JSONParser.parse(jsonString))
     }
     
-    func testJSONArrayStoresRightType_Nil() {
-        let jsonString = "[ 10, \"jk\", 4, \"314\", 99, false, a ]"
-        let jsonArray = JSONParser.makeJSONArray(from: jsonString)
-        XCTAssertNil(jsonArray?[6])
+    func testParseNil_whenNoCloseBracket() {
+        let jsonString = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true  ]"
+        XCTAssertNil(JSONParser.parse(jsonString))
     }
 }

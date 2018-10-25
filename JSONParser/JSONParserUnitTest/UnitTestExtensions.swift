@@ -11,12 +11,6 @@ import XCTest
 class UnitTestExtensions: XCTestCase {
     override func setUp() {}
     override func tearDown() {}
-
-    func testRemoveWhiteSpaces() {
-        let jsonString = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let noWhiteSpace = "[10,\"jk\",4,\"314\",99,\"crong\",false]"
-        XCTAssertEqual(jsonString.removeWhiteSpaces(), noWhiteSpace)
-    }
     
     func testHasNoSideSquareBracket() {
         let noSideSquareBracket = "10, \"jk\", 4, \"314\", 99, \"crong\""
@@ -33,9 +27,9 @@ class UnitTestExtensions: XCTestCase {
         XCTAssertTrue(jsonString.hasSideSquareBrackets())
     }
     
-    func testHasTwoDoubleQuotation() {
-        let stringSurroundedDoubleQuotation = "\"jamie\""
-        XCTAssertTrue(stringSurroundedDoubleQuotation.hasDoubleQuotation())
+    func testHasNoDoubleQuotation() {
+        let stringSurroundedNoDoubleQuotation = "jamie"
+        XCTAssertFalse(stringSurroundedNoDoubleQuotation.hasDoubleQuotation())
     }
     
     func testHasOneDoubleQuotation() {
@@ -43,15 +37,42 @@ class UnitTestExtensions: XCTestCase {
         XCTAssertFalse(stringSurroundedOneDoubleQuotation.hasDoubleQuotation())
     }
     
-    func testHasNoDoubleQuotation() {
-        let stringSurroundedOneDoubleQuotation = "jamie"
-        XCTAssertFalse(stringSurroundedOneDoubleQuotation.hasDoubleQuotation())
+    func testHasTwoDoubleQuotation() {
+        let stringSurroundedDoubleQuotation = "\"jamie\""
+        XCTAssertTrue(stringSurroundedDoubleQuotation.hasDoubleQuotation())
+    }
+    
+    func testHasNoCurlyBracket() {
+        let stringSurroundedNoCurlyBracket = "\"name\" : \"jamie\""
+        XCTAssertFalse(stringSurroundedNoCurlyBracket.hasSideCurlyBrackets())
+    }
+    
+    func testHasOneCurlyBracket() {
+        let stringSurroundedOneCurlyBracket = "{ \"name\" : \"jamie\""
+        XCTAssertFalse(stringSurroundedOneCurlyBracket.hasSideCurlyBrackets())
+    }
+    
+    func testHasTwoCurlyBrackets() {
+        let stringSurroundedCurlyBrackets = "{ \"name\" : \"jamie\" }"
+        XCTAssertTrue(stringSurroundedCurlyBrackets.hasSideCurlyBrackets())
+    }
+    
+    func testTrimWhiteSpaces() {
+        let trimmedWhiteSpaces = "\"name\" : \"jamie\""
+        let stringSurroundedWhiteSpaces = " \"name\" : \"jamie\" "
+        XCTAssertEqual(stringSurroundedWhiteSpaces.trimWhiteSpaces(), trimmedWhiteSpaces)
     }
     
     func testTrimSquareBrackets() {
         let trimmedSquareBrackets = " 10, \"jk\", 4, \"314\", 99, \"crong\", false "
         let jsonString = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
         XCTAssertEqual(jsonString.trimSquareBrackets(), trimmedSquareBrackets)
+    }
+    
+    func testTrimCurlyBrackets() {
+        let trimmedCurlyBrackets = " \"name\" : \"jamie\" "
+        let stringSurroundedCurlyBrackets = "{ \"name\" : \"jamie\" }"
+        XCTAssertEqual(stringSurroundedCurlyBrackets.trimCurlyBrackets(), trimmedCurlyBrackets)
     }
     
     func testTrimDoubleQuotation() {
@@ -64,6 +85,12 @@ class UnitTestExtensions: XCTestCase {
         let jsonString = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
         let splitArray = ["[ 10", " \"jk\"", " 4", " \"314\"", " 99", " \"crong\"", " false ]"]
         XCTAssertEqual(jsonString.splitByComma(), splitArray)
+    }
+    
+    func testSplitByColon() {
+        let jsonString = "\"name\" : \"jamie\""
+        let splitArray = ["\"name\" ", " \"jamie\""]
+        XCTAssertEqual(jsonString.splitByColon(), splitArray)
     }
     
 }

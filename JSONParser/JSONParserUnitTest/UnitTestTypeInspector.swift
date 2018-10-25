@@ -9,24 +9,28 @@
 import XCTest
 
 class UnitTestTypeInspector: XCTestCase {
-    var jsonArray: [Any?] = []
+    var jsonValues: [JSONValue] = []
     var typeCount: [String: Int] = [:]
     
     override func setUp() {
-        jsonArray = [10, "jk", 4, "314", 99, "crong", false, nil]
-        typeCount = TypeInspector.countType(of: jsonArray)
+        jsonValues = [JSONValue.int(10), JSONValue.string("jamie"), JSONValue.bool(true), JSONValue.object(["name": JSONValue.string("jiyeong Yun")]), JSONValue.int(24), JSONValue.bool(false)]
+        typeCount = TypeInspector.countType(of: jsonValues)
     }
     override func tearDown() {}
-    
-    func testCountStringType() {
-        XCTAssertEqual(typeCount[typeName.string.rawValue], 3)
+
+    func testCountString() {
+        XCTAssertEqual(typeCount[typeName.string.rawValue], 1)
     }
 
     func testCountNumber() {
-        XCTAssertEqual(typeCount[typeName.int.rawValue], 3)
+        XCTAssertEqual(typeCount[typeName.int.rawValue], 2)
     }
     
     func testCountBool() {
-        XCTAssertEqual(typeCount[typeName.bool.rawValue], 1)
+        XCTAssertEqual(typeCount[typeName.bool.rawValue], 2)
+    }
+    
+    func testCountObject() {
+        XCTAssertEqual(typeCount[typeName.object.rawValue], 1)
     }
 }
