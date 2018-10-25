@@ -16,18 +16,24 @@ struct JSONParser {
         return nil
     }
     
+    private static func extractKeyValue(from jsonValue: String) -> (key: String, value: JSONValue?)? {
+        guard jsonValue.contains(":") else { return nil }
+        let objectKeyValue = jsonValue.splitByColon().map({ $0.trimWhiteSpaces() })
+        guard objectKeyValue.count > 1 else { return nil }
+        guard objectKeyValue[0].hasDoubleQuotation() else { return nil }
+        let key: String = objectKeyValue[0].trimDoubleQuotation()
+        let value: JSONValue? = typeCast(from: objectKeyValue[1])
+        return (key, value)
+    }
+    
     private static func makeJSONObject(from jsonString: String) -> [String: JSONValue]? {
         var jsonObject = [String: JSONValue]()
         let jsonStringTrimmedBrackets = jsonString.trimWhiteSpaces().trimCurlyBrackets()
         let jsonValues = jsonStringTrimmedBrackets.splitByComma()
         for jsonValue in jsonValues {
-            guard jsonValue.contains(":") else { return nil }
-            let objectKeyValue = jsonValue.splitByColon().map({ $0.trimWhiteSpaces() })
-            guard objectKeyValue.count > 1 else { return nil }
-            guard objectKeyValue[0].hasDoubleQuotation() else { return nil }
-            let key: String = objectKeyValue[0].trimDoubleQuotation()
-            guard let value: JSONValue = typeCast(from: objectKeyValue[1]) else { continue }
-            jsonObject[key] = value
+            guard let keyValue = extractKeyValue(from: jsonValue) else { return nil }
+            guard let value: JSONValue = keyValue.value else { continue }
+            jsonObject[keyValue.key] = value
         }
         return jsonObject
     }
