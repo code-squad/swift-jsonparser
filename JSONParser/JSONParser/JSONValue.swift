@@ -15,9 +15,3 @@ public enum JSONValue {
     case object([String : JSONValue])
     case array([JSONValue])
 }
-
-protocol JSONDataForm {
-    var typeName: typeName { get }
-    var totalCount: Int { get }
-    func countType() -> [String: Int]
-}
