@@ -16,7 +16,7 @@ struct JSONParser {
         return nil
     }
     
-    private static func makeJSONObject(from jsonString: String) -> JSONValue? {
+    private static func makeJSONObject(from jsonString: String) -> [String: JSONValue]? {
         var jsonObject = [String: JSONValue]()
         let jsonStringTrimmedBrackets = jsonString.trimWhiteSpaces().trimCurlyBrackets()
         let jsonValues = jsonStringTrimmedBrackets.splitByComma()
@@ -29,10 +29,10 @@ struct JSONParser {
             guard let value: JSONValue = typeCast(from: objectKeyValue[1]) else { continue }
             jsonObject[key] = value
         }
-        return JSONValue.object(jsonObject)
+        return jsonObject
     }
     
-    private static func makeJSONArray(from jsonString: String) -> JSONValue? {
+    private static func makeJSONArray(from jsonString: String) -> [JSONValue]? {
         var jsonArray = [JSONValue]()
         let jsonStringTrimmedBrackes = jsonString.trimWhiteSpaces().trimSquareBrackets()
         let str = jsonStringTrimmedBrackes
@@ -40,7 +40,7 @@ struct JSONParser {
         for index in str.indices {
             if (str[index]==",") {
                 let a = String(str[iterateIndex..<index])
-                guard let b = typeCast(from: a) else { continue }
+                guard let b = typeCast(from: a.trimWhiteSpaces()) else { continue }
                 jsonArray.append(b)
                 iterateIndex = str.index(after: index)
                 continue
@@ -49,22 +49,28 @@ struct JSONParser {
                 guard let b = a.firstIndex(of: "}") else { return nil }
                 let c = String(str[iterateIndex...b])
                 guard let d = makeJSONObject(from: c) else { return nil}
-                jsonArray.append(d)
+                jsonArray.append(JSONValue.object(d))
                 iterateIndex = str.index(after: index)
                 continue
             } else if (index==str.endIndex) {
                 let a = String(str[iterateIndex...index])
-                guard let b = typeCast(from: a) else { continue }
+                guard let b = typeCast(from: a.trimWhiteSpaces()) else { continue }
                 jsonArray.append(b)
                 continue
             }
         }
-        return JSONValue.array(jsonArray)
+        return jsonArray
     }
     
-    static func parse(_ jsonString: String) -> JSONValue? {
-        if jsonString.hasSideSquareBrackets() { return makeJSONArray(from: jsonString) }
-        if jsonString.hasSideCurlyBrackets() { return makeJSONObject(from: jsonString) }
+    static func parse(_ jsonString: String) -> JSONDataForm? {
+        if jsonString.hasSideSquareBrackets() {
+            guard let jsonArray = makeJSONArray(from: jsonString) else { return nil }
+            return JSONArray.init(jsonArray: jsonArray)
+        }
+        if jsonString.hasSideCurlyBrackets() {
+            guard let jsonObject = makeJSONObject(from: jsonString) else { return nil }
+            return JSONObject.init(jsonObject: jsonObject)
+        }
         return nil
     }
 }
