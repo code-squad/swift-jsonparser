@@ -42,28 +42,34 @@ struct JSONParser {
         var jsonArray = [JSONValue]()
         let jsonStringTrimmedBrackes = jsonString.trimWhiteSpaces().trimSquareBrackets()
         let str = jsonStringTrimmedBrackes
+        
         var iterateIndex = str.startIndex
-        for index in str.indices {
-            if (str[index]==",") {
-                let a = String(str[iterateIndex..<index])
+        var sliceIndex = str.startIndex
+        while(iterateIndex != str.endIndex) {
+            if (str[iterateIndex]==",") {
+                let a = String(str[sliceIndex..<iterateIndex])
                 guard let b = typeCast(from: a.trimWhiteSpaces()) else { continue }
                 jsonArray.append(b)
-                iterateIndex = str.index(after: index)
+                sliceIndex = str.index(after: iterateIndex)
+                iterateIndex = str.index(after: iterateIndex)
                 continue
-            } else if (str[index]=="{") {
+            } else if (str[iterateIndex]=="{") {
                 let a = str[iterateIndex...]
                 guard let b = a.firstIndex(of: "}") else { return nil }
-                let c = String(str[iterateIndex...b])
+                let c = String(str[sliceIndex...b])
                 guard let d = makeJSONObject(from: c) else { return nil}
                 jsonArray.append(JSONValue.object(d))
-                iterateIndex = str.index(after: index)
+                iterateIndex = str.index(after: str[b...].firstIndex(of: ",") ?? b)
+                sliceIndex = iterateIndex
                 continue
-            } else if (index==str.endIndex) {
-                let a = String(str[iterateIndex...index])
+            } else if (iterateIndex==str.index(before: str.endIndex)) {
+                let a = String(str[sliceIndex...])
                 guard let b = typeCast(from: a.trimWhiteSpaces()) else { continue }
                 jsonArray.append(b)
+                iterateIndex = str.index(after: iterateIndex)
                 continue
             }
+            iterateIndex = str.index(after: iterateIndex)
         }
         return jsonArray
     }
