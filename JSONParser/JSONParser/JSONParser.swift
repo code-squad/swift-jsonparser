@@ -40,36 +40,31 @@ struct JSONParser {
     
     private static func makeJSONArray(from jsonString: String) -> [JSONValue]? {
         var jsonArray = [JSONValue]()
-        let jsonStringTrimmedBrackes = jsonString.trimWhiteSpaces().trimSquareBrackets()
-        let str = jsonStringTrimmedBrackes
-        
-        var iterateIndex = str.startIndex
-        var sliceIndex = str.startIndex
-        while(iterateIndex != str.endIndex) {
-            if (str[iterateIndex]==",") {
-                let a = String(str[sliceIndex..<iterateIndex])
-                guard let b = typeCast(from: a.trimWhiteSpaces()) else { continue }
-                jsonArray.append(b)
-                sliceIndex = str.index(after: iterateIndex)
-                iterateIndex = str.index(after: iterateIndex)
-                continue
-            } else if (str[iterateIndex]=="{") {
-                let a = str[iterateIndex...]
-                guard let b = a.firstIndex(of: "}") else { return nil }
-                let c = String(str[sliceIndex...b])
-                guard let d = makeJSONObject(from: c) else { return nil}
-                jsonArray.append(JSONValue.object(d))
-                iterateIndex = str.index(after: str[b...].firstIndex(of: ",") ?? b)
+        let jsonString = jsonString.trimWhiteSpaces().trimSquareBrackets()
+        var iterateIndex = jsonString.startIndex
+        var sliceIndex = jsonString.startIndex
+        while(iterateIndex != jsonString.endIndex) {
+            if (jsonString[iterateIndex]=="{") {
+                guard let closeBracketIndex = jsonString[iterateIndex...].firstIndex(of: "}") else { return nil }
+                let slice = String(jsonString[sliceIndex...closeBracketIndex])
+                guard let jsonObject = makeJSONObject(from: slice) else { return nil}
+                jsonArray.append(JSONValue.object(jsonObject))
+                iterateIndex = jsonString.index(after: jsonString[closeBracketIndex...].firstIndex(of: ",") ?? closeBracketIndex)
                 sliceIndex = iterateIndex
                 continue
-            } else if (iterateIndex==str.index(before: str.endIndex)) {
-                let a = String(str[sliceIndex...])
-                guard let b = typeCast(from: a.trimWhiteSpaces()) else { continue }
-                jsonArray.append(b)
-                iterateIndex = str.index(after: iterateIndex)
+            } else if (jsonString[iterateIndex] == ",") {
+                let slice = String(jsonString[sliceIndex..<iterateIndex])
+                guard let jsonValue = typeCast(from: slice.trimWhiteSpaces()) else { continue }
+                jsonArray.append(jsonValue)
+                iterateIndex = jsonString.index(after: iterateIndex)
+                sliceIndex = iterateIndex
                 continue
+            } else if (iterateIndex==jsonString.index(before: jsonString.endIndex)) {
+                let slice = String(jsonString[sliceIndex...])
+                guard let jsonValue = typeCast(from: slice.trimWhiteSpaces()) else { continue }
+                jsonArray.append(jsonValue)
             }
-            iterateIndex = str.index(after: iterateIndex)
+            iterateIndex = jsonString.index(after: iterateIndex)
         }
         return jsonArray
     }
