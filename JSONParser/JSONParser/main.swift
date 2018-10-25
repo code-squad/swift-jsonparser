@@ -11,11 +11,11 @@ import Foundation
 struct Main {
     static func run() {
         let jsonString = InputView.readInput()
-        guard let jsonArray: [Any?] = JSONParser.makeJSONArray(from: jsonString) else {
+        guard let jsonDataForm: JSONDataForm = JSONParser.parse(jsonString) else {
             OutputView.notifyIssue()
             return
         }
-        OutputView.showTypeCountOf(JSON: jsonArray)
+        OutputView.showTypeCount(of: jsonDataForm)
     }
 }
 

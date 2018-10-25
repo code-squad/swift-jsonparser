@@ -16,15 +16,15 @@ struct OutputView {
             static let noCount = 0
             static let countUnit = "개"
             static let comma = ","
-            static func makeSentence(with totalCount: Int, and typeCount: String) -> String {
-                return "총 \(totalCount)개의 데이터 중에 \(typeCount)가 포함되어 있습니다."
+            static func makeSentence(with totalCount: Int, dataForm: String, and typeCount: String) -> String {
+                return "총 \(totalCount)개의 \(dataForm) 데이터 중에 \(typeCount)가 포함되어 있습니다."
             }
         }
     }
     
-    private static func addTypeName(to jsonArray: [Any?]) -> String {
-        var typeNames: [String?] = [typeName.string.rawValue, typeName.int.rawValue, typeName.bool.rawValue]
-        let typeCount = TypeInspector.countType(of: jsonArray)
+    private static func addTypeName(to jsonDataForm: JSONDataForm) -> String {
+        var typeNames: [String?] = [typeName.string.rawValue, typeName.int.rawValue, typeName.bool.rawValue, typeName.object.rawValue]
+        let typeCount = jsonDataForm.countType()
         for index in 0..<typeNames.count {
             let key = typeNames[index] ?? typeName.none.rawValue
             guard let count = typeCount[key] else {
@@ -36,10 +36,11 @@ struct OutputView {
         return typeNames.compactMap({$0}).joined(separator: "\(Message.countResult.comma) ")
     }
     
-    static func showTypeCountOf(JSON jsonArray: [Any?]) {
-        let totalCount = jsonArray.count
-        let typeCount = addTypeName(to: jsonArray)
-        print(Message.countResult.makeSentence(with: totalCount, and: typeCount))
+    static func showTypeCount(of jsonDataForm: JSONDataForm) {
+        let totalCount = jsonDataForm.totalCount
+        let dataForm = jsonDataForm.typeName.rawValue
+        let typeCount = addTypeName(to: jsonDataForm)
+        print(Message.countResult.makeSentence(with: totalCount, dataForm: dataForm, and: typeCount))
     }
     
     static func notifyIssue() {
