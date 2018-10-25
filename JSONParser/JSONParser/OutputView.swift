@@ -16,7 +16,7 @@ struct OutputView {
             static let noCount = 0
             static let countUnit = "개"
             static let comma = ","
-            static func makeSentence(with totalCount: Int, dataForm: String, and typeCount: String) -> String {
+            static func makeSentence(with totalCount: Int, _ dataForm: String, and typeCount: String) -> String {
                 return "총 \(totalCount)개의 \(dataForm) 데이터 중에 \(typeCount)가 포함되어 있습니다."
             }
         }
@@ -40,7 +40,7 @@ struct OutputView {
         let totalCount = jsonDataForm.totalCount
         let dataForm = jsonDataForm.typeName.rawValue
         let typeCount = addTypeName(to: jsonDataForm)
-        print(Message.countResult.makeSentence(with: totalCount, dataForm: dataForm, and: typeCount))
+        print(Message.countResult.makeSentence(with: totalCount, dataForm, and: typeCount))
     }
     
     static func notifyIssue() {
