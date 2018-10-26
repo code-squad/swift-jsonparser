@@ -12,8 +12,8 @@ enum JSONValue {
     case string(String)
     case int(Int)
     case bool(Bool)
-    case object([String : JSONValue])
-    case array([JSONValue])
+    case object(JSONObject)
+    case array(JSONArray)
     
     var typeName: String {
         switch self {

@@ -16,7 +16,7 @@ struct JSONArray: JSONDataForm {
     }
     
     var typeName: String {
-        return "배열"
+        return JSONValue.array(self).typeName
     }
     
     var totalCount: Int {

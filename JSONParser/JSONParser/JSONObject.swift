@@ -16,7 +16,7 @@ struct JSONObject: JSONDataForm {
     }
     
     var typeName: String {
-        return "객체"
+        return JSONValue.object(self).typeName
     }
     
     var totalCount: Int {

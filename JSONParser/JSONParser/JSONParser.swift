@@ -19,7 +19,7 @@ struct JSONParser {
     private static func typeCast(from string: String) -> JSONValue? {
         if string.hasSideCurlyBrackets() {
             guard let jsonObject = makeJSONObject(from: string) else { return nil }
-            return JSONValue.object(jsonObject)
+            return JSONValue.object(JSONObject.init(jsonObject))
         }
         if string.hasDoubleQuotation() { return JSONValue.string(string.trimDoubleQuotation()) }
         if let int = Int(string) { return JSONValue.int(int) }
