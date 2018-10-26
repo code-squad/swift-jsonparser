@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum JSONValue {
+enum JSONValue {
     case string(String)
     case int(Int)
     case bool(Bool)

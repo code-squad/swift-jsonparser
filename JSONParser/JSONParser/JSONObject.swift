@@ -11,7 +11,7 @@ import Foundation
 struct JSONObject: JSONDataForm {
     private let jsonObject: [String: JSONValue]
     
-    init(jsonObject: [String: JSONValue]) {
+    init(_ jsonObject: [String: JSONValue]) {
         self.jsonObject = jsonObject
     }
     

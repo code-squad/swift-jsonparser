@@ -11,7 +11,7 @@ import Foundation
 struct JSONArray: JSONDataForm {
     private let jsonArray: [JSONValue]
     
-    init(jsonArray: [JSONValue]) {
+    init(_ jsonArray: [JSONValue]) {
         self.jsonArray = jsonArray
     }
     
