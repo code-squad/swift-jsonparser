@@ -23,10 +23,10 @@ struct OutputView {
     }
     
     private static func addTypeName(to jsonDataForm: JSONDataForm) -> String {
-        var typeNames: [String?] = [typeName.string.rawValue, typeName.int.rawValue, typeName.bool.rawValue, typeName.object.rawValue]
+        var typeNames: [String?] = ["문자열", "숫자", "부울", "객체"]
         let typeCount = jsonDataForm.countType()
         for index in 0..<typeNames.count {
-            let key = typeNames[index] ?? typeName.none.rawValue
+            let key = typeNames[index] ?? ""
             guard let count = typeCount[key] else {
                 typeNames[index] = nil
                 continue
@@ -38,7 +38,7 @@ struct OutputView {
     
     static func showTypeCount(of jsonDataForm: JSONDataForm) {
         let totalCount = jsonDataForm.totalCount
-        let dataForm = jsonDataForm.typeName.rawValue
+        let dataForm = jsonDataForm.typeName
         let typeCount = addTypeName(to: jsonDataForm)
         print(Message.countResult.makeSentence(with: totalCount, dataForm, and: typeCount))
     }

@@ -15,8 +15,8 @@ struct JSONObject: JSONDataForm {
         self.jsonObject = jsonObject
     }
     
-    var typeName: typeName {
-        return .object
+    var typeName: String {
+        return "객체"
     }
     
     var totalCount: Int {
@@ -24,6 +24,10 @@ struct JSONObject: JSONDataForm {
     }
     
     func countType() -> [String : Int] {
-        return TypeInspector.countType(of: Array(jsonObject.values))
+        var typeCount: [String: Int] = [:]
+        for value in self.jsonObject.values {
+            typeCount[value.typeName] = (typeCount[value.typeName] ?? 0) + 1
+        }
+        return typeCount
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol JSONDataForm {
-    var typeName: typeName { get }
+    var typeName: String { get }
     var totalCount: Int { get }
     func countType() -> [String: Int]
 }
