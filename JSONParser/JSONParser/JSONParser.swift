@@ -9,7 +9,18 @@
 import Foundation
 
 struct JSONParser {
+    private static func captureGroup(in string: String, by pattern: String) -> [String] {
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else { return [] }
+        let range = NSRange(string.startIndex..., in: string)
+        let matches = regex.matches(in: string, options: [], range: range)
+        return matches.map { String(string[Range($0.range, in: string)!]) }
+    }
+    
     private static func typeCast(from string: String) -> JSONValue? {
+        if string.hasSideCurlyBrackets() {
+            guard let jsonObject = makeJSONObject(from: string) else { return nil }
+            return JSONValue.object(jsonObject)
+        }
         if string.hasDoubleQuotation() { return JSONValue.string(string.trimDoubleQuotation()) }
         if let int = Int(string) { return JSONValue.int(int) }
         if let bool = Bool(string) { return JSONValue.bool(bool) }
@@ -25,46 +36,26 @@ struct JSONParser {
         let value: JSONValue? = typeCast(from: objectKeyValue[1])
         return (key, value)
     }
-    
+
     private static func makeJSONObject(from jsonString: String) -> [String: JSONValue]? {
         var jsonObject = [String: JSONValue]()
-        let jsonStringTrimmedBrackets = jsonString.trimWhiteSpaces().trimCurlyBrackets()
-        let jsonValues = jsonStringTrimmedBrackets.splitByComma()
-        for jsonValue in jsonValues {
-            guard let keyValue = extractKeyValue(from: jsonValue) else { return nil }
-            guard let value: JSONValue = keyValue.value else { continue }
-            jsonObject[keyValue.key] = value
+        let regexKeyValueInJSONObject = "\"[\\w]+\"\\s*:\\s*[\"\\w\\s]+"
+        let keyValues = captureGroup(in: jsonString, by: regexKeyValueInJSONObject)
+        for keyValue in keyValues {
+            guard let keyValueSplit = extractKeyValue(from: keyValue) else { return nil }
+            guard let value: JSONValue = keyValueSplit.value else { continue }
+            jsonObject[keyValueSplit.key] = value
         }
         return jsonObject
     }
     
     private static func makeJSONArray(from jsonString: String) -> [JSONValue]? {
         var jsonArray = [JSONValue]()
-        let jsonString = jsonString.trimWhiteSpaces().trimSquareBrackets()
-        var iterateIndex = jsonString.startIndex
-        var sliceIndex = jsonString.startIndex
-        while(iterateIndex != jsonString.endIndex) {
-            if (jsonString[iterateIndex]=="{") {
-                guard let closeBracketIndex = jsonString[iterateIndex...].firstIndex(of: "}") else { return nil }
-                let slice = String(jsonString[sliceIndex...closeBracketIndex])
-                guard let jsonObject = makeJSONObject(from: slice) else { return nil}
-                jsonArray.append(JSONValue.object(jsonObject))
-                iterateIndex = jsonString.index(after: jsonString[closeBracketIndex...].firstIndex(of: ",") ?? closeBracketIndex)
-                sliceIndex = iterateIndex
-                continue
-            } else if (jsonString[iterateIndex] == ",") {
-                let slice = String(jsonString[sliceIndex..<iterateIndex])
-                guard let jsonValue = typeCast(from: slice.trimWhiteSpaces()) else { continue }
-                jsonArray.append(jsonValue)
-                iterateIndex = jsonString.index(after: iterateIndex)
-                sliceIndex = iterateIndex
-                continue
-            } else if (iterateIndex==jsonString.index(before: jsonString.endIndex)) {
-                let slice = String(jsonString[sliceIndex...])
-                guard let jsonValue = typeCast(from: slice.trimWhiteSpaces()) else { continue }
-                jsonArray.append(jsonValue)
-            }
-            iterateIndex = jsonString.index(after: iterateIndex)
+        let regexValuesInJSONArray = "(\\{(?:(?:\\s*\"[\\w]+\"\\s*:\\s*[\"\\w\\s]+\\s*),*)*\\}|\"[\\w]+\"|[0-9]+|false|true)"
+        let jsonValues = captureGroup(in: jsonString, by: regexValuesInJSONArray)
+        for jsonValue in jsonValues {
+            guard let jsonValueConverted = typeCast(from: jsonValue) else { return nil }
+            jsonArray.append(jsonValueConverted)
         }
         return jsonArray
     }
