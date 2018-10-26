@@ -23,24 +23,16 @@ struct OutputView {
     }
     
     private static func addTypeName(to jsonDataForm: JSONDataForm) -> String {
-        var typeNames: [String?] = ["문자열", "숫자", "부울", "객체"]
         let typeCount = jsonDataForm.countType()
-        for index in 0..<typeNames.count {
-            let key = typeNames[index] ?? ""
-            guard let count = typeCount[key] else {
-                typeNames[index] = nil
-                continue
-            }
-            typeNames[index]?.append(" \(count)\(Message.countResult.countUnit)")
-        }
-        return typeNames.compactMap({$0}).joined(separator: "\(Message.countResult.comma) ")
+        let countNameAdded = typeCount.map{ (key, value) in "\(key) \(value)\(Message.countResult.countUnit)" }
+        return countNameAdded.joined(separator: "\(Message.countResult.comma) ")
     }
     
     static func showTypeCount(of jsonDataForm: JSONDataForm) {
         let totalCount = jsonDataForm.totalCount
-        let dataForm = jsonDataForm.typeName
+        let typeName = jsonDataForm.typeName
         let typeCount = addTypeName(to: jsonDataForm)
-        print(Message.countResult.makeSentence(with: totalCount, dataForm, and: typeCount))
+        print(Message.countResult.makeSentence(with: totalCount, typeName, and: typeCount))
     }
     
     static func notifyIssue() {
