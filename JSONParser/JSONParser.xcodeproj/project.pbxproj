@@ -16,6 +16,7 @@
 		A39A96C02181ED1400FA6EEF /* JSONArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39A96BE2181ED1400FA6EEF /* JSONArray.swift */; };
 		A39A96C22181EE8200FA6EEF /* JSONDataForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39A96C12181EE8200FA6EEF /* JSONDataForm.swift */; };
 		A39A96C32181EE8200FA6EEF /* JSONDataForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39A96C12181EE8200FA6EEF /* JSONDataForm.swift */; };
+		A3C3502921841493001B80BC /* UnitTestJSONDataForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C3502821841493001B80BC /* UnitTestJSONDataForm.swift */; };
 		A3D86F8F21786A2C0044CFD9 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F8E21786A2C0044CFD9 /* InputView.swift */; };
 		A3D86F9121786A3D0044CFD9 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F9021786A3D0044CFD9 /* OutputView.swift */; };
 		A3D86F93217872D20044CFD9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F92217872D20044CFD9 /* Extensions.swift */; };
@@ -45,6 +46,7 @@
 		A39A96BB2181ED0800FA6EEF /* JSONObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONObject.swift; sourceTree = "<group>"; };
 		A39A96BE2181ED1400FA6EEF /* JSONArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONArray.swift; sourceTree = "<group>"; };
 		A39A96C12181EE8200FA6EEF /* JSONDataForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDataForm.swift; sourceTree = "<group>"; };
+		A3C3502821841493001B80BC /* UnitTestJSONDataForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestJSONDataForm.swift; sourceTree = "<group>"; };
 		A3D86F8E21786A2C0044CFD9 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		A3D86F9021786A3D0044CFD9 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		A3D86F92217872D20044CFD9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				A3D86F9E2179AB2A0044CFD9 /* UnitTestJSONParser.swift */,
 				A3D86FA02179AB2A0044CFD9 /* Info.plist */,
 				A3D86FA72179ABB40044CFD9 /* UnitTestExtensions.swift */,
+				A3C3502821841493001B80BC /* UnitTestJSONDataForm.swift */,
 			);
 			path = JSONParserUnitTest;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3D86FA52179AB680044CFD9 /* JSONParser.swift in Sources */,
+				A3C3502921841493001B80BC /* UnitTestJSONDataForm.swift in Sources */,
 				A39A96C32181EE8200FA6EEF /* JSONDataForm.swift in Sources */,
 				A3D86FA82179ABB40044CFD9 /* UnitTestExtensions.swift in Sources */,
 				A3D86F9F2179AB2A0044CFD9 /* UnitTestJSONParser.swift in Sources */,
