@@ -10,19 +10,19 @@ import Foundation
 
 struct JSONArray: JSONDataForm {
     private let jsonArray: [JSONValue]
-    
+
     init(_ jsonArray: [JSONValue]) {
         self.jsonArray = jsonArray
     }
-    
+
     var typeName: String {
         return JSONValue.array(self).typeName
     }
-    
+
     var totalCount: Int {
         return jsonArray.count
     }
-    
+
     func countType() -> [String : Int] {
         var typeCount: [String: Int] = [:]
         for jsonValue in self.jsonArray {
@@ -30,5 +30,6 @@ struct JSONArray: JSONDataForm {
         }
         return typeCount
     }
+    
 }
 

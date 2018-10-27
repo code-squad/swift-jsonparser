@@ -14,7 +14,7 @@ enum JSONValue {
     case bool(Bool)
     case object(JSONObject)
     case array(JSONArray)
-    
+
     var typeName: String {
         switch self {
         case .string:

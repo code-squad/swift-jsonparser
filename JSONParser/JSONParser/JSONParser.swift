@@ -9,26 +9,33 @@
 import Foundation
 
 struct JSONParser {
+
     private static func captureGroup(in string: String, by pattern: String) -> [String] {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else { return [] }
         let range = NSRange(string.startIndex..., in: string)
         let matches = regex.matches(in: string, options: [], range: range)
         return matches.map { String(string[Range($0.range, in: string)!]) }
     }
-    
+
     private static func typeCast(from string: String) -> JSONValue? {
         if string.hasSideCurlyBrackets() {
             guard let jsonObject = makeJSONObject(from: string) else { return nil }
             return JSONValue.object(JSONObject.init(jsonObject))
         }
-        if string.hasDoubleQuotation() { return JSONValue.string(string.trimDoubleQuotation()) }
-        if let int = Int(string) { return JSONValue.int(int) }
-        if let bool = Bool(string) { return JSONValue.bool(bool) }
+        if string.hasDoubleQuotation() {
+            return JSONValue.string(string.trimDoubleQuotation())
+        }
+        if let int = Int(string) {
+            return JSONValue.int(int)
+        }
+        if let bool = Bool(string) {
+            return JSONValue.bool(bool)
+        }
         return nil
     }
-    
+
     private static func extractKeyValue(from jsonValue: String) -> (key: String, value: JSONValue?) {
-        let objectKeyValue = jsonValue.splitByColon().map({ $0.trimWhiteSpaces() })
+        let objectKeyValue = jsonValue.splitByColon().map { $0.trimWhiteSpaces() }
         let key: String = objectKeyValue[0].trimDoubleQuotation()
         let value: JSONValue? = typeCast(from: objectKeyValue[1])
         return (key, value)
@@ -46,7 +53,7 @@ struct JSONParser {
         }
         return jsonObject
     }
-    
+
     private static func makeJSONArray(from jsonString: String) -> [JSONValue]? {
         var jsonArray = [JSONValue]()
         let regexValuesInJSONArray = "(\\{(?:(?:\\s*\"[\\w]+\"\\s*:\\s*[\"\\w\\s]+\\s*),*)*\\}|\"[\\w]+\"|[0-9]+|false|true)"
@@ -57,7 +64,7 @@ struct JSONParser {
         }
         return jsonArray
     }
-    
+
     static func parse(_ jsonString: String) -> JSONDataForm? {
         if jsonString.hasSideSquareBrackets() {
             guard let jsonArray = makeJSONArray(from: jsonString) else { return nil }
@@ -69,4 +76,5 @@ struct JSONParser {
         }
         return nil
     }
+
 }
