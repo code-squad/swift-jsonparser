@@ -27,11 +27,8 @@ struct JSONParser {
         return nil
     }
     
-    private static func extractKeyValue(from jsonValue: String) -> (key: String, value: JSONValue?)? {
-        guard jsonValue.contains(":") else { return nil }
+    private static func extractKeyValue(from jsonValue: String) -> (key: String, value: JSONValue?) {
         let objectKeyValue = jsonValue.splitByColon().map({ $0.trimWhiteSpaces() })
-        guard objectKeyValue.count > 1 else { return nil }
-        guard objectKeyValue[0].hasDoubleQuotation() else { return nil }
         let key: String = objectKeyValue[0].trimDoubleQuotation()
         let value: JSONValue? = typeCast(from: objectKeyValue[1])
         return (key, value)
@@ -41,8 +38,9 @@ struct JSONParser {
         var jsonObject = [String: JSONValue]()
         let regexKeyValueInJSONObject = "\"[\\w]+\"\\s*:\\s*[\"\\w\\s]+"
         let keyValues = captureGroup(in: jsonString, by: regexKeyValueInJSONObject)
+        guard keyValues.count == jsonString.splitByComma().count else { return nil }
         for keyValue in keyValues {
-            guard let keyValueSplit = extractKeyValue(from: keyValue) else { return nil }
+            let keyValueSplit = extractKeyValue(from: keyValue)
             guard let value: JSONValue = keyValueSplit.value else { continue }
             jsonObject[keyValueSplit.key] = value
         }

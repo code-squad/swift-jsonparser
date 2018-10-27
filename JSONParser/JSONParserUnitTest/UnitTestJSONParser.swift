@@ -16,19 +16,14 @@ class UnitTestJSONParser: XCTestCase {
         let jsonString = "{ \"name\"  \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
         XCTAssertNil(JSONParser.parse(jsonString))
     }
-    
+
     func testParseNil_whenKeyValueNotSatisfiedInJSONObject() {
         let jsonString = "{ \"name\" : \"KIM JUNG\",:, \"level\" : 5, \"married\" : true }"
         XCTAssertNil(JSONParser.parse(jsonString))
     }
-    
+
     func testParseNil_whenKeyHasNoDoubleQuotationInJSONObject() {
         let jsonString = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, married : true }"
-        XCTAssertNil(JSONParser.parse(jsonString))
-    }
-    
-    func testParseNil_whenNoCloseBracket() {
-        let jsonString = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true  ]"
         XCTAssertNil(JSONParser.parse(jsonString))
     }
 }
