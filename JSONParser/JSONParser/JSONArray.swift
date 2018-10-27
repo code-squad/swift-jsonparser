@@ -30,6 +30,5 @@ struct JSONArray: JSONDataForm {
         }
         return typeCount
     }
-    
-}
 
+}

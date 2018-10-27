@@ -9,6 +9,7 @@
 import XCTest
 
 class UnitTestExtensions: XCTestCase {
+
     func testHasNoSideSquareBracket() {
         let noSideSquareBracket = "10, \"jk\", 4, \"314\", 99, \"crong\""
         XCTAssertFalse(noSideSquareBracket.hasSideSquareBrackets())

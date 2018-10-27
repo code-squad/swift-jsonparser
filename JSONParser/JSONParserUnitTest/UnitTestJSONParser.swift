@@ -9,6 +9,7 @@
 import XCTest
 
 class UnitTestJSONParser: XCTestCase {
+
     func testParseNil_whenColonNotIncludedProperlyInJSONObject() {
         let jsonString = "{ \"name\"  \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
         XCTAssertNil(JSONParser.parse(jsonString))

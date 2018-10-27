@@ -12,7 +12,7 @@ extension String {
     func hasSideSquareBrackets() -> Bool {
         return (self.count > 1 && self.first == "[" && self.last == "]")
     }
-    
+
     func hasSideCurlyBrackets() -> Bool {
         return (self.count > 1 && self.first == "{" && self.last == "}")
     }

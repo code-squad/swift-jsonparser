@@ -9,6 +9,7 @@
 import XCTest
 
 class UnitTestJSONDataForm: XCTestCase {
+
     func testJSONObjectCountTypeRight() {
         let dic: [String: JSONValue] = ["name" : JSONValue.string("JIYEONG YUN"), "alias" : JSONValue.string("Jamie"), "level" : JSONValue.int(2), "smart" : JSONValue.bool(true)]
         let jsonObject = JSONObject.init(dic)
