@@ -35,8 +35,13 @@ class UnitTestGrammarChecker: XCTestCase {
         XCTAssertFalse(GrammarChecker.isValid(jsonObject, for: JSONRegex.jsonObject))
     }
 
-    func testIsNotValid_whenObjectHasArray() {
+    func testIsValid_whenObjectHasNestedArray() {
         let jsonObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true, \"array\" : [ \"nested\" ] }"
+        XCTAssertTrue(GrammarChecker.isValid(jsonObject, for: JSONRegex.jsonObject))
+    }
+    
+    func testIsNotValid_whenObjectHasDoubleNestedArray() {
+        let jsonObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true, \"array\" : [ \"nested\", [\"doubleNested\", true] ] }"
         XCTAssertFalse(GrammarChecker.isValid(jsonObject, for: JSONRegex.jsonObject))
     }
 
@@ -55,8 +60,13 @@ class UnitTestGrammarChecker: XCTestCase {
         XCTAssertFalse(GrammarChecker.isValid(jsonArray, for: JSONRegex.jsonArray))
     }
 
-    func testIsNotValid_whenArrayHasNestedArray() {
+    func testIsValid_whenArrayHasNestedArray() {
         let jsonArray = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true }, [ \"nested\" ] ]"
+        XCTAssertTrue(GrammarChecker.isValid(jsonArray, for: JSONRegex.jsonArray))
+    }
+    
+    func testIsNotValid_whenArrayHasDoubleNestedArray() {
+        let jsonArray = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true }, [ \"nested\", [true, false] ] ]"
         XCTAssertFalse(GrammarChecker.isValid(jsonArray, for: JSONRegex.jsonArray))
     }
 

@@ -18,6 +18,10 @@ struct JSONParser {
     }
 
     private static func typeCast(from string: String) -> JSONData? {
+        if string.hasSideSquareBrackets() {
+            guard let jsonArray = makeJSONArray(from: string) else { return nil }
+            return jsonArray
+        }
         if string.hasSideCurlyBrackets() {
             guard let jsonObject = makeJSONObject(from: string) else { return nil }
             return jsonObject
@@ -43,8 +47,7 @@ struct JSONParser {
 
     private static func makeJSONObject(from jsonString: String) -> [String: JSONData]? {
         var jsonObject = [String: JSONData]()
-        let keyValues = captureGroup(in: jsonString, by: JSONRegex.keyValue)
-        guard keyValues.count == jsonString.splitByComma().count else { return nil }
+        let keyValues = captureGroup(in: jsonString, by: JSONRegex.keyValueIncludingArray)
         for keyValue in keyValues {
             let keyValueSplit = extractKeyValue(from: keyValue)
             guard let value: JSONData = keyValueSplit.value else { continue }
@@ -55,7 +58,7 @@ struct JSONParser {
 
     private static func makeJSONArray(from jsonString: String) -> [JSONData]? {
         var jsonArray = [JSONData]()
-        let jsonValues = captureGroup(in: jsonString, by: JSONRegex.valuesIncludingObject)
+        let jsonValues = captureGroup(in: jsonString.trimSquareBrackets(), by: JSONRegex.valuesIncludingArray)
         for jsonValue in jsonValues {
             guard let jsonValueConverted = typeCast(from: jsonValue) else { return nil }
             jsonArray.append(jsonValueConverted)

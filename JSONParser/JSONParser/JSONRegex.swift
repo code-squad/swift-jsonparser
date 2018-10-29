@@ -16,15 +16,20 @@ struct JSONRegex {
     private static let leftSquareBracket = "\\["
     private static let rightSquareBracket = "\\]"
 
-    private static let string = "\"[\\w_\(space)]+\""
+    private static let string = "\"[\\w_\(space)\']+\""
     private static let int = "[0-9]+"
     private static let bool = "(?:true|false)"
 
     private static let values = "\(string)|\(int)|\(bool)"
-    static let keyValue = "\(string)\(space)*\(colon)\(space)*(?:\(values))"
+    private static let keyValue = "\(string)\(space)*\(colon)\(space)*(?:\(values))"
     private static let object = "\(leftCurlyBracket)\(space)*\(keyValue)\(space)*(?:,\(space)*\(keyValue)\(space)*)*\(rightCurlyBracket)"
-    static let jsonObject = "^\(object)$"
 
-    static let valuesIncludingObject = "\(values)|\(object)"
-    static let jsonArray = "^\(leftSquareBracket)\(space)*(?:\(valuesIncludingObject))\(space)*(?:,\(space)*(?:\(valuesIncludingObject))\(space)*)*\(rightSquareBracket)$"
+    private static let valuesIncludingObject = "\(values)|\(object)"
+    private static let array = "\(leftSquareBracket)\(space)*(?:\(valuesIncludingObject))\(space)*(?:,\(space)*(?:\(valuesIncludingObject))\(space)*)*\(rightSquareBracket)"
+    
+    static let valuesIncludingArray = "\(valuesIncludingObject)|\(array)"
+    static let keyValueIncludingArray = "\(string)\(space)*\(colon)\(space)*(?:\(valuesIncludingArray))"
+    static let jsonObject = "^\(leftCurlyBracket)\(space)*\(keyValueIncludingArray)\(space)*(?:,\(space)*\(keyValueIncludingArray)\(space)*)*\(rightCurlyBracket)$"
+    static let jsonArray = "^\(leftSquareBracket)\(space)*(?:\(valuesIncludingArray))\(space)*(?:,\(space)*(?:\(valuesIncludingArray))\(space)*)*\(rightSquareBracket)$"
+    
 }

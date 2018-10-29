@@ -11,13 +11,13 @@ import XCTest
 class UnitTestJSONDataForm: XCTestCase {
 
     func testJSONObjectCountTypeRight() {
-        let jsonObject: [String: JSONData] = ["name" : "JIYEONG YUN", "alias" : "Jamie", "level" : 2, "smart" : true]
-        XCTAssertEqual(jsonObject.countType(), ["문자열": 2, "숫자": 1, "부울": 1])
+        let jsonObject: [String: JSONData] = ["name" : "JIYEONG YUN", "alias" : "Jamie", "level" : 2, "smart" : true, "object" : ["nested" : true], "array" : [2, 3, 5], "secondArray" : [true, "string"] ]
+        XCTAssertEqual(jsonObject.countType(), ["문자열": 2, "숫자": 1, "부울": 1, "객체": 1, "배열": 2])
     }
 
     func testJSONArrayCountTypeRight() {
-        let jsonArray: [JSONData] = ["JIYEONG YUN", "Jamie", 2, true, ["name" : "JIYEONG YUN", "alias" : "Jamie", "level" : 2, "smart" : true]]
-        XCTAssertEqual(jsonArray.countType(), ["문자열": 2, "숫자": 1, "부울": 1, "객체": 1])
+        let jsonArray: [JSONData] = ["JIYEONG YUN", "Jamie", 2, true, ["name" : "JIYEONG YUN", "alias" : "Jamie", "level" : 2, "smart" : true], [2, 3, 5], [true, "string"] ]
+        XCTAssertEqual(jsonArray.countType(), ["문자열": 2, "숫자": 1, "부울": 1, "객체": 1, "배열": 2])
     }
 
 }
