@@ -17,7 +17,7 @@ extension Dictionary: JSONDataForm where Key == String, Value == JSONData {
     var totalCount: Int {
         return self.count
     }
-    
+
     func countType() -> [String : Int] {
         var typeCount: [String: Int] = [:]
         for value in self.values {
@@ -31,7 +31,7 @@ extension Array: JSONDataForm where Element == JSONData {
     var totalCount: Int {
         return self.count
     }
-    
+
     func countType() -> [String : Int] {
         var typeCount: [String: Int] = [:]
         for value in self {

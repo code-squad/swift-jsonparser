@@ -26,10 +26,10 @@ struct JSONRegex {
 
     private static let valuesIncludingObject = "\(values)|\(object)"
     private static let array = "\(leftSquareBracket)\(space)*(?:\(valuesIncludingObject))\(space)*(?:,\(space)*(?:\(valuesIncludingObject))\(space)*)*\(rightSquareBracket)"
-    
+
     static let valuesIncludingArray = "\(valuesIncludingObject)|\(array)"
     static let keyValueIncludingArray = "\(string)\(space)*\(colon)\(space)*(?:\(valuesIncludingArray))"
     static let jsonObject = "^\(leftCurlyBracket)\(space)*\(keyValueIncludingArray)\(space)*(?:,\(space)*\(keyValueIncludingArray)\(space)*)*\(rightCurlyBracket)$"
     static let jsonArray = "^\(leftSquareBracket)\(space)*(?:\(valuesIncludingArray))\(space)*(?:,\(space)*(?:\(valuesIncludingArray))\(space)*)*\(rightSquareBracket)$"
-    
+
 }
