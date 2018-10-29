@@ -43,8 +43,7 @@ struct JSONParser {
 
     private static func makeJSONObject(from jsonString: String) -> [String: JSONValue]? {
         var jsonObject = [String: JSONValue]()
-        let regexKeyValueInJSONObject = "\"[\\w]+\"\\s*:\\s*[\"\\w\\s]+"
-        let keyValues = captureGroup(in: jsonString, by: regexKeyValueInJSONObject)
+        let keyValues = captureGroup(in: jsonString, by: JSONRegex.keyValue)
         guard keyValues.count == jsonString.splitByComma().count else { return nil }
         for keyValue in keyValues {
             let keyValueSplit = extractKeyValue(from: keyValue)
@@ -56,8 +55,7 @@ struct JSONParser {
 
     private static func makeJSONArray(from jsonString: String) -> [JSONValue]? {
         var jsonArray = [JSONValue]()
-        let regexValuesInJSONArray = "(\\{(?:(?:\\s*\"[\\w]+\"\\s*:\\s*[\"\\w\\s]+\\s*),*)*\\}|\"[\\w]+\"|[0-9]+|false|true)"
-        let jsonValues = captureGroup(in: jsonString, by: regexValuesInJSONArray)
+        let jsonValues = captureGroup(in: jsonString, by: JSONRegex.valuesIncludingObject)
         for jsonValue in jsonValues {
             guard let jsonValueConverted = typeCast(from: jsonValue) else { return nil }
             jsonArray.append(jsonValueConverted)

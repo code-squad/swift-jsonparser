@@ -21,10 +21,10 @@ struct JSONRegex {
     private static let bool = "(?:true|false)"
 
     private static let values = "\(string)|\(int)|\(bool)"
-    private static let keyValue = "\(string)\(space)*\(colon)\(space)*(?:\(values))"
+    static let keyValue = "\(string)\(space)*\(colon)\(space)*(?:\(values))"
     private static let object = "\(leftCurlyBracket)\(space)*\(keyValue)\(space)*(?:,\(space)*\(keyValue)\(space)*)*\(rightCurlyBracket)"
     static let jsonObject = "^\(object)$"
 
-    private static let valuesIncludingObject = "\(values)|\(object)"
+    static let valuesIncludingObject = "\(values)|\(object)"
     static let jsonArray = "^\(leftSquareBracket)\(space)*(?:\(valuesIncludingObject))\(space)*(?:,\(space)*(?:\(valuesIncludingObject))\(space)*)*\(rightSquareBracket)$"
 }
