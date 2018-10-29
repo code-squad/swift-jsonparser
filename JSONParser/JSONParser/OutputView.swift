@@ -10,7 +10,7 @@ import Foundation
 
 struct OutputView {
     private struct Message {
-        static let invalidForm = "지원하는 규격이 아닙니다."
+        static let invalidForm = "지원하지 않는 형식을 포함하고 있습니다."
 
         struct countResult {
             static let noCount = 0
