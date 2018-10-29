@@ -66,11 +66,14 @@ struct JSONParser {
     }
 
     static func parse(_ jsonString: String) -> JSONDataForm? {
+        let jsonString = jsonString.trimWhiteSpaces()
         if jsonString.hasSideSquareBrackets() {
+            guard GrammarChecker.isValid(jsonString, for: JSONRegex.jsonArray) else { return nil }
             guard let jsonArray = makeJSONArray(from: jsonString) else { return nil }
             return JSONArray.init(jsonArray)
         }
         if jsonString.hasSideCurlyBrackets() {
+            guard GrammarChecker.isValid(jsonString, for: JSONRegex.jsonObject) else { return nil }
             guard let jsonObject = makeJSONObject(from: jsonString) else { return nil }
             return JSONObject.init(jsonObject)
         }
