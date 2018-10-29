@@ -25,6 +25,10 @@
 		A3D86FA42179AB610044CFD9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F92217872D20044CFD9 /* Extensions.swift */; };
 		A3D86FA52179AB680044CFD9 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F942178749B0044CFD9 /* JSONParser.swift */; };
 		A3D86FA82179ABB40044CFD9 /* UnitTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86FA72179ABB40044CFD9 /* UnitTestExtensions.swift */; };
+		A3E93B912186AAAB00828D73 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E93B902186AAAB00828D73 /* GrammarChecker.swift */; };
+		A3E93B922186AAAB00828D73 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E93B902186AAAB00828D73 /* GrammarChecker.swift */; };
+		A3E93B942186D06000828D73 /* JSONRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E93B932186D06000828D73 /* JSONRegex.swift */; };
+		A3E93B952186D06000828D73 /* JSONRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E93B932186D06000828D73 /* JSONRegex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -55,6 +59,8 @@
 		A3D86F9E2179AB2A0044CFD9 /* UnitTestJSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestJSONParser.swift; sourceTree = "<group>"; };
 		A3D86FA02179AB2A0044CFD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3D86FA72179ABB40044CFD9 /* UnitTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestExtensions.swift; sourceTree = "<group>"; };
+		A3E93B902186AAAB00828D73 /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
+		A3E93B932186D06000828D73 /* JSONRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONRegex.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +111,8 @@
 				A39A96BB2181ED0800FA6EEF /* JSONObject.swift */,
 				A39A96BE2181ED1400FA6EEF /* JSONArray.swift */,
 				A3D86F92217872D20044CFD9 /* Extensions.swift */,
+				A3E93B902186AAAB00828D73 /* GrammarChecker.swift */,
+				A3E93B932186D06000828D73 /* JSONRegex.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -217,8 +225,10 @@
 				A39A96BF2181ED1400FA6EEF /* JSONArray.swift in Sources */,
 				A39A96BC2181ED0800FA6EEF /* JSONObject.swift in Sources */,
 				A3D86F9121786A3D0044CFD9 /* OutputView.swift in Sources */,
+				A3E93B942186D06000828D73 /* JSONRegex.swift in Sources */,
 				A34DBE17217EC9BE00D29AD0 /* JSONValue.swift in Sources */,
 				A3D86F93217872D20044CFD9 /* Extensions.swift in Sources */,
+				A3E93B912186AAAB00828D73 /* GrammarChecker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,8 +243,10 @@
 				A3D86F9F2179AB2A0044CFD9 /* UnitTestJSONParser.swift in Sources */,
 				A39A96C02181ED1400FA6EEF /* JSONArray.swift in Sources */,
 				A39A96BD2181ED0800FA6EEF /* JSONObject.swift in Sources */,
+				A3E93B952186D06000828D73 /* JSONRegex.swift in Sources */,
 				A3D86FA42179AB610044CFD9 /* Extensions.swift in Sources */,
 				A34DBE18217EC9BE00D29AD0 /* JSONValue.swift in Sources */,
+				A3E93B922186AAAB00828D73 /* GrammarChecker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
