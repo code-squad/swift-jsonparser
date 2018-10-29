@@ -29,6 +29,7 @@
 		A3E93B922186AAAB00828D73 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E93B902186AAAB00828D73 /* GrammarChecker.swift */; };
 		A3E93B942186D06000828D73 /* JSONRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E93B932186D06000828D73 /* JSONRegex.swift */; };
 		A3E93B952186D06000828D73 /* JSONRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E93B932186D06000828D73 /* JSONRegex.swift */; };
+		A3E93B972186D4D000828D73 /* UnitTestGrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E93B962186D4D000828D73 /* UnitTestGrammarChecker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -61,6 +62,7 @@
 		A3D86FA72179ABB40044CFD9 /* UnitTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestExtensions.swift; sourceTree = "<group>"; };
 		A3E93B902186AAAB00828D73 /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
 		A3E93B932186D06000828D73 /* JSONRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONRegex.swift; sourceTree = "<group>"; };
+		A3E93B962186D4D000828D73 /* UnitTestGrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestGrammarChecker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				A3D86FA02179AB2A0044CFD9 /* Info.plist */,
 				A3D86FA72179ABB40044CFD9 /* UnitTestExtensions.swift */,
 				A3C3502821841493001B80BC /* UnitTestJSONDataForm.swift */,
+				A3E93B962186D4D000828D73 /* UnitTestGrammarChecker.swift */,
 			);
 			path = JSONParserUnitTest;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				A3D86FA42179AB610044CFD9 /* Extensions.swift in Sources */,
 				A34DBE18217EC9BE00D29AD0 /* JSONValue.swift in Sources */,
 				A3E93B922186AAAB00828D73 /* GrammarChecker.swift in Sources */,
+				A3E93B972186D4D000828D73 /* UnitTestGrammarChecker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

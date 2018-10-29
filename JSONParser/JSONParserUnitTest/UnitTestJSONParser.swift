@@ -35,4 +35,9 @@ class UnitTestJSONParser: XCTestCase {
         XCTAssertNil(JSONParser.parse(jsonString))
     }
 
+    func testParseNil_whenNoOneCurlyBracketInArray() {
+        let jsonString = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, married : true }, { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, married : true ]"
+        XCTAssertNil(JSONParser.parse(jsonString))
+    }
+
 }
