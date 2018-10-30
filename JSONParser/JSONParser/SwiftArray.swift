@@ -23,6 +23,13 @@ struct SwiftArray {
         self.bools.append(bool)
     }
     
-
-    
+    func readNumbers() -> [Double] {
+        return self.numbers
+    }
+    func readStrings() -> [String] {
+        return self.strings
+    }
+    func readBools() -> [Bool] {
+        return self.bools
+    }
 }
