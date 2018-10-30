@@ -33,8 +33,9 @@ struct TextValidator {
     private func hasPossibleData() -> Bool {
         let texts = text.removeBracket.separateByComma
         
-        
-        
+        for element in texts {
+            guard element.isString || element.isNumeric || element.isBoolean else { return false }
+        }
         return true
     }
     
