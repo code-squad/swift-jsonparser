@@ -9,9 +9,9 @@
 import Foundation
 
 func main() {
-    let a = InputView.readInput()
-    let b = a.extractData()
-    print(b)
+    let input = InputView.readInput()
+    let extractedData = input.extractData()
+    print(extractedData)
 }
 
 main()
