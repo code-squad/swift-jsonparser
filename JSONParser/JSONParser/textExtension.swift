@@ -19,15 +19,15 @@ extension String {
     }
     
     var isString: Bool {
-        return self.range(of: "[^a-zA-Z]", options: .regularExpression) == nil && self != String()
+        return self.range(of: "[^ a-zA-Z]", options: .regularExpression) == nil && self != String()
     }
     
     var isNumeric: Bool {
-        return self.range(of: "[^0-9]", options: .regularExpression) == nil && self != String()
+        return self.range(of: "[^ 0-9]", options: .regularExpression) == nil && self != String()
     }
     
     var isBoolean: Bool {
-        guard self.isString && Bool(self) ?? false  else { return false }
+        guard !(Bool(self) == nil) else { return false }
         return true
     }
 }

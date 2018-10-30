@@ -9,15 +9,23 @@
 import Foundation
 
 struct JSONParser {
-    private var text: String
-    
-    init(input: String) {
-        self.text = input
+    private func countJSON(_ texts: [String]) -> (string: Int, bool: Int, int: Int) {
+        var nString = 0, nBoolean = 0, nInt = 0
+        
+        for element in texts {
+            if element.isNumeric { nInt += 1 }
+            if element.isString { nString += 1 }
+            if element.isBoolean {
+                nBoolean += 1
+                nString -= 1
+            }
+        }
+        
+        return (string: nString, bool: nBoolean, int: nInt)
     }
     
-    func dataSet(of text: String) -> [String: Int] {
-        let dataSet = ["문자열": 0, "숫자": 0, "부울": 0]
-        
-        return dataSet
+    public func countsOfJSON(from text: String) -> (string: Int, bool: Int, int: Int) {
+        let texts = text.removeBracket.separateByComma
+        return countJSON(texts)
     }
 }

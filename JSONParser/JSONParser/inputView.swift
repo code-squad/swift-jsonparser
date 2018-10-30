@@ -11,9 +11,6 @@ import Foundation
 struct InputView {
     static public func getInput(ment: String) -> String {
         print(ment)
-        guard let input:String = readLine() else {
-            return String()
-        }
-        return input
+        return readLine() ?? String()
     }
 }

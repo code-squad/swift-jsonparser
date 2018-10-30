@@ -16,21 +16,16 @@ enum ErrorList: String {
 }
 
 struct TextValidator {
-    private var text: String
     private let leftBracket:Character = "["
     private let rightBracket:Character = "]"
     
-    init(text: String) {
-        self.text = text
-    }
-    
-    private func hasBrackets() -> Bool {
+    private func hasBrackets(_ text: String) -> Bool {
         guard text.first == leftBracket else { return false }
         guard text.last == rightBracket else { return false }
         return true
     }
     
-    private func hasPossibleData() -> Bool {
+    private func hasPossibleData(_ text: String) -> Bool {
         let texts = text.removeBracket.separateByComma
         
         for element in texts {
@@ -39,10 +34,9 @@ struct TextValidator {
         return true
     }
     
-    public func textErrorCheck() -> ErrorList {
-        
-        guard hasBrackets() else { return .invalidForm }
-        guard hasPossibleData() else { return .parsingError }
+    public func textErrorCheck(of text: String) -> ErrorList {
+        guard hasBrackets(text) else { return .invalidForm }
+        guard hasPossibleData(text) else { return .parsingError }
         guard !(text.isEmpty || text.removeBracket.isEmpty) else { return .emptyInput }
         return .noError
     }
