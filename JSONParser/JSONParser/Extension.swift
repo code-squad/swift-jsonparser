@@ -9,11 +9,17 @@
 import Foundation
 
 extension String {
-    func removeSquareBracket() -> String {
+    private func removeSquareBracket() -> String {
         return self.trimmingCharacters(in: ["[","]"])
     }
     
-    func removeSpace() -> String {
+    private func removeSpace() -> String {
         return self.replacingOccurrences(of: " ", with: "")
+    }
+    
+    func extractData() -> [String] {
+        let removedSquareBracket = self.removeSquareBracket()
+        let removedSpace = removedSquareBracket.removeSpace()
+        return removedSpace.split(separator: ",").map{String($0)}
     }
 }

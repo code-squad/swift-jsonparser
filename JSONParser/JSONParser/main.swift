@@ -10,7 +10,8 @@ import Foundation
 
 func main() {
     let a = InputView.readInput()
-    print(a)
+    let b = a.extractData()
+    print(b)
 }
 
 main()

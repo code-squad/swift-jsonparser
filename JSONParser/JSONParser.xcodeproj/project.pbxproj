@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7D7EE2F52187F98E0090472D /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2F42187F98E0090472D /* InputView.swift */; };
 		7D7EE2F721883A650090472D /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2F621883A650090472D /* Extension.swift */; };
+		7D7EE2F921883E490090472D /* Sorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2F821883E490090472D /* Sorter.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		7D7EE2F42187F98E0090472D /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		7D7EE2F621883A650090472D /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		7D7EE2F821883E490090472D /* Sorter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sorter.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
+				7D7EE2F821883E490090472D /* Sorter.swift */,
 				7D7EE2F621883A650090472D /* Extension.swift */,
 				7D7EE2F42187F98E0090472D /* InputView.swift */,
 			);
@@ -128,6 +131,7 @@
 			files = (
 				7D7EE2F721883A650090472D /* Extension.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				7D7EE2F921883E490090472D /* Sorter.swift in Sources */,
 				7D7EE2F52187F98E0090472D /* InputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
