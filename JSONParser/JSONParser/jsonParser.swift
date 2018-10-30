@@ -9,14 +9,14 @@
 import Foundation
 
 struct JSONParser {
-    private var json: String
+    private var text: String
     
     init(input: String) {
-        self.json = input
+        self.text = input
     }
     
-    func dataSet(of json: String) -> (string: Int, int: Int, bool: Int) {
-        var dataSet = (string: 0, int: 0, bool: 0)
+    func dataSet(of text: String) -> [String: Int] {
+        let dataSet = ["문자열": 0, "숫자": 0, "부울": 0]
         
         return dataSet
     }
