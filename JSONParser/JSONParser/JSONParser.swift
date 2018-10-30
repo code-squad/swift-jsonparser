@@ -47,7 +47,7 @@ struct JSONParser {
 
     private static func makeJSONObject(from jsonString: String) -> [String: JSONData]? {
         var jsonObject = [String: JSONData]()
-        let keyValues = captureGroup(in: jsonString, by: JSONRegex.keyValueIncludingArray)
+        let keyValues = captureGroup(in: jsonString.trimCurlyBrackets(), by: JSONRegex.keyValueIncludingArray)
         for keyValue in keyValues {
             let keyValueSplit = extractKeyValue(from: keyValue)
             guard let value: JSONData = keyValueSplit.value else { continue }
