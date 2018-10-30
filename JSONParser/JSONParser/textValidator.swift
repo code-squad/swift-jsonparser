@@ -26,7 +26,7 @@ struct TextValidator {
     }
     
     private func hasPossibleData(_ text: String) -> Bool {
-        let texts = text.removeBracket.separateByComma
+        let texts = text.removeQuotation.removeBracket.separateByComma
         
         for element in texts {
             guard element.isString || element.isNumeric || element.isBoolean else { return false }

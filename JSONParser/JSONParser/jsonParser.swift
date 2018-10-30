@@ -15,10 +15,7 @@ struct JSONParser {
         for element in texts {
             if element.isNumeric { nInt += 1 }
             if element.isString { nString += 1 }
-            if element.isBoolean {
-                nBoolean += 1
-                nString -= 1
-            }
+            if element.isBoolean { nBoolean += 1 }
         }
         
         return (string: nString, bool: nBoolean, int: nInt)

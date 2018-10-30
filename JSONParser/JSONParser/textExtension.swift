@@ -14,12 +14,16 @@ extension String {
         return String(self.dropFirst().dropLast())
     }
     
+    var removeQuotation: String {
+        return self.replacingOccurrences(of: "\"", with: "")
+    }
+    
     var separateByComma: [String] {
-        return self.split(separator: ",").map {String($0)}
+        return self.split(separator: ",").map {String($0).trimmingCharacters(in: .whitespaces)}
     }
     
     var isString: Bool {
-        return self.range(of: "[^ a-zA-Z]", options: .regularExpression) == nil && self != String()
+        return self.range(of: "[^ a-zA-Z]", options: .regularExpression) == nil && !self.isBoolean && self != String()
     }
     
     var isNumeric: Bool {
@@ -27,7 +31,7 @@ extension String {
     }
     
     var isBoolean: Bool {
-        guard !(Bool(self) == nil) else { return false }
+        guard Bool(self) != nil else { return false }
         return true
     }
 }
