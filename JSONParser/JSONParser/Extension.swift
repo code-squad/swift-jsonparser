@@ -22,4 +22,8 @@ extension String {
         let removedSpace = removedSquareBracket.removeSpace()
         return removedSpace.split(separator: ",").map{String($0)}
     }
+    
+    func isBoolForm() -> Bool {
+        return (self.uppercased() == "TRUE") || (self.uppercased() == "FALSE")
+    }
 }

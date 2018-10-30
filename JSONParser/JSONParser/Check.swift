@@ -9,5 +9,4 @@
 import Foundation
 
 struct Check {
-    
 }
