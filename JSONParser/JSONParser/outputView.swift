@@ -9,16 +9,18 @@
 import Foundation
 
 struct OutputView {
+    // 문자열, 부울, 숫자 각자의 갯수에 맞게 출력
     private func printByType(_ counts: (string: Int, bool: Int, int: Int)) -> String {
-        var string = String(), bool = String(), int = String()
+        var result = String()
         
-        if counts.string > 0 { string = "문자열 \(counts.string)개" }
-        if counts.int > 0 { bool = "숫자 \(counts.int)개" }
-        if counts.bool > 0 { int = "부울 \(counts.bool)개 " }
+        if counts.string > 0 { result += "문자열 \(counts.string)개, " }
+        if counts.int > 0 { result += "숫자 \(counts.int)개, " }
+        if counts.bool > 0 { result += "부울 \(counts.bool)개 " }
         
-        return [string, bool, int].joined(separator: ", ")
+        return result
     }
     
+    // JSONParser에서 전달받은 데이터 세트를 출력
     public func printResult(by counts: (string: Int, bool: Int, int: Int)) {
         let total = counts.string + counts.bool + counts.int
         let result = printByType(counts)
