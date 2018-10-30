@@ -37,6 +37,10 @@ extension String {
         return self.trimmingCharacters(in: CharacterSet(charactersIn: "\""))
     }
 
+    func trimBothSides() -> String {
+        return String(self.dropFirst().dropLast())
+    }
+
     func splitByComma() -> [String] {
         return self.split(separator: ",").map { String($0) }
     }

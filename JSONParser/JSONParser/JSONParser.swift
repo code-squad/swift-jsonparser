@@ -10,7 +10,8 @@ import Foundation
 
 struct JSONParser {
 
-    private static func captureGroup(in string: String, by pattern: String) -> [String] {
+    private static func captureGroup(in string: String, sideTrimmed: Bool = false, by pattern: String) -> [String] {
+        let string = sideTrimmed ? string.trimBothSides() : string
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else { return [] }
         let range = NSRange(string.startIndex..., in: string)
         let matches = regex.matches(in: string, options: [], range: range)
@@ -47,7 +48,7 @@ struct JSONParser {
 
     private static func makeJSONObject(from jsonString: String) -> [String: JSONData]? {
         var jsonObject = [String: JSONData]()
-        let keyValues = captureGroup(in: jsonString.trimCurlyBrackets(), by: JSONRegex.keyValueIncludingArray)
+        let keyValues = captureGroup(in: jsonString, sideTrimmed: true, by: JSONRegex.keyValueIncludingArray)
         for keyValue in keyValues {
             let keyValueSplit = extractKeyValue(from: keyValue)
             guard let value: JSONData = keyValueSplit.value else { continue }
@@ -58,7 +59,7 @@ struct JSONParser {
 
     private static func makeJSONArray(from jsonString: String) -> [JSONData]? {
         var jsonArray = [JSONData]()
-        let jsonValues = captureGroup(in: jsonString.trimSquareBrackets(), by: JSONRegex.valuesIncludingArray)
+        let jsonValues = captureGroup(in: jsonString, sideTrimmed: true, by: JSONRegex.valuesIncludingArray)
         for jsonValue in jsonValues {
             guard let jsonValueConverted = typeCast(from: jsonValue) else { return nil }
             jsonArray.append(jsonValueConverted)
