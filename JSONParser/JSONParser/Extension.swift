@@ -23,6 +23,10 @@ extension String {
         return removedSpace.split(separator: ",").map{String($0)}
     }
     
+    func isStringForm() -> Bool {
+        return (self.hasPrefix("\"")) && (self.hasSuffix("\""))
+    }
+    
     func isBoolForm() -> Bool {
         return (self.uppercased() == "TRUE") || (self.uppercased() == "FALSE")
     }
