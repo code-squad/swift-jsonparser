@@ -9,9 +9,20 @@
 import Foundation
 
 struct SwiftArray {
-    private var Numbers : [Double] = []
-    private var Strings : [String] = []
-    private var Bools : [Bool] = []
+    private var numbers : [Double] = []
+    private var strings : [String] = []
+    private var bools : [Bool] = []
     
+    mutating func insertIntoNumbers(_ number:Double) {
+        self.numbers.append(number)
+    }
+    mutating func insertIntoStrings(_ string:String) {
+        self.strings.append(string)
+    }
+    mutating func insertIntoBools(_ bool:Bool) {
+        self.bools.append(bool)
+    }
+    
+
     
 }
