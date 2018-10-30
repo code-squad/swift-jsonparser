@@ -9,7 +9,8 @@
 import Foundation
 
 func main() {
-    
+    let a = InputView.readInput()
+    print(a)
 }
 
 main()
