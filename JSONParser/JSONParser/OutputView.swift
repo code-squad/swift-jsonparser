@@ -37,7 +37,7 @@ struct OutputView {
         print(Message.countResult.makeSentence(with: totalCount, typeName, and: typeCount))
     }
     
-    static func showJSONSerialization(of jsonDataForm: JSONDataForm) {
+    static func showJSONPrettyPrinted(of jsonDataForm: JSONDataForm) {
         print(jsonDataForm.prettyPrinted)
     }
 

@@ -15,7 +15,7 @@ struct Main {
             OutputView.notifyIssue()
             return
         }
-        OutputView.showJSONSerialization(of: jsonDataForm)
+        OutputView.showJSONPrettyPrinted(of: jsonDataForm)
     }
 }
 
