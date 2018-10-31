@@ -15,7 +15,7 @@ struct Main {
             OutputView.notifyIssue()
             return
         }
-        OutputView.showTypeCount(of: jsonDataForm)
+        OutputView.showJSONSerialization(of: jsonDataForm)
     }
 }
 

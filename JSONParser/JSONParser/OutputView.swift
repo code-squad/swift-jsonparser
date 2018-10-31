@@ -36,6 +36,10 @@ struct OutputView {
         let typeCount = addTypeName(to: jsonDataForm)
         print(Message.countResult.makeSentence(with: totalCount, typeName, and: typeCount))
     }
+    
+    static func showJSONSerialization(of jsonDataForm: JSONDataForm) {
+        print(jsonDataForm.prettyPrinted)
+    }
 
     static func notifyIssue() {
         print(Message.invalidForm)
