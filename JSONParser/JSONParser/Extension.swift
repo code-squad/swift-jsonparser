@@ -10,11 +10,11 @@ import Foundation
 
 extension String {
     private func removeSquareBracket() -> String {
-        return self.trimmingCharacters(in: ["[","]"])
+        return trimmingCharacters(in: ["[","]"])
     }
     
     private func removeSpace() -> String {
-        return self.replacingOccurrences(of: " ", with: "")
+        return replacingOccurrences(of: " ", with: "")
     }
     
     func extractData() -> [String] {
@@ -23,11 +23,15 @@ extension String {
         return removedSpace.split(separator: ",").map{String($0)}
     }
     
+    func isNumberForm() -> Bool {
+        return !isEmpty && range(of: "^[^0-9]+$", options: .regularExpression) == nil
+    }
+    
     func isStringForm() -> Bool {
-        return (self.hasPrefix("\"")) && (self.hasSuffix("\""))
+        return (hasPrefix("\"")) && (hasSuffix("\""))
     }
     
     func isBoolForm() -> Bool {
-        return (self.uppercased() == "TRUE") || (self.uppercased() == "FALSE")
+        return (uppercased() == "TRUE") || (uppercased() == "FALSE")
     }
 }
