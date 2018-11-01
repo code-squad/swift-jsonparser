@@ -9,5 +9,11 @@
 import Foundation
 
 struct Sorter {
-    
+    static func sortByTypeIntoArray(_ inputData:[String]) -> SwiftArray {
+        var swiftArr = SwiftArray()
+        for data in inputData {
+
+        }
+        return swiftArr
+    }
 }
