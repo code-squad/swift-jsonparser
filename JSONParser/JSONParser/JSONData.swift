@@ -49,11 +49,15 @@ extension Dictionary: JSONData where Key == String, Value == JSONData {
     }
     
     var prettyPrinted: String {
-        return "{\n\(self.map { "\t\"\($0.key)\": \($0.value.prettyPrinted)" } .joined(separator: ",\n"))\n}"
+        let object = self.map { "\t\"\($0.key)\": \($0.value.prettyPrinted)" }
+                        .joined(separator: ",\n")
+        return "{\n\(object)\n}"
     }
 
     var prettyPrintedNested: String {
-        return "{\n\(self.map { "\t\t\"\($0.key)\": \($0.value.prettyPrinted)" } .joined(separator: ",\n"))\n\t}"
+        let objectNested = self.map { "\t\t\"\($0.key)\": \($0.value.prettyPrinted)" }
+                                .joined(separator: ",\n")
+        return "{\n\(objectNested)\n\t}"
     }
 }
 
@@ -63,9 +67,13 @@ extension Array: JSONData where Element == JSONData {
     }
 
     var prettyPrinted: String {
-        if self.contains(where: { element in return element is [String: JSONData]}) {
-            return "[\(self.map { "\($0 is [String: JSONData] ? ($0 as! [String: JSONData]).prettyPrintedNested : $0.prettyPrinted)" } .joined(separator: ",\n\t"))\n]"
+        if self.contains(where: { element in return element is [String: JSONData] }) {
+            let arrayContainingObject = self.map { "\($0 is [String: JSONData] ? ($0 as! [String: JSONData]).prettyPrintedNested : $0.prettyPrinted)" }
+                                            .joined(separator: ",\n\t")
+            return "[\(arrayContainingObject)\n]"
         }
-        return "[\(self.map { "\($0.prettyPrinted)" } .joined(separator: ", "))]"
+        let array = self.map { "\($0.prettyPrinted)" }
+                        .joined(separator: ", ")
+        return "[\(array)]"
     }
 }
