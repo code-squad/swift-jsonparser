@@ -9,6 +9,10 @@
 import Foundation
 
 extension String {
+    func removeDoubleQuotationMarks() -> String {
+        return trimmingCharacters(in: ["\"","\""])
+    }
+    
     private func removeSquareBracket() -> String {
         return trimmingCharacters(in: ["[","]"])
     }
