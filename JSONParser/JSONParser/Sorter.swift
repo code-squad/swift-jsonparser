@@ -18,7 +18,7 @@ struct Sorter {
             case .swiftNumber :
                 swiftArr.insertIntoNumbers(Double(data) ?? 0)
             case .swiftBool :
-                swiftArr.insertIntoBools(<#T##bool: Bool##Bool#>)
+                swiftArr.insertIntoBools(data.isTrue())
             case .none : continue
             }
         }

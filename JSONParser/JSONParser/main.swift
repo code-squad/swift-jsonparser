@@ -11,7 +11,8 @@ import Foundation
 func main() {
     let input = InputView.readInput()
     let extractedData = input.extractData()
-    print(extractedData)
+    let extractedSwiftData = Sorter.sortByTypeIntoArray(extractedData)
+    OutputView.showNumberOfData(extractedSwiftData)
 }
 
 main()
