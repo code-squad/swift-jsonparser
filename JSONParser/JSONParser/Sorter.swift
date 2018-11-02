@@ -13,13 +13,13 @@ struct Sorter {
         var swiftArr = SwiftArray()
         for data in inputData {
             switch data.isWhatForm() {
-            case .swiftString :
+            case "string" :
                 swiftArr.insertIntoStrings(data.removeDoubleQuotationMarks())
-            case .swiftNumber :
+            case "number" :
                 swiftArr.insertIntoNumbers(Double(data) ?? 0)
-            case .swiftBool :
+            case "bool" :
                 swiftArr.insertIntoBools(data.isTrue())
-            case .none : continue
+            default : continue
             }
         }
         return swiftArr
