@@ -13,34 +13,36 @@ extension String {
         return trimmingCharacters(in: ["\"","\""])
     }
     
-    
     private func removeSquareBracket() -> String {
         return trimmingCharacters(in: ["[","]"])
     }
+    
     private func removeSpace() -> String {
         return replacingOccurrences(of: " ", with: "")
     }
+    
     func extractData() -> [String] {
         let removedSquareBracket = self.removeSquareBracket()
         let removedSpace = removedSquareBracket.removeSpace()
         return removedSpace.split(separator: ",").map{String($0)}
     }
     
-    
     func isTrue() -> Bool {
         return uppercased() == "TRUE"
     }
     
-    
     private func isNumberForm() -> Bool {
         return !isEmpty && range(of: "^[^0-9]+$", options: .regularExpression) == nil
     }
+    
     private func isStringForm() -> Bool {
         return (hasPrefix("\"")) && (hasSuffix("\""))
     }
+    
     private func isBoolForm() -> Bool {
         return (uppercased() == "TRUE") || (uppercased() == "FALSE")
     }
+    
     func isWhatForm() -> SwiftType {
         if isBoolForm() {
             return .swiftBool
