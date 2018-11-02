@@ -34,16 +34,16 @@ extension String {
     private func isBoolForm() -> Bool {
         return (uppercased() == "TRUE") || (uppercased() == "FALSE")
     }
-    func isWhatForm() -> String {
+    func isWhatForm() -> SwiftType {
         if isBoolForm() {
-            return "Bool"
+            return .swiftBool
         }
         if isStringForm() {
-            return "String"
+            return .swiftString
         }
         if isNumberForm() {
-            return "Number"
+            return .swiftNumber
         }
-        return "none"
+        return .none
     }
 }

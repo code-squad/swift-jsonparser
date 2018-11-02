@@ -9,7 +9,8 @@
 import Foundation
 
 enum SwiftType {
-    case string
-    case number
-    case bool
+    case swiftString
+    case swiftNumber
+    case swiftBool
+    case none
 }
