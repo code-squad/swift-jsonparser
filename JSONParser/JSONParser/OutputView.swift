@@ -28,11 +28,11 @@ struct OutputView {
     }
     
     static private func showResult(_ result:[String]) {
-        for i in result {
-            print(i, terminator: "")
-            guard i != result[result.startIndex] else {continue}
-            guard i != result[result.endIndex - 1] else {continue}
-            guard i != result[result.endIndex - 2] else {continue}
+        for numberOfData in result {
+            print(numberOfData, terminator: "")
+            guard numberOfData != result[result.startIndex] else {continue}
+            guard numberOfData != result[result.endIndex - 1] else {continue}
+            guard numberOfData != result[result.endIndex - 2] else {continue}
             print(",", terminator: "")
         }
         print("")
