@@ -12,6 +12,7 @@
 		7D7EE2F921883E490090472D /* Sorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2F821883E490090472D /* Sorter.swift */; };
 		7D7EE2FD21884B8B0090472D /* SwiftArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2FC21884B8B0090472D /* SwiftArray.swift */; };
 		7D7EE2FF21884EF80090472D /* Check.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2FE21884EF80090472D /* Check.swift */; };
+		7DFAEC02218BDD9000EE8BEE /* SwiftType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFAEC01218BDD9000EE8BEE /* SwiftType.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		7D7EE2F821883E490090472D /* Sorter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sorter.swift; sourceTree = "<group>"; };
 		7D7EE2FC21884B8B0090472D /* SwiftArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftArray.swift; sourceTree = "<group>"; };
 		7D7EE2FE21884EF80090472D /* Check.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Check.swift; sourceTree = "<group>"; };
+		7DFAEC01218BDD9000EE8BEE /* SwiftType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftType.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,6 +75,7 @@
 				7D7EE2FC21884B8B0090472D /* SwiftArray.swift */,
 				7D7EE2F621883A650090472D /* Extension.swift */,
 				7D7EE2F42187F98E0090472D /* InputView.swift */,
+				7DFAEC01218BDD9000EE8BEE /* SwiftType.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 				7D7EE2F721883A650090472D /* Extension.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				7D7EE2FF21884EF80090472D /* Check.swift in Sources */,
+				7DFAEC02218BDD9000EE8BEE /* SwiftType.swift in Sources */,
 				7D7EE2F921883E490090472D /* Sorter.swift in Sources */,
 				7D7EE2F52187F98E0090472D /* InputView.swift in Sources */,
 				7D7EE2FD21884B8B0090472D /* SwiftArray.swift in Sources */,
