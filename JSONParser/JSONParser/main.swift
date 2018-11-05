@@ -10,12 +10,16 @@ import Foundation
 
 struct Main {
     static func run() {
-        let jsonString = InputView.readInput()
-        guard let jsonDataForm: JSONDataForm = JSONParser.parse(jsonString) else {
-            OutputView.notifyIssue()
+        guard let file = InputView.readArgument(atIndex: .inputFile) else {
+            OutputView.notifyIssue(of: .noInputFile)
             return
         }
-        OutputView.showJSONPrettyPrinted(of: jsonDataForm)
+        guard let jsonString = InputView.readContents(from: file) else { return }
+        guard let jsonDataForm: JSONDataForm = JSONParser.parse(jsonString) else {
+            OutputView.notifyIssue(of: .invalidForm)
+            return
+        }
+        OutputView.writeJSONPrettyPrinted(of: jsonDataForm)
     }
 }
 
