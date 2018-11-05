@@ -24,6 +24,10 @@ extension String {
     func trimWhiteSpaces() -> String {
         return self.trimmingCharacters(in: CharacterSet(charactersIn: " "))
     }
+    
+    func trimNewLine() -> String {
+        return self.trimmingCharacters(in: CharacterSet(charactersIn: "\n"))
+    }
 
     func trimSquareBrackets() -> String {
         return self.trimmingCharacters(in: CharacterSet(charactersIn: "[]"))
