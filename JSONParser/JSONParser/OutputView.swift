@@ -9,8 +9,6 @@
 import Foundation
 
 struct OutputView {
-    static private let defaultOutputFile = "output.json"
-    
     struct Message {
         enum Error: String {
             case invalidForm = "지원하지 않는 형식을 포함하고 있습니다."
@@ -46,9 +44,8 @@ struct OutputView {
         print(jsonDataForm.prettyPrinted)
     }
     
-    static func writeJSONPrettyPrinted(of jsonDataForm: JSONDataForm) {
+    static func writeJSONPrettyPrinted(of jsonDataForm: JSONDataForm, to file: String) {
         let contents = jsonDataForm.prettyPrinted
-        let file = CommandLineReader.readArgument(atIndex: .outputFile) ?? defaultOutputFile
         guard let fileURL = FileReader.getDocumentURL(with: file) else { return }
         do {
             try contents.write(to: fileURL, atomically: true, encoding: .utf8)

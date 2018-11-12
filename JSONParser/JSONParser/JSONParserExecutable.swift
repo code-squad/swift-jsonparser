@@ -27,6 +27,7 @@ struct JSONLineParser: JSONParserExecutable {
 }
 
 struct JSONFileParser: JSONParserExecutable {
+    private let defaultOutputFile = "output.json"
 
     func read() -> String? {
         guard let file = CommandLineReader.readArgument(atIndex: .inputFile) else { return nil }
@@ -35,7 +36,8 @@ struct JSONFileParser: JSONParserExecutable {
     }
     
     func makeResult(of jsonDataForm: JSONDataForm) {
-        OutputView.writeJSONPrettyPrinted(of: jsonDataForm)
+        let file = CommandLineReader.readArgument(atIndex: .outputFile) ?? defaultOutputFile
+        OutputView.writeJSONPrettyPrinted(of: jsonDataForm, to: file)
     }
 
 }
