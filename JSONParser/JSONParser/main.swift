@@ -9,18 +9,21 @@
 import Foundation
 
 struct Main {
-    static func run() {
-        guard let file = InputView.readArgument(atIndex: .inputFile) else {
-            OutputView.notifyIssue(of: .noInputFile)
-            return
+
+    private static func decideProgram() -> JSONParserExecutable {
+        if CommandLineReader.hasArgument(atIndex: .inputFile) {
+            return JSONFileParser()
         }
-        guard let jsonString = InputView.readContents(from: file) else { return }
-        guard let jsonDataForm: JSONDataForm = JSONParser.parse(jsonString) else {
-            OutputView.notifyIssue(of: .invalidForm)
-            return
-        }
-        OutputView.writeJSONPrettyPrinted(of: jsonDataForm)
+        return JSONLineParser()
     }
+    
+    static func run() {
+        let jsonParserProgram = decideProgram()
+        guard let jsonString = jsonParserProgram.read() else { return }
+        guard let jsonDataForm = JSONParser.parse(jsonString) else { return }
+        jsonParserProgram.makeResult(of: jsonDataForm)
+    }
+
 }
 
 Main.run()
