@@ -9,7 +9,11 @@
 import Foundation
 
 protocol SwiftArray {
-    func parsedData() -> (ints: [Int], bools: [Bool], strings: [String], totalCount: Int)
+    func getDTO() -> DTO
+}
+
+struct DTO {
+    let json: (ints: [Int], bools: [Bool], strings: [String], totalCount: Int)
 }
 
 struct JSONData: SwiftArray {
@@ -25,7 +29,7 @@ struct JSONData: SwiftArray {
         self.totalCount = ints.count + bools.count + strings.count
     }
     
-    func parsedData() -> (ints: [Int], bools: [Bool], strings: [String], totalCount: Int) {
-        return (ints: self.ints, bools: self.bools, strings: self.strings, totalCount: self.totalCount)
+    func getDTO() -> DTO {
+        return DTO(json: (ints: self.ints, bools: self.bools, strings: self.strings, totalCount: self.totalCount))
     }
 }

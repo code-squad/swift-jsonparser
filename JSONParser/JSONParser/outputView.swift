@@ -22,8 +22,8 @@ struct OutputView {
     
     // JSONParser에서 전달받은 데이터 세트를 출력
     public func printResult(by counts: SwiftArray) {
-        let total = counts.parsedData()
-        let result = printByType(total)
+        let total = counts.getDTO()
+        let result = printByType(total.json)
         
         print(result)
     }
