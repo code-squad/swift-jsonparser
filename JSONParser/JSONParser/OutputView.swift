@@ -9,12 +9,10 @@
 import Foundation
 
 struct OutputView {
-    static private let outputFileDirPath = "/Users/yxxjy/DevNote/swift-jsonparser/"
     static private let defaultOutputFile = "output.json"
     
     struct Message {
         enum Error: String {
-            case noInputFile = "파싱할 JSON 파일이 미지정되었습니다."
             case invalidForm = "지원하지 않는 형식을 포함하고 있습니다."
             case unableToSave = "정상적으로 저장되지 않았습니다."
         }
@@ -50,8 +48,8 @@ struct OutputView {
     
     static func writeJSONPrettyPrinted(of jsonDataForm: JSONDataForm) {
         let contents = jsonDataForm.prettyPrinted
-        let file = InputView.readArgument(atIndex: .outputFile) ?? defaultOutputFile
-        let fileURL = URL(fileURLWithPath: "\(outputFileDirPath)\(file)")
+        let file = CommandLineReader.readArgument(atIndex: .outputFile) ?? defaultOutputFile
+        guard let fileURL = FileReader.getDocumentURL(with: file) else { return }
         do {
             try contents.write(to: fileURL, atomically: true, encoding: .utf8)
         } catch {
