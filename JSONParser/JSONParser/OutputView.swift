@@ -11,18 +11,17 @@ import Foundation
 struct OutputView {
     static func showNumberOfData(_ data:SwiftArray) {
         var outputArray = [String]()
-        let swiftArray = data.readArray()
-        let numberOfAll = swiftArray.count
+        let numberOfAll = data.readNumberOfArray()
         
         outputArray.append("총 \(numberOfAll)개의 데이터 중에")
-        if swiftArray.numberOfStringForm() > 0 {
-            outputArray.append(" 문자열 \(swiftArray.numberOfStringForm())개")
+        if data.readNumberOfString() > 0 {
+            outputArray.append(" 문자열 \(data.readNumberOfString())개")
         }
-        if swiftArray.numberOfNumberForm() > 0 {
-            outputArray.append(" 숫자 \(swiftArray.numberOfNumberForm())개")
+        if data.readNumberOfNumber() > 0 {
+            outputArray.append(" 숫자 \(data.readNumberOfNumber())개")
         }
-        if swiftArray.numberOfBoolForm() > 0 {
-            outputArray.append(" 부울 \(swiftArray.numberOfBoolForm())개")
+        if data.readNumberOfBool() > 0 {
+            outputArray.append(" 부울 \(data.readNumberOfBool())개")
         }
         outputArray.append("가 포함되어 있습니다.")
         showResult(outputArray)

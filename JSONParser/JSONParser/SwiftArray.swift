@@ -18,4 +18,20 @@ struct SwiftArray {
     func readArray() -> [Any] {
         return self.swiftArr
     }
+    
+    func readNumberOfArray() -> Int {
+        return swiftArr.count
+    }
+    
+    func readNumberOfString() -> Int {
+        return swiftArr.numberOfStringForm()
+    }
+    
+    func readNumberOfNumber() -> Int {
+        return swiftArr.numberOfNumberForm()
+    }
+    
+    func readNumberOfBool() -> Int {
+        return swiftArr.numberOfBoolForm()
+    }
 }
