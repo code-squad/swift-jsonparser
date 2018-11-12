@@ -12,6 +12,9 @@
 		A34DBE18217EC9BE00D29AD0 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34DBE16217EC9BE00D29AD0 /* JSONData.swift */; };
 		A39A96C22181EE8200FA6EEF /* JSONDataForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39A96C12181EE8200FA6EEF /* JSONDataForm.swift */; };
 		A39A96C32181EE8200FA6EEF /* JSONDataForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39A96C12181EE8200FA6EEF /* JSONDataForm.swift */; };
+		A39DE60F2199176F00681D8C /* FileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39DE60E2199176F00681D8C /* FileReader.swift */; };
+		A39DE6112199550B00681D8C /* CommandLineReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39DE6102199550B00681D8C /* CommandLineReader.swift */; };
+		A39DE613219963E100681D8C /* JSONParserExcutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39DE612219963E100681D8C /* JSONParserExcutable.swift */; };
 		A3C3502921841493001B80BC /* UnitTestJSONDataForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C3502821841493001B80BC /* UnitTestJSONDataForm.swift */; };
 		A3D86F8F21786A2C0044CFD9 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F8E21786A2C0044CFD9 /* InputView.swift */; };
 		A3D86F9121786A3D0044CFD9 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D86F9021786A3D0044CFD9 /* OutputView.swift */; };
@@ -45,6 +48,9 @@
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		A34DBE16217EC9BE00D29AD0 /* JSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
 		A39A96C12181EE8200FA6EEF /* JSONDataForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDataForm.swift; sourceTree = "<group>"; };
+		A39DE60E2199176F00681D8C /* FileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReader.swift; sourceTree = "<group>"; };
+		A39DE6102199550B00681D8C /* CommandLineReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandLineReader.swift; sourceTree = "<group>"; };
+		A39DE612219963E100681D8C /* JSONParserExcutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParserExcutable.swift; sourceTree = "<group>"; };
 		A3C3502821841493001B80BC /* UnitTestJSONDataForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestJSONDataForm.swift; sourceTree = "<group>"; };
 		A3D86F8E21786A2C0044CFD9 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		A3D86F9021786A3D0044CFD9 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
@@ -99,7 +105,10 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
+				A39DE612219963E100681D8C /* JSONParserExcutable.swift */,
 				A3D86F8E21786A2C0044CFD9 /* InputView.swift */,
+				A39DE6102199550B00681D8C /* CommandLineReader.swift */,
+				A39DE60E2199176F00681D8C /* FileReader.swift */,
 				A3D86F9021786A3D0044CFD9 /* OutputView.swift */,
 				A3D86F942178749B0044CFD9 /* JSONParser.swift */,
 				A34DBE16217EC9BE00D29AD0 /* JSONData.swift */,
@@ -214,11 +223,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				A39DE6112199550B00681D8C /* CommandLineReader.swift in Sources */,
 				A39A96C22181EE8200FA6EEF /* JSONDataForm.swift in Sources */,
 				A3D86F952178749B0044CFD9 /* JSONParser.swift in Sources */,
+				A39DE613219963E100681D8C /* JSONParserExcutable.swift in Sources */,
 				A3D86F8F21786A2C0044CFD9 /* InputView.swift in Sources */,
 				A3D86F9121786A3D0044CFD9 /* OutputView.swift in Sources */,
 				A3E93B942186D06000828D73 /* JSONRegex.swift in Sources */,
+				A39DE60F2199176F00681D8C /* FileReader.swift in Sources */,
 				A34DBE17217EC9BE00D29AD0 /* JSONData.swift in Sources */,
 				A3D86F93217872D20044CFD9 /* Extensions.swift in Sources */,
 				A3E93B912186AAAB00828D73 /* GrammarChecker.swift in Sources */,
