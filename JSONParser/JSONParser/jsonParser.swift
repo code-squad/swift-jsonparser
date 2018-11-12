@@ -9,17 +9,10 @@
 import Foundation
 
 struct JSONParser {
-    // 문자열의 배열을 각 데이터 형태에 따라 갯수를 카운트 & 튜플로 리턴
-    public func countsOfJSON(from text: String) -> (string: Int, bool: Int, int: Int) {
-        let texts = text.removeBracket.separateByComma
-        var nString = 0, nBoolean = 0, nInt = 0
+    // 문자열의 배열을 각 데이터 형태에 프로토콜(SwiftArray)로 리턴
+    public func parse() -> SwiftArray {
         
-        for element in texts {
-            if element.isNumeric { nInt += 1 }
-            if element.isString { nString += 1 }
-            if element.isBoolean { nBoolean += 1 }
-        }
         
-        return (string: nString, bool: nBoolean, int: nInt)
+        return JSONData(ints: [Int](), bools: [Bool](), strings: [String]())
     }
 }
