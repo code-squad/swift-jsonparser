@@ -18,6 +18,7 @@ enum ErrorList: String {
 struct TextValidator {
     private let leftBracket:Character = "["
     private let rightBracket:Character = "]"
+    private let validCharacters = CharacterSet.init(charactersIn: " ,\"[]").union(CharacterSet.alphanumerics)
     
     private func hasBrackets(_ text: String) -> Bool {
         guard text.first == leftBracket else { return false }
@@ -27,11 +28,9 @@ struct TextValidator {
     
     // 가능한 데이터 형태(문자열, 부울, 숫자)인지 확인
     private func isPossibleData(_ text: String) -> Bool {
-        let texts = text.removeQuotation.removeBracket.separateByComma
+        let texts = text.components(separatedBy: validCharacters).filter { !($0 == String()) }
         
-        for element in texts {
-            guard element.isString || element.isNumeric || element.isBoolean else { return false }
-        }
+        guard texts.isEmpty else { return false }
         return true
     }
     
