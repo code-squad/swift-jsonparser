@@ -9,27 +9,13 @@
 import Foundation
 
 struct SwiftArray {
-    private var numbers : [Double] = []
-    private var strings : [String] = []
-    private var bools : [Bool] = []
+    private var swiftArr = [Any]()
     
-    mutating func insertIntoNumbers(_ number:Double) {
-        self.numbers.append(number)
-    }
-    mutating func insertIntoStrings(_ string:String) {
-        self.strings.append(string)
-    }
-    mutating func insertIntoBools(_ bool:Bool) {
-        self.bools.append(bool)
+    mutating func insertIntoArray(_ data:Any) {
+        self.swiftArr.append(data)
     }
     
-    func readNumbers() -> [Double] {
-        return self.numbers
-    }
-    func readStrings() -> [String] {
-        return self.strings
-    }
-    func readBools() -> [Bool] {
-        return self.bools
+    func readArray() -> [Any] {
+        return self.swiftArr
     }
 }

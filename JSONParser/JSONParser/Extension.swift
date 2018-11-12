@@ -56,3 +56,32 @@ extension String {
         return "none"
     }
 }
+
+extension Array {
+    func numberOfStringForm() -> Int {
+        var number = 0
+        for data in self {
+            guard data is String else {continue}
+            number += 1
+        }
+        return number
+    }
+    
+    func numberOfNumberForm() -> Int {
+        var number = 0
+        for data in self {
+            guard data is Double else {continue}
+            number += 1
+        }
+        return number
+    }
+    
+    func numberOfBoolForm() -> Int {
+        var number = 0
+        for data in self {
+            guard data is Bool else {continue}
+            number += 1
+        }
+        return number
+    }
+}

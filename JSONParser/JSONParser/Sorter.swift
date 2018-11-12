@@ -14,11 +14,11 @@ struct Sorter {
         for data in inputData {
             switch data.isWhatForm() {
             case "string" :
-                swiftArr.insertIntoStrings(data.removeDoubleQuotationMarks())
+                swiftArr.insertIntoArray(data.removeDoubleQuotationMarks())
             case "number" :
-                swiftArr.insertIntoNumbers(Double(data) ?? 0)
+                swiftArr.insertIntoArray(Double(data) ?? 0)
             case "bool" :
-                swiftArr.insertIntoBools(data.isTrue())
+                swiftArr.insertIntoArray(data.isTrue())
             default : continue
             }
         }
