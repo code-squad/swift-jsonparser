@@ -10,9 +10,18 @@ import Foundation
 
 struct JSONParser {
     // 문자열의 배열을 각 데이터 형태에 프로토콜(SwiftArray)로 리턴
-    public func parse() -> SwiftArray {
+    public func parse(from input: String) -> SwiftArray {
+        var ints = [Int]()
+        var bools = [Bool]()
+        var strings = [String]()
         
+        let rawData = input.removeBracket.separateByComma
+        rawData.forEach {
+            if $0.isNumeric { ints.append(Int($0) ?? 0) }
+            if $0.isBoolean { bools.append(Bool($0) ?? false) }
+            if $0.isString { strings.append($0) }
+        }
         
-        return JSONData(ints: [Int](), bools: [Bool](), strings: [String]())
+        return JSONData(ints: ints, bools: bools, strings: strings)
     }
 }

@@ -23,22 +23,21 @@ extension String {
     
     // 콤마(,)로 배열로 변환 & 공백(blank) 제거
     var separateByComma: [String] {
-        return self.split(separator: ",").map {String($0).trimmingCharacters(in: .whitespaces)}
+        return self.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }
     }
     
     // 문자열인지 확인 & 부울 타입 제외
     var isString: Bool {
-        return self.range(of: "[^ a-zA-Z]", options: .regularExpression) == nil && !self.isBoolean && self != String()
+        return self.first == "\"" && self.last == "\"" && !self.isBoolean && self != String()
     }
     
     // 숫자인지 확인
     var isNumeric: Bool {
-        return self.range(of: "[^ 0-9]", options: .regularExpression) == nil && self != String()
+        return Int(self) != nil
     }
     
     // 부울인지 확인
     var isBoolean: Bool {
-        guard Bool(self) != nil else { return false }
-        return true
+        return Bool(self) != nil
     }
 }
