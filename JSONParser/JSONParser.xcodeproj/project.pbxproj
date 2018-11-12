@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5950A3AD21991F1F00DDBD14 /* jsonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5950A3AC21991F1F00DDBD14 /* jsonData.swift */; };
 		595B28E32187F4560006A61A /* inputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595B28E22187F4560006A61A /* inputView.swift */; };
 		595B28E52187F4670006A61A /* outputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595B28E42187F4670006A61A /* outputView.swift */; };
 		595B28E72187F4AD0006A61A /* jsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595B28E62187F4AD0006A61A /* jsonParser.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5950A3AC21991F1F00DDBD14 /* jsonData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jsonData.swift; sourceTree = "<group>"; };
 		595B28E22187F4560006A61A /* inputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inputView.swift; sourceTree = "<group>"; };
 		595B28E42187F4670006A61A /* outputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = outputView.swift; sourceTree = "<group>"; };
 		595B28E62187F4AD0006A61A /* jsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jsonParser.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				595B28E62187F4AD0006A61A /* jsonParser.swift */,
 				595B28EC218819D40006A61A /* textExtension.swift */,
 				595B28E82187FA930006A61A /* textValidator.swift */,
+				5950A3AC21991F1F00DDBD14 /* jsonData.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				595B28E32187F4560006A61A /* inputView.swift in Sources */,
+				5950A3AD21991F1F00DDBD14 /* jsonData.swift in Sources */,
 				595B28E72187F4AD0006A61A /* jsonParser.swift in Sources */,
 				595B28ED218819D40006A61A /* textExtension.swift in Sources */,
 				595B28E92187FA930006A61A /* textValidator.swift in Sources */,
