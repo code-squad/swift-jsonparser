@@ -11,8 +11,8 @@ import Foundation
 struct SwiftArray {
     private var swiftArr = [Any]()
     
-    mutating func insertIntoArray(_ data:Any) {
-        self.swiftArr.append(data)
+    init(array:[Any]) {
+        self.swiftArr = array
     }
     
     func readArray() -> [Any] {

@@ -58,30 +58,20 @@ extension String {
 }
 
 extension Array {
-    func numberOfStringForm() -> Int {
-        var number = 0
+    func numberByType() -> [String:Int] {
+        var numberOfStirng = 0
+        var numberOfNumber = 0
+        var numberOfBool = 0
+        
         for data in self {
-            guard data is String else {continue}
-            number += 1
+            numberOfStirng += data is String ? 1 : 0
+            numberOfNumber += data is Double ? 1 : 0
+            numberOfBool += data is Bool ? 1 : 0
         }
-        return number
+        return ["string" : numberOfStirng,
+                "number" : numberOfNumber,
+                "bool" : numberOfBool]
     }
     
-    func numberOfNumberForm() -> Int {
-        var number = 0
-        for data in self {
-            guard data is Double else {continue}
-            number += 1
-        }
-        return number
-    }
-    
-    func numberOfBoolForm() -> Int {
-        var number = 0
-        for data in self {
-            guard data is Bool else {continue}
-            number += 1
-        }
-        return number
-    }
+    private func 
 }

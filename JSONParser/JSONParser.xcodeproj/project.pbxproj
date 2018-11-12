@@ -69,8 +69,8 @@
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				7D7EE2F821883E490090472D /* Sorter.swift */,
-				7D7EE2FE21884EF80090472D /* OutputView.swift */,
 				7D7EE2FC21884B8B0090472D /* SwiftArray.swift */,
+				7D7EE2FE21884EF80090472D /* OutputView.swift */,
 				7D7EE2F621883A650090472D /* Extension.swift */,
 				7D7EE2F42187F98E0090472D /* InputView.swift */,
 			);

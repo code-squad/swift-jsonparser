@@ -9,19 +9,20 @@
 import Foundation
 
 struct Sorter {
-    static func sortByTypeIntoArray(_ inputData:[String]) -> SwiftArray {
-        var swiftArr = SwiftArray()
+    static func sortByType(_ inputData:[String]) -> [Any] {
+        var jsonData = [Any]()
         for data in inputData {
             switch data.isWhatForm() {
-            case "string" :
-                swiftArr.insertIntoArray(data.removeDoubleQuotationMarks())
-            case "number" :
-                swiftArr.insertIntoArray(Double(data) ?? 0)
-            case "bool" :
-                swiftArr.insertIntoArray(data.isTrue())
-            default : continue
+            case "string":
+                jsonData.append(data.removeDoubleQuotationMarks())
+            case "number":
+                jsonData.append(Double(data) ?? 0)
+            case "bool":
+                jsonData.append(data.isTrue())
+            default:
+                continue
             }
         }
-        return swiftArr
+        return jsonData
     }
 }
