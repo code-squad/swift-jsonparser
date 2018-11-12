@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D4D897C2199AD0200A59103 /* NumberByType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D897B2199AD0200A59103 /* NumberByType.swift */; };
 		7D7EE2F52187F98E0090472D /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2F42187F98E0090472D /* InputView.swift */; };
 		7D7EE2F721883A650090472D /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2F621883A650090472D /* Extension.swift */; };
 		7D7EE2F921883E490090472D /* Sorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2F821883E490090472D /* Sorter.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7D4D897B2199AD0200A59103 /* NumberByType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberByType.swift; sourceTree = "<group>"; };
 		7D7EE2F42187F98E0090472D /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		7D7EE2F621883A650090472D /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		7D7EE2F821883E490090472D /* Sorter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sorter.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				7D7EE2F821883E490090472D /* Sorter.swift */,
 				7D7EE2FC21884B8B0090472D /* SwiftArray.swift */,
+				7D4D897B2199AD0200A59103 /* NumberByType.swift */,
 				7D7EE2FE21884EF80090472D /* OutputView.swift */,
 				7D7EE2F621883A650090472D /* Extension.swift */,
 				7D7EE2F42187F98E0090472D /* InputView.swift */,
@@ -136,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D7EE2F721883A650090472D /* Extension.swift in Sources */,
+				7D4D897C2199AD0200A59103 /* NumberByType.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				7D7EE2FF21884EF80090472D /* OutputView.swift in Sources */,
 				7D7EE2F921883E490090472D /* Sorter.swift in Sources */,

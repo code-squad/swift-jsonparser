@@ -13,6 +13,8 @@ struct OutputView {
         var outputArray = [String]()
         let numberOfAll = data.readNumberOfArray()
         
+        guard numberOfAll > 0 else {print("데이터가 없습니다."); return}
+        
         outputArray.append("총 \(numberOfAll)개의 데이터 중에")
         if data.readNumberOfString() > 0 {
             outputArray.append(" 문자열 \(data.readNumberOfString())개")
@@ -38,3 +40,5 @@ struct OutputView {
         print("")
     }
 }
+
+

@@ -9,29 +9,32 @@
 import Foundation
 
 struct SwiftArray {
-    private var swiftArr = [Any]()
-    
-    init(array:[Any]) {
-        self.swiftArr = array
+    private var swiftArray : [Any]
+    private var numberByType : NumberByType
+
+    init(_ array:[Any]) {
+        self.swiftArray = array
+        self.numberByType = array.numberByType()
     }
     
     func readArray() -> [Any] {
-        return self.swiftArr
+        return self.swiftArray
     }
     
     func readNumberOfArray() -> Int {
-        return swiftArr.count
+        return swiftArray.count
     }
     
     func readNumberOfString() -> Int {
-        return swiftArr.numberOfStringForm()
+        return numberByType.numberOfString()
     }
     
     func readNumberOfNumber() -> Int {
-        return swiftArr.numberOfNumberForm()
+        return numberByType.numberOfNumber()
     }
     
     func readNumberOfBool() -> Int {
-        return swiftArr.numberOfBoolForm()
+        return numberByType.numberOfBool()
     }
 }
+

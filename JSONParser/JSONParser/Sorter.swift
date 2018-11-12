@@ -9,8 +9,9 @@
 import Foundation
 
 struct Sorter {
-    static func sortByType(_ inputData:[String]) -> [Any] {
+    static func sortByType(_ inputData:[String]) -> SwiftArray {
         var jsonData = [Any]()
+        
         for data in inputData {
             switch data.isWhatForm() {
             case "string":
@@ -23,6 +24,6 @@ struct Sorter {
                 continue
             }
         }
-        return jsonData
+        return SwiftArray.init(jsonData)
     }
 }

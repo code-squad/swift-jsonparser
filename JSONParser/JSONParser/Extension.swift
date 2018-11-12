@@ -58,7 +58,7 @@ extension String {
 }
 
 extension Array {
-    func numberByType() -> [String:Int] {
+    func numberByType() -> NumberByType {
         var numberOfStirng = 0
         var numberOfNumber = 0
         var numberOfBool = 0
@@ -68,10 +68,8 @@ extension Array {
             numberOfNumber += data is Double ? 1 : 0
             numberOfBool += data is Bool ? 1 : 0
         }
-        return ["string" : numberOfStirng,
-                "number" : numberOfNumber,
-                "bool" : numberOfBool]
+        return NumberByType.init(string: numberOfStirng,
+                                 number: numberOfNumber,
+                                 bool: numberOfBool)
     }
-    
-    private func 
 }
