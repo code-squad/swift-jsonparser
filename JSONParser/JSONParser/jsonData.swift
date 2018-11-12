@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SwiftArray {
+protocol JSONData {
     func getDTO() -> DTO
 }
 
@@ -16,7 +16,7 @@ struct DTO {
     let json: (ints: [Int], bools: [Bool], strings: [String], totalCount: Int)
 }
 
-struct JSONData: SwiftArray {
+struct SwiftJSON: JSONData {
     private var ints: [Int]
     private var bools: [Bool]
     private var strings: [String]
