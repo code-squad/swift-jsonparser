@@ -9,15 +9,15 @@
 import Foundation
 
 struct SwiftArray {
-    private var swiftArray : [Any]
+    private var swiftArray : [UsableType]
     private var numberByType : NumberByType
 
-    init(_ array:[Any]) {
+    init(_ array:[UsableType]) {
         self.swiftArray = array
         self.numberByType = array.numberByType()
     }
     
-    func readArray() -> [Any] {
+    func readArray() -> [UsableType] {
         return self.swiftArray
     }
     

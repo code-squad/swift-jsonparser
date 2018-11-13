@@ -10,7 +10,7 @@ import Foundation
 
 struct Sorter {
     static func sortByType(_ inputData:[String]) -> SwiftArray {
-        var jsonData = [Any]()
+        var jsonData = [UsableType]()
         
         for data in inputData {
             switch data.isWhatForm() {
