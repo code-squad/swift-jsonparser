@@ -24,10 +24,17 @@ struct ArrayCreator : Creator {
                 jsonData.append(Double(data) ?? 0)
             case "bool":
                 jsonData.append(data.isTrue())
+            case "object":
+                jsonData.append(createObject(data))
             default:
                 continue
             }
         }
         return SwiftArray.init(jsonData)
+    }
+    
+    private func createObject(_ data:String) -> [String:UsableType] {
+        let creator = CollectionCreator.init(ObjectCreator())
+        return creator.create(data) as? [String : UsableType] ?? ["":""]
     }
 }

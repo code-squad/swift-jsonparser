@@ -13,3 +13,4 @@ protocol UsableType {}
 extension String : UsableType {}
 extension Double : UsableType {}
 extension Bool : UsableType {}
+extension Dictionary : UsableType {}
