@@ -12,6 +12,10 @@ extension String {
     func removeDoubleQuotationMarks() -> String {
         return trimmingCharacters(in: ["\"","\""])
     }
+    
+    func seperateByColon() -> [String] {
+        return split(separator: ":").map{String($0)}
+    }
 
     private func removeSpace() -> String {
         return replacingOccurrences(of: " ", with: "")

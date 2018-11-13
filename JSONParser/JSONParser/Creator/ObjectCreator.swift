@@ -14,6 +14,20 @@ struct ObjectCreator : Creator {
     }
     
     func sortByType(_ inputData: [String]) -> Collection {
-        <#code#>
+        var jsonData = [String:UsableType]()
+        
+        for data in inputData {
+            switch data.isWhatForm() {
+            case "string":
+                jsonData.append(data.removeDoubleQuotationMarks())
+            case "number":
+                jsonData.append(Double(data) ?? 0)
+            case "bool":
+                jsonData.append(data.isTrue())
+            default:
+                continue
+            }
+        }
+        return SwiftObject.init(jsonData)
     }
 }
