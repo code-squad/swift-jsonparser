@@ -56,20 +56,3 @@ extension String {
         return "none"
     }
 }
-
-extension Array {
-    func numberByType() -> NumberByType {
-        var numberOfStirng = 0
-        var numberOfNumber = 0
-        var numberOfBool = 0
-        
-        for data in self {
-            numberOfStirng += data is String ? 1 : 0
-            numberOfNumber += data is Double ? 1 : 0
-            numberOfBool += data is Bool ? 1 : 0
-        }
-        return NumberByType.init(string: numberOfStirng,
-                                 number: numberOfNumber,
-                                 bool: numberOfBool)
-    }
-}
