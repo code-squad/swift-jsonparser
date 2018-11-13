@@ -16,19 +16,19 @@ extension String {
         return String(self.dropFirst().dropLast())
     }
     
-    // 입력 문자열의 따옴표 제거
-    var removeQuotation: String {
-        return self.replacingOccurrences(of: "\"", with: "")
-    }
-    
     // 콤마(,)로 배열로 변환 & 공백(blank) 제거
     var separateByComma: [String] {
         return self.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }
     }
     
+    // 콜론(:)으로 배열로 변환 & 공백(blank) 제거
+    var separateByColumn: [String] {
+        return self.split(separator: ":").map { String($0).trimmingCharacters(in: .whitespaces) }
+    }
+    
     // 문자열인지 확인 & 부울 타입 제외
     var isString: Bool {
-        return self.first == "\"" && self.last == "\"" && !self.isBoolean && self != String()
+        return self.first == "\"" && self.last == "\"" 
     }
     
     // 숫자인지 확인
