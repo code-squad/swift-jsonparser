@@ -59,6 +59,8 @@ extension String {
         switch (self.first,self.last) {
         case ("[","]"):
             return ArrayCreator()
+        case ("{","}"):
+            return ObjectCreator()
         default:
             return nil
         }
