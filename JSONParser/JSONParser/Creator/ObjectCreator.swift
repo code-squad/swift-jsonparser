@@ -15,19 +15,30 @@ struct ObjectCreator : Creator {
     
     func sortByType(_ inputData: [String]) -> Collection {
         var jsonData = [String:UsableType]()
+        let seperatedInput = seperateKeyAndValue(inputData)
         
-        for data in inputData {
-            switch data.isWhatForm() {
+        for data in seperatedInput {
+            switch data[1].isWhatForm() {
             case "string":
-                jsonData.append(data.removeDoubleQuotationMarks())
+                jsonData[data[0]] = data[1].removeDoubleQuotationMarks()
             case "number":
-                jsonData.append(Double(data) ?? 0)
+                jsonData[data[0]] = Double(data[1])
             case "bool":
-                jsonData.append(data.isTrue())
+                jsonData[data[0]] = data[1].isTrue()
             default:
                 continue
             }
         }
         return SwiftObject.init(jsonData)
+    }
+    
+    func seperateKeyAndValue(_ input:[String]) -> [[String]] {
+        var seperatedInput = [[String]]()
+        
+        for willSeperateData in input {
+            seperatedInput.append(willSeperateData.seperateByColon())
+        }
+        
+        return seperatedInput
     }
 }
