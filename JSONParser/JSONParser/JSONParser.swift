@@ -10,9 +10,10 @@ import Foundation
 
 struct JSONParser {
     // JSON -> Swift 타입으로 추출해 냄
-    func extractJSONtoSwift(jsonData : [String]) -> [Any] {
+    func extractJSONtoSwift(dataToConvert : String) -> [Any] {
         let checkType = CheckType()
         var jsonToSwift : [Any] = []
+        let jsonData : [String] = dataToConvert.components(separatedBy: ["[", ",", "]"])
         for index in 1..<jsonData.count-1 {
             switch checkType.supportingType(jsonData[index]) {
             case .stringType :

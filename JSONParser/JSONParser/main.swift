@@ -13,14 +13,15 @@ func main() {
     let jsonParser = JSONParser()
     let outputView = OutputView()
     var input : String
-    var extractData : [String]
+    var inputState : InputState
+
     repeat {
         input = InputView.UserInput(message: "분석할 JSON 문자열을 입력하세요.")
-        extractData = input.components(separatedBy: ["[", ",", "]"])
-    } while !checkInput.IsArrayType(input) || !checkInput.IsSupportType(extractData)
+        inputState = checkInput.checkUserInput(input)
+        outputView.printErrorState(inputState)
+    } while inputState != .rightInput
     
-    let jsonToSwift : [Any] = jsonParser.extractJSONtoSwift(jsonData: extractData)
-    print(jsonToSwift)
+    let jsonToSwift : [Any] = jsonParser.extractJSONtoSwift(dataToConvert: input)
     outputView.printType(typeCount: jsonParser.countingType(jsonToSwift))
 }
 

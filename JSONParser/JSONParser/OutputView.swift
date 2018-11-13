@@ -9,6 +9,11 @@
 import Foundation
 
 struct OutputView {
+    // 에러의 상태를 프린트
+    func printErrorState(_ errorState : InputState) {
+        if errorState != .rightInput { print(errorState.rawValue) }
+    }
+    
     // 화면에 타입의 개수를 출력
     func printType(typeCount : (total : Int, string : Int, bool : Int, number : Int)) {
         var printText : [String] = []

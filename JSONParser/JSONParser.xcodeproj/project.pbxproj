@@ -12,6 +12,7 @@
 		9D6D09F2218C3A000061681A /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D09F1218C3A000061681A /* OutputView.swift */; };
 		9D6D09F4219008570061681A /* CheckType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D09F3219008570061681A /* CheckType.swift */; };
 		9D6D09F621900A9D0061681A /* SupportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D09F521900A9D0061681A /* SupportType.swift */; };
+		9DC6DA3E219A9EB000D057B0 /* InputState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6DA3D219A9EB000D057B0 /* InputState.swift */; };
 		9DD8E5982188248100CE6DE3 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD8E5972188248100CE6DE3 /* InputView.swift */; };
 		9DD8E59C2188262C00CE6DE3 /* CheckInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD8E59B2188262C00CE6DE3 /* CheckInput.swift */; };
 /* End PBXBuildFile section */
@@ -35,6 +36,7 @@
 		9D6D09F1218C3A000061681A /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		9D6D09F3219008570061681A /* CheckType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckType.swift; sourceTree = "<group>"; };
 		9D6D09F521900A9D0061681A /* SupportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportType.swift; sourceTree = "<group>"; };
+		9DC6DA3D219A9EB000D057B0 /* InputState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputState.swift; sourceTree = "<group>"; };
 		9DD8E5972188248100CE6DE3 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		9DD8E59B2188262C00CE6DE3 /* CheckInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInput.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,6 +77,7 @@
 				9DD8E59B2188262C00CE6DE3 /* CheckInput.swift */,
 				9D6D09F3219008570061681A /* CheckType.swift */,
 				9D6D09F521900A9D0061681A /* SupportType.swift */,
+				9DC6DA3D219A9EB000D057B0 /* InputState.swift */,
 				9D6D09EF218C39D40061681A /* JSONParser.swift */,
 			);
 			path = JSONParser;
@@ -144,6 +147,7 @@
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				9DD8E59C2188262C00CE6DE3 /* CheckInput.swift in Sources */,
 				9D6D09F0218C39D40061681A /* JSONParser.swift in Sources */,
+				9DC6DA3E219A9EB000D057B0 /* InputState.swift in Sources */,
 				9DD8E5982188248100CE6DE3 /* InputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
