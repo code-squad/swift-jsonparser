@@ -8,8 +8,7 @@
 
 import Foundation
 
-protocol UsableType {
-}
+protocol UsableType {}
 
 extension String : UsableType {}
 extension Double : UsableType {}
