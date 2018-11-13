@@ -14,8 +14,12 @@ struct OutputView {
         let numberOfAll = data.readNumberOfElements()
         
         guard numberOfAll > 0 else {print("데이터가 없습니다."); return}
-        
-        outputArray.append("총 \(numberOfAll)개의 데이터 중에")
+        if data is SwiftObject {
+            outputArray.append("총 \(numberOfAll)개의 객체 데이터 중에")
+        }
+        if data is SwiftArray {
+            outputArray.append("총 \(numberOfAll)개의 배열 데이터 중에")
+        }
         if data.readNumberOfString() > 0 {
             outputArray.append(" 문자열 \(data.readNumberOfString())개")
         }

@@ -42,6 +42,10 @@ extension String {
         return (uppercased() == "TRUE") || (uppercased() == "FALSE")
     }
     
+    private func isObject() -> Bool {
+        return (hasPrefix("{")) && (hasSuffix("}"))
+    }
+    
     func isWhatForm() -> String {
         if isBoolForm() {
             return "bool"
@@ -51,6 +55,9 @@ extension String {
         }
         if isNumberForm() {
             return "number"
+        }
+        if isObject() {
+            return "object"
         }
         return "none"
     }
