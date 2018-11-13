@@ -33,32 +33,8 @@ struct CheckInput {
     func IsSupportType(_ extractData: [String]) -> Bool {
         let checkType = CheckType()
         for index in 1..<extractData.count-1 {
-            guard checkType.supportingType(extractData[index]) != .notSupporting else { return false }
-//            guard CheckType.IsStringType(extractData[index]) || CheckType.IsNumberType(extractData[index]) || CheckType.IsBooleanType(extractData[index]) else { return false }
+            guard checkType.supportingType(extractData[index]) != .notSupportingType else { return false }
         }
         return true
     }
-    // 스트링 타입인지 확인
-//    private func IsStringType(_ allData : String) -> Bool {
-//        let firstIndex = allData.index(allData.startIndex, offsetBy: 1)
-//        let lastIndex = allData.index(allData.endIndex, offsetBy: -1)
-//        guard allData[..<firstIndex] == "\"" else { return false }
-//        guard allData[lastIndex..<allData.endIndex] == "\"" else { return false }
-//        return true
-//    }
-    
-    // 숫자 타입인지 확인
-//    private func IsNumberType(_ allData : String) -> Bool {
-//        let numberSet = CharacterSet.decimalDigits
-//        for element in allData {
-//            guard String(element).rangeOfCharacter(from: numberSet) != nil else { return false }
-//        }
-//        return true
-//    }
-    
-    // Boolean 타입인지 확인
-//    private func IsBooleanType(_ allData : String) -> Bool {
-//        guard allData == "true" || allData == "false" else { return false }
-//        return true
-//    }
 }

@@ -13,14 +13,14 @@ struct JSONParser {
     func extractJSONtoSwift(jsonData : [String]) -> [Any] {
         let checkType = CheckType()
         var jsonToSwift : [Any] = []
-        for data in jsonData {
-            switch checkType.supportingType(data) {
+        for index in 1..<jsonData.count-1 {
+            switch checkType.supportingType(jsonData[index]) {
             case .stringType :
-                jsonToSwift.append(data)
+                jsonToSwift.append(self.extractString(jsonData[index]))
             case .booleanType :
-                jsonToSwift.append(data)
+                jsonToSwift.append(self.extractBoolean(jsonData[index]))
             case .numberType :
-                jsonToSwift.append(data)
+                jsonToSwift.append(self.extractNumber(jsonData[index]))
             default :
                 return []
             }
@@ -30,6 +30,9 @@ struct JSONParser {
     
     // String으로 데이터를 추출
     private func extractString(_ data : String) -> String {
+        var data = data
+        data.remove(at: data.startIndex)
+        data.remove(at: data.index(before: data.endIndex))
         return data
     }
     
@@ -43,5 +46,16 @@ struct JSONParser {
     private func extractNumber(_ data : String) -> Double {
         guard let convertedNumber = Double(data) else { return 0 }
         return convertedNumber
+    }
+    
+    // 타입의 개수를 Count
+    func countingType(_ swiftData : [Any]) -> (Int, Int, Int, Int) {
+        var typeCount : (totalCount : Int, stringCount : Int, boolCount : Int, numberCount : Int) = (swiftData.count, 0, 0, 0)
+        for data in swiftData {
+            if data is String { typeCount.stringCount += 1 }
+            else if data is Bool { typeCount.boolCount += 1 }
+            else if data is Double { typeCount.numberCount += 1 }
+        }
+        return typeCount
     }
 }

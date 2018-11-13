@@ -9,14 +9,19 @@
 import Foundation
 
 func main() {
-    let checkInput : CheckInput = CheckInput()
+    let checkInput = CheckInput()
+    let jsonParser = JSONParser()
+    let outputView = OutputView()
     var input : String
     var extractData : [String]
     repeat {
         input = InputView.UserInput(message: "분석할 JSON 문자열을 입력하세요.")
         extractData = input.components(separatedBy: ["[", ",", "]"])
     } while !checkInput.IsArrayType(input) || !checkInput.IsSupportType(extractData)
+    
+    let jsonToSwift : [Any] = jsonParser.extractJSONtoSwift(jsonData: extractData)
+    print(jsonToSwift)
+    outputView.printType(typeCount: jsonParser.countingType(jsonToSwift))
 }
-
 
 main()
