@@ -25,7 +25,7 @@ func main() {
     
     // 에러 처리된 입력을 문자열 변환하고 출력
     let jsonData = jsonParser.parse(from: input)
-    outputView.printResult(by: jsonData)
+    outputView.printResult(by: jsonData.getDTO())
 }
 
 main()
