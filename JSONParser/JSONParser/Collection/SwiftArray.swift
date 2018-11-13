@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SwiftArray {
+struct SwiftArray : Collection {
     private var swiftArray : [UsableType]
     private var numberByType : NumberByType
 
@@ -21,7 +21,7 @@ struct SwiftArray {
         return self.swiftArray
     }
     
-    func readNumberOfArray() -> Int {
+    func readNumberOfElements() -> Int {
         return swiftArray.count
     }
     

@@ -1,15 +1,19 @@
 //
-//  Sorter.swift
+//  ArrayCreator.swift
 //  JSONParser
 //
-//  Created by 조재흥 on 18. 10. 30..
+//  Created by 조재흥 on 18. 11. 13..
 //  Copyright © 2018 JK. All rights reserved.
 //
 
 import Foundation
 
-struct Sorter {
-    static func sortByType(_ inputData:[String]) -> Collection {
+struct ArrayCreator : Creator {
+    func removeBracket(_ jsonData:String) -> String {
+        return jsonData.trimmingCharacters(in: ["[","]"])
+    }
+    
+    func sortByType(_ inputData:[String]) -> Collection {
         var jsonData = [UsableType]()
         
         for data in inputData {

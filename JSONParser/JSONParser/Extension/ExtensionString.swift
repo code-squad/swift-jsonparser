@@ -12,18 +12,13 @@ extension String {
     func removeDoubleQuotationMarks() -> String {
         return trimmingCharacters(in: ["\"","\""])
     }
-    
-    private func removeSquareBracket() -> String {
-        return trimmingCharacters(in: ["[","]"])
-    }
-    
+
     private func removeSpace() -> String {
         return replacingOccurrences(of: " ", with: "")
     }
     
     func extractData() -> [String] {
-        let removedSquareBracket = self.removeSquareBracket()
-        let removedSpace = removedSquareBracket.removeSpace()
+        let removedSpace = self.removeSpace()
         return removedSpace.split(separator: ",").map{String($0)}
     }
     
@@ -54,5 +49,14 @@ extension String {
             return "number"
         }
         return "none"
+    }
+    
+    func isWhatCollectionType() -> Creator? {
+        switch (self.first,self.last) {
+        case ("[","]"):
+            return ArrayCreator()
+        default:
+            return nil
+        }
     }
 }

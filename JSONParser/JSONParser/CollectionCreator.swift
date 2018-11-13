@@ -9,5 +9,15 @@
 import Foundation
 
 struct CollectionCreator {
+    private var creator : Creator
     
+    init(_ inputCollectionType:Creator) {
+        self.creator = inputCollectionType
+    }
+    
+    func create(_ input:String) -> Collection {
+        let removedBrakcet = creator.removeBracket(input)
+        let extractedData = removedBrakcet.extractData()
+        return creator.sortByType(extractedData)
+    }
 }

@@ -9,9 +9,9 @@
 import Foundation
 
 struct OutputView {
-    static func showNumberOfData(_ data:SwiftArray) {
+    static func showNumberOfData(_ data:Collection) {
         var outputArray = [String]()
-        let numberOfAll = data.readNumberOfArray()
+        let numberOfAll = data.readNumberOfElements()
         
         guard numberOfAll > 0 else {print("데이터가 없습니다."); return}
         
