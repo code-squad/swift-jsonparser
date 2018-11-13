@@ -15,15 +15,14 @@ struct JSONParser {
         var jsonToSwift : [Any] = []
         let jsonData : [String] = dataToConvert.components(separatedBy: ["[", ",", "]"])
         for index in 1..<jsonData.count-1 {
-            switch checkType.supportingType(jsonData[index]) {
+            guard let jsonType = checkType.supportingType(jsonData[index]) else { return [] }
+            switch jsonType {
             case .stringType :
                 jsonToSwift.append(self.extractString(jsonData[index]))
             case .booleanType :
                 jsonToSwift.append(self.extractBoolean(jsonData[index]))
             case .numberType :
                 jsonToSwift.append(self.extractNumber(jsonData[index]))
-            default :
-                return []
             }
         }
         return jsonToSwift

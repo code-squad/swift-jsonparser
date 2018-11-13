@@ -10,11 +10,11 @@ import Foundation
 
 struct CheckType {
     // Type을 검사해서 지원하는 타입인지 enum 생성
-    func supportingType(_ jsonType : String) -> SupportType {
+    func supportingType(_ jsonType : String) -> SupportType? {
         if IsStringType(jsonType) { return .stringType }
         else if IsBooleanType(jsonType) { return .booleanType }
         else if IsNumberType(jsonType) { return .numberType }
-        else { return .notSupportingType }
+        else { return nil }
     }
     
     // 스트링 타입인지 확인

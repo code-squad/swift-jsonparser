@@ -41,7 +41,7 @@ struct CheckInput {
     private func IsSupportType(_ extractData: [String]) -> Bool {
         let checkType = CheckType()
         for index in 1..<extractData.count-1 {
-            guard checkType.supportingType(extractData[index]) != .notSupportingType else { return false }
+            guard checkType.supportingType(extractData[index]) != nil else { return false }
         }
         return true
     }
