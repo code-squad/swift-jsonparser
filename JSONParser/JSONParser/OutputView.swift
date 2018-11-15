@@ -29,6 +29,9 @@ struct OutputView {
         if data.readNumberOfBool() > 0 {
             outputArray.append(" 부울 \(data.readNumberOfBool())개")
         }
+        if data.readNumberOfObject() > 0 {
+            outputArray.append(" 객체 \(data.readNumberOfObject())개")
+        }
         outputArray.append("가 포함되어 있습니다.")
         showResult(outputArray)
     }

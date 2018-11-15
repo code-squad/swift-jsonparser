@@ -12,11 +12,13 @@ struct NumberByType {
     private var string : Int
     private var number : Int
     private var bool : Int
+    private var object : Int
     
-    init(string:Int, number:Int, bool:Int) {
+    init(string:Int, number:Int, bool:Int, object:Int) {
         self.string = string
         self.number = number
         self.bool = bool
+        self.object = object
     }
     
     func numberOfString() -> Int{
@@ -27,5 +29,8 @@ struct NumberByType {
     }
     func numberOfBool() -> Int{
         return self.bool
+    }
+    func numberOfObject() -> Int {
+        return self.object
     }
 }

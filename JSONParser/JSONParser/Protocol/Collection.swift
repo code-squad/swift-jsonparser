@@ -16,4 +16,6 @@ protocol Collection {
     func readNumberOfNumber() -> Int
     
     func readNumberOfBool() -> Int
+    
+    func readNumberOfObject() -> Int
 }
