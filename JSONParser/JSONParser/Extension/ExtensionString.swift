@@ -13,10 +13,6 @@ extension String {
         return trimmingCharacters(in: ["\"","\""])
     }
     
-    func seperateByColon() -> [String] {
-        return split(separator: ":").map{String($0)}
-    }
-    
     func isTrue() -> Bool {
         return uppercased() == "TRUE"
     }
