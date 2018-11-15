@@ -9,18 +9,6 @@
 import Foundation
 
 extension String {
-    private func regex(pattern:String) -> [String] {
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else {return []}
-        
-        let range = NSRange(self.startIndex..., in: self)
-        let matches = regex.matches(in: self, options: [], range: range)
-        
-        return matches.map {
-            let range = Range($0.range, in: self)!
-            return String(self[range])
-        }
-    }
-    
     func removeDoubleQuotationMarks() -> String {
         return trimmingCharacters(in: ["\"","\""])
     }
@@ -32,7 +20,7 @@ extension String {
     private func removeSpace() -> String {
         return replacingOccurrences(of: " ", with: "")
     }
-    
+
     func extractData() -> [String] {
         let removedSpace = self.removeSpace()
         return removedSpace.split(separator: ",").map{String($0)}
