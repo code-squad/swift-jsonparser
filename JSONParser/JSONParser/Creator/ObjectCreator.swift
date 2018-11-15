@@ -14,7 +14,7 @@ struct ObjectCreator : Creator {
     }
     
     func sortByType(_ inputData: [String]) -> Collection {
-        var jsonData = [String:UsableType]()
+        var jsonData = [String:ObjectUsableType]()
         let seperatedInput = seperateKeyAndValue(inputData)
         
         for data in seperatedInput {
@@ -32,7 +32,7 @@ struct ObjectCreator : Creator {
         return SwiftObject.init(jsonData)
     }
     
-    func seperateKeyAndValue(_ input:[String]) -> [[String]] {
+    private func seperateKeyAndValue(_ input:[String]) -> [[String]] {
         var seperatedInput = [[String]]()
         
         for willSeperateData in input {

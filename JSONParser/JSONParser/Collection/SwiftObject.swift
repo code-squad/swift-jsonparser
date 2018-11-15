@@ -9,16 +9,16 @@
 import Foundation
 
 struct SwiftObject : Collection {
-    private var swiftObject : [String:UsableType]
+    private var swiftObject : [String:ObjectUsableType]
     private var numberByType : NumberByType
     
-    init(_ object:[String:UsableType]) {
+    init(_ object:[String:ObjectUsableType]) {
         self.swiftObject = object
-        let values = Array<UsableType>(object.values)
+        let values = Array<ObjectUsableType>(object.values)
         self.numberByType = values.numberByType()
     }
     
-    func readObject() -> [String:UsableType] {
+    func readObject() -> [String:ObjectUsableType] {
         return self.swiftObject
     }
     

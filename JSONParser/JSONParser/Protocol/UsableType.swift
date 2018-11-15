@@ -8,9 +8,10 @@
 
 import Foundation
 
-protocol UsableType {}
+protocol ArrayUsableType {}
+protocol ObjectUsableType {}
 
-extension String : UsableType {}
-extension Double : UsableType {}
-extension Bool : UsableType {}
-extension Dictionary : UsableType {}
+extension String : ArrayUsableType, ObjectUsableType {}
+extension Double : ArrayUsableType, ObjectUsableType {}
+extension Bool : ArrayUsableType, ObjectUsableType {}
+extension Dictionary : ArrayUsableType {}

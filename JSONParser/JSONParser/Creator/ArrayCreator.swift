@@ -14,7 +14,7 @@ struct ArrayCreator : Creator {
     }
     
     func sortByType(_ inputData:[String]) -> Collection {
-        var jsonData = [UsableType]()
+        var jsonData = [ArrayUsableType]()
         
         for data in inputData {
             switch data.isWhatForm() {
@@ -33,8 +33,8 @@ struct ArrayCreator : Creator {
         return SwiftArray.init(jsonData)
     }
     
-    private func createObject(_ data:String) -> [String:UsableType] {
+    private func createObject(_ data:String) -> [String:ArrayUsableType] {
         let creator = CollectionCreator.init(ObjectCreator())
-        return creator.create(data) as? [String : UsableType] ?? ["":""]
+        return creator.create(data) as? [String : ArrayUsableType] ?? ["":""]
     }
 }
