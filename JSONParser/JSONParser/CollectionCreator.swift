@@ -17,7 +17,7 @@ struct CollectionCreator {
     
     func create(_ input:String) -> Collection {
         let removedBrakcet = creator.removeBracket(input)
-        let extractedData = removedBrakcet.extractData()
+        let extractedData = RegularExpression.extractData(string: removedBrakcet)
         return creator.sortByType(extractedData)
     }
 }

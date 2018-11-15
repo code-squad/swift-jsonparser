@@ -32,5 +32,4 @@ struct RegularExpression {
     static func extractData(string:String) -> [String] {
         return self.regex(pattern: allData, string: string)
     }
-    
 }

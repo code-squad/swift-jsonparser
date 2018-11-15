@@ -16,22 +16,22 @@ extension String {
     func seperateByColon() -> [String] {
         return split(separator: ":").map{String($0)}
     }
-
-    private func removeSpace() -> String {
-        return replacingOccurrences(of: " ", with: "")
-    }
-
-    func extractData() -> [String] {
-        let removedSpace = self.removeSpace()
-        return removedSpace.split(separator: ",").map{String($0)}
-    }
+//
+//    private func removeSpace() -> String {
+//        return replacingOccurrences(of: " ", with: "")
+//    }
+//
+//    func extractData() -> [String] {
+//        let removedSpace = self.removeSpace()
+//        return removedSpace.split(separator: ",").map{String($0)}
+//    }
     
     func isTrue() -> Bool {
         return uppercased() == "TRUE"
     }
     
     private func isNumberForm() -> Bool {
-        return !isEmpty && range(of: "^[^0-9]+$", options: .regularExpression) == nil
+        return range(of: "^\\d+$", options: .regularExpression) != nil
     }
     
     private func isStringForm() -> Bool {
