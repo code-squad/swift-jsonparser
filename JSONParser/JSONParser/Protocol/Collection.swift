@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Collection {    
+protocol Collection {
     func readNumberOfElements() -> Int
     
     func readNumberOfString() -> Int
