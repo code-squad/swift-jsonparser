@@ -9,7 +9,7 @@
 import Foundation
 
 struct OutputView {
-    static func showNumberOfData(_ data:Collection) {
+    static func showNumberOfData(_ data:SwiftType) {
         var outputArray = [String]()
         let numberOfAll = data.readNumberOfElements()
         

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SwiftArray : Collection {
+struct SwiftArray : SwiftType {
     private var swiftArray : [ArrayUsableType]
     private var numberByType : NumberByType
 

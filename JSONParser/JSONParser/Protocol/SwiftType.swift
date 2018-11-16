@@ -8,7 +8,9 @@
 
 import Foundation
 
-protocol Collection {
+protocol SwiftType {
+    
+    
     func readNumberOfElements() -> Int
     
     func readNumberOfString() -> Int

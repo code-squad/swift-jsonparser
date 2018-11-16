@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SwiftObject : Collection {
+struct SwiftObject : SwiftType {
     private var swiftObject : [String:ObjectUsableType]
     private var numberByType : NumberByType
     
