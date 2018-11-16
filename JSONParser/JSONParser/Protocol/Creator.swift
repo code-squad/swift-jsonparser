@@ -11,5 +11,5 @@ import Foundation
 protocol Creator {
     func removeBracket(_ input:String) -> String
     
-    func sortByType(_ inputData:[String]) -> SwiftType
+    func sortByType(_ inputData:[String]) -> JsonCollection
 }

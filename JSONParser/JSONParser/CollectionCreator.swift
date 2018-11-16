@@ -15,7 +15,7 @@ struct CollectionCreator {
         self.creator = inputCollectionType
     }
     
-    func create(_ input:String) -> SwiftType {
+    func create(_ input:String) -> JsonCollection {
         let removedBrakcet = creator.removeBracket(input)
         let extractedData = RegularExpression.extractData(string: removedBrakcet)
         return creator.sortByType(extractedData)

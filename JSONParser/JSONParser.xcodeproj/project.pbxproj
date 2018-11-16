@@ -10,16 +10,16 @@
 		7D4D897C2199AD0200A59103 /* NumberByType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D897B2199AD0200A59103 /* NumberByType.swift */; };
 		7D4D897E219A969B00A59103 /* ExtensionArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D897D219A969B00A59103 /* ExtensionArray.swift */; };
 		7D4D8980219A974600A59103 /* UsableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D897F219A974600A59103 /* UsableType.swift */; };
-		7D4D8982219A98A500A59103 /* SwiftObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D8981219A98A500A59103 /* SwiftObject.swift */; };
+		7D4D8982219A98A500A59103 /* JsonObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D8981219A98A500A59103 /* JsonObject.swift */; };
 		7D4D8985219AA4F600A59103 /* CollectionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D8984219AA4F600A59103 /* CollectionCreator.swift */; };
 		7D4D8987219AA5B700A59103 /* ArrayCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D8986219AA5B700A59103 /* ArrayCreator.swift */; };
-		7D4D898B219AB5B000A59103 /* SwiftType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D898A219AB5B000A59103 /* SwiftType.swift */; };
+		7D4D898B219AB5B000A59103 /* JsonCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D898A219AB5B000A59103 /* JsonCollection.swift */; };
 		7D4D8991219ABC2D00A59103 /* ObjectCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D8990219ABC2D00A59103 /* ObjectCreator.swift */; };
 		7D4D8993219ABE4600A59103 /* Creator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D8992219ABE4600A59103 /* Creator.swift */; };
 		7D4D899B219D89F000A59103 /* RegularExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D899A219D89F000A59103 /* RegularExpression.swift */; };
 		7D7EE2F52187F98E0090472D /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2F42187F98E0090472D /* InputView.swift */; };
 		7D7EE2F721883A650090472D /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2F621883A650090472D /* ExtensionString.swift */; };
-		7D7EE2FD21884B8B0090472D /* SwiftArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2FC21884B8B0090472D /* SwiftArray.swift */; };
+		7D7EE2FD21884B8B0090472D /* JsonArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2FC21884B8B0090472D /* JsonArray.swift */; };
 		7D7EE2FF21884EF80090472D /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2FE21884EF80090472D /* OutputView.swift */; };
 		7DD8BE6B219E8D9600724C91 /* JsonAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD8BE6A219E8D9600724C91 /* JsonAnalysis.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
@@ -41,16 +41,16 @@
 		7D4D897B2199AD0200A59103 /* NumberByType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberByType.swift; sourceTree = "<group>"; };
 		7D4D897D219A969B00A59103 /* ExtensionArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionArray.swift; sourceTree = "<group>"; };
 		7D4D897F219A974600A59103 /* UsableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsableType.swift; sourceTree = "<group>"; };
-		7D4D8981219A98A500A59103 /* SwiftObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftObject.swift; sourceTree = "<group>"; };
+		7D4D8981219A98A500A59103 /* JsonObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonObject.swift; sourceTree = "<group>"; };
 		7D4D8984219AA4F600A59103 /* CollectionCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCreator.swift; sourceTree = "<group>"; };
 		7D4D8986219AA5B700A59103 /* ArrayCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayCreator.swift; sourceTree = "<group>"; };
-		7D4D898A219AB5B000A59103 /* SwiftType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftType.swift; sourceTree = "<group>"; };
+		7D4D898A219AB5B000A59103 /* JsonCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonCollection.swift; sourceTree = "<group>"; };
 		7D4D8990219ABC2D00A59103 /* ObjectCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectCreator.swift; sourceTree = "<group>"; };
 		7D4D8992219ABE4600A59103 /* Creator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Creator.swift; sourceTree = "<group>"; };
 		7D4D899A219D89F000A59103 /* RegularExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularExpression.swift; sourceTree = "<group>"; };
 		7D7EE2F42187F98E0090472D /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		7D7EE2F621883A650090472D /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
-		7D7EE2FC21884B8B0090472D /* SwiftArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftArray.swift; sourceTree = "<group>"; };
+		7D7EE2FC21884B8B0090472D /* JsonArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonArray.swift; sourceTree = "<group>"; };
 		7D7EE2FE21884EF80090472D /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		7DD8BE6A219E8D9600724C91 /* JsonAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonAnalysis.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,7 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				7D4D897F219A974600A59103 /* UsableType.swift */,
-				7D4D898A219AB5B000A59103 /* SwiftType.swift */,
+				7D4D898A219AB5B000A59103 /* JsonCollection.swift */,
 				7D4D8992219ABE4600A59103 /* Creator.swift */,
 			);
 			path = Protocol;
@@ -90,8 +90,8 @@
 		7D4D898E219ABBF100A59103 /* Collection */ = {
 			isa = PBXGroup;
 			children = (
-				7D7EE2FC21884B8B0090472D /* SwiftArray.swift */,
-				7D4D8981219A98A500A59103 /* SwiftObject.swift */,
+				7D7EE2FC21884B8B0090472D /* JsonArray.swift */,
+				7D4D8981219A98A500A59103 /* JsonObject.swift */,
 			);
 			path = Collection;
 			sourceTree = "<group>";
@@ -133,8 +133,8 @@
 				7DD8BE6A219E8D9600724C91 /* JsonAnalysis.swift */,
 				7D4D898F219ABBFA00A59103 /* Creator */,
 				7D4D898E219ABBF100A59103 /* Collection */,
-				7D4D898D219ABBA700A59103 /* Extension */,
 				7D4D898C219ABB9600A59103 /* Protocol */,
+				7D4D898D219ABBA700A59103 /* Extension */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -204,15 +204,15 @@
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				7D4D899B219D89F000A59103 /* RegularExpression.swift in Sources */,
 				7D4D897E219A969B00A59103 /* ExtensionArray.swift in Sources */,
-				7D4D8982219A98A500A59103 /* SwiftObject.swift in Sources */,
+				7D4D8982219A98A500A59103 /* JsonObject.swift in Sources */,
 				7D4D8980219A974600A59103 /* UsableType.swift in Sources */,
 				7D4D8991219ABC2D00A59103 /* ObjectCreator.swift in Sources */,
 				7D4D8985219AA4F600A59103 /* CollectionCreator.swift in Sources */,
 				7DD8BE6B219E8D9600724C91 /* JsonAnalysis.swift in Sources */,
 				7D7EE2FF21884EF80090472D /* OutputView.swift in Sources */,
 				7D7EE2F52187F98E0090472D /* InputView.swift in Sources */,
-				7D7EE2FD21884B8B0090472D /* SwiftArray.swift in Sources */,
-				7D4D898B219AB5B000A59103 /* SwiftType.swift in Sources */,
+				7D7EE2FD21884B8B0090472D /* JsonArray.swift in Sources */,
+				7D4D898B219AB5B000A59103 /* JsonCollection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

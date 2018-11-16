@@ -9,15 +9,15 @@
 import Foundation
 
 struct OutputView {
-    static func showNumberOfData(_ data:SwiftType) {
+    static func showNumberOfData(_ data:JsonCollection) {
         var outputArray = [String]()
         let numberOfAll = data.readNumberOfElements()
         
         guard numberOfAll > 0 else {print("데이터가 없습니다."); return}
-        if data is SwiftObject {
+        if data is JsonObject {
             outputArray.append("총 \(numberOfAll)개의 객체 데이터 중에")
         }
-        if data is SwiftArray {
+        if data is JsonArray {
             outputArray.append("총 \(numberOfAll)개의 배열 데이터 중에")
         }
         if data.readNumberOfString() > 0 {

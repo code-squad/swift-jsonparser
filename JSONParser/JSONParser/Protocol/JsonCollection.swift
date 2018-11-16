@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SwiftType {
+protocol JsonCollection {
     
     
     func readNumberOfElements() -> Int

@@ -13,7 +13,7 @@ struct ObjectCreator : Creator {
         return jsonData.trimmingCharacters(in: ["{","}"])
     }
     
-    func sortByType(_ inputData: [String]) -> SwiftType {
+    func sortByType(_ inputData: [String]) -> JsonCollection {
         var jsonData = [String:ObjectUsableType]()
         
         for index in stride(from: inputData.startIndex, through: inputData.endIndex - 1, by: 2) {
@@ -28,6 +28,6 @@ struct ObjectCreator : Creator {
                 continue
             }
         }
-        return SwiftObject.init(jsonData)
+        return JsonObject.init(jsonData)
     }
 }

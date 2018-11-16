@@ -1,29 +1,28 @@
 //
-//  SwiftObject.swift
+//  SwiftArray.swift
 //  JSONParser
 //
-//  Created by 조재흥 on 18. 11. 13..
+//  Created by 조재흥 on 18. 10. 30..
 //  Copyright © 2018 JK. All rights reserved.
 //
 
 import Foundation
 
-struct SwiftObject : SwiftType {
-    private var swiftObject : [String:ObjectUsableType]
+struct JsonArray : JsonCollection {
+    private var swiftArray : [ArrayUsableType]
     private var numberByType : NumberByType
-    
-    init(_ object:[String:ObjectUsableType]) {
-        self.swiftObject = object
-        let values = Array<ObjectUsableType>(object.values)
-        self.numberByType = values.numberByType()
+
+    init(_ array:[ArrayUsableType]) {
+        self.swiftArray = array
+        self.numberByType = array.numberByType()
     }
     
-    func readObject() -> [String:ObjectUsableType] {
-        return self.swiftObject
+    func readArray() -> [ArrayUsableType] {
+        return self.swiftArray
     }
     
     func readNumberOfElements() -> Int {
-        return self.swiftObject.count
+        return swiftArray.count
     }
     
     func readNumberOfString() -> Int {
@@ -41,3 +40,4 @@ struct SwiftObject : SwiftType {
         return numberByType.numberOfObject()
     }
 }
+

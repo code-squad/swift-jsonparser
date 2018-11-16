@@ -13,7 +13,7 @@ struct ArrayCreator : Creator {
         return jsonData.trimmingCharacters(in: ["[","]"])
     }
     
-    func sortByType(_ inputData:[String]) -> SwiftType {
+    func sortByType(_ inputData:[String]) -> JsonCollection {
         var jsonData = [ArrayUsableType]()
         
         for data in inputData {
@@ -30,7 +30,7 @@ struct ArrayCreator : Creator {
                 continue
             }
         }
-        return SwiftArray.init(jsonData)
+        return JsonArray.init(jsonData)
     }
     
     private func createObject(_ data:String) -> [String:ArrayUsableType] {
