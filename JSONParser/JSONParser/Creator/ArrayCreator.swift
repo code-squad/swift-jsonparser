@@ -17,7 +17,7 @@ struct ArrayCreator : Creator {
         var jsonData = [ArrayUsableType]()
         
         for data in inputData {
-            switch data.isWhatForm() {
+            switch JsonAnalysis.isWhatForm(string: data) {
             case "string":
                 jsonData.append(data.removeDoubleQuotationMarks())
             case "number":

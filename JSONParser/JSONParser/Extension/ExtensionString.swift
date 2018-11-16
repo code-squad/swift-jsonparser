@@ -16,47 +16,4 @@ extension String {
     func isTrue() -> Bool {
         return uppercased() == "TRUE"
     }
-    
-    private func isNumberForm() -> Bool {
-        return range(of: "^\\d+$", options: .regularExpression) != nil
-    }
-    
-    private func isStringForm() -> Bool {
-        return (hasPrefix("\"")) && (hasSuffix("\""))
-    }
-    
-    private func isBoolForm() -> Bool {
-        return (uppercased() == "TRUE") || (uppercased() == "FALSE")
-    }
-    
-    private func isObject() -> Bool {
-        return (hasPrefix("{")) && (hasSuffix("}"))
-    }
-    
-    func isWhatForm() -> String {
-        if isBoolForm() {
-            return "bool"
-        }
-        if isStringForm() {
-            return "string"
-        }
-        if isNumberForm() {
-            return "number"
-        }
-        if isObject() {
-            return "object"
-        }
-        return "none"
-    }
-    
-    func isWhatCollectionType() -> Creator? {
-        switch (self.first,self.last) {
-        case ("[","]"):
-            return ArrayCreator()
-        case ("{","}"):
-            return ObjectCreator()
-        default:
-            return nil
-        }
-    }
 }
