@@ -13,6 +13,11 @@
 		9D6D09F4219008570061681A /* CheckType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D09F3219008570061681A /* CheckType.swift */; };
 		9D6D09F621900A9D0061681A /* SupportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D09F521900A9D0061681A /* SupportType.swift */; };
 		9DC6DA3E219A9EB000D057B0 /* InputState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6DA3D219A9EB000D057B0 /* InputState.swift */; };
+		9DC6DA40219AB49E00D057B0 /* StringType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6DA3F219AB49E00D057B0 /* StringType.swift */; };
+		9DC6DA42219AB4A600D057B0 /* BoolType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6DA41219AB4A600D057B0 /* BoolType.swift */; };
+		9DC6DA44219AB4AE00D057B0 /* NumberType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6DA43219AB4AE00D057B0 /* NumberType.swift */; };
+		9DC6DA46219AB52E00D057B0 /* SwiftType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6DA45219AB52E00D057B0 /* SwiftType.swift */; };
+		9DC6DA48219ACAA600D057B0 /* ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6DA47219ACAA600D057B0 /* ObjectType.swift */; };
 		9DD8E5982188248100CE6DE3 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD8E5972188248100CE6DE3 /* InputView.swift */; };
 		9DD8E59C2188262C00CE6DE3 /* CheckInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD8E59B2188262C00CE6DE3 /* CheckInput.swift */; };
 /* End PBXBuildFile section */
@@ -37,6 +42,11 @@
 		9D6D09F3219008570061681A /* CheckType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckType.swift; sourceTree = "<group>"; };
 		9D6D09F521900A9D0061681A /* SupportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportType.swift; sourceTree = "<group>"; };
 		9DC6DA3D219A9EB000D057B0 /* InputState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputState.swift; sourceTree = "<group>"; };
+		9DC6DA3F219AB49E00D057B0 /* StringType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringType.swift; sourceTree = "<group>"; };
+		9DC6DA41219AB4A600D057B0 /* BoolType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolType.swift; sourceTree = "<group>"; };
+		9DC6DA43219AB4AE00D057B0 /* NumberType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberType.swift; sourceTree = "<group>"; };
+		9DC6DA45219AB52E00D057B0 /* SwiftType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftType.swift; sourceTree = "<group>"; };
+		9DC6DA47219ACAA600D057B0 /* ObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectType.swift; sourceTree = "<group>"; };
 		9DD8E5972188248100CE6DE3 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		9DD8E59B2188262C00CE6DE3 /* CheckInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInput.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,6 +89,11 @@
 				9D6D09F521900A9D0061681A /* SupportType.swift */,
 				9DC6DA3D219A9EB000D057B0 /* InputState.swift */,
 				9D6D09EF218C39D40061681A /* JSONParser.swift */,
+				9DC6DA45219AB52E00D057B0 /* SwiftType.swift */,
+				9DC6DA3F219AB49E00D057B0 /* StringType.swift */,
+				9DC6DA41219AB4A600D057B0 /* BoolType.swift */,
+				9DC6DA43219AB4AE00D057B0 /* NumberType.swift */,
+				9DC6DA47219ACAA600D057B0 /* ObjectType.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -143,10 +158,15 @@
 			files = (
 				9D6D09F621900A9D0061681A /* SupportType.swift in Sources */,
 				9D6D09F4219008570061681A /* CheckType.swift in Sources */,
+				9DC6DA48219ACAA600D057B0 /* ObjectType.swift in Sources */,
 				9D6D09F2218C3A000061681A /* OutputView.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				9DD8E59C2188262C00CE6DE3 /* CheckInput.swift in Sources */,
+				9DC6DA44219AB4AE00D057B0 /* NumberType.swift in Sources */,
 				9D6D09F0218C39D40061681A /* JSONParser.swift in Sources */,
+				9DC6DA40219AB49E00D057B0 /* StringType.swift in Sources */,
+				9DC6DA42219AB4A600D057B0 /* BoolType.swift in Sources */,
+				9DC6DA46219AB52E00D057B0 /* SwiftType.swift in Sources */,
 				9DC6DA3E219A9EB000D057B0 /* InputState.swift in Sources */,
 				9DD8E5982188248100CE6DE3 /* InputView.swift in Sources */,
 			);

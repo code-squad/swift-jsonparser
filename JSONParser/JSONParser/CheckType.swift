@@ -14,6 +14,7 @@ struct CheckType {
         if IsStringType(jsonType) { return .stringType }
         else if IsBooleanType(jsonType) { return .booleanType }
         else if IsNumberType(jsonType) { return .numberType }
+        else if IsObjectType(jsonType) { return .objectType }
         else { return nil }
     }
     
@@ -38,6 +39,20 @@ struct CheckType {
     // Boolean 타입인지 확인
     private func IsBooleanType(_ inputToCheck : String) -> Bool {
         guard inputToCheck == "true" || inputToCheck == "false" else { return false }
+        return true
+    }
+    
+    //Objcect 타입인지 확인
+    func IsObjectType(_ inputToCheck : String) -> Bool {
+        var propertyToCheck : [String]
+        guard inputToCheck.getFirstElement() == "{" && inputToCheck.getLastElement() == "}" else { return false }
+        let objectProperty : [String] = inputToCheck.components(separatedBy: ["{", ",", "}"])
+        guard objectProperty.count != 2 else { return false }
+        for index in 1..<objectProperty.count-1 {
+            propertyToCheck = objectProperty[index].split(separator: ":").map(String.init)
+            guard IsStringType(propertyToCheck[0]) else { return false }
+            guard IsStringType(propertyToCheck[1]) || IsNumberType(propertyToCheck[1]) || IsBooleanType(propertyToCheck[1]) else { return false }
+        }
         return true
     }
 }

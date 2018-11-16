@@ -12,4 +12,5 @@ enum SupportType {
     case stringType
     case numberType
     case booleanType
+    case objectType
 }
