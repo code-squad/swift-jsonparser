@@ -18,15 +18,15 @@ struct ArrayCreator : Creator {
         
         for data in inputData {
             switch JsonAnalysis.isWhatForm(string: data) {
-            case "string":
+            case .string:
                 jsonData.append(data.removeDoubleQuotationMarks())
-            case "number":
+            case .number:
                 jsonData.append(Double(data) ?? 0)
-            case "bool":
+            case .bool:
                 jsonData.append(data.isTrue())
-            case "object":
+            case .object:
                 jsonData.append(createObject(data))
-            default:
+            case .none:
                 continue
             }
         }

@@ -18,16 +18,17 @@ struct ObjectCreator : Creator {
         
         for index in stride(from: inputData.startIndex, through: inputData.endIndex - 1, by: 2) {
             switch JsonAnalysis.isWhatForm(string: inputData[index + 1]) {
-            case "string":
+            case .string:
                 jsonData[inputData[index]] = inputData[index + 1].removeDoubleQuotationMarks()
-            case "number":
+            case .number:
                 jsonData[inputData[index]] = Double(inputData[index + 1])
-            case "bool":
+            case .bool:
                 jsonData[inputData[index]] = inputData[index + 1].isTrue()
-            default:
+            case .object,.none:
                 continue
             }
         }
         return JsonObject.init(jsonData)
     }
+    
 }

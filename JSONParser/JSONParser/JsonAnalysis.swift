@@ -25,20 +25,20 @@ struct JsonAnalysis {
         return string.hasPrefix("{") && string.hasSuffix("}")
     }
     
-    static func isWhatForm(string:String) -> String {
-        if isBoolForm(string:string) {
-            return "bool"
-        }
+    static func isWhatForm(string:String) -> SwiftType {
         if isStringForm(string:string) {
-            return "string"
+            return .string
         }
         if isNumberForm(string:string) {
-            return "number"
+            return .number
+        }
+        if isBoolForm(string:string) {
+            return .bool
         }
         if isObject(string:string) {
-            return "object"
+            return .object
         }
-        return "none"
+        return .none
     }
     
     static func isWhatCollectionType(string:String) -> Creator? {

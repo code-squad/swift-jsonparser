@@ -13,4 +13,5 @@ enum SwiftType {
     case number
     case bool
     case object
+    case none
 }
