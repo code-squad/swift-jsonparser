@@ -24,6 +24,7 @@
 		7DD8BE6B219E8D9600724C91 /* JsonAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD8BE6A219E8D9600724C91 /* JsonAnalysis.swift */; };
 		7DD8BE6D219E9BB700724C91 /* SwiftType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD8BE6C219E9BB700724C91 /* SwiftType.swift */; };
 		7DD8BE7121A2CC1000724C91 /* JsonString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD8BE7021A2CC1000724C91 /* JsonString.swift */; };
+		7DD8BE7321A2CC8200724C91 /* JsonNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD8BE7221A2CC8200724C91 /* JsonNumber.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 		7DD8BE6A219E8D9600724C91 /* JsonAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonAnalysis.swift; sourceTree = "<group>"; };
 		7DD8BE6C219E9BB700724C91 /* SwiftType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftType.swift; sourceTree = "<group>"; };
 		7DD8BE7021A2CC1000724C91 /* JsonString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonString.swift; sourceTree = "<group>"; };
+		7DD8BE7221A2CC8200724C91 /* JsonNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonNumber.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				7DD8BE7021A2CC1000724C91 /* JsonString.swift */,
+				7DD8BE7221A2CC8200724C91 /* JsonNumber.swift */,
 			);
 			path = JsonType;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				7DD8BE6D219E9BB700724C91 /* SwiftType.swift in Sources */,
 				7D4D899B219D89F000A59103 /* RegularExpression.swift in Sources */,
+				7DD8BE7321A2CC8200724C91 /* JsonNumber.swift in Sources */,
 				7D4D897E219A969B00A59103 /* ExtensionArray.swift in Sources */,
 				7D4D8982219A98A500A59103 /* JsonObject.swift in Sources */,
 				7D4D8980219A974600A59103 /* UsableType.swift in Sources */,
