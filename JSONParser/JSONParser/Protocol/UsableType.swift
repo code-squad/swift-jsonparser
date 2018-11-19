@@ -8,9 +8,7 @@
 
 import Foundation
 
-protocol UsableType {
-    func isWhatType() -> SwiftType
-}
+protocol UsableType {}
 protocol ArrayUsableType : UsableType {}
 protocol ObjectUsableType : UsableType {}
 

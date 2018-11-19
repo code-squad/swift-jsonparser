@@ -25,7 +25,7 @@ struct JsonAnalysis {
         return string.hasPrefix("{") && string.hasSuffix("}")
     }
     
-    static func isWhatForm(string:String) -> SwiftType {
+    static func convertToSwiftType(string:String) -> SwiftType {
         if isStringForm(string:string) {
             return .string
         }

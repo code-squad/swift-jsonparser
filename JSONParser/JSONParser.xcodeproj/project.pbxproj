@@ -23,6 +23,7 @@
 		7D7EE2FF21884EF80090472D /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7EE2FE21884EF80090472D /* OutputView.swift */; };
 		7DD8BE6B219E8D9600724C91 /* JsonAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD8BE6A219E8D9600724C91 /* JsonAnalysis.swift */; };
 		7DD8BE6D219E9BB700724C91 /* SwiftType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD8BE6C219E9BB700724C91 /* SwiftType.swift */; };
+		7DD8BE7121A2CC1000724C91 /* JsonString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD8BE7021A2CC1000724C91 /* JsonString.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		7D7EE2FE21884EF80090472D /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		7DD8BE6A219E8D9600724C91 /* JsonAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonAnalysis.swift; sourceTree = "<group>"; };
 		7DD8BE6C219E9BB700724C91 /* SwiftType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftType.swift; sourceTree = "<group>"; };
+		7DD8BE7021A2CC1000724C91 /* JsonString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonString.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,8 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				7D4D897F219A974600A59103 /* UsableType.swift */,
-				7D4D898A219AB5B000A59103 /* JsonCollection.swift */,
 				7D4D8992219ABE4600A59103 /* Creator.swift */,
+				7D4D898A219AB5B000A59103 /* JsonCollection.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -107,6 +109,14 @@
 			path = Creator;
 			sourceTree = "<group>";
 		};
+		7DD8BE6F21A2CBF500724C91 /* JsonType */ = {
+			isa = PBXGroup;
+			children = (
+				7DD8BE7021A2CC1000724C91 /* JsonString.swift */,
+			);
+			path = JsonType;
+			sourceTree = "<group>";
+		};
 		83AE2E031F8CAC2800F38CC9 = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +144,7 @@
 				7D4D899A219D89F000A59103 /* RegularExpression.swift */,
 				7DD8BE6A219E8D9600724C91 /* JsonAnalysis.swift */,
 				7DD8BE6C219E9BB700724C91 /* SwiftType.swift */,
+				7DD8BE6F21A2CBF500724C91 /* JsonType */,
 				7D4D898F219ABBFA00A59103 /* Creator */,
 				7D4D898E219ABBF100A59103 /* Collection */,
 				7D4D898C219ABB9600A59103 /* Protocol */,
@@ -204,6 +215,7 @@
 				7D7EE2F721883A650090472D /* ExtensionString.swift in Sources */,
 				7D4D8993219ABE4600A59103 /* Creator.swift in Sources */,
 				7D4D897C2199AD0200A59103 /* NumberByType.swift in Sources */,
+				7DD8BE7121A2CC1000724C91 /* JsonString.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				7DD8BE6D219E9BB700724C91 /* SwiftType.swift in Sources */,
 				7D4D899B219D89F000A59103 /* RegularExpression.swift in Sources */,

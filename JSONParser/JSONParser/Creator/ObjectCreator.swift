@@ -17,7 +17,7 @@ struct ObjectCreator : Creator {
         var jsonData = [String:ObjectUsableType]()
         
         for index in stride(from: inputData.startIndex, through: inputData.endIndex - 1, by: 2) {
-            switch JsonAnalysis.isWhatForm(string: inputData[index + 1]) {
+            switch JsonAnalysis.convertToSwiftType(string: inputData[index + 1]) {
             case .string:
                 jsonData[inputData[index]] = inputData[index + 1].removeDoubleQuotationMarks()
             case .number:
@@ -30,5 +30,4 @@ struct ObjectCreator : Creator {
         }
         return JsonObject.init(jsonData)
     }
-    
 }
