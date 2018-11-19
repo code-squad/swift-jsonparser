@@ -25,6 +25,7 @@
 		7DD8BE6D219E9BB700724C91 /* SwiftType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD8BE6C219E9BB700724C91 /* SwiftType.swift */; };
 		7DD8BE7121A2CC1000724C91 /* JsonString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD8BE7021A2CC1000724C91 /* JsonString.swift */; };
 		7DD8BE7321A2CC8200724C91 /* JsonNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD8BE7221A2CC8200724C91 /* JsonNumber.swift */; };
+		7DD8BE7521A2CCCA00724C91 /* JsonBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD8BE7421A2CCCA00724C91 /* JsonBool.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		7DD8BE6C219E9BB700724C91 /* SwiftType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftType.swift; sourceTree = "<group>"; };
 		7DD8BE7021A2CC1000724C91 /* JsonString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonString.swift; sourceTree = "<group>"; };
 		7DD8BE7221A2CC8200724C91 /* JsonNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonNumber.swift; sourceTree = "<group>"; };
+		7DD8BE7421A2CCCA00724C91 /* JsonBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonBool.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +118,7 @@
 			children = (
 				7DD8BE7021A2CC1000724C91 /* JsonString.swift */,
 				7DD8BE7221A2CC8200724C91 /* JsonNumber.swift */,
+				7DD8BE7421A2CCCA00724C91 /* JsonBool.swift */,
 			);
 			path = JsonType;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				7D4D8987219AA5B700A59103 /* ArrayCreator.swift in Sources */,
 				7D7EE2F721883A650090472D /* ExtensionString.swift in Sources */,
 				7D4D8993219ABE4600A59103 /* Creator.swift in Sources */,
+				7DD8BE7521A2CCCA00724C91 /* JsonBool.swift in Sources */,
 				7D4D897C2199AD0200A59103 /* NumberByType.swift in Sources */,
 				7DD8BE7121A2CC1000724C91 /* JsonString.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
