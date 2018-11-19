@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonNumber {
+struct JsonNumber: ArrayUsableType, ObjectUsableType {
     private let number : Double
     
     init(number:Double) {

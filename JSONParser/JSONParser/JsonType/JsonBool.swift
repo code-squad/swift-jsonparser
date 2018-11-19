@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonBool {
+struct JsonBool: ArrayUsableType, ObjectUsableType  {
     private let bool : Bool
     
     init(bool:Bool) {

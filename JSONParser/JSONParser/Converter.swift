@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonAnalysis {
+struct Converter {
     static private func isBoolForm(string:String) -> Bool {
         return string.uppercased() == "TRUE" || string.uppercased() == "FALSE"
     }
