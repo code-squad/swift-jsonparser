@@ -23,6 +23,7 @@ extension String {
 }
 
 struct CheckInput {
+    // 입력 값 검사하여 오류가 있는지 확인
     func checkUserInput(_ input: String) -> InputState {
         if IsArrayType(input) { return checkArrayType(checkToArray: input) }
         else if IsObjectType(input) { return checkObjectType(checkToObject: input) }
@@ -43,23 +44,15 @@ struct CheckInput {
     
     // 입력 값이 배열인 경우 내부 검사
     private func checkArrayType(checkToArray : String) -> InputState {
-        let extractData = checkToArray.components(separatedBy: ["[", ",", "]"])
-        guard IsSupportType(extractData) else { return .notSupportingType }
+        let extractData : ExtractData = ExtractData()
+        guard extractData.notSupportingArrayDataType(data: checkToArray).count == 0 else { return .notSupportingType }
         return .rightInput
     }
     
     // 입력 값이 객체인 경우 내부 검사
     private func checkObjectType(checkToObject : String) -> InputState {
-        let checkCorrectFormat = CheckType()
-        guard checkCorrectFormat.IsObjectType(checkToObject) else { return .notCorrectObjectFormat }
+        let extractData : ExtractData = ExtractData()
+        guard extractData.notSupportingPropertyType(data: checkToObject).count == 0 else { return .notSupportingType }
         return .rightInput
-    }
-    
-    // 지원하는 타입인지 확인
-    private func IsSupportType(_ extractData: [String]) -> Bool {
-        let checkType = CheckType()
-        print(extractData)
-        for index in 1..<extractData.count-1 { guard checkType.supportingType(extractData[index]) != nil else { return false } }
-        return true
     }
 }

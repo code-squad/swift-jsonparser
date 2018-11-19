@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
+		9D2EE25821A27E59000AA841 /* ExtractData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2EE25721A27E59000AA841 /* ExtractData.swift */; };
 		9D6D09F0218C39D40061681A /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D09EF218C39D40061681A /* JSONParser.swift */; };
 		9D6D09F2218C3A000061681A /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D09F1218C3A000061681A /* OutputView.swift */; };
 		9D6D09F4219008570061681A /* CheckType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D09F3219008570061681A /* CheckType.swift */; };
@@ -37,6 +38,7 @@
 /* Begin PBXFileReference section */
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		9D2EE25721A27E59000AA841 /* ExtractData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtractData.swift; sourceTree = "<group>"; };
 		9D6D09EF218C39D40061681A /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		9D6D09F1218C3A000061681A /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		9D6D09F3219008570061681A /* CheckType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckType.swift; sourceTree = "<group>"; };
@@ -85,15 +87,16 @@
 				9DD8E5972188248100CE6DE3 /* InputView.swift */,
 				9D6D09F1218C3A000061681A /* OutputView.swift */,
 				9DD8E59B2188262C00CE6DE3 /* CheckInput.swift */,
-				9D6D09F3219008570061681A /* CheckType.swift */,
 				9D6D09F521900A9D0061681A /* SupportType.swift */,
 				9DC6DA3D219A9EB000D057B0 /* InputState.swift */,
+				9D2EE25721A27E59000AA841 /* ExtractData.swift */,
 				9D6D09EF218C39D40061681A /* JSONParser.swift */,
 				9DC6DA45219AB52E00D057B0 /* SwiftType.swift */,
 				9DC6DA3F219AB49E00D057B0 /* StringType.swift */,
 				9DC6DA41219AB4A600D057B0 /* BoolType.swift */,
 				9DC6DA43219AB4AE00D057B0 /* NumberType.swift */,
 				9DC6DA47219ACAA600D057B0 /* ObjectType.swift */,
+				9D6D09F3219008570061681A /* CheckType.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 				9DC6DA44219AB4AE00D057B0 /* NumberType.swift in Sources */,
 				9D6D09F0218C39D40061681A /* JSONParser.swift in Sources */,
 				9DC6DA40219AB49E00D057B0 /* StringType.swift in Sources */,
+				9D2EE25821A27E59000AA841 /* ExtractData.swift in Sources */,
 				9DC6DA42219AB4A600D057B0 /* BoolType.swift in Sources */,
 				9DC6DA46219AB52E00D057B0 /* SwiftType.swift in Sources */,
 				9DC6DA3E219A9EB000D057B0 /* InputState.swift in Sources */,
