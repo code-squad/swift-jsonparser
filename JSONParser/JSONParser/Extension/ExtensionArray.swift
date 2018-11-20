@@ -16,10 +16,10 @@ extension Array {
         var numberOfObject = 0
         
         for data in self {
-            numberOfStirng += data is String ? 1 : 0
-            numberOfNumber += data is Double ? 1 : 0
-            numberOfBool += data is Bool ? 1 : 0
-            numberOfObject += data is Dictionary<String, ObjectUsableType> ? 1 : 0
+            numberOfStirng += data is JsonString ? 1 : 0
+            numberOfNumber += data is JsonNumber ? 1 : 0
+            numberOfBool += data is JsonBool ? 1 : 0
+            numberOfObject += data is JsonObject ? 1 : 0
         }
         return NumberByType.init(string: numberOfStirng,
                                  number: numberOfNumber,

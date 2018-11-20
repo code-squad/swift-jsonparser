@@ -9,8 +9,6 @@
 import Foundation
 
 protocol JsonCollection {
-    
-    
     func readNumberOfElements() -> Int
     
     func readNumberOfString() -> Int

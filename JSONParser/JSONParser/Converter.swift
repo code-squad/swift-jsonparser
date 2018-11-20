@@ -25,20 +25,40 @@ struct Converter {
         return string.hasPrefix("{") && string.hasSuffix("}")
     }
     
-    static func convertToSwiftType(string:String) -> SwiftType {
+    static func convertToArray(string:String) -> ArrayUsableType? {
         if isStringForm(string:string) {
-            return .string
+            return JsonString.init(string: string.removeDoubleQuotationMarks())
         }
         if isNumberForm(string:string) {
-            return .number
+            return JsonNumber.init(number: Double(string) ?? 0)
         }
         if isBoolForm(string:string) {
-            return .bool
+            return JsonBool.init(bool: string.isTrue())
         }
         if isObject(string:string) {
-            return .object
+            return createObject(string)
         }
-        return .none
+        
+        return nil
+    }
+    
+    static private func createObject(_ data:String) -> JsonObject? {
+        let creator = CollectionCreator.init(ObjectCreator())
+        return creator.create(data) as? JsonObject
+    }
+    
+    static func convertToObject(string:String) -> ObjectUsableType? {
+        if isStringForm(string:string) {
+            return JsonString.init(string: string.removeDoubleQuotationMarks())
+        }
+        if isNumberForm(string:string) {
+            return JsonNumber.init(number: Double(string) ?? 0)
+        }
+        if isBoolForm(string:string) {
+            return JsonBool.init(bool: string.isTrue())
+        }
+
+        return nil
     }
     
     static func isWhatCollectionType(string:String) -> Creator? {

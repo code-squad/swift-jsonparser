@@ -36,6 +36,7 @@ struct JsonArray : JsonCollection {
     func readNumberOfBool() -> Int {
         return numberByType.numberOfBool()
     }
+    
     func readNumberOfObject() -> Int {
         return numberByType.numberOfObject()
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonObject : JsonCollection {
+struct JsonObject : JsonCollection, ArrayUsableType {
     private var swiftObject : [String:ObjectUsableType]
     private var numberByType : NumberByType
     

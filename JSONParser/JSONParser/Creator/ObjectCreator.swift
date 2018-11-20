@@ -17,16 +17,7 @@ struct ObjectCreator : Creator {
         var jsonData = [String:ObjectUsableType]()
         
         for index in stride(from: inputData.startIndex, through: inputData.endIndex - 1, by: 2) {
-            switch Converter.convertToSwiftType(string: inputData[index + 1]) {
-            case .string:
-                jsonData[inputData[index]] = inputData[index + 1].removeDoubleQuotationMarks()
-            case .number:
-                jsonData[inputData[index]] = Double(inputData[index + 1])
-            case .bool:
-                jsonData[inputData[index]] = inputData[index + 1].isTrue()
-            case .object,.none:
-                continue
-            }
+            jsonData[inputData[index]] = Converter.convertToObject(string: inputData[index + 1])
         }
         return JsonObject.init(jsonData)
     }

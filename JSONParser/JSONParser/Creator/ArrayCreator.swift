@@ -17,24 +17,9 @@ struct ArrayCreator : Creator {
         var jsonData = [ArrayUsableType]()
         
         for data in inputData {
-            switch Converter.convertToSwiftType(string: data) {
-            case .string:
-                jsonData.append(data.removeDoubleQuotationMarks())
-            case .number:
-                jsonData.append(Double(data) ?? 0)
-            case .bool:
-                jsonData.append(data.isTrue())
-            case .object:
-                jsonData.append(createObject(data))
-            case .none:
-                continue
-            }
+            guard let notNilData = Converter.convertToArray(string: data) else {continue}
+            jsonData.append(notNilData)
         }
         return JsonArray.init(jsonData)
-    }
-    
-    private func createObject(_ data:String) -> [String:ArrayUsableType] {
-        let creator = CollectionCreator.init(ObjectCreator())
-        return creator.create(data) as? [String : ArrayUsableType] ?? ["":""]
     }
 }
