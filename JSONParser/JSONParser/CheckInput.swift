@@ -25,7 +25,7 @@ extension String {
 struct CheckInput {
     // 입력 값 검사하여 오류가 있는지 확인
     func checkUserInput(_ input: String) -> InputState {
-        let typeChecker : CheckType = CheckType()
+        let typeChecker : TypeChecker = TypeChecker()
         if typeChecker.IsArrayType(input) { return checkArrayType(checkToArray: input) }
         else if typeChecker.IsObjectType(input) { return checkObjectType(checkToObject: input) }
         else { return .notArrayOrObjectType }
@@ -34,10 +34,10 @@ struct CheckInput {
     // 입력 값이 배열인 경우 내부 검사
     private func checkArrayType(checkToArray : String) -> InputState {
         let extractData : ExtractData = ExtractData()
-        let typeChecker : CheckType = CheckType()
+        let typeChecker : TypeChecker = TypeChecker()
         let extractedData : [String] = extractData.inArrayAllDataType(data: checkToArray)
         for eachData in extractedData {
-            guard let dataType = typeChecker.supportingType(eachData) else { return .notSupportingType }
+            guard let dataType = typeChecker.supportingTypeInArray(eachData) else { return .notSupportingType }
             if dataType == .objectType { guard checkObjectType(checkToObject: eachData) == .rightInput else { return .notSupportingType } }
         }
         return .rightInput
@@ -52,13 +52,4 @@ struct CheckInput {
         }
         return .rightInput
     }
-    
-//    private func checkPropertyInObject(_ inputToProperty : String) -> Bool {
-//        let extractData : ExtractData = ExtractData()
-//        let propertiesInObject : [String] = extractData.inObjectAllDataType(data: inputToProperty)
-//        for eachProperty in propertiesInObject {
-//            guard extractData.objectDataExtract(objectData: eachProperty).count == 1 else { return false }
-//        }
-//        return true
-//    }
 }

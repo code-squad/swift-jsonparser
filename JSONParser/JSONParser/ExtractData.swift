@@ -33,16 +33,28 @@ struct ExtractData {
     private let arrayExtractDataPattern : String
     private let allArrayDataType : String
     private let allObjectPropertyType : String
+    private let objectPropertyValuePattern : String
     
     init() {
         boolPattern = "(true|false)"
         stringPattern = "\"[a-zA-Z0-9\\s]+\""
         numberPattern = "[0-9]+"
+        objectPropertyValuePattern = "(\(boolPattern)|\(numberPattern)|\(stringPattern))"
         objectPropertyPattern = "\(stringPattern)\\s?:\\s?(\(stringPattern)|\(boolPattern)|\(numberPattern))"
         objectPattern = "\\{\\s?\(objectPropertyPattern)\\s?(,\\s?\(objectPropertyPattern)\\s?)*\\s?\\}"
         arrayExtractDataPattern = "(\(objectPattern)|\(boolPattern)|\(stringPattern)|\(numberPattern))"
         allArrayDataType = "(\(objectPattern)|\(boolPattern)|\(stringPattern)|\(numberPattern)|[a-zA-Z0-9]+)"
         allObjectPropertyType = "(\(stringPattern)\\s?:\\s?(\(stringPattern)|\(boolPattern)|\(numberPattern)))|[a-zA-Z0-9]+"
+    }
+    
+    // 객체의 프로퍼티 Value 값으로 쓰일 수 있는 값 추출
+    func propertyValueExtract(data : String) -> String {
+        return data.getArrayAfterRegex(regex: objectPropertyValuePattern)[0]
+    }
+    
+    // 객체의 프로퍼티 Key 값으로 쓰일 수 있는 값 추출
+    func propertyKeyExtract(data : String) -> String {
+        return data.getArrayAfterRegex(regex: stringPattern)[0]
     }
     
     // 배열의 데이터를 추출
