@@ -8,36 +8,36 @@
 
 import Foundation
 
-struct JsonObject : JsonCollection, ArrayUsableType {
-    private var swiftObject : [String:ObjectUsableType]
-    private var numberByType : NumberByType
+struct JsonObject : JsonType, ArrayUsableType, JsonCollection {
+    private let objectBeforeConvert : String
+    private var object : Dictionary = [String:ObjectUsableType]()
     
-    init(_ object:[String:ObjectUsableType]) {
-        self.swiftObject = object
-        let values = Array<ObjectUsableType>(object.values)
-        self.numberByType = values.numberByType()
+    init(string:String) {
+        self.objectBeforeConvert = string
+        self.convertData()
     }
     
-    func readObject() -> [String:ObjectUsableType] {
-        return self.swiftObject
+    mutating func convertData() {
+        let removedSquare = objectBeforeConvert.trimmingCharacters(in: ["{","}"])
+        let extractedData = RegularExpression.extractData(string: removedSquare)
+        
+        for index in stride(from: extractedData.startIndex, through: extractedData.endIndex - 1, by: 2) {
+            guard let keyData = Parser.convert(string:extractedData[index]) as? JsonString else {continue}
+            guard let valueData = Parser.convert(string:extractedData[index + 1]) as? ObjectUsableType else {continue}
+            guard keyData.checkAvailable() && valueData.checkAvailable() else {continue}
+            object[keyData.readData()] = valueData
+        }
     }
     
-    func readNumberOfElements() -> Int {
-        return self.swiftObject.count
+    func checkAvailable() -> Bool {
+        return self.object.count != 0
     }
     
-    func readNumberOfString() -> Int {
-        return numberByType.numberOfString()
+    func numberByType() -> NumberByType {
+        return Array(self.object.values).numberByType()
     }
     
-    func readNumberOfNumber() -> Int {
-        return numberByType.numberOfNumber()
-    }
-    
-    func readNumberOfBool() -> Int {
-        return numberByType.numberOfBool()
-    }
-    func readNumberOfObject() -> Int {
-        return numberByType.numberOfObject()
+    func type() -> String {
+        return "객체"
     }
 }

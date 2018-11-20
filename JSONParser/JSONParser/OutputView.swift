@@ -9,28 +9,22 @@
 import Foundation
 
 struct OutputView {
-    static func showNumberOfData(_ data:JsonCollection) {
+    static func showNumberOfData(_ number:NumberByType, type:String) {
         var outputArray = [String]()
-        let numberOfAll = data.readNumberOfElements()
         
-        guard numberOfAll > 0 else {print("데이터가 없습니다."); return}
-        if data is JsonObject {
-            outputArray.append("총 \(numberOfAll)개의 객체 데이터 중에")
+        guard number.numberOfAll() > 0 else {print("데이터가 없습니다."); return}
+        outputArray.append("총 \(number.numberOfAll())개의 \(type) 데이터 중에")
+        if number.numberOfString() > 0 {
+            outputArray.append(" 문자열 \(number.numberOfString())개")
         }
-        if data is JsonArray {
-            outputArray.append("총 \(numberOfAll)개의 배열 데이터 중에")
+        if number.numberOfNumber() > 0 {
+            outputArray.append(" 숫자 \(number.numberOfNumber())개")
         }
-        if data.readNumberOfString() > 0 {
-            outputArray.append(" 문자열 \(data.readNumberOfString())개")
+        if number.numberOfBool() > 0 {
+            outputArray.append(" 부울 \(number.numberOfBool())개")
         }
-        if data.readNumberOfNumber() > 0 {
-            outputArray.append(" 숫자 \(data.readNumberOfNumber())개")
-        }
-        if data.readNumberOfBool() > 0 {
-            outputArray.append(" 부울 \(data.readNumberOfBool())개")
-        }
-        if data.readNumberOfObject() > 0 {
-            outputArray.append(" 객체 \(data.readNumberOfObject())개")
+        if number.numberOfObject() > 0 {
+            outputArray.append(" 객체 \(number.numberOfObject())개")
         }
         outputArray.append("가 포함되어 있습니다.")
         showResult(outputArray)

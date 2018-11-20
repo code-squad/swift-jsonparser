@@ -9,10 +9,6 @@
 import Foundation
 
 struct Parser {
-    static private func isBoolForm(string:String) -> Bool {
-        return string.uppercased() == "TRUE" || string.uppercased() == "FALSE"
-    }
-    
     static private func isStringForm(string:String) -> Bool {
         return string.hasPrefix("\"") && string.hasSuffix("\"")
     }
@@ -21,59 +17,34 @@ struct Parser {
         return string.range(of: "^[\\d\\.]+$", options: .regularExpression) != nil
     }
     
+    static private func isBoolForm(string:String) -> Bool {
+        return string.uppercased() == "TRUE" || string.uppercased() == "FALSE"
+    }
+    
     static private func isObject(string:String) -> Bool {
         return string.hasPrefix("{") && string.hasSuffix("}")
     }
     
-//    static func convert(string:String) -> JsonCollection? {
-//        guard let collectionType = Parser.isWhatCollectionType(string: string) else {return nil}
-//        let creator = CollectionCreator.init(collectionType)
-//    }
+    static private func isArray(string:String) -> Bool {
+        return string.hasPrefix("[") && string.hasSuffix("]")
+    }
     
-    static func convertToArray(string:String) -> ArrayUsableType? {
-        if isStringForm(string:string) {
-            return JsonString.init(string: string.removeDoubleQuotationMarks())
+    static func convert(string:String) -> JsonType? {
+        if self.isStringForm(string:string) {
+            return JsonString.init(string: string)
         }
-        if isNumberForm(string:string) {
-            return JsonNumber.init(number: Double(string) ?? 0)
+        if self.isNumberForm(string:string) {
+            return JsonNumber.init(string: string)
         }
-        if isBoolForm(string:string) {
-            return JsonBool.init(bool: string.isTrue())
+        if self.isBoolForm(string:string) {
+            return JsonBool.init(string: string)
         }
-        if isObject(string:string) {
-            return createObject(string)
+        if self.isObject(string:string) {
+            return JsonObject.init(string: string)
         }
-        
+        if self.isArray(string: string) {
+            return JsonArray.init(string: string)
+        }
         return nil
-    }
-    
-    static private func createObject(_ data:String) -> JsonObject? {
-        let creator = CollectionCreator.init(ObjectCreator())
-        return creator.create(data) as? JsonObject
-    }
-    
-    static func convertToObject(string:String) -> ObjectUsableType? {
-        if isStringForm(string:string) {
-            return JsonString.init(string: string.removeDoubleQuotationMarks())
-        }
-        if isNumberForm(string:string) {
-            return JsonNumber.init(number: Double(string) ?? 0)
-        }
-        if isBoolForm(string:string) {
-            return JsonBool.init(bool: string.isTrue())
-        }
-
-        return nil
-    }
-    
-    static func isWhatCollectionType(string:String) -> Creator? {
-        switch (string.first,string.last) {
-        case ("[","]"):
-            return ArrayCreator()
-        case ("{","}"):
-            return ObjectCreator()
-        default:
-            return nil
-        }
     }
 }

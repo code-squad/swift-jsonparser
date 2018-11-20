@@ -8,11 +8,20 @@
 
 import Foundation
 
-struct JsonNumber: ArrayUsableType, ObjectUsableType {
-    private let number : Double
+struct JsonNumber: JsonType, ArrayUsableType, ObjectUsableType {
+    private let numberBeforeConvert : String
+    private var number : Double? = nil
     
-    init(number:Double) {
-        self.number = number
+    init(string:String) {
+        self.numberBeforeConvert = string
+        self.convertData()
     }
     
+    mutating func convertData() {
+        self.number = Double(self.numberBeforeConvert)
+    }
+    
+    func checkAvailable() -> Bool {
+        return self.number != nil
+    }
 }

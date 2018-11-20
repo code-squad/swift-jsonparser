@@ -8,37 +8,36 @@
 
 import Foundation
 
-struct JsonArray : JsonCollection {
-    private var swiftArray : [ArrayUsableType]
-    private var numberByType : NumberByType
-
-    init(_ array:[ArrayUsableType]) {
-        self.swiftArray = array
-        self.numberByType = array.numberByType()
+struct JsonArray : JsonType, JsonCollection {
+    private let arrayBeforeConvert : String
+    private var array : Array = [ArrayUsableType]()
+    
+    init(string:String) {
+        self.arrayBeforeConvert = string
+        self.convertData()
     }
     
-    func readArray() -> [ArrayUsableType] {
-        return self.swiftArray
+    mutating func convertData() {
+        let removedSquare = arrayBeforeConvert.trimmingCharacters(in: ["[","]"])
+        let extractedData = RegularExpression.extractData(string: removedSquare)
+        
+        for data in extractedData {
+            guard let parsedData = Parser.convert(string: data) as? ArrayUsableType else {continue}
+            guard parsedData.checkAvailable() else {continue}
+            self.array.append(parsedData)
+        }
     }
     
-    func readNumberOfElements() -> Int {
-        return swiftArray.count
+    func checkAvailable() -> Bool {
+        return self.array.count != 0
     }
     
-    func readNumberOfString() -> Int {
-        return numberByType.numberOfString()
+    func numberByType() -> NumberByType {
+        return self.array.numberByType()
     }
     
-    func readNumberOfNumber() -> Int {
-        return numberByType.numberOfNumber()
-    }
-    
-    func readNumberOfBool() -> Int {
-        return numberByType.numberOfBool()
-    }
-    
-    func readNumberOfObject() -> Int {
-        return numberByType.numberOfObject()
+    func type() -> String {
+        return "배열"
     }
 }
 

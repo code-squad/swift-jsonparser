@@ -8,11 +8,20 @@
 
 import Foundation
 
-struct JsonBool: ArrayUsableType, ObjectUsableType  {
-    private let bool : Bool
+struct JsonBool: JsonType, ArrayUsableType, ObjectUsableType  {
+    private let boolBeforeConvert : String
+    private var bool : Bool? = nil
     
-    init(bool:Bool) {
-        self.bool = bool
+    init(string:String) {
+        self.boolBeforeConvert = string
+        self.convertData()
     }
     
+    mutating func convertData() {
+        self.bool = self.boolBeforeConvert.isTrue()
+    }
+    
+    func checkAvailable() -> Bool {
+        return self.bool != nil
+    }
 }

@@ -8,11 +8,24 @@
 
 import Foundation
 
-struct JsonString: ArrayUsableType, ObjectUsableType {
-    private let string : String
+struct JsonString: JsonType, ArrayUsableType, ObjectUsableType {
+    private let stringBeforeConvert : String
+    private var string : String? = nil
     
     init(string:String) {
-        self.string = string
+        self.stringBeforeConvert = string
+        self.convertData()
     }
     
+    mutating func convertData() {
+        self.string = self.stringBeforeConvert.removeDoubleQuotationMarks()
+    }
+    
+    func checkAvailable() -> Bool {
+        return self.string != nil
+    }
+    
+    func readData() -> String {
+        return self.string ?? ""
+    }
 }
