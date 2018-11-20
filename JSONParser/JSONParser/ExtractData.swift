@@ -31,8 +31,8 @@ struct ExtractData {
     private let objectPropertyPattern : String
     private let objectPattern : String
     private let arrayExtractDataPattern : String
-    private let notSupprotingArrayDataType : String
-    private let notSupportingObjectProperty : String
+    private let allArrayDataType : String
+    private let allObjectPropertyType : String
     
     init() {
         boolPattern = "(true|false)"
@@ -40,9 +40,9 @@ struct ExtractData {
         numberPattern = "[0-9]+"
         objectPropertyPattern = "\(stringPattern)\\s?:\\s?(\(stringPattern)|\(boolPattern)|\(numberPattern))"
         objectPattern = "\\{\\s?\(objectPropertyPattern)\\s?(,\\s?\(objectPropertyPattern)\\s?)*\\s?\\}"
-        arrayExtractDataPattern = "(\(objectPattern)|(\(boolPattern)|\(stringPattern)|\(numberPattern))"
-        notSupprotingArrayDataType = "[^(\(objectPattern)|(\(boolPattern)|\(stringPattern)|\(numberPattern)|\\[|\\])]"
-        notSupportingObjectProperty = "[^\(objectPropertyPattern)\\s?(,\\s?\(objectPropertyPattern)\\s?)*|\\{,\\}]"
+        arrayExtractDataPattern = "(\(objectPattern)|\(boolPattern)|\(stringPattern)|\(numberPattern))"
+        allArrayDataType = "(\(objectPattern)|\(boolPattern)|\(stringPattern)|\(numberPattern)|[a-zA-Z0-9]+)"
+        allObjectPropertyType = "(\(stringPattern)\\s?:\\s?(\(stringPattern)|\(boolPattern)|\(numberPattern)))|[a-zA-Z0-9]+"
     }
     
     // 배열의 데이터를 추출
@@ -55,13 +55,13 @@ struct ExtractData {
         return objectData.getArrayAfterRegex(regex: objectPropertyPattern)
     }
     
-    // 지원하지 않는 타입을 리턴
-    func notSupportingArrayDataType(data : String) -> [String] {
-        return data.getArrayAfterRegex(regex: notSupprotingArrayDataType)
+    // 배열 안에 있는 모든 데이터 반환
+    func inArrayAllDataType(data : String) -> [String] {
+        return data.getArrayAfterRegex(regex: allArrayDataType)
     }
     
-    // 객체의 프로퍼티 중 지원하지 않는 프로퍼티 리턴
-    func notSupportingPropertyType(data : String) -> [String] {
-        return data.getArrayAfterRegex(regex: notSupportingObjectProperty)
+    // 객체 안에 있는 모든 프로퍼티 데이터 반환
+    func inObjectAllDataType(data : String) -> [String] {
+        return data.getArrayAfterRegex(regex: allObjectPropertyType)
     }
 }

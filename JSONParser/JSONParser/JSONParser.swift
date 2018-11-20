@@ -11,17 +11,22 @@ import Foundation
 struct JSONParser {
     // JSON 모든 데이터를 SWIFT 데이터 타입 배열에 저장
     func extractJSONtoSwift(dataToConvert : String) -> [SwiftType] {
+        let extractData : ExtractData = ExtractData()
+        var jsonDatas : [String] = []
         var jsonToSwift : [SwiftType] = []
-        let jsonData : [String] = dataToConvert.components(separatedBy: ["[", ",", "]"])
-        for index in 1..<jsonData.count-1 {
-            guard let swiftType = extractData(jsonData[index]) else { return [] }
-            jsonToSwift.append(swiftType)
+        if dataToConvert.getFirstElement() == "{" && dataToConvert.getLastElement() == "}" { jsonDatas = extractData.objectDataExtract(objectData: dataToConvert) }
+        else if dataToConvert.getFirstElement() == "[" && dataToConvert.getLastElement() == "]" { jsonDatas = extractData.arrayDataExtract(arrayData: dataToConvert) }
+        
+        print(jsonDatas)
+        
+        for jsonData in jsonDatas {
+            guard let tempSwiftData = jsonToSwiftType(jsonData) else { return [] }
+            jsonToSwift.append(tempSwiftData)
         }
         return jsonToSwift
     }
     
-    // JSON 데이터를 Swift 데이터로 바꾸어준다
-    private func extractData(_ jsonData : String) -> SwiftType? {
+    private func jsonToSwiftType(_ jsonData : String) -> SwiftType? {
         let checkType = CheckType()
         guard let jsonType = checkType.supportingType(jsonData) else { return nil }
         switch jsonType {

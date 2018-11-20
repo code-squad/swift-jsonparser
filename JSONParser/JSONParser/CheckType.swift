@@ -9,6 +9,18 @@
 import Foundation
 
 struct CheckType {
+    // 배열을 입력하였는지 검사
+    func IsArrayType(_ input: String) -> Bool {
+        guard input.getFirstElement() == "[" && input.getLastElement() == "]" else { return false }
+        return true
+    }
+    
+    // 객체 타입인지 검사
+    func IsObjectType(_ input: String) -> Bool {
+        guard input.getFirstElement() == "{" && input.getLastElement() == "}" else { return false }
+        return true
+    }
+    
     // Type을 검사해서 지원하는 타입인지 enum 생성
     func supportingType(_ jsonType : String) -> SupportType? {
         if IsStringType(jsonType) { return .stringType }
@@ -39,20 +51,6 @@ struct CheckType {
     // Boolean 타입인지 확인
     private func IsBooleanType(_ inputToCheck : String) -> Bool {
         guard inputToCheck == "true" || inputToCheck == "false" else { return false }
-        return true
-    }
-    
-    //Objcect 타입인지 확인
-    func IsObjectType(_ inputToCheck : String) -> Bool {
-        var propertyToCheck : [String]
-        guard inputToCheck.getFirstElement() == "{" && inputToCheck.getLastElement() == "}" else { return false }
-        let objectProperty : [String] = inputToCheck.components(separatedBy: ["{", ",", "}"])
-        guard objectProperty.count != 2 else { return false }
-        for index in 1..<objectProperty.count-1 {
-            propertyToCheck = objectProperty[index].split(separator: ":").map(String.init)
-            guard IsStringType(propertyToCheck[0]) else { return false }
-            guard IsStringType(propertyToCheck[1]) || IsNumberType(propertyToCheck[1]) || IsBooleanType(propertyToCheck[1]) else { return false }
-        }
         return true
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 
 func main() {
     let checkInput = CheckInput()
-    let jsonParser = JSONParser()
+//    let jsonParser = JSONParser()
     let outputView = OutputView()
     var input : String
     var inputState : InputState
@@ -21,7 +21,7 @@ func main() {
         outputView.printErrorState(inputState)
     } while inputState != .rightInput
     
-    let jsonToSwift : [SwiftType] = jsonParser.extractJSONtoSwift(dataToConvert: input)
+//    let jsonToSwift : [SwiftType] = jsonParser.extractJSONtoSwift(dataToConvert: input)
 //    outputView.printType(typeCount: jsonParser.countingType(jsonToSwift))
 }
 

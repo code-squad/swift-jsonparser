@@ -25,34 +25,40 @@ extension String {
 struct CheckInput {
     // 입력 값 검사하여 오류가 있는지 확인
     func checkUserInput(_ input: String) -> InputState {
-        if IsArrayType(input) { return checkArrayType(checkToArray: input) }
-        else if IsObjectType(input) { return checkObjectType(checkToObject: input) }
+        let typeChecker : CheckType = CheckType()
+        if typeChecker.IsArrayType(input) { return checkArrayType(checkToArray: input) }
+        else if typeChecker.IsObjectType(input) { return checkObjectType(checkToObject: input) }
         else { return .notArrayOrObjectType }
-    }
-    
-    // 배열을 입력하였는지 검사
-    private func IsArrayType(_ input: String) -> Bool {
-        guard input.getFirstElement() == "[" && input.getLastElement() == "]" else { return false }
-        return true
-    }
-    
-    // 객체 타입인지 검사
-    private func IsObjectType(_ input: String) -> Bool {
-        guard input.getFirstElement() == "{" && input.getLastElement() == "}" else { return false }
-        return true
     }
     
     // 입력 값이 배열인 경우 내부 검사
     private func checkArrayType(checkToArray : String) -> InputState {
         let extractData : ExtractData = ExtractData()
-        guard extractData.notSupportingArrayDataType(data: checkToArray).count == 0 else { return .notSupportingType }
+        let typeChecker : CheckType = CheckType()
+        let extractedData : [String] = extractData.inArrayAllDataType(data: checkToArray)
+        for eachData in extractedData {
+            guard let dataType = typeChecker.supportingType(eachData) else { return .notSupportingType }
+            if dataType == .objectType { guard checkObjectType(checkToObject: eachData) == .rightInput else { return .notSupportingType } }
+        }
         return .rightInput
     }
     
     // 입력 값이 객체인 경우 내부 검사
     private func checkObjectType(checkToObject : String) -> InputState {
         let extractData : ExtractData = ExtractData()
-        guard extractData.notSupportingPropertyType(data: checkToObject).count == 0 else { return .notSupportingType }
+        let propertiesInObject : [String] = extractData.inObjectAllDataType(data: checkToObject)
+        for eachProperty in propertiesInObject {
+            guard extractData.objectDataExtract(objectData: eachProperty).count == 1 else { return .notSupportingType }
+        }
         return .rightInput
     }
+    
+//    private func checkPropertyInObject(_ inputToProperty : String) -> Bool {
+//        let extractData : ExtractData = ExtractData()
+//        let propertiesInObject : [String] = extractData.inObjectAllDataType(data: inputToProperty)
+//        for eachProperty in propertiesInObject {
+//            guard extractData.objectDataExtract(objectData: eachProperty).count == 1 else { return false }
+//        }
+//        return true
+//    }
 }
