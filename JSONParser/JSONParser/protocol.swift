@@ -8,14 +8,6 @@
 
 import Foundation
 
-protocol JSONData {
+protocol Parsable {
     func getDTO() -> DTO
-}
-
-protocol JSONArray: JSONData {
-    
-}
-
-protocol JSONObject: JSONData {
-    
 }

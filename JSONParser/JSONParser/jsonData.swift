@@ -8,19 +8,26 @@
 
 import Foundation
 
-struct SwiftJSON: JSONData {
-    private var ints: [Int]
-    private var bools: [Bool]
-    private var strings: [String]
+struct ArrayJSONData: Parsable {
+    private let elements: [String]
     
-    init(ints: [Int], bools: [Bool], strings: [String]) {
-        self.ints = ints
-        self.bools = bools
-        self.strings = strings
+    init(elements: [String]) {
+        self.elements = elements
     }
     
     func getDTO() -> DTO {
-        return DTO(json: ["ints": self.ints, "bools": self.bools, "strings": self.strings])
+        return DTO(json: self.elements)
     }
 }
 
+struct ObjectJSONData: Parsable {
+    private let elements: [String]
+    
+    init(elements: [String]) {
+        self.elements = elements
+    }
+    
+    func getDTO() -> DTO {
+        return DTO(json: self.elements)
+    }
+}

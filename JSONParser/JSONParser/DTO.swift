@@ -9,5 +9,5 @@
 import Foundation
 
 struct DTO {
-    let json: [String: [Any]]
+    let json: [String]
 }
