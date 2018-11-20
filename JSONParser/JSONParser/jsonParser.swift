@@ -9,45 +9,39 @@
 import Foundation
 
 struct JSONParser {
-    let leftSquare:Character = "[", rightSquare:Character = "]"
-    
-    // 문자열의 배열을 각 데이터 형태에 프로토콜로 리턴
-    func parse(from input: String) -> JSONData {
-        let rawData = input.removeBracket.separateByComma
-        
-        guard input.first == leftSquare && input.last == rightSquare else {
-            return parseObject(of: rawData)
-        }
-        
-        return parseArray(of: rawData)
+    // 문자열을 파싱해서 각 데이터 형태에 맞게 프로토콜로 리턴
+    func parse(from input: String) -> Parsable {
+        guard input.isArray else { return parseObject(of: input) }
+        return parseArray(of: input)
     }
     
-    private func parseArray(of input: [String]) -> JSONData {
-        var ints = [Int]()
-        var bools = [Bool]()
-        var strings = [String]()
+    // 배열 파싱
+    private func parseArray(of input: String) -> Parsable {
+        let pattern = "\"[\\w\\s*]+\"|[0-9]+|true|false|\\{(?:(?:\\s*\"[\\w\\s*]+\"\\s*:\\s*[\"\\w\\s*]+\\s*),*)*\\}"
+        let elements = classify(input, with: pattern)
         
-        input.forEach {
-            if $0.isNumeric { ints.append(Int($0)!) }
-            if $0.isBoolean { bools.append(Bool($0)!) }
-            if $0.isString { strings.append($0) }
-        }
-        
-        return SwiftJSON(ints: ints, bools: bools, strings: strings)
+        return ArrayJSONData(elements: elements)
     }
     
-    private func parseObject(of input: [String]) -> JSONData {
-        var ints = [Int]()
-        var bools = [Bool]()
-        var strings = [String]()
-
-        input.forEach {
-            let temp = $0.separateByColumn.last!
-            if temp.isNumeric { ints.append(Int(temp)!) }
-            if temp.isBoolean { bools.append(Bool(temp)!) }
-            if temp.isString { strings.append(temp) }
+    // 객체 파싱
+    private func parseObject(of input: String) -> Parsable {
+        let pattern = "\"[\\w\\s*]+\"\\s*:\\s*\"[\\w\\s*]+\"|[0-9]+|true|false"
+        let elements = classify(input, with: pattern)
+        
+        return ObjectJSONData(elements: elements)
+    }
+    
+    // 입력과 정규표현식을 이용하여 배열로 분리
+    private func classify(_ text: String, with pattern: String) -> [String] {
+        let regex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        let textNS = text as NSString
+        let rangeNS = NSRange(location: 0, length: textNS.length)
+        let classified = regex.matches(in: text, options: [], range: rangeNS).map {
+            textNS.substring(with: $0.range)
         }
         
-        return SwiftJSON(ints: ints, bools: bools, strings: strings)
+        return classified
     }
+    
+    
 }
