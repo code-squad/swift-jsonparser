@@ -23,15 +23,15 @@ struct NumberByType {
         self.all = string + number + bool + object
     }
     
-    func numberOfString() -> Int{
+    func numberOfString() -> Int {
         return self.string
     }
     
-    func numberOfNumber() -> Int{
+    func numberOfNumber() -> Int {
         return self.number
     }
     
-    func numberOfBool() -> Int{
+    func numberOfBool() -> Int {
         return self.bool
     }
     
