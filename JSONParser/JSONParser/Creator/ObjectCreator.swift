@@ -17,7 +17,7 @@ struct ObjectCreator : Creator {
         var jsonData = [String:ObjectUsableType]()
         
         for index in stride(from: inputData.startIndex, through: inputData.endIndex - 1, by: 2) {
-            jsonData[inputData[index]] = Converter.convertToObject(string: inputData[index + 1])
+            jsonData[inputData[index]] = Parser.convertToObject(string: inputData[index + 1])
         }
         return JsonObject.init(jsonData)
     }

@@ -17,7 +17,7 @@ struct ArrayCreator : Creator {
         var jsonData = [ArrayUsableType]()
         
         for data in inputData {
-            guard let notNilData = Converter.convertToArray(string: data) else {continue}
+            guard let notNilData = Parser.convertToArray(string: data) else {continue}
             jsonData.append(notNilData)
         }
         return JsonArray.init(jsonData)

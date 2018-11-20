@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Converter {
+struct Parser {
     static private func isBoolForm(string:String) -> Bool {
         return string.uppercased() == "TRUE" || string.uppercased() == "FALSE"
     }
@@ -18,12 +18,17 @@ struct Converter {
     }
     
     static private func isNumberForm(string:String) -> Bool {
-        return string.range(of: "^\\d+$", options: .regularExpression) != nil
+        return string.range(of: "^[\\d\\.]+$", options: .regularExpression) != nil
     }
     
     static private func isObject(string:String) -> Bool {
         return string.hasPrefix("{") && string.hasSuffix("}")
     }
+    
+//    static func convert(string:String) -> JsonCollection? {
+//        guard let collectionType = Parser.isWhatCollectionType(string: string) else {return nil}
+//        let creator = CollectionCreator.init(collectionType)
+//    }
     
     static func convertToArray(string:String) -> ArrayUsableType? {
         if isStringForm(string:string) {
