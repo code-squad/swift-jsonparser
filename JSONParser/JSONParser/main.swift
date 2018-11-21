@@ -22,7 +22,7 @@ func main() {
     } while inputState != .rightInput
     
     let jsonToSwift : InputMenu = jsonParser.jsonParser(dataToConvert: input)
-
+    outputView.printTypeCount(jsonToSwift)
 }
 
 main()

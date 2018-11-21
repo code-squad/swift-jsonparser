@@ -9,5 +9,4 @@
 import Foundation
 
 // 객체 안에 들어갈 수 있는 프로퍼티 타입
-protocol InObjectSwiftType {
-}
+protocol InObjectSwiftType { }
