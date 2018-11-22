@@ -22,9 +22,9 @@ extension String {
     }
 }
 
-struct CheckInput {
+struct FormChecker {
     // 입력 값 검사하여 오류가 있는지 확인
-    func checkUserInput(_ input: String) -> InputState {
+    func checkJSONForm(_ input: String) -> FormState {
         let typeChecker : TypeChecker = TypeChecker()
         if typeChecker.IsArrayType(input) { return checkArrayType(checkToArray: input) }
         else if typeChecker.IsObjectType(input) { return checkObjectType(checkToObject: input) }
@@ -32,24 +32,24 @@ struct CheckInput {
     }
     
     // 입력 값이 배열인 경우 내부 검사
-    private func checkArrayType(checkToArray : String) -> InputState {
+    private func checkArrayType(checkToArray : String) -> FormState {
         let extractData : ExtractData = ExtractData()
         let typeChecker : TypeChecker = TypeChecker()
         let extractedData : [String] = extractData.inArrayAllDataType(data: checkToArray)
         for eachData in extractedData {
             guard let dataType = typeChecker.supportingTypeInArray(eachData) else { return .notSupportingType }
-            if dataType == .objectType { guard checkObjectType(checkToObject: eachData) == .rightInput else { return .notSupportingType } }
+            if dataType == .objectType { guard checkObjectType(checkToObject: eachData) == .rightForm else { return .notSupportingType } }
         }
-        return .rightInput
+        return .rightForm
     }
     
     // 입력 값이 객체인 경우 내부 검사
-    private func checkObjectType(checkToObject : String) -> InputState {
+    private func checkObjectType(checkToObject : String) -> FormState {
         let extractData : ExtractData = ExtractData()
         let propertiesInObject : [String] = extractData.inObjectAllDataType(data: checkToObject)
         for eachProperty in propertiesInObject {
             guard extractData.objectDataExtract(objectData: eachProperty).count == 1 else { return .notSupportingType }
         }
-        return .rightInput
+        return .rightForm
     }
 }

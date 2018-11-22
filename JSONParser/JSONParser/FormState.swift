@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum InputState : String {
+enum FormState : String {
     case notArrayOrObjectType = "JSON 배열 또는 객체형식이 아닙니다."
     case notSupportingType = "지원하는 타입이 아닙니다."
-    case rightInput = ""
+    case rightForm = ""
 }

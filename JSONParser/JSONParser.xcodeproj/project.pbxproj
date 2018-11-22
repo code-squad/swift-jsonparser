@@ -16,10 +16,10 @@
 		9D6D09F2218C3A000061681A /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D09F1218C3A000061681A /* OutputView.swift */; };
 		9D6D09F4219008570061681A /* TypeChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D09F3219008570061681A /* TypeChecker.swift */; };
 		9D6D09F621900A9D0061681A /* SupportTypeInArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D09F521900A9D0061681A /* SupportTypeInArray.swift */; };
-		9DC6DA3E219A9EB000D057B0 /* InputState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6DA3D219A9EB000D057B0 /* InputState.swift */; };
+		9DC6DA3E219A9EB000D057B0 /* FormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6DA3D219A9EB000D057B0 /* FormState.swift */; };
 		9DC6DA46219AB52E00D057B0 /* InArraySwiftType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6DA45219AB52E00D057B0 /* InArraySwiftType.swift */; };
 		9DD8E5982188248100CE6DE3 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD8E5972188248100CE6DE3 /* InputView.swift */; };
-		9DD8E59C2188262C00CE6DE3 /* CheckInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD8E59B2188262C00CE6DE3 /* CheckInput.swift */; };
+		9DD8E59C2188262C00CE6DE3 /* FormChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD8E59B2188262C00CE6DE3 /* FormChecker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,10 +45,10 @@
 		9D6D09F1218C3A000061681A /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		9D6D09F3219008570061681A /* TypeChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeChecker.swift; sourceTree = "<group>"; };
 		9D6D09F521900A9D0061681A /* SupportTypeInArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportTypeInArray.swift; sourceTree = "<group>"; };
-		9DC6DA3D219A9EB000D057B0 /* InputState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputState.swift; sourceTree = "<group>"; };
+		9DC6DA3D219A9EB000D057B0 /* FormState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormState.swift; sourceTree = "<group>"; };
 		9DC6DA45219AB52E00D057B0 /* InArraySwiftType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InArraySwiftType.swift; sourceTree = "<group>"; };
 		9DD8E5972188248100CE6DE3 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
-		9DD8E59B2188262C00CE6DE3 /* CheckInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInput.swift; sourceTree = "<group>"; };
+		9DD8E59B2188262C00CE6DE3 /* FormChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormChecker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,13 +84,13 @@
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				9DD8E5972188248100CE6DE3 /* InputView.swift */,
 				9D6D09F1218C3A000061681A /* OutputView.swift */,
-				9DD8E59B2188262C00CE6DE3 /* CheckInput.swift */,
+				9DD8E59B2188262C00CE6DE3 /* FormChecker.swift */,
 				9D6D09F3219008570061681A /* TypeChecker.swift */,
 				9D2EE25721A27E59000AA841 /* ExtractData.swift */,
 				9D6D09EF218C39D40061681A /* JSONParser.swift */,
 				9D6D09F521900A9D0061681A /* SupportTypeInArray.swift */,
 				9D2EE25D21A46FD2000AA841 /* SupportTypeInObject.swift */,
-				9DC6DA3D219A9EB000D057B0 /* InputState.swift */,
+				9DC6DA3D219A9EB000D057B0 /* FormState.swift */,
 				9D2EE25921A468D0000AA841 /* InputMenu.swift */,
 				9D2EE25B21A46B68000AA841 /* InObjectSwiftType.swift */,
 				9DC6DA45219AB52E00D057B0 /* InArraySwiftType.swift */,
@@ -162,12 +162,12 @@
 				9D2EE25A21A468D0000AA841 /* InputMenu.swift in Sources */,
 				9D6D09F2218C3A000061681A /* OutputView.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
-				9DD8E59C2188262C00CE6DE3 /* CheckInput.swift in Sources */,
+				9DD8E59C2188262C00CE6DE3 /* FormChecker.swift in Sources */,
 				9D6D09F0218C39D40061681A /* JSONParser.swift in Sources */,
 				9D2EE25821A27E59000AA841 /* ExtractData.swift in Sources */,
 				9DC6DA46219AB52E00D057B0 /* InArraySwiftType.swift in Sources */,
 				9D2EE25E21A46FD2000AA841 /* SupportTypeInObject.swift in Sources */,
-				9DC6DA3E219A9EB000D057B0 /* InputState.swift in Sources */,
+				9DC6DA3E219A9EB000D057B0 /* FormState.swift in Sources */,
 				9DD8E5982188248100CE6DE3 /* InputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
