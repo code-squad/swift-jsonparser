@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonNumber: JsonType, ArrayUsableType, ObjectUsableType {
+struct JsonNumber: JsonType {
     private let numberBeforeConvert : String
     private var number : Double? = nil
     

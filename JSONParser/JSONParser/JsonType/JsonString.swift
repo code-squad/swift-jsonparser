@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonString: JsonType, ArrayUsableType, ObjectUsableType {
+struct JsonString: JsonType {
     private let stringBeforeConvert : String
     private var string : String? = nil
     

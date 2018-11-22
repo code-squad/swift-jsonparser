@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonBool: JsonType, ArrayUsableType, ObjectUsableType  {
+struct JsonBool: JsonType  {
     private let boolBeforeConvert : String
     private var bool : Bool? = nil
     

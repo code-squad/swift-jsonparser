@@ -22,7 +22,7 @@ struct JsonArray : JsonType, JsonCollection {
         let extractedData = RegularExpression.extractData(string: removedSquare)
         
         for data in extractedData {
-            guard let parsedData = Parser.convert(string: data) as? ArrayUsableType else {continue}
+            guard let parsedData = Parser.convert(string: data) else {continue}
             guard parsedData.checkAvailable() else {continue}
             self.array.append(parsedData)
         }
