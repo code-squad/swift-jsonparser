@@ -22,7 +22,7 @@ extension String {
     }
 }
 
-struct FormChecker {
+struct GrammarChecker {
     // 입력 값 검사하여 오류가 있는지 확인
     func checkJSONForm(_ input: String) -> FormState {
         let typeChecker : TypeChecker = TypeChecker()
@@ -36,7 +36,7 @@ struct FormChecker {
         let extractData : ExtractData = ExtractData()
         let typeChecker : TypeChecker = TypeChecker()
         let extractedData : [String] = extractData.inArrayAllDataType(data: checkToArray)
-
+        
         for eachData in extractedData {
             guard let dataType = typeChecker.supportingTypeInSet(eachData) else { return .notSupportingType }
             if dataType is Dictionary<String, InSetJSONType> { guard checkObjectType(checkToObject: eachData) == .rightForm else { return .notSupportingType } }

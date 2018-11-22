@@ -43,7 +43,7 @@ struct ExtractData {
         objectPropertyPattern = "\(stringPattern)\\s?:\\s?(\(stringPattern)|\(boolPattern)|\(numberPattern))"
         objectPattern = "\\{\\s?\(objectPropertyPattern)\\s?(,\\s?\(objectPropertyPattern)\\s?)*\\s?\\}"
         arrayExtractDataPattern = "(\(objectPattern)|\(boolPattern)|\(stringPattern)|\(numberPattern))"
-        allArrayDataType = "(\(objectPattern)|\(boolPattern)|\(stringPattern)|\(numberPattern)|[a-zA-Z0-9]+)"
+        allArrayDataType = "(\(objectPattern)|\(boolPattern)|\(stringPattern)|\(numberPattern)|[a-zA-Z0-9:]+)"
         allObjectPropertyType = "(\(stringPattern)\\s?:\\s?(\(stringPattern)|\(boolPattern)|\(numberPattern)))|[a-zA-Z0-9]+"
     }
     

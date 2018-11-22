@@ -9,7 +9,7 @@
 import Foundation
 
 func main() {
-    let checkInput = FormChecker()
+    let checkInput = GrammarChecker()
     let jsonParser = JSONParser()
     let outputView = OutputView()
     var input : String
