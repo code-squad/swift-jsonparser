@@ -17,6 +17,3 @@ protocol JsonCollection {
     func numberByType() -> NumberByType
     func type() -> String
 }
-
-protocol ArrayUsableType : JsonType {}
-protocol ObjectUsableType : JsonType {}
