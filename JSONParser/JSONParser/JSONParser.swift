@@ -32,14 +32,11 @@ struct JSONParser {
         let typeChecker : TypeChecker = TypeChecker()
         guard let dataType = typeChecker.supportingTypeInSet(json) else { return "" }
         switch dataType {
-        case .stringType:
-            return stringConvert(json)
-        case .booleanType:
-            return booleanConvert(json)
-        case .numberType:
-            return numberConvert(json)
-        case .objectType:
-            return objectConvert(json)
+        case is String: return stringConvert(json)
+        case is Bool: return booleanConvert(json)
+        case is Int: return numberConvert(json)
+        case is Dictionary<String, InSetJSONType>: return objectConvert(json)
+        default: return ""
         }
     }
     

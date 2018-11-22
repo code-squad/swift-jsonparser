@@ -21,12 +21,12 @@ struct TypeChecker {
         return true
     }
     
-    // Type을 검사해서 지원하는 타입인지 enum 생성
-    func supportingTypeInSet(_ jsonType : String) -> SupportTypeInJSON? {
-        if IsStringType(jsonType) { return .stringType }
-        else if IsBooleanType(jsonType) { return .booleanType }
-        else if IsNumberType(jsonType) { return .numberType }
-        else if IsObjectType(jsonType) { return .objectType }
+    // Type을 검사하여 지원하는 타입인지 확인
+    func supportingTypeInSet(_ jsonType : String) -> InSetJSONType? {
+        if IsStringType(jsonType) { return String() }
+        else if IsBooleanType(jsonType) { return Bool() }
+        else if IsNumberType(jsonType) { return Int() }
+        else if IsObjectType(jsonType) { return Dictionary<String, InSetJSONType>()  }
         else { return nil }
     }
     

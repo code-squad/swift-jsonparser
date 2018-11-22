@@ -36,9 +36,10 @@ struct FormChecker {
         let extractData : ExtractData = ExtractData()
         let typeChecker : TypeChecker = TypeChecker()
         let extractedData : [String] = extractData.inArrayAllDataType(data: checkToArray)
+
         for eachData in extractedData {
             guard let dataType = typeChecker.supportingTypeInSet(eachData) else { return .notSupportingType }
-            if dataType == .objectType { guard checkObjectType(checkToObject: eachData) == .rightForm else { return .notSupportingType } }
+            if dataType is Dictionary<String, InSetJSONType> { guard checkObjectType(checkToObject: eachData) == .rightForm else { return .notSupportingType } }
         }
         return .rightForm
     }
