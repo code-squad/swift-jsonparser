@@ -16,9 +16,9 @@ struct GrammarChecker {
     static private let string = "\"\(s)(\(w)|\(s)|\(d)|\\{|\\}|\\[|\\])+\(s)\""
     
     static func check(input:String) -> Bool {
-        guard !self.checkColonInArray(input: string) else {return  false}
+        guard !self.checkColonInArray(input: input) else {return  false}
         if input.hasPrefix("{") && input.hasSuffix("}") {
-            guard checkObject(input: string) else {return false}
+            guard checkObject(input: input) else {return false}
         }
         return true
     }
