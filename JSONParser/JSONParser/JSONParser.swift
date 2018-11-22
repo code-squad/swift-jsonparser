@@ -19,18 +19,18 @@ struct JSONParser {
     }
     
     // Array 안의 모든 JSON 데이터를 Swift 형식의 데이터로 전환
-    private func allDataConvertInArray(_ allDataInArray : [String]) -> Array<InArraySwiftType>{
-        var convertedArray : [InArraySwiftType] = []
+    private func allDataConvertInArray(_ allDataInArray : [String]) -> Array<InSetJSONType>{
+        var convertedArray : [InSetJSONType] = []
         for eachData in allDataInArray {
-            convertedArray.append(jsonToSwiftTypeInArray(json: eachData))
+            convertedArray.append(jsonToSwiftTypeInSetMember(json: eachData))
         }
         return convertedArray
     }
     
     // Array 안 데이터 변환
-    private func jsonToSwiftTypeInArray(json : String) -> InArraySwiftType{
+    private func jsonToSwiftTypeInSetMember(json : String) -> InSetJSONType{
         let typeChecker : TypeChecker = TypeChecker()
-        guard let dataType = typeChecker.supportingTypeInArray(json) else { return "" }
+        guard let dataType = typeChecker.supportingTypeInSet(json) else { return "" }
         switch dataType {
         case .stringType:
             return stringConvert(json)
@@ -40,20 +40,6 @@ struct JSONParser {
             return numberConvert(json)
         case .objectType:
             return objectConvert(json)
-        }
-    }
-    
-    // Object 안 데이터 변환
-    private func jsonToSwiftTypeInObject(_ json : String) -> InObjectSwiftType {
-        let typeChecker : TypeChecker = TypeChecker()
-        guard let dataType = typeChecker.supportingTypeInObject(json) else { return "" }
-        switch dataType {
-        case .stringType:
-            return stringConvert(json)
-        case .booleanType:
-            return booleanConvert(json)
-        case .numberType:
-            return numberConvert(json)
         }
     }
     
@@ -77,19 +63,19 @@ struct JSONParser {
     }
     
     // JSON Object -> Swfit Dictionary
-    private func objectConvert(_ json : String) -> Dictionary<String, InObjectSwiftType> {
+    private func objectConvert(_ json : String) -> Dictionary<String, InSetJSONType> {
         let extractData : ExtractData = ExtractData()
         let objectProperties : [String] = extractData.objectDataExtract(objectData: json)
         var keyAndValue : [String]
         var propertyKey : String
         var propertyValue : String
-        var jsonObjectToSwiftDic : [String : InObjectSwiftType] = [:]
+        var jsonObjectToSwiftDic : [String : InSetJSONType] = [:]
         
         for eachProperty in objectProperties {
             keyAndValue = eachProperty.split(separator: ":").map(String.init)
             propertyKey = extractData.propertyKeyExtract(data: keyAndValue[0])
             propertyValue = extractData.propertyValueExtract(data: keyAndValue[1])
-            jsonObjectToSwiftDic.updateValue(jsonToSwiftTypeInObject(propertyValue), forKey: stringConvert(propertyKey))
+            jsonObjectToSwiftDic.updateValue(jsonToSwiftTypeInSetMember(json: propertyValue), forKey: stringConvert(propertyKey))
         }
         return jsonObjectToSwiftDic
     }

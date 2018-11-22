@@ -8,10 +8,10 @@
 
 import Foundation
 
-extension String : InArraySwiftType, InObjectSwiftType {}
-extension Bool : InArraySwiftType, InObjectSwiftType {}
-extension Int : InArraySwiftType, InObjectSwiftType {}
-extension Dictionary : InArraySwiftType, JSONType {
+extension String : InSetJSONType {}
+extension Bool : InSetJSONType {}
+extension Int : InSetJSONType {}
+extension Dictionary : InSetJSONType, JSONType {
     // 객체 안의 지원하는 타입의 개수를 각각 셈
     func countingType() -> (Int, Int, Int, Int, Int) {
         var typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int) = (self.count, 0, 0, 0, 0)
@@ -48,6 +48,4 @@ extension Array : JSONType {
 }
 
 // 배열 안에 들어갈 수 있는 데이터 타입
-protocol InArraySwiftType {
-    
-}
+protocol InSetJSONType { }

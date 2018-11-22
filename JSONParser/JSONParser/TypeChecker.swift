@@ -22,19 +22,11 @@ struct TypeChecker {
     }
     
     // Type을 검사해서 지원하는 타입인지 enum 생성
-    func supportingTypeInArray(_ jsonType : String) -> SupportTypeInArray? {
+    func supportingTypeInSet(_ jsonType : String) -> SupportTypeInJSON? {
         if IsStringType(jsonType) { return .stringType }
         else if IsBooleanType(jsonType) { return .booleanType }
         else if IsNumberType(jsonType) { return .numberType }
         else if IsObjectType(jsonType) { return .objectType }
-        else { return nil }
-    }
-    
-    // Object 내부 타입 검사
-    func supportingTypeInObject(_ jsonType : String) -> SupportTypeInObject? {
-        if IsStringType(jsonType) { return .stringType }
-        else if IsBooleanType(jsonType) { return .booleanType }
-        else if IsNumberType(jsonType) { return .numberType }
         else { return nil }
     }
     
