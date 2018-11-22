@@ -21,7 +21,7 @@ func main() {
         outputView.printErrorState(inputState)
     } while inputState != .rightForm
     
-    let jsonToSwift : InputMenu = jsonParser.jsonParser(dataToConvert: input)
+    let jsonToSwift : JSONType = jsonParser.jsonParser(dataToConvert: input)
     outputView.printTypeCount(jsonToSwift)
 }
 

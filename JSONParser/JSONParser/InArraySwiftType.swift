@@ -11,7 +11,7 @@ import Foundation
 extension String : InArraySwiftType, InObjectSwiftType {}
 extension Bool : InArraySwiftType, InObjectSwiftType {}
 extension Int : InArraySwiftType, InObjectSwiftType {}
-extension Dictionary : InArraySwiftType, InputMenu {
+extension Dictionary : InArraySwiftType, JSONType {
     // 객체 안의 지원하는 타입의 개수를 각각 셈
     func countingType() -> (Int, Int, Int, Int, Int) {
         var typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int) = (self.count, 0, 0, 0, 0)
@@ -23,7 +23,7 @@ extension Dictionary : InArraySwiftType, InputMenu {
         return typeCount
     }
 }
-extension Array : InputMenu {
+extension Array : JSONType {
     // 배열 안의 지원하는 타입의 개수를 각각 셈
     func countingType() -> (Int, Int, Int, Int, Int) {
         var typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int) = (self.count, 0, 0, 0, 0)
@@ -38,4 +38,6 @@ extension Array : InputMenu {
 }
 
 // 배열 안에 들어갈 수 있는 데이터 타입
-protocol InArraySwiftType { }
+protocol InArraySwiftType {
+    
+}

@@ -10,7 +10,7 @@ import Foundation
 
 struct JSONParser {
     // JSON 모든 데이터를 SWIFT 데이터 타입 배열에 저장
-    func jsonParser(dataToConvert : String) -> InputMenu {
+    func jsonParser(dataToConvert : String) -> JSONType {
         let extractData : ExtractData = ExtractData()
         let typeChecker : TypeChecker = TypeChecker()
         

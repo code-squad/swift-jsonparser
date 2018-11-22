@@ -15,7 +15,7 @@ struct OutputView {
     }
     
     // 각 지원하는 타입안의 데이터 타입 출력
-    func printTypeCount(_ swiftData : InputMenu) {
+    func printTypeCount(_ swiftData : JSONType) {
         var printText : [String] = []
         let typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int) = swiftData.countingType()
         
