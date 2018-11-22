@@ -30,6 +30,7 @@ struct Parser {
     }
     
     static func convert(string:String) -> JsonType? {
+        guard GrammarChecker.check(input: string) else {return nil}
         if self.isStringForm(string:string) {
             return JsonString.init(string: string)
         }
