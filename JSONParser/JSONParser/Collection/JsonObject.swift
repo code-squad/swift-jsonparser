@@ -10,7 +10,7 @@ import Foundation
 
 struct JsonObject : JsonType, ArrayUsableType, JsonCollection {
     private let objectBeforeConvert : String
-    private var object : Dictionary = [String:ObjectUsableType]()
+    private var object : Dictionary = [String:JsonType]()
     
     init(string:String) {
         self.objectBeforeConvert = string

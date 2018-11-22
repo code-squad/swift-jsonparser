@@ -10,7 +10,7 @@ import Foundation
 
 struct JsonArray : JsonType, JsonCollection {
     private let arrayBeforeConvert : String
-    private var array : Array = [ArrayUsableType]()
+    private var array : Array = [JsonType]()
     
     init(string:String) {
         self.arrayBeforeConvert = string
