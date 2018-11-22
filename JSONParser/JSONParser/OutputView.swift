@@ -19,36 +19,18 @@ struct OutputView {
         var printText : [String] = []
         let typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int) = swiftData.countingType()
         
-        if swiftData is Array<InArraySwiftType> { printText = printArray((typeCount.string, typeCount.bool, typeCount.number, typeCount.object)) }
-        else { printText = printObject((typeCount.string, typeCount.bool, typeCount.number)) }
-        for index in stride(from: 1, to: 2*printText.count-1, by: 2) {
-            printText.insert(", ", at: index)
-        }
-        printText.insert("총 \(typeCount.total)의 데이터 중에 ", at: 0)
+        if let text = printObjectTypeCount(typeCount.object) { printText.append(text) }
+        if let text = printStringTypeCount(typeCount.string) { printText.append(text) }
+        if let text = printBoolTypeCount(typeCount.bool) { printText.append(text) }
+        if let text = printNumberTypeCount(typeCount.number) { printText.append(text) }
+        
+        for index in stride(from: 1, to: 2*printText.count-1, by: 2) { printText.insert(", ", at: index) }
+        printText.insert(swiftData.printTotalText(typeCount.total), at: 0)
         printText.append("가 있습니다")
         for text in printText {
             print(text, terminator: "")
         }
         print("")
-    }
-    
-    // 배열 안의 타입 개수 문구 저장
-    private func printArray(_ typeCount : (string : Int, number : Int, bool : Int, object : Int)) -> [String]{
-        var printText : [String] = []
-        if let text = printStringTypeCount(typeCount.string) { printText.append(text) }
-        if let text = printBoolTypeCount(typeCount.bool) { printText.append(text) }
-        if let text = printNumberTypeCount(typeCount.number) { printText.append(text) }
-        if let text = printObjectTypeCount(typeCount.object) { printText.append(text) }
-        return printText
-    }
-    
-    // 객체 안의 타입 개수 문구 저장
-    private func printObject(_ typeCount : (string : Int, number : Int, bool : Int)) -> [String] {
-        var printText : [String] = []
-        if let text = printStringTypeCount(typeCount.string) { printText.append(text) }
-        if let text = printBoolTypeCount(typeCount.bool) { printText.append(text) }
-        if let text = printNumberTypeCount(typeCount.number) { printText.append(text) }
-        return printText
     }
     
     // 프린트할 문자열의 개수 문자열 화

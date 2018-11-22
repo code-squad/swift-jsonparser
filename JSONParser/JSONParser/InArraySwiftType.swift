@@ -22,6 +22,11 @@ extension Dictionary : InArraySwiftType, JSONType {
         }
         return typeCount
     }
+    
+    // 객체 프린트 문구 리턴
+    func printTotalText(_ totalCount: Int) -> String {
+        return "총 \(totalCount)개의 객체 데이터 중에 "
+    }
 }
 extension Array : JSONType {
     // 배열 안의 지원하는 타입의 개수를 각각 셈
@@ -34,6 +39,11 @@ extension Array : JSONType {
             else { typeCount.object += 1 }
         }
         return typeCount
+    }
+    
+    // 배열 프린트 문구 리턴
+    func printTotalText(_ totalCount: Int) -> String {
+        return "총 \(totalCount)개의 배열 데이터 중에 "
     }
 }
 
