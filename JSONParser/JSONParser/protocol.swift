@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol JsonFormat {
-    func name() -> String
-    func countEachJSON() -> (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int)
+protocol JSONFormat {
+    func typeName() -> String
+    func countsEachData() -> (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int)
 }

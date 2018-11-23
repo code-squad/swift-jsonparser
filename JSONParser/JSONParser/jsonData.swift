@@ -26,18 +26,18 @@ enum JSONType {
     }
 }
 
-struct ArrayJSONData: JsonFormat {
+struct ArrayJSONData: JSONFormat {
     private let elements: [JSONType]
     
     init(elements: [JSONType]) {
         self.elements = elements
     }
     
-    func name() -> String {
+    func typeName() -> String {
         return "배열"
     }
     
-    func countEachJSON() -> (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int) {
+    func countsEachData() -> (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int) {
         var int = Int(), bool = Int(), string = Int(), array = Int(), object = Int()
         
         elements.forEach {
@@ -52,18 +52,18 @@ struct ArrayJSONData: JsonFormat {
     }
 }
 
-struct ObjectJSONData: JsonFormat {
+struct ObjectJSONData: JSONFormat {
     private let elements: [String: JSONType]
     
     init(elements: [String: JSONType]) {
         self.elements = elements
     }
     
-    func name() -> String {
+    func typeName() -> String {
         return "객체"
     }
     
-    func countEachJSON() -> (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int) {
+    func countsEachData() -> (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int) {
         var int = Int(), bool = Int(), string = Int(), array = Int(), object = Int()
         
         elements.values.forEach {

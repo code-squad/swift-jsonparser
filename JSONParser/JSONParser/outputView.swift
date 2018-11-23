@@ -10,9 +10,9 @@ import Foundation
 
 struct OutputView {
     // JSONParser에서 전달받은 데이터 세트를 출력
-    func printResult(by data: JsonFormat) {
-        let dataType = data.name()
-        let result = combineSentence(with: (data.countEachJSON()))
+    func printResult(by data: JSONFormat) {
+        let dataType = data.typeName()
+        let result = combineSentence(with: (data.countsEachData()))
         
         print("총 \(result.total)개의 \(dataType) 데이터 중에 \(result.ment)가 포함되어 있습니다.")
     }
