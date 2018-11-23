@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Regex {
+struct JSONRegex {
     private let objectPattern = "\"[\\w\\s*]+\"\\s*:\\s*(\"[\\w\\s*]+\"|[0-9]+|true|false)"
     private let arrayPattern = "\"[\\w\\s*]+\"|[0-9]+|true|false|\\{(?:(?:\\s*\"[\\w\\s*]+\"\\s*:\\s*[\"\\w\\s*]+\\s*),*)*\\}"
     private let rawData: String

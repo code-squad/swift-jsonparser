@@ -25,7 +25,7 @@ struct JSONParser {
     // 배열 파싱
     private func parseArray(of input: String) -> [JSONType]? {
         var jsonData = [JSONType]()
-        let rawData = Regex(rawData: input).takeArray()
+        let rawData = JSONRegex(rawData: input).takeArray()
         
         rawData.forEach {
             jsonData.append(determineType(of: $0)!)
@@ -36,7 +36,7 @@ struct JSONParser {
     // 객체 파싱
     private func parseObject(of input: String) -> [String: JSONType]? {
         var jsonData = [String: JSONType]()
-        let rawData = Regex(rawData: input).takeObject()
+        let rawData = JSONRegex(rawData: input).takeObject()
         
         rawData.forEach {
             let data = $0.split(separator: ":").map { $0.trimmingCharacters(in: CharacterSet(charactersIn: " ")) }
