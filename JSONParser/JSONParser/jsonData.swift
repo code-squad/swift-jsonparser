@@ -26,7 +26,7 @@ enum JSONType {
     }
 }
 
-struct ArrayJSONData: Parsable {
+struct ArrayJSONData: JsonFormat {
     private let elements: [JSONType]
     
     init(elements: [JSONType]) {
@@ -52,7 +52,7 @@ struct ArrayJSONData: Parsable {
     }
 }
 
-struct ObjectJSONData: Parsable {
+struct ObjectJSONData: JsonFormat {
     private let elements: [String: JSONType]
     
     init(elements: [String: JSONType]) {

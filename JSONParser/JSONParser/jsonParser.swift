@@ -10,7 +10,7 @@ import Foundation
 
 struct JSONParser {
     // 문자열을 파싱해서 각 데이터 형태에 맞게 프로토콜로 리턴
-    func parse(from input: String) -> Parsable? {
+    func parse(from input: String) -> JsonFormat? {
         if input.isArray {
             guard let array = parseArray(of: input) else { return nil }
             return ArrayJSONData.init(elements: array)
