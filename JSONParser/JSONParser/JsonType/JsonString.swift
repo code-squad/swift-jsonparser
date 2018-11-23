@@ -9,23 +9,13 @@
 import Foundation
 
 struct JsonString: JsonType {
-    private let stringBeforeConvert : String
-    private var string : String? = nil
+    private let _data : String
     
     init(string:String) {
-        self.stringBeforeConvert = string
-        self.convertData()
+        self._data = string.removeDoubleQuotationMarks()
     }
     
-    mutating func convertData() {
-        self.string = self.stringBeforeConvert.removeDoubleQuotationMarks()
-    }
-    
-    func checkAvailable() -> Bool {
-        return self.string != nil
-    }
-    
-    func readData() -> String {
-        return self.string ?? ""
+    func data() -> String {
+        return self._data
     }
 }

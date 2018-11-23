@@ -35,16 +35,16 @@ struct Parser {
             return JsonString.init(string: string)
         }
         if self.isNumberForm(string:string) {
-            return JsonNumber.init(string: string)
+            return JsonNumber.init(number: string)
         }
         if self.isBoolForm(string:string) {
-            return JsonBool.init(string: string)
+            return JsonBool.init(bool: string)
         }
         if self.isObject(string:string) {
-            return JsonObject.init(string: string)
+            return JsonObject.init(object: string)
         }
         if self.isArray(string: string) {
-            return JsonArray.init(string: string)
+            return JsonArray.init(array: string)
         }
         return nil
     }

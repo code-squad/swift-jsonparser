@@ -9,19 +9,13 @@
 import Foundation
 
 struct JsonBool: JsonType  {
-    private let boolBeforeConvert : String
-    private var bool : Bool? = nil
+    private let _data : Bool
     
-    init(string:String) {
-        self.boolBeforeConvert = string
-        self.convertData()
+    init(bool:String) {
+        self._data = bool.isTrue()
     }
     
-    mutating func convertData() {
-        self.bool = self.boolBeforeConvert.isTrue()
-    }
-    
-    func checkAvailable() -> Bool {
-        return self.bool != nil
+    func data() -> Bool {
+        return self._data
     }
 }

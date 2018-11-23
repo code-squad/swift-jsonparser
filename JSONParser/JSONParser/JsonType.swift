@@ -9,8 +9,7 @@
 import Foundation
 
 protocol JsonType {
-    mutating func convertData()
-    func checkAvailable() -> Bool
+
 }
 
 protocol JsonCollection {

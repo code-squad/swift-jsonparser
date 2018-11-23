@@ -9,19 +9,13 @@
 import Foundation
 
 struct JsonNumber: JsonType {
-    private let numberBeforeConvert : String
-    private var number : Double? = nil
+    private let _data : Double
     
-    init(string:String) {
-        self.numberBeforeConvert = string
-        self.convertData()
+    init(number:String) {
+        self._data = Double(number) ?? 0
     }
     
-    mutating func convertData() {
-        self.number = Double(self.numberBeforeConvert)
-    }
-    
-    func checkAvailable() -> Bool {
-        return self.number != nil
+    func data() -> Double {
+        return self._data
     }
 }

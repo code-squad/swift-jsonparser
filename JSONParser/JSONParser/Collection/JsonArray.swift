@@ -9,31 +9,30 @@
 import Foundation
 
 struct JsonArray : JsonType, JsonCollection {
-    private let arrayBeforeConvert : String
-    private var array : Array = [JsonType]()
+    private var _data = [JsonType]()
     
-    init(string:String) {
-        self.arrayBeforeConvert = string
-        self.convertData()
+    init(array:String) {
+        self._data = makeArray(string: array)
     }
     
-    mutating func convertData() {
-        let removedSquare = arrayBeforeConvert.trimmingCharacters(in: ["[","]"])
+    private func makeArray(string:String) -> [JsonType]{
+        let removedSquare = string.trimmingCharacters(in: ["[","]"])
         let extractedData = RegularExpression.extractData(string: removedSquare)
+        var jsonArray = [JsonType]()
         
         for data in extractedData {
-            guard let parsedData = Parser.convert(string: data) else {continue}
-            guard parsedData.checkAvailable() else {continue}
-            self.array.append(parsedData)
+            guard let parsedData = Parser.convert(string: data) else {print("지원하지 않는 형식을 포함하고 있습니다.");break}
+            jsonArray.append(parsedData)
         }
+        return jsonArray
     }
     
-    func checkAvailable() -> Bool {
-        return self.array.count != 0
+    func data() -> [JsonType] {
+        return self._data
     }
     
     func numberByType() -> NumberByType {
-        return self.array.numberByType()
+        return self._data.numberByType()
     }
     
     func type() -> String {
