@@ -34,23 +34,18 @@ struct GrammarChecker {
     // 입력 값이 배열인 경우 내부 검사
     private func checkArrayType(checkToArray : String) -> FormState {
         let extractData : ExtractData = ExtractData()
-        let typeChecker : TypeChecker = TypeChecker()
-        let extractedData : [String] = extractData.inArrayAllDataType(data: checkToArray)
+        let extractedArray : [String] = extractData.arrayExtract(data: checkToArray)
         
-        for eachData in extractedData {
-            guard let dataType = typeChecker.supportingTypeInSet(eachData) else { return .notSupportingType }
-            if dataType is Dictionary<String, InSetJSONType> { guard checkObjectType(checkToObject: eachData) == .rightForm else { return .notSupportingType } }
-        }
+        guard extractedArray.count == 1 else { return .notSupportingType }
         return .rightForm
     }
     
     // 입력 값이 객체인 경우 내부 검사
     private func checkObjectType(checkToObject : String) -> FormState {
         let extractData : ExtractData = ExtractData()
-        let propertiesInObject : [String] = extractData.inObjectAllDataType(data: checkToObject)
-        for eachProperty in propertiesInObject {
-            guard extractData.objectDataExtract(objectData: eachProperty).count == 1 else { return .notSupportingType }
-        }
+        let extractedObject : [String] = extractData.objectExtract(data: checkToObject)
+        
+        guard extractedObject.count == 1 else { return .notSupportingType }
         return .rightForm
     }
 }

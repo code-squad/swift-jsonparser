@@ -31,9 +31,9 @@ struct ExtractData {
     private let objectPropertyPattern : String
     private let objectPattern : String
     private let arrayExtractDataPattern : String
-    private let allArrayDataType : String
-    private let allObjectPropertyType : String
     private let objectPropertyValuePattern : String
+    private let arrayPattern : String
+    
     
     init() {
         boolPattern = "(true|false)"
@@ -43,8 +43,7 @@ struct ExtractData {
         objectPropertyPattern = "\(stringPattern)\\s?:\\s?(\(stringPattern)|\(boolPattern)|\(numberPattern))"
         objectPattern = "\\{\\s?\(objectPropertyPattern)\\s?(,\\s?\(objectPropertyPattern)\\s?)*\\s?\\}"
         arrayExtractDataPattern = "(\(objectPattern)|\(boolPattern)|\(stringPattern)|\(numberPattern))"
-        allArrayDataType = "(\(objectPattern)|\(boolPattern)|\(stringPattern)|\(numberPattern)|[a-zA-Z0-9:]+)"
-        allObjectPropertyType = "(\(stringPattern)\\s?:\\s?(\(stringPattern)|\(boolPattern)|\(numberPattern)))|[a-zA-Z0-9]+"
+        arrayPattern = "\\[\\s?\(arrayExtractDataPattern)\\s?(,\\s?\(arrayExtractDataPattern)\\s?)*\\s?\\]"
     }
     
     // 객체의 프로퍼티 Value 값으로 쓰일 수 있는 값 추출
@@ -67,13 +66,13 @@ struct ExtractData {
         return objectData.getArrayAfterRegex(regex: objectPropertyPattern)
     }
     
-    // 배열 안에 있는 모든 데이터 반환
-    func inArrayAllDataType(data : String) -> [String] {
-        return data.getArrayAfterRegex(regex: allArrayDataType)
+    // 배열 형식 추출
+    func arrayExtract(data : String) -> [String] {
+        return data.getArrayAfterRegex(regex: arrayPattern)
     }
     
-    // 객체 안에 있는 모든 프로퍼티 데이터 반환
-    func inObjectAllDataType(data : String) -> [String] {
-        return data.getArrayAfterRegex(regex: allObjectPropertyType)
+    // 객체 형식 추출
+    func objectExtract(data : String) -> [String] {
+        return data.getArrayAfterRegex(regex: objectPattern)
     }
 }
