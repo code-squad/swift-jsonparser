@@ -8,26 +8,72 @@
 
 import Foundation
 
-struct ArrayJSONData: Parsable {
-    private let elements: [String]
+enum JSONType {
+    case int(Int)
+    case bool(Bool)
+    case string(String)
+    case array(ArrayJSONData)
+    case object(ObjectJSONData)
     
-    init(elements: [String]) {
+    var name: String {
+        switch self {
+        case .int:      return "숫자"
+        case .bool:     return "부울"
+        case .string:   return "문자열"
+        case .array:    return "배열"
+        case .object:   return "객체"
+        }
+    }
+}
+
+struct ArrayJSONData: Parsable {
+    private let elements: [JSONType]
+    
+    init(elements: [JSONType]) {
         self.elements = elements
     }
     
-    func getDTO() -> DTO {
-        return DTO(json: self.elements)
+    func name() -> String {
+        return "배열"
+    }
+    
+    func countEachJSON() -> (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int) {
+        var int = Int(), bool = Int(), string = Int(), array = Int(), object = Int()
+        
+        elements.forEach {
+            if $0.name == "숫자" { int += 1 }
+            if $0.name == "부울" { bool += 1 }
+            if $0.name == "문자열" { string += 1 }
+            if $0.name == "배열" { array += 1 }
+            if $0.name == "객체" { object += 1 }
+        }
+        
+        return (int: int, bool: bool, string: string, array: array, object: object, total: self.elements.count)
     }
 }
 
 struct ObjectJSONData: Parsable {
-    private let elements: [String]
+    private let elements: [String: JSONType]
     
-    init(elements: [String]) {
+    init(elements: [String: JSONType]) {
         self.elements = elements
     }
     
-    func getDTO() -> DTO {
-        return DTO(json: self.elements)
+    func name() -> String {
+        return "객체"
+    }
+    
+    func countEachJSON() -> (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int) {
+        var int = Int(), bool = Int(), string = Int(), array = Int(), object = Int()
+        
+        elements.values.forEach {
+            if $0.name == "숫자" { int += 1 }
+            if $0.name == "부울" { bool += 1 }
+            if $0.name == "문자열" { string += 1 }
+            if $0.name == "배열" { array += 1 }
+            if $0.name == "객체" { object += 1 }
+        }
+        
+        return (int: int, bool: bool, string: string, array: array, object: object, total: self.elements.count)
     }
 }
