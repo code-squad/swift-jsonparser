@@ -10,15 +10,15 @@ import Foundation
 
 struct OutputView {
     // JSONParser에서 전달받은 데이터 세트를 출력
-    func printResult(by data: Parsable) {
+    func printResult(by data: JsonFormat) {
         let dataType = data.name()
-        let result = checkEachType(of: (data.countEachJSON()))
+        let result = combineSentence(with: (data.countEachJSON()))
         
         print("총 \(result.total)개의 \(dataType) 데이터 중에 \(result.ment)가 포함되어 있습니다.")
     }
     
-    // 출력을 위한 문구를 작성
-    private func checkEachType(of count: (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int)) -> (total: Int, ment: String) {
+    // JSON 데이터를 가지고 문장을 조합하는 메소드
+    private func combineSentence(with count: (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int)) -> (total: Int, ment: String) {
         var result = [String]()
         
         if count.int > 0 { result.append("숫자 \(count.int)개") }
