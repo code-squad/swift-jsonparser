@@ -16,21 +16,17 @@ enum ErrorList: String {
 }
 
 struct TextValidator {
-    private let leftSquare:Character = "[", rightSquare:Character = "]"
-    private let leftCurly:Character = "{", rightCurly:Character = "}"
     private let validCharacters = CharacterSet.init(charactersIn: " ,:\"[]{}").union(CharacterSet.alphanumerics)
     
     // 가능한 데이터 형태(배열, 객체)인지 확인
     private func hasBrackets(_ text: String) -> Bool {
-        guard text.first == leftSquare || text.first == leftCurly else { return false }
-        guard text.last == rightSquare || text.last == rightCurly else { return false }
+        guard text.isArray || text.isObject else { return false }
         return true
     }
     
     // 가능한 데이터 형태(문자열, 부울, 숫자)인지 확인
     private func isPossibleData(_ text: String) -> Bool {
         let texts = text.components(separatedBy: validCharacters).filter { $0 != String() }
-        
         guard texts.isEmpty else { return false }
         return true
     }
