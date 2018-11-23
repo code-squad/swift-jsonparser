@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		5908F199219ADA1400EF577D /* protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5908F198219ADA1400EF577D /* protocol.swift */; };
-		5908F19B219ADA4400EF577D /* DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5908F19A219ADA4400EF577D /* DTO.swift */; };
 		5950A3AD21991F1F00DDBD14 /* jsonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5950A3AC21991F1F00DDBD14 /* jsonData.swift */; };
 		595B28E32187F4560006A61A /* inputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595B28E22187F4560006A61A /* inputView.swift */; };
 		595B28E52187F4670006A61A /* outputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595B28E42187F4670006A61A /* outputView.swift */; };
 		595B28E72187F4AD0006A61A /* jsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595B28E62187F4AD0006A61A /* jsonParser.swift */; };
 		595B28E92187FA930006A61A /* textValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595B28E82187FA930006A61A /* textValidator.swift */; };
 		595B28ED218819D40006A61A /* textExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595B28EC218819D40006A61A /* textExtension.swift */; };
+		59A656EA21A7A3C7003E1A34 /* regularExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A656E921A7A3C7003E1A34 /* regularExpression.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,13 +32,13 @@
 
 /* Begin PBXFileReference section */
 		5908F198219ADA1400EF577D /* protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = protocol.swift; sourceTree = "<group>"; };
-		5908F19A219ADA4400EF577D /* DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTO.swift; sourceTree = "<group>"; };
 		5950A3AC21991F1F00DDBD14 /* jsonData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jsonData.swift; sourceTree = "<group>"; };
 		595B28E22187F4560006A61A /* inputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inputView.swift; sourceTree = "<group>"; };
 		595B28E42187F4670006A61A /* outputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = outputView.swift; sourceTree = "<group>"; };
 		595B28E62187F4AD0006A61A /* jsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jsonParser.swift; sourceTree = "<group>"; };
 		595B28E82187FA930006A61A /* textValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = textValidator.swift; sourceTree = "<group>"; };
 		595B28EC218819D40006A61A /* textExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = textExtension.swift; sourceTree = "<group>"; };
+		59A656E921A7A3C7003E1A34 /* regularExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = regularExpression.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,8 +73,8 @@
 		83AE2E0E1F8CAC2800F38CC9 /* JSONParser */ = {
 			isa = PBXGroup;
 			children = (
+				59A656E921A7A3C7003E1A34 /* regularExpression.swift */,
 				5908F198219ADA1400EF577D /* protocol.swift */,
-				5908F19A219ADA4400EF577D /* DTO.swift */,
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				595B28E22187F4560006A61A /* inputView.swift */,
 				595B28E42187F4670006A61A /* outputView.swift */,
@@ -148,8 +148,8 @@
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				595B28E32187F4560006A61A /* inputView.swift in Sources */,
 				5950A3AD21991F1F00DDBD14 /* jsonData.swift in Sources */,
-				5908F19B219ADA4400EF577D /* DTO.swift in Sources */,
 				5908F199219ADA1400EF577D /* protocol.swift in Sources */,
+				59A656EA21A7A3C7003E1A34 /* regularExpression.swift in Sources */,
 				595B28E72187F4AD0006A61A /* jsonParser.swift in Sources */,
 				595B28ED218819D40006A61A /* textExtension.swift in Sources */,
 				595B28E92187FA930006A61A /* textValidator.swift in Sources */,

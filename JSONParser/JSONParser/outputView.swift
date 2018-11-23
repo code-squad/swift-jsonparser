@@ -8,49 +8,26 @@
 
 import Foundation
 
-enum JSONType: String {
-    case int = "숫자"
-    case bool = "부울"
-    case object = "객체"
-    case string = "문자열"
-}
-
 struct OutputView {
     // JSONParser에서 전달받은 데이터 세트를 출력
     func printResult(by data: Parsable) {
-        var dataType = String()
-        let result = checkType(of: data.getDTO())
+        let dataType = data.name()
+        let result = checkEachType(of: (data.countEachJSON()))
         
-        if data is ArrayJSONData { dataType = "배열" }
-        if data is ObjectJSONData { dataType = "객체" }
-        
-        print("총 \(result.n)개의 \(dataType) 데이터 중에 \(result.ment)가 포함되어 있습니다.")
+        print("총 \(result.total)개의 \(dataType) 데이터 중에 \(result.ment)가 포함되어 있습니다.")
     }
     
-    private func checkType(of data: DTO) -> (n: Int, ment: String) {
-        let total = data.json.count
-        var int = Int(), bool = Int(), string = Int(), object = Int()
+    // 출력을 위한 문구를 작성
+    private func checkEachType(of count: (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int)) -> (total: Int, ment: String) {
+        var result = [String]()
         
-        for element in data.json {
-            if element.isNumeric { int += 1 }
-            if element.isBoolean { bool += 1 }
-            if element.isString { string += 1 }
-            if element.isObject { object += 1 }
-        }
+        if count.int > 0 { result.append("숫자 \(count.int)개") }
+        if count.bool > 0 { result.append("부울 \(count.bool)개") }
+        if count.string > 0 { result.append("문자열 \(count.string)개") }
+        if count.array > 0 { result.append("배열 \(count.array)개") }
+        if count.object > 0 { result.append("객체 \(count.object)개") }
         
-        let mention = makeMent(by: int, bool, string, object)
-        
-        return (n: total, ment: mention)
-    }
-    
-    private func makeMent(by int: Int, _ bool: Int, _ string: Int, _ object: Int) -> String {
-        var ments = [String]()
-        
-        if int > 0 { ments.append("\(JSONType.int.rawValue) \(int)개") }
-        if bool > 0 { ments.append("\(JSONType.bool.rawValue) \(bool)개") }
-        if string > 0 { ments.append("\(JSONType.string.rawValue) \(string)개") }
-        if object > 0 { ments.append("\(JSONType.object.rawValue) \(object)개") }
-        
-        return ments.joined(separator: ", ")
+        let mention = result.joined(separator: ", ")
+        return (total: count.total, ment: mention)
     }
 }
