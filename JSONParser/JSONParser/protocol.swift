@@ -9,5 +9,6 @@
 import Foundation
 
 protocol Parsable {
-    func getDTO() -> DTO
+    func name() -> String
+    func countEachJSON() -> (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int)
 }

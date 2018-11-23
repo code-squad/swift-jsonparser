@@ -39,7 +39,7 @@ extension String {
     
     // 객체인지 확인
     var isObject: Bool {
-        guard self.first == "{" && self.last == "}" else { return false }
+        guard self.first == "{" && self.contains(":") && self.last == "}" else { return false }
         return true
     }
 }
