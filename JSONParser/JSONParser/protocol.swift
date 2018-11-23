@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Parsable {
+protocol JsonFormat {
     func name() -> String
     func countEachJSON() -> (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int)
 }
