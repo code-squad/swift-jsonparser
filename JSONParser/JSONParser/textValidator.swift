@@ -11,13 +11,11 @@ import Foundation
 enum ErrorList: String {
     case emptyInput = "입력값이 없습니다."
     case invalidForm = "배열 또는 객체 형태로 입력하세요."
-    case parsingError = "지원하지 않는 데이터를 포함하고 있습니다."
+    case parsingError = "지원하지 않는 형식을 포함하고 있습니다."
     case noError
 }
 
-struct TextValidator {
-    private let validCharacters = CharacterSet.init(charactersIn: " ,:\"[]{}").union(CharacterSet.alphanumerics)
-    
+struct GrammarChecker {
     // 가능한 데이터 형태(배열, 객체)인지 확인
     private func hasBrackets(_ text: String) -> Bool {
         guard text.isArray || text.isObject else { return false }
@@ -26,8 +24,11 @@ struct TextValidator {
     
     // 가능한 데이터 형태(문자열, 부울, 숫자)인지 확인
     private func isPossibleData(_ text: String) -> Bool {
-        let texts = text.components(separatedBy: validCharacters).filter { $0 != String() }
-        guard texts.isEmpty else { return false }
+        let extractedData = JSONRegex().extractData(from: text)
+        let textRemovedBracket = text.removeBracket.trimmingCharacters(in: CharacterSet(charactersIn: " "))
+        let reorder = extractedData.joined(separator: ", ")
+        
+        if textRemovedBracket != reorder { return false }
         return true
     }
     

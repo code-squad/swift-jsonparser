@@ -14,18 +14,19 @@ struct JSONParser {
         if input.isArray {
             guard let array = parseArray(of: input) else { return nil }
             return ArrayJSONData.init(elements: array)
-        } else if input.isObject {
+        }
+        
+        if input.isObject {
             guard let object = parseObject(of: input) else { return nil }
             return ObjectJSONData.init(elements: object)
-        } else {
-            return nil
         }
+        return nil
     }
     
     // 배열 파싱
     private func parseArray(of input: String) -> [JSONType]? {
         var jsonData = [JSONType]()
-        let rawData = JSONRegex(rawData: input).takeArray()
+        let rawData = JSONRegex().extractData(from: input)
         
         rawData.forEach {
             jsonData.append(determineType(of: $0)!)
@@ -36,7 +37,7 @@ struct JSONParser {
     // 객체 파싱
     private func parseObject(of input: String) -> [String: JSONType]? {
         var jsonData = [String: JSONType]()
-        let rawData = JSONRegex(rawData: input).takeObject()
+        let rawData = JSONRegex().extractData(from: input)
         
         rawData.forEach {
             let data = $0.split(separator: ":").map { $0.trimmingCharacters(in: CharacterSet(charactersIn: " ")) }
