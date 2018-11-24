@@ -12,10 +12,14 @@ struct JsonString: JsonType {
     private let _data : String
     
     init(string:String) {
-        self._data = string.removeDoubleQuotationMarks()
+        self._data = string.trimmingCharacters(in: ["\"","\""])
     }
     
     func data() -> String {
         return self._data
+    }
+    
+    func type() -> TypeInfo {
+        return .string
     }
 }

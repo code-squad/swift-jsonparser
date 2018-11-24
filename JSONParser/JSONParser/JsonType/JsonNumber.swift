@@ -18,4 +18,8 @@ struct JsonNumber: JsonType {
     func data() -> Double {
         return self._data
     }
+    
+    func type() -> TypeInfo {
+        return .number
+    }
 }

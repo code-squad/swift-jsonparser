@@ -15,12 +15,27 @@ struct NumberByType {
     private let object : Int
     private let all : Int
     
-    init(string:Int, number:Int, bool:Int, object:Int) {
-        self.string = string
-        self.number = number
-        self.bool = bool
-        self.object = object
-        self.all = string + number + bool + object
+    init(array:[JsonType]) {
+        var numberOfStirng = 0
+        var numberOfNumber = 0
+        var numberOfBool = 0
+        var numberOfObject = 0
+        
+        for data in array {
+            switch data.type() {
+            case .string: numberOfStirng += 1
+            case .number: numberOfNumber += 1
+            case .bool: numberOfBool += 1
+            case .object: numberOfObject += 1
+            case .array: continue
+            }
+        }
+        
+        self.string = numberOfStirng
+        self.number = numberOfNumber
+        self.bool = numberOfBool
+        self.object = numberOfObject
+        self.all = self.string + self.number + self.bool + self.object
     }
     
     func numberOfString() -> Int {

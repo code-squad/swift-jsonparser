@@ -12,10 +12,14 @@ struct JsonBool: JsonType  {
     private let _data : Bool
     
     init(bool:String) {
-        self._data = bool.isTrue()
+        self._data = Bool(bool) ?? false
     }
     
     func data() -> Bool {
         return self._data
+    }
+    
+    func type() -> TypeInfo {
+        return .bool
     }
 }

@@ -9,10 +9,10 @@
 import Foundation
 
 struct OutputView {
-    static func showNumberOfData(_ number:NumberByType, type:String) {
+    static func showNumberOfData(_ number:NumberByType, type:TypeInfo) {
         guard number.numberOfAll() > 0 else {print("데이터가 없습니다."); return}
         
-        print("총 \(number.numberOfAll())개의 \(type) 데이터 중에", terminator: "")
+        print("총 \(number.numberOfAll())개의 \(type.rawValue) 데이터 중에", terminator: "")
         showResult(readInfo(number))
         print("가 포함되어 있습니다.", terminator: "")
         print("")

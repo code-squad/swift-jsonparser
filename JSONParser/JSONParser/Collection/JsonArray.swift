@@ -32,11 +32,11 @@ struct JsonArray : JsonType, JsonCollection {
     }
     
     func numberByType() -> NumberByType {
-        return self._data.numberByType()
+        return NumberByType.init(array: self._data)
     }
     
-    func type() -> String {
-        return "배열"
+    func type() -> TypeInfo {
+        return .array
     }
 }
 

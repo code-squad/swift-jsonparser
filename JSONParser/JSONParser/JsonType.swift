@@ -9,10 +9,9 @@
 import Foundation
 
 protocol JsonType {
-
+    func type() -> TypeInfo
 }
 
-protocol JsonCollection {
+protocol JsonCollection: JsonType {
     func numberByType() -> NumberByType
-    func type() -> String
 }

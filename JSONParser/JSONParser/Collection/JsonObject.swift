@@ -36,10 +36,10 @@ struct JsonObject : JsonType, JsonCollection {
     }
     
     func numberByType() -> NumberByType {
-        return Array(self._data.values).numberByType()
+        return NumberByType.init(array: Array(self._data.values))
     }
     
-    func type() -> String {
-        return "객체"
+    func type() -> TypeInfo {
+        return .object
     }
 }
