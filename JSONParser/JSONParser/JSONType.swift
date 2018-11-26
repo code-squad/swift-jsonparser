@@ -10,6 +10,6 @@ import Foundation
 
 // 사용자가 입력할 수 있는 데이터 타입 Ex) 배열, 객체
 protocol JSONType {
-    func countingType() -> (Int, Int, Int, Int, Int)
+    func countingType() -> (Int, Int, Int, Int, Int, Int)
     func printTotalText(_ totalCount : Int) -> String
 }

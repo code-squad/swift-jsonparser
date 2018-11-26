@@ -27,6 +27,7 @@ struct TypeChecker {
         else if IsBooleanType(jsonType) { return Bool() }
         else if IsNumberType(jsonType) { return Int() }
         else if IsObjectType(jsonType) { return Dictionary<String, InSetJSONType>()  }
+        else if IsArrayType(jsonType) { return [InSetJSONType]() }
         else { return nil }
     }
     

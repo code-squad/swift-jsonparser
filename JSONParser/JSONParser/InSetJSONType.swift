@@ -13,11 +13,12 @@ extension Bool : InSetJSONType {}
 extension Int : InSetJSONType {}
 extension Dictionary : InSetJSONType, JSONType {
     // 객체 안의 지원하는 타입의 개수를 각각 셈
-    func countingType() -> (Int, Int, Int, Int, Int) {
-        var typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int) = (self.count, 0, 0, 0, 0)
+    func countingType() -> (Int, Int, Int, Int, Int, Int) {
+        var typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int, array : Int) = (self.count, 0, 0, 0, 0, 0)
         for (_, value) in self {
             if value is String { typeCount.string += 1 }
             else if value is Bool { typeCount.bool += 1 }
+            else if value is Array<InSetJSONType> { typeCount.array += 1 }
             else { typeCount.number += 1 }
         }
         return typeCount
@@ -28,14 +29,15 @@ extension Dictionary : InSetJSONType, JSONType {
         return "총 \(totalCount)개의 객체 데이터 중에 "
     }
 }
-extension Array : JSONType {
+extension Array : InSetJSONType, JSONType {
     // 배열 안의 지원하는 타입의 개수를 각각 셈
-    func countingType() -> (Int, Int, Int, Int, Int) {
-        var typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int) = (self.count, 0, 0, 0, 0)
+    func countingType() -> (Int, Int, Int, Int, Int, Int) {
+        var typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int, array : Int) = (self.count, 0, 0, 0, 0, 0)
         for eachData in self {
             if eachData is String { typeCount.string += 1 }
             else if eachData is Bool { typeCount.bool += 1 }
             else if eachData is Int { typeCount.number += 1 }
+            else if eachData is Array { typeCount.array += 1 }
             else { typeCount.object += 1 }
         }
         return typeCount

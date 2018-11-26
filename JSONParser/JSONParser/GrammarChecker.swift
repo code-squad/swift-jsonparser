@@ -37,6 +37,7 @@ struct GrammarChecker {
         let extractedArray : [String] = extractData.arrayExtract(data: checkToArray)
         
         guard extractedArray.count == 1 else { return .notSupportingType }
+        guard extractData.notSupportingNestedElementExtract(arrayData: checkToArray).count == 0 else { return .notSupportingType }
         return .rightForm
     }
     

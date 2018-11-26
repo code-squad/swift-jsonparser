@@ -17,12 +17,13 @@ struct OutputView {
     // 각 지원하는 타입안의 데이터 타입 출력
     func printTypeCount(_ swiftData : JSONType) {
         var printText : [String] = []
-        let typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int) = swiftData.countingType()
+        let typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int, array : Int) = swiftData.countingType()
         
         if let text = printObjectTypeCount(typeCount.object) { printText.append(text) }
         if let text = printStringTypeCount(typeCount.string) { printText.append(text) }
         if let text = printBoolTypeCount(typeCount.bool) { printText.append(text) }
         if let text = printNumberTypeCount(typeCount.number) { printText.append(text) }
+        if let text = printArrayTypeCount(typeCount.array) { printText.append(text) }
         
         for index in stride(from: 1, to: 2*printText.count-1, by: 2) { printText.insert(", ", at: index) }
         printText.insert(swiftData.printTotalText(typeCount.total), at: 0)
@@ -55,5 +56,10 @@ struct OutputView {
     private func printObjectTypeCount(_ objectCount : Int) -> String? {
         guard objectCount != 0 else { return nil }
         return "객체 \(objectCount)개"
+    }
+    
+    private func printArrayTypeCount(_ arrayCount : Int) -> String? {
+        guard arrayCount != 0 else { return nil }
+        return "배열 \(arrayCount)개"
     }
 }

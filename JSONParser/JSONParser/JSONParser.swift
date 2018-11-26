@@ -36,6 +36,7 @@ struct JSONParser {
         case is Bool: return booleanConvert(json)
         case is Int: return numberConvert(json)
         case is Dictionary<String, InSetJSONType>: return objectConvert(json)
+        case is Array<InSetJSONType>: return arrayConvert(json)
         default: return ""
         }
     }
@@ -75,5 +76,17 @@ struct JSONParser {
             jsonObjectToSwiftDic.updateValue(jsonToSwiftTypeInSetMember(json: propertyValue), forKey: stringConvert(propertyKey))
         }
         return jsonObjectToSwiftDic
+    }
+    
+    // JSON Array -> Swift Array
+    private func arrayConvert(_ json : String) -> Array<InSetJSONType> {
+        let extractData : ExtractData = ExtractData()
+        let arrayElement : [String] = extractData.arrayNestedDataExtract(arrayData: json)
+        var swiftArray : [InSetJSONType] = []
+        
+        for eachElement in arrayElement {
+            swiftArray.append(jsonToSwiftTypeInSetMember(json: eachElement))
+        }
+        return swiftArray
     }
 }

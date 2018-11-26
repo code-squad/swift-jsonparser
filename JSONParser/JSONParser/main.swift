@@ -9,7 +9,7 @@
 import Foundation
 
 func main() {
-    let checkInput = GrammarChecker()
+    let grammarChecker = GrammarChecker()
     let jsonParser = JSONParser()
     let outputView = OutputView()
     var input : String
@@ -17,7 +17,7 @@ func main() {
 
     repeat {
         input = InputView.UserInput(message: "분석할 JSON 문자열을 입력하세요.")
-        inputState = checkInput.checkJSONForm(input)
+        inputState = grammarChecker.checkJSONForm(input)
         outputView.printErrorState(inputState)
     } while inputState != .rightForm
     
