@@ -13,6 +13,7 @@ struct NumberByType {
     private let number : Int
     private let bool : Int
     private let object : Int
+    private let array : Int
     private let all : Int
     
     init(array:[JsonType]) {
@@ -20,6 +21,7 @@ struct NumberByType {
         var numberOfNumber = 0
         var numberOfBool = 0
         var numberOfObject = 0
+        var numberOfArray = 0
         
         for data in array {
             switch data.type() {
@@ -27,7 +29,7 @@ struct NumberByType {
             case .number: numberOfNumber += 1
             case .bool: numberOfBool += 1
             case .object: numberOfObject += 1
-            case .array: continue
+            case .array: numberOfArray += 1
             }
         }
         
@@ -35,7 +37,8 @@ struct NumberByType {
         self.number = numberOfNumber
         self.bool = numberOfBool
         self.object = numberOfObject
-        self.all = self.string + self.number + self.bool + self.object
+        self.array = numberOfArray
+        self.all = self.string + self.number + self.bool + self.object + self.array
     }
     
     func numberOfString() -> Int {
@@ -52,6 +55,10 @@ struct NumberByType {
     
     func numberOfObject() -> Int {
         return self.object
+    }
+    
+    func numberOfArray() -> Int {
+        return self.array
     }
     
     func numberOfAll() -> Int {
