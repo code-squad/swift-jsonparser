@@ -35,6 +35,7 @@ struct ExtractData {
     private let arrayPattern : String
     private let nestedArray : String
     private let nestedObject : String
+    private let allPattern : String
     
     init() {
         boolPattern = "(true|false)"
@@ -47,6 +48,7 @@ struct ExtractData {
         objectPattern = "\\{\\s?\(objectPropertyPattern)\\s?(,\\s?\(objectPropertyPattern)\\s?)*\\s?\\}"
         allValuePattern = "(\(nestedArray)|\(nestedObject)|\(boolPattern)|\(stringPattern)|\(numberPattern))"
         arrayPattern = "\\[\\s?\(allValuePattern)\\s?(,\\s?\(allValuePattern))*\\s?\\]"
+        allPattern = "(\(arrayPattern))|(\(objectPattern))"
     }
     
     // 객체의 프로퍼티 Value 값으로 쓰일 수 있는 값 추출
@@ -74,13 +76,8 @@ struct ExtractData {
         return objectData.getArrayAfterRegex(regex: objectPropertyPattern)
     }
     
-    // 배열 형식 추출
-    func arrayExtract(data : String) -> [String] {
-        return data.getArrayAfterRegex(regex: arrayPattern)
-    }
-    
-    // 객체 형식 추출
-    func objectExtract(data : String) -> [String] {
-        return data.getArrayAfterRegex(regex: objectPattern)
+    // 입력 값으로부터 배열또는 객체 형식을 추출
+    func extractAllData(data : String) -> [String] {
+        return data.getArrayAfterRegex(regex: allPattern)
     }
 }

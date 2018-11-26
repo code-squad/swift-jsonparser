@@ -23,40 +23,12 @@ extension String {
 }
 
 struct GrammarChecker {
-    // 배열을 입력하였는지 검사
-    func IsArrayType(_ input: String) -> Bool {
-        guard input.getFirstElement() == "[" && input.getLastElement() == "]" else { return false }
-        return true
-    }
-    
-    // 객체 타입인지 검사
-    func IsObjectType(_ input: String) -> Bool {
-        guard input.getFirstElement() == "{" && input.getLastElement() == "}" else { return false }
-        return true
-    }
-    
     // 입력 값 검사하여 오류가 있는지 확인
     func checkJSONForm(_ input: String) -> FormState {
-        if IsArrayType(input) { return checkArrayType(checkToArray: input) }
-        else if IsObjectType(input) { return checkObjectType(checkToObject: input) }
-        else { return .notArrayOrObjectType }
-    }
-    
-    // 입력 값이 배열인 경우 내부 검사
-    private func checkArrayType(checkToArray : String) -> FormState {
         let extractData : ExtractData = ExtractData()
-        let extratedArrayData = extractData.arrayExtract(data: checkToArray)
         
-        guard extratedArrayData[0].count == checkToArray.count else { return .notSupportingType }
-        return .rightForm
-    }
-    
-    // 입력 값이 객체인 경우 내부 검사
-    private func checkObjectType(checkToObject : String) -> FormState {
-        let extractData : ExtractData = ExtractData()
-        let extractedObjectData = extractData.objectExtract(data: checkToObject)
-        
-        guard extractedObjectData[0].count == checkToObject.count else { return .notSupportingType }
+        guard extractData.extractAllData(data: input).count != 0 else { return .notSupportingType }
+        guard input.count == extractData.extractAllData(data : input)[0].count else { return .notSupportingType }
         return .rightForm
     }
     
@@ -68,6 +40,18 @@ struct GrammarChecker {
         else if IsObjectType(jsonType) { return Dictionary<String, InSetJSONType>()  }
         else if IsArrayType(jsonType) { return [InSetJSONType]() }
         else { return nil }
+    }
+    
+    // 배열을 입력하였는지 검사
+    func IsArrayType(_ input: String) -> Bool {
+        guard input.getFirstElement() == "[" && input.getLastElement() == "]" else { return false }
+        return true
+    }
+    
+    // 객체 타입인지 검사
+    func IsObjectType(_ input: String) -> Bool {
+        guard input.getFirstElement() == "{" && input.getLastElement() == "}" else { return false }
+        return true
     }
     
     // 스트링 타입인지 확인
