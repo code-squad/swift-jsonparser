@@ -12,19 +12,17 @@ struct JsonArray : JsonType, JsonCollection {
     private var _data = [JsonType]()
     
     init(array:String) {
-        self._data = makeArray(string: array)
+        makeArray(string: array)
     }
     
-    private func makeArray(string:String) -> [JsonType]{
+    mutating private func makeArray(string:String) {
         let removedSquare = string.trimmingCharacters(in: ["[","]"])
         let extractedData = RegularExpression.extractData(string: removedSquare)
-        var jsonArray = [JsonType]()
         
         for data in extractedData {
             guard let parsedData = Parser.convert(string: data) else {print("지원하지 않는 형식을 포함하고 있습니다.");break}
-            jsonArray.append(parsedData)
+            self._data.append(parsedData)
         }
-        return jsonArray
     }
     
     func data() -> [JsonType] {
