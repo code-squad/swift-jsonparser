@@ -45,23 +45,23 @@ struct GrammarChecker {
     // 입력 값이 배열인 경우 내부 검사
     private func checkArrayType(checkToArray : String) -> FormState {
         let extractData : ExtractData = ExtractData()
+        let extratedArrayData = extractData.arrayExtract(data: checkToArray)
         
-        guard extractData.arrayExtract(data: checkToArray).count == 1 else { return .notSupportingType }
-        guard extractData.notSupportingNestedArrayElementExtract(arrayData: checkToArray).count == 0 else { return .notSupportingType }
+        guard extratedArrayData[0].count == checkToArray.count else { return .notSupportingType }
         return .rightForm
     }
     
     // 입력 값이 객체인 경우 내부 검사
     private func checkObjectType(checkToObject : String) -> FormState {
         let extractData : ExtractData = ExtractData()
+        let extractedObjectData = extractData.objectExtract(data: checkToObject)
         
-        guard extractData.objectExtract(data: checkToObject).count == 1 else { return .notSupportingType }
-        guard extractData.notSupportingNestedObjectElementExtract(objectData: checkToObject).count == 0 else { return .notSupportingType }
+        guard extractedObjectData[0].count == checkToObject.count else { return .notSupportingType }
         return .rightForm
     }
     
     // Type을 검사하여 지원하는 타입인지 확인
-    func supportingTypeInSet(_ jsonType : String) -> InSetJSONType? {
+    func checkSupportingTypeInSet(_ jsonType : String) -> InSetJSONType? {
         if IsStringType(jsonType) { return String() }
         else if IsBooleanType(jsonType) { return Bool() }
         else if IsNumberType(jsonType) { return Int() }

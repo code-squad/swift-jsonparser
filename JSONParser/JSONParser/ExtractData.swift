@@ -35,8 +35,6 @@ struct ExtractData {
     private let arrayPattern : String
     private let nestedArray : String
     private let nestedObject : String
-    private let notSupportingArrayNestedPattern : String
-    private let notSupportingObjectNestedPattern : String
     
     init() {
         boolPattern = "(true|false)"
@@ -49,9 +47,6 @@ struct ExtractData {
         objectPattern = "\\{\\s?\(objectPropertyPattern)\\s?(,\\s?\(objectPropertyPattern)\\s?)*\\s?\\}"
         allValuePattern = "(\(nestedArray)|\(nestedObject)|\(boolPattern)|\(stringPattern)|\(numberPattern))"
         arrayPattern = "\\[\\s?\(allValuePattern)\\s?(,\\s?\(allValuePattern))*\\s?\\]"
-        notSupportingArrayNestedPattern = "(\\[\\s?.*\\s?\\[\\s?.*\\s?\\[\\s?.*\\s?\\]\\s?.*\\s?\\]\\s?.*\\s?\\])|(\\[\\s?.*\\s?\\[\\s?.*\\s?\\{\\s?.*\\s?\\}\\s?.*\\s?\\]\\s?.*\\s?\\])|(\\[\\s?.*\\s?\\{\\s?.*\\s?:\\s?\\[\\s?.*\\s?\\]\\s?.*\\s?\\}\\s?.*\\])|(\\[\\s?.*\\s?\\{\\s?.*\\s?\\{\\s?.*\\s?\\}\\s?.*\\s?\\}\\s?.*\\s?\\])"
-        notSupportingObjectNestedPattern = "(\\{\\s?.*\\s?\\{\\s?.*\\s?\\{\\s?.*\\s?\\}\\s?.*\\s?\\}\\s?.*\\s?\\})|(\\{\\s?.*\\s?\\[\\s?.*\\s?\\{\\s?.*\\s?\\}\\s?.*\\s?\\]\\s?.*\\s?\\})|(\\{\\s?.*\\s?\\[\\s?.*\\s?\\[\\s?.*\\s?\\]\\s?.*\\s?\\]\\s?.*\\s?\\})|(\\{\\s?.*\\s?\\{\\s?.*\\s?\\[\\s?.*\\s?\\]\\s?.*\\s?\\}\\s?.*\\s?\\})"
-        
     }
     
     // 객체의 프로퍼티 Value 값으로 쓰일 수 있는 값 추출
@@ -72,16 +67,6 @@ struct ExtractData {
     // 중첩된 배열 안의 데이터 추출
     func arrayNestedDataExtract(arrayData : String) -> [String] {
         return arrayData.getArrayAfterRegex(regex: nestedElementValue)
-    }
-    
-    // 3중 이상으로 중첩된 Array 데이터 추출
-    func notSupportingNestedArrayElementExtract(arrayData : String) -> [String] {
-        return arrayData.getArrayAfterRegex(regex: notSupportingArrayNestedPattern)
-    }
-    
-    // 3중 이상으로 중첩된 Object 데이터 추출
-    func notSupportingNestedObjectElementExtract(objectData : String) -> [String] {
-        return objectData.getArrayAfterRegex(regex: notSupportingObjectNestedPattern)
     }
     
     // 객체의 데이터를 추출

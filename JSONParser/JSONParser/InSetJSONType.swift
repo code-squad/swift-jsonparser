@@ -13,7 +13,7 @@ extension Bool : InSetJSONType {}
 extension Int : InSetJSONType {}
 extension Dictionary : InSetJSONType, JSONType {
     // 객체 안의 지원하는 타입의 개수를 각각 셈
-    func countingType() -> (Int, Int, Int, Int, Int, Int) {
+    func conutType() -> (Int, Int, Int, Int, Int, Int) {
         var typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int, array : Int) = (self.count, 0, 0, 0, 0, 0)
         for (_, value) in self {
             if value is String { typeCount.string += 1 }
@@ -32,7 +32,7 @@ extension Dictionary : InSetJSONType, JSONType {
 }
 extension Array : InSetJSONType, JSONType {
     // 배열 안의 지원하는 타입의 개수를 각각 셈
-    func countingType() -> (Int, Int, Int, Int, Int, Int) {
+    func conutType() -> (Int, Int, Int, Int, Int, Int) {
         var typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int, array : Int) = (self.count, 0, 0, 0, 0, 0)
         for eachData in self {
             if eachData is String { typeCount.string += 1 }
@@ -51,4 +51,5 @@ extension Array : InSetJSONType, JSONType {
 }
 
 // 배열 안에 들어갈 수 있는 데이터 타입
-protocol InSetJSONType { }
+protocol InSetJSONType {
+}
