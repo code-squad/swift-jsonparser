@@ -32,6 +32,9 @@ struct OutputView {
         if number.numberOfObject() > 0 {
             outputArray.append(" 객체 \(number.numberOfObject())개")
         }
+        if number.numberOfArray() > 0 {
+            outputArray.append(" 배열 \(number.numberOfArray())개")
+        }
         return outputArray
     }
     
