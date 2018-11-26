@@ -9,23 +9,41 @@
 import Foundation
 
 struct JSONRegex {
-    private let objectPattern = "\"[\\w\\s*]+\"\\s*:\\s*(\"[\\w\\s*]+\"|[0-9]+|true|false)"
-    private let arrayPattern = "\"[\\w\\s*]+\"|[0-9]+|true|false|\\{(?:(?:\\s*\"[\\w\\s*]+\"\\s*:\\s*[\"\\w\\s*]+\\s*),*)*\\}"
+    private static let int = "[0-9]+", bool = "(true|false)", str = "\"[\\w_\\s*]+\"", blank = "\\s*"
+    private static let basic = "\(str)|\(int)|\(bool)"
     
+    // JSONParser 구조체에서 Parsing에 사용
+    private static let keyAndValue = "\(str)\(blank):\(blank)(?:\(basic))"
+    private static let object = "\\{\(blank)\(keyAndValue)\(blank)(?:,\(blank)\(keyAndValue)\(blank))*\\}"
+    private static let array = "\(basic)|\(object)"
+    
+    // GrammarCheck 구조체에서 규칙 검사에 사용
+    private static let objectPattern = "^\(object)$"
+    private static let arrayPattern = "^\\[\(blank)(?:\(basic)|\(object))\(blank)(?:,\(blank)(?:\(basic)|\(object))\(blank))*\\]$"
+    
+    // 규칙 검사를 통과한 입력에서 JSONType 요소를 배열로 변환
     func extractData(from rawData: String) -> [String] {
-        if rawData.isArray { return classify(rawData, with: arrayPattern) }
-        if rawData.isObject { return classify(rawData, with: objectPattern) }
+        if rawData.isArray { return classify(rawData, with: JSONRegex.array) }
+        if rawData.isObject { return classify(rawData, with: JSONRegex.keyAndValue) }
         return []
     }
     
     // 입력과 정규표현식을 이용하여 배열로 분리
     private func classify(_ text: String, with pattern: String) -> [String] {
-        let regex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else { return [] }
         let textNS = text as NSString, rangeNS = NSRange(location: 0, length: textNS.length)
         let classified = regex.matches(in: text, options: [], range: rangeNS).map {
             textNS.substring(with: $0.range)
         }
         
         return classified
+    }
+    
+    // 규칙 검사를 위한 메소드
+    func getThrough(_ text: String) -> String {
+        var result = [String]()
+        if text.isArray { result = classify(text, with: JSONRegex.arrayPattern) }
+        if text.isObject { result = classify(text, with: JSONRegex.objectPattern) }
+        return result.joined(separator: "")
     }
 }
