@@ -27,6 +27,7 @@ struct JSONParser {
     private func parseArray(of input: String) -> [JSONType]? {
         var jsonData = [JSONType]()
         let rawData = JSONRegex().extractData(from: input)
+        if !isPossibleData(input, rawData) { return nil }
         
         rawData.forEach {
             jsonData.append(determineType(of: $0)!)
@@ -38,6 +39,7 @@ struct JSONParser {
     private func parseObject(of input: String) -> [String: JSONType]? {
         var jsonData = [String: JSONType]()
         let rawData = JSONRegex().extractData(from: input)
+        if !isPossibleData(input, rawData) { return nil }
         
         rawData.forEach {
             let data = $0.split(separator: ":").map { $0.trimmingCharacters(in: CharacterSet(charactersIn: " ")) }
@@ -55,4 +57,14 @@ struct JSONParser {
         if element.isObject { return JSONType.object(ObjectJSONData(elements: parseObject(of: element)!)) }
         return nil
     }
+    
+    // 파싱 가능한 데이터 형태(문자열, 부울, 숫자)인지 확인
+    private func isPossibleData(_ text: String, _ rawData: [String]) -> Bool {
+        let textRemovedBracket = text.removeBracket.trimmingCharacters(in: CharacterSet(charactersIn: " "))
+        let reorder = rawData.joined(separator: ", ")
+        
+        if textRemovedBracket != reorder { return false }
+        return true
+    }
+
 }

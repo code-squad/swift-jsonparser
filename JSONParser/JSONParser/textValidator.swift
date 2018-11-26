@@ -22,21 +22,11 @@ struct GrammarChecker {
         return true
     }
     
-    // 가능한 데이터 형태(문자열, 부울, 숫자)인지 확인
-    private func isPossibleData(_ text: String) -> Bool {
-        let extractedData = JSONRegex().extractData(from: text)
-        let textRemovedBracket = text.removeBracket.trimmingCharacters(in: CharacterSet(charactersIn: " "))
-        let reorder = extractedData.joined(separator: ", ")
-        
-        if textRemovedBracket != reorder { return false }
-        return true
-    }
-    
     // 콘솔로 받는 입력을 에러 처리
     public func textErrorCheck(of text: String) -> ErrorList {
         guard hasBrackets(text) else { return .invalidForm }
-        guard isPossibleData(text) else { return .parsingError }
-        guard !(text.isEmpty || text.removeBracket.isEmpty) else { return .emptyInput }
+        guard !(text.isEmpty) else { return .emptyInput }
+        guard !(text.removeBracket.isEmpty) else { return .emptyInput }
         return .noError
     }
 }

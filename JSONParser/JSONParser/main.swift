@@ -13,7 +13,7 @@ func main() {
     let grammarChecker = GrammarChecker()
     let jsonParser = JSONParser()
     let outputView = OutputView()
-    
+
     // 입력을 받고, 에러를 처리
     var input = InputView.getInput(ment: "분석할 JSON 데이터를 입력하세요.")
     var error = grammarChecker.textErrorCheck(of: input)
@@ -24,7 +24,10 @@ func main() {
     }
     
     // 에러 처리된 입력을 문자열 변환하고 출력
-    guard let jsonData = jsonParser.parse(from: input) else { return }
+    guard let jsonData = jsonParser.parse(from: input) else {
+        print(ErrorList.parsingError.rawValue)
+        return
+    }
     outputView.printResult(by: jsonData)
 }
 
