@@ -12,7 +12,7 @@ struct JSONParser {
     // JSON 모든 데이터를 SWIFT 데이터 타입 배열에 저장
     func jsonParser(dataToConvert : String) -> JSONType {
         let extractData : ExtractData = ExtractData()
-        let typeChecker : TypeChecker = TypeChecker()
+        let typeChecker : GrammarChecker = GrammarChecker()
         
         if typeChecker.IsArrayType(dataToConvert) { return allDataConvertInArray(extractData.arrayDataExtract(arrayData: dataToConvert)) }
         else { return objectConvert(dataToConvert) }
@@ -29,7 +29,7 @@ struct JSONParser {
     
     // Array 안 데이터 변환
     private func jsonToSwiftTypeInSetMember(json : String) -> InSetJSONType{
-        let typeChecker : TypeChecker = TypeChecker()
+        let typeChecker : GrammarChecker = GrammarChecker()
         guard let dataType = typeChecker.supportingTypeInSet(json) else { return "" }
         switch dataType {
         case is String: return stringConvert(json)
