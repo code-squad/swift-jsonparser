@@ -64,15 +64,13 @@ struct JSONParser {
     private func objectConvert(_ json : String) -> Dictionary<String, InSetJSONType> {
         let extractData : ExtractData = ExtractData()
         let objectProperties : [String] = extractData.objectDataExtract(objectData: json)
-        var keyAndValue : [String]
         var propertyKey : String
         var propertyValue : String
         var jsonObjectToSwiftDic : [String : InSetJSONType] = [:]
         
         for eachProperty in objectProperties {
-            keyAndValue = eachProperty.split(separator: ":").map(String.init)
-            propertyKey = extractData.propertyKeyExtract(data: keyAndValue[0])
-            propertyValue = extractData.propertyValueExtract(data: keyAndValue[1])
+            propertyKey = extractData.propertyKeyExtract(data: eachProperty)
+            propertyValue = extractData.propertyValueExtract(data: eachProperty)
             jsonObjectToSwiftDic.updateValue(jsonToSwiftTypeInSetMember(json: propertyValue), forKey: stringConvert(propertyKey))
         }
         return jsonObjectToSwiftDic
@@ -84,9 +82,7 @@ struct JSONParser {
         let arrayElement : [String] = extractData.arrayNestedDataExtract(arrayData: json)
         var swiftArray : [InSetJSONType] = []
         
-        for eachElement in arrayElement {
-            swiftArray.append(jsonToSwiftTypeInSetMember(json: eachElement))
-        }
+        for eachElement in arrayElement { swiftArray.append(jsonToSwiftTypeInSetMember(json: eachElement)) }
         return swiftArray
     }
 }

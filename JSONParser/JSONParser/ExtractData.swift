@@ -30,26 +30,33 @@ struct ExtractData {
     private let numberPattern : String
     private let objectPropertyPattern : String
     private let objectPattern : String
-    private let arrayExtractDataPattern : String
-    private let objectPropertyValuePattern : String
+    private let allValuePattern : String
+    private let nestedElementValue : String
     private let arrayPattern : String
-    private let notSupportingNestedPattern : String
+    private let nestedArray : String
+    private let nestedObject : String
+    private let notSupportingArrayNestedPattern : String
+    private let notSupportingObjectNestedPattern : String
     
     init() {
         boolPattern = "(true|false)"
         stringPattern = "\"[a-zA-Z0-9\\s]+\""
         numberPattern = "[0-9]+"
-        objectPropertyValuePattern = "(\(boolPattern)|\(numberPattern)|\(stringPattern))"
-        objectPropertyPattern = "\(stringPattern)\\s?:\\s?(\(stringPattern)|\(boolPattern)|\(numberPattern))"
+        nestedElementValue = "(\(boolPattern)|\(numberPattern)|\(stringPattern))"
+        nestedArray = "\\[\\s?\(nestedElementValue)\\s?(,\\s?\(nestedElementValue))*\\s?\\]"
+        nestedObject = "\\{\\s?\(stringPattern)\\s?:\\s?\(nestedElementValue)\\s?(,\\s?\(stringPattern)\\s?:\\s?\(nestedElementValue)\\s?)*\\s?\\}"
+        objectPropertyPattern = "\(stringPattern)\\s?:\\s?(\(nestedObject)|\(stringPattern)|\(boolPattern)|\(numberPattern)|\(nestedArray))"
         objectPattern = "\\{\\s?\(objectPropertyPattern)\\s?(,\\s?\(objectPropertyPattern)\\s?)*\\s?\\}"
-        arrayExtractDataPattern = "(\\[\\s?\(objectPropertyValuePattern)\\s?(,\\s?\(objectPropertyValuePattern))*\\s?\\]|\(objectPattern)|\(boolPattern)|\(stringPattern)|\(numberPattern))"
-        arrayPattern = "\\[\\s?\(arrayExtractDataPattern)\\s?(,\\s?\(arrayExtractDataPattern))*\\s?\\]"
-        notSupportingNestedPattern = "(\\[\\s?.*\\s?\\[\\s?.*\\s?\\[\\s?.*\\s?\\]\\s?.*\\s?\\]\\s?.*\\s?\\])|(\\[\\s?.*\\s?\\[\\s?.*\\s?\\{\\s?.*\\s?\\}\\s?.*\\s?\\]\\s?.*\\s?\\])|(\\[\\s?.*\\s?\\{\\s?.*\\s?:\\s?\\[\\s?.*\\s?\\]\\s?.*\\s?\\}\\s?.*\\])"
+        allValuePattern = "(\(nestedArray)|\(nestedObject)|\(boolPattern)|\(stringPattern)|\(numberPattern))"
+        arrayPattern = "\\[\\s?\(allValuePattern)\\s?(,\\s?\(allValuePattern))*\\s?\\]"
+        notSupportingArrayNestedPattern = "(\\[\\s?.*\\s?\\[\\s?.*\\s?\\[\\s?.*\\s?\\]\\s?.*\\s?\\]\\s?.*\\s?\\])|(\\[\\s?.*\\s?\\[\\s?.*\\s?\\{\\s?.*\\s?\\}\\s?.*\\s?\\]\\s?.*\\s?\\])|(\\[\\s?.*\\s?\\{\\s?.*\\s?:\\s?\\[\\s?.*\\s?\\]\\s?.*\\s?\\}\\s?.*\\])|(\\[\\s?.*\\s?\\{\\s?.*\\s?\\{\\s?.*\\s?\\}\\s?.*\\s?\\}\\s?.*\\s?\\])"
+        notSupportingObjectNestedPattern = "(\\{\\s?.*\\s?\\{\\s?.*\\s?\\{\\s?.*\\s?\\}\\s?.*\\s?\\}\\s?.*\\s?\\})|(\\{\\s?.*\\s?\\[\\s?.*\\s?\\{\\s?.*\\s?\\}\\s?.*\\s?\\]\\s?.*\\s?\\})|(\\{\\s?.*\\s?\\[\\s?.*\\s?\\[\\s?.*\\s?\\]\\s?.*\\s?\\]\\s?.*\\s?\\})|(\\{\\s?.*\\s?\\{\\s?.*\\s?\\[\\s?.*\\s?\\]\\s?.*\\s?\\}\\s?.*\\s?\\})"
+        
     }
     
     // 객체의 프로퍼티 Value 값으로 쓰일 수 있는 값 추출
     func propertyValueExtract(data : String) -> String {
-        return data.getArrayAfterRegex(regex: objectPropertyValuePattern)[0]
+        return data.getArrayAfterRegex(regex: allValuePattern)[1]
     }
     
     // 객체의 프로퍼티 Key 값으로 쓰일 수 있는 값 추출
@@ -59,17 +66,22 @@ struct ExtractData {
     
     // 배열의 데이터를 추출
     func arrayDataExtract(arrayData : String) -> [String] {
-        return arrayData.getArrayAfterRegex(regex: arrayExtractDataPattern)
+        return arrayData.getArrayAfterRegex(regex: allValuePattern)
     }
     
     // 중첩된 배열 안의 데이터 추출
     func arrayNestedDataExtract(arrayData : String) -> [String] {
-        return arrayData.getArrayAfterRegex(regex: objectPropertyValuePattern)
+        return arrayData.getArrayAfterRegex(regex: nestedElementValue)
     }
     
-    // 3중 이상으로 중첩된 데이터 추출
-    func notSupportingNestedElementExtract(arrayData : String) -> [String] {
-        return arrayData.getArrayAfterRegex(regex: notSupportingNestedPattern)
+    // 3중 이상으로 중첩된 Array 데이터 추출
+    func notSupportingNestedArrayElementExtract(arrayData : String) -> [String] {
+        return arrayData.getArrayAfterRegex(regex: notSupportingArrayNestedPattern)
+    }
+    
+    // 3중 이상으로 중첩된 Object 데이터 추출
+    func notSupportingNestedObjectElementExtract(objectData : String) -> [String] {
+        return objectData.getArrayAfterRegex(regex: notSupportingObjectNestedPattern)
     }
     
     // 객체의 데이터를 추출

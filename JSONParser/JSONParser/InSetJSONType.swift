@@ -18,8 +18,9 @@ extension Dictionary : InSetJSONType, JSONType {
         for (_, value) in self {
             if value is String { typeCount.string += 1 }
             else if value is Bool { typeCount.bool += 1 }
+            else if value is Int { typeCount.number += 1 }
             else if value is Array<InSetJSONType> { typeCount.array += 1 }
-            else { typeCount.number += 1 }
+            else { typeCount.object += 1 }
         }
         return typeCount
     }

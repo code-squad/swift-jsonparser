@@ -34,19 +34,20 @@ struct GrammarChecker {
     // 입력 값이 배열인 경우 내부 검사
     private func checkArrayType(checkToArray : String) -> FormState {
         let extractData : ExtractData = ExtractData()
-        let extractedArray : [String] = extractData.arrayExtract(data: checkToArray)
         
-        guard extractedArray.count == 1 else { return .notSupportingType }
-        guard extractData.notSupportingNestedElementExtract(arrayData: checkToArray).count == 0 else { return .notSupportingType }
+        guard extractData.arrayExtract(data: checkToArray).count == 1 else { return .notSupportingType }
+        guard extractData.notSupportingNestedArrayElementExtract(arrayData: checkToArray).count == 0 else { return .notSupportingType }
         return .rightForm
     }
     
     // 입력 값이 객체인 경우 내부 검사
     private func checkObjectType(checkToObject : String) -> FormState {
         let extractData : ExtractData = ExtractData()
-        let extractedObject : [String] = extractData.objectExtract(data: checkToObject)
         
-        guard extractedObject.count == 1 else { return .notSupportingType }
+        guard extractData.objectExtract(data: checkToObject).count == 1 else { return .notSupportingType }
+        guard extractData.notSupportingNestedObjectElementExtract(objectData: checkToObject).count == 0 else { return .notSupportingType }
         return .rightForm
     }
+    
+    
 }
