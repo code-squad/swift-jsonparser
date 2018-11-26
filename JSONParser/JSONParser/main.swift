@@ -24,10 +24,7 @@ func main() {
     }
     
     // 에러 처리된 입력을 문자열 변환하고 출력
-    guard let jsonData = jsonParser.parse(from: input) else {
-        print(ErrorList.parsingError.rawValue)
-        return
-    }
+    guard let jsonData = jsonParser.parse(from: input) else { return }
     outputView.printResult(by: jsonData)
 }
 

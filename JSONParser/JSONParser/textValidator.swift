@@ -22,11 +22,15 @@ struct GrammarChecker {
         return true
     }
     
+    //
+    private func isPossibleData(_ text: String) -> Bool {
+        return text.count == JSONRegex().getThrough(text).count
+    }
+    
     // 콘솔로 받는 입력을 에러 처리
     public func textErrorCheck(of text: String) -> ErrorList {
         guard hasBrackets(text) else { return .invalidForm }
-        guard !(text.isEmpty) else { return .emptyInput }
-        guard !(text.removeBracket.isEmpty) else { return .emptyInput }
+        guard isPossibleData(text) else { return .parsingError }
         return .noError
     }
 }
