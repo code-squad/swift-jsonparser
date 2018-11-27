@@ -11,19 +11,8 @@ import Foundation
 struct JsonArray : JsonType, JsonCollection {
     private var _data = [JsonType]()
     
-    init(array:String) {
-        makeArray(string: array)
-    }
-    
-    mutating private func makeArray(string:String) {
-        let removedSquare = string.trimmingCharacters(in: ["[","]"])
-        let extractedData = RegularExpression.extractData(string: removedSquare)
-        
-        for data in extractedData {
-            guard GrammarChecker.checkValidOfGrammar(string: data) else {return}
-            guard let parsedData = Parser.convert(string: data) else {break}
-            self._data.append(parsedData)
-        }
+    init(array:[JsonType]) {
+        self._data = array
     }
     
     func data() -> [JsonType] {

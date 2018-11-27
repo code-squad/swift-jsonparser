@@ -40,11 +40,38 @@ struct Parser {
             return JsonBool.init(bool: string)
         }
         if self.isObject(string:string) {
-            return JsonObject.init(object: string)
+            return JsonObject.init(object: makeObject(string: string))
         }
         if self.isArray(string: string) {
-            return JsonArray.init(array: string)
+            return JsonArray.init(array: makeArray(string: string))
         }
         return nil
+    }
+    
+    static private func makeArray(string:String) -> [JsonType] {
+        let removedSquare = string.trimmingCharacters(in: ["[","]"])
+        let extractedData = RegularExpression.extractData(string: removedSquare)
+        var jsonArray = [JsonType]()
+        
+        for data in extractedData {
+            guard let parsedData = Parser.convert(string: data) else {continue}
+            jsonArray.append(parsedData)
+        }
+        
+        return jsonArray
+    }
+    
+    static private func makeObject(string:String) -> [String:JsonType] {
+        let removedSquare = string.trimmingCharacters(in: ["{","}"])
+        let extractedData = RegularExpression.extractData(string: removedSquare)
+        var jsonObject = [String:JsonType]()
+        
+        for index in stride(from: extractedData.startIndex, through: extractedData.endIndex - 1, by: 2) {
+            guard let keyData = Parser.convert(string:extractedData[index]) as? JsonString else {continue}
+            guard let valueData = Parser.convert(string:extractedData[index + 1]) else {continue}
+            jsonObject[keyData.data()] = valueData
+        }
+        
+        return jsonObject
     }
 }

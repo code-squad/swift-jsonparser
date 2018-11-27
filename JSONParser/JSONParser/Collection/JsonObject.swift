@@ -11,21 +11,8 @@ import Foundation
 struct JsonObject : JsonType, JsonCollection {
     private var _data = [String:JsonType]()
     
-    init(object:String) {
-        makeObject(string: object)
-    }
-    
-    mutating private func makeObject(string:String) {
-        let removedSquare = string.trimmingCharacters(in: ["{","}"])
-        let extractedData = RegularExpression.extractData(string: removedSquare)
-        
-        for index in stride(from: extractedData.startIndex, through: extractedData.endIndex - 1, by: 2) {
-            guard GrammarChecker.checkValidOfGrammar(string: extractedData[index]) else {return}
-            guard GrammarChecker.checkValidOfGrammar(string: extractedData[index+1]) else {return}
-            guard let keyData = Parser.convert(string:extractedData[index]) as? JsonString else {continue}
-            guard let valueData = Parser.convert(string:extractedData[index + 1]) else {continue}
-            self._data[keyData.data()] = valueData
-        }
+    init(object:[String:JsonType]) {
+        self._data = object
     }
     
     func data() -> [String:JsonType] {
