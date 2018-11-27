@@ -10,5 +10,8 @@ import Foundation
 
 protocol JSONFormat {
     func typeName() -> String
-    func countsEachData() -> (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int)
+    func typeTotal() -> Int
+    func countsEachData() -> (int: Int, bool: Int, string: Int, array: Int, object: Int)
+    func bringContents() -> String
+    func bringBracket() -> (left: String, right: String)
 }
