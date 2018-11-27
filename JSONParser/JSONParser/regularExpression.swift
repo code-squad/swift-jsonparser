@@ -40,10 +40,17 @@ struct JSONRegex {
     }
     
     // 규칙 검사를 위한 메소드
-    func getThrough(_ text: String) -> String {
-        var result = [String]()
-        if text.isArray { result = classify(text, with: JSONRegex.arrayPattern) }
-        if text.isObject { result = classify(text, with: JSONRegex.objectPattern) }
-        return result.joined(separator: "")
+    func isParsable(_ text: String) -> Bool {
+        if text.isArray { return isPass(text, with: JSONRegex.arrayPattern) }
+        if text.isObject { return isPass(text, with: JSONRegex.objectPattern) }
+        return false
+    }
+    
+    private func isPass(_ text: String, with pattern: String) -> Bool {
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else { return false }
+        let textNS = text as NSString, rangeNS = NSRange(location: 0, length: textNS.length)
+        let count = regex.numberOfMatches(in: text, options: [], range: rangeNS)
+        
+        return count == 1
     }
 }
