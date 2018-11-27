@@ -20,7 +20,8 @@ struct JsonArray : JsonType, JsonCollection {
         let extractedData = RegularExpression.extractData(string: removedSquare)
         
         for data in extractedData {
-            guard let parsedData = Parser.convertExtractedData(string: data) else {break}
+            guard GrammarChecker.checkValidOfGrammar(string: data) else {return}
+            guard let parsedData = Parser.convert(string: data) else {break}
             self._data.append(parsedData)
         }
     }
@@ -37,4 +38,3 @@ struct JsonArray : JsonType, JsonCollection {
         return .array
     }
 }
-
