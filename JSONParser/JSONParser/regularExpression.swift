@@ -49,8 +49,8 @@ struct JSONRegex {
     private func isPass(_ text: String, with pattern: String) -> Bool {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else { return false }
         let textNS = text as NSString, rangeNS = NSRange(location: 0, length: textNS.length)
-        let count = regex.numberOfMatches(in: text, options: [], range: rangeNS)
+        let length = regex.rangeOfFirstMatch(in: text, options: [], range: rangeNS)
         
-        return count == 1
+        return length == rangeNS
     }
 }
