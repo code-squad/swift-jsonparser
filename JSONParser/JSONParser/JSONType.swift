@@ -12,6 +12,7 @@ import Foundation
 protocol JSONType {
     func matchTypeForCounting() -> (Int, Int, Int, Int, Int, Int)
     func printTotalText(_ totalCount : Int) -> String
+    func createJSONStirng() -> String
 }
 
 

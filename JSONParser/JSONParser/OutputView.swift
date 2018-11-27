@@ -58,9 +58,13 @@ struct OutputView {
         return "객체 \(objectCount)개"
     }
     
+    // 프린트할 배열의 개수 문자열 화
     private func printArrayTypeCount(_ arrayCount : Int) -> String? {
         guard arrayCount != 0 else { return nil }
         return "배열 \(arrayCount)개"
     }
     
+    func printJSONSting(_ swiftType : JSONType) {
+        print(swiftType.createJSONStirng())
+    }
 }

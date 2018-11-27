@@ -23,6 +23,7 @@ func main() {
     
     let jsonToSwift : JSONType = jsonParser.jsonParser(dataToConvert: input)
     outputView.printTypeCount(jsonToSwift)
+    outputView.printJSONSting(jsonToSwift)
 }
 
 main()
