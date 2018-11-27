@@ -37,7 +37,11 @@ struct ArrayJSONData: JSONFormat {
         return "배열"
     }
     
-    func countsEachData() -> (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int) {
+    func typeTotal() -> Int {
+        return self.elements.count
+    }
+    
+    func countsEachData() -> (int: Int, bool: Int, string: Int, array: Int, object: Int) {
         var int = Int(), bool = Int(), string = Int(), array = Int(), object = Int()
         
         elements.forEach {
@@ -48,7 +52,18 @@ struct ArrayJSONData: JSONFormat {
             if $0.name == "객체" { object += 1 }
         }
         
-        return (int: int, bool: bool, string: string, array: array, object: object, total: self.elements.count)
+        return (int: int, bool: bool, string: string, array: array, object: object)
+    }
+    
+    func bringContents() -> String {
+        var contents = String()
+        
+        
+        return contents
+    }
+    
+    func bringBracket() -> (left: String, right: String) {
+        return (left: "[", right: "]")
     }
 }
 
@@ -63,7 +78,11 @@ struct ObjectJSONData: JSONFormat {
         return "객체"
     }
     
-    func countsEachData() -> (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int) {
+    func typeTotal() -> Int {
+        return self.elements.count
+    }
+    
+    func countsEachData() -> (int: Int, bool: Int, string: Int, array: Int, object: Int) {
         var int = Int(), bool = Int(), string = Int(), array = Int(), object = Int()
         
         elements.values.forEach {
@@ -74,6 +93,17 @@ struct ObjectJSONData: JSONFormat {
             if $0.name == "객체" { object += 1 }
         }
         
-        return (int: int, bool: bool, string: string, array: array, object: object, total: self.elements.count)
+        return (int: int, bool: bool, string: string, array: array, object: object)
+    }
+    
+    func bringContents() -> String {
+        var contents = String()
+        
+        
+        return contents
+    }
+    
+    func bringBracket() -> (left: String, right: String) {
+        return (left: "{", right: "}")
     }
 }
