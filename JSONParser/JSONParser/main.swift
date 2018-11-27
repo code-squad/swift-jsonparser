@@ -21,9 +21,6 @@ func main() {
         outputView.printErrorState(inputState)
     } while inputState != .rightForm
     
-    let extractData = ExtractData()
-    extractData.searchRange(stringForRange: input)
-    
     let jsonToSwift : JSONType = jsonParser.jsonParser(dataToConvert: input)
     outputView.printTypeCount(jsonToSwift)
 }
