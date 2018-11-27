@@ -9,7 +9,7 @@
 import Foundation
 
 extension String : InSetJSONType {}
-extension Bool : InSetJSONType {}
+extension Bool : InSetJSONType  {}
 extension Int : InSetJSONType {}
 extension Dictionary : InSetJSONType, JSONType {
     // 객체 안의 지원하는 타입의 개수를 각각 셈
@@ -24,6 +24,7 @@ extension Dictionary : InSetJSONType, JSONType {
         return "총 \(totalCount)개의 객체 데이터 중에 "
     }
 }
+
 extension Array : InSetJSONType, JSONType {
     // 배열 안의 지원하는 타입의 개수를 각각 셈
     func matchTypeForCounting() -> (Int, Int, Int, Int, Int, Int) {
@@ -37,5 +38,4 @@ extension Array : InSetJSONType, JSONType {
 }
 
 // 배열 안에 들어갈 수 있는 데이터 타입
-protocol InSetJSONType {
-}
+protocol InSetJSONType {}

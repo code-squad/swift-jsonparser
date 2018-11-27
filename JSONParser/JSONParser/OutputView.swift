@@ -62,4 +62,5 @@ struct OutputView {
         guard arrayCount != 0 else { return nil }
         return "배열 \(arrayCount)개"
     }
+    
 }

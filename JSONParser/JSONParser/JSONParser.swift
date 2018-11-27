@@ -13,14 +13,19 @@ struct JSONParser {
     func jsonParser(dataToConvert : String) -> JSONType {
         let extractData : ExtractData = ExtractData()
         let typeChecker : GrammarChecker = GrammarChecker()
+        let checkJSONType = typeChecker.IsArrayType(dataToConvert)
+        var dataToConvert = dataToConvert
+        dataToConvert.remove(at: dataToConvert.startIndex)
+        dataToConvert.remove(at: dataToConvert.index(before: dataToConvert.endIndex))
         
-        if typeChecker.IsArrayType(dataToConvert) { return convertAllDataInArray(extractData.arrayDataExtract(arrayData: dataToConvert)) }
+        if checkJSONType { return convertAllDataInArray(extractData.arrayDataExtract(arrayData: dataToConvert)) }
         else { return convertObject(dataToConvert) }
     }
     
     // Array 안의 모든 JSON 데이터를 Swift 형식의 데이터로 전환
     private func convertAllDataInArray(_ allDataInArray : [String]) -> Array<InSetJSONType>{
         var convertedArray : [InSetJSONType] = []
+        
         for eachData in allDataInArray {
             convertedArray.append(jsonToSwiftTypeInSetMember(json: eachData))
         }

@@ -26,9 +26,7 @@ struct GrammarChecker {
     // 입력 값 검사하여 오류가 있는지 확인
     func checkJSONForm(_ input: String) -> FormState {
         let extractData : ExtractData = ExtractData()
-        
-        guard extractData.extractAllData(data: input).count != 0 else { return .notSupportingType }
-        guard input.count == extractData.extractAllData(data : input)[0].count else { return .notSupportingType }
+        guard extractData.searchRange(stringForRange: input) == NSRange(input.startIndex..., in: input) else { return .notSupportingType }
         return .rightForm
     }
     

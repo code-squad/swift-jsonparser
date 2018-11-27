@@ -51,6 +51,12 @@ struct ExtractData {
         allPattern = "(\(arrayPattern))|(\(objectPattern))"
     }
     
+    // 정규식과 일치하는 문자열의 NSRange을 찾음
+    func searchRange(stringForRange : String) -> NSRange{
+        let regex = try? NSRegularExpression(pattern: allPattern, options: .caseInsensitive)
+        return regex?.rangeOfFirstMatch(in: stringForRange, options: [], range: NSRange(stringForRange.startIndex..., in: stringForRange)) ?? NSRange()
+    }
+    
     // 객체의 프로퍼티 Value 값으로 쓰일 수 있는 값 추출
     func propertyValueExtract(data : String) -> String {
         return data.getArrayAfterRegex(regex: allValuePattern)[1]
@@ -74,10 +80,5 @@ struct ExtractData {
     // 객체의 데이터를 추출
     func objectDataExtract(objectData : String) -> [String] {
         return objectData.getArrayAfterRegex(regex: objectPropertyPattern)
-    }
-    
-    // 입력 값으로부터 배열또는 객체 형식을 추출
-    func extractAllData(data : String) -> [String] {
-        return data.getArrayAfterRegex(regex: allPattern)
     }
 }
