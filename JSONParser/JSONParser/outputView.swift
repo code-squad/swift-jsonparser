@@ -10,15 +10,16 @@ import Foundation
 
 struct OutputView {
     // JSONParser에서 전달받은 데이터 세트를 출력
-    func printResult(by data: JSONFormat) {
+    func printParsedCounts(by data: JSONFormat) {
+        let total = data.typeTotal()
         let dataType = data.typeName()
-        let result = combineSentence(with: (data.countsEachData()))
+        let ment = combineSentence(with: (data.countsEachData()))
         
-        print("총 \(result.total)개의 \(dataType) 데이터 중에 \(result.ment)가 포함되어 있습니다.")
+        print("총 \(total)개의 \(dataType) 데이터 중에 \(ment)가 포함되어 있습니다.")
     }
     
     // JSON 데이터를 가지고 문장을 조합하는 메소드
-    private func combineSentence(with count: (int: Int, bool: Int, string: Int, array: Int, object: Int, total: Int)) -> (total: Int, ment: String) {
+    private func combineSentence(with count: (int: Int, bool: Int, string: Int, array: Int, object: Int)) -> String {
         var result = [String]()
         
         if count.int > 0 { result.append("숫자 \(count.int)개") }
@@ -27,7 +28,15 @@ struct OutputView {
         if count.array > 0 { result.append("배열 \(count.array)개") }
         if count.object > 0 { result.append("객체 \(count.object)개") }
         
-        let mention = result.joined(separator: ", ")
-        return (total: count.total, ment: mention)
+        return result.joined(separator: ", ")
+    }
+    
+    func printParsedContents(by data: JSONFormat) {
+        let brackets = data.bringBracket()
+        let contents = data.bringContents()
+        
+        print(brackets.left)
+        print(contents)
+        print(brackets.right)
     }
 }
