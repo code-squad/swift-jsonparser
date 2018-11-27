@@ -34,8 +34,12 @@ struct Parser {
         return self.convert(string: string)
     }
     
-    static func convert(string:String) -> JsonType? {
+    static func convertExtractedData(string:String) -> JsonType? {
         guard GrammarChecker.checkValidOfGrammar(string: string) else {return nil}
+        return self.convert(string: string)
+    }
+    
+    static func convert(string:String) -> JsonType? {
         if self.isStringForm(string:string) {
             return JsonString.init(string: string)
         }
