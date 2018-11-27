@@ -18,6 +18,14 @@ struct GrammarChecker {
     static private let array = "(\\[([,\\s]*|\(stringNumberBool)|\(subArray)|\(subObject))+\\])"
     static private let object = "(\\{(([\\s]*?|\(string))+:([\\s,]*?|\(stringNumberBool)|\(subArray)|\(subObject))+)+\\})"
     
+    static func checkInputData(data:String) -> Bool {
+        let willCheckData = data
+        guard !checkGrammar(regex: "^\(array)$", string: willCheckData) else {return true}
+        guard !checkGrammar(regex: "^\(object)$", string: willCheckData) else {return true}
+        
+        return false
+    }
+    
     static func checkValidOfGrammar(string:String) -> Bool {
         guard self.checkBasicGrammar(data: string) else {return false}
         return true

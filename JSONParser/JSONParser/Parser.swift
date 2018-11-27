@@ -29,6 +29,11 @@ struct Parser {
         return string.hasPrefix("[") && string.hasSuffix("]")
     }
     
+    static func convertInput(string:String) -> JsonType? {
+        guard GrammarChecker.checkInputData(data:string) else {return nil}
+        return self.convert(string: string)
+    }
+    
     static func convert(string:String) -> JsonType? {
         guard GrammarChecker.checkValidOfGrammar(string: string) else {return nil}
         if self.isStringForm(string:string) {
