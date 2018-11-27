@@ -20,7 +20,7 @@ struct JsonArray : JsonType, JsonCollection {
         let extractedData = RegularExpression.extractData(string: removedSquare)
         
         for data in extractedData {
-            guard let parsedData = Parser.convert(string: data) else {print("지원하지 않는 형식을 포함하고 있습니다.");break}
+            guard let parsedData = Parser.convert(string: data) else {break}
             self._data.append(parsedData)
         }
     }

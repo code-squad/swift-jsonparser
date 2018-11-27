@@ -20,10 +20,8 @@ struct JsonObject : JsonType, JsonCollection {
         let extractedData = RegularExpression.extractData(string: removedSquare)
         
         for index in stride(from: extractedData.startIndex, through: extractedData.endIndex - 1, by: 2) {
-            guard let keyData = Parser.convert(string:extractedData[index]) as? JsonString
-                else {print("지원하지 않는 형식을 포함하고 있습니다.");break}
-            guard let valueData = Parser.convert(string:extractedData[index + 1])
-                else {print("지원하지 않는 형식을 포함하고 있습니다.");break}
+            guard let keyData = Parser.convert(string:extractedData[index]) as? JsonString else {continue}
+            guard let valueData = Parser.convert(string:extractedData[index + 1]) else {continue}
             self._data[keyData.data()] = valueData
         }
     }

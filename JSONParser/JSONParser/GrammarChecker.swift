@@ -9,48 +9,32 @@
 import Foundation
 
 struct GrammarChecker {
+    static private let string = "(\"[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣0-9\\s']+?\")"
+    static private let number = "(\\d+)"
+    static private let bool = "(true|false)"
+    static private let stringNumberBool = "\(string)|\(number)|\(bool)"
+    static private let subArray = "(\\[([,\\s]*|\(stringNumberBool))+\\])"
+    static private let subObject = "(\\{(([\\s]*?|\(string))+:([\\s,]*?|\(stringNumberBool))+)+\\})"
+    static private let array = "(\\[([,\\s]*|\(stringNumberBool)|\(subArray)|\(subObject))+\\])"
+    static private let object = "(\\{(([\\s]*?|\(string))+:([\\s,]*?|\(stringNumberBool)|\(subArray)|\(subObject))+)+\\})"
+    
     static func checkValidOfGrammar(string:String) -> Bool {
-        guard !self.checkColonInArray(string: string) else {return  false}
-        guard self.checkBasicGrammar(string: string) else {return false}
+        guard self.checkBasicGrammar(data: string) else {return false}
         return true
     }
     
-    static private func checkColonInArray(string:String) -> Bool {
-        let regex = "\\[\\s*\"(\\w|\\s|\\d|\\{|\\}|\\[|\\])+\"\\s*:\\s*(\"(\\w|\\s|\\d|\\{|\\}|\\[|\\])+\"|\\d+|true|false)\\s*\\]"
-        return string.range(of: regex, options: .regularExpression) != nil
-    }
-    
-    static private func checkBasicGrammar(string:String) -> Bool {
-        guard !checkString(string: string) else {return true}
-        guard !checkNumber(string: string) else {return true}
-        guard !checkBool(string: string) else {return true}
-        guard !checkArray(string: string) else {return true}
-        guard !checkObject(string: string) else {return true}
+    static private func checkBasicGrammar(data:String) -> Bool {
+        let willCheckData = data
+        guard !checkGrammar(regex: "^\(string)$", string: willCheckData) else {return true}
+        guard !checkGrammar(regex: "^\(number)$", string: willCheckData) else {return true}
+        guard !checkGrammar(regex: "^\(bool)$", string: willCheckData) else {return true}
+        guard !checkGrammar(regex: "^\(array)$", string: willCheckData) else {return true}
+        guard !checkGrammar(regex: "^\(object)$", string: willCheckData) else {return true}
+
         return false
     }
     
-    static private func checkString(string:String) -> Bool {
-        let regex = "^\"(.+)\"$"
-        return string.range(of: regex, options: .regularExpression) != nil
-    }
-    
-    static private func checkNumber(string:String) -> Bool {
-        let regex = "^\\d+$"
-        return string.range(of: regex, options: .regularExpression) != nil
-    }
-    
-    static private func checkBool(string:String) -> Bool {
-        let regex = "TRUE|FALSE"
-        return string.uppercased().range(of: regex, options: .regularExpression) != nil
-    }
-    
-    static private func checkArray(string:String) -> Bool {
-        let regex = "^\\[.+\\]$"
-        return string.range(of: regex, options: .regularExpression) != nil
-    }
-    
-    static private func checkObject(string:String) -> Bool {
-        let regex = "^\\{.+\\}$"
+    static private func checkGrammar(regex:String, string:String) -> Bool {
         return string.range(of: regex, options: .regularExpression) != nil
     }
 }
