@@ -15,3 +15,7 @@ protocol JsonType {
 protocol JsonCollection: JsonType {
     func numberByType() -> NumberByType
 }
+
+protocol ShowAble {
+    func bracket() -> (String,String)
+}

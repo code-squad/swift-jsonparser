@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonArray : JsonType, JsonCollection {
+struct JsonArray : JsonType, JsonCollection, ShowAble {
     private var _data = [JsonType]()
     
     init(array:[JsonType]) {
@@ -25,5 +25,9 @@ struct JsonArray : JsonType, JsonCollection {
     
     func type() -> TypeInfo {
         return .array
+    }
+    
+    func bracket() -> (String, String) {
+        return ("[","]")
     }
 }

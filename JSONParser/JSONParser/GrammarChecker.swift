@@ -26,22 +26,6 @@ struct GrammarChecker {
         return false
     }
     
-    static func checkValidOfGrammar(string:String) -> Bool {
-        guard self.checkBasicGrammar(data: string) else {return false}
-        return true
-    }
-    
-    static private func checkBasicGrammar(data:String) -> Bool {
-        let willCheckData = data
-        guard !checkGrammar(regex: "^\(string)$", string: willCheckData) else {return true}
-        guard !checkGrammar(regex: "^\(number)$", string: willCheckData) else {return true}
-        guard !checkGrammar(regex: "^\(bool)$", string: willCheckData) else {return true}
-        guard !checkGrammar(regex: "^\(array)$", string: willCheckData) else {return true}
-        guard !checkGrammar(regex: "^\(object)$", string: willCheckData) else {return true}
-
-        return false
-    }
-    
     static private func checkGrammar(regex:String, string:String) -> Bool {
         return string.range(of: regex, options: .regularExpression) != nil
     }

@@ -45,6 +45,15 @@ struct OutputView {
             print(",", terminator: "")
         }
     }
+    
+    static func showJsonForm(_ jsonData:JsonCollection) {
+        if jsonData.type() == .array {
+            
+        }
+        if jsonData.type() == .object {
+            
+        }
+    }
 }
 
 
