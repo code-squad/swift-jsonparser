@@ -10,7 +10,7 @@ import Foundation
 
 struct JSONParser {
     // JSON 모든 데이터를 SWIFT 데이터 타입 배열에 저장
-    func jsonParser(dataToConvert : String) -> JSONType {
+    func jsonParser(dataToConvert : String) -> SupportableJSON {
         let extractData : ExtractData = ExtractData()
         let typeChecker : GrammarChecker = GrammarChecker()
         let checkJSONType = typeChecker.IsArrayType(dataToConvert)
@@ -23,8 +23,8 @@ struct JSONParser {
     }
     
     // Array 안의 모든 JSON 데이터를 Swift 형식의 데이터로 전환
-    private func convertAllDataInArray(_ allDataInArray : [String]) -> Array<InSetJSONType>{
-        var convertedArray : [InSetJSONType] = []
+    private func convertAllDataInArray(_ allDataInArray : [String]) -> Array<SupportableInSetJSON>{
+        var convertedArray : [SupportableInSetJSON] = []
         
         for eachData in allDataInArray {
             convertedArray.append(jsonToSwiftTypeInSetMember(json: eachData))
@@ -33,15 +33,15 @@ struct JSONParser {
     }
     
     // Array 안 데이터 변환
-    private func jsonToSwiftTypeInSetMember(json : String) -> InSetJSONType{
+    private func jsonToSwiftTypeInSetMember(json : String) -> SupportableInSetJSON{
         let typeChecker : GrammarChecker = GrammarChecker()
         guard let dataType = typeChecker.checkSupportingTypeInSet(json) else { return "" }
         switch dataType {
         case is String: return convertString(json)
         case is Bool: return convertBoolean(json)
         case is Int: return convertNumber(json)
-        case is Dictionary<String, InSetJSONType>: return convertObject(json)
-        case is Array<InSetJSONType>: return convertArray(json)
+        case is Dictionary<String, SupportableInSetJSON>: return convertObject(json)
+        case is Array<SupportableInSetJSON>: return convertArray(json)
         default: return ""
         }
     }
@@ -66,12 +66,12 @@ struct JSONParser {
     }
     
     // JSON Object -> Swfit Dictionary
-    private func convertObject(_ json : String) -> Dictionary<String, InSetJSONType> {
+    private func convertObject(_ json : String) -> Dictionary<String, SupportableInSetJSON> {
         let extractData : ExtractData = ExtractData()
         let objectProperties : [String] = extractData.objectDataExtract(objectData: json)
         var propertyKey : String
         var propertyValue : String
-        var jsonObjectToSwiftDic : [String : InSetJSONType] = [:]
+        var jsonObjectToSwiftDic : [String : SupportableInSetJSON] = [:]
         
         for eachProperty in objectProperties {
             propertyKey = extractData.propertyKeyExtract(data: eachProperty)
@@ -82,10 +82,10 @@ struct JSONParser {
     }
     
     // JSON Array -> Swift Array
-    private func convertArray(_ json : String) -> Array<InSetJSONType> {
+    private func convertArray(_ json : String) -> Array<SupportableInSetJSON> {
         let extractData : ExtractData = ExtractData()
         let arrayElement : [String] = extractData.arrayNestedDataExtract(arrayData: json)
-        var swiftArray : [InSetJSONType] = []
+        var swiftArray : [SupportableInSetJSON] = []
         
         for eachElement in arrayElement { swiftArray.append(jsonToSwiftTypeInSetMember(json: eachElement)) }
         return swiftArray

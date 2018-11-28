@@ -31,12 +31,12 @@ struct GrammarChecker {
     }
     
     // Type을 검사하여 지원하는 타입인지 확인
-    func checkSupportingTypeInSet(_ jsonType : String) -> InSetJSONType? {
+    func checkSupportingTypeInSet(_ jsonType : String) -> SupportableInSetJSON? {
         if IsStringType(jsonType) { return String() }
         else if IsBooleanType(jsonType) { return Bool() }
         else if IsNumberType(jsonType) { return Int() }
-        else if IsObjectType(jsonType) { return Dictionary<String, InSetJSONType>()  }
-        else if IsArrayType(jsonType) { return [InSetJSONType]() }
+        else if IsObjectType(jsonType) { return Dictionary<String, SupportableInSetJSON>()  }
+        else if IsArrayType(jsonType) { return [SupportableInSetJSON]() }
         else { return nil }
     }
     

@@ -15,7 +15,7 @@ struct OutputView {
     }
     
     // 각 지원하는 타입안의 데이터 타입 출력
-    func printTypeCount(_ swiftData : JSONType) {
+    func printTypeCount(_ swiftData : SupportableJSON) {
         var printText : [String] = []
         let typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int, array : Int) = swiftData.matchTypeForCounting()
         
@@ -64,7 +64,7 @@ struct OutputView {
         return "배열 \(arrayCount)개"
     }
     
-    func printJSONSting(_ swiftType : JSONType) {
-        print(swiftType.createJSONStirng())
+    func printJSONSting(_ swiftType : SupportableJSON) {
+        print(swiftType.createJSONString())
     }
 }

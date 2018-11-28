@@ -8,23 +8,23 @@
 
 import Foundation
 
-extension String : InSetJSONType {
+extension String : SupportableInSetJSON {
     // 개별요소로 올 경우 문자열 화
     func printEachJSONString() -> String { return "\"\(self)\"" }
 }
-extension Bool : InSetJSONType  {
+extension Bool : SupportableInSetJSON  {
     // 개별요소로 올 경우 문자열 화
     func printEachJSONString() -> String { return "\(self)" }
 }
-extension Int : InSetJSONType {
+extension Int : SupportableInSetJSON {
     // 개별요소로 올 경우 문자열 화
     func printEachJSONString() -> String { return "\(self)" }
 }
-extension Dictionary : InSetJSONType, JSONType {
+extension Dictionary : SupportableInSetJSON, SupportableJSON {
     // 객체 안의 지원하는 타입의 개수를 각각 셈
     func matchTypeForCounting() -> (Int, Int, Int, Int, Int, Int) {
-        var valueSet : [InSetJSONType] = []
-        for (_, value) in self { valueSet.append(value as! InSetJSONType) }
+        var valueSet : [SupportableInSetJSON] = []
+        for (_, value) in self { valueSet.append(value as! SupportableInSetJSON) }
         return countType(allData: valueSet)
     }
     
@@ -34,14 +34,14 @@ extension Dictionary : InSetJSONType, JSONType {
     }
     
     // Dictionary JSON 문자열 생성
-    func createJSONStirng() -> String {
+    func createJSONString() -> String {
         var keyInSetJSON : String
         var valueInSetJSON : String
         var jsonText : String = "{\n"
         
         for (key, value) in self {
-            keyInSetJSON = (key as! InSetJSONType).printEachJSONString()
-            valueInSetJSON = (value as! InSetJSONType).printEachJSONString()
+            keyInSetJSON = (key as! SupportableInSetJSON).printEachJSONString()
+            valueInSetJSON = (value as! SupportableInSetJSON).printEachJSONString()
             jsonText = jsonText + "\t\(keyInSetJSON) : \(valueInSetJSON),\n"
         }
         jsonText.remove(at: jsonText.index(jsonText.endIndex, offsetBy: -2))
@@ -56,8 +56,8 @@ extension Dictionary : InSetJSONType, JSONType {
         var jsonText : String = "{\n"
         
         for (key, value) in self {
-            keyInSetJSON = (key as! InSetJSONType).printEachJSONString()
-            valueInSetJSON = (value as! InSetJSONType).printEachJSONString()
+            keyInSetJSON = (key as! SupportableInSetJSON).printEachJSONString()
+            valueInSetJSON = (value as! SupportableInSetJSON).printEachJSONString()
             jsonText = jsonText + "\t\t\(keyInSetJSON) : \(valueInSetJSON),\n"
         }
         jsonText.remove(at: jsonText.index(jsonText.endIndex, offsetBy: -2))
@@ -66,10 +66,10 @@ extension Dictionary : InSetJSONType, JSONType {
     }
 }
 
-extension Array : InSetJSONType, JSONType {
+extension Array : SupportableInSetJSON, SupportableJSON {
     // 배열 안의 지원하는 타입의 개수를 각각 셈
     func matchTypeForCounting() -> (Int, Int, Int, Int, Int, Int) {
-        return countType(allData: self as! [InSetJSONType])
+        return countType(allData: self as! [SupportableInSetJSON])
     }
     
     // 배열 프린트 문구 리턴
@@ -78,12 +78,12 @@ extension Array : InSetJSONType, JSONType {
     }
     
     // Array JSON 문자열 생성
-    func createJSONStirng() -> String {
-        var valueInArray : [InSetJSONType] = []
+    func createJSONString() -> String {
+        var valueInArray : [SupportableInSetJSON] = []
         var lastSpace : Bool = false
         var jsonText : String = "["
         
-        for value in self { valueInArray.append(value as! InSetJSONType) }
+        for value in self { valueInArray.append(value as! SupportableInSetJSON) }
         for index in 0..<valueInArray.count {
             if index == 0 && valueInArray[index] is Array {
                 jsonText = jsonText + "\n\t"
@@ -93,7 +93,7 @@ extension Array : InSetJSONType, JSONType {
                 jsonText = jsonText + "\n\t"
                 lastSpace = true
             }
-            else if index != 0 && valueInArray[index-1] is Dictionary<String, InSetJSONType> && valueInArray[index] is Array {
+            else if index != 0 && valueInArray[index-1] is Dictionary<String, SupportableInSetJSON> && valueInArray[index] is Array {
                 jsonText = jsonText + "\n\t"
                 lastSpace = true
             }
@@ -113,7 +113,7 @@ extension Array : InSetJSONType, JSONType {
 }
 
 // 배열 안에 들어갈 수 있는 데이터 타입
-protocol InSetJSONType {
+protocol SupportableInSetJSON {
     // 개별요소로 올 경우 문자열 화
     func printEachJSONString() -> String
 }
