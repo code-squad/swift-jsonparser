@@ -11,7 +11,7 @@ import Foundation
 // 사용자가 입력할 수 있는 데이터 타입 Ex) 배열, 객체
 protocol SupportableJSON {
     func matchTypeForCounting() -> (Int, Int, Int, Int, Int, Int)
-    func printTotalText(_ totalCount : Int) -> String
+    func createTotalText(_ totalCount : Int) -> String
     func createJSONString() -> String
 }
 

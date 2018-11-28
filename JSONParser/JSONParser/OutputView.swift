@@ -26,7 +26,7 @@ struct OutputView {
         if let text = printArrayTypeCount(typeCount.array) { printText.append(text) }
         
         for index in stride(from: 1, to: 2*printText.count-1, by: 2) { printText.insert(", ", at: index) }
-        printText.insert(swiftData.printTotalText(typeCount.total), at: 0)
+        printText.insert(swiftData.createTotalText(typeCount.total), at: 0)
         printText.append("가 있습니다")
         for text in printText {
             print(text, terminator: "")
