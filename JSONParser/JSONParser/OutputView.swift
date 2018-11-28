@@ -46,13 +46,10 @@ struct OutputView {
         }
     }
     
-    static func showJsonForm(_ jsonData:JsonCollection) {
-        if jsonData.type() == .array {
-            
-        }
-        if jsonData.type() == .object {
-            
-        }
+    static func showJsonForm(_ jsonData:ShowAble) {
+        let bracket = jsonData.bracket()
+        print(bracket.0)
+        print(bracket.1)
     }
 }
 
