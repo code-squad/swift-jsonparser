@@ -24,6 +24,16 @@ enum JSONType {
         case .object:   return "객체"
         }
     }
+    
+    func content(_ indent: Int) -> String {
+        switch self {
+        case .int(let element):     return String(element)
+        case .bool(let element):    return String(element)
+        case .string(let element):  return element
+        case .array(let element):   return element.drawContents(with: indent)
+        case .object(let element):  return element.drawContents(with: indent)
+        }
+    }
 }
 
 struct ArrayJSONData: JSONFormat {
@@ -55,15 +65,22 @@ struct ArrayJSONData: JSONFormat {
         return (int: int, bool: bool, string: string, array: array, object: object)
     }
     
-    func bringContents() -> String {
-        var contents = String()
+    func drawContents(with indent: Int) -> String {
+        let blank = indent.calcBlank
+        var contents = "["
         
+        for element in self.elements {
+            switch element.name {
+            case "객체" :    contents += "\n\(element.content(indent)), "
+            case "배열" :    contents += "\n\(blank)\(element.content(indent)), "
+            default :       contents += "\(element.content(indent)), "
+            }
+        }
         
+        contents.removeLast(2)
+        if contents.last == "]" || contents.last == "}" { contents += "\n" }
+        contents += "]"
         return contents
-    }
-    
-    func bringBracket() -> (left: String, right: String) {
-        return (left: "[", right: "]")
     }
 }
 
@@ -96,14 +113,16 @@ struct ObjectJSONData: JSONFormat {
         return (int: int, bool: bool, string: string, array: array, object: object)
     }
     
-    func bringContents() -> String {
-        var contents = String()
+    func drawContents(with indent: Int) -> String {
+        let blank = indent.calcBlank
+        var contents = "\(blank){\n"
         
+        for (key,value) in self.elements {
+            contents += "\t\(blank)\(key) : \(value.content(indent)),\n"
+        }
         
+        contents.removeLast(2)
+        contents += "\n\(blank)}"
         return contents
-    }
-    
-    func bringBracket() -> (left: String, right: String) {
-        return (left: "{", right: "}")
     }
 }

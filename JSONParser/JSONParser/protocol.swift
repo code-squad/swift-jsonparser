@@ -12,6 +12,5 @@ protocol JSONFormat {
     func typeName() -> String
     func typeTotal() -> Int
     func countsEachData() -> (int: Int, bool: Int, string: Int, array: Int, object: Int)
-    func bringContents() -> String
-    func bringBracket() -> (left: String, right: String)
+    func drawContents(with indent: Int) -> String
 }
