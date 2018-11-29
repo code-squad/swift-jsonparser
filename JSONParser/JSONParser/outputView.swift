@@ -35,6 +35,7 @@ struct OutputView {
     }
     
     private func makeIndent(with count: (int: Int, bool: Int, string: Int, array: Int, object: Int), _ type: JSONFormat) -> Int {
+        if type is ObjectJSONData && count.object > 0 { return 1 }
         if type is ArrayJSONData && (count.array > 0 || count.object > 0) { return 1 }
         return 0
     }
