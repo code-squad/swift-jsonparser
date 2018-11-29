@@ -9,16 +9,19 @@
 import Foundation
 
 extension String : SupportableInSetJSON {
-    // 개별요소로 올 경우 문자열 화
-    func createValueJSONString() -> String { return "\"\(self)\"" }
+    func createValueJSONString(tab: String) -> String {
+        return "\(tab)\(self)"
+    }
 }
 extension Bool : SupportableInSetJSON  {
-    // 개별요소로 올 경우 문자열 화
-    func createValueJSONString() -> String { return "\(self)" }
+    func createValueJSONString(tab: String) -> String {
+        return "\(tab)\(self)"
+    }
 }
 extension Int : SupportableInSetJSON {
-    // 개별요소로 올 경우 문자열 화
-    func createValueJSONString() -> String { return "\(self)" }
+    func createValueJSONString(tab: String) -> String {
+        return "\(tab)\(self)"
+    }
 }
 extension Dictionary : SupportableInSetJSON, SupportableJSON {
     // 객체 안의 지원하는 타입의 개수를 각각 셈
@@ -36,30 +39,32 @@ extension Dictionary : SupportableInSetJSON, SupportableJSON {
     // Dictionary JSON 문자열 생성
     func createJSONString() -> String {
         var jsonText : String = "{\n"
-        
+        var tab : String
+
         for (key, value) in self {
             guard let keyInSetJSON = key as? SupportableInSetJSON else { return "" }
             guard let valueInSetJSON = value as? SupportableInSetJSON else { return "" }
-            jsonText = jsonText + "\t\(keyInSetJSON.createValueJSONString()) : \(valueInSetJSON.createValueJSONString()),\n"
+            if valueInSetJSON is Dictionary<String, SupportableInSetJSON> { tab = "\t\t" }
+            else { tab = "" }
+            jsonText = jsonText + "\t\(keyInSetJSON.createValueJSONString(tab: "")) : \(valueInSetJSON.createValueJSONString(tab: tab)),\n"
         }
         jsonText.remove(at: jsonText.index(jsonText.endIndex, offsetBy: -2))
         jsonText = jsonText + "}"
         return jsonText
     }
     
-    // 개별 요소로 올 경우 문자열 화
-    func createValueJSONString() -> String {
-        var keyInSetJSON : String
-        var valueInSetJSON : String
+    // 내부요소로 올 경우 JSON 생성
+    func createValueJSONString(tab: String) -> String {
         var jsonText : String = "{\n"
         
         for (key, value) in self {
-            keyInSetJSON = (key as! SupportableInSetJSON).createValueJSONString()
-            valueInSetJSON = (value as! SupportableInSetJSON).createValueJSONString()
-            jsonText = jsonText + "\t\t\(keyInSetJSON) : \(valueInSetJSON),\n"
+            guard let keyInSetJSON = key as? SupportableInSetJSON else { return "" }
+            guard let valueInSetJSON = value as? SupportableInSetJSON else { return "" }
+            jsonText = jsonText + "\(tab)\(keyInSetJSON.createValueJSONString(tab: "")) : \(valueInSetJSON.createValueJSONString(tab: "")),\n"
         }
         jsonText.remove(at: jsonText.index(jsonText.endIndex, offsetBy: -2))
-        jsonText = jsonText + "\t}"
+        if tab == "\t\t" { jsonText = jsonText + "\t}" }
+        jsonText = jsonText + "}"
         return jsonText
     }
 }
@@ -77,40 +82,43 @@ extension Array : SupportableInSetJSON, SupportableJSON {
     
     // Array JSON 문자열 생성
     func createJSONString() -> String {
-        var lastSpace : Bool = false
         var jsonText : String = "["
+        var tab : String
+        var inObjectDoubleSpace : Bool = false
         
         for index in 0..<self.count {
-            guard let valueInArray = self[index] as? SupportableInSetJSON else { return "" }
-            if index == 0 && self[index] is Array {
-                jsonText = jsonText + "\n\t"
-                lastSpace = true
-            }
-            else if index != 0 && self[index-1] is Array && self[index] is Array {
-                jsonText = jsonText + "\n\t"
-                lastSpace = true
-            }
-            else if index != 0 && self[index-1] is Dictionary<String, SupportableInSetJSON> && self[index] is Array {
-                jsonText = jsonText + "\n\t"
-                lastSpace = true
-            }
-            jsonText = jsonText + valueInArray.createValueJSONString() + ", "
+            if index == 0 && self[index] is Array { inObjectDoubleSpace = true }
+            else if index != 0 && self[index] is Array && self[index-1] is Array { inObjectDoubleSpace = true }
+            else if index != 0 && self[index] is Array && self[index-1] is Dictionary<String, SupportableInSetJSON> { inObjectDoubleSpace = true }
         }
+        
+        for index in 0..<self.count {
+            guard let elementInArray = self[index] as? SupportableInSetJSON else { return "" }
+            if index == 0 && self[index] is Array { tab = "\n\t" }
+            else if index != 0 && self[index] is Array && self[index-1] is Array { tab = "\n\t" }
+            else if index != 0 && self[index] is Array && self[index-1] is Dictionary<String, SupportableInSetJSON> { tab = "\n\t" }
+            else if inObjectDoubleSpace && self[index] is Dictionary<String, SupportableInSetJSON> { tab = "\t\t" }
+            else if self[index] is Dictionary<String, SupportableInSetJSON> { tab = "\t" }
+            else { tab = "" }
+            jsonText = jsonText + elementInArray.createValueJSONString(tab: tab)
+            jsonText = jsonText + ", "
+        }
+
         jsonText.remove(at: jsonText.index(before: jsonText.endIndex))
         jsonText.remove(at: jsonText.index(before: jsonText.endIndex))
-        if lastSpace { jsonText = jsonText + "\n]" }
+        if inObjectDoubleSpace { jsonText = jsonText + "\n]" }
         else { jsonText = jsonText + "]" }
+        
         return jsonText
     }
     
-    // 개별요소로 올 경우 문자열 화
-    func createValueJSONString() -> String {
-        return "\(self)"
+    func createValueJSONString(tab : String) -> String {
+        return "\(tab)\(self)"
     }
 }
 
 // 배열 안에 들어갈 수 있는 데이터 타입
 protocol SupportableInSetJSON {
     // 개별요소로 올 경우 문자열 화
-    func createValueJSONString() -> String
+    func createValueJSONString(tab : String) -> String
 }
