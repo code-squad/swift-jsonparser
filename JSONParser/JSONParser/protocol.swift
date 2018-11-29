@@ -8,9 +8,13 @@
 
 import Foundation
 
-protocol JSONFormat {
+protocol JSONFormat: PrintableJSON {
     func typeName() -> String
     func typeTotal() -> Int
     func countsEachData() -> (int: Int, bool: Int, string: Int, array: Int, object: Int)
+    
+}
+
+protocol PrintableJSON {
     func drawContents(with indent: Int) -> String
 }
