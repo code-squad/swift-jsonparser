@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonArray : JsonType, JsonCollection, ShowAble {
+struct JsonArray : JsonType, JsonCollection {
     private var _data = [JsonType]()
     
     init(array:[JsonType]) {

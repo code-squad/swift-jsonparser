@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonObject : JsonType, JsonCollection, ShowAble {
+struct JsonObject : JsonType, JsonCollection {
     private var _data = [String:JsonType]()
     
     init(object:[String:JsonType]) {
