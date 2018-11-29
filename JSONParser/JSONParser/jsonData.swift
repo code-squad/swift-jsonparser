@@ -66,7 +66,7 @@ struct ArrayJSONData: JSONFormat {
     }
     
     func drawContents(with indent: Int) -> String {
-        let blank = indent.calcBlank
+        let blank = calcBlank(by: indent)
         var contents = "["
         
         for element in self.elements {
@@ -81,6 +81,10 @@ struct ArrayJSONData: JSONFormat {
         if contents.last == "]" || contents.last == "}" { contents += "\n" }
         contents += "]"
         return contents
+    }
+    
+    private func calcBlank(by indent: Int) -> String {
+        return indent == 1 ? "\t" : String()
     }
 }
 
@@ -114,7 +118,7 @@ struct ObjectJSONData: JSONFormat {
     }
     
     func drawContents(with indent: Int) -> String {
-        let blank = indent.calcBlank
+        let blank = calcBlank(by: indent)
         var contents = "\(blank){\n"
         
         for (key,value) in self.elements {
@@ -124,5 +128,9 @@ struct ObjectJSONData: JSONFormat {
         contents.removeLast(2)
         contents += "\n\(blank)}"
         return contents
+    }
+    
+    private func calcBlank(by indent: Int) -> String {
+        return indent == 1 ? "\t" : String()
     }
 }

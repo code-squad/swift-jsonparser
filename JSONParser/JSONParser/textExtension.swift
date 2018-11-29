@@ -43,12 +43,3 @@ extension String {
         return true
     }
 }
-
-extension Int {
-    var calcBlank: String {
-        if self == 1 {
-            return "\t"
-        }
-        return String()
-    }
-}
