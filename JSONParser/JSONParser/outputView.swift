@@ -10,12 +10,11 @@ import Foundation
 
 struct OutputView {
     // JSONParser에서 전달받은 데이터 세트를 출력
-    func printParsedContents(by data: JSONFormat) {
+    func printResult(by data: JSONFormat) {
         let total = data.typeTotal(), dataType = data.typeName()                // 전달받은 데이터의 총 수와 데이터명
         let eachData = data.countsEachData()                                    // 전달받은 데이터 각각의 수
         let ment = makeSentence(with: eachData)                                 // 각 데이터의 수를 가지고 출력문 생성
-        let indent = makeIndent(with: eachData, data)                                 // 데이터 타입과 출력을 위한 인덴트 생성
-        let contents = data.drawContents(with: indent)                          // 각 데이터와 인덴트를 가지고 출력문 생성
+        let contents = printParsedContents(by: data, with: eachData.array, eachData.object)
         
         print("총 \(total)개의 \(dataType) 데이터 중에 \(ment)가 포함되어 있습니다.")
         print(contents)
@@ -34,9 +33,15 @@ struct OutputView {
         return result.joined(separator: ", ")
     }
     
-    private func makeIndent(with count: (int: Int, bool: Int, string: Int, array: Int, object: Int), _ type: JSONFormat) -> Int {
-        if type is ObjectJSONData && count.object > 0 { return 1 }
-        if type is ArrayJSONData && (count.array > 0 || count.object > 0) { return 1 }
+    private func makeIndent(with array: Int, _ object: Int , by type: JSONFormat) -> Int {
+        if type is ObjectJSONData && object > 0 { return 1 }
+        if type is ArrayJSONData && (array > 0 || object > 0) { return 1 }
         return 0
+    }
+    
+    private func printParsedContents(by data: JSONFormat, with array: Int, _ object: Int ) -> String {
+        let indent = makeIndent(with: array, object, by: data)                           // 데이터 타입과 출력을 위한 인덴트 생성
+        let contents = data.drawContents(with: indent)                          // 각 데이터와 인덴트를 가지고 출력문 생성
+        return contents
     }
 }
