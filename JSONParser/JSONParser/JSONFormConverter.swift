@@ -9,7 +9,7 @@
 import Foundation
 
 struct JSONFormConverter {
-    static func show(rawData:JsonType) -> String {
+    static func convert(rawData:JsonType) -> String {
         switch rawData.type() {
         case .string:
             guard let string = rawData as? JsonString else {return ""}
@@ -22,31 +22,31 @@ struct JSONFormConverter {
             return "\(bool.data())"
         case .array:
             guard let array = rawData as? JsonArray else {return ""}
-            return "\(show(rawArray: array.data()))"
+            return "\(convert(rawArray: array.data()))"
         case .object:
             guard let object = rawData as? JsonObject else {return ""}
-            return "\(show(rawObject: object.data()))"
+            return "\(convert(rawObject: object.data()))"
         }
     }
     
-    static private func show(rawObject:[String:JsonType]) -> String {
+    static private func convert(rawObject:[String:JsonType]) -> String {
         var JSONFormObject = ""
         
         JSONFormObject.append("{")
         for data in rawObject {
-            JSONFormObject.append("\n\t\t\"\(data.key)\": \(show(rawData: data.value))")
+            JSONFormObject.append("\n\t\t\"\(data.key)\": \(convert(rawData: data.value))")
         }
         JSONFormObject.append("\n\t}")
         
         return JSONFormObject
     }
     
-    static private func show(rawArray:[JsonType]) -> String {
+    static private func convert(rawArray:[JsonType]) -> String {
         var JSONFormArray = ""
         
         JSONFormArray.append("[")
         for data in rawArray {
-            JSONFormArray.append("\(show(rawData: data))")
+            JSONFormArray.append("\(convert(rawData: data))")
             JSONFormArray.append(", ")
         }
         JSONFormArray.removeLast()

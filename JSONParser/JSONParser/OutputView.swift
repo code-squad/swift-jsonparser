@@ -65,7 +65,7 @@ struct OutputView {
         JSONFormObject.append("{")
         for data in object {
             JSONFormObject.append("\n\t")
-            JSONFormObject.append("\"\(data.key)\": \(JSONFormConverter.show(rawData: data.value)),")
+            JSONFormObject.append("\"\(data.key)\": \(JSONFormConverter.convert(rawData: data.value)),")
         }
         JSONFormObject.removeLast()
         JSONFormObject.append("\n}")
@@ -78,7 +78,7 @@ struct OutputView {
         
         JSONFormArray.append("[")
         for data in array {
-            JSONFormArray.append("\(JSONFormConverter.show(rawData: data))")
+            JSONFormArray.append("\(JSONFormConverter.convert(rawData: data))")
             JSONFormArray.append(",\n\t")
         }
         JSONFormArray.removeLast()
