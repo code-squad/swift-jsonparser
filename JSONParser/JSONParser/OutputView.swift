@@ -50,89 +50,89 @@ struct OutputView {
         switch jsonData.type() {
         case .object:
             guard let object = jsonData as? JsonObject else {return}
-            showObject(object: object.data())
+            show(object: object.data())
         case .array:
             guard let array = jsonData as? JsonArray else {return}
-            showArray(array: array.data())
+            show(array: array.data())
         default:
             return
         }
     }
     
-    static private func showObject(object:[String:JsonType]) {
-        var jsonFormObject = ""
+    static private func show(object:[String:JsonType]) {
+        var JSONFormObject = ""
         
-        jsonFormObject.append("{")
+        JSONFormObject.append("{")
         for data in object {
-            jsonFormObject.append("\n\t")
-            jsonFormObject.append("\"\(data.key)\": \(showRawData(data: data.value)),")
+            JSONFormObject.append("\n\t")
+            JSONFormObject.append("\"\(data.key)\": \(show(rawData: data.value)),")
         }
-        jsonFormObject.removeLast()
-        jsonFormObject.append("\n}")
+        JSONFormObject.removeLast()
+        JSONFormObject.append("\n}")
         
-        print(jsonFormObject)
+        print(JSONFormObject)
     }
     
-    static private func showArray(array:[JsonType]) {
-        var jsonFormArray = ""
+    static private func show(array:[JsonType]) {
+        var JSONFormArray = ""
         
-        jsonFormArray.append("[")
+        JSONFormArray.append("[")
         for data in array {
-            jsonFormArray.append("\(showRawData(data: data))")
-            jsonFormArray.append(",\n\t")
+            JSONFormArray.append("\(show(rawData: data))")
+            JSONFormArray.append(",\n\t")
         }
-        jsonFormArray.removeLast()
-        jsonFormArray.removeLast()
-        jsonFormArray.removeLast()
-        jsonFormArray.append("\n]")
+        JSONFormArray.removeLast()
+        JSONFormArray.removeLast()
+        JSONFormArray.removeLast()
+        JSONFormArray.append("\n]")
         
-        print(jsonFormArray)
+        print(JSONFormArray)
     }
     
-    static private func showRawData(data:JsonType) -> String {
-        switch data.type() {
+    static private func show(rawData:JsonType) -> String {
+        switch rawData.type() {
         case .string:
-            guard let string = data as? JsonString else {return ""}
+            guard let string = rawData as? JsonString else {return ""}
             return "\"\(string.data())\""
         case .number:
-            guard let number = data as? JsonNumber else {return ""}
+            guard let number = rawData as? JsonNumber else {return ""}
             return "\(Int(number.data()))"
         case .bool:
-            guard let bool = data as? JsonBool else {return ""}
+            guard let bool = rawData as? JsonBool else {return ""}
             return "\(bool.data())"
         case .array:
-            guard let array = data as? JsonArray else {return ""}
-            return "\(showRawArray(array: array.data()))"
+            guard let array = rawData as? JsonArray else {return ""}
+            return "\(show(rawArray: array.data()))"
         case .object:
-            guard let object = data as? JsonObject else {return ""}
-            return "\(showRawObject(object: object.data()))"
+            guard let object = rawData as? JsonObject else {return ""}
+            return "\(show(rawObject: object.data()))"
         }
     }
     
-    static private func showRawObject(object:[String:JsonType]) -> String {
-        var jsonFormObject = ""
+    static private func show(rawObject:[String:JsonType]) -> String {
+        var JSONFormObject = ""
         
-        jsonFormObject.append("{")
-        for data in object {
-            jsonFormObject.append("\n\t\t\"\(data.key)\": \(showRawData(data: data.value))")
+        JSONFormObject.append("{")
+        for data in rawObject {
+            JSONFormObject.append("\n\t\t\"\(data.key)\": \(show(rawData: data.value))")
         }
-        jsonFormObject.append("\n\t}")
+        JSONFormObject.append("\n\t}")
         
-        return jsonFormObject
+        return JSONFormObject
     }
     
-    static private func showRawArray(array:[JsonType]) -> String {
-        var jsonFormArray = ""
+    static private func show(rawArray:[JsonType]) -> String {
+        var JSONFormArray = ""
         
-        jsonFormArray.append("[")
-        for data in array {
-            jsonFormArray.append("\(showRawData(data: data))")
-            jsonFormArray.append(", ")
+        JSONFormArray.append("[")
+        for data in rawArray {
+            JSONFormArray.append("\(show(rawData: data))")
+            JSONFormArray.append(", ")
         }
-        jsonFormArray.removeLast()
-        jsonFormArray.removeLast()
-        jsonFormArray.append("]")
+        JSONFormArray.removeLast()
+        JSONFormArray.removeLast()
+        JSONFormArray.append("]")
         
-        return jsonFormArray
+        return JSONFormArray
     }
 }
