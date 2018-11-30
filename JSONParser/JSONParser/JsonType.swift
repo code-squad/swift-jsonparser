@@ -21,6 +21,6 @@ protocol PrintAble {
     func printForm() -> String
 }
 
-protocol ObjectKey {
+protocol KeyOfObject {
     func key() -> String
 }

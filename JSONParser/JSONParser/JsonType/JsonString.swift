@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonString: JsonType, ObjectKey {
+struct JsonString: JsonType, KeyOfObject {
     private let string : String
     
     init(string:String) {
