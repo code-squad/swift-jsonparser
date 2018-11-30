@@ -13,4 +13,9 @@ struct InputView {
         print(ment)
         return readLine() ?? ""
     }
+    
+    static func readFile() -> String {
+        
+        return ""
+    }
 }
