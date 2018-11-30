@@ -32,6 +32,18 @@ struct JsonArray : JsonType, JsonCollection, ShowAble {
     }
     
     func JSONForm() -> String {
-        return ""
+        var JSONFormArray = ""
+        
+        JSONFormArray.append("[")
+        for data in _data {
+            JSONFormArray.append("\(JSONFormConverter.convert(rawData: data))")
+            JSONFormArray.append(",\n\t")
+        }
+        JSONFormArray.removeLast()
+        JSONFormArray.removeLast()
+        JSONFormArray.removeLast()
+        JSONFormArray.append("\n]")
+        
+        return JSONFormArray
     }
 }

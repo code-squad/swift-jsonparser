@@ -16,7 +16,8 @@ func main() {
     
     guard let collectionTypeJsonData = jsonData as? JsonCollection else {return}
     OutputView.showNumberOfData(collectionTypeJsonData.numberByType(),type:collectionTypeJsonData.type())
-    OutputView.showJsonForm(collectionTypeJsonData)
+    guard let showAbleJsonData = jsonData as? ShowAble else {return}
+    OutputView.showJsonForm(showAbleJsonData)
 }
 
 main()

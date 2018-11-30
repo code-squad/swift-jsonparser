@@ -46,46 +46,7 @@ struct OutputView {
         }
     }
     
-    static func showJsonForm(_ jsonData:JsonCollection) {
-        switch jsonData.type() {
-        case .object:
-            guard let object = jsonData as? JsonObject else {return}
-            show(object: object.data())
-        case .array:
-            guard let array = jsonData as? JsonArray else {return}
-            show(array: array.data())
-        default:
-            return
-        }
-    }
-    
-    static private func show(object:[String:JsonType]) {
-        var JSONFormObject = ""
-        
-        JSONFormObject.append("{")
-        for data in object {
-            JSONFormObject.append("\n\t")
-            JSONFormObject.append("\"\(data.key)\": \(JSONFormConverter.convert(rawData: data.value)),")
-        }
-        JSONFormObject.removeLast()
-        JSONFormObject.append("\n}")
-        
-        print(JSONFormObject)
-    }
-    
-    static private func show(array:[JsonType]) {
-        var JSONFormArray = ""
-        
-        JSONFormArray.append("[")
-        for data in array {
-            JSONFormArray.append("\(JSONFormConverter.convert(rawData: data))")
-            JSONFormArray.append(",\n\t")
-        }
-        JSONFormArray.removeLast()
-        JSONFormArray.removeLast()
-        JSONFormArray.removeLast()
-        JSONFormArray.append("\n]")
-        
-        print(JSONFormArray)
+    static func showJsonForm(_ jsonData:ShowAble) {
+        print("\(jsonData.JSONForm())")
     }
 }
