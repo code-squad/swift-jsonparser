@@ -10,12 +10,13 @@ import Foundation
 
 protocol JsonType {
     func type() -> TypeInfo
+    func JSONForm() -> String
 }
 
 protocol JsonCollection: JsonType {
     func numberByType() -> NumberByType
 }
 
-protocol ShowAble {
-    func JSONForm() -> String
+protocol PrintAble {
+    func printForm() -> String
 }

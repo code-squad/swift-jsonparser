@@ -22,4 +22,8 @@ struct JsonString: JsonType {
     func type() -> TypeInfo {
         return .string
     }
+    
+    func JSONForm() -> String {
+        return "\"\(_data)\""
+    }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonArray : JsonType, JsonCollection, ShowAble {
+struct JsonArray : JsonType, JsonCollection, PrintAble {
     private var _data = [JsonType]()
     
     init(array:[JsonType]) {
@@ -36,7 +36,22 @@ struct JsonArray : JsonType, JsonCollection, ShowAble {
         
         JSONFormArray.append("[")
         for data in _data {
-            JSONFormArray.append("\(JSONFormConverter.convert(rawData: data))")
+            JSONFormArray.append("\(data.JSONForm())")
+            JSONFormArray.append(", ")
+        }
+        JSONFormArray.removeLast()
+        JSONFormArray.removeLast()
+        JSONFormArray.append("]")
+        
+        return JSONFormArray
+    }
+    
+    func printForm() -> String {
+        var JSONFormArray = ""
+        
+        JSONFormArray.append("[")
+        for data in _data {
+            JSONFormArray.append("\(data.JSONForm())")
             JSONFormArray.append(",\n\t")
         }
         JSONFormArray.removeLast()

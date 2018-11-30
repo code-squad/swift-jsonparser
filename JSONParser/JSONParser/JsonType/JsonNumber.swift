@@ -22,4 +22,8 @@ struct JsonNumber: JsonType {
     func type() -> TypeInfo {
         return .number
     }
+    
+    func JSONForm() -> String {
+        return "\(Int(_data))"
+    }
 }

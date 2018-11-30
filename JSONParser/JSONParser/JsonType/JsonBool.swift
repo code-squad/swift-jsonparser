@@ -22,4 +22,8 @@ struct JsonBool: JsonType  {
     func type() -> TypeInfo {
         return .bool
     }
+    
+    func JSONForm() -> String {
+        return "\(_data)"
+    }
 }

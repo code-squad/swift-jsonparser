@@ -46,7 +46,7 @@ struct OutputView {
         }
     }
     
-    static func showJsonForm(_ jsonData:ShowAble) {
-        print("\(jsonData.JSONForm())")
+    static func showJsonForm(_ jsonData:PrintAble) {
+        print("\(jsonData.printForm())")
     }
 }

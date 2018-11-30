@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonObject : JsonType, JsonCollection, ShowAble {
+struct JsonObject : JsonType, JsonCollection, PrintAble {
     private var _data = [String:JsonType]()
     
     init(object:[String:JsonType]) {
@@ -36,8 +36,20 @@ struct JsonObject : JsonType, JsonCollection, ShowAble {
         
         JSONFormObject.append("{")
         for data in _data {
+            JSONFormObject.append("\n\t\t\"\(data.key)\": \(data.value.JSONForm())")
+        }
+        JSONFormObject.append("\n\t}")
+        
+        return JSONFormObject
+    }
+    
+    func printForm() -> String {
+        var JSONFormObject = ""
+        
+        JSONFormObject.append("{")
+        for data in _data {
             JSONFormObject.append("\n\t")
-            JSONFormObject.append("\"\(data.key)\": \(JSONFormConverter.convert(rawData: data.value)),")
+            JSONFormObject.append("\"\(data.key)\": \(data.value.JSONForm()),")
         }
         JSONFormObject.removeLast()
         JSONFormObject.append("\n}")
