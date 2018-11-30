@@ -15,14 +15,10 @@ struct JsonString: JsonType {
         self.string = string.trimmingCharacters(in: ["\"","\""])
     }
     
-    func data() -> String {
-        return self.string
-    }
-    
     func type() -> TypeInfo {
         return .string
     }
-    
+
     func JSONForm() -> String {
         return "\"\(string)\""
     }

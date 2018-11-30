@@ -15,10 +15,6 @@ struct JsonNumber: JsonType {
         self.number = Double(number) ?? 0
     }
     
-    func data() -> Double {
-        return self.number
-    }
-    
     func type() -> TypeInfo {
         return .number
     }

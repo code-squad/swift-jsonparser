@@ -15,10 +15,6 @@ struct JsonObject : JsonType, JsonCollection, PrintAble {
         self.object = object
     }
     
-    func data() -> [String:JsonType] {
-        return self.object
-    }
-    
     func numberByType() -> NumberByType {
         return NumberByType.init(array: Array(self.object.values))
     }

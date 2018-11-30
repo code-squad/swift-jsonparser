@@ -15,10 +15,6 @@ struct JsonArray : JsonType, JsonCollection, PrintAble {
         self.array = array
     }
     
-    func data() -> [JsonType] {
-        return self.array
-    }
-    
     func numberByType() -> NumberByType {
         return NumberByType.init(array: self.array)
     }

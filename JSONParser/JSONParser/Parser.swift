@@ -69,7 +69,7 @@ struct Parser {
         for index in stride(from: extractedData.startIndex, through: extractedData.endIndex - 1, by: 2) {
             guard let keyData = Parser.convert(string:extractedData[index]) as? JsonString else {continue}
             guard let valueData = Parser.convert(string:extractedData[index + 1]) else {continue}
-            jsonObject[keyData.data()] = valueData
+            jsonObject[keyData.JSONForm().trimmingCharacters(in: ["\"","\""])] = valueData
         }
         
         return jsonObject

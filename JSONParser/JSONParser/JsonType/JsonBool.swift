@@ -15,10 +15,6 @@ struct JsonBool: JsonType  {
         self.bool = Bool(bool) ?? false
     }
     
-    func data() -> Bool {
-        return self.bool
-    }
-    
     func type() -> TypeInfo {
         return .bool
     }
