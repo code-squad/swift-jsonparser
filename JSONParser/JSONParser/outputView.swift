@@ -16,7 +16,7 @@ struct OutputView {
         let ment = makeSentence(with: eachData)                                 // 각 데이터의 수를 가지고 출력문 생성
         
         print("총 \(total)개의 \(dataType) 데이터 중에 \(ment)가 포함되어 있습니다.")
-        print(extractParsedContents(by: data))
+        print(getParsedContents(by: data))
     }
     
     // JSON 데이터를 가지고 문장을 조합하는 메소드
@@ -38,7 +38,7 @@ struct OutputView {
         return 0
     }
     
-    func extractParsedContents(by data: JSONFormat) -> String {
+    func getParsedContents(by data: JSONFormat) -> String {
         let eachData = data.countsEachData()
         let array = eachData.array, object = eachData.object
         let indent = makeIndent(with: array, object, by: data)                  // 데이터 타입과 출력을 위한 인덴트 생성

@@ -41,7 +41,7 @@ struct JSONAnalyzer {
             return
         }
 
-        createFile(name: outputFile, with: outputView.extractParsedContents(by: jsonData))
+        createFile(name: outputFile, with: outputView.getParsedContents(by: jsonData))
     }
     
     // 파일로부터 내용을 읽어들이는 메소드
