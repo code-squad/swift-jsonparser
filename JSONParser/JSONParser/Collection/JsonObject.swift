@@ -36,8 +36,9 @@ struct JsonObject : JsonType, JsonCollection, PrintAble {
         
         JSONFormObject.append("{")
         for data in object {
-            JSONFormObject.append("\n\t\t\"\(data.key)\": \(data.value.JSONForm())")
+            JSONFormObject.append("\n\t\t\"\(data.key)\": \(data.value.JSONForm()),")
         }
+        JSONFormObject.removeLast()
         JSONFormObject.append("\n\t}")
         
         return JSONFormObject
@@ -48,8 +49,7 @@ struct JsonObject : JsonType, JsonCollection, PrintAble {
         
         JSONFormObject.append("{")
         for data in object {
-            JSONFormObject.append("\n\t")
-            JSONFormObject.append("\"\(data.key)\": \(data.value.JSONForm()),")
+            JSONFormObject.append("\n\t\"\(data.key)\": \(data.value.JSONForm()),")
         }
         JSONFormObject.removeLast()
         JSONFormObject.append("\n}")
