@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonString: JsonType {
+struct JsonString: JsonType, ObjectKey {
     private let string : String
     
     init(string:String) {
@@ -21,5 +21,9 @@ struct JsonString: JsonType {
 
     func JSONForm() -> String {
         return "\"\(string)\""
+    }
+    
+    func key() -> String {
+        return "\(string)"
     }
 }
