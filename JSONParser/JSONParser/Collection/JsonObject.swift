@@ -32,27 +32,22 @@ struct JsonObject : JsonType, JsonCollection, PrintAble {
     }
     
     func JSONForm() -> String {
-        var JSONFormObject = ""
-        
-        JSONFormObject.append("{")
-        for data in object {
-            JSONFormObject.append("\n\t\t\"\(data.key)\": \(data.value.JSONForm()),")
-        }
-        JSONFormObject.removeLast()
-        JSONFormObject.append("\n\t}")
-        
-        return JSONFormObject
+        return basicObjectForm(option: "\t")
     }
     
     func printForm() -> String {
+        return basicObjectForm(option: "")
+    }
+    
+    private func basicObjectForm(option:String) -> String {
         var JSONFormObject = ""
         
         JSONFormObject.append("{")
         for data in object {
-            JSONFormObject.append("\n\t\"\(data.key)\": \(data.value.JSONForm()),")
+            JSONFormObject.append("\n\t\(option)\"\(data.key)\": \(data.value.JSONForm()),")
         }
         JSONFormObject.removeLast()
-        JSONFormObject.append("\n}")
+        JSONFormObject.append("\n\(option)}")
         
         return JSONFormObject
     }
