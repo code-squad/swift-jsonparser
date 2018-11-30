@@ -15,7 +15,7 @@ struct OutputView {
     
     static func saveJSONData(jsonData:JsonType, fileName:String) {
         let fileManager = FileManager()
-        let desktop = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first!
+        guard let desktop = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first else {return}
         let path = desktop.appendingPathComponent(fileName)
         var text = ""
         

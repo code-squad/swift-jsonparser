@@ -12,7 +12,7 @@ struct InputView {
     static func readInput() -> (String,String) {
         let arguments = CommandLine.arguments
         let fileManager = FileManager()
-        let desktop = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first!
+        guard let desktop = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first else {return ("","")}
         let path = desktop.appendingPathComponent("\(arguments[1])")
         let json = try? String(contentsOf: path, encoding: .utf8)
         
