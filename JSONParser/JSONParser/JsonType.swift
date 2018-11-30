@@ -20,3 +20,7 @@ protocol JsonCollection: JsonType {
 protocol PrintAble {
     func printForm() -> String
 }
+
+protocol ObjectKey {
+    func key() -> String
+}
