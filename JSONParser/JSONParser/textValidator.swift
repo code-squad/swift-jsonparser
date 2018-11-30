@@ -8,13 +8,6 @@
 
 import Foundation
 
-enum ErrorList: String {
-    case emptyInput = "입력값이 없습니다."
-    case invalidForm = "배열 또는 객체 형태로 입력하세요."
-    case parsingError = "지원하지 않는 형식을 포함하고 있습니다."
-    case noError
-}
-
 struct GrammarChecker {
     // 가능한 데이터 형태(배열, 객체)인지 확인
     private func hasBrackets(_ text: String) -> Bool {
