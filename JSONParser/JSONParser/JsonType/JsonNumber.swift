@@ -9,14 +9,14 @@
 import Foundation
 
 struct JsonNumber: JsonType {
-    private let _data : Double
+    private let number : Double
     
     init(number:String) {
-        self._data = Double(number) ?? 0
+        self.number = Double(number) ?? 0
     }
     
     func data() -> Double {
-        return self._data
+        return self.number
     }
     
     func type() -> TypeInfo {
@@ -24,6 +24,6 @@ struct JsonNumber: JsonType {
     }
     
     func JSONForm() -> String {
-        return "\(Int(_data))"
+        return "\(Int(number))"
     }
 }

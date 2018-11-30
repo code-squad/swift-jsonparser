@@ -9,14 +9,14 @@
 import Foundation
 
 struct JsonString: JsonType {
-    private let _data : String
+    private let string : String
     
     init(string:String) {
-        self._data = string.trimmingCharacters(in: ["\"","\""])
+        self.string = string.trimmingCharacters(in: ["\"","\""])
     }
     
     func data() -> String {
-        return self._data
+        return self.string
     }
     
     func type() -> TypeInfo {
@@ -24,6 +24,6 @@ struct JsonString: JsonType {
     }
     
     func JSONForm() -> String {
-        return "\"\(_data)\""
+        return "\"\(string)\""
     }
 }

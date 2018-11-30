@@ -9,18 +9,18 @@
 import Foundation
 
 struct JsonObject : JsonType, JsonCollection, PrintAble {
-    private var _data = [String:JsonType]()
+    private var object = [String:JsonType]()
     
     init(object:[String:JsonType]) {
-        self._data = object
+        self.object = object
     }
     
     func data() -> [String:JsonType] {
-        return self._data
+        return self.object
     }
     
     func numberByType() -> NumberByType {
-        return NumberByType.init(array: Array(self._data.values))
+        return NumberByType.init(array: Array(self.object.values))
     }
     
     func type() -> TypeInfo {
@@ -35,7 +35,7 @@ struct JsonObject : JsonType, JsonCollection, PrintAble {
         var JSONFormObject = ""
         
         JSONFormObject.append("{")
-        for data in _data {
+        for data in object {
             JSONFormObject.append("\n\t\t\"\(data.key)\": \(data.value.JSONForm())")
         }
         JSONFormObject.append("\n\t}")
@@ -47,7 +47,7 @@ struct JsonObject : JsonType, JsonCollection, PrintAble {
         var JSONFormObject = ""
         
         JSONFormObject.append("{")
-        for data in _data {
+        for data in object {
             JSONFormObject.append("\n\t")
             JSONFormObject.append("\"\(data.key)\": \(data.value.JSONForm()),")
         }

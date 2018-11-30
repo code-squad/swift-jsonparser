@@ -9,14 +9,14 @@
 import Foundation
 
 struct JsonBool: JsonType  {
-    private let _data : Bool
+    private let bool : Bool
     
     init(bool:String) {
-        self._data = Bool(bool) ?? false
+        self.bool = Bool(bool) ?? false
     }
     
     func data() -> Bool {
-        return self._data
+        return self.bool
     }
     
     func type() -> TypeInfo {
@@ -24,6 +24,6 @@ struct JsonBool: JsonType  {
     }
     
     func JSONForm() -> String {
-        return "\(_data)"
+        return "\(bool)"
     }
 }

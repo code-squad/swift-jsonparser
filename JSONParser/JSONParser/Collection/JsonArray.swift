@@ -9,18 +9,18 @@
 import Foundation
 
 struct JsonArray : JsonType, JsonCollection, PrintAble {
-    private var _data = [JsonType]()
+    private var array = [JsonType]()
     
     init(array:[JsonType]) {
-        self._data = array
+        self.array = array
     }
     
     func data() -> [JsonType] {
-        return self._data
+        return self.array
     }
     
     func numberByType() -> NumberByType {
-        return NumberByType.init(array: self._data)
+        return NumberByType.init(array: self.array)
     }
     
     func type() -> TypeInfo {
@@ -35,7 +35,7 @@ struct JsonArray : JsonType, JsonCollection, PrintAble {
         var JSONFormArray = ""
         
         JSONFormArray.append("[")
-        for data in _data {
+        for data in array {
             JSONFormArray.append("\(data.JSONForm())")
             JSONFormArray.append(", ")
         }
@@ -50,7 +50,7 @@ struct JsonArray : JsonType, JsonCollection, PrintAble {
         var JSONFormArray = ""
         
         JSONFormArray.append("[")
-        for data in _data {
+        for data in array {
             JSONFormArray.append("\(data.JSONForm())")
             JSONFormArray.append(",\n\t")
         }
