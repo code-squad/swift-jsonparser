@@ -9,13 +9,13 @@
 import Foundation
 
 struct OutputView {
-    static func showNumberOfData(_ number:NumberByType, type:TypeInfo) {
-        guard number.numberOfAll() > 0 else {print("데이터가 없습니다."); return}
-        
-        print("총 \(number.numberOfAll())개의 \(type.rawValue) 데이터 중에", terminator: "")
-        showResult(readInfo(number))
-        print("가 포함되어 있습니다.", terminator: "")
-        print("")
+    static private func numberOfData(_ number:NumberByType, type:TypeInfo) -> String {
+        guard number.numberOfAll() > 0 else {return "데이터가 없습니다."}
+        var outputInfo = ""
+        outputInfo.append("총 \(number.numberOfAll())개의 \(type.rawValue) 데이터 중에")
+        outputInfo.append(showResult(readInfo(number)))
+        outputInfo.append("가 포함되어 있습니다.\n")
+        return outputInfo
     }
     
     static private func readInfo(_ number:NumberByType) -> [String] {
@@ -38,16 +38,14 @@ struct OutputView {
         return outputArray
     }
     
-    static private func showResult(_ result:[String]) {
+    static private func showResult(_ result:[String]) -> String {
+        var outputInfo = ""
         for numberOfData in result {
-            print(numberOfData, terminator: "")
+            outputInfo.append(numberOfData)
             guard numberOfData != result[result.endIndex - 1] else {continue}
-            print(",", terminator: "")
+            outputInfo.append(",")
         }
-    }
-    
-    static func showJsonForm(_ jsonData:PrintAble) {
-        print("\(jsonData.printForm())")
+        return outputInfo
     }
     
     static func saveJSONData(jsonData:JsonType, fileName:String) {
@@ -55,8 +53,13 @@ struct OutputView {
         let desktop = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first!
         let path = desktop.appendingPathComponent(fileName)
         var text = ""
+        
+        guard let collectionData = jsonData as? JsonCollection else {return}
+        let numberOfData = self.numberOfData(collectionData.numberByType(),type:collectionData.type())
+        text.append(numberOfData)
         guard let printableData = jsonData as? PrintAble else {return}
         text.append(JSONForm(printableData))
+        
         try? text.write(to: path, atomically: false, encoding: .utf8)
     }
     
