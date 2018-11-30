@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonObject : JsonType, JsonCollection {
+struct JsonObject : JsonType, JsonCollection, ShowAble {
     private var _data = [String:JsonType]()
     
     init(object:[String:JsonType]) {
@@ -29,5 +29,9 @@ struct JsonObject : JsonType, JsonCollection {
     
     func bracket() -> (String, String) {
         return ("{","}")
+    }
+    
+    func JSONForm() -> String {
+        return ""
     }
 }

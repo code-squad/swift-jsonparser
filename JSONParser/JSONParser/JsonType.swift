@@ -16,3 +16,6 @@ protocol JsonCollection: JsonType {
     func numberByType() -> NumberByType
 }
 
+protocol ShowAble {
+    func JSONForm() -> String
+}
