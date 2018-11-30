@@ -9,6 +9,25 @@
 import Foundation
 
 struct OutputView {
+    static private func JSONForm(_ jsonData:PrintAble) -> String {
+        return "\(jsonData.printForm())"
+    }
+    
+    static func saveJSONData(jsonData:JsonType, fileName:String) {
+        let fileManager = FileManager()
+        let desktop = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first!
+        let path = desktop.appendingPathComponent(fileName)
+        var text = ""
+        
+        guard let collectionData = jsonData as? JsonCollection else {return}
+        let numberOfData = self.numberOfData(collectionData.numberByType(),type:collectionData.type())
+        text.append(numberOfData)
+        guard let printableData = jsonData as? PrintAble else {return}
+        text.append(JSONForm(printableData))
+        
+        try? text.write(to: path, atomically: false, encoding: .utf8)
+    }
+    
     static private func numberOfData(_ number:NumberByType, type:TypeInfo) -> String {
         guard number.numberOfAll() > 0 else {return "데이터가 없습니다."}
         var outputInfo = ""
@@ -46,24 +65,5 @@ struct OutputView {
             outputInfo.append(",")
         }
         return outputInfo
-    }
-    
-    static func saveJSONData(jsonData:JsonType, fileName:String) {
-        let fileManager = FileManager()
-        let desktop = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first!
-        let path = desktop.appendingPathComponent(fileName)
-        var text = ""
-        
-        guard let collectionData = jsonData as? JsonCollection else {return}
-        let numberOfData = self.numberOfData(collectionData.numberByType(),type:collectionData.type())
-        text.append(numberOfData)
-        guard let printableData = jsonData as? PrintAble else {return}
-        text.append(JSONForm(printableData))
-        
-        try? text.write(to: path, atomically: false, encoding: .utf8)
-    }
-    
-    static private func JSONForm(_ jsonData:PrintAble) -> String {
-        return "\(jsonData.printForm())"
     }
 }
