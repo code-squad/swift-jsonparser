@@ -28,18 +28,18 @@ struct JsonArray : JsonType, JsonCollection, PrintAble {
     }
     
     func JSONForm() -> String {
-        var JSONFormArray = basicArrayForm(option: ", ")
+        var JSONFormArray = basicForm(option: ", ")
         JSONFormArray.append("]")
         return JSONFormArray
     }
     
     func printForm() -> String {
-        var JSONFormArray = basicArrayForm(option: ",\n\t")
+        var JSONFormArray = basicForm(option: ",\n\t")
         JSONFormArray.append("\n]")
         return JSONFormArray
     }
     
-    private func basicArrayForm(option:String) -> String {
+    private func basicForm(option:String) -> String {
         var JSONFormArray = ""
         
         JSONFormArray.append("[")

@@ -28,14 +28,14 @@ struct JsonObject : JsonType, JsonCollection, PrintAble {
     }
     
     func JSONForm() -> String {
-        return basicObjectForm(option: "\t")
+        return basicForm(option: "\t")
     }
     
     func printForm() -> String {
-        return basicObjectForm(option: "")
+        return basicForm(option: "")
     }
     
-    private func basicObjectForm(option:String) -> String {
+    private func basicForm(option:String) -> String {
         var JSONFormObject = ""
         
         JSONFormObject.append("{")
