@@ -19,7 +19,7 @@ func main() {
     guard let showAbleJsonData = jsonData as? PrintAble else {return}
     OutputView.showJsonForm(showAbleJsonData)
     
-    OutputView.saveJSONData(convertedData: "성공", fileName: fileNameToSave)
+    OutputView.saveJSONData(jsonData: jsonData, fileName: fileNameToSave)
 }
 
 main()

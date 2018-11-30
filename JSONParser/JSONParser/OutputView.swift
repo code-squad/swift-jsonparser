@@ -50,11 +50,17 @@ struct OutputView {
         print("\(jsonData.printForm())")
     }
     
-    static func saveJSONData(convertedData:String, fileName:String) {
+    static func saveJSONData(jsonData:JsonType, fileName:String) {
         let fileManager = FileManager()
         let desktop = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first!
         let path = desktop.appendingPathComponent(fileName)
-        let text = convertedData
+        var text = ""
+        guard let printableData = jsonData as? PrintAble else {return}
+        text.append(JSONForm(printableData))
         try? text.write(to: path, atomically: false, encoding: .utf8)
+    }
+    
+    static private func JSONForm(_ jsonData:PrintAble) -> String {
+        return "\(jsonData.printForm())"
     }
 }
