@@ -9,18 +9,16 @@
 import Foundation
 
 struct InputView {
-    static func readInput(ment:String) -> String {
-        print(ment)
-        return readLine() ?? ""
-    }
-    
-    static func readFile() -> String {
+    static func readInput() -> (String,String) {
         let arguments = CommandLine.arguments
         let fileManager = FileManager()
         let desktop = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first!
         let path = desktop.appendingPathComponent("\(arguments[1])")
         let json = try? String(contentsOf: path, encoding: .utf8)
         
-        return json ?? ""
+        if arguments.count > 2 {
+            return (json ?? "", arguments[2])
+        }
+        return (json ?? "", "output.json")
     }
 }

@@ -9,9 +9,9 @@
 import Foundation
 
 func main() {
-    let input = InputView.readFile()
-    
-    guard GrammarChecker.checkInputData(data:input) else {print("지원하지 않는 형식을 포함하고 있습니다.");return}
+    let (input,outputFileName) = InputView.readInput()
+
+    guard GrammarChecker.checkInputData(data: input) else {print("지원하지 않는 형식을 포함하고 있습니다.");return}
     guard let jsonData = Parser.convert(string: input) else {return}
     
     guard let collectionTypeJsonData = jsonData as? JsonCollection else {return}
