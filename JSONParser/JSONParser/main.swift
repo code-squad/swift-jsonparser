@@ -9,23 +9,19 @@
 import Foundation
 
 func main() {
-    // 각 객체의 인스턴스를 생성
-    let grammarChecker = GrammarChecker()
-    let jsonParser = JSONParser()
-    let outputView = OutputView()
-
-    // 입력을 받고, 에러를 처리
-    var input = InputView.getInput(ment: "분석할 JSON 데이터를 입력하세요.")
-    var error = grammarChecker.textErrorCheck(of: input)
+    let jsonAnalyzer = JSONAnalyzer()
+    let arguments = CommandLine.arguments
     
-    while error != .noError {
-        input = InputView.getInput(ment: "\(error.rawValue)")
-        error = grammarChecker.textErrorCheck(of: input)
+    switch arguments.count {
+    case 1:
+        jsonAnalyzer.execute()                                          // 처리하려는 파일을 입력하지 않은 경우
+    case 2:
+        jsonAnalyzer.execute(from: arguments[1], to: nil)               // 처리하려는 파일만 입력한 경우
+    case 3:
+        jsonAnalyzer.execute(from: arguments[1], to: arguments[2])      // 처리하려는 파일과 생성하려는 파일 모두 입력한 경우
+    default:
+        print(ErrorList.wrongInput.rawValue)
     }
-    
-    // 에러 처리된 입력을 문자열 변환하고 출력
-    guard let jsonData = jsonParser.parse(from: input) else { return }
-    outputView.printResult(by: jsonData)
 }
 
 main()
