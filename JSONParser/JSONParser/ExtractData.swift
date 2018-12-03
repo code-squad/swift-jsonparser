@@ -36,6 +36,7 @@ struct ExtractData {
     private let nestedArray : String
     private let nestedObject : String
     private let allPattern : String
+    private let fileReaderOrder : String
     
     init() {
         boolPattern = "(true|false)"
@@ -49,12 +50,20 @@ struct ExtractData {
         allValuePattern = "(\(nestedArray)|\(nestedObject)|\(boolPattern)|\(stringPattern)|\(numberPattern))"
         arrayPattern = "\\[\\s?\(allValuePattern)\\s?(,\\s?\(allValuePattern))*\\s?\\]"
         allPattern = "(\(arrayPattern))|(\(objectPattern))"
+        fileReaderOrder = "jsonparser\\s.+(//s.*){0,1}"
     }
     
     // 정규식과 일치하는 문자열의 NSRange을 찾음
     func searchRange(stringForRange : String) -> NSRange{
         let regex = try? NSRegularExpression(pattern: allPattern, options: .caseInsensitive)
         return regex?.rangeOfFirstMatch(in: stringForRange, options: [], range: NSRange(stringForRange.startIndex..., in: stringForRange)) ?? NSRange()
+    }
+    
+    // file 읽어오는 명령어를 추출
+    func searchFileReadOrder(in order : String) -> Bool {
+        let regex = try? NSRegularExpression(pattern: fileReaderOrder, options: .caseInsensitive)
+        guard regex?.numberOfMatches(in: order, options: [], range: NSRange(order.startIndex..., in: order)) == 1 else { return false }
+        return true
     }
     
     // 객체의 프로퍼티 Value 값으로 쓰일 수 있는 값 추출

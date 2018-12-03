@@ -11,7 +11,7 @@ import Foundation
 struct OutputView {
     // 에러의 상태를 프린트
     func printErrorState(_ errorState : FormState) {
-        if errorState != .rightForm { print(errorState.rawValue) }
+        if errorState != .userInputForm && errorState != .fileInputForm { print(errorState.rawValue) }
     }
     
     // 각 지원하는 타입안의 데이터 타입 출력

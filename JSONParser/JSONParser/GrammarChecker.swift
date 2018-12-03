@@ -26,8 +26,16 @@ struct GrammarChecker {
     // 입력 값 검사하여 오류가 있는지 확인
     func checkJSONForm(_ input: String) -> FormState {
         let extractData : ExtractData = ExtractData()
+        var isFileRead = false
+        var fileName : String = ""
+        if extractData.searchFileReadOrder(in: input) {
+            isFileRead = true
+            fileName = input.split(separator: " ").map(String.init)[1]
+        }
+        if isFileRead { guard FileReaderWriter.readFile(in: fileName) == nil else { return .fileInputForm } }
+        
         guard extractData.searchRange(stringForRange: input) == NSRange(input.startIndex..., in: input) else { return .notSupportingType }
-        return .rightForm
+        return .userInputForm
     }
     
     // Type을 검사하여 지원하는 타입인지 확인

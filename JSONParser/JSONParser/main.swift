@@ -10,20 +10,18 @@ import Foundation
 
 func main() {
     let grammarChecker = GrammarChecker()
-    let jsonParser = JSONParser()
+//    let jsonParser = JSONParser()
     let outputView = OutputView()
     var input : String
     var inputState : FormState
-
+    
     repeat {
         input = InputView.UserInput(message: "분석할 JSON 문자열을 입력하세요.")
         inputState = grammarChecker.checkJSONForm(input)
         outputView.printErrorState(inputState)
-    } while inputState != .rightForm
+    } while inputState != .userInputForm && inputState != .fileInputForm
     
-    let jsonToSwift : SupportableJSON = jsonParser.jsonParser(dataToConvert: input)
-    outputView.printTypeCount(jsonToSwift)
-    outputView.printJSONSting(jsonToSwift)
+    DistinguishOrder.excuteOrder(of: inputState, in: input)
 }
 
 main()
