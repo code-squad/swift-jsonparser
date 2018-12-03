@@ -9,8 +9,7 @@
 import Foundation
 
 struct InputView {
-    static func readInput() -> (String,URL?) {
-        let arguments = CommandLine.arguments
+    static func readInput(arguments:[String]) -> (String,URL?) {
         if arguments.count == 1 {
             return readEnter(ment: "분석할 JSON 데이터를 입력하세요.")
         }
