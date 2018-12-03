@@ -13,19 +13,15 @@ struct OutputView {
         return "\(jsonData.printForm())"
     }
     
-    static func saveJSONData(jsonData:JsonType, fileName:String) {
-        let fileManager = FileManager()
-        guard let desktop = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first else {return}
-        let path = desktop.appendingPathComponent(fileName)
+    static func saveJSONData(jsonData:JsonType, path:URL?) {
         var text = ""
-        
         guard let collectionData = jsonData as? JsonCollection else {return}
         let numberOfData = self.numberOfData(collectionData.numberByType(),type:collectionData.type())
         text.append(numberOfData)
         guard let printableData = jsonData as? PrintAble else {return}
         text.append(JSONForm(printableData))
-        
-        try? text.write(to: path, atomically: false, encoding: .utf8)
+        guard let notNilPath = path else {print(text); return}
+        try? text.write(to: notNilPath, atomically: false, encoding: .utf8)
     }
     
     static private func numberOfData(_ number:NumberByType, type:TypeInfo) -> String {

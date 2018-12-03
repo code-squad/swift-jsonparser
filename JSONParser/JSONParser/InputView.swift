@@ -9,16 +9,28 @@
 import Foundation
 
 struct InputView {
-    static func readInput() -> (String,String) {
+    static func readInput() -> (String,URL?) {
         let arguments = CommandLine.arguments
-        let fileManager = FileManager()
-        guard let desktop = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first else {return ("","")}
-        let path = desktop.appendingPathComponent("\(arguments[1])")
-        let json = try? String(contentsOf: path, encoding: .utf8)
-        
-        if arguments.count > 2 {
-            return (json ?? "", arguments[2])
+        if arguments.count == 1 {
+            return readEnter(ment: "분석할 JSON 데이터를 입력하세요.")
         }
-        return (json ?? "", "output.json")
+        if arguments.count == 2 {
+            return readContent(readFileName: arguments[1], saveFileName: "output.json")
+        }
+        return readContent(readFileName: arguments[1], saveFileName: arguments[2])
+    }
+    
+     static private func readEnter(ment:String) -> (String,URL?) {
+        print(ment)
+        return (readLine() ?? "", nil)
+    }
+    
+    static private func readContent(readFileName:String, saveFileName:String) -> (String,URL?) {
+        let fileManager = FileManager()
+        guard let desktop = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first else {return ("",nil)}
+        let path = desktop.appendingPathComponent("\(readFileName)")
+        let json = try? String(contentsOf: path, encoding: .utf8)
+
+        return (json ?? "", desktop.appendingPathComponent("\(saveFileName)"))
     }
 }
