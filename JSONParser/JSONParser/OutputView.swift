@@ -10,12 +10,12 @@ import Foundation
 
 struct OutputView {
     // 에러의 상태를 프린트
-    func printErrorState(_ errorState : FormState) {
-        if errorState != .userInputForm && errorState != .fileInputForm { print(errorState.rawValue) }
+    static func printErrorState(_ errorState : FormState) {
+        if errorState != .rightForm{ print(errorState.rawValue) }
     }
     
     // 각 지원하는 타입안의 데이터 타입 출력
-    func printTypeCount(_ swiftData : SupportableJSON) {
+    static func printTypeCount(_ swiftData : SupportableJSON) {
         var printText : [String] = []
         let typeCount : (total : Int, string : Int, number : Int, bool : Int, object : Int, array : Int) = swiftData.matchTypeForCounting()
         
@@ -35,36 +35,36 @@ struct OutputView {
     }
     
     // 프린트할 문자열의 개수 문자열 화
-    private func printStringTypeCount(_ stringCount : Int) -> String? {
+    static private func printStringTypeCount(_ stringCount : Int) -> String? {
         guard stringCount != 0 else { return nil }
         return "문자열 \(stringCount)개"
     }
 
     // 프린트할 부울의 개수 문자열 화
-    private func printBoolTypeCount(_ boolCount : Int) -> String? {
+    static private func printBoolTypeCount(_ boolCount : Int) -> String? {
         guard boolCount != 0 else { return nil }
         return "부울 \(boolCount)개"
     }
     
     // 프린트할 숫자의 개수 문자열 화
-    private func printNumberTypeCount(_ numberCount : Int) -> String? {
+    static private func printNumberTypeCount(_ numberCount : Int) -> String? {
         guard numberCount != 0 else { return nil }
         return "숫자 \(numberCount)개"
     }
     
     // 프린트할 객체의 개수 문자열 화
-    private func printObjectTypeCount(_ objectCount : Int) -> String? {
+    static private func printObjectTypeCount(_ objectCount : Int) -> String? {
         guard objectCount != 0 else { return nil }
         return "객체 \(objectCount)개"
     }
     
     // 프린트할 배열의 개수 문자열 화
-    private func printArrayTypeCount(_ arrayCount : Int) -> String? {
+    static private func printArrayTypeCount(_ arrayCount : Int) -> String? {
         guard arrayCount != 0 else { return nil }
         return "배열 \(arrayCount)개"
     }
     
-    func printJSONSting(_ swiftType : SupportableJSON) {
+    static func printJSONSting(_ swiftType : SupportableJSON) {
         print(swiftType.createJSONString())
     }
 }

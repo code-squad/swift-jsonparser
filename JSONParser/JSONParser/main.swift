@@ -10,18 +10,19 @@ import Foundation
 
 func main() {
     let grammarChecker = GrammarChecker()
-//    let jsonParser = JSONParser()
-    let outputView = OutputView()
+    let jsonParser = JSONParser()
     var input : String
     var inputState : FormState
+    let argumentState = ExecutorByArgument.checkCommandLineState()
     
     repeat {
-        input = InputView.UserInput(message: "분석할 JSON 문자열을 입력하세요.")
+        input = ExecutorByArgument.inputByCommanLine(of : argumentState)
         inputState = grammarChecker.checkJSONForm(input)
-        outputView.printErrorState(inputState)
-    } while inputState != .userInputForm && inputState != .fileInputForm
+        if argumentState == nil { OutputView.printErrorState(inputState) }              // CommandLine으로 Argument가 안들어온 경우만 콘솔에 에러 상황 출력
+    } while inputState != .rightForm && argumentState == nil
     
-    DistinguishOrder.excuteOrder(of: inputState, in: input)
+    let jsonToSwift = jsonParser.jsonParser(dataToConvert: input)
+    ExecutorByArgument.outputByCommandLine(of: argumentState, with: jsonToSwift)
 }
 
 main()
