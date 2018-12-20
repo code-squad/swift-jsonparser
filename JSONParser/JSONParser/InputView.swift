@@ -7,3 +7,17 @@
 //
 
 import Foundation
+
+//입력
+struct InputView {
+    
+    private static func readInput(ment: String) -> String {
+        print(ment)
+        return readLine() ?? ""
+    }
+    
+    static func getUserString() -> String {
+        let jsonParser = readInput(ment: "분석할 JSON 데이터를 입력하세요.")
+        return jsonParser
+    }
+}

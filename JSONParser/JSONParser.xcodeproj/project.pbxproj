@@ -7,12 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F32786CB21CB2E4300BB271E /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786C521CB2E4200BB271E /* Regex.swift */; };
+		F309459021CB7440005592E4 /* TestJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F309458F21CB7440005592E4 /* TestJSONParser.swift */; };
+		F309459521CB746B005592E4 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786C821CB2E4300BB271E /* InputView.swift */; };
+		F309459621CB746B005592E4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786D121CB326600BB271E /* main.swift */; };
+		F309459721CB746B005592E4 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786C621CB2E4200BB271E /* OutputView.swift */; };
+		F309459821CB746B005592E4 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786C921CB2E4300BB271E /* Parser.swift */; };
+		F309459921CB746B005592E4 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786CA21CB2E4300BB271E /* Stack.swift */; };
 		F32786CC21CB2E4300BB271E /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786C621CB2E4200BB271E /* OutputView.swift */; };
-		F32786CD21CB2E4300BB271E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786C721CB2E4200BB271E /* main.swift */; };
 		F32786CE21CB2E4300BB271E /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786C821CB2E4300BB271E /* InputView.swift */; };
 		F32786CF21CB2E4300BB271E /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786C921CB2E4300BB271E /* Parser.swift */; };
 		F32786D021CB2E4300BB271E /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786CA21CB2E4300BB271E /* Stack.swift */; };
+		F32786D221CB326600BB271E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786D121CB326600BB271E /* main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,16 +34,25 @@
 
 /* Begin PBXFileReference section */
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
-		F32786C521CB2E4200BB271E /* Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
+		F309458D21CB7440005592E4 /* TestJSONParser.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestJSONParser.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F309458F21CB7440005592E4 /* TestJSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestJSONParser.swift; sourceTree = "<group>"; };
+		F309459121CB7440005592E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F32786C621CB2E4200BB271E /* OutputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
-		F32786C721CB2E4200BB271E /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../../../jsoncode/jsoncode/main.swift; sourceTree = "<group>"; };
 		F32786C821CB2E4300BB271E /* InputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		F32786C921CB2E4300BB271E /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F32786CA21CB2E4300BB271E /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		F32786D121CB326600BB271E /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		83AE2E091F8CAC2800F38CC9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F309458A21CB7440005592E4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -52,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0E1F8CAC2800F38CC9 /* JSONParser */,
+				F309458E21CB7440005592E4 /* TestJSONParser */,
 				83AE2E0D1F8CAC2800F38CC9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0C1F8CAC2800F38CC9 /* JSONParser */,
+				F309458D21CB7440005592E4 /* TestJSONParser.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,13 +84,21 @@
 			isa = PBXGroup;
 			children = (
 				F32786C821CB2E4300BB271E /* InputView.swift */,
-				F32786C721CB2E4200BB271E /* main.swift */,
+				F32786D121CB326600BB271E /* main.swift */,
 				F32786C621CB2E4200BB271E /* OutputView.swift */,
 				F32786C921CB2E4300BB271E /* Parser.swift */,
-				F32786C521CB2E4200BB271E /* Regex.swift */,
 				F32786CA21CB2E4300BB271E /* Stack.swift */,
 			);
 			path = JSONParser;
+			sourceTree = "<group>";
+		};
+		F309458E21CB7440005592E4 /* TestJSONParser */ = {
+			isa = PBXGroup;
+			children = (
+				F309458F21CB7440005592E4 /* TestJSONParser.swift */,
+				F309459121CB7440005592E4 /* Info.plist */,
+			);
+			path = TestJSONParser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -97,18 +121,39 @@
 			productReference = 83AE2E0C1F8CAC2800F38CC9 /* JSONParser */;
 			productType = "com.apple.product-type.tool";
 		};
+		F309458C21CB7440005592E4 /* TestJSONParser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F309459421CB7440005592E4 /* Build configuration list for PBXNativeTarget "TestJSONParser" */;
+			buildPhases = (
+				F309458921CB7440005592E4 /* Sources */,
+				F309458A21CB7440005592E4 /* Frameworks */,
+				F309458B21CB7440005592E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestJSONParser;
+			productName = TestJSONParser;
+			productReference = F309458D21CB7440005592E4 /* TestJSONParser.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		83AE2E041F8CAC2800F38CC9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0900;
-				LastUpgradeCheck = 0900;
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = JK;
 				TargetAttributes = {
 					83AE2E0B1F8CAC2800F38CC9 = {
 						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
+					F309458C21CB7440005592E4 = {
+						CreatedOnToolsVersion = 10.1;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -126,21 +171,44 @@
 			projectRoot = "";
 			targets = (
 				83AE2E0B1F8CAC2800F38CC9 /* JSONParser */,
+				F309458C21CB7440005592E4 /* TestJSONParser */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F309458B21CB7440005592E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		83AE2E081F8CAC2800F38CC9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F32786CB21CB2E4300BB271E /* Regex.swift in Sources */,
 				F32786D021CB2E4300BB271E /* Stack.swift in Sources */,
+				F32786D221CB326600BB271E /* main.swift in Sources */,
 				F32786CF21CB2E4300BB271E /* Parser.swift in Sources */,
 				F32786CE21CB2E4300BB271E /* InputView.swift in Sources */,
-				F32786CD21CB2E4300BB271E /* main.swift in Sources */,
 				F32786CC21CB2E4300BB271E /* OutputView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F309458921CB7440005592E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F309459521CB746B005592E4 /* InputView.swift in Sources */,
+				F309459621CB746B005592E4 /* main.swift in Sources */,
+				F309459721CB746B005592E4 /* OutputView.swift in Sources */,
+				F309459821CB746B005592E4 /* Parser.swift in Sources */,
+				F309459921CB746B005592E4 /* Stack.swift in Sources */,
+				F309459021CB7440005592E4 /* TestJSONParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +229,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -168,6 +237,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -218,6 +288,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -225,6 +296,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -271,6 +343,39 @@
 			};
 			name = Release;
 		};
+		F309459221CB7440005592E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = TestJSONParser/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "elena-kr.TestJSONParser";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		F309459321CB7440005592E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = TestJSONParser/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "elena-kr.TestJSONParser";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -288,6 +393,15 @@
 			buildConfigurations = (
 				83AE2E141F8CAC2800F38CC9 /* Debug */,
 				83AE2E151F8CAC2800F38CC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F309459421CB7440005592E4 /* Build configuration list for PBXNativeTarget "TestJSONParser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F309459221CB7440005592E4 /* Debug */,
+				F309459321CB7440005592E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
