@@ -8,16 +8,18 @@
 
 import Foundation
 
-struct Stack: ParseData {
-    // stack Data 
-    var dataCount: [String] { return stackData }
-    // Array is Start index zero. so returnData add oneData.
-    var dataNumber: Int { return (stackData.count)+1 }
-    
-    private (set) var stackData = [String()]
-    
-    init(_ data: [String]) {
-        self.stackData = data
+struct Stack<Element> {
+    var items = [Element]()
+    mutating func push(_ item: Element) {
+        items.append(item)
     }
-    
+    mutating func pop() -> Element {
+        return items.removeLast()
+    }
+}
+
+extension Stack {
+    var topElement: Element? {
+        return self.items.last
+    }
 }

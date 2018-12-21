@@ -9,6 +9,5 @@
 import Foundation
 
 let userInputData = InputView.getUserString()
-
-let result = Parser.isDivideData(from: userInputData)
-print(result)
+let result = Parser.DivideData(from: userInputData)
+OutputView.resultPrint(result)
