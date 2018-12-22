@@ -8,6 +8,10 @@
 
 import Foundation
 //분석
+protocol JSONResult {
+    var resultDataPrint: String { get }
+    
+}
 
 extension String {
     func splitByComma() -> [String] {
@@ -18,18 +22,19 @@ extension String {
     }
 }
 
-struct Parser {
+struct Parser{
     
-    static func DivideData(from data: String) -> String? {
+    static func DivideData(from data: String) -> ([String],[String],[String])? {
         guard isDivideData(from: data) else {
             return nil
         }
+        
         let dataJSON: [String] = data.removeBothFirstAndLast().splitByComma()
         
         let pushData = pushValidData(dataJSON)
         let popData = popParseData(pushData)
         
-        return ""
+        return popData
     }
     
     static func isDivideData(from data: String) -> Bool {

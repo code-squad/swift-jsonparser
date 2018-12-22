@@ -10,4 +10,4 @@ import Foundation
 
 let userInputData = InputView.getUserString()
 let result = Parser.DivideData(from: userInputData)
-OutputView.resultPrint(result)
+
