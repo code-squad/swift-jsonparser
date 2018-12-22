@@ -10,6 +10,7 @@ import Foundation
 //분석
 protocol JSONResult {
     var resultDataPrint: String { get }
+    var parserResultPrint: String { get }
     
 }
 
@@ -24,17 +25,17 @@ extension String {
 
 struct Parser{
     
-    static func DivideData(from data: String) -> ([String],[String],[String])? {
+    static func DivideData(from data: String) -> (([String],[String],[String]),Int)? {
         guard isDivideData(from: data) else {
             return nil
         }
         
         let dataJSON: [String] = data.removeBothFirstAndLast().splitByComma()
-        
+        let datasize = dataJSON.count
         let pushData = pushValidData(dataJSON)
         let popData = popParseData(pushData)
         
-        return popData
+        return (popData,datasize)
     }
     
     static func isDivideData(from data: String) -> Bool {

@@ -8,6 +8,13 @@
 
 import Foundation
 
-let userInputData = InputView.getUserString()
-let result = Parser.DivideData(from: userInputData)
+func parsingMain() {
+    let userInputData = InputView.getUserString()
+    let result = Parser.DivideData(from: userInputData)
+    guard let printResultData = result else {
+        return
+    }
+    let resultData = ParserData.init(printResultData)
+    OutputView
 
+}
