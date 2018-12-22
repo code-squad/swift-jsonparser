@@ -8,11 +8,6 @@
 
 import Foundation
 //분석
-//
-protocol resultProtocol {
-    var resultString: String { get }
-    var resultNumber: Int { get }
-}
 
 extension String {
     func splitByComma() -> [String] {
@@ -22,10 +17,10 @@ extension String {
         return String(self.dropFirst().dropLast())
     }
 }
-// 비교를 하기 위해 Equatable 프로토콜 사용
-struct Parser : Equatable {
+
+struct Parser {
     
-    static func DivideData(from data: String) ->[String:Int]? {
+    static func DivideData(from data: String) -> String? {
         guard isDivideData(from: data) else {
             return nil
         }
@@ -33,9 +28,8 @@ struct Parser : Equatable {
         
         let pushData = pushValidData(dataJSON)
         let popData = popParseData(pushData)
-
-        return popData
         
+        return ""
     }
     
     static func isDivideData(from data: String) -> Bool {
@@ -56,27 +50,24 @@ struct Parser : Equatable {
         return stringData
     }
     
-    private static func popParseData(_ data: Stack<String>) -> [String:Int]{
+    private static func popParseData(_ data: Stack<String>) -> ([String],[String],[String]){
         var data = data
-        var number = [0,0,0]
-        var resultData: [String:Int] = ["String":0,"Int":0,"Bool":0]
+        var resultDataString:[String] = [""]
+        var resultDataInt:[String] = [""]
+        var resultDataBool:[String] = [""]
         
         while !data.items.isEmpty {
             var popdata = data.pop()
             popdata = popdata.trimmingCharacters(in:.whitespacesAndNewlines)
             if isStringType(popdata) {
-                number[1] += 1
+                resultDataString.append(popdata)
             }else if isBoolType(popdata) {
-                number[2] += 1
+                resultDataBool.append(popdata)
             }else if isNumber(popdata) {
-                number[0] += 1
+                resultDataInt.append(popdata)
             }
         }
-        resultData["String"] = number[1]
-        resultData["Int"] = number[0]
-        resultData["Bool"] = number[2]
-        
-        return resultData
+        return (resultDataString,resultDataInt,resultDataBool)
     }
     
     private static func isNumber (_ popData : String) -> Bool {
