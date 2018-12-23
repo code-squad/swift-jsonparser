@@ -9,7 +9,8 @@
 import Foundation
 
 struct OutputView {
-    
-    
+    func parserResultData(_ shape: JSONResult) {
+        print("\(shape.resultDataPrint) \(shape.parserResultPrint)")
+    }
     
 }

@@ -58,13 +58,14 @@ struct Parser{
     
     private static func popParseData(_ data: Stack<String>) -> ([String],[String],[String]){
         var data = data
-        var resultDataString:[String] = [""]
-        var resultDataInt:[String] = [""]
-        var resultDataBool:[String] = [""]
+        var resultDataString:[String] = ["String"]
+        var resultDataInt:[String] = ["Int"]
+        var resultDataBool:[String] = ["Bool"]
         
         while !data.items.isEmpty {
             var popdata = data.pop()
             popdata = popdata.trimmingCharacters(in:.whitespacesAndNewlines)
+            
             if isStringType(popdata) {
                 resultDataString.append(popdata)
             }else if isBoolType(popdata) {

@@ -15,6 +15,8 @@ func parsingMain() {
         return
     }
     let resultData = ParserData.init(printResultData)
-    OutputView
+    OutputView().parserResultData(resultData)
 
 }
+
+parsingMain()
