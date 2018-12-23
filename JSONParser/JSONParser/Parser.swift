@@ -7,7 +7,7 @@
 //
 
 import Foundation
-//분석
+//JSON 출력을 위한 Protocol
 protocol JSONResult {
     var resultDataPrint: String { get }
     var parserResultPrint: String { get }
@@ -24,7 +24,7 @@ extension String {
 }
 
 struct Parser{
-    
+    // 입력받은 데이터를 분석해서 숫자 , 문자 , 불 로 나눠서 반환하기
     static func DivideData(from data: String) -> (([String],[String],[String]),Int)? {
         guard isDivideData(from: data) else {
             return nil
@@ -37,7 +37,7 @@ struct Parser{
         
         return (popData,datasize)
     }
-    
+    // 입력받은 데이터에 괄호가 있는지 체크
     static func isDivideData(from data: String) -> Bool {
         
         guard ((data.first?.description) == "["), ((data.last?.description) == "]") else {
@@ -45,7 +45,7 @@ struct Parser{
         }
         return true
     }
-    
+    //유효데이터를 Stack에 push
     private static func pushValidData(_ data: [String])-> Stack<String> {
         
         var stringData: Stack<String> = Stack<String>()
@@ -55,7 +55,7 @@ struct Parser{
         }
         return stringData
     }
-    
+    //data를 pop해서 숫자 , 문자 , 불 타입으로 저장
     private static func popParseData(_ data: Stack<String>) -> ([String],[String],[String]){
         var data = data
         var resultDataString:[String] = ["String"]
