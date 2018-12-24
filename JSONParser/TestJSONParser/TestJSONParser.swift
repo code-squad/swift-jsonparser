@@ -32,14 +32,21 @@ class TestJSONParser: XCTestCase {
     }
     
     // comparison : InputString.count Data , Parser.count Data
-    func testParserDataCountComparison() {
+    func testParserDataCountNotComparison() {
         let testData = "[ 10, 21, \"cony\", - ]"
         let comparisonData = Parser.DivideData(from: testData)
         let parserDataCount = (Int(comparisonData?.0.0.count ?? 0)-1+Int(comparisonData?.0.1.count ?? 0)-1+Int(comparisonData?.0.2.count ?? 0)-1)
         if comparisonData?.1 == parserDataCount {
             XCTAssertTrue(true)
-        }else {
-            XCTAssertFalse(false)
+        }
+    }
+    
+    func testParserDataCountComparison() {
+        let testData = "[ 10, 21, \"cony\", 33 ]"
+        let comparisonData = Parser.DivideData(from: testData)
+        let parserDataCount = (Int(comparisonData?.0.0.count ?? 0)-1+Int(comparisonData?.0.1.count ?? 0)-1+Int(comparisonData?.0.2.count ?? 0)-1)
+        if comparisonData?.1 != parserDataCount {
+            XCTAssertTrue(true)
         }
     }
 

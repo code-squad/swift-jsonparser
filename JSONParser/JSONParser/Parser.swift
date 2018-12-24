@@ -70,7 +70,7 @@ struct Parser{
                 resultDataString.append(popdata)
             }else if isBoolType(popdata) {
                 resultDataBool.append(popdata)
-            }else if isNumber(popdata) && isNumber(popdata) {
+            }else if isNumber(popdata) && isValidCharacter(popdata) {
                 resultDataInt.append(popdata)
             }
         }
@@ -80,7 +80,7 @@ struct Parser{
     private static func isNumber (_ popData : String) -> Bool {
         return popData.components(separatedBy: CharacterSet.decimalDigits).count != 0
     }
-    private func isValidCharacter(_ popData : String) -> Bool {
+    private static func isValidCharacter(_ popData : String) -> Bool {
         let validCharacter = CharacterSet.init(charactersIn: "0123456789")
         return (popData.rangeOfCharacter(from: validCharacter.inverted) == nil)
     }
