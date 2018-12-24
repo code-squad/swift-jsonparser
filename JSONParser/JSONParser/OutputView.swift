@@ -12,5 +12,7 @@ struct OutputView {
     func parserResultData(_ shape: JSONResult) {
         print("\(shape.resultDataPrint) \(shape.parserResultPrint)")
     }
-    
+    func errorResult() {
+        print("지원하는 규격이 아니다.")
+    }
 }
