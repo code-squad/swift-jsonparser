@@ -16,7 +16,6 @@ func parsingMain() {
     }
     let resultData = ParserData.init(printResultData)
     OutputView().parserResultData(resultData)
-
 }
 
 parsingMain()
