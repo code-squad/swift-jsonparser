@@ -29,15 +29,14 @@ struct Parser{
         guard isDivideData(from: data) else {
             return nil
         }
-        
         let dataJSON: [String] = data.removeBothFirstAndLast().splitByComma()
         let datasJSON: [String] = removeSpace(dataJSON)
         let parseJSONData = parseData(datasJSON)
         
         return parseJSONData
     }
-    //공백제거
-    static func removeSpace(_ data:[String]) -> [String] {
+    //데이터 사이 공백제거
+    private static func removeSpace(_ data:[String]) -> [String] {
         var removeSpaceData: [String] = [String]()
         for index in 0..<data.count {
             let jsonParser = data[index].trimmingCharacters(in: .whitespacesAndNewlines)
@@ -55,7 +54,7 @@ struct Parser{
         return true
     }
     
-    static func parseData(_ data: [String]) -> JSONData?{
+    private static func parseData(_ data: [String]) -> JSONData?{
         var resultData: JSONData = JSONData()
         resultData.datas = data
         for index in 0..<data.count {
