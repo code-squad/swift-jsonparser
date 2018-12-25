@@ -25,15 +25,27 @@ extension String {
 
 struct Parser{
     // 입력받은 데이터를 분석해서 반환
-    static func DivideData(from data: String) -> [Any]? {
+    static func DivideData(from data: String) -> JSONData? {
         guard isDivideData(from: data) else {
             return nil
         }
         
-        let dataJSON: [String] = data.trimmingCharacters(in: .whitespacesAndNewlines).removeBothFirstAndLast().splitByComma()
+        let dataJSON: [String] = data.removeBothFirstAndLast().splitByComma()
+        let datasJSON: [String] = removeSpace(dataJSON)
+        let parseJSONData = parseData(datasJSON)
         
-        return dataJSON
+        return parseJSONData
     }
+    //공백제거
+    static func removeSpace(_ data:[String]) -> [String] {
+        var removeSpaceData: [String] = [String]()
+        for index in 0..<data.count {
+            let jsonParser = data[index].trimmingCharacters(in: .whitespacesAndNewlines)
+            removeSpaceData.append(jsonParser)
+        }
+        return removeSpaceData
+    }
+    
     // 입력받은 데이터에 괄호가 있는지 체크
     static func isDivideData(from data: String) -> Bool {
         
@@ -43,17 +55,18 @@ struct Parser{
         return true
     }
     
+    static func parseData(_ data: [String]) -> JSONData?{
+        var resultData: JSONData = JSONData()
     
-    static func parseData(_ data: String) -> ([Any]){
-        var resultData:[Any] = [Any]()
-        
-        for _ in 0..<data.count {
-            if isStringType(data) {
-                resultData.append(String(data))
-            }else if isBoolType(data) {
-                resultData.append(Bool(data))
-            }else if isNumber(data) && isValidCharacter(data) {
-                resultData.append(Int(data))
+        for index in 0..<data.count {
+            if isStringType(data[index]) {
+                resultData.dataString.append(data[index])
+            }else if isBoolType(data[index]) {
+                guard let isData = Bool(data[index]) else { break }
+                resultData.dataBool.append(isData)
+            }else if isNumber(data[index]) && isValidCharacter(data[index]) {
+                guard  let isData = Int(data[index]) else{ break }
+                resultData.dataInt.append(isData)
             }
         }
         return resultData
