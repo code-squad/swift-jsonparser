@@ -57,7 +57,7 @@ struct Parser{
     
     static func parseData(_ data: [String]) -> JSONData?{
         var resultData: JSONData = JSONData()
-    
+        resultData.datas = data
         for index in 0..<data.count {
             if isStringType(data[index]) {
                 resultData.dataString.append(data[index])

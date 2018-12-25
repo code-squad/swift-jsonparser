@@ -11,12 +11,12 @@ import Foundation
 func parsingMain() {
     let userInputData = InputView.getUserString()
     let result = Parser.DivideData(from: userInputData)
-//    guard let printResultData = result else {
-//        OutputView().errorResult()
-//        return
-//    }
-    //let resultData = ParserData.init(printResultData)
-    //OutputView().parserResultData(resultData)
+    guard let printResultData = result else {
+        OutputView().errorResult()
+        return
+    }
+    let resultData = ParserData.init(printResultData)
+    OutputView().parserResultData(resultData)
 }
 
 parsingMain()

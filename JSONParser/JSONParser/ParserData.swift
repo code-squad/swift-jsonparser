@@ -11,20 +11,22 @@ import Foundation
 struct ParserData: JSONResult {
     
     var resultDataPrint: String {
-        return "총 \(parserData.count)개의 배열 데이터 중에 "
+        return "총 \(parserData.datas.count) 개의 배열 데이터 중에 "
     }
     var parserResultPrint: String {
         var resultData = ""
         
-        
+        if self.parserData.dataString.count != 0 { resultData += "문자열 \(parserData.dataString.count)개," }
+        if self.parserData.dataInt.count != 0 { resultData += "숫자 \(parserData.dataInt.count)개," }
+        if self.parserData.dataBool.count != 0 { resultData += "부울 \(parserData.dataBool.count)개," }
         
         resultData.removeLast()
         return resultData
     }
     
-    let parserData: [Any]
+    let parserData: JSONData
     
-    init(_ parserData: [Any]) {
+    init(_ parserData: JSONData) {
         self.parserData = parserData
     }
 }

@@ -13,5 +13,4 @@ struct JSONData {
     var dataString: [String] = []
     var dataInt: [Int] = []
     var dataBool: [Bool] = []
-
 }
