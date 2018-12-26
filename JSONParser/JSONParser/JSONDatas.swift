@@ -9,7 +9,8 @@
 import Foundation
 
 struct JSONData {
-    var datas: [String] = []
+    
+    var datas = [String:Any]()
     var dataString: [String] = []
     var dataInt: [Int] = []
     var dataBool: [Bool] = []

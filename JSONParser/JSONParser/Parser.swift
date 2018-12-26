@@ -48,15 +48,16 @@ struct Parser{
     // 입력받은 데이터에 괄호가 있는지 체크
     static func isDivideData(from data: String) -> Bool {
         
-        guard ((data.first?.description) == "["), ((data.last?.description) == "]") else {
+        guard ((data.first?.description) == "["), ((data.last?.description) == "]") || ((data.first?.description) == "{"), ((data.last?.description) == "}")else {
             return false
         }
+        
         return true
     }
     
     private static func parseData(_ data: [String]) -> JSONData?{
         var resultData: JSONData = JSONData()
-        resultData.datas = data
+        //resultData.datas = data
         for index in 0..<data.count {
             if isStringType(data[index]) {
                 resultData.dataString.append(data[index])
@@ -70,6 +71,7 @@ struct Parser{
         }
         return resultData
     }
+    
     
     private static func isNumber (_ popData : String) -> Bool {
         return popData.components(separatedBy: CharacterSet.decimalDigits).count != 0
