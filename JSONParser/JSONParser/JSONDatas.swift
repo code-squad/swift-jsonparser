@@ -9,9 +9,9 @@
 import Foundation
 
 struct JSONData {
-    
-    var datas = [String]()
+    var datas: [String] = []
     var dataString: [String] = []
     var dataInt: [Int] = []
     var dataBool: [Bool] = []
+    var objectCount: Int = 0
 }

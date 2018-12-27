@@ -29,50 +29,59 @@ extension String {
 struct Parser{
     // 입력받은 데이터를 분석해서 반환
     static func DivideData(from data: String) -> JSONData? {
-        // flag 를 둔 이유는? 맨처음 [ 괄호면? 배열이 들어오고 ,  { 이면 파싱해야하니깐
-        var flag = 0
-        data.first?.description == "[" ? (flag = 0) : (flag = 1)
-        print(flag)
-        // 괄호 체크
         guard isDivideData(from: data) else {
             return nil
         }
-        var resultData: JSONData = JSONData()
-        let dataJSON: [String] = data.removeBothFirstAndLast().splitByComma()
-        resultData.datas = dataJSON // 순서 있는 사용자 input
-        // [ { 일때
-        var bracketData: Stack<String>
-        if flag == 0 { bracketData = pushValidArray(dataJSON)}
-        
-        //콜론기준으로 데이터를 나누기
-        let test = parseDictionary(dataJSON)
-        
-        
-        let datasJSON: [String] = removeSpace(dataJSON)
-        let parseJSONData = parseData(datasJSON)
-        
+        // 사용자 데이터 넣으려고
+        let datasJSON = testss(data)
+        //let dataJSON: [String] = data.removeBothFirstAndLast().splitByComma()
+        //let datasJSON: [String] = removeSpace(dataJSON)
+        //var parseJSONData = parseData(datasJSON)
+        var parseJSONData = parseDatas(datasJSON)
+        //사용자 입력한 그대로의 데이터를 저장하기 위해
+        parseJSONData?.datas = data.splitByComma()
         return parseJSONData
     }
-    // [ { 이거 체크할때 사용
-    private static func pushValidArray(_ data: [String]) -> Stack<String>{
-        var bracketData: Stack<String> = Stack<String>()
-        for index in 0..<data.count {
-            if data[index] == "{" || data[index] == "}" {
-                bracketData.push(data[index])
+    // 리팩토링 해야함
+    // 콤마로 나누고 , 괄호도 빼고 , 딕셔너리로 나누고 저장한 데이터 반환
+    static func testss(_ data: String) -> [String:String]{
+        var dicCode = [String:String]()
+        // 콤마로 나누기
+        var test: [String] = data.splitByComma()
+        for index in 0..<test.count {
+            // 괄호빼기
+            if test[index].first?.description == "{" {
+                //괄호를 빼고 다시 넣기
+                let bracket = test[index].dropFirst()
+                test[index] = String(bracket)
+            }else if test[index].last?.description == "}" {
+                let bracket = test[index].dropLast()
+                test[index] = String(bracket)
+            }
+            var code = test[index].splitByColon()
+            dicCode.updateValue(code[1], forKey: code[0])
+        }
+        return dicCode
+    }
+    private static func parseDatas(_ data: [String:String]) -> JSONData?{
+        var resultData: JSONData = JSONData()
+        for (_,value) in data {
+            let value = value.trimmingCharacters(in: .whitespacesAndNewlines)
+            print(value)
+            
+            if isStringType(value) {
+                resultData.dataString.append(value)
+            }else if isBoolType(value) {
+                guard let isData = Bool(value) else { break }
+                resultData.dataBool.append(isData)
+            }else if isNumber(value) && isValidCharacter(value) {
+                guard  let isData = Int(value) else{ break }
+                resultData.dataInt.append(isData)
             }
         }
-        return bracketData
+        return resultData
     }
     
-    // : 콜론을 기준으로 데이터 나눠서 JSON 요소를 저장한 사전(Dictionary) 저장 key: String : value : JSONDatas 로 받게끔
-    private static func parseDictionary(_ data: [String]) ->[String:JSONData]{
-        for index in 0..<data.count {
-            print(data[index])
-            print("----------")
-        }
-        let test: JSONData = JSONData()
-        return ["dd": test]
-    }
     //데이터 사이 공백제거
     private static func removeSpace(_ data:[String]) -> [String] {
         var removeSpaceData: [String] = [String]()
@@ -85,19 +94,19 @@ struct Parser{
     
     // 입력받은 데이터에 괄호가 있는지 체크
     static func isDivideData(from data: String) -> Bool {
-        if ((data.first?.description) == "{"), ((data.last?.description) == "}") {
+        if (data.first?.description) == "{" , data.last?.description == "}" {
             return true
         }
         guard ((data.first?.description) == "["), ((data.last?.description) == "]") else {
             return false
         }
-        
         return true
     }
     
     private static func parseData(_ data: [String]) -> JSONData?{
         var resultData: JSONData = JSONData()
-        //resultData.datas = data
+        resultData.datas = data
+        print(data)
         for index in 0..<data.count {
             if isStringType(data[index]) {
                 resultData.dataString.append(data[index])
@@ -111,7 +120,6 @@ struct Parser{
         }
         return resultData
     }
-    
     
     private static func isNumber (_ popData : String) -> Bool {
         return popData.components(separatedBy: CharacterSet.decimalDigits).count != 0
