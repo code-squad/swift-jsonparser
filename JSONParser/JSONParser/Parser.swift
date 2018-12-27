@@ -74,17 +74,17 @@ struct Parser{
     
     private static func parseDatas(_ data: [String:String]) -> JSONData?{
         var resultData: JSONData = JSONData()
-        for (_,value) in data {
+        for (key,value) in data {
             let value = value.trimmingCharacters(in: .whitespacesAndNewlines)
             
             if isStringType(value) {
-                resultData.dataString.append(value)
+                resultData.dataString.updateValue(value, forKey: key)
             }else if isBoolType(value) {
                 guard let isData = Bool(value) else { break }
-                resultData.dataBool.append(isData)
+                resultData.dataBool.updateValue(isData, forKey: key)
             }else if isNumber(value) && isValidCharacter(value) {
                 guard  let isData = Int(value) else{ break }
-                resultData.dataInt.append(isData)
+                resultData.dataInt.updateValue(isData, forKey: key)
             }
         }
         return resultData

@@ -1,5 +1,5 @@
 //
-//  JSONDatas.swift
+//  JSONData.swift
 //  JSONParser
 //
 //  Created by Elena on 24/12/2018.
@@ -10,8 +10,8 @@ import Foundation
 
 struct JSONData {
     var datas: [String] = []
-    var dataString: [String] = []
-    var dataInt: [Int] = []
-    var dataBool: [Bool] = []
+    var dataString = [String:String]()
+    var dataInt = [String:Int]()
+    var dataBool = [String:Bool]()
     var objectCount: Int = 0
 }
