@@ -17,7 +17,7 @@ class TestJSONParser: XCTestCase {
     //Parser
     // Valid Data
     func testParserisValidData() {
-        let validData = "[ 10, 21, 4, 314, 99, 0, 72 ]"
+        let validData = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
         XCTAssertTrue(Parser.isDivideData(from: validData))
     }
     // Open Bracket X

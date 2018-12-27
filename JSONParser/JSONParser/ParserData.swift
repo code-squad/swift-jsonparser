@@ -12,12 +12,17 @@ struct ParserData: JSONResult {
     
     var resultDataPrint: String {
         if parserData.objectCount > 0 {
-            return "총 \(parserData.objectCount)개의 배열 데이터 중에 객체 \(parserData.objectCount)개가 포함되어 있습니다."
+            return "총 \(parserData.objectCount)개의 배열 데이터 중에"
         }
         return "총 \(parserData.datas.count) 개의 객체 데이터 중에 "
     }
     
     var parserResultPrint: String {
+        
+        if parserData.objectCount > 0 {
+            return "객체 \(parserData.objectCount)개가 포함되어 있습니다."
+        }
+        
         var resultData = ""
         
         if self.parserData.dataString.count != 0 { resultData += "문자열 \(parserData.dataString.count)개," }

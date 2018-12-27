@@ -32,42 +32,50 @@ struct Parser{
         guard isDivideData(from: data) else {
             return nil
         }
-        // 사용자 데이터 넣으려고
-        let datasJSON = testss(data)
-        //let dataJSON: [String] = data.removeBothFirstAndLast().splitByComma()
-        //let datasJSON: [String] = removeSpace(dataJSON)
-        //var parseJSONData = parseData(datasJSON)
+        if data.first?.description == "[" {
+            return parseBracket(data)
+        }
+        let datasJSON = parserForm(data)
         var parseJSONData = parseDatas(datasJSON)
-        //사용자 입력한 그대로의 데이터를 저장하기 위해
         parseJSONData?.datas = data.splitByComma()
         return parseJSONData
     }
-    // 리팩토링 해야함
-    // 콤마로 나누고 , 괄호도 빼고 , 딕셔너리로 나누고 저장한 데이터 반환
-    static func testss(_ data: String) -> [String:String]{
-        var dicCode = [String:String]()
-        // 콤마로 나누기
-        var test: [String] = data.splitByComma()
-        for index in 0..<test.count {
-            // 괄호빼기
-            if test[index].first?.description == "{" {
-                //괄호를 빼고 다시 넣기
-                let bracket = test[index].dropFirst()
-                test[index] = String(bracket)
-            }else if test[index].last?.description == "}" {
-                let bracket = test[index].dropLast()
-                test[index] = String(bracket)
-            }
-            var code = test[index].splitByColon()
-            dicCode.updateValue(code[1], forKey: code[0])
+    private static func parseBracket(_ data: String) -> JSONData? {
+        var resultData: JSONData = JSONData()
+        var leftBracket = 0
+        var rightBracket = 0
+        leftBracket = data.components(separatedBy: "{").count
+        rightBracket = data.components(separatedBy: "}").count
+        if leftBracket != rightBracket {
+            return nil
         }
-        return dicCode
+        resultData.objectCount = leftBracket-1
+        return resultData
     }
+    // Form 만들기
+    private static func parserForm(_ data: String) -> [String:String]{
+        var dicFormData = [String:String]()
+        var dataSplitByComma: [String] = data.splitByComma()
+        for index in 0..<dataSplitByComma.count {
+            
+            if dataSplitByComma[index].first?.description == "{" {
+                let bracket = dataSplitByComma[index].dropFirst()
+                dataSplitByComma[index] = String(bracket)
+                
+            }else if dataSplitByComma[index].last?.description == "}" {
+                let bracket = dataSplitByComma[index].dropLast()
+                dataSplitByComma[index] = String(bracket)
+            }
+            var dataSplitByColon = dataSplitByComma[index].splitByColon()
+            dicFormData.updateValue(dataSplitByColon[1], forKey: dataSplitByColon[0])
+        }
+        return dicFormData
+    }
+    
     private static func parseDatas(_ data: [String:String]) -> JSONData?{
         var resultData: JSONData = JSONData()
         for (_,value) in data {
             let value = value.trimmingCharacters(in: .whitespacesAndNewlines)
-            print(value)
             
             if isStringType(value) {
                 resultData.dataString.append(value)
@@ -82,16 +90,6 @@ struct Parser{
         return resultData
     }
     
-    //데이터 사이 공백제거
-    private static func removeSpace(_ data:[String]) -> [String] {
-        var removeSpaceData: [String] = [String]()
-        for index in 0..<data.count {
-            let jsonParser = data[index].trimmingCharacters(in: .whitespacesAndNewlines)
-            removeSpaceData.append(jsonParser)
-        }
-        return removeSpaceData
-    }
-    
     // 입력받은 데이터에 괄호가 있는지 체크
     static func isDivideData(from data: String) -> Bool {
         if (data.first?.description) == "{" , data.last?.description == "}" {
@@ -101,24 +99,6 @@ struct Parser{
             return false
         }
         return true
-    }
-    
-    private static func parseData(_ data: [String]) -> JSONData?{
-        var resultData: JSONData = JSONData()
-        resultData.datas = data
-        print(data)
-        for index in 0..<data.count {
-            if isStringType(data[index]) {
-                resultData.dataString.append(data[index])
-            }else if isBoolType(data[index]) {
-                guard let isData = Bool(data[index]) else { break }
-                resultData.dataBool.append(isData)
-            }else if isNumber(data[index]) && isValidCharacter(data[index]) {
-                guard  let isData = Int(data[index]) else{ break }
-                resultData.dataInt.append(isData)
-            }
-        }
-        return resultData
     }
     
     private static func isNumber (_ popData : String) -> Bool {
