@@ -22,13 +22,19 @@ class TestJSONParser: XCTestCase {
     }
     // Open Bracket X
     func testParserisNoOpenBracket() {
-        let noOpenBracket = " 10, 21, 4, 314, 99, 0, 72 ]"
+        let noOpenBracket = " \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
         XCTAssertFalse(Parser.isDivideData(from: noOpenBracket))
     }
     // Close Bracket X
     func testParserisNoCloseBracket() {
-        let noCloseBracket = "[ 10, 21, 4, 314, 99, 0, 72"
+        let noCloseBracket = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true "
         XCTAssertFalse(Parser.isDivideData(from: noCloseBracket))
+    }
+    
+    //Array Valid Data
+    func testArrayParserisValidData() {
+        let validData = "[{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true },{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }]"
+        XCTAssertTrue(Parser.isDivideData(from: validData))
     }
 
 }
