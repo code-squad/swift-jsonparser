@@ -8,10 +8,12 @@
 
 import Foundation
 
-struct JSONData {
-    var datas: [String] = []
+struct ObjectData{
+    var objectCount: Int = 0
+}
+
+struct JSONData{
     var dataString = [String:String]()
     var dataInt = [String:Int]()
     var dataBool = [String:Bool]()
-    var objectCount: Int = 0
 }

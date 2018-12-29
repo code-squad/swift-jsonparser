@@ -33,15 +33,17 @@ struct Parser{
             return nil
         }
         if data.first?.description == "[" {
-            return parseBracket(data)
+            var bracket = JSONData()
+            bracket.dataString = ["ObjectData":data]
+            return bracket
         }
-        let datasJSON = parserForm(data)
-        var parseJSONData = parseDatas(datasJSON)
-        parseJSONData?.datas = data.splitByComma()
+        let dataJSON = parserForm(data)
+        let parseJSONData = parseData(dataJSON)
         return parseJSONData
     }
-    private static func parseBracket(_ data: String) -> JSONData? {
-        var resultData: JSONData = JSONData()
+    
+    static func parseBracket(_ data: String) -> ObjectData? {
+        var resultData: ObjectData = ObjectData()
         var leftBracket = 0
         var rightBracket = 0
         leftBracket = data.components(separatedBy: "{").count
@@ -72,7 +74,7 @@ struct Parser{
         return dicFormData
     }
     
-    private static func parseDatas(_ data: [String:String]) -> JSONData?{
+    private static func parseData(_ data: [String:String]) -> JSONData?{
         var resultData: JSONData = JSONData()
         for (key,value) in data {
             let value = value.trimmingCharacters(in: .whitespacesAndNewlines)

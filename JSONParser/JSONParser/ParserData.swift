@@ -11,17 +11,11 @@ import Foundation
 struct ParserData: JSONResult {
     
     var resultDataPrint: String {
-        if parserData.objectCount > 0 {
-            return "총 \(parserData.objectCount)개의 배열 데이터 중에"
-        }
-        return "총 \(parserData.datas.count) 개의 객체 데이터 중에 "
+
+        return "총 \(parserData.dataInt.count + parserData.dataString.count + parserData.dataBool.count) 개의 객체 데이터 중에 "
     }
     
     var parserResultPrint: String {
-        
-        if parserData.objectCount > 0 {
-            return "객체 \(parserData.objectCount)개가 포함되어 있습니다."
-        }
         
         var resultData = ""
         
@@ -39,3 +33,22 @@ struct ParserData: JSONResult {
         self.parserData = parserData
     }
 }
+
+
+struct ParserObjectData: JSONResult {
+    
+    var resultDataPrint: String {
+        return "총 \(parserData.objectCount)개의 배열 데이터 중에"
+    }
+    
+    var parserResultPrint: String {
+        return "객체 \(parserData.objectCount)개가 포함되어 있습니다."
+    }
+    
+    let parserData: ObjectData
+    
+    init(_ parserData: ObjectData) {
+        self.parserData = parserData
+    }
+}
+
