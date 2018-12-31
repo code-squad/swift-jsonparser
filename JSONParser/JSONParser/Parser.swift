@@ -41,7 +41,6 @@ struct Parser{
         let parseJSONData = parseData(dataJSON)
         return parseJSONData
     }
-    
     static func parseBracket(_ data: String) -> ObjectData? {
         var resultData: ObjectData = ObjectData()
         var leftBracket = 0
@@ -92,7 +91,7 @@ struct Parser{
         return resultData
     }
     
-    // 입력받은 데이터에 괄호가 있는지 체크
+    // 괄호가 있는지 체크
     static func isDivideData(from data: String) -> Bool {
         if (data.first?.description) == "{" , data.last?.description == "}" {
             return true
