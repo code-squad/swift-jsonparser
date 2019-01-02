@@ -16,4 +16,5 @@ struct JSONData{
     var dataString = [String:String]()
     var dataInt = [String:Int]()
     var dataBool = [String:Bool]()
+    var ObjectData:String = ""
 }

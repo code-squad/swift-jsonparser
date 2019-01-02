@@ -34,7 +34,7 @@ struct Parser{
         }
         if data.first?.description == "[" {
             var bracket = JSONData()
-            bracket.dataString = ["ObjectData":data]
+            bracket.ObjectData = data
             return bracket
         }
         let dataJSON = parserForm(data)

@@ -17,8 +17,8 @@ func parsingMain() {
         return
     }
     // [ ]
-    if  printResultData.dataString.keys.description == ["ObjectData":"data"].keys.description {
-        let resultObjectData = Parser.parseBracket(printResultData.dataString.values.description)
+    if  printResultData.ObjectData.isEmpty {
+        let resultObjectData = Parser.parseBracket(printResultData.ObjectData)
         guard let result = resultObjectData else {
             OutputView().errorResult()
             return
