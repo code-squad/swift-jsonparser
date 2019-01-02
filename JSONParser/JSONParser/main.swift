@@ -17,7 +17,7 @@ func parsingMain() {
         return
     }
     // [ ]
-    if  printResultData.ObjectData.isEmpty {
+    if  !printResultData.ObjectData.isEmpty {
         let resultObjectData = Parser.parseBracket(printResultData.ObjectData)
         guard let result = resultObjectData else {
             OutputView().errorResult()
