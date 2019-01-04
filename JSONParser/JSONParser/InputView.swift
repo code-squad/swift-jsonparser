@@ -8,7 +8,6 @@
 
 import Foundation
 
-//입력
 struct InputView {
     
     private static func readInput(ment: String) -> String {

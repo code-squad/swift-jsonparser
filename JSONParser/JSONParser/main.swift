@@ -8,28 +8,16 @@
 
 import Foundation
 
-func parsingMain() {
-    let userInputData = InputView.getUserString()
-    let result = Parser.DivideData(from: userInputData)
-    //err 'nil'
-    guard let printResultData = result else {
-        OutputView().errorResult()
-        return
-    }
-    // [ ]
-    if  !printResultData.ObjectData.isEmpty {
-        let resultObjectData = Parser.parseBracket(printResultData.ObjectData)
-        guard let result = resultObjectData else {
-            OutputView().errorResult()
+
+struct Main {
+    static func run() {
+        let userData = InputView.getUserString()
+        guard let jsonDataForm: JSONDataForm = Parser.divideData(userData) else {
+            OutputView.errorResult()
             return
         }
-        let resultData = ParserObjectData.init(result)
-        OutputView().parserResultData(resultData)
-        return
+        OutputView.showResultData(of: jsonDataForm)
     }
-    // { }
-    let resultData = ParserData.init(printResultData)
-    OutputView().parserResultData(resultData)
 }
 
-parsingMain()
+Main.run()

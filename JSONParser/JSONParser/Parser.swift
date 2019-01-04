@@ -7,114 +7,100 @@
 //
 
 import Foundation
-//JSON 출력을 위한 Protocol
-protocol JSONResult {
-    var resultDataPrint: String { get }
-    var parserResultPrint: String { get }
-    
-}
-
 extension String {
     func splitByComma() -> [String] {
-        return self.split(separator: ",").map({String($0)})
+        return self.split(separator: ",").map({ String($0)})
     }
     func removeBothFirstAndLast() -> String {
         return String(self.dropFirst().dropLast())
     }
     func splitByColon() -> [String] {
-        return self.split(separator: ":").map({String($0)})
+        return self.split(separator: ":").map({ String($0)})
+    }
+    func splitByBracket() -> [String] {
+        return self.split(separator: "{").map({ String($0)})
     }
 }
 
-struct Parser{
-    // 입력받은 데이터를 분석해서 반환
-    static func DivideData(from data: String) -> JSONData? {
-        guard isDivideData(from: data) else {
-            return nil
+
+struct Parser {
+    //커링 방법을 사용해서 문자열에 괄호 패턴이 있는지 확인하는 메소드
+    private static func regexTest(pattern: String) -> (String) -> Bool {
+        let expression: NSRegularExpression? = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        return { (input: String) -> Bool in
+            guard let expression = expression else { return false }
+            let inputRange = NSMakeRange(0, input.characters.count)
+            let matches = expression.matches(in: input, options: [], range: inputRange)
+            return matches.count > 0
         }
-        if data.first?.description == "[" {
-            var bracket = JSONData()
-            bracket.ObjectData = data
-            return bracket
-        }
-        let dataJSON = parserForm(data)
-        let parseJSONData = parseData(dataJSON)
-        return parseJSONData
     }
-    static func parseBracket(_ data: String) -> ObjectData? {
-        var resultData: ObjectData = ObjectData()
-        var leftBracket = 0
-        var rightBracket = 0
-        leftBracket = data.components(separatedBy: "{").count
-        rightBracket = data.components(separatedBy: "}").count
-        if leftBracket != rightBracket {
-            return nil
-        }
-        resultData.objectCount = leftBracket-1
-        return resultData
+    // 객체일때 Dictionary
+    private static func splitByKeyValue(from data: String) -> (key: String, value: JSONType?) {
+        let objectKeyValue = data.splitByColon()
+        let key: String = objectKeyValue[0]
+        let value = JSONTypeSelect.selectJSONData(objectKeyValue[1])
+        return (key, value)
     }
-    // Form 만들기
-    private static func parserForm(_ data: String) -> [String:String]{
-        var dicFormData = [String:String]()
-        var dataSplitByComma: [String] = data.splitByComma()
-        for index in 0..<dataSplitByComma.count {
-            
-            if dataSplitByComma[index].first?.description == "{" {
-                let bracket = dataSplitByComma[index].dropFirst()
-                dataSplitByComma[index] = String(bracket)
-                
-            }else if dataSplitByComma[index].last?.description == "}" {
-                let bracket = dataSplitByComma[index].dropLast()
-                dataSplitByComma[index] = String(bracket)
+
+    private static func makeJSONObject(from data: String) -> [String: JSONType]? {
+        var jsonObject = [String: JSONType]()
+        let keyValues = data.splitByComma()
+        for keyValue in keyValues {
+            let keyValueSplit = splitByKeyValue(from: keyValue)
+            guard let value: JSONType = keyValueSplit.value else { continue }
+            jsonObject[keyValueSplit.key] = value
+        }
+        return jsonObject
+    }
+
+    private static func makeJSONArray(from data: String) -> [JSONType]? {
+        var jsonArray = [JSONType]()
+        let data = data.removeBothFirstAndLast()
+        // {}이라는 스트링이 안에 있는지없는지 판별하기 위한 테스트 : 배열 ? 단순 배열
+        let hasBracketIn = regexTest(pattern: "\\{")
+        let result = hasBracketIn(data)
+        if result {
+            let value = data.splitByBracket()
+            for index in 0..<value.count {
+                guard let parserData = JSONTypeSelect.selectSimpleLine(value[index]) else {
+                    return nil
+                }
+                jsonArray.append(parserData)
             }
-            var dataSplitByColon = dataSplitByComma[index].splitByColon()
-            dicFormData.updateValue(dataSplitByColon[1], forKey: dataSplitByColon[0])
-        }
-        return dicFormData
-    }
-    
-    private static func parseData(_ data: [String:String]) -> JSONData?{
-        var resultData: JSONData = JSONData()
-        for (key,value) in data {
-            let value = value.trimmingCharacters(in: .whitespacesAndNewlines)
-            
-            if isStringType(value) {
-                resultData.dataString.updateValue(value, forKey: key)
-            }else if isBoolType(value) {
-                guard let isData = Bool(value) else { break }
-                resultData.dataBool.updateValue(isData, forKey: key)
-            }else if isNumber(value) && isValidCharacter(value) {
-                guard  let isData = Int(value) else{ break }
-                resultData.dataInt.updateValue(isData, forKey: key)
+        } else {
+            let value = data.splitByComma()
+            for index in 0..<value.count {
+                guard let parserData = JSONTypeSelect.selectJSONData(value[index]) else {
+                    return nil
+                    }
+                jsonArray.append(parserData)
             }
         }
-        return resultData
+        return jsonArray
     }
-    
-    // 괄호가 있는지 체크
+    // bracket 를 확인해서 배열인지? 객체인지 ?
+    static func divideData(_ data: String) -> JSONDataForm? {
+        guard isDivideData(from: data) else { return nil }
+        
+        if data.hasPrefix("[") {
+            guard let jsonArray = makeJSONArray(from: data) else { return nil }
+            return ParserArray.init(jsonArray)
+        }
+        if data.hasPrefix("{") {
+            guard let jsonObject = makeJSONObject(from: data) else { return nil }
+            return ParserObject.init(jsonObject)
+        }
+        return nil
+    }
+    // 처음과 끝이 bracket 있는지 체크
     static func isDivideData(from data: String) -> Bool {
-        if (data.first?.description) == "{" , data.last?.description == "}" {
+        if data.hasPrefix("{"), data.hasSuffix("}") {
             return true
         }
-        guard ((data.first?.description) == "["), ((data.last?.description) == "]") else {
-            return false
+        else if data.hasPrefix("["),data.hasSuffix("]")  {
+            return true
         }
-        return true
+        return false
     }
-    
-    private static func isNumber (_ popData : String) -> Bool {
-        return popData.components(separatedBy: CharacterSet.decimalDigits).count != 0
-    }
-    private static func isValidCharacter(_ popData : String) -> Bool {
-        let validCharacter = CharacterSet.init(charactersIn: "0123456789")
-        return (popData.rangeOfCharacter(from: validCharacter.inverted) == nil)
-    }
-    
-    private static func isStringType (_ popData : String) -> Bool {
-        return popData.first == "\"" && popData.last == "\""
-    }
-    
-    private static func isBoolType (_ popData : String) -> Bool {
-        return popData.contains("true") || popData.contains("false")
-    }
+
 }
