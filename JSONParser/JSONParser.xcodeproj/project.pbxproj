@@ -21,6 +21,9 @@
 		F32786CE21CB2E4300BB271E /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786C821CB2E4300BB271E /* InputView.swift */; };
 		F32786CF21CB2E4300BB271E /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786C921CB2E4300BB271E /* Parser.swift */; };
 		F32786D221CB326600BB271E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786D121CB326600BB271E /* main.swift */; };
+		F35646E221DF38A7002CEADA /* JSONTypeSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30945E021DF1165005592E4 /* JSONTypeSelect.swift */; };
+		F35646E321DF38A7002CEADA /* ParserArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30945CB21DC7F37005592E4 /* ParserArray.swift */; };
+		F35646E421DF38A7002CEADA /* ParserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30945C921DC653D005592E4 /* ParserObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -215,6 +218,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F35646E221DF38A7002CEADA /* JSONTypeSelect.swift in Sources */,
+				F35646E321DF38A7002CEADA /* ParserArray.swift in Sources */,
+				F35646E421DF38A7002CEADA /* ParserObject.swift in Sources */,
 				F30945C321D4BFC5005592E4 /* InputView.swift in Sources */,
 				F30945C421D4BFC5005592E4 /* main.swift in Sources */,
 				F30945C521D4BFC5005592E4 /* OutputView.swift in Sources */,
