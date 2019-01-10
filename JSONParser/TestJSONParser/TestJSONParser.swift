@@ -10,10 +10,10 @@ import XCTest
 @testable import JSONParser
 
 class TestJSONParser: XCTestCase {
-
+    
     override func setUp() { }
     override func tearDown() { }
-
+    
     //Parser
     // Valid Data
     func testParserisValidData() {
@@ -42,12 +42,6 @@ class TestJSONParser: XCTestCase {
         let jsonObject = ParserObject.init(dic)
         XCTAssertEqual(jsonObject.printType(), ["문자열": 2, "숫자": 1, "부울": 1])
     }
-    // JSONType Array check
-    func testJSONTypeArrayValidData() {
-        let array = [JSONType.string("kwangrae"), JSONType.string("cony"), JSONType.int(2), JSONType.bool(false)]
-        let jsonArray = ParserArray.init(array)
-        XCTAssertEqual(jsonArray.printType(), ["문자열": 2, "숫자": 1, "부울": 1])
-    }
     // JSONType select check : String
     func testJSONTypeStringValidData() {
         let inputString = "\"conyconydev\""
@@ -69,5 +63,19 @@ class TestJSONParser: XCTestCase {
         let equalStringType = JSONType.int(55)
         XCTAssertEqual(selectInt?.typeName,equalStringType.typeName)
     }
-    
+    // JSONType select check : jsonObject
+    func testDivideDataObjectValidData() {
+        let inputData = "{ \"name\" : \"kwangrae\", \"alias\" : \"cony\", \"level\" : 2, \"married\" : false }"
+        let makeJSON = Parser.divideData(inputData)
+        let dic: [String: JSONType] = ["name" : JSONType.string("kwangrae"), "alias" : JSONType.string("cony"), "level" : JSONType.int(2), "married" : JSONType.bool(false)]
+        let equalStringType = ParserObject.init(dic)
+        XCTAssertEqual(makeJSON?.typeName,equalStringType.typeName)
+    }
+    // JSONType select check : jsonArray
+    func testDivideDataArrayValidData() {
+        let inputData = "[{ \"name\" : \"kwangrae\", \"alias\" : \"cony\", \"level\" : 2, \"married\" : false },{ \"name\" : \"kwangrae\", \"alias\" : \"cony\", \"level\" : 2, \"married\" : false }]"
+        let makeJSON = Parser.divideData(inputData)
+        //총 2개의 배열 데이터 중에 객체 2개가 포함되어 있습니다.
+        XCTAssertEqual(makeJSON?.printType(), ["객체":2])
+    }
 }

@@ -7,21 +7,6 @@
 //
 
 import Foundation
-extension String {
-    func splitByComma() -> [String] {
-        return self.split(separator: ",").map({ String($0)})
-    }
-    func removeBothFirstAndLast() -> String {
-        return String(self.dropFirst().dropLast())
-    }
-    func splitByColon() -> [String] {
-        return self.split(separator: ":").map({ String($0)})
-    }
-    func splitByBracket() -> [String] {
-        return self.split(separator: "{").map({ String($0)})
-    }
-}
-
 
 struct Parser {
     //커링 방법을 사용해서 문자열에 괄호 패턴이 있는지 확인하는 메소드
@@ -36,49 +21,45 @@ struct Parser {
     }
     // 객체일때 Dictionary
     private static func splitByKeyValue(from data: String) -> (key: String, value: JSONType?) {
+        let grammarChecker = regexTest(pattern: GrammarChecker.keyValue)(data)
+        guard grammarChecker else { return (data,nil) }
         let objectKeyValue = data.splitByColon()
         let key: String = objectKeyValue[0]
         let value = JSONTypeSelect.selectJSONData(objectKeyValue[1])
         return (key, value)
     }
-
+    
     private static func makeJSONObject(from data: String) -> [String: JSONType]? {
+        let grammarChecker = regexTest(pattern: GrammarChecker.jsonObject)(data)
+        guard grammarChecker else { return nil }
         var jsonObject = [String: JSONType]()
         let keyValues = data.splitByComma()
         for keyValue in keyValues {
             let keyValueSplit = splitByKeyValue(from: keyValue)
+            if keyValueSplit.value == nil { return nil}
             guard let value: JSONType = keyValueSplit.value else { continue }
             jsonObject[keyValueSplit.key] = value
         }
         return jsonObject
     }
-
+    
     private static func makeJSONArray(from data: String) -> [JSONType]? {
+        let grammarChecker = regexTest(pattern: GrammarChecker.jsonArray)(data)
+        guard grammarChecker else { return nil }
         var jsonArray = [JSONType]()
         let data = data.removeBothFirstAndLast()
-        // {}이라는 스트링이 안에 있는지없는지 판별하기 위한 테스트 : 배열 ? 단순 배열
-        let hasBracketIn = regexTest(pattern: "\\{")
+        let hasBracketIn = regexTest(pattern: GrammarChecker.leftBracket)
         let result = hasBracketIn(data)
-        if result {
-            let value = data.splitByBracket()
-            for index in 0..<value.count {
-                guard let parserData = JSONTypeSelect.selectSimpleLine(value[index]) else {
-                    return nil
-                }
-                jsonArray.append(parserData)
+        guard result else { return nil }
+        let value = data.splitByBracket()
+        for index in 0..<value.count {
+            guard let parserData = JSONTypeSelect.selectSimpleLine(value[index]) else {
+                return nil
             }
-        } else {
-            let value = data.splitByComma()
-            for index in 0..<value.count {
-                guard let parserData = JSONTypeSelect.selectJSONData(value[index]) else {
-                    return nil
-                    }
-                jsonArray.append(parserData)
-            }
+            jsonArray.append(parserData)
         }
         return jsonArray
     }
-    // bracket 를 확인해서 배열인지? 객체인지 ?
     static func divideData(_ data: String) -> JSONDataForm? {
         guard isDivideData(from: data) else { return nil }
         
@@ -102,5 +83,5 @@ struct Parser {
         }
         return false
     }
-
+    
 }

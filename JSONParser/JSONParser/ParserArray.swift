@@ -25,8 +25,8 @@ struct ParserArray: JSONDataForm {
     
     func printType() -> [String : Int] {
         var typeCount: [String: Int] = [:]
-        for jsonValue in self.jsonArray {
-            typeCount[jsonValue.typeName] = (typeCount[jsonValue.typeName] ?? 0) + 1
+        for _ in self.jsonArray {
+            typeCount["객체"] = (typeCount["객체"] ?? 0) + 1
         }
         return typeCount
     }

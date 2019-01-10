@@ -9,7 +9,7 @@
 import Foundation
 
 struct JSONTypeSelect {
-
+    
     // JSONData Type을 선택해서 반환
     static func selectJSONData(_ data: String) -> JSONType? {
         var resultData = JSONType.int(0)
