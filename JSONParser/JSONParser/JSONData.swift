@@ -9,9 +9,9 @@
 import Foundation
 
 struct JSONData {
-    var typeBoolean: Int
-    var typeString: Int
-    var typeNumber: Int
+    private var typeBoolean: Int
+    private var typeString: Int
+    private var typeNumber: Int
     
     init(typeBoolean: Int, typeString: Int, typeNumber: Int){
         self.typeBoolean = typeBoolean
