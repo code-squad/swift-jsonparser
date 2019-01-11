@@ -66,7 +66,6 @@ struct Parser {
         for keyValue in keyValues {
             let keyValueSplit = splitByKeyValue(from: keyValue)
             guard let value: JSONType = keyValueSplit.value else { continue }
-            if value.typeName == "배열" { return nil }
             jsonObject[keyValueSplit.key] = value
         }
         return jsonObject
@@ -76,7 +75,6 @@ struct Parser {
         let jsonValues = regexString(pattern: GrammarChecker.valuesInArray, data)
         for jsonValue in jsonValues {
             guard let keyValueType = selectJSONData(from: jsonValue) else { return nil }
-            if keyValueType.typeName == "배열" { return nil }
             jsonArray.append(keyValueType)
         }
         return jsonArray
