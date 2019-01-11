@@ -13,69 +13,48 @@ class TestJSONParser: XCTestCase {
     
     override func setUp() { }
     override func tearDown() { }
-    
     //Parser
     // Valid Data
-    func testParserisValidData() {
+    func testParserisValidDataJSONObject() {
         let validData = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        XCTAssertTrue(Parser.isDivideData(from: validData))
+        XCTAssertNotNil(Parser.divideData(validData))
     }
+    
     // Open Bracket X
     func testParserisNoOpenBracket() {
         let noOpenBracket = " \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        XCTAssertFalse(Parser.isDivideData(from: noOpenBracket))
+        XCTAssertNil(Parser.divideData(noOpenBracket))
     }
+    
     // Close Bracket X
     func testParserisNoCloseBracket() {
         let noCloseBracket = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true "
-        XCTAssertFalse(Parser.isDivideData(from: noCloseBracket))
+        XCTAssertNil(Parser.divideData(noCloseBracket))
     }
     
-    //Array Valid Data
-    func testArrayParserisValidData() {
+    //GrammarChecker
+    //jsonObject validData O
+    func testGrammarCheckerValidDataJsonObject() {
+        let validData = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
+        XCTAssertTrue(GrammarChecker.regexTest(pattern: GrammarChecker.jsonObject)(validData))
+    }
+        
+    //jsonArray validData O
+    func testGrammarCheckerValidDataJsonArray() {
         let validData = "[{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true },{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }]"
-        XCTAssertTrue(Parser.isDivideData(from: validData))
+        XCTAssertTrue(GrammarChecker.regexTest(pattern: GrammarChecker.jsonArray)(validData))
     }
-    // JSONType Object check
-    func testJSONTypeObjectValidData() {
-        let dic: [String: JSONType] = ["name" : JSONType.string("kwangrae"), "alias" : JSONType.string("cony"), "level" : JSONType.int(2), "married" : JSONType.bool(false)]
-        let jsonObject = ParserObject.init(dic)
-        XCTAssertEqual(jsonObject.printType(), ["문자열": 2, "숫자": 1, "부울": 1])
+        
+    //jsonObject validData x
+    func testGrammarCheckerNotValidDataJsonObject() {
+        let validData = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
+        XCTAssertFalse(GrammarChecker.regexTest(pattern: GrammarChecker.jsonArray)(validData))
     }
-    // JSONType select check : String
-    func testJSONTypeStringValidData() {
-        let inputString = "\"conyconydev\""
-        let selectString = JSONTypeSelect.selectJSONData(inputString)
-        let equalStringType = JSONType.string(inputString)
-        XCTAssertEqual(selectString?.typeName,equalStringType.typeName)
+        
+    //jsonArray validData x
+    func testGrammarCheckerNotValidDataJsonArray() {
+        let validData = "[{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true },{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }]"
+        XCTAssertFalse(GrammarChecker.regexTest(pattern: GrammarChecker.jsonObject)(validData))
     }
-    // JSONType select check : Bool
-    func testJSONTypeBoolValidData() {
-        let inputData = "true"
-        let selectBool = JSONTypeSelect.selectJSONData(inputData)
-        let equalStringType = JSONType.bool(true)
-        XCTAssertEqual(selectBool?.typeName,equalStringType.typeName)
-    }
-    // JSONType select check : Int
-    func testJSONTypeIntValidData() {
-        let inputData = "55"
-        let selectInt = JSONTypeSelect.selectJSONData(inputData)
-        let equalStringType = JSONType.int(55)
-        XCTAssertEqual(selectInt?.typeName,equalStringType.typeName)
-    }
-    // JSONType select check : jsonObject
-    func testDivideDataObjectValidData() {
-        let inputData = "{ \"name\" : \"kwangrae\", \"alias\" : \"cony\", \"level\" : 2, \"married\" : false }"
-        let makeJSON = Parser.divideData(inputData)
-        let dic: [String: JSONType] = ["name" : JSONType.string("kwangrae"), "alias" : JSONType.string("cony"), "level" : JSONType.int(2), "married" : JSONType.bool(false)]
-        let equalStringType = ParserObject.init(dic)
-        XCTAssertEqual(makeJSON?.typeName,equalStringType.typeName)
-    }
-    // JSONType select check : jsonArray
-    func testDivideDataArrayValidData() {
-        let inputData = "[{ \"name\" : \"kwangrae\", \"alias\" : \"cony\", \"level\" : 2, \"married\" : false },{ \"name\" : \"kwangrae\", \"alias\" : \"cony\", \"level\" : 2, \"married\" : false }]"
-        let makeJSON = Parser.divideData(inputData)
-        //총 2개의 배열 데이터 중에 객체 2개가 포함되어 있습니다.
-        XCTAssertEqual(makeJSON?.printType(), ["객체":2])
-    }
+    
 }
