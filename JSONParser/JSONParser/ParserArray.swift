@@ -8,27 +8,24 @@
 
 import Foundation
 
-struct ParserArray: JSONDataForm {
-    private let jsonArray: [JSONType]
-    
-    init(_ dataArray: [JSONType]) {
-        self.jsonArray = dataArray
-    }
-    
-    var typeName: String {
-        return JSONType.array(self).typeName
-    }
-    
+import Foundation
+
+extension Array: JSONDataForm where Element == JSONType {
     var totalCount: Int {
-        return jsonArray.count
+        return self.count
     }
     
-    func printType() -> [String : Int] {
+    func countValue() -> [String : Int] {
         var typeCount: [String: Int] = [:]
-        for _ in self.jsonArray {
-            typeCount["객체"] = (typeCount["객체"] ?? 0) + 1
+        for value in self {
+            typeCount[value.typeName] = (typeCount[value.typeName] ?? 0) + 1
         }
         return typeCount
     }
-    
+}
+
+extension Array: JSONType where Element == JSONType {
+    var typeName: String {
+        return "배열"
+    }
 }

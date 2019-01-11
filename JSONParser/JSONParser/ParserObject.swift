@@ -7,27 +7,25 @@
 //
 import Foundation
 
-struct ParserObject: JSONDataForm {
-    private let jsonObject: [String: JSONType]
-    
-    init(_ jsonObject: [String: JSONType]) {
-        self.jsonObject = jsonObject
-    }
-    
+extension Dictionary: JSONType where Key == String, Value == JSONType {
     var typeName: String {
-        return JSONType.object(self).typeName
+        return "객체"
     }
-    
+}
+
+extension Dictionary: JSONDataForm where Key == String, Value == JSONType {
     var totalCount: Int {
-        return jsonObject.count
+        return self.count
     }
     
-    func printType() -> [String : Int] {
+    func countValue() -> [String : Int] {
         var typeCount: [String: Int] = [:]
-        for value in self.jsonObject.values {
+        for value in self.values {
             typeCount[value.typeName] = (typeCount[value.typeName] ?? 0) + 1
         }
         return typeCount
     }
-    
 }
+
+
+
