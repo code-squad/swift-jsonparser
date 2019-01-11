@@ -8,20 +8,6 @@
 
 import Foundation
 
-extension String {
-    func splitByComma() -> [String] {
-        return self.split(separator: ",").map({ String($0)})
-    }
-    func removeBothFirstAndLast() -> String {
-        return String(self.dropFirst().dropLast())
-    }
-    func splitByColon() -> [String] {
-        return self.split(separator: ":").map({ String($0)})
-    }
-    func splitByBracket() -> [String] {
-        return self.split(separator: "{").map({ String($0)})
-    }
-}
 /* 실행 결과 변환
  첫번째 데이터 정규식 (x)
  \["[\w_\s']+":(?:"[\w_\s']+"|[0-9]+|(?:true|false))\]
@@ -32,26 +18,39 @@ extension String {
  네번째 데이터 정규식 (0)
  \[(?:\{(?:"[\w_\s']+":(?:"[\w_\s']+"|[0-9]+|(?:true|false)),)*"[\w_\s']+":(?:"[\w_\s']+"|[0-9]+|(?:true|false))\},)*\{(?:"[\w_\s']+":(?:"[\w_\s']+"|[0-9]+|(?:true|false)),)*"[\w_\s']+":(?:"[\w_\s']+"|[0-9]+|(?:true|false))\}\]
  */
-
 struct GrammarChecker {
-    static let space = "\\s"
-    static let colon = ":"
-    static let leftBracket = "\\{"
-    static let rightBracket = "\\}"
-    static let leftBigBracket = "\\["
-    static let rightBigBracket = "\\]"
+    private static let space = "\\s"
+    private static let colon = ":"
+    private static let leftBracket = "\\{"
+    private static let rightBracket = "\\}"
+    private static let leftBigBracket = "\\["
+    private static let rightBigBracket = "\\]"
     
-    static let string = "\"[\\w_\(space)\']+\""
-    static let int = "[0-9]+"
-    static let bool = "(?:true|false)"
+    private static let string = "\"[\\w_\(space)\']+\""
+    private static let int = "[0-9]+"
+    private static let bool = "(?:true|false)"
     
-    static let values = "\(string)|\(int)|\(bool)"
-    static let keyValue = "\(string)\(space)*\(colon)\(space)*(?:\(values))"
+    private static let values = "\(string)|\(int)|\(bool)"
+    private static let keyValue = "\(string)\(space)*\(colon)\(space)*(?:\(values))"
     
-    static let jsonObject = "^\(leftBracket)\(space)*\(keyValue)\(space)*(?:,\(space)*\(keyValue)\(space)*)*\(rightBracket)$"
+    private static let object = "\(leftBracket)\(space)*\(keyValue)\(space)*(?:,\(space)*\(keyValue)\(space)*)*\(rightBracket)"
+    private static let valuesInObject = "\(values)|\(object)"
     
-    static let object = "\(leftBracket)\(space)*\(keyValue)\(space)*(?:,\(space)*\(keyValue)\(space)*)*\(rightBracket)"
-    static let valuesObject = "\(values)|\(object)"
-    static let jsonArray = "^\(leftBigBracket)\(space)*(?:\(valuesObject))\(space)*(?:,\(space)*(?:\(valuesObject))\(space)*)*\(rightBigBracket)$"
+    private static let array = "\(leftBigBracket)\(space)*(?:\(valuesInObject))\(space)*(?:,\(space)*(?:\(valuesInObject))\(space)*)*\(rightBigBracket)"
+    static let valuesInArray = "\(valuesInObject)|\(array)"
+    static let keyValueInArray = "\(string)\(space)*\(colon)\(space)*(?:\(valuesInArray))"
+    
+    static let jsonObject = "^\(leftBracket)\(space)*\(keyValueInArray)\(space)*(?:,\(space)*\(keyValueInArray)\(space)*)*\(rightBracket)$"
+    static let jsonArray = "^\(leftBigBracket)\(space)*(?:\(valuesInArray))\(space)*(?:,\(space)*(?:\(valuesInArray))\(space)*)*\(rightBigBracket)$"
+
+    static func regexTest(pattern: String) -> (String) -> Bool {
+        let expression: NSRegularExpression? = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        return { (input: String) -> Bool in
+            guard let expression = expression else { return false }
+            let inputRange = NSMakeRange(0, input.characters.count)
+            let matches = expression.matches(in: input, options: [], range: inputRange)
+            return matches.count > 0
+        }
+    }
 }
 
