@@ -15,8 +15,8 @@ func main() {
         OutputView.errorResult()
         return
     }
-    OutputView.showResultData(of: jsonDataForm)
+    OutputView.showResultData(jsonDataForm)
+    
 }
-
 
 main()

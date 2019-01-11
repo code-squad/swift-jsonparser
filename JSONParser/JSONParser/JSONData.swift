@@ -13,7 +13,6 @@ protocol JSONDataForm: JSONType {
     func countValue() -> [String: Int]
 }
 
-
 protocol JSONType {
     var typeName: String { get }
 }
