@@ -27,11 +27,11 @@ struct Parser {
     private static func splitByKeyValue(from data: String) -> (key: String, value: JSONType?) {
         let objectKeyValue = data.splitByColon().map { $0.trimmingCharacters(in: CharacterSet(charactersIn: " ")) }
         let key: String = objectKeyValue[0]
-        let value = selectJSONData(from: objectKeyValue[1])
+        let value = selectJSONType(from: objectKeyValue[1])
         return (key, value)
     }
     
-    private static func selectJSONData(from string: String) -> JSONType? {
+    private static func selectJSONType(from string: String) -> JSONType? {
         if string.confirmByBigBrackets() {
             guard let jsonArray = makeJSONArray(from: string) else { return nil }
             return jsonArray
@@ -74,7 +74,7 @@ struct Parser {
         var jsonArray = [JSONType]()
         let jsonValues = regexString(pattern: GrammarChecker.valuesInArray, data)
         for jsonValue in jsonValues {
-            guard let keyValueType = selectJSONData(from: jsonValue) else { return nil }
+            guard let keyValueType = selectJSONType(from: jsonValue) else { return nil }
             jsonArray.append(keyValueType)
         }
         return jsonArray
@@ -83,13 +83,11 @@ struct Parser {
     
     static func divideData(_ data: String) -> JSONDataForm? {
         let jsonString = data.trimmingCharacters(in: CharacterSet(charactersIn: " "))
-        if jsonString.confirmByBigBrackets() {
-            guard GrammarChecker.regexTest(pattern: GrammarChecker.jsonArray)(jsonString) else { return nil }
+        if GrammarChecker.regexTest(pattern: GrammarChecker.jsonArray)(jsonString) {
             guard let jsonArray = makeJSONArray(from: jsonString) else { return nil }
             return jsonArray
         }
-        if jsonString.confirmByBracket() {
-            guard GrammarChecker.regexTest(pattern: GrammarChecker.jsonObject)(jsonString) else { return nil }
+        if GrammarChecker.regexTest(pattern: GrammarChecker.jsonObject)(jsonString) {
             guard let jsonObject = makeJSONObject(from: jsonString) else { return nil }
             return jsonObject
         }
