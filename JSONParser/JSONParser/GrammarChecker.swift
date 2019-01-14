@@ -26,7 +26,7 @@ struct GrammarChecker {
     private static let leftBigBracket = "\\["
     private static let rightBigBracket = "\\]"
     
-    private static let string = "\"[\\w_\(space)\']+\""
+    private static let string = "\"[\\w\(space)\']+\""
     private static let int = "[0-9]+"
     private static let bool = "(?:true|false)"
     
