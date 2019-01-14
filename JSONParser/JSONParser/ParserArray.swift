@@ -28,4 +28,7 @@ extension Array: JSONType where Element == JSONType {
     var typeName: String {
         return "배열"
     }
+    var typeData: String {
+        return "\(self)"
+    }
 }

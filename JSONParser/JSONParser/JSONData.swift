@@ -15,11 +15,15 @@ protocol JSONDataForm: JSONType {
 
 protocol JSONType {
     var typeName: String { get }
+    var typeData: String { get }
 }
 
 extension String: JSONType {
     var typeName: String {
         return "문자열"
+    }
+    var typeData: String {
+        return "\"\(self)\""
     }
 }
 
@@ -27,10 +31,16 @@ extension Int: JSONType {
     var typeName: String {
         return "숫자"
     }
+    var typeData: String {
+        return "\(self)"
+    }
 }
 
 extension Bool: JSONType {
     var typeName: String {
         return "부울"
+    }
+    var typeData: String {
+        return "\(self)"
     }
 }

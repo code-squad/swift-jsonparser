@@ -11,6 +11,10 @@ extension Dictionary: JSONType where Key == String, Value == JSONType {
     var typeName: String {
         return "객체"
     }
+    
+    var typeData: String {
+        return "\(self)"
+    }
 }
 
 extension Dictionary: JSONDataForm where Key == String, Value == JSONType {
