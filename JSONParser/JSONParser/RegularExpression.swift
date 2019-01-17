@@ -15,15 +15,6 @@ struct RegularExpression {
         return results.map { String(text[Range($0.range, in: text)!]) }
     }
     
-    static func bringData(from input: [String], regex: String) -> [String] {
-        var data = [String]()
-        for val in input {
-            let matchData = matches(for: regex, in: String(val))
-            for idx in 0 ..< matchData.count {
-                data.append(matchData[idx])
-            }
-        }
-        return data
-    }
+   
 }
 
