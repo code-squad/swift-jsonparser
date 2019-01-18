@@ -36,6 +36,9 @@ struct OutputView {
         let typeCount = addTypeName(data)
         print(Message.countResult.parserResultData(with: totalCount, typeName, and: typeCount))
     }
+    static func showJSONTypeData(_ data: JSONDataForm) {
+        print(data.typeData)
+    }
     
     static func errorResult() {
         print(Message.invalidForm)

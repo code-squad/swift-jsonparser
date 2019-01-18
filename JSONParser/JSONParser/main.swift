@@ -16,6 +16,7 @@ func main() {
         return
     }
     OutputView.showResultData(jsonDataForm)
+    OutputView.showJSONTypeData(jsonDataForm)
     
 }
 

@@ -13,7 +13,13 @@ extension Dictionary: JSONType where Key == String, Value == JSONType {
     }
     
     var typeData: String {
-        return "\(self)"
+        let object = self.map{ "\t\($0.key) : \($0.value.typeData)" }.joined(separator: ",\n")
+        return "{\n\(object)\n}"
+    }
+    
+    var manyTypeData: String {
+        let objectMany = self.map{ "\t\t\($0.key) : \($0.value.typeData)" }.joined(separator: ",\n")
+        return "{\n\(objectMany)\n\t}"
     }
 }
 

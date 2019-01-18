@@ -28,7 +28,21 @@ extension Array: JSONType where Element == JSONType {
     var typeName: String {
         return "배열"
     }
+    
     var typeData: String {
-        return "\(self)"
+        //https://developer.apple.com/documentation/swift/array/2297359-contains
+        if self.contains(where: { element in
+            return element is [String: JSONType]}) {
+            
+            let dataArrayObject = self.map{ "\($0 is [String: JSONType] ? ($0 as! [String: JSONType]).manyTypeData : $0.typeData)" }.joined(separator: ",\n\t")
+            
+            return "[\(dataArrayObject)\n]"
+        }
+        
+        let array = self.map { "\($0.typeData)" }.joined(separator: ", ")
+        print(array)
+        
+        return "[\(array)]"
     }
+    
 }
