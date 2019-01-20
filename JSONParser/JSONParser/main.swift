@@ -9,16 +9,17 @@
 import Foundation
 
 func main() {
-    let input = InputView.readInput()
+    let input = InputView.readInput() 
 
-    guard CheckInput.isInputable(input: input) else {
+    guard CheckInput.validInput(userInput: input) else {
         print(ErrorMessage.reEntered.description)
         return
     }
-
+    
     let splitInput = InputView.splitInput(input)
-    let json = JSONData.makeJSON(from: splitInput)
-    OutputView.printData(in: json, from: splitInput)
+    
+    let regex = RegularExpression.makeJsonData(split: splitInput) // [10, "jk", 4, "314", 99, "crong", false]
+    OutputView.printData(in: regex, from: splitInput)
 }
 
 while true {
