@@ -18,7 +18,8 @@ enum ErrorMessage: Error {
 }
 
 struct CheckInput {
-    static func isInputable(input: String) -> Bool {
+    // 사용자의 입력 문자열 확인
+    private static func isInputable(_ input: String) -> Bool {
         let characterCanBeEntered = CharacterSet(charactersIn: "[ 01234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,\"]")
         let inputCheck = input.trimmingCharacters(in: characterCanBeEntered)
         guard inputCheck.isEmpty else {
@@ -26,4 +27,15 @@ struct CheckInput {
         }
         return true
     }
+    
+    // 사용자의 입력 양 끝에 [] 확인
+    private static func hasParentheses(_ input: String) -> Bool {
+        return input.contains("[]")
+    }
+    
+    // 사용자의 입력이 유효한지 확인
+    static func validInput(userInput: String) -> Bool {
+        return isInputable(userInput) && hasParentheses(userInput)
+    }
+    
 }
