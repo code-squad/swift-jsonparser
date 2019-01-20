@@ -10,40 +10,26 @@ import XCTest
 @testable import JSONParser
 
 class UnitTestJSONParser: XCTestCase {
-    func testIsInputTrue() {
-        let input = "[1,2,\"44\"]"
-        XCTAssertTrue(CheckInput.isInputable(input: input))
+    func testIsNotNilJsonData() {
+        let input = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
+        let splited = InputView.splitInput(input)
+        let data = RegularExpression.makeJsonData(split: splited)
+        XCTAssertNotNil(data)
     }
     
-    func testIsInputFalse() {
-        let input = "(1,2,\"44\")"
-        XCTAssertFalse(CheckInput.isInputable(input: input))
+    func testJsonDataCount() {
+        let input = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
+        let splited = InputView.splitInput(input)
+        let data = RegularExpression.makeJsonData(split: splited)
+        let out = OutputView.countData(in: data, from: splited)
+        XCTAssertEqual(["문자열" : 3, "숫자" : 3, "부울" : 1, ], out)
     }
     
-    
-    
-    func testCanSplitInput() -> [String] {
-        let input = "[ 1, 2, jk, 3]"
-        XCTAssertEqual(["[ 1", " 2", " jk"," 3]"], InputView.splitInput(input))
-        return InputView.splitInput(input)
+    func testOneJsonData() {
+        let input = "[ \"jk\", \"314\", \"crong\" ]"
+        let splited = InputView.splitInput(input)
+        let data = RegularExpression.makeJsonData(split: splited)
+        let out = OutputView.countData(in: data, from: splited)
+        XCTAssertEqual(["문자열" : 3, "숫자" : 0, "부울" : 0, ], out)
     }
-    
-    // 공백을 넣어 입력한 문자열에 대한 테스트(숫자 검색)
-    func testBringNumber() {
-        let splitInput = testCanSplitInput()
-        XCTAssertEqual([" 1", " 2", " 3"], RegularExpression.bringData(from: splitInput, regex: "\\s[0-9]+"))
-    }
-    
-    // 공백없이 입력한 문자열에 대한 테스트(문자 검색) -> [1,2,false,"ff"]
-    func testbb() {
-        let splitInput = ["[]1", "2", "false", "\"ff\""]
-        XCTAssertEqual(["\"ff\""], RegularExpression.bringData(from: splitInput, regex: "\"{1}+[A-Z0-9a-z]+\"{1}"))
-    }
-    
-    func testNotNilJSONData() {
-        let input = "[ 10, 21, 4, 314, 99, 0, 72 ]"
-        let splitInput = InputView.splitInput(input)
-        XCTAssertNotNil(JSONData.makeJSON(from: splitInput))
-    }
-
 }
