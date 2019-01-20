@@ -30,7 +30,7 @@ struct RegularExpression {
     }
     
     // split 배열에서 문자열 숫자를 숫자로 형변환
-    static func intCasting(text: String, regex: String) -> Int {
+    private static func intCasting(text: String, regex: String) -> Int {
         let matchedRegex = matches(for: regex, in: text)
         var int = 0
         if matchedRegex[0].contains(" ") {
@@ -69,8 +69,6 @@ struct RegularExpression {
         }
         return data
     }
-    
-    
 }
     
 
