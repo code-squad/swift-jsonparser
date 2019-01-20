@@ -14,16 +14,4 @@ class JSONData {
     init(_ values: JsonValue...) {
         self.values = values
     } 
-}
-
-
-
-
-
-
-
-
-
-
-
-
+}	
