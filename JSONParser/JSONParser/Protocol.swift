@@ -8,6 +8,7 @@
 
 import Foundation
 
+// 다양한 타입의 자료를 가질 수 있도록 프로토콜 생성
 protocol JsonValue {
     func typeInfo() -> Self
 }
