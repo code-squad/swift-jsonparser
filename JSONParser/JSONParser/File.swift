@@ -34,7 +34,7 @@ struct CommandLineRead {
 struct File {
     
     static func getURL(_ file: String? = nil) -> URL? {
-        let fileURL = FileManager.default.urls(for: .desktopDirectory,in: .userDomainMask)[0]
+        let fileURL = FileManager.default.urls(for: .documentDirectory,in: .userDomainMask)[0]
         guard let file = file else { return fileURL }
         let fileURLAppendingPath = fileURL.appendingPathComponent(file)
         return fileURLAppendingPath
