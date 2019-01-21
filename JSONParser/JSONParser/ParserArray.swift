@@ -40,7 +40,6 @@ extension Array: JSONType where Element == JSONType {
         }
         
         let array = self.map { "\($0.typeData)" }.joined(separator: ", ")
-        print(array)
         
         return "[\(array)]"
     }
