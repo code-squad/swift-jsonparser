@@ -20,6 +20,7 @@
 		F32786CE21CB2E4300BB271E /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786C821CB2E4300BB271E /* InputView.swift */; };
 		F32786CF21CB2E4300BB271E /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786C921CB2E4300BB271E /* Parser.swift */; };
 		F32786D221CB326600BB271E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32786D121CB326600BB271E /* main.swift */; };
+		F338740621F1E49300FA7194 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = F338740521F1E49300FA7194 /* File.swift */; };
 		F35646E321DF38A7002CEADA /* ParserArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30945CB21DC7F37005592E4 /* ParserArray.swift */; };
 		F35646E421DF38A7002CEADA /* ParserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30945C921DC653D005592E4 /* ParserObject.swift */; };
 		F35646EB21E6E45C002CEADA /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35646EA21E6E45C002CEADA /* GrammarChecker.swift */; };
@@ -50,6 +51,7 @@
 		F32786C821CB2E4300BB271E /* InputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		F32786C921CB2E4300BB271E /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F32786D121CB326600BB271E /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		F338740521F1E49300FA7194 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		F35646EA21E6E45C002CEADA /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,6 +102,7 @@
 				F35646EA21E6E45C002CEADA /* GrammarChecker.swift */,
 				F30945BD21D0CFC5005592E4 /* JSONData.swift */,
 				F32786C621CB2E4200BB271E /* OutputView.swift */,
+				F338740521F1E49300FA7194 /* File.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				F30945CA21DC653D005592E4 /* ParserObject.swift in Sources */,
 				F35646EB21E6E45C002CEADA /* GrammarChecker.swift in Sources */,
 				F32786CE21CB2E4300BB271E /* InputView.swift in Sources */,
+				F338740621F1E49300FA7194 /* File.swift in Sources */,
 				F32786CC21CB2E4300BB271E /* OutputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

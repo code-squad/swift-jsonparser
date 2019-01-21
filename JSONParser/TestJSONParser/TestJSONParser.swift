@@ -111,5 +111,4 @@ class TestJSONParser: XCTestCase {
         let validData = " "
         XCTAssertFalse(GrammarChecker.regexTest(pattern: GrammarChecker.jsonArray)(validData))
     }
-    
 }
