@@ -8,16 +8,20 @@
 
 import Foundation
 
+func selectMode() -> JSONParserReadWrite {
+    if CommandLineRead.selectArgument(.inputFile) {
+        return JSONFileParser()
+    }
+    return JSONLineParser()
+}
 
 func main() {
-    let userData = InputView.getUserString()
-    guard let jsonDataForm: JSONDataForm = Parser.divideData(userData) else {
-        OutputView.errorResult()
-        return
-    }
-    OutputView.showResultData(jsonDataForm)
-    OutputView.showJSONTypeData(jsonDataForm)
-    
+    let jsonFileData = selectMode()
+    guard let userData = jsonFileData.readUserString() else { return }
+    guard let jsonDataForm = Parser.divideData(userData) else { return }
+    jsonFileData.writeResult(jsonDataForm)
 }
+
+
 
 main()
