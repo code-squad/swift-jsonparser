@@ -15,7 +15,7 @@ struct BoolParser: Parser {
                 if result as! Bool {
                     trueCharacters.removeFirst()
                 } else {
-                    throw BoolParsingError.doesNotMatchFoundBool
+                    throw BoolParsingError.cannotFindBoolFormat
                 }
             } else {
                 result = true
@@ -26,7 +26,7 @@ struct BoolParser: Parser {
                 if !(result as! Bool) {
                     falseCharacters.removeFirst()
                 } else {
-                    throw BoolParsingError.doesNotMatchFoundBool
+                    throw BoolParsingError.cannotFindBoolFormat
                 }
             } else {
                 result = false
@@ -35,7 +35,7 @@ struct BoolParser: Parser {
         case ",", " ":
             return false
         default:
-            throw BoolParsingError.cannotFindBool
+            throw BoolParsingError.cannotFindBoolFormat
         }
     }
     
@@ -45,6 +45,5 @@ struct BoolParser: Parser {
 }
 
 enum BoolParsingError: Error {
-    case cannotFindBool
-    case doesNotMatchFoundBool
+    case cannotFindBoolFormat
 }
