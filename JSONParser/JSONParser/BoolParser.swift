@@ -33,6 +33,20 @@ struct BoolParser: Parser {
         }
     }
     
+    let firstParser = { (_ character: Character) throws in
+        switch character {
+        case :
+            <#code#>
+        case <#pattern#>:
+            <#code#>
+default:
+            <#code#>
+        }
+    }
+    
+    
+    
+    
 }
 
 enum BoolParsingError: Error {

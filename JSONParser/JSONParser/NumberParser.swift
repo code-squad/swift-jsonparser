@@ -2,14 +2,20 @@ import Foundation
 
 struct NumberParser: Parser {
     
-    var result: SupportedType
+    private(set) var result: SupportedType
     
     private var buffer = ""
     private var hasDoneFirstParse = false
     private var hasDoneSecondParse = false
     private var isZero = false
     
+    private var currentParser: (Character) throws -> Bool
+    
     mutating func parse(_ character: Character) throws -> Bool {
+        
+    }
+    
+    let defaultParser = { (_ character: Character) throws -> Bool in
         
     }
     
