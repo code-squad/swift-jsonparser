@@ -10,28 +10,6 @@ struct JSONParser {
     
     
     
-    mutating func parse(JSON: String) {
-        
-        var buffer = ""
-        var isDataToParse = false
-        
-        for character in JSON {
-            
-            if character == "," {
-                isDataToParse = !isDataToParse
-            }
-            if isDataToParse {
-                buffer.append(character)
-            } else {
-                data.string.append(buffer)
-            }
-            
-        }
-        
-    }
-    
-    
-    
     struct StringParser {
         var buffer = ""
         var isDataToParse = false
@@ -65,8 +43,41 @@ struct JSONParser {
     
     
     
+    struct NumberParser {
+        var buffer = ""
+        var isDataToParse = false
+        var hasMinusSign = false
+        var isZero = false
+        
+        mutating func parse(character: Character) throws -> Double? {
+            switch character {
+            case "-":
+                if hasMinusSign {
+                    throw NumberParserError.duplicatedMinusSign
+                } else {
+                    hasMinusSign = !hasMinusSign
+                    buffer.append(character)
+                }
+            case "0":
+                if isZero {
+                    throw NumberParserError.duplicatedNumberZero
+                } else {
+                    isZero = !isZero
+                }
+            default:
+                buffer.append(character)
+            }
+            
+            return nil
+        }
+        
+    }
+    
+    
 }
 
-enum ParsingError: Error {
+enum NumberParserError: Error {
+    case duplicatedMinusSign
+    case duplicatedNumberZero
     case invalidNumber
 }
