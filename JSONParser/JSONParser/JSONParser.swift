@@ -4,33 +4,77 @@ struct JSONParser {
     
     var data = Data()
     
-    var currentStringIndex = 0
+    
     
     mutating func parse(JSON: String) throws {
         
-        while currentStringIndex < JSON.count - 1 {
-            
-            
+        var currentEncodedOffset = 0
+        var currentStringIndex = String.Index(encodedOffset: currentEncodedOffset)
+        
+        
+        func collectStringData() {
+            var string = ""
+            while currentEncodedOffset < JSON.count - 1 {
+                if JSON[currentStringIndex] == "\"" {
+                    break
+                }
+                string.append(JSON[currentStringIndex])
+                currentEncodedOffset += 1
+            }
+            data.string.append(string)
+        }
+        
+        
+        func collectNumberData() {
+            while currentEncodedOffset < JSON.count - 1 {
+                
+                
+                currentEncodedOffset += 1
+            }
             
         }
+        
+        
+        func collectBoolData() {
+            while currentEncodedOffset < JSON.count - 1 {
+                
+                
+                currentEncodedOffset += 1
+            }
+            
+        }
+        
+        
+        while currentEncodedOffset < JSON.count - 1 {
+            switch JSON[currentStringIndex] {
+            case "[":
+                ""
+            default:
+                ""
+            }
+            
+            
+            
+            currentEncodedOffset += 1
+        }
+        
+        
+        
+        
+        
+        
         
         
         
         defer {
-            currentStringIndex = 0
+            currentEncodedOffset = 0
         }
-    }
-    
-    mutating func collectStringData() {
+        
+        
+        
         
     }
     
-    mutating func collectNumberData() {
-        
-    }
     
-    mutating func collectBoolData() {
-        
-    }
     
 }
