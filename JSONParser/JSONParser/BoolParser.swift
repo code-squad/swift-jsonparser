@@ -2,11 +2,11 @@ import Foundation
 
 struct BoolParser: Parser {
     
-    var result: SupportedType
-    var didDetermineBoolValue = false
+    private(set) var result: SupportedType
+    private var didDetermineBoolValue = false
     
-    var trueCharacters: [Character] = ["t", "r", "u", "e"]
-    var falseCharacters: [Character] = ["f", "a", "l", "s", "e"]
+    private var trueCharacters: [Character] = ["t", "r", "u", "e"]
+    private var falseCharacters: [Character] = ["f", "a", "l", "s", "e"]
     
     mutating func parse(_ character: Character) throws -> Bool {
         switch character {

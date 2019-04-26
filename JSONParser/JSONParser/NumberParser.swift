@@ -4,10 +4,10 @@ struct NumberParser: Parser {
     
     var result: SupportedType
     
-    var buffer = ""
-    var isDataToParse = false
-    var hasDoneFirstParse = false
-    var isZero = false
+    private var buffer = ""
+    private var hasDoneFirstParse = false
+    private var hasDoneSecondParse = false
+    private var isZero = false
     
     mutating func parse(_ character: Character) throws -> Bool {
         
@@ -28,14 +28,37 @@ struct NumberParser: Parser {
         }
     }
     
-    mutating func secondParse(_ character: Character) throws {
-        switch <#value#> {
-        case <#pattern#>:
-            <#code#>
+    mutating func secondParse(_ character: Character) throws -> Bool {
+        switch character {
+        case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
+            buffer.append(character)
+            return true
+        case ".":
+            buffer.append(character)
+            return true
+        case " ", ",":
+            return false
+        case "e", "E":
+            buffer.append(character)
+            return false
         default:
-            <#code#>
+            throw NumberParsingError.invalidNumberFormat
         }
         
+    }
+    
+    
+    mutating func parseDecimals(_ character: Character) throws -> Bool {
+        switch character {
+            
+        case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
+            buffer.append(character)
+            return true
+        case " ", ",":
+            return false
+        default:
+            throw NumberParsingError.invalidDecimalFormat
+        }
     }
     
     
@@ -43,7 +66,6 @@ struct NumberParser: Parser {
 }
 
 enum NumberParsingError: Error {
-    case duplicatedMinusSign
-    case duplicatedNumberZero
     case invalidNumberFormat
+    case invalidDecimalFormat
 }
