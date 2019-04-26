@@ -7,19 +7,27 @@ struct BoolParser: Parser {
     
     var trueCharacters: [Character] = ["t", "r", "u", "e"]
     var falseCharacters: [Character] = ["f", "a", "l", "s", "e"]
-    
+
     mutating func parse(_ character: Character) throws -> Bool {
         switch character {
         case trueCharacters.first:
             if didDetermineBoolValue {
-                trueCharacters.removeFirst()
+                if result as! Bool {
+                    trueCharacters.removeFirst()
+                } else {
+                    throw BoolParsingError.doesNotMatchFoundBool
+                }
             } else {
                 result = true
             }
             return true
         case falseCharacters.first:
             if didDetermineBoolValue {
-                falseCharacters.removeFirst()
+                if !(result as! Bool) {
+                    falseCharacters.removeFirst()
+                } else {
+                    throw BoolParsingError.doesNotMatchFoundBool
+                }
             } else {
                 result = false
             }
@@ -38,4 +46,5 @@ struct BoolParser: Parser {
 
 enum BoolParsingError: Error {
     case cannotFindBool
+    case doesNotMatchFoundBool
 }
