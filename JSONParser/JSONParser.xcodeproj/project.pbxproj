@@ -74,10 +74,10 @@
 			isa = PBXGroup;
 			children = (
 				F21006512272A2A10033D0B7 /* JSONParser.swift */,
-				F2E70F3822734C62008E0BA8 /* NumberParser.swift */,
 				F2E70F3A22734C74008E0BA8 /* BoolParser.swift */,
-				F2E70F3422734BB3008E0BA8 /* Parser.swift */,
+				F2E70F3822734C62008E0BA8 /* NumberParser.swift */,
 				F2E70F3622734C45008E0BA8 /* StringParser.swift */,
+				F2E70F3422734BB3008E0BA8 /* Parser.swift */,
 				F21006552272ABD20033D0B7 /* Data.swift */,
 				F210064F2272A1570033D0B7 /* InputView.swift */,
 				F21006532272A5A70033D0B7 /* OutputView.swift */,

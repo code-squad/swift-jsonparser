@@ -1,10 +1,9 @@
 import Foundation
 
-enum Type {
-    case string
-    case number
-    case bool
-}
+protocol SupportedType { }
+extension String: SupportedType { }
+extension Double: SupportedType { }
+extension Bool: SupportedType { }
 
 struct JSONParser {
     

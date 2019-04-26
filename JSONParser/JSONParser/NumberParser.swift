@@ -1,6 +1,6 @@
 import Foundation
 
-struct NumberParser {
+struct NumberParser: Parser {
     var buffer = ""
     var isDataToParse = false
     var hasMinusSign = false

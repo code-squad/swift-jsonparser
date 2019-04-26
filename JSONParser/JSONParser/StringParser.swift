@@ -1,6 +1,6 @@
 import Foundation
 
-struct StringParser {
+struct StringParser: Parser {
     var buffer = ""
     var isDataToParse = false
     var isEscapeSequence = false
