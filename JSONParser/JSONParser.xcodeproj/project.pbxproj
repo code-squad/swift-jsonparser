@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		F21006502272A1570033D0B7 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F210064F2272A1570033D0B7 /* InputView.swift */; };
+		F21006522272A2A10033D0B7 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006512272A2A10033D0B7 /* JSONParser.swift */; };
+		F21006542272A5A70033D0B7 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006532272A5A70033D0B7 /* OutputView.swift */; };
+		F21006562272ABD20033D0B7 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006552272ABD20033D0B7 /* Data.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,6 +30,9 @@
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		F210064F2272A1570033D0B7 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		F21006512272A2A10033D0B7 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
+		F21006532272A5A70033D0B7 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
+		F21006552272ABD20033D0B7 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,8 +65,11 @@
 		83AE2E0E1F8CAC2800F38CC9 /* JSONParser */ = {
 			isa = PBXGroup;
 			children = (
-				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
+				F21006512272A2A10033D0B7 /* JSONParser.swift */,
+				F21006552272ABD20033D0B7 /* Data.swift */,
 				F210064F2272A1570033D0B7 /* InputView.swift */,
+				F21006532272A5A70033D0B7 /* OutputView.swift */,
+				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -125,6 +134,9 @@
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				F21006502272A1570033D0B7 /* InputView.swift in Sources */,
+				F21006562272ABD20033D0B7 /* Data.swift in Sources */,
+				F21006522272A2A10033D0B7 /* JSONParser.swift in Sources */,
+				F21006542272A5A70033D0B7 /* OutputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
