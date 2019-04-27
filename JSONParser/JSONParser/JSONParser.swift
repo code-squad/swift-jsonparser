@@ -9,9 +9,9 @@ struct JSONParser {
     
     var data = Data()
     
-    var isDataToParse = false
-    
-
+    func parse(_ character: Character) {
+        <#function body#>
+    }
     
     
 }

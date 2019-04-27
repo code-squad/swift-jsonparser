@@ -2,7 +2,13 @@ import Foundation
 
 struct StringParser: Parser {
     
-    private(set) var result: SupportedType
+    mutating func result() throws -> SupportedType {
+        defer {
+            buffer = ""
+        }
+        return buffer
+    }
+    
     private var buffer = ""
     private var isDataToParse = false
     

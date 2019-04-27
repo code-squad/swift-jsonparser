@@ -2,7 +2,11 @@ import Foundation
 
 struct BoolParser: Parser {
     
-    private(set) var result: SupportedType
+    mutating func result() throws -> SupportedType {
+        return resultBool
+    }
+    
+    private var resultBool: Bool
     private var boolCharacters = [Character]()
     private var didRunFirstParse = false
     
@@ -20,10 +24,10 @@ struct BoolParser: Parser {
     private mutating func firstParse(_ character: Character) throws {
         switch character {
         case "t":
-            result = true
+            resultBool = true
             boolCharacters = ["r", "u", "e"]
         case "f":
-            result = false
+            resultBool = false
             boolCharacters = ["a", "l", "s", "e"]
         default:
             throw BoolParsingError.cannotFindBoolFormat

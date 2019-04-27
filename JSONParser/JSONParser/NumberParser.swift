@@ -2,13 +2,26 @@ import Foundation
 
 struct NumberParser: Parser {
     
-    private(set) var result: SupportedType
+    mutating func result() throws -> SupportedType {
+        guard let result = Double(buffer) else {
+            throw NumberParsingError.resultCouldNotConvertedToNumbers
+        }
+        defer {
+            buffer = ""
+        }
+        return result
+    }
+    
     private var buffer = ""
     private var didRunFirstParse = false
     private var isLessThanOne = false
     private var isAfterPoint = false
     
     mutating func parse(_ character: Character) throws -> Bool {
+        if didRunFirstParse {
+            return try secondParse(character)
+        }
+        try firstParse(character)
         return true
     }
     
@@ -32,9 +45,15 @@ struct NumberParser: Parser {
     mutating func secondParse(_ character: Character) throws -> Bool {
         switch character {
         case ".":
+            if isAfterPoint {
+                throw NumberParsingError.duplicatedDecimalPoint
+            }
             buffer.append(character)
             isAfterPoint = true
         case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
+            if isLessThanOne {
+                throw NumberParsingError.invalidNumberAfterZero
+            }
             buffer.append(character)
         case " ", ",":
             return false
@@ -44,20 +63,12 @@ struct NumberParser: Parser {
         return true
     }
     
-    mutating func thridParse(_ character: Character) throws -> Bool {
-        switch character {
-        case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
-            buffer.append(character)
-        case " ", ",":
-            return false
-        default:
-            throw NumberParsingError.invalidNumberFormat
-        }
-        return true
-    }
     
 }
 
 enum NumberParsingError: Error {
     case invalidNumberFormat
+    case invalidNumberAfterZero
+    case duplicatedDecimalPoint
+    case resultCouldNotConvertedToNumbers
 }

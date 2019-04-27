@@ -2,7 +2,7 @@ import Foundation
 
 protocol Parser {
     
-    var result: SupportedType { get }
+    mutating func result() throws -> SupportedType
     
     /// 문자를 분석하고 결과를 저장합니다.
     ///
