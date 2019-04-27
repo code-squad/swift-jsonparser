@@ -1,12 +1,11 @@
 import Foundation
 
 struct BoolParser: Parser {
-    
     mutating func result() throws -> SupportedType {
         return resultBool
     }
     
-    private var resultBool: Bool
+    private var resultBool = true
     private var boolCharacters = [Character]()
     private var didRunFirstParse = false
     

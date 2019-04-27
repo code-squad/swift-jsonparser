@@ -4,22 +4,25 @@ protocol SupportedType { }
 extension String: SupportedType { }
 extension Double: SupportedType { }
 extension Bool: SupportedType { }
+extension Array: SupportedType { }
 
 struct JSONParser {
     
     var data = Data()
     
-    func parse(_ character: Character) {
-        <#function body#>
+    var boolParser = BoolParser()
+    var stringParser = StringParser()
+    var numberParser = NumberParser()
+    
+    
+
+    mutating func parse(JSON: String) {
+        var currentParser: Parser
+        
+        for character in JSON {
+            
+        }
     }
     
     
 }
-
-
-enum ArrayParsingError: Error {
-    case squareBracketWasOpenedIncorrectly
-    case squareBracketWasClosedIncorrectly
-}
-
-
