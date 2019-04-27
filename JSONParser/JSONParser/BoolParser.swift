@@ -2,8 +2,6 @@ import Foundation
 
 struct BoolParser: Parser {
     
-    
-    
     private(set) var result: SupportedType
     
     private var boolCharacters = [Character]()
