@@ -2,10 +2,9 @@ import Foundation
 
 struct StringParser: Parser {
     
+    private(set) var result: SupportedType
     private var buffer = ""
     private var isDataToParse = false
-    
-    private(set) var result: SupportedType
     
     mutating func parse(_ character: Character) throws -> Bool {
         switch character {

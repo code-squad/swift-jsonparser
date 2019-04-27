@@ -3,9 +3,7 @@ import Foundation
 struct BoolParser: Parser {
     
     private(set) var result: SupportedType
-    
     private var boolCharacters = [Character]()
-    
     private var didRunFirstParse = false
     
     
@@ -14,6 +12,7 @@ struct BoolParser: Parser {
             return try secondParse(character)
         } else {
             try firstParse(character)
+            return true
         }
     }
     
