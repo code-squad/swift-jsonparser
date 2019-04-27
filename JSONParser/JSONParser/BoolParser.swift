@@ -2,46 +2,43 @@ import Foundation
 
 struct BoolParser: Parser {
     
-    private(set) var result: SupportedType
-    private var didDetermineBoolValue = false
     
-    private var trueCharacters: [Character] = ["t", "r", "u", "e"]
-    private var falseCharacters: [Character] = ["f", "a", "l", "s", "e"]
+    
+    private(set) var result: SupportedType
+    
+    private var boolCharacters = [Character]()
+    
+    private var didRunFirstParse = false
+    
     
     mutating func parse(_ character: Character) throws -> Bool {
+        if didRunFirstParse {
+            return try secondParse(character)
+        } else {
+            try firstParse(character)
+        }
+    }
+    
+    
+    private mutating func firstParse(_ character: Character) throws {
         switch character {
-        case trueCharacters.first:
-            if didDetermineBoolValue {
-                throw BoolParsingError.cannotFindBoolFormat
-            } else {
-                result = true
-                falseCharacters.removeAll()
-            }
-            return true
-        case falseCharacters.first:
-            if didDetermineBoolValue {
-                throw BoolParsingError.cannotFindBoolFormat
-            } else {
-                result = false
-                trueCharacters.removeAll()
-            }
-            return true
-        case ",", " ":
-            return false
+        case "t":
+            result = true
+            boolCharacters = ["r", "u", "e"]
+        case "f":
+            result = false
+            boolCharacters = ["a", "l", "s", "e"]
         default:
             throw BoolParsingError.cannotFindBoolFormat
         }
     }
     
-    let firstParser = { (_ character: Character) throws in
-        switch character {
-        case :
-            <#code#>
-        case <#pattern#>:
-            <#code#>
-default:
-            <#code#>
+    private mutating func secondParse(_ character: Character) throws -> Bool {
+        if character == boolCharacters.first {
+            boolCharacters.removeFirst()
+            return true
         }
+        return false
     }
     
     
