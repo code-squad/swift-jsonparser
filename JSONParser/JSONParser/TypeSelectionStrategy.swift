@@ -1,12 +1,11 @@
 import Foundation
 
-struct TypeSelectionStrategy: ParsingStrategy {
+struct TypeSelectionStrategy {
     
-    private var parsingStrategy: ParsingStrategy = StringParsingStrategy()
-    private var hasDetectedType = false
+    private var parsingStrategy: ParsingStrategy! = nil
     
     mutating func parse(_ character: Character) throws -> ParsingState {
-        if !hasDetectedType { try detectType(character) }
+        if parsingStrategy == nil { try detectType(character) }
         return try parsingStrategy.parse(character)
     }
     
@@ -21,7 +20,6 @@ struct TypeSelectionStrategy: ParsingStrategy {
         default:
             throw TypeSeltectionError.unsupportedCharacter
         }
-        hasDetectedType = true
     }
     
     
