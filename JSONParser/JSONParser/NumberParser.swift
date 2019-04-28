@@ -2,12 +2,12 @@ import Foundation
 
 struct NumberParser: Parser {
     
-    private var buffer = ""
-    private var didRunFirstParse = false
-    private var isLessThanOne = false
-    private var isAfterPoint = false
+    private static var buffer = ""
+    private static var didRunFirstParse = false
+    private static var isLessThanOne = false
+    private static var isAfterPoint = false
     
-    mutating func parse(_ character: Character) throws -> SupportedType? {
+    static func parse(_ character: Character) throws -> SupportedType? {
         if didRunFirstParse {
             return try secondParse(character)
         }
@@ -15,7 +15,7 @@ struct NumberParser: Parser {
         return true
     }
     
-    private mutating func firstParse(_ character: Character) throws {
+    private static func firstParse(_ character: Character) throws {
         switch character {
         case "-":
             buffer.append(character)
@@ -32,7 +32,7 @@ struct NumberParser: Parser {
         }
     }
     
-    private mutating func secondParse(_ character: Character) throws -> SupportedType? {
+    private static func secondParse(_ character: Character) throws -> SupportedType? {
         switch character {
         case ".":
             if isAfterPoint {
