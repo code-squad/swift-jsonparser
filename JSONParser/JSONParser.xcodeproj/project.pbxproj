@@ -14,6 +14,7 @@
 		F283CA7A2275759200D7CBBC /* SupportedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA792275759200D7CBBC /* SupportedType.swift */; };
 		F283CA7C2275C4E700D7CBBC /* StringParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */; };
 		F283CA7E2275CA8C00D7CBBC /* BoolParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */; };
+		F283CA802275CEED00D7CBBC /* NumberParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA7F2275CEED00D7CBBC /* NumberParsingStrategy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,10 +38,9 @@
 		F283CA792275759200D7CBBC /* SupportedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedType.swift; sourceTree = "<group>"; };
 		F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringParsingStrategy.swift; sourceTree = "<group>"; };
 		F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolParsingStrategy.swift; sourceTree = "<group>"; };
+		F283CA7F2275CEED00D7CBBC /* NumberParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberParsingStrategy.swift; sourceTree = "<group>"; };
 		F2E70F3422734BB3008E0BA8 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
-		F2E70F3622734C45008E0BA8 /* StringParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringParser.swift; sourceTree = "<group>"; };
 		F2E70F3822734C62008E0BA8 /* NumberParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberParser.swift; sourceTree = "<group>"; };
-		F2E70F3A22734C74008E0BA8 /* BoolParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,9 +75,8 @@
 			children = (
 				F21006512272A2A10033D0B7 /* JSONParser.swift */,
 				F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */,
-				F2E70F3622734C45008E0BA8 /* StringParser.swift */,
 				F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */,
-				F2E70F3A22734C74008E0BA8 /* BoolParser.swift */,
+				F283CA7F2275CEED00D7CBBC /* NumberParsingStrategy.swift */,
 				F2E70F3822734C62008E0BA8 /* NumberParser.swift */,
 				F2E70F3422734BB3008E0BA8 /* Parser.swift */,
 				F283CA792275759200D7CBBC /* SupportedType.swift */,
@@ -152,6 +151,7 @@
 				F21006502272A1570033D0B7 /* InputView.swift in Sources */,
 				F283CA7A2275759200D7CBBC /* SupportedType.swift in Sources */,
 				F21006522272A2A10033D0B7 /* JSONParser.swift in Sources */,
+				F283CA802275CEED00D7CBBC /* NumberParsingStrategy.swift in Sources */,
 				F21006542272A5A70033D0B7 /* OutputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

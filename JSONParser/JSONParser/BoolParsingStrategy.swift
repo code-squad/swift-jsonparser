@@ -4,15 +4,12 @@ struct BoolParsingStrategy {
     
     private var boolCharacters = [Character]()
     private var boolDetected = false
-    private var boolEnded = false
     
     private var resultBool = false
     
     mutating func parse(_ character: Character) throws -> ParsingState {
-        if boolEnded {
-            return ParsingState.isDone(result: resultBool)
-        } else if boolDetected {
-            try matchBoolCharacters(character)
+        if boolDetected {
+            return try matchBoolCharacters(character)
         } else {
             try detectBool(character)
         }
@@ -33,16 +30,13 @@ struct BoolParsingStrategy {
         }
     }
     
-    private mutating func matchBoolCharacters(_ character: Character) throws {
-        switch character {
-        case boolCharacters.first:
+    private mutating func matchBoolCharacters(_ character: Character) throws -> ParsingState {
+        if character == boolCharacters.first {
             boolCharacters.removeFirst()
-            if boolCharacters.isEmpty {
-                boolEnded = true
-            }
-        default:
-            throw BoolParsingError.doesNotMatchBoolCharacters
+            if boolCharacters.isEmpty { return ParsingState.isDoneCurrentCharacter(result: resultBool) }
+            return ParsingState.isNotDone
         }
+        throw BoolParsingError.doesNotMatchBoolCharacters
     }
     
 }
