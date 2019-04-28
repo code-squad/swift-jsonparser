@@ -2,14 +2,14 @@ import Foundation
 
 struct JSONParser: Parser {
     
-    private static var currentParser: Parser = NumberParser()
-    private static var didRunFirstParse = false
+    private var currentParser: Parser = NumberParser()
+    private var didRunFirstParse = false
     
-    static func parse(_ character: Character) throws -> SupportedType? {
+    mutating func parse(_ character: Character) throws -> SupportedType? {
         return 0
     }
     
-    private static func firstParse(_ character: Character) throws {
+    private mutating func firstParse(_ character: Character) throws {
         switch character {
         case "\"":
             currentParser = StringParser()
@@ -25,8 +25,8 @@ struct JSONParser: Parser {
         }
     }
     
-    private static func secondParse(_ character: Character) throws -> SupportedType? {
-        
+    private func secondParse(_ character: Character) throws -> SupportedType? {
+        return 0
     }
     
 }

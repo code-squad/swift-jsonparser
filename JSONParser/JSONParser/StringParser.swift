@@ -2,10 +2,10 @@ import Foundation
 
 struct StringParser: Parser {
     
-    private static var buffer = ""
-    private static var isDataToParse = false
+    private var buffer = ""
+    private var isDataToParse = false
     
-    static func parse(_ character: Character) throws -> SupportedType? {
+    mutating func parse(_ character: Character) throws -> SupportedType? {
         switch character {
         case "\"":
             isDataToParse.toggle()
