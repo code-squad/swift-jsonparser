@@ -12,6 +12,7 @@
 		F21006522272A2A10033D0B7 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006512272A2A10033D0B7 /* JSONParser.swift */; };
 		F21006542272A5A70033D0B7 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006532272A5A70033D0B7 /* OutputView.swift */; };
 		F21006562272ABD20033D0B7 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006552272ABD20033D0B7 /* Data.swift */; };
+		F283CA772275429F00D7CBBC /* ValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA762275429F00D7CBBC /* ValueParser.swift */; };
 		F2E70F3522734BB3008E0BA8 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E70F3422734BB3008E0BA8 /* Parser.swift */; };
 		F2E70F3722734C45008E0BA8 /* StringParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E70F3622734C45008E0BA8 /* StringParser.swift */; };
 		F2E70F3922734C62008E0BA8 /* NumberParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E70F3822734C62008E0BA8 /* NumberParser.swift */; };
@@ -38,6 +39,7 @@
 		F21006512272A2A10033D0B7 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		F21006532272A5A70033D0B7 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		F21006552272ABD20033D0B7 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		F283CA762275429F00D7CBBC /* ValueParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueParser.swift; sourceTree = "<group>"; };
 		F2E70F3422734BB3008E0BA8 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F2E70F3622734C45008E0BA8 /* StringParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringParser.swift; sourceTree = "<group>"; };
 		F2E70F3822734C62008E0BA8 /* NumberParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberParser.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				F20A2323227497F900D4CFA3 /* ArrayParser.swift */,
 				F2E70F3A22734C74008E0BA8 /* BoolParser.swift */,
 				F2E70F3622734C45008E0BA8 /* StringParser.swift */,
+				F283CA762275429F00D7CBBC /* ValueParser.swift */,
 				F2E70F3822734C62008E0BA8 /* NumberParser.swift */,
 				F2E70F3422734BB3008E0BA8 /* Parser.swift */,
 				F21006552272ABD20033D0B7 /* Data.swift */,
@@ -152,6 +155,7 @@
 				F2E70F3522734BB3008E0BA8 /* Parser.swift in Sources */,
 				F2E70F3922734C62008E0BA8 /* NumberParser.swift in Sources */,
 				F2E70F3722734C45008E0BA8 /* StringParser.swift in Sources */,
+				F283CA772275429F00D7CBBC /* ValueParser.swift in Sources */,
 				F21006562272ABD20033D0B7 /* Data.swift in Sources */,
 				F21006522272A2A10033D0B7 /* JSONParser.swift in Sources */,
 				F21006542272A5A70033D0B7 /* OutputView.swift in Sources */,
