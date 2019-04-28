@@ -6,12 +6,8 @@ struct TypeSelectionStrategy: ParsingStrategy {
     private var hasDetectedType = false
     
     mutating func parse(_ character: Character) throws -> ParsingState {
-        if hasDetectedType {
-            return try parsingStrategy.parse(character)
-        } else {
-            try detectType(character)
-        }
-        return ParsingState.isNotDone
+        if !hasDetectedType { try detectType(character) }
+        return try parsingStrategy.parse(character)
     }
     
     private mutating func detectType(_ character: Character) throws {
