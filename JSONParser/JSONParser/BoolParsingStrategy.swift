@@ -3,12 +3,12 @@ import Foundation
 struct BoolParsingStrategy: ParsingStrategy {
     
     private var boolCharacters = [Character]()
-    private var boolDetected = false
+    private var hasDetectedBool = false
     
     private var resultBool = false
     
     mutating func parse(_ character: Character) throws -> ParsingState {
-        if boolDetected {
+        if hasDetectedBool {
             return try matchBoolCharacters(character)
         } else {
             try detectBool(character)

@@ -4,14 +4,14 @@ struct NumberParsingStrategy: ParsingStrategy {
     
     private var buffer = ""
     private var hasDoneMinusDetection = false
-    private var firstNumberDetected = false
+    private var hasDetectedFirstNumber = false
     
     private var absoluteValueLessThanOne = false
     private var decimalPointPlaced = false
     
     
     mutating func parse(_ character: Character) throws -> ParsingState {
-        if firstNumberDetected {
+        if hasDetectedFirstNumber {
             return try appendToBuffer(character)
         } else if hasDoneMinusDetection {
             try detectFirstNumber(character)
@@ -35,7 +35,7 @@ struct NumberParsingStrategy: ParsingStrategy {
         default:
             throw NumberParsingError.invalidNumberFormat
         }
-        firstNumberDetected = true
+        hasDetectedFirstNumber = true
         buffer.append(character)
     }
     

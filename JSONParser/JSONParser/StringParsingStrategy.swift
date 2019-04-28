@@ -3,10 +3,10 @@ import Foundation
 struct StringParsingStrategy: ParsingStrategy {
     
     private var buffer = ""
-    private var stringDetected = false
+    private var hasDetectedString = false
     
     mutating func parse(_ character: Character) throws -> ParsingState {
-        if stringDetected {
+        if hasDetectedString {
             return try appendToBuffer(character)
         } else {
             try detectString(character)
@@ -18,7 +18,7 @@ struct StringParsingStrategy: ParsingStrategy {
     private mutating func detectString(_ character: Character) throws {
         switch character {
         case "\"":
-            stringDetected = true
+            hasDetectedString = true
         default:
             throw StringParsingError.cannotDetectFirstDoubleQuotationMark
         }
