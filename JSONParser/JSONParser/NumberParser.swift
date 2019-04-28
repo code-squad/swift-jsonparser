@@ -2,25 +2,12 @@ import Foundation
 
 struct NumberParser: Parser {
     
-    mutating func result() throws -> SupportedType {
-        guard let result = Double(buffer) else {
-            throw NumberParsingError.resultCouldNotConvertedToNumbers
-        }
-        defer {
-            buffer = ""
-            didRunFirstParse = false
-            isLessThanOne = false
-            isAfterPoint = false
-        }
-        return result
-    }
-    
     private var buffer = ""
     private var didRunFirstParse = false
     private var isLessThanOne = false
     private var isAfterPoint = false
     
-    mutating func parse(_ character: Character) throws -> Bool {
+    mutating func parse(_ character: Character) throws -> SupportedType? {
         if didRunFirstParse {
             return try secondParse(character)
         }
@@ -28,7 +15,7 @@ struct NumberParser: Parser {
         return true
     }
     
-    mutating func firstParse(_ character: Character) throws {
+    private mutating func firstParse(_ character: Character) throws {
         switch character {
         case "-":
             buffer.append(character)
@@ -45,7 +32,7 @@ struct NumberParser: Parser {
         }
     }
     
-    mutating func secondParse(_ character: Character) throws -> Bool {
+    private mutating func secondParse(_ character: Character) throws -> SupportedType? {
         switch character {
         case ".":
             if isAfterPoint {
@@ -59,11 +46,20 @@ struct NumberParser: Parser {
             }
             buffer.append(character)
         case " ", ",":
-            return false
+            guard let result = Double(buffer) else {
+                throw NumberParsingError.resultCouldNotConvertedToNumbers
+            }
+            defer {
+                buffer = ""
+                didRunFirstParse = false
+                isLessThanOne = false
+                isAfterPoint = false
+            }
+            return result
         default:
             throw NumberParsingError.invalidNumberFormat
         }
-        return true
+        return nil
     }
     
     
