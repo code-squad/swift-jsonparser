@@ -2,21 +2,10 @@ import Foundation
 
 struct StringParser: Parser {
     
-    mutating func result() throws -> SupportedType {
-        if isDataToParse {
-            throw StringParsingError.expectedDoubleQuotationMarksToEndParsing
-        }
-        defer {
-            buffer = ""
-            isDataToParse = false
-        }
-        return buffer
-    }
-    
     private var buffer = ""
     private var isDataToParse = false
     
-    mutating func parse(_ character: Character) throws -> Bool {
+    mutating func parse(_ character: Character) throws -> SupportedType? {
         switch character {
         case "\"":
             isDataToParse.toggle()
@@ -27,7 +16,10 @@ struct StringParser: Parser {
                 throw StringParsingError.expectedDoubleQuotationMarksToStartParsing
             }
         }
-        return isDataToParse
+        guard isDataToParse else {
+            return buffer
+        }
+        return nil
     }
     
 }

@@ -14,3 +14,6 @@ for i in json {
 }
 
 print(try stringParser.result())
+
+
+let encoder = JSONEncoder()
