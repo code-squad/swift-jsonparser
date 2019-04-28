@@ -40,7 +40,6 @@
 		F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolParsingStrategy.swift; sourceTree = "<group>"; };
 		F283CA7F2275CEED00D7CBBC /* NumberParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberParsingStrategy.swift; sourceTree = "<group>"; };
 		F2E70F3422734BB3008E0BA8 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
-		F2E70F3822734C62008E0BA8 /* NumberParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +76,6 @@
 				F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */,
 				F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */,
 				F283CA7F2275CEED00D7CBBC /* NumberParsingStrategy.swift */,
-				F2E70F3822734C62008E0BA8 /* NumberParser.swift */,
 				F2E70F3422734BB3008E0BA8 /* Parser.swift */,
 				F283CA792275759200D7CBBC /* SupportedType.swift */,
 				F210064F2272A1570033D0B7 /* InputView.swift */,

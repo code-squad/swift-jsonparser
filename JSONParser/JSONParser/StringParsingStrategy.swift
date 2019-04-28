@@ -7,7 +7,7 @@ struct StringParsingStrategy {
     
     mutating func parse(_ character: Character) throws -> ParsingState {
         if stringDetected {
-            return try appendString(character)
+            return try appendToBuffer(character)
         } else {
             try detectString(character)
         }
@@ -24,7 +24,7 @@ struct StringParsingStrategy {
         }
     }
     
-    private mutating func appendString(_ character: Character) throws -> ParsingState {
+    private mutating func appendToBuffer(_ character: Character) throws -> ParsingState {
         switch character {
         case "\"":
             let result = buffer
