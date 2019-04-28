@@ -17,7 +17,9 @@ struct StringParser: Parser {
             }
         }
         guard isDataToParse else {
-            return buffer
+            let result = buffer
+            buffer = ""
+            return result
         }
         return nil
     }
