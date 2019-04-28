@@ -1,6 +1,6 @@
 import Foundation
 
-struct NumberParsingStrategy {
+struct NumberParsingStrategy: ParsingStrategy {
     
     private var buffer = ""
     private var hasDoneMinusDetection = false
@@ -50,7 +50,7 @@ struct NumberParsingStrategy {
             guard let result = Double(buffer) else {
                 throw NumberParsingError.resultCouldNotConvertedToNumbers
             }
-            return ParsingState.isDonePreviousCharacter(result: result)
+            return ParsingState.isDonePreviousCharacter(result: Type.number(result))
         }
         buffer.append(character)
         return ParsingState.isNotDone

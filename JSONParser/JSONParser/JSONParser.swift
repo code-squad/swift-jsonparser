@@ -2,6 +2,6 @@ import Foundation
 
 enum ParsingState {
     case isNotDone
-    case isDoneCurrentCharacter(result: SupportedType)
-    case isDonePreviousCharacter(result: SupportedType)
+    case isDoneCurrentCharacter(result: Type)
+    case isDonePreviousCharacter(result: Type)
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-struct StringParsingStrategy {
+struct StringParsingStrategy: ParsingStrategy {
     
     private var buffer = ""
     private var stringDetected = false
@@ -28,7 +28,7 @@ struct StringParsingStrategy {
         switch character {
         case "\"":
             let result = buffer
-            return ParsingState.isDoneCurrentCharacter(result: result)
+            return ParsingState.isDoneCurrentCharacter(result: Type.string(result))
         default:
             buffer.append(character)
             return ParsingState.isNotDone

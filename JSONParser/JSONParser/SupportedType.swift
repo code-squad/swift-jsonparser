@@ -1,7 +1,8 @@
 import Foundation
 
-protocol SupportedType { }
-extension String: SupportedType { }
-extension Double: SupportedType { }
-extension Bool: SupportedType { }
-extension Array: SupportedType { }
+enum Type {
+    case string(String)
+    case number(Double)
+    case bool(Bool)
+    indirect case array(Array<Type>)
+}
