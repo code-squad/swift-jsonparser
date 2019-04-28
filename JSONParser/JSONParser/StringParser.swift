@@ -25,8 +25,3 @@ struct StringParser: Parser {
     }
     
 }
-
-enum StringParsingError: Error {
-    case expectedDoubleQuotationMarksToStartParsing
-    case expectedDoubleQuotationMarksToEndParsing
-}

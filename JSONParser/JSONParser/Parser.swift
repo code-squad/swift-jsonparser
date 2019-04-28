@@ -10,10 +10,3 @@ protocol Parser {
     mutating func parse(_ character: Character) throws -> SupportedType?
     
 }
-
-enum ParsingStrategy {
-    case string
-    case bool
-    case number
-    case none
-}
