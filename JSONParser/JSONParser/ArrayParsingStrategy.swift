@@ -10,9 +10,13 @@ struct ArrayParsingStrategy: ParsingStrategy {
     private var isParsing = false
     
     mutating func parse(_ character: Character) throws -> ParsingState {
-        
-        
-        
+        if isParsing {
+            try appendValue(character)
+        } else if hasDetectedSquareBracket {
+            return try detectNewValue(character)
+        } else {
+            try detectStartSquareBracket(character)
+        }
         return ParsingState.isNotDone
     }
     
@@ -37,7 +41,7 @@ struct ArrayParsingStrategy: ParsingStrategy {
         isParsing = false
     }
     
-    private mutating func detectComma(_ character: Character) throws -> ParsingState {
+    private mutating func detectNewValue(_ character: Character) throws -> ParsingState {
         switch character {
         case " ":
             break
