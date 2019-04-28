@@ -13,6 +13,7 @@
 		F21006542272A5A70033D0B7 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006532272A5A70033D0B7 /* OutputView.swift */; };
 		F283CA7A2275759200D7CBBC /* SupportedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA792275759200D7CBBC /* SupportedType.swift */; };
 		F283CA7C2275C4E700D7CBBC /* StringParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */; };
+		F283CA7E2275CA8C00D7CBBC /* BoolParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +36,7 @@
 		F21006532272A5A70033D0B7 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		F283CA792275759200D7CBBC /* SupportedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedType.swift; sourceTree = "<group>"; };
 		F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringParsingStrategy.swift; sourceTree = "<group>"; };
+		F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolParsingStrategy.swift; sourceTree = "<group>"; };
 		F2E70F3422734BB3008E0BA8 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F2E70F3622734C45008E0BA8 /* StringParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringParser.swift; sourceTree = "<group>"; };
 		F2E70F3822734C62008E0BA8 /* NumberParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberParser.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				F21006512272A2A10033D0B7 /* JSONParser.swift */,
 				F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */,
 				F2E70F3622734C45008E0BA8 /* StringParser.swift */,
+				F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */,
 				F2E70F3A22734C74008E0BA8 /* BoolParser.swift */,
 				F2E70F3822734C62008E0BA8 /* NumberParser.swift */,
 				F2E70F3422734BB3008E0BA8 /* Parser.swift */,
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F283CA7C2275C4E700D7CBBC /* StringParsingStrategy.swift in Sources */,
+				F283CA7E2275CA8C00D7CBBC /* BoolParsingStrategy.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				F21006502272A1570033D0B7 /* InputView.swift in Sources */,
 				F283CA7A2275759200D7CBBC /* SupportedType.swift in Sources */,

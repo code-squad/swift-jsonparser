@@ -41,7 +41,3 @@ struct BoolParser: Parser {
     
     
 }
-
-enum BoolParsingError: Error {
-    case cannotFindBoolFormat
-}

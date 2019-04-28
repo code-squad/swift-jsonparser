@@ -1,11 +1,3 @@
-//
-//  StringParsingStrategy.swift
-//  JSONParser
-//
-//  Created by 김성현 on 28/04/2019.
-//  Copyright © 2019 JK. All rights reserved.
-//
-
 import Foundation
 
 struct StringParsingStrategy {
@@ -30,8 +22,6 @@ struct StringParsingStrategy {
     
     private mutating func detectString(_ character: Character) throws {
         switch character {
-        case " ":
-            return
         case "\"":
             stringDetected = true
         default:
