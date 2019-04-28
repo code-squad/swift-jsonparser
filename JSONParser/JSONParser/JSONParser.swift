@@ -6,7 +6,11 @@ struct JSONParser: Parser {
     private var didRunFirstParse = false
     
     mutating func parse(_ character: Character) throws -> SupportedType? {
-        return 0
+        if didRunFirstParse {
+            return try secondParse(character)
+        }
+        try firstParse(character)
+        return nil
     }
     
     private mutating func firstParse(_ character: Character) throws {
@@ -25,8 +29,11 @@ struct JSONParser: Parser {
         }
     }
     
-    private func secondParse(_ character: Character) throws -> SupportedType? {
-        return 0
+    private mutating func secondParse(_ character: Character) throws -> SupportedType? {
+        if let result = try currentParser.parse(character) {
+            return result
+        }
+        return nil
     }
     
 }

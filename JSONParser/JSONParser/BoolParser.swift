@@ -26,14 +26,17 @@ struct BoolParser: Parser {
         default:
             throw BoolParsingError.cannotFindBoolFormat
         }
+        didRunFirstParse = true
     }
     
     private mutating func secondParse(_ character: Character) throws -> SupportedType? {
         if character == boolCharacters.first {
             boolCharacters.removeFirst()
-            return nil
+            if boolCharacters.isEmpty {
+                return resultBool
+            }
         }
-        return resultBool
+        return nil
     }
     
     
