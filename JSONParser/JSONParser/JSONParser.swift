@@ -2,40 +2,31 @@ import Foundation
 
 struct JSONParser: Parser {
     
-    private var parsingStrategy = ParsingStrategy.none
-    private var didRunFirstParse = false
+    private static var currentParser: Parser = NumberParser()
+    private static var didRunFirstParse = false
     
-    mutating func parse(_ character: Character) throws -> SupportedType? {
+    static func parse(_ character: Character) throws -> SupportedType? {
         return 0
     }
     
-    private mutating func firstParse(_ character: Character) throws {
+    private static func firstParse(_ character: Character) throws {
         switch character {
         case "\"":
-            parsingStrategy = .string
+            currentParser = StringParser()
             didRunFirstParse = true
         case "t", "f":
-            parsingStrategy = .bool
+            currentParser = BoolParser()
             didRunFirstParse = true
         case "-", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
-            parsingStrategy = .number
+            currentParser = NumberParser()
             didRunFirstParse = true
         default:
             throw JSONParsingError.unsupportedCharacter
         }
     }
     
-    private mutating func secondParse(_ character: Character) throws -> SupportedType? {
-        switch parsingStrategy {
-        case .bool:
-            
-        case .number: <#code#>
-        case .string: <#code#>
+    private static func secondParse(_ character: Character) throws -> SupportedType? {
         
-        case .none: <#code#>
-        
-            
-        }
     }
     
 }
