@@ -3,8 +3,12 @@ import Foundation
 struct StringParser: Parser {
     
     mutating func result() throws -> SupportedType {
+        if isDataToParse {
+            throw StringParsingError.expectedDoubleQuotationMarksToEndParsing
+        }
         defer {
             buffer = ""
+            isDataToParse = false
         }
         return buffer
     }
@@ -20,7 +24,7 @@ struct StringParser: Parser {
             if isDataToParse {
                 buffer.append(character)
             } else {
-                throw StringParsingError.expectedDoubleQuotationMarks
+                throw StringParsingError.expectedDoubleQuotationMarksToStartParsing
             }
         }
         return isDataToParse
@@ -29,5 +33,6 @@ struct StringParser: Parser {
 }
 
 enum StringParsingError: Error {
-    case expectedDoubleQuotationMarks
+    case expectedDoubleQuotationMarksToStartParsing
+    case expectedDoubleQuotationMarksToEndParsing
 }

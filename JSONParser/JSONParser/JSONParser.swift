@@ -14,8 +14,6 @@ struct JSONParser {
     var stringParser = StringParser()
     var numberParser = NumberParser()
     
-    
-
     mutating func parse(JSON: String) {
         var currentParser: Parser
         
@@ -23,6 +21,5 @@ struct JSONParser {
             
         }
     }
-    
     
 }
