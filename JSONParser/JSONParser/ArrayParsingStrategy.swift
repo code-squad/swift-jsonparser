@@ -4,7 +4,7 @@ struct ArrayParsingStrategy: ParsingStrategy {
     
     private var buffer = [Type]()
     
-    private var typeSelectionStrategy = TypeSelectionStrategy()
+    private var typeSelectionStrategy = TypeSelecter()
     
     private var hasDetectedSquareBracket = false
     private var isParsing = false
