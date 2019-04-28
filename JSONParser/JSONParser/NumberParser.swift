@@ -8,6 +8,9 @@ struct NumberParser: Parser {
         }
         defer {
             buffer = ""
+            didRunFirstParse = false
+            isLessThanOne = false
+            isAfterPoint = false
         }
         return result
     }
@@ -51,7 +54,7 @@ struct NumberParser: Parser {
             buffer.append(character)
             isAfterPoint = true
         case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
-            if isLessThanOne {
+            if isLessThanOne && !isAfterPoint {
                 throw NumberParsingError.invalidNumberAfterZero
             }
             buffer.append(character)
