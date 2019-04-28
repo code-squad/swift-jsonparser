@@ -1,24 +1,19 @@
 import Foundation
 
 struct BoolParser: Parser {
-    mutating func result() throws -> SupportedType {
-        return resultBool
-    }
     
     private var resultBool = true
     private var boolCharacters = [Character]()
     private var didRunFirstParse = false
     
-    
-    mutating func parse(_ character: Character) throws -> Bool {
+    mutating func parse(_ character: Character) throws -> SupportedType? {
         if didRunFirstParse {
             return try secondParse(character)
         } else {
             try firstParse(character)
-            return true
+            return nil
         }
     }
-    
     
     private mutating func firstParse(_ character: Character) throws {
         switch character {
@@ -33,15 +28,13 @@ struct BoolParser: Parser {
         }
     }
     
-    private mutating func secondParse(_ character: Character) throws -> Bool {
+    private mutating func secondParse(_ character: Character) throws -> SupportedType? {
         if character == boolCharacters.first {
             boolCharacters.removeFirst()
-            return true
+            return nil
         }
-        return false
+        return resultBool
     }
-    
-    
     
     
 }
