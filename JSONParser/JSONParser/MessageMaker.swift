@@ -17,9 +17,9 @@ struct MessageMaker {
         
         for value in json {
             switch value {
-            case let value where value is JsonType.int: intCount += 1
-            case let value where value is JsonType.bool: boolCount += 1
-            default: stringCount += 1
+            case .int: intCount += 1
+            case .bool: boolCount += 1
+            case .string: stringCount += 1
             }
         }
         

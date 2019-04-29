@@ -11,7 +11,7 @@ import Foundation
 func main () {
     var inputView = InputView()
     var outputView = OutputView()
-    var json = [Any]()
+    var json = [JsonType]()
     
     while true {
         inputView.readInput()
@@ -23,7 +23,7 @@ func main () {
         catch { print("알 수 없는 오류입니다. 입력값을 확인해주세요.") }
     }
     
-    let message = Converter.makeMessage(json)
+    let message = MessageMaker.makeMessage(json)
     outputView.printMessage(message)
 }
 
