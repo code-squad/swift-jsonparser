@@ -4,7 +4,7 @@ struct OutputView {
     
     static func printTypeCount(data: Type) {
         
-        if data is Array<Type> {
+        if data is Array<Type>, !(data as! Array<Type>).isEmpty {
             let data = data as! Array<Type>
             var counts = [String: Int]()
             for item in data {

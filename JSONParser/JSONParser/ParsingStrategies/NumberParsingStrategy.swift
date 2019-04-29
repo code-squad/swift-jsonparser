@@ -63,7 +63,7 @@ struct NumberParsingStrategy: ParsingStrategy {
         case ".":
             if decimalPointPlaced { throw NumberParsingError.duplicatedDecimalPoint }
             decimalPointPlaced = true
-        case " ", ",":
+        case " ", ",", "]":
             return ParsingState.isDonePreviousCharacter
         default:
             throw NumberParsingError.invalidCharacter

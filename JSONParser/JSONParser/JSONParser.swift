@@ -10,14 +10,15 @@ struct JSONParser {
     
     static func parse(JSON: String) throws -> Type {
         var strategySelecter = StrategySelecter()
-        var currentState = ParsingState.isNotDone
+        
         for character in JSON + " " {
-            currentState = try strategySelecter.parse(character)
+            if try strategySelecter.parse(character) != .isNotDone {
+                return try strategySelecter.result()
+            }
         }
-        if currentState == .isNotDone {
-            throw ParsingError.JSONEndedWithoutClosureDeclaration
-        }
-        return try strategySelecter.result()
+        
+        throw ParsingError.JSONEndedWithoutClosureDeclaration
+        
     }
     
 }

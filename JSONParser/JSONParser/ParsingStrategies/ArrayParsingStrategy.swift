@@ -35,6 +35,11 @@ struct ArrayParsingStrategy: ParsingStrategy {
     }
     
     private mutating func appendValue(_ character: Character) throws -> ParsingState {
+        
+        if character == "]", buffer.isEmpty {
+            return .isDoneCurrentCharacter
+        }
+        
         switch try strategySelecter.parse(character) {
         case .isDoneCurrentCharacter:
             buffer.append(try strategySelecter.result())
@@ -66,7 +71,6 @@ struct ArrayParsingStrategy: ParsingStrategy {
         }
         return ParsingState.isNotDone
     }
-    
     
 }
 
