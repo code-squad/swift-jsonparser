@@ -16,7 +16,7 @@ struct JSONParser {
         for character in JSON {
             try strategySelecter.parse(character)
         }
-        return strategySelecter.result
+        return strategySelecter.result()
     }
     
 }

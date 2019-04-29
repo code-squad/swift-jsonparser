@@ -4,8 +4,10 @@ struct StrategySelecter {
     
     private var parsingStrategy: ParsingStrategy! = nil
     
-    var result: Type {
-        return parsingStrategy.result
+    mutating func result() -> Type {
+        let result = parsingStrategy.result
+        parsingStrategy = nil
+        return result
     }
     
     

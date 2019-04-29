@@ -8,7 +8,10 @@ struct NumberParsingStrategy: ParsingStrategy {
     }
     
     private var buffer = ""
+    
     private var hasDoneMinusDetection = false
+    private var hasDetectedMinusSign = false
+    
     private var hasDetectedFirstNumber = false
     
     private var absoluteValueLessThanOne = false
@@ -16,18 +19,25 @@ struct NumberParsingStrategy: ParsingStrategy {
     
     
     mutating func parse(_ character: Character) throws -> ParsingState {
+        if !hasDoneMinusDetection {
+            detectMinusSign(character)
+            if hasDetectedMinusSign {
+                return ParsingState.isNotDone
+            }
+        }
         if hasDetectedFirstNumber {
             return try appendToBuffer(character)
-        } else if hasDoneMinusDetection {
-            try detectFirstNumber(character)
         } else {
-            detectMinusSign(character)
+            try detectFirstNumber(character)
+            return ParsingState.isNotDone
         }
-        return ParsingState.isNotDone
     }
     
     private mutating func detectMinusSign(_ character: Character) {
-        if character == "-" { buffer.append(character) }
+        if character == "-" {
+            buffer.append(character)
+            hasDetectedMinusSign = true
+        }
         hasDoneMinusDetection = true
     }
     

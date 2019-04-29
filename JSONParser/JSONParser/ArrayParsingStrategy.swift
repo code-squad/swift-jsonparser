@@ -37,11 +37,11 @@ struct ArrayParsingStrategy: ParsingStrategy {
     private mutating func appendValue(_ character: Character) throws -> ParsingState {
         switch try strategySelecter.parse(character) {
         case .isDoneCurrentCharacter:
-            buffer.append(strategySelecter.result)
+            buffer.append(strategySelecter.result())
             isParsing = false
             return .isNotDone
         case .isDonePreviousCharacter:
-            buffer.append(strategySelecter.result)
+            buffer.append(strategySelecter.result())
             isParsing = false
             return try detectNewValue(character)
         case .isNotDone:
