@@ -34,6 +34,7 @@ struct BoolParsingStrategy: ParsingStrategy {
         default:
             throw BoolParsingError.cannotFindBoolFormat
         }
+        hasDetectedBool = true
     }
     
     private mutating func matchBoolCharacters(_ character: Character) throws -> ParsingState {
