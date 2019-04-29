@@ -2,8 +2,8 @@ import Foundation
 
 struct BoolParsingStrategy: ParsingStrategy {
     
-    var result: Type {
-        return Type.bool(resultBool)
+    func result() -> Type {
+        return resultBool
     }
     
     private var boolCharacters = [Character]()

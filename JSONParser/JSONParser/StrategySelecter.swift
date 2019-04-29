@@ -4,12 +4,11 @@ struct StrategySelecter {
     
     private var parsingStrategy: ParsingStrategy! = nil
     
-    mutating func result() -> Type {
-        let result = parsingStrategy.result
+    mutating func result() throws -> Type {
+        let result = try parsingStrategy.result()
         parsingStrategy = nil
         return result
     }
-    
     
     mutating func parse(_ charcater: Character) throws -> ParsingState {
         if parsingStrategy == nil {
@@ -37,8 +36,6 @@ struct StrategySelecter {
             throw TypeSeltectionError.unsupportedCharacter
         }
     }
-    
-    
     
 }
 

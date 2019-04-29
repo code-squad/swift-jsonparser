@@ -2,12 +2,12 @@ import Foundation
 
 struct StringParsingStrategy: ParsingStrategy {
     
+    func result() -> Type {
+        return buffer
+    }
+    
     private var buffer = ""
     private var hasDetectedString = false
-    
-    var result: Type {
-        return Type.string(buffer)
-    }
     
     mutating func parse(_ character: Character) throws -> ParsingState {
         if hasDetectedString {

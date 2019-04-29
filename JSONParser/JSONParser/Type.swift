@@ -1,8 +1,9 @@
 import Foundation
 
-enum Type {
-    case string(String)
-    case number(Double)
-    case bool(Bool)
-    indirect case array(Array<Type>)
-}
+protocol Type { }
+
+extension String: Type { }
+extension Double: Type { }
+extension Bool: Type { }
+extension Array: Type where Element == Type { }
+

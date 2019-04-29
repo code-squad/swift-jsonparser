@@ -2,9 +2,11 @@ import Foundation
 
 struct NumberParsingStrategy: ParsingStrategy {
     
-    var result: Type {
-        let result = Double(buffer)!
-        return Type.number(result)
+    func result() throws -> Type {
+        guard let result = Double(buffer) else {
+            throw NumberParsingError.resultCouldNotConvertedToNumbers
+        }
+        return result
     }
     
     private var buffer = ""
