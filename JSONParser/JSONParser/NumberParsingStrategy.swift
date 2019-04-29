@@ -46,11 +46,13 @@ struct NumberParsingStrategy: ParsingStrategy {
         case ".":
             if decimalPointPlaced { throw NumberParsingError.duplicatedDecimalPoint }
             decimalPointPlaced = true
-        default:
+        case " ", ",":
             guard let result = Double(buffer) else {
                 throw NumberParsingError.resultCouldNotConvertedToNumbers
             }
             return ParsingState.isDonePreviousCharacter(result: Type.number(result))
+        default:
+            throw NumberParsingError.invalidCharacter
         }
         buffer.append(character)
         return ParsingState.isNotDone
@@ -63,4 +65,5 @@ enum NumberParsingError: Error {
     case invalidNumberAfterZero
     case duplicatedDecimalPoint
     case resultCouldNotConvertedToNumbers
+    case invalidCharacter
 }

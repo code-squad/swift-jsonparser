@@ -6,13 +6,13 @@ struct ArrayParsingStrategy: ParsingStrategy {
     
     private var strategySelecter = StrategySelecter()
     
-    private var hasDetectedSquareBracket = false
+    private var hasDetectedStartSquareBracket = false
     private var isParsing = false
     
     mutating func parse(_ character: Character) throws -> ParsingState {
         if isParsing {
             try appendValue(character)
-        } else if hasDetectedSquareBracket {
+        } else if hasDetectedStartSquareBracket {
             return try detectNewValue(character)
         } else {
             try detectStartSquareBracket(character)
@@ -22,7 +22,7 @@ struct ArrayParsingStrategy: ParsingStrategy {
     
     private mutating func detectStartSquareBracket(_ character: Character) throws {
         if character == "[" {
-            hasDetectedSquareBracket = true
+            hasDetectedStartSquareBracket = true
             isParsing = true
         } else {
             throw ArrayParsingError.cannotDetectStartSquareBracket
@@ -30,11 +30,15 @@ struct ArrayParsingStrategy: ParsingStrategy {
     }
     
     private mutating func appendValue(_ character: Character) throws {
+        
+        
+        
         switch try strategySelecter.parse(character) {
         case .isDoneCurrentCharacter(let result):
             buffer.append(result)
         case .isDonePreviousCharacter(let result):
             buffer.append(result)
+            return
         case .isNotDone:
             return
         }
