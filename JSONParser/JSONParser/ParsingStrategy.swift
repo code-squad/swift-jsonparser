@@ -2,6 +2,8 @@ import Foundation
 
 protocol ParsingStrategy {
     
+    var result: Type { get }
+    
     /// 문자를 분석하고 결과를 저장합니다.
     ///
     /// - Parameter character: JSON 문자입니다.

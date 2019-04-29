@@ -2,10 +2,16 @@ import Foundation
 
 struct BoolParsingStrategy: ParsingStrategy {
     
+    var result: Type {
+        return Type.bool(resultBool)
+    }
+    
     private var boolCharacters = [Character]()
     private var hasDetectedBool = false
     
     private var resultBool = false
+    
+    
     
     mutating func parse(_ character: Character) throws -> ParsingState {
         if hasDetectedBool {
@@ -33,7 +39,7 @@ struct BoolParsingStrategy: ParsingStrategy {
     private mutating func matchBoolCharacters(_ character: Character) throws -> ParsingState {
         if character == boolCharacters.first {
             boolCharacters.removeFirst()
-            if boolCharacters.isEmpty { return ParsingState.isDoneCurrentCharacter(result: Type.bool(resultBool)) }
+            if boolCharacters.isEmpty { return ParsingState.isDoneCurrentCharacter }
             return ParsingState.isNotDone
         }
         throw BoolParsingError.doesNotMatchBoolCharacters
