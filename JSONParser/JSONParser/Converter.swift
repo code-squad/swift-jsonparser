@@ -39,24 +39,6 @@ struct Converter {
         }
     }
     
-    static private func makeJson (_ inputSplited: [String]) -> [Any] {
-        var json = [Any]()
-        
-        for inputValue in inputSplited {
-            if let number = Int(inputValue) {
-                json.append(number)
-            } else if inputValue == "true" {
-                json.append(true)
-            } else if inputValue == "false" {
-                json.append(false)
-            } else {
-                json.append(inputValue)
-            }
-        }
-        
-        return json
-    }
-    
     static func makeMessage (_ json: [Any]) -> String {
         var intCount = 0
         var boolCount = 0
