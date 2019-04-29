@@ -11,6 +11,7 @@
 		330A94C52273DADA00D475C4 /* InputError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330A94C42273DADA00D475C4 /* InputError.swift */; };
 		33F901E52273222600BC4927 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F901E42273222600BC4927 /* InputView.swift */; };
 		33FF2E8E2276EE4D0057C3A9 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF2E8D2276EE4D0057C3A9 /* OutputView.swift */; };
+		33FF2E902276EF720057C3A9 /* JsonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF2E8F2276EF720057C3A9 /* JsonType.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		330A94C42273DADA00D475C4 /* InputError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputError.swift; sourceTree = "<group>"; };
 		33F901E42273222600BC4927 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		33FF2E8D2276EE4D0057C3A9 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
+		33FF2E8F2276EF720057C3A9 /* JsonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonType.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,6 +72,7 @@
 				330A94C22273CD4300D475C4 /* Converter.swift */,
 				330A94C42273DADA00D475C4 /* InputError.swift */,
 				33FF2E8D2276EE4D0057C3A9 /* OutputView.swift */,
+				33FF2E8F2276EF720057C3A9 /* JsonType.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -137,6 +140,7 @@
 				330A94C52273DADA00D475C4 /* InputError.swift in Sources */,
 				330A94C32273CD4300D475C4 /* Converter.swift in Sources */,
 				33F901E52273222600BC4927 /* InputView.swift in Sources */,
+				33FF2E902276EF720057C3A9 /* JsonType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
