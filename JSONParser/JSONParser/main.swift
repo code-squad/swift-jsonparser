@@ -1,14 +1,17 @@
 import Foundation
 
-let JSON = "[ 10, 21, 4, 314, 99, 0, 72 ]"
-let JSON2 = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
+func main() {
+    
+    do {
+        let input = try InputView.ask(about: "분석할 JSON 데이터를 입력하세요.")
+        let data = try JSONParser.parse(JSON: input)
+        
+        OutputView.printTypeCount(data: data as! Array<Type>)
+    } catch {
+        print(error)
+    }
+    
+    
+}
 
-let aaaa = try JSONParser.parse(JSON: JSON2)
-
-print(aaaa)
-
-//print(try JSONParser.parse(JSON: "false"))
-
-//let b = Type.bool(true)
-//print(b)
-
+main()
