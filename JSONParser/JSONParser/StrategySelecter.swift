@@ -2,15 +2,16 @@ import Foundation
 
 struct StrategySelecter {
     
-    private var parsingStrategy: ParsingStrategy? = nil
-    private var hasDetectedType = false
+    private var parsingStrategy: ParsingStrategy! = nil
     
-    mutating func parse(_ character: Character) throws -> ParsingState {
-        if parsingStrategy == nil { try detectType(character) }
-        guard var parsingStrategy = parsingStrategy else {
+    mutating func parse(_ charcater: Character) throws -> ParsingState {
+        if parsingStrategy == nil {
+            try detectType(charcater)
+        }
+        guard parsingStrategy != nil else {
             return ParsingState.isNotDone
         }
-        return try parsingStrategy.parse(character)
+        return try parsingStrategy.parse(charcater)
     }
     
     private mutating func detectType(_ character: Character) throws {
@@ -28,7 +29,6 @@ struct StrategySelecter {
         default:
             throw TypeSeltectionError.unsupportedCharacter
         }
-        hasDetectedType = true
     }
     
     

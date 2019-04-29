@@ -4,7 +4,7 @@ struct ArrayParsingStrategy: ParsingStrategy {
     
     private var buffer = [Type]()
     
-    private var typeSelectionStrategy = TypeSelecter()
+    private var strategySelecter = StrategySelecter()
     
     private var hasDetectedSquareBracket = false
     private var isParsing = false
@@ -30,7 +30,7 @@ struct ArrayParsingStrategy: ParsingStrategy {
     }
     
     private mutating func appendValue(_ character: Character) throws {
-        switch try typeSelectionStrategy.parse(character) {
+        switch try strategySelecter.parse(character) {
         case .isDoneCurrentCharacter(let result):
             buffer.append(result)
         case .isDonePreviousCharacter(let result):
