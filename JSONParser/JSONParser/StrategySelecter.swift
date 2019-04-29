@@ -4,6 +4,11 @@ struct StrategySelecter {
     
     private var parsingStrategy: ParsingStrategy! = nil
     
+    var result: Type {
+        return parsingStrategy.result
+    }
+    
+    
     mutating func parse(_ charcater: Character) throws -> ParsingState {
         if parsingStrategy == nil {
             try detectType(charcater)

@@ -2,6 +2,11 @@ import Foundation
 
 struct ArrayParsingStrategy: ParsingStrategy {
     
+    var result: Type {
+        let result = buffer
+        return Type.array(result)
+    }
+    
     private var buffer = [Type]()
     
     private var strategySelecter = StrategySelecter()
@@ -30,15 +35,11 @@ struct ArrayParsingStrategy: ParsingStrategy {
     }
     
     private mutating func appendValue(_ character: Character) throws {
-        
-        
-        
         switch try strategySelecter.parse(character) {
-        case .isDoneCurrentCharacter(let result):
-            buffer.append(result)
-        case .isDonePreviousCharacter(let result):
-            buffer.append(result)
-            return
+        case .isDoneCurrentCharacter:
+            buffer.append(strategySelecter.result)
+        case .isDonePreviousCharacter:
+            buffer.append(strategySelecter.result)
         case .isNotDone:
             return
         }
@@ -56,8 +57,7 @@ struct ArrayParsingStrategy: ParsingStrategy {
                 isParsing = true
             }
         case "]":
-            let result = buffer
-            return ParsingState.isDoneCurrentCharacter(result: Type.array(result))
+            return ParsingState.isDoneCurrentCharacter
         default:
             break
         }

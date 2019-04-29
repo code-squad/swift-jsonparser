@@ -2,6 +2,11 @@ import Foundation
 
 struct NumberParsingStrategy: ParsingStrategy {
     
+    var result: Type {
+        let result = Double(buffer)!
+        return Type.number(result)
+    }
+    
     private var buffer = ""
     private var hasDoneMinusDetection = false
     private var hasDetectedFirstNumber = false
@@ -47,10 +52,7 @@ struct NumberParsingStrategy: ParsingStrategy {
             if decimalPointPlaced { throw NumberParsingError.duplicatedDecimalPoint }
             decimalPointPlaced = true
         case " ", ",":
-            guard let result = Double(buffer) else {
-                throw NumberParsingError.resultCouldNotConvertedToNumbers
-            }
-            return ParsingState.isDonePreviousCharacter(result: Type.number(result))
+            return ParsingState.isDonePreviousCharacter
         default:
             throw NumberParsingError.invalidCharacter
         }
