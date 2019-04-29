@@ -1,6 +1,6 @@
 import Foundation
 
-struct StrategySelecter {
+struct StrategySelecter: ParsingStrategy {
     
     private var parsingStrategy: ParsingStrategy! = nil
     

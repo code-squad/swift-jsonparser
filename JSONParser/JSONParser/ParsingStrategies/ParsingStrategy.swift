@@ -2,7 +2,7 @@ import Foundation
 
 protocol ParsingStrategy {
     
-    func result() throws -> Type
+    mutating func result() throws -> Type
     
     /// 문자를 분석하고 결과를 저장합니다.
     ///

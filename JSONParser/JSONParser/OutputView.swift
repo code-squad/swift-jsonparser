@@ -1,7 +1,0 @@
-import Foundation
-
-struct OutputView {
-    
-    
-    
-}
