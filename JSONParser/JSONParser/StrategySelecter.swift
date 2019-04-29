@@ -1,6 +1,6 @@
 import Foundation
 
-struct TypeSelecter {
+struct StrategySelecter {
     
     private var parsingStrategy: ParsingStrategy? = nil
     private var hasDetectedType = false
@@ -15,14 +15,14 @@ struct TypeSelecter {
     
     private mutating func detectType(_ character: Character) throws {
         switch character {
+        case " ":
+            return
         case "\"":
             parsingStrategy = StringParsingStrategy()
         case "t", "f":
             parsingStrategy = BoolParsingStrategy()
         case "-", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
             parsingStrategy = NumberParsingStrategy()
-        case " ":
-            return
         case "[":
             parsingStrategy = ArrayParsingStrategy()
         default:
