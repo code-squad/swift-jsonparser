@@ -16,7 +16,7 @@ struct ArrayParsingStrategy: ParsingStrategy {
     
     mutating func parse(_ character: Character) throws -> ParsingState {
         if isParsing {
-            try appendValue(character)
+            return try appendValue(character)
         } else if hasDetectedStartSquareBracket {
             return try detectNewValue(character)
         } else {
@@ -34,16 +34,19 @@ struct ArrayParsingStrategy: ParsingStrategy {
         }
     }
     
-    private mutating func appendValue(_ character: Character) throws {
+    private mutating func appendValue(_ character: Character) throws -> ParsingState {
         switch try strategySelecter.parse(character) {
         case .isDoneCurrentCharacter:
             buffer.append(strategySelecter.result)
+            isParsing = false
+            return .isNotDone
         case .isDonePreviousCharacter:
             buffer.append(strategySelecter.result)
+            isParsing = false
+            return try detectNewValue(character)
         case .isNotDone:
-            return
+            return .isNotDone
         }
-        isParsing = false
     }
     
     private mutating func detectNewValue(_ character: Character) throws -> ParsingState {
@@ -70,4 +73,5 @@ struct ArrayParsingStrategy: ParsingStrategy {
 enum ArrayParsingError: Error {
     case cannotDetectStartSquareBracket
     case unexpectedComma
+    case unexpectedEndOfProgram
 }
