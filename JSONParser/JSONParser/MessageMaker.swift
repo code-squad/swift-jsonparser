@@ -9,11 +9,11 @@
 import Foundation
 
 struct MessageMaker {
-    static func makeMessage (_ json: [JsonType]) -> String {
+    static func makeMessage (_ json: [JsonType]) -> [String: Int] {
         var intCount = 0
         var boolCount = 0
         var stringCount = 0
-        var message = ""
+        var message = [String: Int]()
         
         for value in json {
             switch value {
@@ -23,11 +23,10 @@ struct MessageMaker {
             }
         }
         
-        message = "총 \(json.count)개의 데이터 중에"
-        if stringCount > 0 { message += " 문자열 \(stringCount)개" }
-        if intCount > 0 { message += " 숫자 \(intCount)개" }
-        if boolCount > 0 { message += " 부울 \(boolCount)개" }
-        message += "가 포함되어 있습니다."
+        message["총"] = json.count
+        if stringCount > 0 { message["문자열"] = stringCount }
+        if intCount > 0 { message["숫자"] = intCount }
+        if boolCount > 0 { message["부울"] = boolCount }
         
         return message
     }
