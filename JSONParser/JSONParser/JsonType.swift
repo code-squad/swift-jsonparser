@@ -12,4 +12,5 @@ enum JsonType {
     case int(Int)
     case string(String)
     case bool(Bool)
+    case object([JsonType])
 }

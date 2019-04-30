@@ -31,9 +31,6 @@ struct Converter {
     }
     
     static private func verifyInput (_ inputSplited: [String]) throws {
-        if inputSplited.first != "[" || inputSplited.last != "]" {
-            throw InputError.NonInputStandard
-        }
         if inputSplited.count <= 2 {
             throw InputError.DataCountIsZero
         }

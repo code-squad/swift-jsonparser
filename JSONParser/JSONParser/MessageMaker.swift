@@ -13,6 +13,7 @@ struct MessageMaker {
         var intCount = 0
         var boolCount = 0
         var stringCount = 0
+        var objectCount = 0
         var message = [String: Int]()
         
         for value in json {
@@ -20,6 +21,8 @@ struct MessageMaker {
             case .int: intCount += 1
             case .bool: boolCount += 1
             case .string: stringCount += 1
+            case .object(_):
+                objectCount += 1
             }
         }
         

@@ -10,7 +10,7 @@ import Foundation
 
 func main () {
     var inputView = InputView()
-    var outputView = OutputView()
+    let outputView = OutputView()
     var json = [JsonType]()
     
     while true {
@@ -24,6 +24,7 @@ func main () {
     }
     
     let message = MessageMaker.makeMessage(json)
+    dump(json)
     outputView.printMessage(message)
 }
 
