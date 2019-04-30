@@ -2,7 +2,7 @@ import Foundation
 
 struct StrategySelecter: ParsingStrategy {
     
-    private(set) var parsingStrategy: ParsingStrategy! = nil
+    private(set) var parsingStrategy: ParsingStrategy!
     
     mutating func result() throws -> Type {
         let result = try parsingStrategy.result()
