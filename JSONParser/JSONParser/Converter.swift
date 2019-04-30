@@ -19,12 +19,13 @@ struct Converter {
     }
     
     static private func splitInput (_ input: String) throws ->  [String] {
-        var inputSplited = input.components(separatedBy: [",", " "])
+        var inputSplited = input.components(separatedBy: [","])
         
         try verifyInput(inputSplited)
+
+        if inputSplited.first == "[" { inputSplited.removeFirst() }
+        if inputSplited.last == "]" { inputSplited.removeLast() }
         
-        inputSplited.removeFirst()
-        inputSplited.removeLast()
         inputSplited = inputSplited.filter{$0 != ""}
         
         return inputSplited
