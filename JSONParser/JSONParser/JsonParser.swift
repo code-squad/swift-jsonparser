@@ -46,15 +46,16 @@ struct JsonParser {
     }
     
     static private func getJsonValue (_ input: String) -> JsonType {
-        if let number = Int(input) {
-             return JsonType.int(number)
-        } else if input == "true" {
-            return JsonType.bool(true)
-        } else if input == "false" {
-            return JsonType.bool(false)
-        } else {
-            return JsonType.string(input)
-        }
+        var modifyInput = input
+        if modifyInput.first == "[" { modifyInput.removeFirst() }
+        if modifyInput.first == " " { modifyInput.removeFirst() }
+        if modifyInput.last == "]" { modifyInput.removeLast() }
+        if modifyInput.last == " " { modifyInput.removeLast() }
+        
+        if let number = Int(modifyInput) { return JsonType.int(number) }
+        else if modifyInput == "true" { return JsonType.bool(true) }
+        else if modifyInput == "false" { return JsonType.bool(false) }
+        else { return JsonType.string(modifyInput) }
     }
    
 }

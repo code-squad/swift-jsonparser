@@ -26,6 +26,10 @@ struct MessageMaker {
             }
         }
         
+        if objectCount == 1 {
+//            총 4개의 객체 데이터 중에 문자열 2개, 숫자 1개, 부울 1개가 포함되어 있습니다.
+            
+        }
         message["총"] = json.count
         if stringCount > 0 { message["문자열"] = stringCount }
         if intCount > 0 { message["숫자"] = intCount }
