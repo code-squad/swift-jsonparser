@@ -17,11 +17,7 @@ struct JsonParser {
         var modifyInput: String
         
         for inputValue in inputSplited {
-            modifyInput = inputValue
-            if modifyInput.first == "[" { modifyInput.removeFirst() }
-            if modifyInput.first == " " { modifyInput.removeFirst() }
-            if modifyInput.last == "]" { modifyInput.removeLast() }
-            if modifyInput.last == " " { modifyInput.removeLast() }
+            modifyInput = removeBlank(inputValue)
             
             if modifyInput.first == "{" || object.count > 0 || modifyInput.last == "}" {
                 (key, value) = getObjectElement(modifyInput)
@@ -59,5 +55,15 @@ struct JsonParser {
         else { return JsonType.string(input) }
     }
    
+    static private func removeBlank (_ input: String) -> String {
+        var modifyInput = input
+        
+        if modifyInput.first == "[" { modifyInput.removeFirst() }
+        if modifyInput.first == " " { modifyInput.removeFirst() }
+        if modifyInput.last == "]" { modifyInput.removeLast() }
+        if modifyInput.last == " " { modifyInput.removeLast() }
+        
+        return modifyInput
+    }
 }
 
