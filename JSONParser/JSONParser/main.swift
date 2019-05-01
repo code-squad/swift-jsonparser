@@ -24,7 +24,6 @@ func main () {
     }
     
     let message = MessageMaker.makeMessage(json)
-    dump(json)
     outputView.printMessage(message)
 }
 

@@ -14,18 +14,25 @@ struct JsonParser {
         var object = [String: JsonType]()
         var key: String
         var value: JsonType
+        var modifyInput: String
         
         for inputValue in inputSplited {
-            if inputValue.first == "{" || object.count > 0 || inputValue.last == "}" {
-                (key, value) = getObjectElement(inputValue)
+            modifyInput = inputValue
+            if modifyInput.first == "[" { modifyInput.removeFirst() }
+            if modifyInput.first == " " { modifyInput.removeFirst() }
+            if modifyInput.last == "]" { modifyInput.removeLast() }
+            if modifyInput.last == " " { modifyInput.removeLast() }
+            
+            if modifyInput.first == "{" || object.count > 0 || modifyInput.last == "}" {
+                (key, value) = getObjectElement(modifyInput)
                 object[key] = value
                 
-                if inputValue.last == "}" {
+                if modifyInput.last == "}" {
                     json.append(JsonType.object(object))
                     object.removeAll()
                 }
             } else {
-                json.append(getJsonValue(inputValue))
+                json.append(getJsonValue(modifyInput))
             }
         }
         
@@ -46,16 +53,10 @@ struct JsonParser {
     }
     
     static private func getJsonValue (_ input: String) -> JsonType {
-        var modifyInput = input
-        if modifyInput.first == "[" { modifyInput.removeFirst() }
-        if modifyInput.first == " " { modifyInput.removeFirst() }
-        if modifyInput.last == "]" { modifyInput.removeLast() }
-        if modifyInput.last == " " { modifyInput.removeLast() }
-        
-        if let number = Int(modifyInput) { return JsonType.int(number) }
-        else if modifyInput == "true" { return JsonType.bool(true) }
-        else if modifyInput == "false" { return JsonType.bool(false) }
-        else { return JsonType.string(modifyInput) }
+        if let number = Int(input) { return JsonType.int(number) }
+        else if input == "true" { return JsonType.bool(true) }
+        else if input == "false" { return JsonType.bool(false) }
+        else { return JsonType.string(input) }
     }
    
 }
