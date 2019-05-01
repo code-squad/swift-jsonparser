@@ -22,28 +22,26 @@ struct StrategySelecter: ParsingStrategy {
     }
     
     
-    private func loopParsingStrategy(index: Int) -> ParsingStrategy? {
-        switch index {
-        case 1:
-            return ArrayParsingStrategy()
-        case 2:
-            return StringParsingStrategy()
-        case 3:
-            return BoolParsingStrategy()
-        case 4:
-            return NumberParsingStrategy()
-        default:
-            return nil
+    enum Parser: CaseIterable {
+        case array
+        case string
+        case bool
+        case number
+        func strategy() -> ParsingStrategy {
+            switch self {
+            case .array: return ArrayParsingStrategy()
+            case .string: return StringParsingStrategy()
+            case .bool: return BoolParsingStrategy()
+            case .number: return NumberParsingStrategy()
+            }
         }
     }
     
     private mutating func detectType(_ character: Character) throws -> ParsingState {
         if character == " " { return ParsingState.isNotDone }
         
-        for index in 1...4 {
-            guard var parsingStrategy = loopParsingStrategy(index: index) else {
-                throw TypeSeltectionError.invalidIndex
-            }
+        for strategy in Parser.allCases {
+            var parsingStrategy = strategy.strategy()
             if let state = try? parsingStrategy.parse(character) {
                 self.parsingStrategy = parsingStrategy
                 return state
@@ -52,11 +50,8 @@ struct StrategySelecter: ParsingStrategy {
         throw TypeSeltectionError.unsupportedCharacter
     }
     
-    
-    
 }
 
 enum TypeSeltectionError: Error {
     case unsupportedCharacter
-    case invalidIndex
 }
