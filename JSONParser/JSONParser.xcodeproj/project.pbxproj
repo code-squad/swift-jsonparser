@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		156AD8C7227AC34E00200BD8 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156AD8C6227AC34E00200BD8 /* InputView.swift */; };
+		156AD8C9227AC39500200BD8 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156AD8C8227AC39500200BD8 /* OutputView.swift */; };
+		156AD8CB227AC3B000200BD8 /* JsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156AD8CA227AC3B000200BD8 /* JsonParser.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +26,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		156AD8C6227AC34E00200BD8 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		156AD8C8227AC39500200BD8 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
+		156AD8CA227AC3B000200BD8 /* JsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParser.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +64,9 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
+				156AD8C6227AC34E00200BD8 /* InputView.swift */,
+				156AD8C8227AC39500200BD8 /* OutputView.swift */,
+				156AD8CA227AC3B000200BD8 /* JsonParser.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -121,6 +130,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				156AD8C7227AC34E00200BD8 /* InputView.swift in Sources */,
+				156AD8CB227AC3B000200BD8 /* JsonParser.swift in Sources */,
+				156AD8C9227AC39500200BD8 /* OutputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
