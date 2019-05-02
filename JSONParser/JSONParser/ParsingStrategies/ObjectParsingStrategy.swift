@@ -19,7 +19,7 @@ struct ObjectParsingStrategy: ParsingStrategy {
         if isParsingValue {
             return try appendValue(character)
         } else if isParsingString {
-            try catchString(character)
+            try scanString(character)
         } else {
             try detectStartCurlyBracket(character)
         }
@@ -42,7 +42,7 @@ struct ObjectParsingStrategy: ParsingStrategy {
             break
         case ",":
             if isParsingValue {
-                throw ArrayParsingError.unexpectedComma
+                throw ObjectParsingError.unexpectedComma
             } else {
                 isParsingString = true
             }
@@ -54,7 +54,7 @@ struct ObjectParsingStrategy: ParsingStrategy {
         return ParsingState.isNotDone
     }
     
-    private mutating func catchString(_ character: Character) throws {
+    private mutating func scanString(_ character: Character) throws {
         
         if try stringParsingStrategy.parse(character) == .isDoneCurrentCharacter {
             isParsingString = false
@@ -84,4 +84,5 @@ struct ObjectParsingStrategy: ParsingStrategy {
 
 enum ObjectParsingError: Error {
     case cannotDetectStartCurlyBracket
+    case unexpectedComma
 }
