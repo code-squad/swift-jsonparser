@@ -18,6 +18,7 @@
 		F283CA822275E0F800D7CBBC /* StrategySelecter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA812275E0F800D7CBBC /* StrategySelecter.swift */; };
 		F283CA832275E58400D7CBBC /* ParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E70F3422734BB3008E0BA8 /* ParsingStrategy.swift */; };
 		F283CA852275EBA200D7CBBC /* ArrayParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA842275EBA200D7CBBC /* ArrayParsingStrategy.swift */; };
+		F292A2E4227AC76F0048C573 /* ObjectParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292A2E3227AC76F0048C573 /* ObjectParsingStrategy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,6 +45,7 @@
 		F283CA7F2275CEED00D7CBBC /* NumberParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberParsingStrategy.swift; sourceTree = "<group>"; };
 		F283CA812275E0F800D7CBBC /* StrategySelecter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategySelecter.swift; sourceTree = "<group>"; };
 		F283CA842275EBA200D7CBBC /* ArrayParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayParsingStrategy.swift; sourceTree = "<group>"; };
+		F292A2E3227AC76F0048C573 /* ObjectParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectParsingStrategy.swift; sourceTree = "<group>"; };
 		F2E70F3422734BB3008E0BA8 /* ParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingStrategy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				F283CA812275E0F800D7CBBC /* StrategySelecter.swift */,
+				F292A2E3227AC76F0048C573 /* ObjectParsingStrategy.swift */,
 				F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */,
 				F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */,
 				F283CA7F2275CEED00D7CBBC /* NumberParsingStrategy.swift */,
@@ -166,6 +169,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F292A2E4227AC76F0048C573 /* ObjectParsingStrategy.swift in Sources */,
 				F283CA7C2275C4E700D7CBBC /* StringParsingStrategy.swift in Sources */,
 				F283CA822275E0F800D7CBBC /* StrategySelecter.swift in Sources */,
 				F283CA7E2275CA8C00D7CBBC /* BoolParsingStrategy.swift in Sources */,
