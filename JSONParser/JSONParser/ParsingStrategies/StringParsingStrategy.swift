@@ -2,8 +2,11 @@ import Foundation
 
 struct StringParsingStrategy: ParsingStrategy {
     
-    func result() -> Type {
-        return buffer
+    mutating func result() -> Type {
+        let result = buffer
+        buffer = ""
+        hasDetectedString = false
+        return result
     }
     
     private var buffer = ""
