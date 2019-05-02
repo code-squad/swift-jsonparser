@@ -44,14 +44,14 @@ struct ArrayParsingStrategy: ParsingStrategy {
         case .isDoneCurrentCharacter:
             buffer.append(try strategySelecter.result())
             isParsing = false
-            return .isNotDone
         case .isDonePreviousCharacter:
             buffer.append(try strategySelecter.result())
             isParsing = false
             return try detectNewValue(character)
         case .isNotDone:
-            return .isNotDone
+            break
         }
+        return .isNotDone
     }
     
     private mutating func detectNewValue(_ character: Character) throws -> ParsingState {
