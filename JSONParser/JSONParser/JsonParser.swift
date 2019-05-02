@@ -19,14 +19,14 @@ struct JsonParser {
         for inputValue in inputSplited {
             modifyInput = removeBlank(inputValue)
             
-            if modifyInput.first == "{" || object.count > 0 || modifyInput.last == "}" {
+            if modifyInput.first == "{" || object.count > 0 {
                 (key, value) = getObjectElement(modifyInput)
                 object[key] = value
-                
-                if modifyInput.last == "}" {
-                    json.append(JsonType.object(object))
-                    object.removeAll()
-                }
+            } else if modifyInput.last == "}" {
+                (key, value) = getObjectElement(modifyInput)
+                object[key] = value
+                json.append(JsonType.object(object))
+                object.removeAll()
             } else {
                 json.append(getJsonValue(modifyInput))
             }
