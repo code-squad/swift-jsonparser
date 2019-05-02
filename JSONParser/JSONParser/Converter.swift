@@ -26,8 +26,7 @@ struct Converter {
         if inputSplited.first == "[" { inputSplited.removeFirst() }
         if inputSplited.last == "]" { inputSplited.removeLast() }
         
-        inputSplited = inputSplited.filter{$0 != ""}
-        
+        inputSplited = inputSplited.filter( { (value: String) -> Bool in return (value != "") } )
         return inputSplited
     }
     
