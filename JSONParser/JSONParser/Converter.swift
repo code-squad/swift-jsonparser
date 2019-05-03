@@ -9,7 +9,7 @@
 import Foundation
 
 struct Converter {
-    static func inputToAny (_ valueEntered: String) throws -> [JsonType] {
+    static func inputToJson (_ valueEntered: String) throws -> [JsonType] {
         let input = valueEntered
         
         let InputSplited = try splitInput(input)

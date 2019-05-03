@@ -16,7 +16,7 @@ func main () {
     while true {
         inputView.readInput()
         do {
-            json = try Converter.inputToAny(inputView.valueEntered)
+            json = try Converter.inputToJson(inputView.valueEntered)
             break
         }
         catch let error as InputError { print(error.rawValue) }
