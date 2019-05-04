@@ -24,6 +24,8 @@ struct StringParsingStrategy: ParsingStrategy {
     
     private mutating func detectString(_ character: Character) throws {
         switch character {
+        case " ":
+            return
         case "\"":
             hasDetectedString = true
         default:

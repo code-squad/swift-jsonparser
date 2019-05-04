@@ -14,6 +14,6 @@ extension Bool: Type {
 extension Array: Type where Element == Type {
     var description: String { return "배열" }
 }
-extension Dictionary: Type where Value == Type {
+extension Dictionary: Type where Key == String ,Value == Type {
     var description: String { return "오브젝트" }
 }
