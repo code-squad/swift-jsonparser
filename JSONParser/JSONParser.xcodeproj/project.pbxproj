@@ -93,10 +93,10 @@
 			children = (
 				F283CA812275E0F800D7CBBC /* StrategySelecter.swift */,
 				F292A2E3227AC76F0048C573 /* ObjectParsingStrategy.swift */,
+				F283CA842275EBA200D7CBBC /* ArrayParsingStrategy.swift */,
 				F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */,
 				F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */,
 				F283CA7F2275CEED00D7CBBC /* NumberParsingStrategy.swift */,
-				F283CA842275EBA200D7CBBC /* ArrayParsingStrategy.swift */,
 				F2E70F3422734BB3008E0BA8 /* ParsingStrategy.swift */,
 			);
 			path = ParsingStrategies;

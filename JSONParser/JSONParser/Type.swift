@@ -1,6 +1,6 @@
 import Foundation
 
-protocol Type { var description: String { get } }
+protocol Type: CustomStringConvertible { }
 
 extension String: Type {
     var description: String { return "문자열" }

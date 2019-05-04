@@ -16,14 +16,9 @@ struct ObjectParsingStrategy: ParsingStrategy {
     private var isParsingValue = false
     
     mutating func parse(_ character: Character) throws -> ParsingState {
-        if isParsingValue {
-            return try appendValue(character)
-        } else if isParsingString {
-            try scanString(character)
-        } else {
-            try detectStartCurlyBracket(character)
-        }
-        return ParsingState.isNotDone
+        
+        
+        
     }
     
     private mutating func detectStartCurlyBracket(_ character: Character) throws {
@@ -47,25 +42,31 @@ struct ObjectParsingStrategy: ParsingStrategy {
                 isParsingString = true
             }
         case "}":
-            return ParsingState.isDoneCurrentCharacter
+            return .isDoneCurrentCharacter
         default:
             break
         }
         return ParsingState.isNotDone
     }
     
-    private mutating func scanString(_ character: Character) throws {
+    private mutating func scanString(_ character: Character) throws -> ParsingState {
+        
+        if character == "}", buffer.isEmpty {
+            return .isDoneCurrentCharacter
+        }
         
         if try stringParsingStrategy.parse(character) == .isDoneCurrentCharacter {
             isParsingString = false
         }
-        
+        return .isNotDone
     }
     
-    private mutating func appendValue(_ character: Character) throws -> ParsingState {
+    private mutating func scanValue(_ character: Character) throws -> ParsingState {
+        
         switch try strategySelecter.parse(character) {
         case .isDoneCurrentCharacter:
             buffer[stringParsingStrategy.result() as! String] = try strategySelecter.result()
+            
             isParsingValue = false
         case .isDonePreviousCharacter:
             buffer[stringParsingStrategy.result() as! String] = try strategySelecter.result()
