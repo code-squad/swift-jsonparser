@@ -13,6 +13,7 @@ struct ObjectParsingStrategy: ParsingStrategy {
     
     private var hasDetectedStartCurlyBracket = false
     private var isParsingString = false
+    private var isParsingColon = false
     private var isParsingValue = false
     
     mutating func parse(_ character: Character) throws -> ParsingState {
@@ -20,6 +21,9 @@ struct ObjectParsingStrategy: ParsingStrategy {
             return try scanValue(character)
         } else if isParsingString {
             return try scanString(character)
+        } else if isParsingColon {
+            try scanColon(character)
+            return ParsingState.isNotDone
         } else {
             return try detectNewValue(character)
         }
@@ -61,8 +65,23 @@ struct ObjectParsingStrategy: ParsingStrategy {
         
         if try stringParsingStrategy.parse(character) == .isDoneCurrentCharacter {
             isParsingString = false
+            isParsingColon = true
         }
         return .isNotDone
+    }
+    
+    private mutating func scanColon(_ character: Character) throws {
+        
+        switch character {
+        case " ":
+            return
+        case ":":
+            isParsingColon = false
+            isParsingValue = true
+        default:
+            throw ObjectParsingError.expectedColon
+        }
+        
     }
     
     private mutating func scanValue(_ character: Character) throws -> ParsingState {
@@ -70,7 +89,6 @@ struct ObjectParsingStrategy: ParsingStrategy {
         switch try strategySelecter.parse(character) {
         case .isDoneCurrentCharacter:
             buffer[stringParsingStrategy.result() as! String] = try strategySelecter.result()
-            
             isParsingValue = false
         case .isDonePreviousCharacter:
             buffer[stringParsingStrategy.result() as! String] = try strategySelecter.result()
@@ -90,4 +108,5 @@ struct ObjectParsingStrategy: ParsingStrategy {
 enum ObjectParsingError: Error {
     case cannotDetectStartCurlyBracket
     case unexpectedComma
+    case expectedColon
 }
