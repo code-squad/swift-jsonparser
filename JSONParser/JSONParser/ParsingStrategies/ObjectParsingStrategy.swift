@@ -16,9 +16,13 @@ struct ObjectParsingStrategy: ParsingStrategy {
     private var isParsingValue = false
     
     mutating func parse(_ character: Character) throws -> ParsingState {
-        
-        
-        
+        if isParsingValue {
+            return try scanValue(character)
+        } else if isParsingString {
+            return try scanString(character)
+        } else {
+            return try detectNewValue(character)
+        }
     }
     
     private mutating func detectStartCurlyBracket(_ character: Character) throws {
