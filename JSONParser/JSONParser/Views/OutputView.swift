@@ -35,7 +35,7 @@ struct OutputView {
     
     private static func printObjectCount(_ data: [String: Type]) {
         var counts = [String: Int]()
-        for (string, value) in data {
+        for (_, value) in data {
             counts[value.typeDescription] = (counts[value.typeDescription] ?? 0) + 1
         }
         

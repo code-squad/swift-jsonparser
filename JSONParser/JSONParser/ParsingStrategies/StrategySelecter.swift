@@ -11,14 +11,14 @@ struct StrategySelecter: ParsingStrategy {
         return result
     }
     
-    mutating func parse(_ charcater: Character) throws -> ParsingState {
+    mutating func parse(_ character: Character) throws -> ParsingState {
         if parsingStrategy == nil {
-            return try detectType(charcater)
+            return try detectType(character)
         }
         guard parsingStrategy != nil else {
             return ParsingState.isNotDone
         }
-        return try parsingStrategy.parse(charcater)
+        return try parsingStrategy.parse(character)
     }
     
     enum Parser: CaseIterable {
