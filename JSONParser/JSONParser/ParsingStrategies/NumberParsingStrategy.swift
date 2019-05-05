@@ -59,9 +59,13 @@ struct NumberParsingStrategy: ParsingStrategy {
     private mutating func appendToBuffer(_ character: Character) throws -> ParsingState {
         switch character {
         case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
-            if absoluteValueLessThanOne { throw NumberParsingError.invalidNumberAfterZero }
+            if absoluteValueLessThanOne, !decimalPointPlaced {
+                throw NumberParsingError.invalidNumberAfterZero
+            }
         case ".":
-            if decimalPointPlaced { throw NumberParsingError.duplicatedDecimalPoint }
+            if decimalPointPlaced {
+                throw NumberParsingError.duplicatedDecimalPoint
+            }
             decimalPointPlaced = true
         case " ", ",", "]":
             return ParsingState.isDonePreviousCharacter
