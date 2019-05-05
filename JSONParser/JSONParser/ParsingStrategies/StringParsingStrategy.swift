@@ -2,23 +2,25 @@ import Foundation
 
 struct StringParsingStrategy: ParsingStrategy {
     
-    mutating func result() -> Type {
+    mutating func result() throws -> Type {
+        guard !isParsingString else {
+            throw StringParsingError.parsingNotComplete
+        }
         let result = buffer
         buffer = ""
-        hasDetectedString = false
         return result
     }
     
     private var buffer = ""
-    private var hasDetectedString = false
+    private var isParsingString = false
     
     mutating func parse(_ character: Character) throws -> ParsingState {
-        if hasDetectedString {
+        if isParsingString {
             return try appendToBuffer(character)
         } else {
             try detectString(character)
         }
-        return ParsingState.isNotDone
+        return .isNotDone
     }
     
     
@@ -27,7 +29,7 @@ struct StringParsingStrategy: ParsingStrategy {
         case " ":
             return
         case "\"":
-            hasDetectedString = true
+            isParsingString = true
         default:
             throw StringParsingError.cannotDetectFirstDoubleQuotationMark
         }
@@ -36,10 +38,11 @@ struct StringParsingStrategy: ParsingStrategy {
     private mutating func appendToBuffer(_ character: Character) throws -> ParsingState {
         switch character {
         case "\"":
-            return ParsingState.isDoneCurrentCharacter
+            isParsingString = false
+            return .isDoneCurrentCharacter
         default:
             buffer.append(character)
-            return ParsingState.isNotDone
+            return .isNotDone
         }
     }
     
@@ -48,4 +51,5 @@ struct StringParsingStrategy: ParsingStrategy {
 
 enum StringParsingError: Error {
     case cannotDetectFirstDoubleQuotationMark
+    case parsingNotComplete
 }

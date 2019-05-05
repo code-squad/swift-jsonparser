@@ -23,10 +23,12 @@ struct ObjectParsingStrategy: ParsingStrategy {
             return try scanString(character)
         } else if isParsingColon {
             try scanColon(character)
-            return ParsingState.isNotDone
-        } else {
+        } else if hasDetectedStartCurlyBracket {
             return try detectNewValue(character)
+        } else {
+            try detectStartCurlyBracket(character)
         }
+        return ParsingState.isNotDone
     }
     
     private mutating func detectStartCurlyBracket(_ character: Character) throws {
@@ -88,10 +90,10 @@ struct ObjectParsingStrategy: ParsingStrategy {
         
         switch try strategySelecter.parse(character) {
         case .isDoneCurrentCharacter:
-            buffer[stringParsingStrategy.result() as! String] = try strategySelecter.result()
+            buffer[try stringParsingStrategy.result() as! String] = try strategySelecter.result()
             isParsingValue = false
         case .isDonePreviousCharacter:
-            buffer[stringParsingStrategy.result() as! String] = try strategySelecter.result()
+            buffer[try stringParsingStrategy.result() as! String] = try strategySelecter.result()
             isParsingValue = false
             return try detectNewValue(character)
         case .isNotDone:

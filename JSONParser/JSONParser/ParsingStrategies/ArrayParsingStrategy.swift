@@ -22,7 +22,7 @@ struct ArrayParsingStrategy: ParsingStrategy {
         } else {
             try detectStartSquareBracket(character)
         }
-        return ParsingState.isNotDone
+        return .isNotDone
     }
     
     private mutating func detectStartSquareBracket(_ character: Character) throws {
@@ -65,11 +65,11 @@ struct ArrayParsingStrategy: ParsingStrategy {
                 isParsing = true
             }
         case "]":
-            return ParsingState.isDoneCurrentCharacter
+            return .isDoneCurrentCharacter
         default:
             break
         }
-        return ParsingState.isNotDone
+        return .isNotDone
     }
     
 }
