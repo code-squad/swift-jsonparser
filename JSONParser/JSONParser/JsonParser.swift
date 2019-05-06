@@ -14,11 +14,14 @@ struct JsonParser {
         return input
     }
     
-    func parsingData(beforeData : String) throws -> (numberOfElements: Int, numberOfString: Int, numberOfInt: Int, numberOfBool: Int){
+    func parsingData(beforeData : String) throws -> (numberOfElements: Int, countString: Int, countInt: Int, countBool: Int ){
         var countString = 0
         var countInt = 0
         var countBool = 0
-        let refinedData = beforeData.components(separatedBy: ",").filter { $0 != "" }
+        var datas = beforeData
+        datas.removeFirst()
+        datas.removeLast()
+        let refinedData = datas.components(separatedBy: ",").filter { $0 != "" }
         for dataElement in refinedData {
             if dataElement.contains("\"") { countString += 1 }
             else if let _ = Int(dataElement) { countInt += 1 }
