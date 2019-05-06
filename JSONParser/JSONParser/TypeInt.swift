@@ -9,8 +9,17 @@
 import Foundation
 
 struct TypeInt: ElementType {
-    func outputMent(number: Int) -> (type: String, value: Int) {
-        let type = "숫자 "
-        return (type: type, value: number)
+    private(set) var json : Int
+    
+    init (json: String) {
+        self.json = Int(json) ?? 0
+    }
+    
+    func countType(jsonDatas: [Json]) -> Int {
+        var countInt = 0
+        for jsonData in jsonDatas {
+            if ((jsonData.json as? TypeInt) != nil) { countInt += 1 }
+        }
+        return countInt
     }
 }

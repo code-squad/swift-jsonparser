@@ -9,10 +9,8 @@
 import Foundation
 
 struct OutputView {
-    func printElements(elementType: ElementType, numberOfElements: Int, numberOfString: Int, numberOfInt: Int, numberOfBool: Int) {
-        print("총 \(numberOfElements)개의 데이터 중에", terminator: "")
-        print(" \(elementType.outputMent(number: numberOfString)),")
-        print(" \(elementType.outputMent(number: numberOfInt)),")
-        print(" \(elementType.outputMent(number: numberOfBool)),")
+    func printElements(jsonDatas: [Json], elementType: ElementType) {
+        print("총 \(jsonDatas.count)개의 데이터 중에", terminator: "")
+        print(" \(elementType.countType(jsonDatas: jsonDatas)),")
     }
 }

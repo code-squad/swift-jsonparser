@@ -9,8 +9,17 @@
 import Foundation
 
 struct TypeBool: ElementType {
-    func outputMent(number: Int) -> (type: String, value: Int) {
-        let type = "부울 "
-        return (type: type, value: number)
+    private(set) var json : Bool
+    
+    init (json: String) {
+        self.json = Bool(json) ?? false
+    }
+    
+    func countType(jsonDatas: [Json]) -> Int {
+        var countBool = 0
+        for jsonData in jsonDatas {
+            if ((jsonData.json as? TypeBool) != nil) { countBool += 1}
+        }
+        return countBool
     }
 }

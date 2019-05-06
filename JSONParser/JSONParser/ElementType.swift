@@ -9,5 +9,6 @@
 import Foundation
 
 protocol ElementType {
-    func outputMent(number: Int) -> (type: String, value: Int)
+    init (json: String)
+    func countType(jsonDatas: [Json]) -> Int
 }

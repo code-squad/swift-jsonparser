@@ -10,24 +10,25 @@ import Foundation
 
 struct JsonParser {
     func distinctArray(inputdata: String?) throws -> String {
-        guard let input = inputdata, input.first == "[", input.last == "]" else { throw ErrorMessage.notArray }
+        guard let input : String = inputdata, input.first == "[", input.last == "]" else { throw ErrorMessage.notArray }
         return input
     }
     
-    func parsingData(beforeData : String) throws -> (numberOfElements: Int, countString: Int, countInt: Int, countBool: Int ){
-        var countString = 0
-        var countInt = 0
-        var countBool = 0
+    func parsingData(beforeData : String) throws -> [Json]{
+        var jsonDatas : [Json] = []
+        var convertedElement : ElementType
         var datas = beforeData
         datas.removeFirst()
         datas.removeLast()
         let refinedData = datas.components(separatedBy: ",").filter { $0 != "" }
         for dataElement in refinedData {
-            if dataElement.contains("\"") { countString += 1 }
-            else if let _ = Int(dataElement) { countInt += 1 }
-            else if let _ = Bool(dataElement) { countBool += 1 }
-            else { throw ErrorMessage.wrongValue}
+            if dataElement.contains("\"") { convertedElement = TypeString.init(json: dataElement) }
+            else if let _ = Int(dataElement) { convertedElement = TypeInt.init(json: dataElement) }
+            else if let _ = Bool(dataElement) { convertedElement = TypeBool.init(json: dataElement) }
+            else { throw ErrorMessage.wrongValue }
+            let jsonData = Json.init(json: convertedElement)
+            jsonDatas.append(jsonData)
         }
-        return (refinedData.count, countString, countInt, countBool)
+        return jsonDatas
     }
 }
