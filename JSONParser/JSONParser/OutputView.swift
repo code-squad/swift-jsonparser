@@ -14,7 +14,7 @@ struct OutputView {
         var prints : [String] = []
         print("총 \(jsonData.count)개의 데이터 중에", terminator: "")
         for jsonDatum in jsonData {
-            let json = jsonDatum.json.countType(jsonData: jsonData)
+            let json = jsonDatum.countType(jsonData: jsonData)
             prints.append(" \(json.ment)\(json.value)개")
         }
         let setPrint = Set(prints).joined(separator: ",")

@@ -17,7 +17,7 @@ struct JsonParser {
     /// 배열 내의 원소가 어떤 타입인지 판단하고 [Json] 타입의 배열을 재생성하는 함수
     func parsingData(beforeData : String) throws -> [Json] {
         var jsonData : [Json] = []
-        var convertedElement : ElementType
+        var convertedElement : Json
         var data = beforeData
         data.removeFirst()
         data.removeLast()
@@ -27,8 +27,7 @@ struct JsonParser {
             else if let _ = Int(dataElement) { convertedElement = TypeInt.init(json: dataElement) }
             else if let _ = Bool(dataElement) { convertedElement = TypeBool.init(json: dataElement) }
             else { throw ErrorMessage.wrongValue }
-            let jsonDatum = Json.init(json: convertedElement)
-            jsonData.append(jsonDatum)
+            jsonData.append(convertedElement)
         }
         return jsonData
     }

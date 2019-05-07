@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TypeString: ElementType {
+struct TypeString: Json {
     private(set) var json : String
     
     init (json: String) {
@@ -19,7 +19,7 @@ struct TypeString: ElementType {
         let stringMent = "문자열 "
         var countString = 0
         for jsonDatum in jsonData {
-            if ((jsonDatum.json as? TypeString) != nil) { countString += 1 }
+            if ((jsonDatum as? TypeString) != nil) { countString += 1 }
         }
         return (ment: stringMent, value: countString)
     }

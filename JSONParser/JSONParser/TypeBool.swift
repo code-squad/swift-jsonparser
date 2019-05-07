@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TypeBool: ElementType {
+struct TypeBool: Json {
     private(set) var json : Bool
     
     init (json: String) {
@@ -19,7 +19,7 @@ struct TypeBool: ElementType {
         let boolMent = "부울 "
         var countBool = 0
         for jsonDatum in jsonData {
-            if ((jsonDatum.json as? TypeBool) != nil) { countBool += 1}
+            if ((jsonDatum as? TypeBool) != nil) { countBool += 1}
         }
         return (ment: boolMent, value: countBool)
     }

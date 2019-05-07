@@ -8,10 +8,8 @@
 
 import Foundation
 
-struct Json {
-    private(set) var json : ElementType
-    
-    init (json: ElementType) {
-        self.json = json
-    }
+protocol Json {
+    init (json: String)
+    /// [Json]타입의 배열을 받아 해당 배열에 해당 타입이 얼마나 있는지 갯수를 파악하는 함수
+    func countType(jsonData: [Json]) -> (ment: String, value: Int)
 }
