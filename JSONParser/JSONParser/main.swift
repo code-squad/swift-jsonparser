@@ -12,15 +12,18 @@ func main() {
     let input = InputView()
     let output = OutputView()
     let parsing = JsonParser()
-    let data = input.readJson()
     
-    do {
-        let jsonData = try parsing.buildArray(inputdata: data)
-        output.printElements(jsonData: jsonData)
-    }catch let error as ErrorMessage{
-        print(error.rawValue)
-    }catch{
-        print(error)
+    while true {
+        let data = input.readJson()
+        do {
+            let jsonData = try parsing.buildArray(inputdata: data)
+            output.printElements(jsonData: jsonData)
+            break
+        }catch let error as ErrorMessage{
+            print(error.rawValue)
+        }catch{
+            print(error)
+        }
     }
 }
 
