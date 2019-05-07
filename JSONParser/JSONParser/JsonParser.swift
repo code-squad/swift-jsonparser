@@ -14,21 +14,32 @@ struct JsonParser {
         guard let input : String = inputdata, input.first == "[", input.last == "]" else { throw ErrorMessage.notArray }
         return input
     }
-    /// 배열 내의 원소가 어떤 타입인지 판단하고 [Json] 타입의 배열을 재생성하는 함수
-    func parsingData(beforeData : String) throws -> [Json] {
+    /// 배열 내의 원소가 어떤 타입인지 판단하는 함수
+    func parsingData(beforeData : String) throws -> Json {
+        var convertedElement: Json
+        if beforeData.contains("\"") {
+            convertedElement = TypeString.init(json: beforeData)
+        } else if let _ = Int(beforeData) {
+            convertedElement = TypeInt.init(json: beforeData)
+        } else if let _ = Bool(beforeData) {
+            convertedElement = TypeBool.init(json: beforeData)
+        } else {
+            throw ErrorMessage.wrongValue
+        }
+        return convertedElement
+    }
+    /// [Json] 타입의 배열을 생성하는 함수
+    func buildArray(inputdata: String) throws -> [Json] {
         var jsonData : [Json] = []
-        var convertedElement : Json
-        var data = beforeData
+        var data = inputdata
         data.removeFirst()
         data.removeLast()
         let refinedData = data.components(separatedBy: ",").filter { $0 != "" }
         for dataElement in refinedData {
-            if dataElement.contains("\"") { convertedElement = TypeString.init(json: dataElement) }
-            else if let _ = Int(dataElement) { convertedElement = TypeInt.init(json: dataElement) }
-            else if let _ = Bool(dataElement) { convertedElement = TypeBool.init(json: dataElement) }
-            else { throw ErrorMessage.wrongValue }
-            jsonData.append(convertedElement)
+            let jsonDatum = try parsingData(beforeData: dataElement)
+            jsonData.append(jsonDatum)
         }
         return jsonData
     }
+    
 }

@@ -16,7 +16,7 @@ func main() {
     
     do {
         let beforeData = try parsing.distinctArray(inputdata: data)
-        let jsonData = try parsing.parsingData(beforeData: beforeData)
+        let jsonData = try parsing.buildArray(inputdata: beforeData)
         output.printElements(jsonData: jsonData)
     }catch let error as ErrorMessage{
         print(error.rawValue)
