@@ -10,11 +10,11 @@ import Foundation
 
 struct OutputView {
     /// 값을 받아와서 출력하는 함수
-    func printElements(jsonDatas: [Json]) {
+    func printElements(jsonData: [Json]) {
         var prints : [String] = []
-        print("총 \(jsonDatas.count)개의 데이터 중에", terminator: "")
-        for jsonData in jsonDatas {
-            let json = jsonData.json.countType(jsonDatas: jsonDatas)
+        print("총 \(jsonData.count)개의 데이터 중에", terminator: "")
+        for jsonDatum in jsonData {
+            let json = jsonDatum.json.countType(jsonData: jsonData)
             prints.append(" \(json.ment)\(json.value)개")
         }
         let setPrint = Set(prints).joined(separator: ",")
