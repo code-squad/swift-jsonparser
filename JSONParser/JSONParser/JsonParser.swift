@@ -9,11 +9,6 @@
 import Foundation
 
 struct JsonParser {
-    /// 입력받은 String의 양끝에 "[","]"가 있는지 판단하는 함수
-    func distinctArray(inputdata: String?) throws -> String {
-        guard let input : String = inputdata, input.first == "[", input.last == "]" else { throw ErrorMessage.notArray }
-        return input
-    }
     /// 배열 내의 원소가 어떤 타입인지 판단하는 함수
     func parsingData(beforeData : String) throws -> Json {
         var convertedElement: Json
