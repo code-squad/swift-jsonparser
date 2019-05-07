@@ -11,14 +11,16 @@ import Foundation
 struct MessageMaker {
     static func makeMessage (_ json: [JsonType]) -> ([String: Int], String) {
         var eachTypeCount = getEachTypeCount(json)
+        let typeName: String
         
+        typeName = getTypeName(eachTypeCount)
         if eachTypeCount["객체"] == 1 && eachTypeCount.count == 2 {
             eachTypeCount = getEachTypeCountFromObject(json[0])
         } else {
            eachTypeCount["총"] = json.count
         }
         
-        return (eachTypeCount, getTypeName(eachTypeCount))
+        return (eachTypeCount, typeName)
     }
     
     static private func getEachTypeCount (_ json: [JsonType]) -> [String : Int] {

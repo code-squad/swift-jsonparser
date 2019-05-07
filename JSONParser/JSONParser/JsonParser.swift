@@ -17,18 +17,17 @@ struct JsonParser {
         var modifyInput: String
         
         for inputValue in inputSplited {
-            modifyInput = removeBlank(inputValue)
+            modifyInput = removeBlank(inputValue, first: "[", last: "]")
             
             if modifyInput.first == "{" || object.count > 0 {
                 (key, value) = getObjectElement(modifyInput)
                 object[key] = value
-            } else if modifyInput.last == "}" {
-                (key, value) = getObjectElement(modifyInput)
-                object[key] = value
-                json.append(JsonType.object(object))
-                object.removeAll()
             } else {
                 json.append(getJsonValue(modifyInput))
+            }
+            if modifyInput.last == "}" {
+                json.append(JsonType.object(object))
+                object.removeAll()
             }
         }
         
@@ -38,12 +37,8 @@ struct JsonParser {
     static private func getObjectElement (_ input: String) -> (String, JsonType) {
         var inputSplited = input.components(separatedBy: [":"])
         
-        if inputSplited[0].first == "{" { inputSplited[0].removeFirst() }
-        if inputSplited[0].first == " " { inputSplited[0].removeFirst() }
-        if inputSplited[0].last == " " { inputSplited[0].removeLast() }
-        if inputSplited[1].first == " " { inputSplited[1].removeFirst() }
-        if inputSplited[1].last == "}" { inputSplited[1].removeLast() }
-        if inputSplited[1].last == " " { inputSplited[1].removeLast() }
+        inputSplited[0] = removeBlank(inputSplited[0], first: "{", last: "}")
+        inputSplited[1] = removeBlank(inputSplited[1], first: "{", last: "}")
         
         return (inputSplited[0], getJsonValue(inputSplited[1]))
     }
@@ -55,12 +50,12 @@ struct JsonParser {
         else { return JsonType.string(input) }
     }
    
-    static private func removeBlank (_ input: String) -> String {
+    static private func removeBlank (_ input: String, first: String, last: String) -> String {
         var modifyInput = input
         
-        if modifyInput.first == "[" { modifyInput.removeFirst() }
+        if modifyInput.first == first.first { modifyInput.removeFirst() }
         if modifyInput.first == " " { modifyInput.removeFirst() }
-        if modifyInput.last == "]" { modifyInput.removeLast() }
+        if modifyInput.last == last.first { modifyInput.removeLast() }
         if modifyInput.last == " " { modifyInput.removeLast() }
         
         return modifyInput
