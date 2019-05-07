@@ -15,8 +15,7 @@ func main() {
     let data = input.readJson()
     
     do {
-        let beforeData = try input.distinctArray(inputdata: data)
-        let jsonData = try parsing.buildArray(inputdata: beforeData)
+        let jsonData = try parsing.buildArray(inputdata: data)
         output.printElements(jsonData: jsonData)
     }catch let error as ErrorMessage{
         print(error.rawValue)

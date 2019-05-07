@@ -15,9 +15,4 @@ struct InputView {
         let json = readLine()
         return json
     }
-    /// 입력받은 String의 양끝에 "[","]"가 있는지 판단하는 함수
-    func distinctArray(inputdata: String?) throws -> String {
-        guard let input : String = inputdata, input.first == "[", input.last == "]" else { throw ErrorMessage.notArray }
-        return input
-    }
 }

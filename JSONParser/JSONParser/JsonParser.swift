@@ -9,8 +9,13 @@
 import Foundation
 
 struct JsonParser {
+    /// 입력받은 String의 양끝에 "[","]"가 있는지 판단하는 함수
+    private func distinctArray(inputdata: String?) throws -> String {
+        guard let input : String = inputdata, input.first == "[", input.last == "]" else { throw ErrorMessage.notArray }
+        return input
+    }
     /// 배열 내의 원소가 어떤 타입인지 판단하는 함수
-    func parsingData(beforeData : String) throws -> Json {
+    private func parsingData(beforeData : String) throws -> Json {
         var convertedElement: Json
         if beforeData.contains("\"") {
             convertedElement = TypeString.init(json: beforeData)
@@ -24,9 +29,9 @@ struct JsonParser {
         return convertedElement
     }
     /// [Json] 타입의 배열을 생성하는 함수
-    func buildArray(inputdata: String) throws -> [Json] {
+    func buildArray(inputdata: String?) throws -> [Json] {
         var jsonData : [Json] = []
-        var data = inputdata
+        var data = try distinctArray(inputdata: inputdata)
         data.removeFirst()
         data.removeLast()
         let refinedData = data.components(separatedBy: ",").filter { $0 != "" }
@@ -36,5 +41,4 @@ struct JsonParser {
         }
         return jsonData
     }
-    
 }
