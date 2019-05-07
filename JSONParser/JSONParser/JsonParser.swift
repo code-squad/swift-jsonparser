@@ -50,12 +50,12 @@ struct JsonParser {
         else { return JsonType.string(input) }
     }
    
-    static private func removeBlank (_ input: String, first: String, last: String) -> String {
+    static private func removeBlank (_ input: String, first: Character, last: Character) -> String {
         var modifyInput = input
         
-        if modifyInput.first == first.first { modifyInput.removeFirst() }
+        if modifyInput.first == first { modifyInput.removeFirst() }
         if modifyInput.first == " " { modifyInput.removeFirst() }
-        if modifyInput.last == last.first { modifyInput.removeLast() }
+        if modifyInput.last == last { modifyInput.removeLast() }
         if modifyInput.last == " " { modifyInput.removeLast() }
         
         return modifyInput
