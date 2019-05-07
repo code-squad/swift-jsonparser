@@ -15,11 +15,12 @@ struct TypeBool: ElementType {
         self.json = Bool(json) ?? false
     }
     
-    func countType(jsonDatas: [Json]) -> Int {
+    func countType(jsonDatas: [Json]) -> (ment: String, value: Int) {
+        let boolMent = "부울 "
         var countBool = 0
         for jsonData in jsonDatas {
             if ((jsonData.json as? TypeBool) != nil) { countBool += 1}
         }
-        return countBool
+        return (ment: boolMent, value: countBool)
     }
 }

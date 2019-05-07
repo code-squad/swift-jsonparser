@@ -15,11 +15,12 @@ struct TypeInt: ElementType {
         self.json = Int(json) ?? 0
     }
     
-    func countType(jsonDatas: [Json]) -> Int {
+    func countType(jsonDatas: [Json]) -> (ment: String, value: Int) {
+        let intMent = "숫자 "
         var countInt = 0
         for jsonData in jsonDatas {
             if ((jsonData.json as? TypeInt) != nil) { countInt += 1 }
         }
-        return countInt
+        return (ment: intMent, value: countInt)
     }
 }
