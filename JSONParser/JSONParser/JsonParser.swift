@@ -17,12 +17,13 @@ struct JsonParser {
     /// 배열 내의 원소가 어떤 타입인지 판단하는 함수
     private func parsingData(beforeData : String) throws -> Json {
         var convertedElement: Json
-        if beforeData.contains("\"") {
-            convertedElement = TypeString.init(json: beforeData)
-        } else if let _ = Int(beforeData) {
-            convertedElement = TypeInt.init(json: beforeData)
-        } else if let _ = Bool(beforeData) {
-            convertedElement = TypeBool.init(json: beforeData)
+        let afterData = beforeData.trimmingCharacters(in: .whitespacesAndNewlines)
+        if afterData.contains("\"") {
+            convertedElement = TypeString.init(json: afterData)
+        } else if let _ = Int(afterData) {
+            convertedElement = TypeInt.init(json: afterData)
+        } else if let _ = Bool(afterData) {
+            convertedElement = TypeBool.init(json: afterData)
         } else {
             throw ErrorMessage.wrongValue
         }
