@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
+		C56AC7482281758E00D99C02 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7472281758E00D99C02 /* InputView.swift */; };
+		C56AC74A2281764500D99C02 /* ErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7492281764500D99C02 /* ErrorCode.swift */; };
+		C56AC74C228177FA00D99C02 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74B228177FA00D99C02 /* Validation.swift */; };
+		C56AC74E228195C800D99C02 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74D228195C800D99C02 /* Tokenizer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +29,10 @@
 /* Begin PBXFileReference section */
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		C56AC7472281758E00D99C02 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		C56AC7492281764500D99C02 /* ErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCode.swift; sourceTree = "<group>"; };
+		C56AC74B228177FA00D99C02 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
+		C56AC74D228195C800D99C02 /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +66,10 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
+				C56AC7472281758E00D99C02 /* InputView.swift */,
+				C56AC74D228195C800D99C02 /* Tokenizer.swift */,
+				C56AC74B228177FA00D99C02 /* Validation.swift */,
+				C56AC7492281764500D99C02 /* ErrorCode.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -121,6 +133,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				C56AC74E228195C800D99C02 /* Tokenizer.swift in Sources */,
+				C56AC7482281758E00D99C02 /* InputView.swift in Sources */,
+				C56AC74C228177FA00D99C02 /* Validation.swift in Sources */,
+				C56AC74A2281764500D99C02 /* ErrorCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
