@@ -15,12 +15,14 @@ struct TypeString: Json {
         self.json = json
     }
     
-    func countType(jsonData: [Json]) -> (ment: String, value: Int) {
+    func countType(jsonDatum: Json) -> String{
         let stringMent = "문자열 "
-        var countString = 0
-        for jsonDatum in jsonData {
-            if ((jsonDatum as? TypeString) != nil) { countString += 1 }
-        }
-        return (ment: stringMent, value: countString)
+        if (jsonDatum as? TypeString) != nil { return stringMent }
+        else { return "" }
+    }
+    
+    func printMent (name: String, count: Int) -> String {
+        let ment = name+String(count)+"개"
+        return ment
     }
 }
