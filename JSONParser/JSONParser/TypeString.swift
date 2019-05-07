@@ -20,9 +20,4 @@ struct TypeString: Json {
         if (jsonDatum as? TypeString) != nil { return stringMent }
         else { return "" }
     }
-    
-    func printMent (name: String, count: Int) -> String {
-        let ment = name+String(count)+"개"
-        return ment
-    }
 }

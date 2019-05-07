@@ -22,7 +22,6 @@ func main() {
     }catch{
         print(error)
     }
-    
 }
 
 main()
