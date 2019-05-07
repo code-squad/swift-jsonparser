@@ -25,7 +25,10 @@ struct MessageMaker {
     
     static private func getEachTypeCount (_ json: [JsonType]) -> [JsonTypeName : Int] {
         var eachTypeCount: [JsonTypeName : Int] = [JsonTypeName.total: json.count]
-        var intCount = 0; var boolCount = 0; var stringCount = 0; var objectCount = 0
+        var intCount = 0
+        var boolCount = 0
+        var stringCount = 0
+        var objectCount = 0
         
         for value in json {
             switch value {
