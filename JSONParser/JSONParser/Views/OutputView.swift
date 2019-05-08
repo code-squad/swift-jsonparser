@@ -39,10 +39,7 @@ struct OutputView {
             counts[value.typeDescription] = (counts[value.typeDescription] ?? 0) + 1
         }
         
-        var countsString = [String]()
-        for (type, count) in counts {
-            countsString.append("\(type) \(count)개")
-        }
+        let countsString = counts.map { "\($0.key) \($0.value)개" }
         
         print("이 오브젝트에는 총 \(data.count)개의 객체 데이터 중에 \(countsString.joined(separator: ", "))가 포함되어 있습니다.")
     }
