@@ -2,7 +2,7 @@ import Foundation
 
 struct NumberParsingStrategy: ParsingStrategy {
     
-    func result() throws -> Type {
+    func resultFromBuffer() throws -> Type {
         guard let result = Double(buffer) else {
             throw NumberParsingError.resultCouldNotConvertedToNumbers
         }

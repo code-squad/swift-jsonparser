@@ -2,7 +2,7 @@ import Foundation
 
 struct ObjectParsingStrategy: ParsingStrategy {
     
-    func result() throws -> Type {
+    func resultFromBuffer() throws -> Type {
         return buffer
     }
     
@@ -90,10 +90,10 @@ struct ObjectParsingStrategy: ParsingStrategy {
         
         switch try strategySelecter.parse(character) {
         case .isDoneCurrentCharacter:
-            buffer[try stringParsingStrategy.result() as! String] = try strategySelecter.result()
+            buffer[try stringParsingStrategy.resultFromBuffer() as! String] = try strategySelecter.resultFromBuffer()
             isParsingValue = false
         case .isDonePreviousCharacter:
-            buffer[try stringParsingStrategy.result() as! String] = try strategySelecter.result()
+            buffer[try stringParsingStrategy.resultFromBuffer() as! String] = try strategySelecter.resultFromBuffer()
             isParsingValue = false
             return try detectNewValue(character)
         case .isNotDone:

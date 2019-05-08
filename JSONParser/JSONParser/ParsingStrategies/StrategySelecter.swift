@@ -5,8 +5,8 @@ struct StrategySelecter: ParsingStrategy {
     private(set) var parsingStrategy: ParsingStrategy!
     
     
-    mutating func result() throws -> Type {
-        let result = try parsingStrategy.result()
+    mutating func resultFromBuffer() throws -> Type {
+        let result = try parsingStrategy.resultFromBuffer()
         parsingStrategy = nil
         return result
     }

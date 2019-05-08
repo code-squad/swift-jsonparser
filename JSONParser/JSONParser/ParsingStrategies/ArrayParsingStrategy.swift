@@ -2,7 +2,7 @@ import Foundation
 
 struct ArrayParsingStrategy: ParsingStrategy {
     
-    func result() -> Type {
+    func resultFromBuffer() -> Type {
         let result = buffer
         return result
     }
@@ -42,10 +42,10 @@ struct ArrayParsingStrategy: ParsingStrategy {
         
         switch try strategySelecter.parse(character) {
         case .isDoneCurrentCharacter:
-            buffer.append(try strategySelecter.result())
+            buffer.append(try strategySelecter.resultFromBuffer())
             isParsing = false
         case .isDonePreviousCharacter:
-            buffer.append(try strategySelecter.result())
+            buffer.append(try strategySelecter.resultFromBuffer())
             isParsing = false
             return try detectNewValue(character)
         case .isNotDone:

@@ -2,7 +2,7 @@ import Foundation
 
 struct BoolParsingStrategy: ParsingStrategy {
     
-    func result() -> Type {
+    func resultFromBuffer() -> Type {
         return resultBool
     }
     

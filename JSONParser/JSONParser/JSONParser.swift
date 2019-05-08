@@ -23,7 +23,7 @@ struct JSONParser {
         }
         
         if hasDoneParsing {
-            return try strategySelecter.result()
+            return try strategySelecter.resultFromBuffer()
         } else {
             throw ParsingError.JSONEndedWithoutClosureDeclaration
         }

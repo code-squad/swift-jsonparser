@@ -2,7 +2,7 @@ import Foundation
 
 struct StringParsingStrategy: ParsingStrategy {
     
-    mutating func result() throws -> Type {
+    mutating func resultFromBuffer() throws -> Type {
         guard !isParsingString else {
             throw StringParsingError.parsingNotComplete
         }
