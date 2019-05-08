@@ -10,27 +10,15 @@ import Foundation
 
 struct ArrayTokenizer {
     
-    func tokenize(string: String) throws -> [String] {
+    static func tokenize(string: String) throws -> [String] {
         var string = string
-        var tokenized = [String]()
-        var hasDetectedArray = false
-        var hasDetectedString = false
-        
-        guard string.removeFirst() == "[", string.removeLast() == "]" else {
+        guard string.first == "[", string.last == "]" else {
             throw ArrayTokenizerError.invalidArrayFormat
         }
         string.removeLast()
         string.removeFirst()
-        
-        for character in string {
-            switch character {
-            case " " where !hasDetectedString:
-                continue
-            }
-        }
-        
+        let tokenized = string.split(separator: ",").map { String($0) }
         return tokenized
-        
     }
     
     

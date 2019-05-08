@@ -11,6 +11,7 @@
 		F21006502272A1570033D0B7 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F210064F2272A1570033D0B7 /* InputView.swift */; };
 		F21006522272A2A10033D0B7 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006512272A2A10033D0B7 /* JSONParser.swift */; };
 		F21006542272A5A70033D0B7 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006532272A5A70033D0B7 /* OutputView.swift */; };
+		F24E330C22830C0300480C72 /* ArrayTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CCAFF42281582100138EA1 /* ArrayTokenizer.swift */; };
 		F283CA7A2275759200D7CBBC /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA792275759200D7CBBC /* Type.swift */; };
 		F283CA7C2275C4E700D7CBBC /* StringParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */; };
 		F283CA7E2275CA8C00D7CBBC /* BoolParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */; };
@@ -178,6 +179,7 @@
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				F21006502272A1570033D0B7 /* InputView.swift in Sources */,
 				F283CA832275E58400D7CBBC /* ParsingStrategy.swift in Sources */,
+				F24E330C22830C0300480C72 /* ArrayTokenizer.swift in Sources */,
 				F283CA852275EBA200D7CBBC /* ArrayParsingStrategy.swift in Sources */,
 				F283CA7A2275759200D7CBBC /* Type.swift in Sources */,
 				F21006522272A2A10033D0B7 /* JSONParser.swift in Sources */,
