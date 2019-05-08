@@ -8,10 +8,11 @@
 
 import Foundation
 
-enum DevideCharacter: String {
+enum DevideCharacter: Character {
     case squareBracketOpen = "["
     case squareBracketClose = "]"
     case curlyBracketOpen = "{"
     case curlyBracketClose = "}"
     case colon = ":"
+    case whiteSpace = " "
 }

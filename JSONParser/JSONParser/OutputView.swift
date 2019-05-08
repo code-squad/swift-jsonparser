@@ -9,14 +9,14 @@
 import Foundation
 
 struct OutputView {
-    func printMessage (_ message : (messages: [String: Int], typeName: String)) {
+    func printMessage (_ message : (messages: [JsonTypeName: Int], typeName: JsonTypeName)) {
         var ment: String
         
-        ment = "총 \(message.messages["총"] ?? 0)개의 \(message.typeName) 데이터 중에"
+        ment = "총 \(message.messages[JsonTypeName.total] ?? 0)개의 \(message.typeName.rawValue) 데이터 중에"
         
         for message in message.messages {
-            if message.key != "총" {
-                ment += " \(message.key) \(message.value)개,"
+            if message.key != JsonTypeName.total {
+                ment += " \(message.key.rawValue) \(message.value)개,"
             }
         }
         ment.removeLast()

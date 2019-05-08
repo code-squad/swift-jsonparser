@@ -9,23 +9,27 @@
 import Foundation
 
 struct JsonParser {
+    
+
     static func makeJson (_ inputSplited: [String]) -> [JsonType] {
         var json = [JsonType]()
         var object = [String: JsonType]()
         var key: String
         var value: JsonType
         var modifyInput: String
+        let curryBracketOpen = DevideCharacter.curlyBracketOpen
+        let curryBracketClose = DevideCharacter.curlyBracketClose
         
         for inputValue in inputSplited {
-            modifyInput = removeBlank(inputValue, first: "[", last: "]")
+            modifyInput = removeBlank(inputValue, first: DevideCharacter.squareBracketOpen, last: DevideCharacter.squareBracketClose)
             
-            if modifyInput.first == "{" || object.count > 0 {
+            if modifyInput.first == curryBracketOpen.rawValue || object.count > 0 {
                 (key, value) = getObjectElement(modifyInput)
                 object[key] = value
             } else {
                 json.append(getJsonValue(modifyInput))
             }
-            if modifyInput.last == "}" {
+            if modifyInput.last == curryBracketClose.rawValue {
                 json.append(JsonType.object(object))
                 object.removeAll()
             }
@@ -35,10 +39,11 @@ struct JsonParser {
     }
     
     static private func getObjectElement (_ input: String) -> (String, JsonType) {
-        var inputSplited = input.components(separatedBy: [":"])
+        let colon = DevideCharacter.colon
+        var inputSplited = input.components(separatedBy: String(colon.rawValue))
         
-        inputSplited[0] = removeBlank(inputSplited[0], first: "{", last: "}")
-        inputSplited[1] = removeBlank(inputSplited[1], first: "{", last: "}")
+        inputSplited[0] = removeBlank(inputSplited[0], first: DevideCharacter.curlyBracketOpen, last: DevideCharacter.curlyBracketClose)
+        inputSplited[1] = removeBlank(inputSplited[1], first: DevideCharacter.curlyBracketOpen, last: DevideCharacter.curlyBracketClose)
         
         return (inputSplited[0], getJsonValue(inputSplited[1]))
     }
@@ -50,13 +55,14 @@ struct JsonParser {
         else { return JsonType.string(input) }
     }
    
-    static private func removeBlank (_ input: String, first: Character, last: Character) -> String {
+    static private func removeBlank (_ input: String, first: DevideCharacter, last: DevideCharacter) -> String {
+        let whiteSpace = DevideCharacter.whiteSpace
         var modifyInput = input
         
-        if modifyInput.first == first { modifyInput.removeFirst() }
-        if modifyInput.first == " " { modifyInput.removeFirst() }
-        if modifyInput.last == last { modifyInput.removeLast() }
-        if modifyInput.last == " " { modifyInput.removeLast() }
+        if modifyInput.first == first.rawValue { modifyInput.removeFirst() }
+        if modifyInput.first == whiteSpace.rawValue { modifyInput.removeFirst() }
+        if modifyInput.last == last.rawValue { modifyInput.removeLast() }
+        if modifyInput.last == whiteSpace.rawValue { modifyInput.removeLast() }
         
         return modifyInput
     }
