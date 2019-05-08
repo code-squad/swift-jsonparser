@@ -35,13 +35,9 @@ struct MessageMaker {
     static private func getEachTypeCountFromObject (_ json: JsonType) -> [JsonTypeName : Int] {
         var objectValues = [JsonType]()
         
-        switch json {
-        case .bool(_): break
-        case .int(_): break
-        case .string(_): break
-        case let .object(object):
+        if case let JsonType.object(object) = json {
             for value in object.values {
-                objectValues.append(value) 
+                objectValues.append(value)
             }
         }
         
