@@ -34,6 +34,15 @@ struct JsonParser {
         }
         return convertedElement
     }
+    /// 입력된 원소에 key값이 있는 데이터인 경우 값만을 리턴하는 함수
+    private func ifKeyExist(dataElement: String) throws -> String{
+        let refinedDatum = dataElement.components(separatedBy: ":")
+        if refinedDatum.count != 2 {
+            throw ErrorMessage.wrongValue
+        } else {
+            return refinedDatum[1]
+        }
+    }
     /// [Json] 타입의 배열을 생성하는 함수
     func buildArray(inputdata: String?) throws -> [Json] {
         var jsonData : [Json] = []
@@ -42,7 +51,13 @@ struct JsonParser {
         data.removeLast()
         let refinedData = data.components(separatedBy: ",").filter { $0 != "" }
         for dataElement in refinedData {
-            let jsonDatum = try parsingData(beforeData: dataElement)
+            var refinedDatum: String
+            if dataElement.contains(":") {
+                refinedDatum = try ifKeyExist(dataElement: dataElement)
+            } else {
+                refinedDatum = dataElement
+            }
+            let jsonDatum = try parsingData(beforeData: refinedDatum)
             jsonData.append(jsonDatum)
         }
         return jsonData
