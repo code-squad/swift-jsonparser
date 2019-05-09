@@ -9,10 +9,10 @@
 import Foundation
 
 struct JsonDictionary {
-    var jsonElements : [LexicalType : [String]] = [LexicalType.integerNumber : [String](), LexicalType.bool :  [String](), LexicalType.string : [String]()]
+    var jsonElements : [LexicalType : [String]] = [LexicalType.intNumber : [String](), LexicalType.bool :  [String](), LexicalType.string : [String]()]
     var intCount : Int {
         get {
-            return jsonElements[LexicalType.integerNumber]?.count ?? 0
+            return jsonElements[LexicalType.intNumber]?.count ?? 0
         }
     }
     var stringCount : Int {
@@ -23,6 +23,11 @@ struct JsonDictionary {
     var boolCount : Int {
         get{
             return jsonElements[LexicalType.bool]?.count ?? 0
+        }
+    }
+    var totalCount : Int {
+        get {
+            return boolCount + stringCount + intCount
         }
     }
 }

@@ -31,10 +31,11 @@ let main = {
     } catch let errorType as ErrorCode  {
         print(errorType.description)
     }
-    
+    /// 처리 3) Parse
     let parsingResult = Parser.parseLexerResult(lexiedInput)
+    
     /// 출력
-
+    OutputView.printJsonInformation(parsingResult)
 }
 
 try main()

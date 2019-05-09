@@ -11,10 +11,21 @@
 // A lexer does the same plus attachs extra information to each token. If we tokenize into words, a lexer would attach tags like number, word, punctuation etc.
 
 import Foundation
-enum LexicalType: String{
-    case integerNumber = "Int"
+enum LexicalType: String, CustomStringConvertible{
+    case intNumber = "Int"
     case bool = "Bool"
     case string = "String"
+    
+    var description: String {
+        switch self {
+        case .intNumber :
+            return "숫자"
+        case .string :
+            return "문자열"
+        case .bool :
+            return "부울"
+        }
+    }
 }
 
 typealias LexPair = (type: LexicalType , content: String)
@@ -34,7 +45,7 @@ struct Lexer {
 
     static func decideElementType( string: Bool, number: Bool, bool : Bool ) throws -> LexicalType {
         var result: LexicalType? = string ? LexicalType.string : nil
-        result = number ? LexicalType.integerNumber : result
+        result = number ? LexicalType.intNumber : result
         result = bool ? LexicalType.bool : result
         guard let resultType = result else {
             throw ErrorCode.lexicalTypeError

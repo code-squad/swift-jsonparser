@@ -15,6 +15,7 @@
 		C56AC7502282C66F00D99C02 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74F2282C66F00D99C02 /* Parser.swift */; };
 		C56AC7522282CAF500D99C02 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7512282CAF500D99C02 /* Lexer.swift */; };
 		C56AC75422840C4D00D99C02 /* JsonDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC75322840C4D00D99C02 /* JsonDictionary.swift */; };
+		C56AC75622840C9300D99C02 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC75522840C9300D99C02 /* OutputView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,7 @@
 		C56AC74F2282C66F00D99C02 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		C56AC7512282CAF500D99C02 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		C56AC75322840C4D00D99C02 /* JsonDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDictionary.swift; sourceTree = "<group>"; };
+		C56AC75522840C9300D99C02 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,14 +73,15 @@
 		83AE2E0E1F8CAC2800F38CC9 /* JSONParser */ = {
 			isa = PBXGroup;
 			children = (
-				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
-				C56AC7472281758E00D99C02 /* InputView.swift */,
-				C56AC74D228195C800D99C02 /* Tokenizer.swift */,
-				C56AC7512282CAF500D99C02 /* Lexer.swift */,
-				C56AC74F2282C66F00D99C02 /* Parser.swift */,
-				C56AC75322840C4D00D99C02 /* JsonDictionary.swift */,
-				C56AC74B228177FA00D99C02 /* Validation.swift */,
 				C56AC7492281764500D99C02 /* ErrorCode.swift */,
+				C56AC7472281758E00D99C02 /* InputView.swift */,
+				C56AC75322840C4D00D99C02 /* JsonDictionary.swift */,
+				C56AC7512282CAF500D99C02 /* Lexer.swift */,
+				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
+				C56AC75522840C9300D99C02 /* OutputView.swift */,
+				C56AC74F2282C66F00D99C02 /* Parser.swift */,
+				C56AC74D228195C800D99C02 /* Tokenizer.swift */,
+				C56AC74B228177FA00D99C02 /* Validation.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 				C56AC74C228177FA00D99C02 /* Validation.swift in Sources */,
 				C56AC74A2281764500D99C02 /* ErrorCode.swift in Sources */,
 				C56AC75422840C4D00D99C02 /* JsonDictionary.swift in Sources */,
+				C56AC75622840C9300D99C02 /* OutputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
