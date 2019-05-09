@@ -11,7 +11,7 @@ import Foundation
 struct JsonDictionary {
     private var jsonElements : [LexicalType : [String]] = [LexicalType.intNumber : [String](), LexicalType.bool :  [String](), LexicalType.string : [String]()]
     
-    var jsonFormmat : String {
+    var jsonFormmatList : String {
         get{
             return "[ Int : \(jsonIntElementList), String : \(jsonStringElementList), Bool : \(jsonBoolElementList) ]"
         }
