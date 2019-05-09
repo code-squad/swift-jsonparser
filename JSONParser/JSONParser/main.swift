@@ -25,11 +25,14 @@ let main = {
     /// 처리 1) Tokenize
     let tokenizedInput = Tokenizer.tokenize(data)
     /// 처리 2) Lexical analysis
+    var lexiedInput: [LexPair] = [LexPair]()
     do {
-        let lexiedInput = try Lexer.doLexcialAnalysis(tokens: tokenizedInput)
+        lexiedInput = try Lexer.doLexcialAnalysis(tokenList: tokenizedInput)
     } catch let errorType as ErrorCode  {
         print(errorType.description)
     }
+    
+    Parser.parse(lexiedInput)
     /// 출력
 }
 

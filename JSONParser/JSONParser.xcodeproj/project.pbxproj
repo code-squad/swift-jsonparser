@@ -12,6 +12,8 @@
 		C56AC74A2281764500D99C02 /* ErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7492281764500D99C02 /* ErrorCode.swift */; };
 		C56AC74C228177FA00D99C02 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74B228177FA00D99C02 /* Validation.swift */; };
 		C56AC74E228195C800D99C02 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74D228195C800D99C02 /* Tokenizer.swift */; };
+		C56AC7502282C66F00D99C02 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74F2282C66F00D99C02 /* Parser.swift */; };
+		C56AC7522282CAF500D99C02 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7512282CAF500D99C02 /* Lexer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +35,8 @@
 		C56AC7492281764500D99C02 /* ErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCode.swift; sourceTree = "<group>"; };
 		C56AC74B228177FA00D99C02 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		C56AC74D228195C800D99C02 /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
+		C56AC74F2282C66F00D99C02 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		C56AC7512282CAF500D99C02 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +72,8 @@
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				C56AC7472281758E00D99C02 /* InputView.swift */,
 				C56AC74D228195C800D99C02 /* Tokenizer.swift */,
+				C56AC7512282CAF500D99C02 /* Lexer.swift */,
+				C56AC74F2282C66F00D99C02 /* Parser.swift */,
 				C56AC74B228177FA00D99C02 /* Validation.swift */,
 				C56AC7492281764500D99C02 /* ErrorCode.swift */,
 			);
@@ -133,7 +139,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				C56AC7522282CAF500D99C02 /* Lexer.swift in Sources */,
 				C56AC74E228195C800D99C02 /* Tokenizer.swift in Sources */,
+				C56AC7502282C66F00D99C02 /* Parser.swift in Sources */,
 				C56AC7482281758E00D99C02 /* InputView.swift in Sources */,
 				C56AC74C228177FA00D99C02 /* Validation.swift in Sources */,
 				C56AC74A2281764500D99C02 /* ErrorCode.swift in Sources */,
