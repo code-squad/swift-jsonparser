@@ -11,8 +11,13 @@ import Foundation
 struct JsonParser {
     /// 입력받은 String의 양끝에 "[","]"가 있는지 판단하는 함수
     private func distinctArray(inputdata: String?) throws -> String {
-        guard let input : String = inputdata, input.first == "[", input.last == "]" else { throw ErrorMessage.notArray }
-        return input
+        if let input: String = inputdata {
+            switch (input.first, input.last) {
+            case ("[","]"): return input
+            case("{","}"): return input
+            default: throw ErrorMessage.notArray
+            }
+        } else { throw ErrorMessage.notArray }
     }
     /// 배열 내의 원소가 어떤 타입인지 판단하는 함수
     private func parsingData(beforeData : String) throws -> Json {
