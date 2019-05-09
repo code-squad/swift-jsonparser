@@ -9,7 +9,7 @@ enum ParsingState {
 struct JSONParser {
     
     static func parse(JSON: String) throws -> Type {
-        var strategySelecter = StrategySelecter()
+        var strategySelecter = ValueParser()
         var hasDoneParsing = false
         for character in JSON + " " {
             

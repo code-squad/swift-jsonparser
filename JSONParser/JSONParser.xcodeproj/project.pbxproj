@@ -11,12 +11,11 @@
 		F21006502272A1570033D0B7 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F210064F2272A1570033D0B7 /* InputView.swift */; };
 		F21006522272A2A10033D0B7 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006512272A2A10033D0B7 /* JSONParser.swift */; };
 		F21006542272A5A70033D0B7 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006532272A5A70033D0B7 /* OutputView.swift */; };
-		F24E330C22830C0300480C72 /* ArrayTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CCAFF42281582100138EA1 /* ArrayTokenizer.swift */; };
 		F283CA7A2275759200D7CBBC /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA792275759200D7CBBC /* Type.swift */; };
 		F283CA7C2275C4E700D7CBBC /* StringParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */; };
 		F283CA7E2275CA8C00D7CBBC /* BoolParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */; };
 		F283CA802275CEED00D7CBBC /* NumberParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA7F2275CEED00D7CBBC /* NumberParsingStrategy.swift */; };
-		F283CA822275E0F800D7CBBC /* StrategySelecter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA812275E0F800D7CBBC /* StrategySelecter.swift */; };
+		F283CA822275E0F800D7CBBC /* ValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA812275E0F800D7CBBC /* ValueParser.swift */; };
 		F283CA832275E58400D7CBBC /* ParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E70F3422734BB3008E0BA8 /* ParsingStrategy.swift */; };
 		F283CA852275EBA200D7CBBC /* ArrayParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA842275EBA200D7CBBC /* ArrayParsingStrategy.swift */; };
 		F292A2E4227AC76F0048C573 /* ObjectParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292A2E3227AC76F0048C573 /* ObjectParsingStrategy.swift */; };
@@ -44,10 +43,9 @@
 		F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringParsingStrategy.swift; sourceTree = "<group>"; };
 		F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolParsingStrategy.swift; sourceTree = "<group>"; };
 		F283CA7F2275CEED00D7CBBC /* NumberParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberParsingStrategy.swift; sourceTree = "<group>"; };
-		F283CA812275E0F800D7CBBC /* StrategySelecter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategySelecter.swift; sourceTree = "<group>"; };
+		F283CA812275E0F800D7CBBC /* ValueParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueParser.swift; sourceTree = "<group>"; };
 		F283CA842275EBA200D7CBBC /* ArrayParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayParsingStrategy.swift; sourceTree = "<group>"; };
 		F292A2E3227AC76F0048C573 /* ObjectParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectParsingStrategy.swift; sourceTree = "<group>"; };
-		F2CCAFF42281582100138EA1 /* ArrayTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayTokenizer.swift; sourceTree = "<group>"; };
 		F2E70F3422734BB3008E0BA8 /* ParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingStrategy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,10 +91,9 @@
 		F2399ECE227732E000CBFF5D /* ParsingStrategies */ = {
 			isa = PBXGroup;
 			children = (
-				F283CA812275E0F800D7CBBC /* StrategySelecter.swift */,
+				F283CA812275E0F800D7CBBC /* ValueParser.swift */,
 				F292A2E3227AC76F0048C573 /* ObjectParsingStrategy.swift */,
 				F283CA842275EBA200D7CBBC /* ArrayParsingStrategy.swift */,
-				F2CCAFF42281582100138EA1 /* ArrayTokenizer.swift */,
 				F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */,
 				F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */,
 				F283CA7F2275CEED00D7CBBC /* NumberParsingStrategy.swift */,
@@ -174,12 +171,11 @@
 			files = (
 				F292A2E4227AC76F0048C573 /* ObjectParsingStrategy.swift in Sources */,
 				F283CA7C2275C4E700D7CBBC /* StringParsingStrategy.swift in Sources */,
-				F283CA822275E0F800D7CBBC /* StrategySelecter.swift in Sources */,
+				F283CA822275E0F800D7CBBC /* ValueParser.swift in Sources */,
 				F283CA7E2275CA8C00D7CBBC /* BoolParsingStrategy.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				F21006502272A1570033D0B7 /* InputView.swift in Sources */,
 				F283CA832275E58400D7CBBC /* ParsingStrategy.swift in Sources */,
-				F24E330C22830C0300480C72 /* ArrayTokenizer.swift in Sources */,
 				F283CA852275EBA200D7CBBC /* ArrayParsingStrategy.swift in Sources */,
 				F283CA7A2275759200D7CBBC /* Type.swift in Sources */,
 				F21006522272A2A10033D0B7 /* JSONParser.swift in Sources */,

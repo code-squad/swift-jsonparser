@@ -9,7 +9,7 @@ struct ArrayParsingStrategy: ParsingStrategy {
     
     private var buffer = [Type]()
     
-    private var strategySelecter = StrategySelecter()
+    private var valueParser = ValueParser()
     
     private var hasDetectedStartSquareBracket = false
     private var isParsing = false
@@ -40,12 +40,12 @@ struct ArrayParsingStrategy: ParsingStrategy {
             return .isDoneCurrentCharacter
         }
         
-        switch try strategySelecter.parse(character) {
+        switch try valueParser.parse(character) {
         case .isDoneCurrentCharacter:
-            buffer.append(try strategySelecter.resultFromBuffer())
+            buffer.append(try valueParser.resultFromBuffer())
             isParsing = false
         case .isDonePreviousCharacter:
-            buffer.append(try strategySelecter.resultFromBuffer())
+            buffer.append(try valueParser.resultFromBuffer())
             isParsing = false
             return try detectNewValue(character)
         case .isNotDone:
