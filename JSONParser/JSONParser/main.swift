@@ -9,7 +9,21 @@
 import Foundation
 
 
-//[ 10, "jk", 4, "314", 99, "crong", false ]
+let handleStringParsingProcess = { (data: String) -> JsonDictionary in
+    /// 1) Tokenize
+    let tokenizedInput = Tokenizer.tokenize(data)
+    /// 2) Lexical analysis
+    var lexiedInput: [LexPair] = [LexPair]()
+    do {
+        lexiedInput = try Lexer.doLexcialAnalysis(tokenList: tokenizedInput)
+    } catch let errorType as ErrorCode  {
+        print(errorType.description)
+    }
+    /// 3) Parse
+    return Parser.parseLexerResult(lexiedInput)
+}
+
+
 let main = {
     /// 입력
     var data = ""
@@ -22,17 +36,8 @@ let main = {
             print(errorType.description)
         }
     }
-    /// 처리 1) Tokenize
-    let tokenizedInput = Tokenizer.tokenize(data)
-    /// 처리 2) Lexical analysis
-    var lexiedInput: [LexPair] = [LexPair]()
-    do {
-        lexiedInput = try Lexer.doLexcialAnalysis(tokenList: tokenizedInput)
-    } catch let errorType as ErrorCode  {
-        print(errorType.description)
-    }
-    /// 처리 3) Parse
-    let parsingResult = Parser.parseLexerResult(lexiedInput)
+    /// 처리
+    let parsingResult = try handleStringParsingProcess(data)
     
     /// 출력
     OutputView.printJsonInformation(parsingResult)
