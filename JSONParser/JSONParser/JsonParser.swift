@@ -35,13 +35,25 @@ struct JsonParser {
         return convertedElement
     }
     /// 입력된 원소에 key값이 있는 데이터인 경우 값만을 리턴하는 함수
-    private func ifKeyExist(dataElement: String) throws -> String{
-        let refinedDatum = dataElement.components(separatedBy: ":")
+    private func ifKeyExist(dictionaryDataElement: String) throws -> String{
+        let refinedDatum = dictionaryDataElement.components(separatedBy: ":")
         if refinedDatum.count != 2 {
             throw ErrorMessage.wrongValue
         } else {
             return refinedDatum[1]
         }
+    }
+    /// 입력된 문자열이 배열인지 딕셔너리인지 판단하고, 이에 맞는 원소들을 확인하는 함수
+    private func valueOfArrayOrDistinct(dataElement: String, dataMent: String) throws -> String{
+        var refinedDatum: String
+        if dataElement.contains(":"), dataMent == "객체" {
+            refinedDatum = try ifKeyExist(dictionaryDataElement: dataElement)
+        } else if dataElement.contains(":") == false, dataMent == "배열" {
+            refinedDatum = dataElement
+        } else {
+            throw ErrorMessage.wrongValue
+        }
+        return refinedDatum
     }
     /// [Json] 타입의 배열을 생성하는 함수
     func buildArray(inputdata: String?) throws -> (json: [Json],dataMent: String) {
@@ -51,14 +63,7 @@ struct JsonParser {
         data.input.removeLast()
         let refinedData = data.input.components(separatedBy: ",").filter { $0 != "" }
         for dataElement in refinedData {
-            var refinedDatum: String
-            if dataElement.contains(":"), data.distinctMent == "객체" {
-                refinedDatum = try ifKeyExist(dataElement: dataElement)
-            } else if dataElement.contains(":") == false, data.distinctMent == "배열" {
-                refinedDatum = dataElement
-            } else {
-                throw ErrorMessage.wrongValue
-            }
+            let refinedDatum = try valueOfArrayOrDistinct(dataElement: dataElement, dataMent: data.distinctMent)
             let jsonDatum = try parsingData(beforeData: refinedDatum)
             jsonData.append(jsonDatum)
         }
