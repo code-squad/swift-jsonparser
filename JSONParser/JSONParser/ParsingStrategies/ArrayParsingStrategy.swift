@@ -13,8 +13,12 @@ struct ArrayParsingStrategy: ParsingStrategy {
     
     private var hasDetectedStartSquareBracket = false
     private var isParsing = false
+    private var hasDetectedValue: Bool {
+        return valueParser.parsingStrategy != nil
+    }
     
     mutating func parse(_ character: Character) throws -> ParsingState {
+        
         if isParsing {
             return try appendValue(character)
         } else if hasDetectedStartSquareBracket {
@@ -26,6 +30,8 @@ struct ArrayParsingStrategy: ParsingStrategy {
     }
     
     private mutating func detectStartSquareBracket(_ character: Character) throws {
+        
+        
         if character == "[" {
             hasDetectedStartSquareBracket = true
             isParsing = true
@@ -36,7 +42,7 @@ struct ArrayParsingStrategy: ParsingStrategy {
     
     private mutating func appendValue(_ character: Character) throws -> ParsingState {
         
-        if character == "]", buffer.isEmpty {
+        if character == "]", !hasDetectedValue {
             return .isDoneCurrentCharacter
         }
         
@@ -52,6 +58,7 @@ struct ArrayParsingStrategy: ParsingStrategy {
             break
         }
         return .isNotDone
+        
     }
     
     private mutating func detectNewValue(_ character: Character) throws -> ParsingState {
