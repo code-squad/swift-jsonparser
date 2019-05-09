@@ -9,7 +9,7 @@
 import Foundation
 
 struct OutputView {
-    static let unit = "개"
+    static private let unit = "개"
     static func printJsonInformation (_ parsingResult: JsonDictionary ){
         print("총 \(parsingResult.totalCount)개의 데이터 중에",terminator :"")
         print("\(LexicalType.string.description) \(parsingResult.stringCount)\(unit)",terminator :", ")

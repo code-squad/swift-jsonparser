@@ -9,7 +9,13 @@
 import Foundation
 
 struct JsonDictionary {
-    var jsonElements : [LexicalType : [String]] = [LexicalType.intNumber : [String](), LexicalType.bool :  [String](), LexicalType.string : [String]()]
+    private var jsonElements : [LexicalType : [String]] = [LexicalType.intNumber : [String](), LexicalType.bool :  [String](), LexicalType.string : [String]()]
+    
+    init (lexPair : [LexPair]){
+        for element in lexPair{
+            self.jsonElements[element.type]?.append(element.content)
+        }
+    }
     var intCount : Int {
         get {
             return jsonElements[LexicalType.intNumber]?.count ?? 0

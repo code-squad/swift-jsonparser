@@ -11,15 +11,8 @@ import Foundation
 struct Parser {
     
     static func parseLexerResult (_ lexPair: [LexPair] ) -> JsonDictionary{
+        var dictionaryResult = JsonDictionary(lexPair: lexPair)
         
-        var dictionaryResult = JsonDictionary()
-        for element in lexPair{
-            dictionaryResult.jsonElements[element.type]?.append(element.content)
-        }
         return dictionaryResult
-    }
-    
-    static func updateDictionary( dictionary: inout JsonDictionary, type: LexicalType, element: String )  {
-        dictionary.jsonElements[type]?.append(element)
     }
 }
