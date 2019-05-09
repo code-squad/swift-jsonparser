@@ -10,15 +10,13 @@ import Foundation
 
 struct Validation {
     
-    static func checkInvalidArrayFormat (_ input : String) throws -> Bool{
+    static func checkInvalidArrayFormat (_ input : String) throws  {
         var isValid: Bool = true
         isValid &= checkStartSquareBracket(input)
         isValid &= checkEndSquareBracket(input)
-        
         if !isValid{
             throw ErrorCode.invalidJsonFormat
         }
-        return isValid
     }
    
     static private func checkStartSquareBracket(_ input: String) -> Bool {
