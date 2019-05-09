@@ -32,8 +32,9 @@ let main = {
         print(errorType.description)
     }
     
-    Parser.parse(lexiedInput)
+    let parsingResult = Parser.parseLexerResult(lexiedInput)
     /// 출력
+
 }
 
 try main()
