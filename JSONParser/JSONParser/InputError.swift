@@ -9,5 +9,6 @@
 import Foundation
 
 enum InputError: String, Error {
-    case DataCountIsZero = "최소 하나의 데이터는 넣어주세요."
+    case dataCountIsZero = "최소 하나의 데이터는 넣어주세요."
+    case containsUnsupportedFormats = "지원하지 않는 형식을 포함하고 있습니다."
 }

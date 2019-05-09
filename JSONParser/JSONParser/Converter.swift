@@ -13,7 +13,7 @@ struct Converter {
         let input = valueEntered
         
         let InputSplited = try splitInput(input)
-        let json = JsonParser.makeJson(InputSplited)
+        let json = try JsonParser.makeJson(InputSplited)
         
         return json
     }
@@ -28,11 +28,5 @@ struct Converter {
         
         inputSplited = inputSplited.filter( { (value: String) -> Bool in return (value != "") } )
         return inputSplited
-    }
-    
-    static private func verifyInput (_ inputSplited: [String]) throws {
-        if inputSplited.count <= 2 {
-            throw InputError.DataCountIsZero
-        }
     }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3304B5D722817ADB000883DC /* DevideCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3304B5D622817ADB000883DC /* DevideCharacter.swift */; };
+		3304B5D92282B29B000883DC /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3304B5D82282B29B000883DC /* GrammarChecker.swift */; };
 		330A94C32273CD4300D475C4 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330A94C22273CD4300D475C4 /* Converter.swift */; };
 		330A94C52273DADA00D475C4 /* InputError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330A94C42273DADA00D475C4 /* InputError.swift */; };
 		33F901E52273222600BC4927 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F901E42273222600BC4927 /* InputView.swift */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		3304B5D622817ADB000883DC /* DevideCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevideCharacter.swift; sourceTree = "<group>"; };
+		3304B5D82282B29B000883DC /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
 		330A94C22273CD4300D475C4 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 		330A94C42273DADA00D475C4 /* InputError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputError.swift; sourceTree = "<group>"; };
 		33F901E42273222600BC4927 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				33FF2E912276F09C0057C3A9 /* JsonParser.swift */,
 				33FF2E932276F2A60057C3A9 /* MessageMaker.swift */,
 				3304B5D622817ADB000883DC /* DevideCharacter.swift */,
+				3304B5D82282B29B000883DC /* GrammarChecker.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -153,6 +156,7 @@
 				33F901E52273222600BC4927 /* InputView.swift in Sources */,
 				33FF2E922276F09C0057C3A9 /* JsonParser.swift in Sources */,
 				33FF2E902276EF720057C3A9 /* JsonType.swift in Sources */,
+				3304B5D92282B29B000883DC /* GrammarChecker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
