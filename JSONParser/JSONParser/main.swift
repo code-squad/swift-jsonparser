@@ -9,13 +9,13 @@
 import Foundation
 
 
-let handleStringParsingProcess = { (data: String) -> JsonDictionary in
+let parseInputJsonData = { (data: String) -> JsonDictionary in
     /// 1) Tokenize
     let tokenizedInput = Tokenizer.tokenize(data)
     /// 2) Lexical analysis
     var lexiedInput: [LexPair] = [LexPair]()
     do {
-        lexiedInput = try Lexer.doLexcialAnalysis(tokenList: tokenizedInput)
+        lexiedInput = try Lexer.analyzeLexing(tokenList: tokenizedInput)
     } catch let errorType as ErrorCode  {
         print(errorType.description)
     }
@@ -37,7 +37,7 @@ let main = {
         }
     }
     /// 처리
-    let parsingResult = try handleStringParsingProcess(data)
+    let parsingResult = try parseInputJsonData(data)
     
     /// 출력
     OutputView.printJsonInformation(parsingResult)

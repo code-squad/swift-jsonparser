@@ -6,9 +6,11 @@
 //  Copyright © 2019 JK. All rights reserved.
 //
 
-// A lexer is basically a tokenizer, but it usually attaches extra context to the tokens -- this token is a number, that token is a string literal, this other token is an equality operator.
+// A lexer is basically a tokenizer, but it usually attaches extra context to the tokens -- this token is a number,
+// that token is a string literal, this other token is an equality operator.
 // https://www.quora.com/Whats-the-difference-between-a-tokenizer-lexer-and-parser
-// A lexer does the same plus attachs extra information to each token. If we tokenize into words, a lexer would attach tags like number, word, punctuation etc.
+// A lexer does the same plus attachs extra information to each token. If we tokenize into words,
+// a lexer would attach tags like number, word, punctuation etc.
 
 import Foundation
 enum LexicalType: String, CustomStringConvertible{
@@ -31,19 +33,19 @@ enum LexicalType: String, CustomStringConvertible{
 typealias LexPair = (type: LexicalType , content: String)
 
 struct Lexer {
-    static func doLexcialAnalysis (tokenList : [String]) throws -> [LexPair]{
+    static func analyzeLexing (tokenList : [String]) throws -> [LexPair]{
         var result = [LexPair]()
         for token in tokenList {
             let testStringResult = isString(token)
             let testNumberResult = isNumeric(token)
             let testBooleanResult = isBoolean(token)
-            let lexicalType = try decideElementType(string: testStringResult, number: testNumberResult, bool: testBooleanResult)
+            let lexicalType = try decideElementLexicalType(string: testStringResult, number: testNumberResult, bool: testBooleanResult)
             result.append(LexPair(type: lexicalType, content: token))
         }
         return result
     }
 
-    static private func decideElementType( string: Bool, number: Bool, bool : Bool ) throws -> LexicalType {
+    static private func decideElementLexicalType( string: Bool, number: Bool, bool : Bool ) throws -> LexicalType {
         var result: LexicalType? = string ? LexicalType.string : nil
         result = number ? LexicalType.intNumber : result
         result = bool ? LexicalType.bool : result
