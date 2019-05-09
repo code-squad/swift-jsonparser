@@ -11,13 +11,13 @@ import Foundation
 struct JsonDictionary {
     private var jsonElements : [LexicalType : [String]] = [LexicalType.intNumber : [String](), LexicalType.bool :  [String](), LexicalType.string : [String]()]
     
-    var getJsonFormmat : String {
+    var jsonFormmat : String {
         get{
-            return "[ Int : \(getIntElements), String : \(getStringElements), Bool : \(getBoolElements) ]"
+            return "[ Int : \(jsonIntElementList), String : \(jsonStringElementList), Bool : \(jsonBoolElementList) ]"
         }
     }
     
-    private var getIntElements : String {
+    private var jsonIntElementList : String {
         get {
             var result = ""
             guard let elementList = jsonElements[LexicalType.intNumber] else {
@@ -29,7 +29,7 @@ struct JsonDictionary {
         }
     }
     
-    private var getStringElements : String {
+    private var jsonStringElementList : String {
         get {
             var result = ""
             guard let elementList = jsonElements[LexicalType.string] else {
@@ -49,7 +49,7 @@ struct JsonDictionary {
         return result
     }
     
-    private var getBoolElements : String {
+    private var jsonBoolElementList : String {
         get {
             var result = ""
             guard let elementList = jsonElements[LexicalType.bool] else {
