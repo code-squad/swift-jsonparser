@@ -41,6 +41,7 @@ let main = {
     
     /// 출력
     OutputView.printJsonInformation(parsingResult)
+    print(parsingResult.getJsonFormmat)
 }
 
 try main()

@@ -11,6 +11,55 @@ import Foundation
 struct JsonDictionary {
     private var jsonElements : [LexicalType : [String]] = [LexicalType.intNumber : [String](), LexicalType.bool :  [String](), LexicalType.string : [String]()]
     
+    var getJsonFormmat : String {
+        get{
+            return "[ Int : \(getIntElements), String : \(getStringElements), Bool : \(getBoolElements) ]"
+        }
+    }
+    
+    private var getIntElements : String {
+        get {
+            var result = ""
+            guard let elementList = jsonElements[LexicalType.intNumber] else {
+                return result
+            }
+           
+            result = printElementList (elementList)
+            return result
+        }
+    }
+    
+    private var getStringElements : String {
+        get {
+            var result = ""
+            guard let elementList = jsonElements[LexicalType.string] else {
+                return result
+            }
+            result = printElementList (elementList)
+            return result
+        }
+    }
+    
+    private func printElementList (_ list : [String ]) ->  String {
+        var result = "[ "
+        for index in 0..<list.count-1 {
+            result += "\(list[index]), "
+        }
+        result += "\(list[list.count-1]) ]"
+        return result
+    }
+    
+    private var getBoolElements : String {
+        get {
+            var result = ""
+            guard let elementList = jsonElements[LexicalType.bool] else {
+                return result
+            }
+            result = printElementList (elementList)
+            return result
+        }
+    }
+    
     init (lexPair : [LexPair]){
         for element in lexPair{
             self.jsonElements[element.type]?.append(element.content)
