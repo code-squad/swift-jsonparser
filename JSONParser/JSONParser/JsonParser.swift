@@ -39,7 +39,9 @@ struct JsonParser {
         let refinedDatum = dictionaryDataElement.components(separatedBy: ":")
         if refinedDatum.count != 2 {
             throw ErrorMessage.wrongValue
-        } else {
+        } else if refinedDatum[0].contains("\"") == false {
+            throw ErrorMessage.wrongKey
+        }else {
             return refinedDatum[1]
         }
     }
