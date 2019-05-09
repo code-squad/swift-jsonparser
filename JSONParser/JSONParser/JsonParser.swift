@@ -10,11 +10,11 @@ import Foundation
 
 struct JsonParser {
     /// 입력받은 String의 양끝에 "[","]"가 있는지 판단하는 함수
-    private func distinctArray(inputdata: String?) throws -> String {
+    private func distinctArray(inputdata: String?) throws -> (input: String, distinctMent: String) {
         if let input: String = inputdata {
             switch (input.first, input.last) {
-            case ("[","]"): return input
-            case("{","}"): return input
+            case ("[","]"): return (input, "배열")
+            case("{","}"): return (input, "객체")
             default: throw ErrorMessage.notArray
             }
         } else { throw ErrorMessage.notArray }
@@ -44,22 +44,24 @@ struct JsonParser {
         }
     }
     /// [Json] 타입의 배열을 생성하는 함수
-    func buildArray(inputdata: String?) throws -> [Json] {
+    func buildArray(inputdata: String?) throws -> (json: [Json],dataMent: String) {
         var jsonData : [Json] = []
         var data = try distinctArray(inputdata: inputdata)
-        data.removeFirst()
-        data.removeLast()
-        let refinedData = data.components(separatedBy: ",").filter { $0 != "" }
+        data.input.removeFirst()
+        data.input.removeLast()
+        let refinedData = data.input.components(separatedBy: ",").filter { $0 != "" }
         for dataElement in refinedData {
             var refinedDatum: String
-            if dataElement.contains(":") {
+            if dataElement.contains(":"), data.distinctMent == "객체" {
                 refinedDatum = try ifKeyExist(dataElement: dataElement)
-            } else {
+            } else if dataElement.contains(":") == false, data.distinctMent == "배열" {
                 refinedDatum = dataElement
+            } else {
+                throw ErrorMessage.wrongValue
             }
             let jsonDatum = try parsingData(beforeData: refinedDatum)
             jsonData.append(jsonDatum)
         }
-        return jsonData
+        return (json: jsonData, dataMent: data.distinctMent)
     }
 }

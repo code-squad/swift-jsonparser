@@ -10,9 +10,9 @@ import Foundation
 
 struct OutputView {
     /// 값을 받아와서 출력하는 함수
-    func printElements(jsonData: [Json]) {
-        print("총 \(jsonData.count)개의 데이터 중에 ", terminator: "")
-        let mentByTypes = extractionMent(jsonData: jsonData)
+    func printElements(jsonData: (json: [Json], dataMent:String)) {
+        print("총 \(jsonData.json.count)개의 \(jsonData.dataMent) 데이터 중에 ", terminator: "")
+        let mentByTypes = extractionMent(jsonData: jsonData.json)
         print("\(mentByTypes)가 포함되어 있습니다.")
     }
     /// 각 타입별 멘트를 출력하는 함수
