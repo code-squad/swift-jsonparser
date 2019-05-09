@@ -13,7 +13,7 @@ struct JsonDictionary {
     
     var jsonFormmatList : String {
         get{
-            return "[ Int : \(jsonIntElementList), String : \(jsonStringElementList), Bool : \(jsonBoolElementList) ]"
+            return "{ \"Int\" : \(jsonIntElementList), \"String\" : \(jsonStringElementList), \"Bool\" : \(jsonBoolElementList) }"
         }
     }
     
