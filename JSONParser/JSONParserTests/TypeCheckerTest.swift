@@ -75,7 +75,7 @@ class TypeCheckerTest: XCTestCase {
     
     func testCheckArrayToSuccess(){
         //Given
-        let dataOfArray = "[]"
+        let dataOfArray = "[314,\"jk\",true]"
         //When
         let result = try! typeChecker.check(dataOfArray, type: .Array)
         //Then
