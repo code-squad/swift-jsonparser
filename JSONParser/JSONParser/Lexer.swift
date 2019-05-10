@@ -45,7 +45,7 @@ struct Lexer {
         return result
     }
 
-    static private func decideElementLexicalType( string: Bool, number: Bool, bool : Bool ) throws -> LexicalType {
+    static private func decideElementLexicalType( string: Bool, number: Bool, bool : Bool) throws -> LexicalType {
         var result: LexicalType? = string ? LexicalType.string : nil
         result = number ? LexicalType.intNumber : result
         result = bool ? LexicalType.bool : result

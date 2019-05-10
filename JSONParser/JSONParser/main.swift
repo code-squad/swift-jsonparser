@@ -9,7 +9,7 @@
 import Foundation
 
 struct Main {
-    static private func parseInputJsonData (_ data: String) throws-> JsonDictionary {
+    static private func parseInputJsonData (_ data: String) throws-> JsonArray {
         /// 1) Tokenize
         let tokenizedInput = Tokenizer.tokenize(data)
         /// 2) Lexical analysis
@@ -36,9 +36,9 @@ struct Main {
             }
         }
         /// 처리
-        let parsingResult = try parseInputJsonData(data)
+        let parsingPairResult = try parseInputJsonData(data)
         /// 출력
-        let jsonFormat = JsonFormatter.init(jsonDictionary: parsingResult)
+        let jsonFormat = JsonFormatter.init(jsonArray: parsingPairResult)
         OutputView.printJsonInformation(jsonFormat)
     }
 }

@@ -10,33 +10,33 @@ import Foundation
 
 struct JsonFormatter{
     
-    private var jsonDictionary: JsonDictionary
+    private var jsonPairs: JsonArray
     
-    init(jsonDictionary: JsonDictionary){
-        self.jsonDictionary = jsonDictionary
+    init(jsonArray: JsonArray){
+        self.jsonPairs = jsonArray
     }
     
-    var jsonFormmatElementList : String {
+    var jsonFormmatClusteredElementList : String {
         get{
-            return "[{\"Int\" : \(intCount)}, {\"String\" : \(stringCount) }, {\"Bool\" : \(boolCount)}]"
+            return "[{\"Int\" : \(jsonIntElementList)}, {\"String\" : \(jsonStringElementList) }, {\"Bool\" : \(jsonBoolElementList)}]"
         }
     }
     
     var intCount : Int {
         get {
-            return self.jsonDictionary.jsonIntElements.count
+            return self.jsonPairs.jsonIntElements.count
         }
     }
-    
+
     var stringCount : Int {
         get {
-            return self.jsonDictionary.jsonStringElements.count
+            return self.jsonPairs.jsonStringElements.count
         }
     }
-    
+
     var boolCount : Int {
         get{
-            return self.jsonDictionary.jsonBoolElements.count
+            return self.jsonPairs.jsonBoolElements.count
         }
     }
     
@@ -49,10 +49,10 @@ struct JsonFormatter{
     private var jsonIntElementList : String {
         get {
             var result = ""
-            if jsonDictionary.jsonIntElements.count == 0 {
+            if jsonPairs.jsonIntElements.count == 0 {
                 return result
             }
-            result = printElementList (jsonDictionary.jsonIntElements)
+            result = printElementList (jsonPairs.jsonIntElements)
             return result
         }
     }
@@ -60,10 +60,10 @@ struct JsonFormatter{
     private var jsonStringElementList : String {
         get {
             var result = ""
-            if jsonDictionary.jsonStringElements.count == 0 {
+            if jsonPairs.jsonStringElements.count == 0 {
                 return result
             }
-            result = printElementList (jsonDictionary.jsonStringElements)
+            result = printElementList (jsonPairs.jsonStringElements)
             return result
         }
     }
@@ -71,15 +71,15 @@ struct JsonFormatter{
     private var jsonBoolElementList : String {
         get {
             var result = ""
-            if jsonDictionary.jsonBoolElements.count == 0 {
+            if jsonPairs.jsonBoolElements.count == 0 {
                 return result
             }
-            result = printElementList (jsonDictionary.jsonBoolElements)
+            result = printElementList (jsonPairs.jsonBoolElements)
             return result
         }
     }
     
-    private func printElementList (_ list : [String ]) ->  String {
+    private func printElementList (_ list : [String]) ->  String {
         var result = "[ "
         for index in 0..<list.count-1 {
             result += "\(list[index]), "

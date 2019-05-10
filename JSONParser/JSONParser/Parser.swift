@@ -12,8 +12,8 @@ import Foundation
 
 struct Parser {
     
-    static func parseLexerResult (_ lexPair: [LexPair] ) -> JsonDictionary{
-        let dictionaryResult = JsonDictionary(lexPair: lexPair)
+    static func parseLexerResult (_ lexPair: [LexPair]) -> JsonArray{
+        let dictionaryResult = JsonArray(lexPair: lexPair)
         return dictionaryResult
     }
 }

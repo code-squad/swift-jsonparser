@@ -16,7 +16,7 @@ import Foundation
 
 struct Tokenizer {
     
-    static  func tokenize (_ input: String ) -> [String] {
+    static  func tokenize (_ input: String) -> [String] {
         let lowerBound = String.Index.init(encodedOffset: 1)
         let uppderBound = String.Index.init(encodedOffset: input.count-1)
         let removeSquareBracketInput = input[lowerBound..<uppderBound]
