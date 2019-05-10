@@ -12,7 +12,7 @@ enum RegexPatterns: String {
     case String = "\"[\\S\\s]+\""
     case Number = "-?[\\d]+"
     case Boolean = "(true|false)"
-    case Array = "^\\[\\]$"
+    case Array = "^\\[[\\S\\s]+\\]$"
     
     func getRegex() throws -> NSRegularExpression {
         guard let regex = try? NSRegularExpression.init(pattern: self.rawValue, options: []) else { throw Exception.RegexConversionFail }
