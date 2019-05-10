@@ -12,4 +12,6 @@ enum RegularExpressionPatterns: String {
     case String = "\"[\\w]+\""
     case Integer = "[\\d]+"
     case Boolean = "(true|false)"
+    case Array = "^\\[|\\]$"
+    
 }
