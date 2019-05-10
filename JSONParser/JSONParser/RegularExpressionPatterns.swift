@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+enum RegularExpressionPatterns{
+    case String
+    case Integer
+    case Boolean
+}
