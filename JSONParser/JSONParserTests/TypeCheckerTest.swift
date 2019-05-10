@@ -16,20 +16,20 @@ class TypeCheckerTest: XCTestCase {
         self.typeChecker = TypeChecker()
     }
     
-    
     func testCheckStringToSuccess(){
         //Given
-        let dataOfString = "\"Hello world\""
+        let dataOfString = "\"Hello World\""
         //When
-        let result = typeChecker.check(dataOfString, type: .String)
+        let result = try! typeChecker.check(dataOfString, type: .String)
         //Then
         XCTAssertTrue(result, "String 형식 체크에 성공합니다.")
     }
+    
     func testCheckStringToFail(){
         //Given
         let dataToFail = "Fail"
         //When
-        let result = typeChecker.check(dataToFail, type: .String)
+        let result = try! typeChecker.check(dataToFail, type: .String)
         //Then
         XCTAssertFalse(result, "String 형식이 아닌 데이터에 대해서 실패합니다.")
     }
@@ -39,8 +39,8 @@ class TypeCheckerTest: XCTestCase {
         let dataOfPositiveNumber = "10"
         let dataOfNegativeNumber = "-10"
         //When
-        let resultOfPositiveNumber = typeChecker.check(dataOfPositiveNumber, type: .Number)
-        let resultOfNegativeNumber = typeChecker.check(dataOfNegativeNumber, type: .Number)
+        let resultOfPositiveNumber = try! typeChecker.check(dataOfPositiveNumber, type: .Number)
+        let resultOfNegativeNumber = try! typeChecker.check(dataOfNegativeNumber, type: .Number)
         //Then
         XCTAssertTrue(resultOfPositiveNumber, "PositiveNumber 체크에 성공합니다.")
         XCTAssertTrue(resultOfNegativeNumber, "NegativeNumber 체크에 성공합니다.")
@@ -50,7 +50,7 @@ class TypeCheckerTest: XCTestCase {
         //Given
          let dataToFail = "Fail"
         //When
-        let result = typeChecker.check(dataToFail, type: .String)
+        let result = try! typeChecker.check(dataToFail, type: .Number)
         //Then
         XCTAssertFalse(result, "Number 형식이 아닌 데이터에 대해서 실패합니다.")
     }
@@ -59,33 +59,36 @@ class TypeCheckerTest: XCTestCase {
         //Given
         let dataOfBoolean = "true"
         //When
-        let result = typeChecker.check(dataOfBoolean, type: .String)
+        let result = try! typeChecker.check(dataOfBoolean, type: .Boolean)
         //Then
         XCTAssertTrue(result, "Boolean 형식 체크에 성공합니다.")
     }
+    
     func testCheckBooleanToFail(){
         //Given
         let dataToFail = "Fail"
         //When
-        let result = typeChecker.check(dataToFail, type: .String)
+        let result = try! typeChecker.check(dataToFail, type: .Boolean)
         //Then
         XCTAssertFalse(result, "Boolean 형식이 아닌 데이터에 대해서 실패합니다.")
     }
+    
     func testCheckArrayToSuccess(){
         //Given
         let dataOfArray = "[]"
         //When
-        let result = typeChecker.check(dataOfArray, type: .String)
+        let result = try! typeChecker.check(dataOfArray, type: .Array)
         //Then
-        XCTAssertTrue(result, "문자열 체크에 성공합니다.")
+        XCTAssertTrue(result, "Array 형식 체크에 성공합니다.")
     }
+    
     func testCheckArrayToFail(){
         //Given
         let dataToFail = "Fail"
         //When
-        let result = typeChecker.check(dataToFail, type: .String)
+        let result = try! typeChecker.check(dataToFail, type: .Array)
         //Then
-        XCTAssertFalse(result, "배열형식이 아닌 데이터에 대해서 실패합니다.")
+        XCTAssertFalse(result, "Array 형식이 아닌 데이터에 대해서 실패합니다.")
     }
 
 }
