@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+typealias ErrorMessage = String
+
+enum Exception: ErrorMessage,Error,CustomStringConvertible{
+    var description: String { return self.rawValue }
+    
+    case wrongFormat = "잘못된 형식입니다."
+}
