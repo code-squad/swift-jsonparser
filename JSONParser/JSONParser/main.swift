@@ -16,7 +16,7 @@ func main() {
     while true {
         let data = input.readJson()
         do {
-            let jsonData = try parsing.buildArray(inputdata: data)
+            let jsonData = try parsing.buildArray(inputData: data)
             output.printElements(jsonData: jsonData)
             break
         }catch let error as ErrorMessage{

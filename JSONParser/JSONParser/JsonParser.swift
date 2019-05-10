@@ -9,21 +9,41 @@
 import Foundation
 
 struct JsonParser {
-    /// 입력받은 String의 양끝에 "[","]"가 있는지 판단하는 함수
-    private func distinctArray(inputdata: String?) throws -> (input: String, distinctMent: String) {
-        if let input: String = inputdata {
-            switch (input.first, input.last) {
-            case ("[","]"): return (input, "배열")
-            case("{","}"): return (input, "객체")
-            default: throw ErrorMessage.notArray
-            }
-        } else { throw ErrorMessage.notArray }
+    /// 입력받은 문자열이 nil인지 아닌지 판단 및 옵셔널 바인딩 함수
+    private func distinctNil(input: String?) throws -> String {
+        guard let notOptionalText: String = input else {
+            throw ErrorMessage.wrongValue
+        }
+        return notOptionalText
+    }
+    /// 배열이나 객체의 형태를 띄고 있는 문자열을 배열을 형태로 나누어 주는 함수
+    private func isolatingString(input: String) -> String {
+        var insteadInput = input
+        insteadInput.removeFirst()
+        insteadInput.removeLast()
+        return insteadInput
+    }
+    /// 입력받은 String의 양끝에 "[","]" 또는 "{","}" 유무를 판단하여 정보를 넘기는 함수
+    private func distinctArray(inputData: String) throws -> (input: String, distinctMent: String) {
+        switch (inputData.first, inputData.last) {
+        case ("[","]"): return (inputData, "배열")
+        case("{","}"): return (inputData, "객체")
+        default: throw ErrorMessage.notArray
+        }
     }
     /// 배열 내의 원소가 어떤 타입인지 판단하는 함수
     private func parsingData(beforeData : String) throws -> Json {
         var convertedElement: Json
         let afterData = beforeData.trimmingCharacters(in: .whitespacesAndNewlines)
-        if afterData.contains("\"") {
+        if afterData.first == "{", afterData.last == "}" {
+            let distinctAfterData = try distinctArray(inputData: afterData)
+            let dictionaryData = isolatingString(input: distinctAfterData.input)
+            let isolatedDictionaryData = dictionaryData.components(separatedBy: ",").filter{ $0 != "" }
+            for dictionaryDatum in isolatedDictionaryData {
+                _ = try valueOfArrayOrDistinct(dataElement: dictionaryDatum, dataMent: distinctAfterData.distinctMent)
+            }
+            convertedElement = TypeDictionary(json: distinctAfterData.input)
+        } else if afterData.contains("\"") {
             convertedElement = TypeString.init(json: afterData)
         } else if let _ = Int(afterData) {
             convertedElement = TypeInt.init(json: afterData)
@@ -50,21 +70,41 @@ struct JsonParser {
         var refinedDatum: String
         if dataElement.contains(":"), dataMent == "객체" {
             refinedDatum = try ifKeyExist(dictionaryDataElement: dataElement)
-        } else if dataElement.contains(":") == false, dataMent == "배열" {
+        } else if /*dataElement.contains(":") == false,*/ dataMent == "배열" {
             refinedDatum = dataElement
         } else {
             throw ErrorMessage.wrongValue
         }
         return refinedDatum
     }
+    /// 입력한 데이터의 내부에 객체가 존재할 경우 데이터를 나누는 함수
+    private func dictionaryInArray(input: String) -> [String] {
+        var dictionayInData = input.components(separatedBy: ["{","}"]).filter{ $0 != "" }
+        for index in 0..<dictionayInData.count {
+            if dictionayInData[index].first == "," || dictionayInData[index].last == "," {
+                dictionayInData[index] = dictionayInData[index].trimmingCharacters(in: [","])
+            }
+        }
+        for index in 0..<dictionayInData.count {
+            if dictionayInData[index].contains("\":") {
+                dictionayInData[index] = "{" + dictionayInData[index] + "}"
+            }
+        }
+        return dictionayInData
+    }
     /// [Json] 타입의 배열을 생성하는 함수
-    func buildArray(inputdata: String?) throws -> (json: [Json],dataMent: String) {
+    func buildArray(inputData: String?) throws -> (json: [Json],dataMent: String) {
         var jsonData : [Json] = []
-        var data = try distinctArray(inputdata: inputdata)
-        data.input.removeFirst()
-        data.input.removeLast()
-        let refinedData = data.input.components(separatedBy: ",").filter { $0 != "" }
-        for dataElement in refinedData {
+        var isolatedData : [String]
+        let input = try distinctNil(input: inputData)
+        let data = try distinctArray(inputData: input)
+        let refinedData = isolatingString(input: data.input)
+        if refinedData.contains("{"), refinedData.contains("}") {
+            isolatedData = dictionaryInArray(input: refinedData).filter{ $0 != "" }
+        } else {
+            isolatedData = refinedData.components(separatedBy: ",").filter{ $0 != "" }
+        }
+        for dataElement in isolatedData {
             let refinedDatum = try valueOfArrayOrDistinct(dataElement: dataElement, dataMent: data.distinctMent)
             let jsonDatum = try parsingData(beforeData: refinedDatum)
             jsonData.append(jsonDatum)

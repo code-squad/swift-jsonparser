@@ -20,12 +20,14 @@ struct OutputView {
         var countString = 0
         var countInt = 0
         var countBool = 0
+        var countDictionary = 0
         var prints : [String] = []
         for jsonDatum in jsonData {
             let json = jsonDatum.countType(jsonDatum: jsonDatum)
             if json == "문자열 " { countString += 1 }
             else if json == "숫자 " { countInt += 1 }
             else if json == "부울 " { countBool += 1 }
+            else if json == "객체 " { countDictionary += 1}
             if prints.contains(json) == false {prints.append("\(json)")}
             }
         for mentIndex in 0...prints.count - 1 {
@@ -38,6 +40,9 @@ struct OutputView {
                 prints[mentIndex] = mentAndValue
             case "부울 ":
                 let mentAndValue = prints[mentIndex] + String(countBool) + "개"
+                prints[mentIndex] = mentAndValue
+            case "객체 ":
+                let mentAndValue = prints[mentIndex] + String(countDictionary) + "개"
                 prints[mentIndex] = mentAndValue
             default: break
             }
