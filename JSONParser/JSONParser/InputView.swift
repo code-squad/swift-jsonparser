@@ -19,11 +19,13 @@ struct InputView {
     
     private func fetchInput() -> String {
         let input = readLine() ?? ""
+        
         return input
     }
     
     func run() -> String {
         ask(Question.aboutJSON)
+        
         return fetchInput()
     }
     

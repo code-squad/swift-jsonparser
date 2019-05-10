@@ -16,6 +16,7 @@ enum RegexPatterns: String {
     
     func getRegex() throws -> NSRegularExpression {
         guard let regex = try? NSRegularExpression.init(pattern: self.rawValue, options: []) else { throw Exception.RegexConversionFail }
+        
         return regex
     }
     
