@@ -8,39 +8,37 @@
 
 import Foundation
 
-
-let parseInputJsonData = { (data: String) -> JsonDictionary in
-    /// 1) Tokenize
-    let tokenizedInput = Tokenizer.tokenize(data)
-    /// 2) Lexical analysis
-    var lexiedInput: [LexPair] = [LexPair]()
-    do {
-        lexiedInput = try Lexer.analyzeLexing(tokenList: tokenizedInput)
-    } catch let errorType as ErrorCode  {
-        print(errorType.description)
-    }
-    /// 3) Parse
-    return Parser.parseLexerResult(lexiedInput)
-}
-
-
-let main = {
-    /// 입력
-    var data = ""
-    while true {
+struct Main {
+    static private func parseInputJsonData (_ data: String) throws-> JsonDictionary {
+        /// 1) Tokenize
+        let tokenizedInput = Tokenizer.tokenize(data)
+        /// 2) Lexical analysis
+        var lexiedInput: [LexPair] = [LexPair]()
         do {
-            data = try InputView.readStringJsonData()
-            try Validation.checkInvalidArrayFormat(data)
-            break
+            lexiedInput = try Lexer.analyzeLexing(tokenList: tokenizedInput)
         } catch let errorType as ErrorCode  {
             print(errorType.description)
         }
+        /// 3) Parse
+        return Parser.parseLexerResult(lexiedInput)
     }
-    /// 처리
-    let parsingResult = try parseInputJsonData(data)
     
-    /// 출력
-    OutputView.printJsonInformation(parsingResult)
+    static func main () throws {
+        /// 입력
+        var data = ""
+        while true {
+            do {
+                data = try InputView.readStringJsonData()
+                try Validation.checkInvalidArrayFormat(data)
+                break
+            } catch let errorType as ErrorCode  {
+                print(errorType.description)
+            }
+        }
+        /// 처리
+        let parsingResult = try parseInputJsonData(data)
+        /// 출력
+        OutputView.printJsonInformation(parsingResult)
+    }
 }
-
-try main()
+try Main.main()

@@ -24,7 +24,6 @@ enum ErrorCode: Error, CustomStringConvertible{
             case .lexicalTypeError:
                 return "요소 Type 이 문자열, 숫자, 불린 값 어느 경우도 해당하지 않습니다."
             }
-            
         }
     }
 }
