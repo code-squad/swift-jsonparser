@@ -23,7 +23,7 @@ struct Converter {
     
     static private func getValues(_ string:String) throws -> String {
         guard try TypeChecker().check(string, type: .Array) else {
-            return string
+            throw Exception.wrongFormat
         }
         let unnecessaryCharacters:[Character] = ["[","]"," "]
         
