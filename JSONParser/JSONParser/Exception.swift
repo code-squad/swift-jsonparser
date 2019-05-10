@@ -15,4 +15,5 @@ enum Exception: ErrorMessage,Error,CustomStringConvertible {
     
     case wrongFormat = "잘못된 입력형식 입니다."
     case RegexConversionFail = "정규표현식을 지원하지 않는 패턴입니다."
+    case unexpectedError = "예기치 못한 에러입니다."
 }
