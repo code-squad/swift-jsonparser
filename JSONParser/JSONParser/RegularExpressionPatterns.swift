@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum RegularExpressionPatterns{
-    case String
-    case Integer
-    case Boolean
+enum RegularExpressionPatterns: String {
+    case String = "\"[\\w]+\""
+    case Integer = "[\\d]+"
+    case Boolean = "(true|false)"
 }
