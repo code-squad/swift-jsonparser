@@ -8,7 +8,7 @@
 
 import XCTest
 
-class ConvertToArrayTest: XCTestCase {
+class ConverterTest: XCTestCase {
     
     func testConvertComposedOfIntegerData() {
         let input = "[ 10, 21, 4, 314, 99, 0, 72 ]"
@@ -21,9 +21,6 @@ class ConvertToArrayTest: XCTestCase {
         XCTAssertEqual(array,[ "10", "\"jk\""
             , "4", "\"314\"", "99", "\"crong\"", "false" ],"혼합된 데이터타입의 배열로의 변환에 성공합니다.")
     }
-    func testTypeChecker() {
-        let integerData = "10"
-        
-    }
+  
     
 }
