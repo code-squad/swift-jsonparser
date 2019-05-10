@@ -38,7 +38,8 @@ struct Main {
         /// 처리
         let parsingResult = try parseInputJsonData(data)
         /// 출력
-        OutputView.printJsonInformation(parsingResult)
+        let jsonFormat = JsonFormatter.init(jsonDictionary: parsingResult)
+        OutputView.printJsonInformation(jsonFormat)
     }
 }
 try Main.main()
