@@ -10,8 +10,9 @@ import Foundation
 
 typealias ErrorMessage = String
 
-enum Exception: ErrorMessage,Error,CustomStringConvertible{
+enum Exception: ErrorMessage,Error,CustomStringConvertible {
     var description: String { return self.rawValue }
     
-    case wrongFormat = "잘못된 형식입니다."
+    case wrongFormat = "잘못된 입력형식 입니다."
+    case RegexConversionFail = "정규표현식을 지원하지 않는 패턴입니다."
 }
