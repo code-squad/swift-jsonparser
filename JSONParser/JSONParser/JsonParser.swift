@@ -70,7 +70,7 @@ struct JsonParser {
         var refinedDatum: String
         if dataElement.contains(":"), dataMent == "객체" {
             refinedDatum = try ifKeyExist(dictionaryDataElement: dataElement)
-        } else if /*dataElement.contains(":") == false,*/ dataMent == "배열" {
+        } else if dataMent == "배열" {
             refinedDatum = dataElement
         } else {
             throw ErrorMessage.wrongValue
@@ -79,18 +79,21 @@ struct JsonParser {
     }
     /// 입력한 데이터의 내부에 객체가 존재할 경우 데이터를 나누는 함수
     private func dictionaryInArray(input: String) -> [String] {
-        var dictionayInData = input.components(separatedBy: ["{","}"]).filter{ $0 != "" }
-        for index in 0..<dictionayInData.count {
-            if dictionayInData[index].first == "," || dictionayInData[index].last == "," {
-                dictionayInData[index] = dictionayInData[index].trimmingCharacters(in: [","])
+        var dictionaryInData = input.components(separatedBy: ["{","}"]).filter{ $0 != "" }
+        for index in 0..<dictionaryInData.count {
+            if dictionaryInData[index].first == "," || dictionaryInData[index].last == "," {
+                //dictionaryInData[index] = dictionaryInData[index].trimmingCharacters(in: [","])
+                dictionaryInData[index] = dictionaryInData[index].replacingOccurrences(of: ",", with: "|")
             }
         }
-        for index in 0..<dictionayInData.count {
-            if dictionayInData[index].contains("\":") {
-                dictionayInData[index] = "{" + dictionayInData[index] + "}"
+        for index in 0..<dictionaryInData.count {
+            if dictionaryInData[index].contains("\":") {
+                dictionaryInData[index] = "{" + dictionaryInData[index] + "}"
             }
         }
-        return dictionayInData
+        let dataReJoined = dictionaryInData.joined()
+        dictionaryInData = dataReJoined.components(separatedBy: "|")
+        return dictionaryInData
     }
     /// [Json] 타입의 배열을 생성하는 함수
     func buildArray(inputData: String?) throws -> (json: [Json],dataMent: String) {

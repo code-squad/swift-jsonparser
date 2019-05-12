@@ -15,37 +15,49 @@ struct OutputView {
         let mentByTypes = extractionMent(jsonData: jsonData.json)
         print("\(mentByTypes)가 포함되어 있습니다.")
     }
+    /// 포함된 타입들의 멘트를 만드는 함수
+    private func buildCountMent(originMent: String, countOfType: (string: Int, int: Int, bool: Int, dictionary: Int)) -> String{
+        var printMent = originMent
+        switch printMent {
+        case "문자열 ":
+            let mentAndValue = printMent + String(countOfType.string) + "개"
+            printMent = mentAndValue
+        case "숫자 ":
+            let mentAndValue = printMent + String(countOfType.int) + "개"
+            printMent = mentAndValue
+        case "부울 ":
+            let mentAndValue = printMent + String(countOfType.bool) + "개"
+            printMent = mentAndValue
+        case "객체 ":
+            let mentAndValue = printMent + String(countOfType.dictionary) + "개"
+            printMent = mentAndValue
+        default: break
+        }
+        return printMent
+    }
+    /// 조건에 따라 각 타입별 count를 증가시키는 함수
+    private func distinctAndCountOfType(ments: [String], jsonDatum: Json, countOfType: (string: Int, int: Int, bool: Int, dictionary: Int)) -> (ment: String, counts:(string: Int, int: Int, bool: Int, dictionary: Int)) {
+        var counts = countOfType
+        let json = jsonDatum.countType(jsonDatum: jsonDatum)
+        if json == "문자열 " { counts.string += 1 }
+        else if json == "숫자 " { counts.int += 1 }
+        else if json == "부울 " { counts.bool += 1 }
+        else if json == "객체 " { counts.dictionary += 1}
+        if ments.contains(json) == false { return (ment: json, counts: counts) }
+        else { return (ment: "", counts: counts)}
+    }
     /// 각 타입별 멘트를 출력하는 함수
     private func extractionMent(jsonData: [Json]) -> String{
-        var countString = 0
-        var countInt = 0
-        var countBool = 0
-        var countDictionary = 0
-        var prints : [String] = []
+        var countOfType = (string: 0, int: 0, bool: 0, dictionary: 0)
+        var ments : [String] = []
         for jsonDatum in jsonData {
-            let json = jsonDatum.countType(jsonDatum: jsonDatum)
-            if json == "문자열 " { countString += 1 }
-            else if json == "숫자 " { countInt += 1 }
-            else if json == "부울 " { countBool += 1 }
-            else if json == "객체 " { countDictionary += 1}
-            if prints.contains(json) == false {prints.append("\(json)")}
+            let mentOfType = distinctAndCountOfType(ments: ments, jsonDatum: jsonDatum, countOfType: countOfType)
+            ments.append(mentOfType.ment)
+            countOfType = mentOfType.counts
             }
+        var prints = ments.filter { $0 != "" }
         for mentIndex in 0...prints.count - 1 {
-            switch prints[mentIndex] {
-            case "문자열 ":
-                let mentAndValue = prints[mentIndex] + String(countString) + "개"
-                prints[mentIndex] = mentAndValue
-            case "숫자 ":
-                let mentAndValue = prints[mentIndex] + String(countInt) + "개"
-                prints[mentIndex] = mentAndValue
-            case "부울 ":
-                let mentAndValue = prints[mentIndex] + String(countBool) + "개"
-                prints[mentIndex] = mentAndValue
-            case "객체 ":
-                let mentAndValue = prints[mentIndex] + String(countDictionary) + "개"
-                prints[mentIndex] = mentAndValue
-            default: break
-            }
+            prints[mentIndex] = buildCountMent(originMent: prints[mentIndex], countOfType: countOfType)
         }
         let setPrint = prints.joined(separator: ", ")
         return setPrint
