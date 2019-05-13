@@ -23,13 +23,9 @@ struct GrammarChecker {
     static func grammarCheck(_ input: String) throws {
         try bracketCheck(input)
         
-//        if input.matches("\\{[A-z\"0-9.: ]+\\}") {
-//            throw InputError.containsUnsupportedFormats
-//        }
-        
         for object in getObjectList(input)
         {
-            if objectExist(object) || arrayExist(object) {
+            if objectCheck(object) || arrayCheck(object) {
                 throw InputError.containsUnsupportedFormats
             }
         }
@@ -47,16 +43,16 @@ struct GrammarChecker {
         }
     }
     
-    static private func objectExist (_ input: String) -> Bool {
-        if input.matches("\\{[A-z\"0-9:. ]+\\}") {
+    static private func objectCheck (_ input: String) -> Bool {
+        if input.matches("\\{[A-z\"0-9:., ]+\\}") {
             return true
         }
         
         return false
     }
     
-    static private func arrayExist (_ input: String) -> Bool {
-        if input.matches("\\[[A-z\"0-9. ]+\\]") {
+    static private func arrayCheck (_ input: String) -> Bool {
+        if input.matches("\\[[A-z\"0-9., ]+\\]") {
             return true
         }
         
@@ -73,19 +69,17 @@ struct GrammarChecker {
         let squareBracketOpen = DevideCharacter.squareBracketOpen
         let squareBracketClose = DevideCharacter.squareBracketClose
         var bracketStack = [DevideCharacter]()
+        var eachCheck = ""
         
         for character in input {
+            eachCheck += String(character)
             if character == curryBracketOpen.rawValue || character == squareBracketOpen.rawValue {
-                let bracketOpen = DevideCharacter(rawValue: character) ?? curryBracketOpen
-                bracketStack.append(bracketOpen)
+                bracketStack.append(DevideCharacter(rawValue: character)!)
             }
-            if character == curryBracketClose.rawValue {
-                try bracketCloseCheck(close: curryBracketClose, bracketStack)
+            if character == curryBracketClose.rawValue || character == squareBracketClose.rawValue {
+                try bracketCloseCheck(DevideCharacter(rawValue: character)!, bracketStack)
                 bracketStack.removeLast()
-            }
-            if character == squareBracketClose.rawValue {
-                try bracketCloseCheck(close: squareBracketClose, bracketStack)
-                bracketStack.removeLast()
+                eachCheck = try eachGrammarCheck(eachCheck)
             }
         }
         
@@ -94,17 +88,26 @@ struct GrammarChecker {
         }
     }
     
-    static private func bracketCloseCheck (close: DevideCharacter, _ bracketStack: [DevideCharacter]) throws {
+    static private func bracketCloseCheck (_ close: DevideCharacter, _ bracketStack: [DevideCharacter]) throws {
         switch close {
         case .curlyBracketClose:
-            if bracketStack.last != .curlyBracketClose {
+            if bracketStack.last != .curlyBracketOpen {
             throw InputError.containsUnsupportedFormats
         }
         case .squareBracketClose:
-        if bracketStack.last != .squareBracketClose {
+        if bracketStack.last != .squareBracketOpen {
             throw InputError.containsUnsupportedFormats
         }
         default: break
         }
+    }
+    
+    static private func eachGrammarCheck (_ input: String) throws -> String {
+        
+        if !(objectCheck(input) || arrayCheck(input)) && input != " ]" {
+            throw InputError.containsUnsupportedFormats
+        }
+        
+        return ""
     }
 }
