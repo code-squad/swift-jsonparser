@@ -8,3 +8,5 @@
 
 import Foundation
 
+let userInput = InputView.readInput(of: "분석할 JSON 데이터를 입력하세요.")
+
