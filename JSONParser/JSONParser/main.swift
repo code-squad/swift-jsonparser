@@ -12,10 +12,10 @@ func main () {
     var inputView = InputView()
     let outputView = OutputView()
     var json = [JsonType]()
-    
     while true {
         inputView.readInput()
         do {
+            try GrammarChecker.grammarCheck(inputView.valueEntered)
             json = try Converter.inputToJson(inputView.valueEntered)
             break
         }

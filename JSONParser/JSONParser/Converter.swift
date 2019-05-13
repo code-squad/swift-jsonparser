@@ -12,16 +12,14 @@ struct Converter {
     static func inputToJson (_ valueEntered: String) throws -> [JsonType] {
         let input = valueEntered
         
-        let InputSplited = try splitInput(input)
+        let InputSplited = splitInput(input)
         let json = try JsonParser.makeJson(InputSplited)
         
         return json
     }
     
-    static private func splitInput (_ input: String) throws ->  [String] {
+    static private func splitInput (_ input: String) ->  [String] {
         var inputSplited = input.components(separatedBy: [","])
-        
-        try verifyInput(inputSplited)
 
         if inputSplited.first == "[" { inputSplited.removeFirst() }
         if inputSplited.last == "]" { inputSplited.removeLast() }
