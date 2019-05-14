@@ -9,7 +9,7 @@
 import Foundation
 
 struct JsonParser {
-    static func jsonParse (_ inputSplited: [String]) throws -> [JsonType] {
+    static func parseJson (_ inputSplited: [String]) throws -> [JsonType] {
         var json = [JsonType]()
         var object = [String: JsonType]()
         var key: String

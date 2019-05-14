@@ -13,7 +13,7 @@ struct Converter {
         let input = valueEntered
         
         let InputSplited = splitInput(input)
-        let json = try JsonParser.jsonParse(InputSplited)
+        let json = try JsonParser.parseJson(InputSplited)
         
         return json
     }
