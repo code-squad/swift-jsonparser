@@ -16,7 +16,7 @@ func main () {
         inputView.readInput()
         do {
             try GrammarChecker.checkJsonGrammar(inputView.valueEntered)
-            json = try Converter.inputToJson(inputView.valueEntered)
+            json = try Converter.stringToJson(inputView.valueEntered)
             break
         }
         catch let error as InputError { print(error.rawValue) }
