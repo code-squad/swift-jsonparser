@@ -15,7 +15,7 @@ func main () {
     while true {
         inputView.readInput()
         do {
-            try GrammarChecker.grammarCheck(inputView.valueEntered)
+            try GrammarChecker.checkJsonGrammar(inputView.valueEntered)
             json = try Converter.inputToJson(inputView.valueEntered)
             break
         }
