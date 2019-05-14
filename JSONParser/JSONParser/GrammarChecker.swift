@@ -76,10 +76,10 @@ struct GrammarChecker {
         
         for character in input {
             eachCheck += String(character)
-            if character == curryBracketOpen.rawValue || character == squareBracketOpen.rawValue {
+            if character == curlyBracketOpen.rawValue || character == squareBracketOpen.rawValue {
                 bracketStack.append(DevideCharacter(rawValue: character)!)
             }
-            if character == curryBracketClose.rawValue || character == squareBracketClose.rawValue {
+            if character == curlyBracketClose.rawValue || character == squareBracketClose.rawValue {
                 try bracketCloseCheck(DevideCharacter(rawValue: character)!, bracketStack)
                 bracketStack.removeLast()
                 eachCheck = try eachGrammarCheck(eachCheck)
