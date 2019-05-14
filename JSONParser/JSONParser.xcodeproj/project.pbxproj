@@ -13,6 +13,17 @@
 		330A94C52273DADA00D475C4 /* InputError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330A94C42273DADA00D475C4 /* InputError.swift */; };
 		3390212B228A66C9009ADE9F /* regexGrammar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3390212A228A66C9009ADE9F /* regexGrammar.swift */; };
 		33902133228AA15B009ADE9F /* JSONParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33902132228AA15B009ADE9F /* JSONParserTest.swift */; };
+		33902138228AA389009ADE9F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
+		33902139228AA38C009ADE9F /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F901E42273222600BC4927 /* InputView.swift */; };
+		3390213A228AA38F009ADE9F /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330A94C22273CD4300D475C4 /* Converter.swift */; };
+		3390213B228AA392009ADE9F /* InputError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330A94C42273DADA00D475C4 /* InputError.swift */; };
+		3390213C228AA395009ADE9F /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF2E8D2276EE4D0057C3A9 /* OutputView.swift */; };
+		3390213D228AA39D009ADE9F /* JsonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF2E8F2276EF720057C3A9 /* JsonType.swift */; };
+		3390213E228AA39F009ADE9F /* JsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF2E912276F09C0057C3A9 /* JsonParser.swift */; };
+		3390213F228AA3A2009ADE9F /* MessageMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF2E932276F2A60057C3A9 /* MessageMaker.swift */; };
+		33902140228AA3A4009ADE9F /* DevideCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3304B5D622817ADB000883DC /* DevideCharacter.swift */; };
+		33902141228AA3A7009ADE9F /* regexGrammar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3390212A228A66C9009ADE9F /* regexGrammar.swift */; };
+		33902142228AA3A9009ADE9F /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3304B5D82282B29B000883DC /* GrammarChecker.swift */; };
 		33F901E52273222600BC4927 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F901E42273222600BC4927 /* InputView.swift */; };
 		33FF2E8E2276EE4D0057C3A9 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF2E8D2276EE4D0057C3A9 /* OutputView.swift */; };
 		33FF2E902276EF720057C3A9 /* JsonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF2E8F2276EF720057C3A9 /* JsonType.swift */; };
@@ -204,7 +215,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33902141228AA3A7009ADE9F /* regexGrammar.swift in Sources */,
+				33902140228AA3A4009ADE9F /* DevideCharacter.swift in Sources */,
+				33902139228AA38C009ADE9F /* InputView.swift in Sources */,
+				33902142228AA3A9009ADE9F /* GrammarChecker.swift in Sources */,
+				3390213D228AA39D009ADE9F /* JsonType.swift in Sources */,
+				3390213E228AA39F009ADE9F /* JsonParser.swift in Sources */,
+				3390213F228AA3A2009ADE9F /* MessageMaker.swift in Sources */,
+				33902138228AA389009ADE9F /* main.swift in Sources */,
+				3390213A228AA38F009ADE9F /* Converter.swift in Sources */,
+				3390213B228AA392009ADE9F /* InputError.swift in Sources */,
 				33902133228AA15B009ADE9F /* JSONParserTest.swift in Sources */,
+				3390213C228AA395009ADE9F /* OutputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
