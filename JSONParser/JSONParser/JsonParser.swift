@@ -11,9 +11,7 @@ import Foundation
 struct JsonParser {
     /// 입력받은 문자열이 nil인지 아닌지 판단 및 옵셔널 바인딩 함수
     private func distinctNil(input: String?) throws -> String {
-        guard let notOptionalText: String = input else {
-            throw ErrorMessage.wrongValue
-        }
+        guard let notOptionalText: String = input else { throw ErrorMessage.wrongValue }
         return notOptionalText
     }
     /// 배열이나 객체의 형태를 띄고 있는 문자열을 배열을 형태로 나누어 주는 함수

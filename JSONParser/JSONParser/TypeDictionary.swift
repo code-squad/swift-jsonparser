@@ -9,18 +9,18 @@
 import Foundation
 
 struct TypeDictionary: Json {
-    private(set) var json : [String:String]
+    private(set) var json : [String:Json]
     
     init (json: String) {
-        self.json = [String:String]()
+        self.json = [String:Json]()
         var data = json
         data.removeFirst()
         data.removeLast()
         let dictionaryData = data.components(separatedBy: ",")
-        for index in 0...dictionaryData.count - 1 {
+        for index in 0..<dictionaryData.count {
             let Values = dictionaryData[index]
             let keyAndValue = Values.components(separatedBy: ":")
-            self.json[keyAndValue[0]] = keyAndValue[1]
+            self.json[keyAndValue[0]] = keyAndValue[1] as? Json ?? "" as! Json
         }
     }
     
