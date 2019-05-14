@@ -73,13 +73,15 @@ struct GrammarChecker {
         let squareBracketClose = DevideCharacter.squareBracketClose
         var bracketStack = [DevideCharacter]()
         var eachCheck = ""
+        var bracket:DevideCharacter
         
         for character in input {
             eachCheck += String(character)
-            if character == curlyBracketOpen.rawValue || character == squareBracketOpen.rawValue {
+            bracket = DevideCharacter(rawValue: character) ?? DevideCharacter.colon
+            if bracket == curlyBracketOpen || bracket == squareBracketOpen {
                 bracketStack.append(DevideCharacter(rawValue: character)!)
             }
-            if character == curlyBracketClose.rawValue || character == squareBracketClose.rawValue {
+            if bracket == curlyBracketClose || bracket == squareBracketClose {
                 try bracketCloseCheck(DevideCharacter(rawValue: character)!, bracketStack)
                 bracketStack.removeLast()
                 eachCheck = try eachGrammarCheck(eachCheck)
