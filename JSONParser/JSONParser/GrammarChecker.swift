@@ -44,7 +44,8 @@ struct GrammarChecker {
     }
     
     static private func objectCheck (_ input: String) -> Bool {
-        if input.matches("\\{[A-z\"0-9:., ]+\\}") {
+        let objectRegexGrammar = regexGrammar.object
+        if input.matches(objectRegexGrammar.rawValue) {
             return true
         }
         
@@ -52,7 +53,8 @@ struct GrammarChecker {
     }
     
     static private func arrayCheck (_ input: String) -> Bool {
-        if input.matches("\\[[A-z\"0-9., ]+\\]") {
+        let arrayRegexGrammar = regexGrammar.array
+        if input.matches(arrayRegexGrammar.rawValue) {
             return true
         }
         
@@ -60,7 +62,8 @@ struct GrammarChecker {
     }
     
     static private func getObjectList (_ input: String) -> [String] {
-        return regex(pattern: "\\{[A-z\"0-9:. ]+\\}", string: input)
+        let objectRegexGrammar = regexGrammar.object
+        return regex(pattern: objectRegexGrammar.rawValue, string: input)
     }
     
     static private func bracketCheck (_ input: String) throws {
