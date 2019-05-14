@@ -67,8 +67,8 @@ struct GrammarChecker {
     }
     
     static private func bracketCheck (_ input: String) throws {
-        let curryBracketOpen = DevideCharacter.curlyBracketOpen
-        let curryBracketClose = DevideCharacter.curlyBracketClose
+        let curlyBracketOpen = DevideCharacter.curlyBracketOpen
+        let curlyBracketClose = DevideCharacter.curlyBracketClose
         let squareBracketOpen = DevideCharacter.squareBracketOpen
         let squareBracketClose = DevideCharacter.squareBracketClose
         var bracketStack = [DevideCharacter]()
