@@ -106,7 +106,6 @@ struct GrammarChecker {
     }
     
     static private func eachGrammarCheck (_ input: String) throws -> String {
-        
         if !(objectCheck(input) || arrayCheck(input)) && input != " ]" {
             throw InputError.containsUnsupportedFormats
         }

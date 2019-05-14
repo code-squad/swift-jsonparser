@@ -9,8 +9,6 @@
 import Foundation
 
 struct JsonParser {
-    
-
     static func makeJson (_ inputSplited: [String]) throws -> [JsonType] {
         var json = [JsonType]()
         var object = [String: JsonType]()
