@@ -38,20 +38,14 @@ struct GrammarChecker {
     
     static private func checkObjectExist (_ input: String) -> Bool {
         let objectRegexGrammar = regexGrammar.object
-        if input.matches(objectRegexGrammar.rawValue) {
-            return true
-        }
         
-        return false
+        return input.matches(objectRegexGrammar.rawValue)
     }
     
     static private func checkArrayExist (_ input: String) -> Bool {
         let arrayRegexGrammar = regexGrammar.array
-        if input.matches(arrayRegexGrammar.rawValue) {
-            return true
-        }
         
-        return false
+        return input.matches(arrayRegexGrammar.rawValue)
     }
     
     static private func getObjectList (_ input: String) -> [String] {
