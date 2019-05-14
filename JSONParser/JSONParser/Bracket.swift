@@ -8,9 +8,9 @@
 
 import Foundation
 
-enum Bracket: String {
-    case frontCurlyBracket = "{"
-    case BackCurlyBracket = "}"
-    case frontSquareBracket = "["
-    case backSquareBrackter = "]"
+enum Bracket: Character {
+    case frontCurly = "{"
+    case backCurly = "}"
+    case frontSquare = "["
+    case backSquare = "]"
 }

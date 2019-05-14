@@ -11,7 +11,7 @@ import Foundation
 struct TypeDictionary: Json {
     private(set) var json : [String:Json]
     
-    init (json: String) {
+    init (json: String) throws {
         self.json = [String:Json]()
         var data = json
         data.removeFirst()
@@ -20,7 +20,7 @@ struct TypeDictionary: Json {
         for index in 0..<dictionaryData.count {
             let Values = dictionaryData[index]
             let keyAndValue = Values.components(separatedBy: ":")
-            self.json[keyAndValue[0]] = keyAndValue[1] as? Json ?? "" as! Json
+            self.json[keyAndValue[0]] = try JsonParser().parsingData(beforeData: keyAndValue[1])
         }
     }
     

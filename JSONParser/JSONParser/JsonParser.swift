@@ -9,6 +9,11 @@
 import Foundation
 
 struct JsonParser {
+    let frontCurlyBracket = Bracket.frontCurly.rawValue
+    let backCurlyBracket = Bracket.backCurly.rawValue
+    let frontSquareBracket = Bracket.frontSquare.rawValue
+    let backSquareBracket = Bracket.backSquare.rawValue
+    
     /// 입력받은 문자열이 nil인지 아닌지 판단 및 옵셔널 바인딩 함수
     private func distinctNil(input: String?) throws -> String {
         guard let notOptionalText: String = input else { throw ErrorMessage.wrongValue }
@@ -24,23 +29,23 @@ struct JsonParser {
     /// 입력받은 String의 양끝에 "[","]" 또는 "{","}" 유무를 판단하여 정보를 넘기는 함수
     private func distinctArray(inputData: String) throws -> (input: String, distinctMent: String) {
         switch (inputData.first, inputData.last) {
-        case ("[","]"): return (inputData, "배열")
-        case("{","}"): return (inputData, "객체")
+        case (frontCurlyBracket,backCurlyBracket): return (inputData, DataMent.dictionaryMent.rawValue)
+        case(frontSquareBracket,backSquareBracket): return (inputData, DataMent.arrayMent.rawValue)
         default: throw ErrorMessage.notArray
         }
     }
     /// 배열 내의 원소가 어떤 타입인지 판단하는 함수
-    private func parsingData(beforeData : String) throws -> Json {
+    func parsingData(beforeData : String) throws -> Json {
         var convertedElement: Json
         let afterData = beforeData.trimmingCharacters(in: .whitespacesAndNewlines)
-        if afterData.first == "{", afterData.last == "}" {
+        if afterData.first == frontCurlyBracket, afterData.last == backCurlyBracket {
             let distinctAfterData = try distinctArray(inputData: afterData)
             let dictionaryData = isolatingString(input: distinctAfterData.input)
             let isolatedDictionaryData = dictionaryData.components(separatedBy: ",").filter{ $0 != "" }
             for dictionaryDatum in isolatedDictionaryData {
                 _ = try valueOfArrayOrDistinct(dataElement: dictionaryDatum, dataMent: distinctAfterData.distinctMent)
             }
-            convertedElement = TypeDictionary(json: distinctAfterData.input)
+            convertedElement = try TypeDictionary(json: distinctAfterData.input)
         } else if afterData.contains("\"") {
             convertedElement = TypeString.init(json: afterData)
         } else if let _ = Int(afterData) {
@@ -66,9 +71,9 @@ struct JsonParser {
     /// 입력된 문자열이 배열인지 딕셔너리인지 판단하고, 이에 맞는 원소들을 확인하는 함수
     private func valueOfArrayOrDistinct(dataElement: String, dataMent: String) throws -> String{
         var refinedDatum: String
-        if dataElement.contains(":"), dataMent == "객체" {
+        if dataElement.contains(":"), dataMent == DataMent.dictionaryMent.rawValue {
             refinedDatum = try ifKeyExist(dictionaryDataElement: dataElement)
-        } else if dataMent == "배열" {
+        } else if dataMent == DataMent.arrayMent.rawValue {
             refinedDatum = dataElement
         } else {
             throw ErrorMessage.wrongValue
@@ -80,13 +85,12 @@ struct JsonParser {
         var dictionaryInData = input.components(separatedBy: ["{","}"]).filter{ $0 != "" }
         for index in 0..<dictionaryInData.count {
             if dictionaryInData[index].first == "," || dictionaryInData[index].last == "," {
-                //dictionaryInData[index] = dictionaryInData[index].trimmingCharacters(in: [","])
                 dictionaryInData[index] = dictionaryInData[index].replacingOccurrences(of: ",", with: "|")
             }
         }
         for index in 0..<dictionaryInData.count {
             if dictionaryInData[index].contains("\":") {
-                dictionaryInData[index] = "{" + dictionaryInData[index] + "}"
+                dictionaryInData[index] = "\(frontCurlyBracket)" + dictionaryInData[index] + "\(backCurlyBracket)"
             }
         }
         let dataReJoined = dictionaryInData.joined()
@@ -100,7 +104,7 @@ struct JsonParser {
         let input = try distinctNil(input: inputData)
         let data = try distinctArray(inputData: input)
         let refinedData = isolatingString(input: data.input)
-        if refinedData.contains("{"), refinedData.contains("}") {
+        if refinedData.contains(frontCurlyBracket), refinedData.contains(backCurlyBracket) {
             isolatedData = dictionaryInArray(input: refinedData).filter{ $0 != "" }
         } else {
             isolatedData = refinedData.components(separatedBy: ",").filter{ $0 != "" }
