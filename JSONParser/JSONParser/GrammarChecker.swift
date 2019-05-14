@@ -22,13 +22,6 @@ extension String {
 struct GrammarChecker {
     static func checkJsonGrammar(_ input: String) throws {
         try checkBracketCount(input)
-        
-        for object in getObjectList(input)
-        {
-            if checkObjectExist(object) || checkArrayExist(object) {
-                throw InputError.containsUnsupportedFormats
-            }
-        }
     }
     
     static private func regex(pattern:String, string:String) -> [String] {
