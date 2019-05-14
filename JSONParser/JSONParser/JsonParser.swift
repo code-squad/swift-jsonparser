@@ -13,7 +13,6 @@ struct JsonParser {
     let backCurlyBracket = Bracket.backCurly.rawValue
     let frontSquareBracket = Bracket.frontSquare.rawValue
     let backSquareBracket = Bracket.backSquare.rawValue
-    
     /// 입력받은 문자열이 nil인지 아닌지 판단 및 옵셔널 바인딩 함수
     private func distinctNil(input: String?) throws -> String {
         guard let notOptionalText: String = input else { throw ErrorMessage.wrongValue }
@@ -46,24 +45,25 @@ struct JsonParser {
                 _ = try valueOfArrayOrDistinct(dataElement: dictionaryDatum, dataMent: distinctAfterData.distinctMent)
             }
             convertedElement = try TypeDictionary(json: distinctAfterData.input)
-        } else if afterData.contains("\"") {
-            convertedElement = TypeString.init(json: afterData)
         } else if let _ = Int(afterData) {
             convertedElement = TypeInt.init(json: afterData)
         } else if let _ = Bool(afterData) {
             convertedElement = TypeBool.init(json: afterData)
+        } else if afterData.first == ("\""),afterData.last == ("\"") {
+            convertedElement = TypeString.init(json: afterData)
         } else {
             throw ErrorMessage.wrongValue
         }
         return convertedElement
     }
     /// 입력된 원소에 key값이 있는 데이터인 경우 값만을 리턴하는 함수
-    private func ifKeyExist(dictionaryDataElement: String) throws -> String{
+    func ifKeyExist(dictionaryDataElement: String) throws -> String{
         let refinedDatum = dictionaryDataElement.components(separatedBy: ":")
-        if refinedDatum.count != 2 {
-            throw ErrorMessage.wrongValue
-        } else if refinedDatum[0].contains("\"") == false {
+        let removeBlankDatum = refinedDatum[0].trimmingCharacters(in: .whitespacesAndNewlines)
+        if removeBlankDatum.first != ("\"") || removeBlankDatum.last != ("\"") {
             throw ErrorMessage.wrongKey
+        } else if refinedDatum.count != 2 {
+            throw ErrorMessage.wrongValue
         }else {
             return refinedDatum[1]
         }
@@ -89,7 +89,7 @@ struct JsonParser {
             }
         }
         for index in 0..<dictionaryInData.count {
-            if dictionaryInData[index].contains("\":") {
+            if dictionaryInData[index].contains(":") {
                 dictionaryInData[index] = "\(frontCurlyBracket)" + dictionaryInData[index] + "\(backCurlyBracket)"
             }
         }

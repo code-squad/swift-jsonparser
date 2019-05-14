@@ -10,6 +10,7 @@ import Foundation
 
 struct TypeDictionary: Json {
     private(set) var json : [String:Json]
+    let jsonParser = JsonParser()
     
     init (json: String) throws {
         self.json = [String:Json]()
@@ -18,9 +19,10 @@ struct TypeDictionary: Json {
         data.removeLast()
         let dictionaryData = data.components(separatedBy: ",")
         for index in 0..<dictionaryData.count {
-            let Values = dictionaryData[index]
-            let keyAndValue = Values.components(separatedBy: ":")
-            self.json[keyAndValue[0]] = try JsonParser().parsingData(beforeData: keyAndValue[1])
+            let values = dictionaryData[index]
+            let value = try jsonParser.ifKeyExist(dictionaryDataElement: values)
+            let keyAndValue = values.components(separatedBy: ":")
+            self.json[keyAndValue[0]] = try jsonParser.parsingData(beforeData: value)
         }
     }
     
