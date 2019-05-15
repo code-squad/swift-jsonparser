@@ -16,13 +16,12 @@ func main () {
         inputView.readInput()
         do {
             try GrammarChecker.checkJsonGrammar(inputView.valueEntered)
-            json = Converter.stringToJson(inputView.valueEntered)
             break
         }
         catch let error as InputError { print(error.rawValue) }
         catch { print(error) }
     }
-    
+    json = Converter.stringToJson(inputView.valueEntered)
     let message = MessageMaker.makeMessage(json)
     outputView.printMessage(message)
 }
