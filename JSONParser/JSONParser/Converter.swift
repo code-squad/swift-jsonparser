@@ -9,11 +9,11 @@
 import Foundation
 
 struct Converter {
-    static func stringToJson (_ valueEntered: String) throws -> [JsonType] {
+    static func stringToJson (_ valueEntered: String) -> [JsonType] {
         let input = valueEntered
         
         let InputSplited = splitInput(input)
-        let json = try JsonParser.parseJson(InputSplited)
+        let json = JsonParser.parseJson(InputSplited)
         
         return json
     }

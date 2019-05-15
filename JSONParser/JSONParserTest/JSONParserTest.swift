@@ -10,20 +10,15 @@ import XCTest
 
 class JSONParserTest: XCTestCase {
     func testInputError() {
-        XCTAssertNoThrow(try checkInputError("[ 10, 21, 4, 314, 99, 0, 72 ]"))
-        XCTAssertNoThrow(try checkInputError("[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"))
-        XCTAssertNoThrow(try checkInputError("{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"))
-        XCTAssertNoThrow(try checkInputError("[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"))
-        XCTAssertThrowsError(try checkInputError("[ \"name\" : \"KIM JUNG\" ]"))
-        XCTAssertThrowsError(try checkInputError("{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"))
-        XCTAssertNoThrow(try checkInputError("[ 72 ]"))
-        XCTAssertNoThrow(try checkInputError("[ { \"name\" : \"dominic\" } ]"))
-        XCTAssertThrowsError(try checkInputError("[ \"name\" : \"KIM JUNG\" }"))
-        XCTAssertThrowsError(try checkInputError("[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5 }, { \"name\" : \"YAGOM\" } "))
-    }
-    
-    func checkInputError (_ input: String) throws {
-        try GrammarChecker.checkJsonGrammar(input)
-        try Converter.stringToJson(input)
+        XCTAssertNoThrow(try GrammarChecker.checkJsonGrammar("[ 10, 21, 4, 314, 99, 0, 72 ]"))
+        XCTAssertNoThrow(try GrammarChecker.checkJsonGrammar("[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"))
+        XCTAssertNoThrow(try GrammarChecker.checkJsonGrammar("{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"))
+        XCTAssertNoThrow(try GrammarChecker.checkJsonGrammar("[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"))
+        XCTAssertThrowsError(try GrammarChecker.checkJsonGrammar("[ \"name\" : \"KIM JUNG\" ]"))
+        XCTAssertThrowsError(try GrammarChecker.checkJsonGrammar("{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"))
+        XCTAssertNoThrow(try GrammarChecker.checkJsonGrammar("[ 72 ]"))
+        XCTAssertNoThrow(try GrammarChecker.checkJsonGrammar("[ { \"name\" : \"dominic\" } ]"))
+        XCTAssertThrowsError(try GrammarChecker.checkJsonGrammar("[ \"name\" : \"KIM JUNG\" }"))
+        XCTAssertThrowsError(try GrammarChecker.checkJsonGrammar("[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5 }, { \"name\" : \"YAGOM\" } "))
     }
 }
