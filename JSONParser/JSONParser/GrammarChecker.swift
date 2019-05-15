@@ -54,10 +54,6 @@ struct GrammarChecker {
     }
     
     static private func checkBracketCount (_ input: String) throws {
-        let curlyBracketOpen = DevideCharacter.curlyBracketOpen
-        let curlyBracketClose = DevideCharacter.curlyBracketClose
-        let squareBracketOpen = DevideCharacter.squareBracketOpen
-        let squareBracketClose = DevideCharacter.squareBracketClose
         var bracketStack = [DevideCharacter]()
         var eachCheck = ""
         var bracket:DevideCharacter
@@ -65,13 +61,12 @@ struct GrammarChecker {
         for character in input {
             eachCheck += String(character)
             bracket = DevideCharacter(rawValue: character) ?? DevideCharacter.colon
-            if bracket == curlyBracketOpen || bracket == squareBracketOpen {
+            if bracket == DevideCharacter.curlyBracketOpen || bracket == DevideCharacter.squareBracketOpen {
                 bracketStack.append(DevideCharacter(rawValue: character)!)
             }
-            if bracket == curlyBracketClose || bracket == squareBracketClose {
+            if bracket == DevideCharacter.curlyBracketClose || bracket == DevideCharacter.squareBracketClose {
                 try checkBracketClose(DevideCharacter(rawValue: character)!, bracketStack)
                 bracketStack.removeLast()
-                eachCheck = try checkEachGrammar(eachCheck)
             }
         }
         
@@ -92,13 +87,5 @@ struct GrammarChecker {
         }
         default: break
         }
-    }
-    
-    static private func checkEachGrammar (_ input: String) throws -> String {
-        if !(checkObjectExist(input) || checkArrayExist(input)) && input != " ]" {
-            throw InputError.containsUnsupportedFormats
-        }
-        
-        return ""
     }
 }
