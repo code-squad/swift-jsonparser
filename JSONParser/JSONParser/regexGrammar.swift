@@ -9,6 +9,6 @@
 import Foundation
 
 enum regexGrammar: String {
-    case object = "\\{[A-z\"0-9:., ]+\\}"
+    case object = "\\{ \".+\" \\: (true|\".+\"|false|\\d+) \\}"
     case array = "\\[[A-z\"0-9., ]+\\]"
 }
