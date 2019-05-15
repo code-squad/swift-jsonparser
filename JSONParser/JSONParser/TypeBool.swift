@@ -14,10 +14,4 @@ struct TypeBool: Json {
     init (json: String) {
         self.json = Bool(json) ?? false
     }
-    
-    func countType(jsonDatum: Json) -> String{
-        let boolMent = "부울 "
-        if (jsonDatum as? TypeBool) != nil { return boolMent }
-        else { return "" }
-    }
 }

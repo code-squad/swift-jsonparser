@@ -14,10 +14,4 @@ struct TypeString: Json {
     init (json: String) {
         self.json = json
     }
-    
-    func countType(jsonDatum: Json) -> String{
-        let stringMent = "문자열 "
-        if (jsonDatum as? TypeString) != nil { return stringMent }
-        else { return "" }
-    }
 }

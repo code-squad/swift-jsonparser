@@ -25,11 +25,5 @@ struct TypeDictionary: Json {
             self.json[keyAndValue[0]] = try jsonParser.parsingData(beforeData: value)
         }
     }
-    
-    func countType(jsonDatum: Json) -> String{
-        let DictionaryMent = "객체 "
-        if (jsonDatum as? TypeDictionary) != nil { return DictionaryMent }
-        else { return "" }
-    }
 }
 
