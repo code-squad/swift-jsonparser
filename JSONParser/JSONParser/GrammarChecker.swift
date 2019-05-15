@@ -21,71 +21,28 @@ extension String {
 
 struct GrammarChecker {
     static func checkJsonGrammar(_ input: String) throws {
-        try checkBracketCount(input)
-    }
-    
-    static private func regex(pattern:String, string:String) -> [String] {
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else {return []}
+        var verifyJsonGrammerPass = false
+        if input.first == "[" {
+            verifyJsonGrammerPass = checkArrayGrammar(input)
+        }
+        if input.first == "{" {
+           verifyJsonGrammerPass = checkObjectGrammar(input)
+        }
         
-        let range = NSRange(string.startIndex..., in: string)
-        let matches = regex.matches(in: string, options: [], range: range)
-        
-        return matches.map {
-            let range = Range($0.range, in: string)!
-            return String(string[range])
+        if verifyJsonGrammerPass == false {
+            throw InputError.containsUnsupportedFormats
         }
     }
     
-    static private func checkObjectExist (_ input: String) -> Bool {
+    static private func checkObjectGrammar (_ input: String) -> Bool {
         let objectRegexGrammar = regexGrammar.object
         
         return input.matches(objectRegexGrammar.rawValue)
     }
     
-    static private func checkArrayExist (_ input: String) -> Bool {
+    static private func checkArrayGrammar (_ input: String) -> Bool {
         let arrayRegexGrammar = regexGrammar.array
         
         return input.matches(arrayRegexGrammar.rawValue)
-    }
-    
-    static private func getObjectList (_ input: String) -> [String] {
-        let objectRegexGrammar = regexGrammar.object
-        return regex(pattern: objectRegexGrammar.rawValue, string: input)
-    }
-    
-    static private func checkBracketCount (_ input: String) throws {
-        var bracketStack = [DevideCharacter]()
-        var eachCheck = ""
-        var bracket:DevideCharacter
-        
-        for character in input {
-            eachCheck += String(character)
-            bracket = DevideCharacter(rawValue: character) ?? DevideCharacter.colon
-            if bracket == DevideCharacter.curlyBracketOpen || bracket == DevideCharacter.squareBracketOpen {
-                bracketStack.append(DevideCharacter(rawValue: character)!)
-            }
-            if bracket == DevideCharacter.curlyBracketClose || bracket == DevideCharacter.squareBracketClose {
-                try checkBracketClose(DevideCharacter(rawValue: character)!, bracketStack)
-                bracketStack.removeLast()
-            }
-        }
-        
-        if bracketStack.count != 0 {
-            throw InputError.containsUnsupportedFormats
-        }
-    }
-    
-    static private func checkBracketClose (_ close: DevideCharacter, _ bracketStack: [DevideCharacter]) throws {
-        switch close {
-        case .curlyBracketClose:
-            if bracketStack.last != .curlyBracketOpen {
-            throw InputError.containsUnsupportedFormats
-        }
-        case .squareBracketClose:
-        if bracketStack.last != .squareBracketOpen {
-            throw InputError.containsUnsupportedFormats
-        }
-        default: break
-        }
     }
 }
