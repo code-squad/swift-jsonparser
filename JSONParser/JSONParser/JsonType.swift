@@ -13,6 +13,7 @@ enum JsonType {
     case string(String)
     case bool(Bool)
     case object([String: JsonType])
+    case array([JsonType])
     
     var name: JsonTypeName {
         switch self {
@@ -20,6 +21,7 @@ enum JsonType {
         case .int(_): return JsonTypeName.int
         case .object(_): return JsonTypeName.object
         case .string(_): return JsonTypeName.string
+        case .array(_): return JsonTypeName.array
         }
     }
 }
