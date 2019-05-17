@@ -16,6 +16,7 @@
 		C2FAEDA8228EA2B10045F639 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAEDA7228EA2B10045F639 /* OutputView.swift */; };
 		C2FAEDAA228EAC500045F639 /* TypeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAEDA9228EAC500045F639 /* TypeCounter.swift */; };
 		C2FAEDAC228EC9D60045F639 /* JSONValueFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAEDAB228EC9D60045F639 /* JSONValueFactory.swift */; };
+		C2FAEDAE228ED0A80045F639 /* JSONParserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAEDAD228ED0A80045F639 /* JSONParserError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,7 @@
 		C2FAEDA7228EA2B10045F639 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		C2FAEDA9228EAC500045F639 /* TypeCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCounter.swift; sourceTree = "<group>"; };
 		C2FAEDAB228EC9D60045F639 /* JSONValueFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValueFactory.swift; sourceTree = "<group>"; };
+		C2FAEDAD228ED0A80045F639 /* JSONParserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParserError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				C2FAEDAB228EC9D60045F639 /* JSONValueFactory.swift */,
 				C2FAEDA9228EAC500045F639 /* TypeCounter.swift */,
 				C2FAEDA1228E9CAE0045F639 /* JSONSymbols.swift */,
+				C2FAEDAD228ED0A80045F639 /* JSONParserError.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -153,6 +156,7 @@
 				C2FAEDAC228EC9D60045F639 /* JSONValueFactory.swift in Sources */,
 				C2FAEDAA228EAC500045F639 /* TypeCounter.swift in Sources */,
 				C2FAED9C228E98A00045F639 /* InputView.swift in Sources */,
+				C2FAEDAE228ED0A80045F639 /* JSONParserError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
