@@ -29,7 +29,7 @@ struct JsonParser {
         let elements: [String]
         
         if devideCharacter == DevideCharacter.squareBracketOpen {
-            let elementsFromArray = RegexGrammar.elementsFromArray
+            let elementsFromArray = RegexGrammar.elementsFromArrayInArray
             elements = matches(for: elementsFromArray.rawValue, in: input)
         } else {
             let elementsFromObject = RegexGrammar.elementsFromObject
@@ -45,7 +45,7 @@ struct JsonParser {
         var json = [JsonType]()
         
         for element in elements {
-            
+            json.append(elementToJsonType(element))
         }
         
         return json
@@ -53,53 +53,57 @@ struct JsonParser {
     
     static private func elementToJsonType (_ element: String) -> JsonType {
         switch element.first {
-        case "{":
-        case "[":
-        default:
+        case "{": return JsonType.object(elementToObject(element))
+        case "[": return JsonType.array(elementToArray(element))
+        default: return getJsonValue(element)
         }
     }
     
-    static private func elementToObject (_ element: String) -> JsonType {
+    static private func elementToObject (_ element: String) -> [String:JsonType] {
+        var jsonObject = [String:JsonType]()
+        let elementsFromObject = RegexGrammar.elementsFromArrayInArray
+        let elements = matches(for: element, in: elementsFromObject.rawValue)
         let colon = DevideCharacter.colon
-        var elementSplited = element.components(separatedBy: String(colon.rawValue))
-        element
+        var elementSplited: [String]
+    
+        for element in elements {
+            elementSplited = element.components(separatedBy: String(colon.rawValue))
+            elementSplited[0].removeFirst()
+            elementSplited[0].removeLast()
+            elementSplited[1].removeFirst()
+            jsonObject[elementSplited[0]] = getJsonValue(elementSplited[1])
+        }
         
-        return
+        return jsonObject
     }
     
-    static private func elementToObjectElement (_ element: String) -> JsonType {
+    static private func elementToArray (_ element: String) -> [JsonType] {
+        var jsonArray = [JsonType]()
+        let elementsFromArray = RegexGrammar.elementsFromObject
+        let elements = matches(for: element, in: elementsFromArray.rawValue)
+    
+        for element in elements {
+            jsonArray.append(getJsonValue(element))
+        }
         
-        
-        return
+        return jsonArray
     }
     
-    static private func getObjectElement (_ input: String) -> (String, JsonType) {
-        let colon = DevideCharacter.colon
-        var inputSplited = input.components(separatedBy: String(colon.rawValue))
-        
-        inputSplited[0] = removeBlank(inputSplited[0], first: DevideCharacter.curlyBracketOpen, last: DevideCharacter.curlyBracketClose)
-        inputSplited[1] = removeBlank(inputSplited[1], first: DevideCharacter.curlyBracketOpen, last: DevideCharacter.curlyBracketClose)
-        
-        return (inputSplited[0], getJsonValue(inputSplited[1]))
-    }
+//    static private func getObjectElement (_ input: String) -> (String, JsonType) {
+//        let colon = DevideCharacter.colon
+//        var inputSplited = input.components(separatedBy: String(colon.rawValue))
+//
+//        inputSplited[0] = removeBlank(inputSplited[0], first: DevideCharacter.curlyBracketOpen, last: DevideCharacter.curlyBracketClose)
+//        inputSplited[1] = removeBlank(inputSplited[1], first: DevideCharacter.curlyBracketOpen, last: DevideCharacter.curlyBracketClose)
+//
+//        return (inputSplited[0], getJsonValue(inputSplited[1]))
+//    }
     
     static private func getJsonValue (_ input: String) -> JsonType {
         if let number = Int(input) { return JsonType.int(number) }
         else if input == "true" { return JsonType.bool(true) }
         else if input == "false" { return JsonType.bool(false) }
         else { return JsonType.string(input) }
-    }
-   
-    static private func removeBlank (_ input: String, first: DevideCharacter, last: DevideCharacter) -> String {
-        let whiteSpace = DevideCharacter.whiteSpace
-        var modifyInput = input
-        
-        if modifyInput.first == first.rawValue { modifyInput.removeFirst() }
-        if modifyInput.first == whiteSpace.rawValue { modifyInput.removeFirst() }
-        if modifyInput.last == last.rawValue { modifyInput.removeLast() }
-        if modifyInput.last == whiteSpace.rawValue { modifyInput.removeLast() }
-        
-        return modifyInput
     }
 }
 
