@@ -8,9 +8,21 @@
 
 import Foundation
 
-InputView.printInstruction()
-let input = InputView.read()
 
-let tokens = Tokenizer.execute(using: input)
-let parsedValues: [JSONValue] = Parser.parse(tokens)
+InputView.printInstruction()
+
+var parsedValues: [JSONValue]!
+
+do {
+    let input = try InputView.read()
+    let tokens = try Tokenizer.execute(using: input)
+    parsedValues = try Parser.parse(tokens)
+} catch let e as JSONParserError {
+    print(e.message)
+}
+
+if parsedValues != nil {
+    OutputView.printJSONDescription(of: parsedValues)
+}
+
 
