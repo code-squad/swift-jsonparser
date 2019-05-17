@@ -12,6 +12,7 @@ struct JsonParser {
     static func parseJson (_ inputSplited: [String]) -> [JsonType] {
         var json = [JsonType]()
         var object = [String: JsonType]()
+        var array = [JsonType]()
         var key: String
         var value: JsonType
         var modifyInput: String
@@ -20,7 +21,9 @@ struct JsonParser {
         for inputValue in inputSplited {
             modifyInput = removeBlank(inputValue, first: DevideCharacter.squareBracketOpen, last: DevideCharacter.squareBracketClose)
             devideCharacter = DevideCharacter(rawValue: modifyInput.first!) ?? .colon
-            if devideCharacter == DevideCharacter.curlyBracketOpen || object.count > 0 {
+            if devideCharacter == DevideCharacter.squareBracketOpen || array.count > 0 {
+                array.append(getJsonValue(modifyInput))
+            } else if devideCharacter == DevideCharacter.curlyBracketOpen || object.count > 0 {
                 (key, value) = getObjectElement(modifyInput)
                 object[key] = value
             } else {
@@ -29,6 +32,10 @@ struct JsonParser {
             if devideCharacter == DevideCharacter.curlyBracketClose {
                 json.append(JsonType.object(object))
                 object.removeAll()
+            }
+            if devideCharacter == DevideCharacter.squareBracketClose {
+                json.append(JsonType.array(array))
+                array.removeAll()
             }
         }
         
