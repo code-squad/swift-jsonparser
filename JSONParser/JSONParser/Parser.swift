@@ -10,15 +10,15 @@ import Foundation
 
 struct Parser {
     
-    static func parse(_ tokens: [String]) -> [JSONValue] {
-        
+    static func parse(_ tokens: [String]) throws -> [JSONValue] {
         if isWrappedWithBrackets(using: tokens) {
-            let innerRange = 1...tokens.count-2
+            
+            let innerRange = 1...tokens.count - 2
             let innerValues = Array(tokens[innerRange])
-            return parseIntoJSONValues(using: innerValues)
+            return try parseIntoJSONValues(using: innerValues)
         }
         
-        return [] //error
+        throw ParserError.invalidFormatToParse
         
     }
     
@@ -27,13 +27,16 @@ struct Parser {
             && tokens[tokens.count-1] == JSONSymbols.closedBracket
     }
     
-    static private func parseIntoJSONValues(using tokens: [String]) -> [JSONValue] {
+    static private func parseIntoJSONValues(using tokens: [String]) throws -> [JSONValue] {
         var values: [JSONValue] = []
         
         for token in tokens {
-            let value = JSONValueFactory.make(token: token)
+            let value = try JSONValueFactory.make(token: token)
             values.append(value)
         }
+        
+        if values.isEmpty { throw ParserError.impossibleToParse }
+        
         return values
     }
     
