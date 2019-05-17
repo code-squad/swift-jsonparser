@@ -7,3 +7,8 @@
 //
 
 import Foundation
+
+struct JSONSymbols {
+    static let openBracket = "["
+    static let closedBracket = "]"
+}
