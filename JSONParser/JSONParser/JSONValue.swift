@@ -13,3 +13,9 @@ enum JSONValueType {
     case number(Int)
     case string(String)
 }
+
+
+protocol JSONValue {
+    var type: JSONValueType { get }
+}
+
