@@ -12,7 +12,7 @@ struct JSONValueFactory {
     static let trueString = "true"
     static let falseString = "false"
     
-    static func make(token: String) -> JSONValue {
+    static func make(token: String) throws -> JSONValue {
         if token.first == JSONSymbols.doubleQuotation {
             return String(token)
         }
@@ -22,7 +22,11 @@ struct JSONValueFactory {
         if token == falseString {
             return false
         }
-        return Int(token)!
+        
+        guard let numberValue = Int(token) else {
+            throw ValueFactoryError.impossibleToCreateJSONValue
+        }
+        return numberValue
     }
     
 }
