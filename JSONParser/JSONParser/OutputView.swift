@@ -17,8 +17,16 @@ struct OutputView {
         print(finalDescription)
     }
     
-
-    
-    
+    static private func getTypeCountDescription(of values: [JSONValue]) -> String {
+        var typeCountDescription: String = ""
+        let totalTypeCountPair = TypeCounter.getTotalTypeCount(of: values)
+        for (typeDescription, count) in totalTypeCountPair {
+            if count != 0 {
+                typeCountDescription += " \(typeDescription) \(count)개,"
+            }
+        }
+        let range = typeCountDescription.startIndex..<typeCountDescription.index(before: typeCountDescription.endIndex)
+        return String(typeCountDescription[range])
+    }
     
 }
