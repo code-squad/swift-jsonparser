@@ -27,16 +27,16 @@ struct JsonParser {
     static func parseJson (_ input: String) -> [JsonType] {
         let devideCharacter = DevideCharacter(rawValue: input.first!) ?? .colon
         let elements: [String]
+        let json: [JsonType]
         
         if devideCharacter == DevideCharacter.squareBracketOpen {
-            let elementsFromArray = RegexGrammar.elementsFromArrayInArray
+            let elementsFromArray = RegexGrammar.elementsFromArray
             elements = matches(for: elementsFromArray.rawValue, in: input)
+            json = elementsToJson(elements)
         } else {
-            let elementsFromObject = RegexGrammar.elementsFromObject
-            elements = matches(for: elementsFromObject.rawValue, in: input)
+            
+            json = [elementToObject(input)]
         }
-        
-        let json = elementsToJson(elements)
         
         return json
     }
@@ -53,19 +53,21 @@ struct JsonParser {
     
     static private func elementToJsonType (_ element: String) -> JsonType {
         switch element.first {
-        case "{": return JsonType.object(elementToObject(element))
+        case "{": return elementToObject(element)
         case "[": return JsonType.array(elementToArray(element))
         default: return getJsonValue(element)
         }
     }
     
-    static private func elementToObject (_ element: String) -> [String:JsonType] {
+    static private func elementToObject (_ input: String) -> JsonType {
         var jsonObject = [String:JsonType]()
-        let elementsFromObject = RegexGrammar.elementsFromArrayInArray
-        let elements = matches(for: element, in: elementsFromObject.rawValue)
+        
+        let elementsFromObject = RegexGrammar.elementsFromObject
+        let elements = matches(for: elementsFromObject.rawValue, in: input)
+        
         let colon = DevideCharacter.colon
         var elementSplited: [String]
-    
+        
         for element in elements {
             elementSplited = element.components(separatedBy: String(colon.rawValue))
             elementSplited[0].removeFirst()
@@ -74,12 +76,12 @@ struct JsonParser {
             jsonObject[elementSplited[0]] = getJsonValue(elementSplited[1])
         }
         
-        return jsonObject
+        return JsonType.object(jsonObject)
     }
     
     static private func elementToArray (_ element: String) -> [JsonType] {
         var jsonArray = [JsonType]()
-        let elementsFromArray = RegexGrammar.elementsFromObject
+        let elementsFromArray = RegexGrammar.elementsFromArray
         let elements = matches(for: element, in: elementsFromArray.rawValue)
     
         for element in elements {
@@ -89,17 +91,8 @@ struct JsonParser {
         return jsonArray
     }
     
-//    static private func getObjectElement (_ input: String) -> (String, JsonType) {
-//        let colon = DevideCharacter.colon
-//        var inputSplited = input.components(separatedBy: String(colon.rawValue))
-//
-//        inputSplited[0] = removeBlank(inputSplited[0], first: DevideCharacter.curlyBracketOpen, last: DevideCharacter.curlyBracketClose)
-//        inputSplited[1] = removeBlank(inputSplited[1], first: DevideCharacter.curlyBracketOpen, last: DevideCharacter.curlyBracketClose)
-//
-//        return (inputSplited[0], getJsonValue(inputSplited[1]))
-//    }
-    
     static private func getJsonValue (_ input: String) -> JsonType {
+        if input.first == "[" { return JsonType.array(elementToArray(input)) }
         if let number = Int(input) { return JsonType.int(number) }
         else if input == "true" { return JsonType.bool(true) }
         else if input == "false" { return JsonType.bool(false) }
