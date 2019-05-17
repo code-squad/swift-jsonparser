@@ -11,8 +11,11 @@ import Foundation
 struct InputView {
     static private let instruction = "분석할 JSON 데이터를 입력하세요."
     
-    static func read() -> String {
+    static func printInstruction() {
         print(instruction)
+    }
+    
+    static func read() -> String {
         guard let input = readLine() else {
             return ""
         }

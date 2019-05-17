@@ -66,10 +66,10 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
-				C2FAEDA1228E9CAE0045F639 /* JSONSymbols.swift */,
 				C2FAED9B228E98A00045F639 /* InputView.swift */,
 				C2FAED9D228E99580045F639 /* Tokenizer.swift */,
 				C2FAED9F228E9AD40045F639 /* JSONValue.swift */,
+				C2FAEDA1228E9CAE0045F639 /* JSONSymbols.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
