@@ -1,5 +1,5 @@
 //
-//  OuputView.swift
+//  OutputView.swift
 //  JSONParser
 //
 //  Created by Daheen Lee on 17/05/2019.
@@ -7,7 +7,3 @@
 //
 
 import Foundation
-
-struct OutputView {
-    
-}
