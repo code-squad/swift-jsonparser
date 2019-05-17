@@ -10,9 +10,6 @@ import Foundation
 
 struct Tokenizer {
     
-    static let openBracket = "["
-    static let closedBracke = "]"
-    
     static func execute(using input: String) -> [String] {
         
         let tokens = input.components(separatedBy: [" ", ","])
