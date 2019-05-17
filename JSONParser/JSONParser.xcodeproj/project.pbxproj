@@ -12,6 +12,7 @@
 		C2FAED9E228E99580045F639 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAED9D228E99580045F639 /* Tokenizer.swift */; };
 		C2FAEDA0228E9AD40045F639 /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAED9F228E9AD40045F639 /* JSONValue.swift */; };
 		C2FAEDA2228E9CAE0045F639 /* JSONSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAEDA1228E9CAE0045F639 /* JSONSymbols.swift */; };
+		C2FAEDA4228E9DBA0045F639 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAEDA3228E9DBA0045F639 /* Parser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,7 @@
 		C2FAED9D228E99580045F639 /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
 		C2FAED9F228E9AD40045F639 /* JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValue.swift; sourceTree = "<group>"; };
 		C2FAEDA1228E9CAE0045F639 /* JSONSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONSymbols.swift; sourceTree = "<group>"; };
+		C2FAEDA3228E9DBA0045F639 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				C2FAED9B228E98A00045F639 /* InputView.swift */,
 				C2FAED9D228E99580045F639 /* Tokenizer.swift */,
 				C2FAED9F228E9AD40045F639 /* JSONValue.swift */,
+				C2FAEDA3228E9DBA0045F639 /* Parser.swift */,
 				C2FAEDA1228E9CAE0045F639 /* JSONSymbols.swift */,
 			);
 			path = JSONParser;
@@ -134,6 +137,7 @@
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				C2FAEDA0228E9AD40045F639 /* JSONValue.swift in Sources */,
+				C2FAEDA4228E9DBA0045F639 /* Parser.swift in Sources */,
 				C2FAEDA2228E9CAE0045F639 /* JSONSymbols.swift in Sources */,
 				C2FAED9E228E99580045F639 /* Tokenizer.swift in Sources */,
 				C2FAED9C228E98A00045F639 /* InputView.swift in Sources */,
