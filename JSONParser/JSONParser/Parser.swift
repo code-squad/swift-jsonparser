@@ -12,16 +12,13 @@ struct Parser {
     
     static func parse(_ tokens: [String]) -> [JSONValue] {
         
-        var values: [JSONValue] = []
-        
         if isWrappedWithBrackets(using: tokens) {
-            let tokensWithoutBracket = tokens.filter() { token in
-                token != JSONSymbols.openBracket && token != JSONSymbols.closedBracket }
-            
-            values = parseIntoJSONValues(using: tokensWithoutBracket)
+            let innerRange = 1...tokens.count-2
+            let innerValues = Array(tokens[innerRange])
+            return parseIntoJSONValues(using: innerValues)
         }
         
-        return values
+        return [] //error
         
     }
     
