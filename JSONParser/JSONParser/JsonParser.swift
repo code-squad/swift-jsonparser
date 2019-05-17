@@ -9,39 +9,68 @@
 import Foundation
 
 struct JsonParser {
-    static func parseJson (_ inputSplited: String) -> [JsonType] {
-        var json = [JsonType]()
-        var object = [String: JsonType]()
-        var array = [JsonType]()
-        var key: String
-        var value: JsonType
-        var modifyInput: String
-        var firstDevideCharacter: DevideCharacter
-        var lastDevideCharacter: DevideCharacter
+    //정규표현식에 해당하는 문자열 배열 리턴
+    static private func matches(for regex: String, in text: String) -> [String] {
+        do {
+            let regex = try NSRegularExpression(pattern: regex)
+            let results = regex.matches(in: text,
+                                        range: NSRange(text.startIndex..., in: text))
+            return results.map {
+                String(text[Range($0.range, in: text)!])
+            }
+        } catch let error {
+            print("invalid regex: \(error.localizedDescription)")
+            return []
+        }
+    }
+    
+    static func parseJson (_ input: String) -> [JsonType] {
+        let devideCharacter = DevideCharacter(rawValue: input.first!) ?? .colon
+        let elements: [String]
         
-        for inputValue in inputSplited {
-            modifyInput = removeBlank(inputValue, first: DevideCharacter.squareBracketOpen, last: DevideCharacter.squareBracketClose)
-            firstDevideCharacter = DevideCharacter(rawValue: modifyInput.first!) ?? .colon
-            lastDevideCharacter = DevideCharacter(rawValue: modifyInput.last!) ?? .colon
-            if firstDevideCharacter == DevideCharacter.squareBracketOpen || array.count > 0 {
-                array.append(getJsonValue(modifyInput))
-            } else if firstDevideCharacter == DevideCharacter.curlyBracketOpen || object.count > 0 {
-                (key, value) = getObjectElement(modifyInput)
-                object[key] = value
-            } else {
-                json.append(getJsonValue(modifyInput))
-            }
-            if lastDevideCharacter == DevideCharacter.curlyBracketClose {
-                json.append(JsonType.object(object))
-                object.removeAll()
-            }
-            if lastDevideCharacter == DevideCharacter.squareBracketClose {
-                json.append(JsonType.array(array))
-                array.removeAll()
-            }
+        if devideCharacter == DevideCharacter.squareBracketOpen {
+            let elementsFromArray = RegexGrammar.elementsFromArray
+            elements = matches(for: elementsFromArray.rawValue, in: input)
+        } else {
+            let elementsFromObject = RegexGrammar.elementsFromObject
+            elements = matches(for: elementsFromObject.rawValue, in: input)
+        }
+        
+        let json = elementsToJson(elements)
+        
+        return json
+    }
+    
+    static private func elementsToJson (_ elements: [String]) -> [JsonType] {
+        var json = [JsonType]()
+        
+        for element in elements {
+            
         }
         
         return json
+    }
+    
+    static private func elementToJsonType (_ element: String) -> JsonType {
+        switch element.first {
+        case "{":
+        case "[":
+        default:
+        }
+    }
+    
+    static private func elementToObject (_ element: String) -> JsonType {
+        let colon = DevideCharacter.colon
+        var elementSplited = element.components(separatedBy: String(colon.rawValue))
+        element
+        
+        return
+    }
+    
+    static private func elementToObjectElement (_ element: String) -> JsonType {
+        
+        
+        return
     }
     
     static private func getObjectElement (_ input: String) -> (String, JsonType) {

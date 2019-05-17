@@ -15,4 +15,5 @@ enum DevideCharacter: Character {
     case curlyBracketClose = "}"
     case colon = ":"
     case whiteSpace = " "
+    case comma = ","
 }
