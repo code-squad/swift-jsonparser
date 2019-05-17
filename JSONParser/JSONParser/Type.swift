@@ -2,29 +2,25 @@ import Foundation
 
 protocol Type {
     var typeDescription: String { get }
+}
+
+protocol ElementCountable {
     var countDescription: String { get }
 }
 
-protocol SingleValueType: Type { }
-
-protocol MultipleValuesType: Type { }
-
-extension SingleValueType {
-    var countDescription: String {
-        return "총 1개의 데이터 중에 \(self.typeDescription) 1개가 포함되어 있습니다."
-    }
-}
-
-extension String: SingleValueType {
+extension String: Type {
     var typeDescription: String { return "문자열" }
 }
-extension Double: SingleValueType {
+
+extension Double: Type {
     var typeDescription: String { return "숫자" }
 }
-extension Bool: SingleValueType {
+
+extension Bool: Type {
     var typeDescription: String { return "부울" }
 }
-extension Array: Type where Element == Type {
+
+extension Array: Type, ElementCountable where Element == Type {
     
     var typeDescription: String { return "배열" }
     
@@ -39,7 +35,7 @@ extension Array: Type where Element == Type {
     }
     
 }
-extension Dictionary: Type where Key == String ,Value == Type {
+extension Dictionary: Type, ElementCountable where Key == String ,Value == Type {
     
     var typeDescription: String { return "오브젝트" }
     
