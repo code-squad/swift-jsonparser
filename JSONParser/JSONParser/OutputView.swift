@@ -15,16 +15,6 @@ struct OutputView {
         let mentByTypes = extractionMent(jsonData: jsonData.json)
         print("\(mentByTypes)가 포함되어 있습니다.")
     }
-    /// 포함된 타입들의 멘트를 만드는 함수
-    private func buildCountMent(key: String, value: Int) -> String{
-        var mentAndValue : String = ""
-        switch value {
-        case 1...Int.max:
-            mentAndValue = "\(key) \(value)개"
-        default: break
-        }
-        return mentAndValue
-    }
     /// 조건에 따라 각 타입별 count를 증가시키는 함수
     private func distinctAndCountOfType(jsonDatum: Json, countOfType: (문자열: Int, 숫자: Int, 부울: Int, 객체: Int)) -> (문자열: Int, 숫자: Int, 부울: Int, 객체: Int) {
         var counts = countOfType
@@ -37,14 +27,17 @@ struct OutputView {
     /// 각 타입별 멘트를 출력하는 함수
     private func extractionMent(jsonData: [Json]) -> String{
         var countOfType = (문자열: 0, 숫자: 0, 부울: 0, 객체: 0)
+        var ment: String
         var prints : [String] = []
         for jsonDatum in jsonData {
             countOfType = distinctAndCountOfType(jsonDatum: jsonDatum, countOfType: countOfType)
             }
         let mirrorCountOfType = Mirror(reflecting: countOfType)
         for (key, value) in mirrorCountOfType.children{
-            let ment = buildCountMent(key: key ?? "", value: value as? Int ?? 0)
-            prints.append(ment)
+            if value as? Int ?? 0 > 0 {
+                ment = "\(key ?? "") \(value)개"
+                prints.append(ment)
+            }
         }
         let setPrint = prints.filter { $0 != ""}.joined(separator: ", ")
         return setPrint
