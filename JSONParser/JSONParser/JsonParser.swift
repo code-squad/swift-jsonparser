@@ -18,8 +18,7 @@ struct JsonParser {
             return results.map {
                 String(text[Range($0.range, in: text)!])
             }
-        } catch let error {
-            print("invalid regex: \(error.localizedDescription)")
+        } catch let _ {
             return []
         }
     }
