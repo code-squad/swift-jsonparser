@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+protocol JSONParserError: Error {
+    var message: String { get }
+}
+
+
