@@ -16,24 +16,26 @@ struct JsonParser {
         var key: String
         var value: JsonType
         var modifyInput: String
-        var devideCharacter: DevideCharacter
+        var firstDevideCharacter: DevideCharacter
+        var lastDevideCharacter: DevideCharacter
         
         for inputValue in inputSplited {
             modifyInput = removeBlank(inputValue, first: DevideCharacter.squareBracketOpen, last: DevideCharacter.squareBracketClose)
-            devideCharacter = DevideCharacter(rawValue: modifyInput.first!) ?? .colon
-            if devideCharacter == DevideCharacter.squareBracketOpen || array.count > 0 {
+            firstDevideCharacter = DevideCharacter(rawValue: modifyInput.first!) ?? .colon
+            lastDevideCharacter = DevideCharacter(rawValue: modifyInput.last!) ?? .colon
+            if firstDevideCharacter == DevideCharacter.squareBracketOpen || array.count > 0 {
                 array.append(getJsonValue(modifyInput))
-            } else if devideCharacter == DevideCharacter.curlyBracketOpen || object.count > 0 {
+            } else if firstDevideCharacter == DevideCharacter.curlyBracketOpen || object.count > 0 {
                 (key, value) = getObjectElement(modifyInput)
                 object[key] = value
             } else {
                 json.append(getJsonValue(modifyInput))
             }
-            if devideCharacter == DevideCharacter.curlyBracketClose {
+            if lastDevideCharacter == DevideCharacter.curlyBracketClose {
                 json.append(JsonType.object(object))
                 object.removeAll()
             }
-            if devideCharacter == DevideCharacter.squareBracketClose {
+            if lastDevideCharacter == DevideCharacter.squareBracketClose {
                 json.append(JsonType.array(array))
                 array.removeAll()
             }
