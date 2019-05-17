@@ -15,9 +15,9 @@ struct InputView {
         print(instruction)
     }
     
-    static func read() -> String {
+    static func read() throws -> String {
         guard let input = readLine() else {
-            return ""
+            throw InputError.invalidFormat
         }
         return input
     }
