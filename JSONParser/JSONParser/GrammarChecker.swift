@@ -37,13 +37,13 @@ struct GrammarChecker {
     }
     
     static private func checkObjectGrammar (_ input: String) -> Bool {
-        let objectRegexGrammar = regexGrammar.object
+        let objectRegexGrammar = RegexGrammar.object
         
         return input.matches(objectRegexGrammar.rawValue)
     }
     
     static private func checkArrayGrammar (_ input: String) -> Bool {
-        let arrayRegexGrammar = regexGrammar.array
+        let arrayRegexGrammar = RegexGrammar.array
         
         return input.matches(arrayRegexGrammar.rawValue)
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum regexGrammar: String {
+enum RegexGrammar: String {
     case object = "\\{ \"[\\d\\w ]+\" \\: (\\[(\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\"|true|false|\\d+))*\\]|\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\" \\: (\\[(\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\"|true|false|\\d+))*\\]|\"[\\d\\w ]+\"|true|false|\\d+)))* \\}"
     case array = "\\[ (\\[ {0,1}(\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\"|true|false|\\d+))* {0,1}\\]|\"[\\d\\w ]+\"|true|false|\\d+|\\{ \"[\\d\\w ]+\" \\: (\"[\\d\\w ]+\"|true|false|\\d+)(, (\\[ {0,1}(\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\"|true|false|\\d+))* {0,1}\\]|\"[\\d\\w ]+\" \\: (\"[\\d\\w ]+\"|true|false|\\d+)))* \\})(, (\"[\\d\\w ]+\"|true|false|\\d+|\\{ \"[\\d\\w ]+\" \\: (\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\" \\: (\"[\\d\\w ]+\"|true|false|\\d+)))* \\}))* \\]"
 }
