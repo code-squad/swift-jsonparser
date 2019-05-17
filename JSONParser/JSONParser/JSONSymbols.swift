@@ -9,6 +9,7 @@
 import Foundation
 
 struct JSONSymbols {
-    static let openBracket = "["
-    static let closedBracket = "]"
+    static let openBracket  = "["
+    static let closedBracket  = "]"
+    static let doubleQuotation: Character = "\""
 }
