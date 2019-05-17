@@ -10,10 +10,12 @@ import Foundation
 
 struct Tokenizer {
     
-    static func execute(using input: String) -> [String] {
+    static func execute(using input: String) throws -> [String] {
         
         let tokens = input.components(separatedBy: [" ", ","])
+        let validTokens = tokens.filter(){ token in token != "" }
         
+        if validTokens.isEmpty { throw TokenizerError.impossibleToTokenize }
         return tokens.filter(){ token in token != "" }
         
     }
