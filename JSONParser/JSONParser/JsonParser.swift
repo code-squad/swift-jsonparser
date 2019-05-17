@@ -15,19 +15,18 @@ struct JsonParser {
         var key: String
         var value: JsonType
         var modifyInput: String
-        let curryBracketOpen = DevideCharacter.curlyBracketOpen
-        let curryBracketClose = DevideCharacter.curlyBracketClose
+        var devideCharacter: DevideCharacter
         
         for inputValue in inputSplited {
             modifyInput = removeBlank(inputValue, first: DevideCharacter.squareBracketOpen, last: DevideCharacter.squareBracketClose)
-            
-            if modifyInput.first == curryBracketOpen.rawValue || object.count > 0 {
+            devideCharacter = DevideCharacter(rawValue: modifyInput.first!) ?? .colon
+            if devideCharacter == DevideCharacter.curlyBracketOpen || object.count > 0 {
                 (key, value) = getObjectElement(modifyInput)
                 object[key] = value
             } else {
                 json.append(getJsonValue(modifyInput))
             }
-            if modifyInput.last == curryBracketClose.rawValue {
+            if devideCharacter == DevideCharacter.curlyBracketClose {
                 json.append(JsonType.object(object))
                 object.removeAll()
             }

@@ -22,10 +22,12 @@ extension String {
 struct GrammarChecker {
     static func checkJsonGrammar(_ input: String) throws {
         var verifyJsonGrammerPass = false
-        if input.first == "[" {
+        let devideCharacter = DevideCharacter(rawValue: input.first!) ?? .colon
+        
+        if devideCharacter == DevideCharacter.squareBracketOpen {
             verifyJsonGrammerPass = checkArrayGrammar(input)
         }
-        if input.first == "{" {
+        if devideCharacter == DevideCharacter.curlyBracketOpen {
            verifyJsonGrammerPass = checkObjectGrammar(input)
         }
         
