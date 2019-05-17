@@ -21,7 +21,7 @@ func main () {
         catch let error as InputError { print(error.rawValue) }
         catch { print(error) }
     }
-    json = Converter.stringToJson(inputView.valueEntered)
+    json = JsonParser.parseJson(inputView.valueEntered)
     let message = MessageMaker.makeMessage(json)
     outputView.printMessage(message)
 }

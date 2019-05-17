@@ -9,13 +9,11 @@
 /* Begin PBXBuildFile section */
 		3304B5D722817ADB000883DC /* DevideCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3304B5D622817ADB000883DC /* DevideCharacter.swift */; };
 		3304B5D92282B29B000883DC /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3304B5D82282B29B000883DC /* GrammarChecker.swift */; };
-		330A94C32273CD4300D475C4 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330A94C22273CD4300D475C4 /* Converter.swift */; };
 		330A94C52273DADA00D475C4 /* InputError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330A94C42273DADA00D475C4 /* InputError.swift */; };
 		3390212B228A66C9009ADE9F /* regexGrammar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3390212A228A66C9009ADE9F /* regexGrammar.swift */; };
 		33902133228AA15B009ADE9F /* JSONParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33902132228AA15B009ADE9F /* JSONParserTest.swift */; };
 		33902138228AA389009ADE9F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		33902139228AA38C009ADE9F /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F901E42273222600BC4927 /* InputView.swift */; };
-		3390213A228AA38F009ADE9F /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330A94C22273CD4300D475C4 /* Converter.swift */; };
 		3390213B228AA392009ADE9F /* InputError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330A94C42273DADA00D475C4 /* InputError.swift */; };
 		3390213C228AA395009ADE9F /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF2E8D2276EE4D0057C3A9 /* OutputView.swift */; };
 		3390213D228AA39D009ADE9F /* JsonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF2E8F2276EF720057C3A9 /* JsonType.swift */; };
@@ -47,7 +45,6 @@
 /* Begin PBXFileReference section */
 		3304B5D622817ADB000883DC /* DevideCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevideCharacter.swift; sourceTree = "<group>"; };
 		3304B5D82282B29B000883DC /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
-		330A94C22273CD4300D475C4 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 		330A94C42273DADA00D475C4 /* InputError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputError.swift; sourceTree = "<group>"; };
 		3390212A228A66C9009ADE9F /* regexGrammar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = regexGrammar.swift; sourceTree = "<group>"; };
 		33902130228AA15B009ADE9F /* JSONParserTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONParserTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,7 +109,6 @@
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				33F901E42273222600BC4927 /* InputView.swift */,
-				330A94C22273CD4300D475C4 /* Converter.swift */,
 				330A94C42273DADA00D475C4 /* InputError.swift */,
 				33FF2E8D2276EE4D0057C3A9 /* OutputView.swift */,
 				33FF2E8F2276EF720057C3A9 /* JsonType.swift */,
@@ -223,7 +219,6 @@
 				3390213E228AA39F009ADE9F /* JsonParser.swift in Sources */,
 				3390213F228AA3A2009ADE9F /* MessageMaker.swift in Sources */,
 				33902138228AA389009ADE9F /* main.swift in Sources */,
-				3390213A228AA38F009ADE9F /* Converter.swift in Sources */,
 				3390213B228AA392009ADE9F /* InputError.swift in Sources */,
 				33902133228AA15B009ADE9F /* JSONParserTest.swift in Sources */,
 				3390213C228AA395009ADE9F /* OutputView.swift in Sources */,
@@ -240,7 +235,6 @@
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				33FF2E942276F2A60057C3A9 /* MessageMaker.swift in Sources */,
 				330A94C52273DADA00D475C4 /* InputError.swift in Sources */,
-				330A94C32273CD4300D475C4 /* Converter.swift in Sources */,
 				33F901E52273222600BC4927 /* InputView.swift in Sources */,
 				33FF2E922276F09C0057C3A9 /* JsonParser.swift in Sources */,
 				33FF2E902276EF720057C3A9 /* JsonType.swift in Sources */,
