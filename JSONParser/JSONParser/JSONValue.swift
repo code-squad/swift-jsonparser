@@ -9,19 +9,19 @@
 import Foundation
 
 protocol JSONValue {
-    
+    static var typeDescription: String { get }
 }
 
 extension Bool: JSONValue {
-    
+    static var typeDescription: String { return "부울" }
 }
 
 extension Int: JSONValue {
-    
+    static var typeDescription: String { return "숫자" }
 }
 
 extension String: JSONValue {
-    
+    static var typeDescription: String { return "문자열" }
 }
 
 
