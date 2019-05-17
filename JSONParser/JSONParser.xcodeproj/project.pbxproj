@@ -10,6 +10,7 @@
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		C2FAED9C228E98A00045F639 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAED9B228E98A00045F639 /* InputView.swift */; };
 		C2FAED9E228E99580045F639 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAED9D228E99580045F639 /* Tokenizer.swift */; };
+		C2FAEDA0228E9AD40045F639 /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAED9F228E9AD40045F639 /* JSONValue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,6 +30,7 @@
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C2FAED9B228E98A00045F639 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		C2FAED9D228E99580045F639 /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
+		C2FAED9F228E9AD40045F639 /* JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				C2FAED9B228E98A00045F639 /* InputView.swift */,
 				C2FAED9D228E99580045F639 /* Tokenizer.swift */,
+				C2FAED9F228E9AD40045F639 /* JSONValue.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -127,6 +130,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				C2FAEDA0228E9AD40045F639 /* JSONValue.swift in Sources */,
 				C2FAED9E228E99580045F639 /* Tokenizer.swift in Sources */,
 				C2FAED9C228E98A00045F639 /* InputView.swift in Sources */,
 			);
