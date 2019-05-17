@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct IntputView {
+struct InputView {
     static private let instruction = "분석할 JSON 데이터를 입력하세요."
     
     static func read() -> String {
