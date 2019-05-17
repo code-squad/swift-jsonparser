@@ -13,12 +13,12 @@ class JSONParserTest: XCTestCase {
         XCTAssertNoThrow(try GrammarChecker.checkJsonGrammar("[ 10, 21, 4, 314, 99, 0, 72 ]"))
         XCTAssertNoThrow(try GrammarChecker.checkJsonGrammar("[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"))
         XCTAssertNoThrow(try GrammarChecker.checkJsonGrammar("{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"))
-        XCTAssertNoThrow(try GrammarChecker.checkJsonGrammar("[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"))
         XCTAssertThrowsError(try GrammarChecker.checkJsonGrammar("[ \"name\" : \"KIM JUNG\" ]"))
-        XCTAssertThrowsError(try GrammarChecker.checkJsonGrammar("{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"))
         XCTAssertNoThrow(try GrammarChecker.checkJsonGrammar("[ 72 ]"))
         XCTAssertNoThrow(try GrammarChecker.checkJsonGrammar("[ { \"name\" : \"dominic\" } ]"))
         XCTAssertThrowsError(try GrammarChecker.checkJsonGrammar("[ \"name\" : \"KIM JUNG\" }"))
         XCTAssertThrowsError(try GrammarChecker.checkJsonGrammar("[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5 }, { \"name\" : \"YAGOM\" } "))
+        XCTAssertNoThrow(try GrammarChecker.checkJsonGrammar("{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"))
+        XCTAssertNoThrow(try GrammarChecker.checkJsonGrammar("[ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]"))
     }
 }
