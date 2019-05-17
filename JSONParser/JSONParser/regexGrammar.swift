@@ -9,6 +9,6 @@
 import Foundation
 
 enum regexGrammar: String {
-    case object = "\\{ \"[\\d\\w ]+\" \\: (\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\" \\: (\"[\\d\\w ]+\"|true|false|\\d+)))* \\}"
-    case array = "\\[ (\"[\\d\\w ]+\"|true|false|\\d+|\\{ \"[\\d\\w ]+\" \\: (\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\" \\: (\"[\\d\\w ]+\"|true|false|\\d+)))* \\})(, (\"[\\d\\w ]+\"|true|false|\\d+|\\{ \"[\\d\\w ]+\" \\: (\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\" \\: (\"[\\d\\w ]+\"|true|false|\\d+)))* \\}))* \\]"
+    case object = "\\{ \"[\\d\\w ]+\" \\: (\\[(\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\"|true|false|\\d+))*\\]|\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\" \\: (\\[(\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\"|true|false|\\d+))*\\]|\"[\\d\\w ]+\"|true|false|\\d+)))* \\}"
+    case array = "\\[ (\\[ {0,1}(\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\"|true|false|\\d+))* {0,1}\\]|\"[\\d\\w ]+\"|true|false|\\d+|\\{ \"[\\d\\w ]+\" \\: (\"[\\d\\w ]+\"|true|false|\\d+)(, (\\[ {0,1}(\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\"|true|false|\\d+))*\\d\\w ]+\" \\: (\"[\\d\\w ]+\"|true|false|\\d+)))* \\})(, (\"[\\d\\w ]+\"|true|false|\\d+|\\{ \"[\\d\\w ]+\" \\: (\"[\\d\\w ]+\"|true|false|\\d+)(, (\"[\\d\\w ]+\" \\: (\"[\\d\\w ]+\"|true|false|\\d+)))* \\}))* \\]"
 }
