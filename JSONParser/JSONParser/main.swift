@@ -8,4 +8,9 @@
 
 import Foundation
 
+InputView.printInstruction()
 let input = InputView.read()
+
+let tokens = Tokenizer.execute(using: input)
+let parsedValues: [JSONValue] = Parser.parse(tokens)
+
