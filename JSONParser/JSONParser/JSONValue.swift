@@ -8,3 +8,8 @@
 
 import Foundation
 
+enum JSONValueType {
+    case bool(Bool)
+    case number(Int)
+    case string(String)
+}
