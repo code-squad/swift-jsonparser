@@ -17,6 +17,11 @@ struct ArrayTokenizer {
         var input = input
         input.removeFirst()
         input.removeLast()
+        let values = input.trimmingCharacters(in: Token.whitespace)
+        
+        guard FormatValidator.validateArrayFormat(values) else {
+            throw TokenizingError.invalidArrayGrammar
+        }
         
         var tokenizedInput = [String]()
         var buffer = ""
@@ -24,7 +29,7 @@ struct ArrayTokenizer {
         var nestedArrayCount: UInt = 0
         var nestedObjectCount: UInt = 0
         
-        for character in input {
+        for character in values {
             if character == Token.quotationMark {
                 isParsingString.toggle()
             } else if !isParsingString {

@@ -19,6 +19,11 @@ struct ObjectTokenizer {
         var input = input
         input.removeFirst()
         input.removeLast()
+        let values = input.trimmingCharacters(in: Token.whitespace)
+        
+        guard FormatValidator.validateObjectFormat(values) else {
+            throw TokenizingError.invalidObjectGrammar
+        }
         
         var tokenizedInput = [String: String]()
         var keyBuffer = ""
@@ -28,7 +33,7 @@ struct ObjectTokenizer {
         var nestedObjectCount: UInt = 0
         var isParsingKey = true
         
-        for character in input {
+        for character in values {
             if character == Token.quotationMark {
                 isParsingString.toggle()
             } else if !isParsingString {
