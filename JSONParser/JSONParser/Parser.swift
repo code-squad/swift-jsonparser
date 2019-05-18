@@ -42,9 +42,10 @@ struct Parser {
 
     private static func parseObject(_ input: String) throws -> [String: Type]? {
         guard input.first == Token.beginObject else { return nil }
-        let tokenized = try ObjectTokenizer.tokenize(input)
+        let tokenizedInput = try ObjectTokenizer.tokenize(input)
+        if tokenizedInput.isEmpty { return tokenizedInput }
         var result = [String: Type]()
-        for (key, value) in tokenized {
+        for (key, value) in tokenizedInput {
             guard let key = parseString(key) else {
                 throw ParsingError.objectKeyMustBeString
             }
@@ -56,9 +57,10 @@ struct Parser {
 
     private static func parseArray(_ input: String) throws -> [Type]? {
         guard input.first == Token.beginArray else { return nil }
-        let tokenized = try ArrayTokenizer.tokenize(input)
+        let tokenizedInput = try ArrayTokenizer.tokenize(input)
+        if tokenizedInput.isEmpty { return tokenizedInput }
         var result = [Type]()
-        for value in tokenized {
+        for value in tokenizedInput {
             result.append(try parseValue(value))
         }
         return result

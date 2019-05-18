@@ -5,6 +5,7 @@ struct ObjectTokenizer {
     enum TokenizingError: Error {
         case cannotDetectBeginOrEndOfObject
         case objectKeyShouldBeOneAndOnly
+        case invalidNestedStructure
     }
     
     static func tokenize(_ input: String) throws -> [String: String] {
@@ -16,7 +17,7 @@ struct ObjectTokenizer {
         input.removeFirst()
         input.removeLast()
         
-        var tokenized = [String: String]()
+        var tokenizedInput = [String: String]()
         var keyBuffer = ""
         var valueBuffer = ""
         var isParsingString = false
@@ -30,10 +31,16 @@ struct ObjectTokenizer {
             } else if !isParsingString {
                 switch character {
                 case Token.endObject:
+                    guard nestedObjectCount > 0 else {
+                        throw TokenizingError.invalidNestedStructure
+                    }
                     nestedObjectCount -= 1
                 case Token.beginObject:
                     nestedObjectCount += 1
                 case Token.endArray:
+                    guard nestedArrayCount > 0 else {
+                        throw TokenizingError.invalidNestedStructure
+                    }
                     nestedArrayCount -= 1
                 case Token.beginArray:
                     nestedArrayCount += 1
@@ -41,7 +48,7 @@ struct ObjectTokenizer {
                     guard nestedObjectCount == 0, nestedArrayCount == 0 else {
                         break
                     }
-                    try move(fromKeyBuffer: &keyBuffer, valueBuffer: &valueBuffer, to: &tokenized)
+                    try move(fromKeyBuffer: &keyBuffer, valueBuffer: &valueBuffer, to: &tokenizedInput)
                     isParsingKey = true
                     continue
                 case Token.nameSeparator:
@@ -57,8 +64,8 @@ struct ObjectTokenizer {
                 valueBuffer.append(character)
             }
         }
-        try move(fromKeyBuffer: &keyBuffer, valueBuffer: &valueBuffer, to: &tokenized)
-        return tokenized
+        try move(fromKeyBuffer: &keyBuffer, valueBuffer: &valueBuffer, to: &tokenizedInput)
+        return tokenizedInput
     }
     
     private static func move(fromKeyBuffer keyBuffer: inout String, valueBuffer: inout String, to result: inout [String: String]) throws {

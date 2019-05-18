@@ -7,7 +7,7 @@ struct InputView {
         guard let input = readLine() else {
             throw InputError.invalidError
         }
-        return input
+        return input.trimmingCharacters(in: Token.whitespace)
     }
     
 }
