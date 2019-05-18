@@ -11,3 +11,12 @@ import Foundation
 protocol Json {
     init (json: String) throws
 }
+extension Json where Self == TypeDictionary {
+    var json: [String:Json] {
+        return [:]
+    }
+    
+//    init (json: [String:Json]) {
+//        self = json
+//    }
+}

@@ -18,6 +18,7 @@
 		156AD8EF2284667D00200BD8 /* TypeDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156AD8EE2284667D00200BD8 /* TypeDictionary.swift */; };
 		15BDCD5B228ABFE800C28E60 /* Sign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BDCD5A228ABFE800C28E60 /* Sign.swift */; };
 		15BDCD5D228B0E5E00C28E60 /* DataMent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BDCD5C228B0E5E00C28E60 /* DataMent.swift */; };
+		15BDCD63228FEDD900C28E60 /* MentOfCounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BDCD62228FEDD900C28E60 /* MentOfCounts.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		156AD8EE2284667D00200BD8 /* TypeDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeDictionary.swift; sourceTree = "<group>"; };
 		15BDCD5A228ABFE800C28E60 /* Sign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sign.swift; sourceTree = "<group>"; };
 		15BDCD5C228B0E5E00C28E60 /* DataMent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMent.swift; sourceTree = "<group>"; };
+		15BDCD62228FEDD900C28E60 /* MentOfCounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentOfCounts.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,6 +93,7 @@
 				156AD8D92280882600200BD8 /* Json.swift */,
 				15BDCD5A228ABFE800C28E60 /* Sign.swift */,
 				15BDCD5C228B0E5E00C28E60 /* DataMent.swift */,
+				15BDCD62228FEDD900C28E60 /* MentOfCounts.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 				156AD8D6227C114600200BD8 /* TypeBool.swift in Sources */,
 				156AD8D1227C112200200BD8 /* TypeString.swift in Sources */,
 				156AD8C9227AC39500200BD8 /* OutputView.swift in Sources */,
+				15BDCD63228FEDD900C28E60 /* MentOfCounts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
