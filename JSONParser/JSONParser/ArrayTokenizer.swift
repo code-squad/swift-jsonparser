@@ -6,7 +6,7 @@ struct ArrayTokenizer {
         case cannotDetectBeginOrEndOfArray
     }
     
-    private func tokenize(_ input: String) throws -> [String] {
+    static func tokenize(_ input: String) throws -> [String] {
         
         guard input.first == Token.beginArray, input.last == Token.endArray else {
             throw TokenizingError.cannotDetectBeginOrEndOfArray
@@ -25,19 +25,27 @@ struct ArrayTokenizer {
             case Token.quotationMark:
                 isParsingString.toggle()
             case Token.endArray:
-                guard !isParsingString else { continue }
+                guard !isParsingString else { break }
                 nestedArrayCount -= 1
             case Token.beginArray:
-                guard !isParsingString else { continue }
+                guard !isParsingString else { break }
                 nestedArrayCount += 1
             case Token.valueSeparator:
-                tokenized.append(buffer)
-                buffer = ""
+                guard !isParsingString, nestedArrayCount == 0 else { break }
+                appendFromBuffer(&tokenized, &buffer)
+                continue
             default:
-                buffer.append(character)
+                break
             }
+            buffer.append(character)
         }
-        
+        appendFromBuffer(&tokenized, &buffer)
+        return tokenized
+    }
+    
+    private static func appendFromBuffer(_ tokenized: inout [String], _ buffer: inout String) {
+        tokenized.append(buffer.trimmingCharacters(in: Token.whitespace))
+        buffer = ""
     }
     
     

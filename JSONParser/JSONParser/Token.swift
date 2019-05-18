@@ -9,5 +9,5 @@ struct Token {
     static let valueSeparator: Character = ","
     static let quotationMark: Character = "\""
     
-    static let whitespace: Character = " "
+    static let whitespace: CharacterSet = [" ","\t","\n","\r"]
 }
