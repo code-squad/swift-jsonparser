@@ -12,7 +12,8 @@ extension String: Type {
     var typeDescription: String { return "문자열" }
 }
 
-extension Double: Type {
+typealias Number = Double
+extension Number: Type {
     var typeDescription: String { return "숫자" }
 }
 
@@ -35,6 +36,7 @@ extension Array: Type, ElementCountable where Element == Type {
     }
     
 }
+
 extension Dictionary: Type, ElementCountable where Key == String ,Value == Type {
     
     var typeDescription: String { return "오브젝트" }

@@ -22,6 +22,7 @@
 		F283CA832275E58400D7CBBC /* ParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E70F3422734BB3008E0BA8 /* ParsingStrategy.swift */; };
 		F283CA852275EBA200D7CBBC /* ArrayParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA842275EBA200D7CBBC /* ArrayParsingStrategy.swift */; };
 		F292A2E4227AC76F0048C573 /* ObjectParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292A2E3227AC76F0048C573 /* ObjectParsingStrategy.swift */; };
+		F29D7B5D228F99BA00F70DE6 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29D7B5C228F99BA00F70DE6 /* Parser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +52,7 @@
 		F283CA812275E0F800D7CBBC /* ValueParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueParser.swift; sourceTree = "<group>"; };
 		F283CA842275EBA200D7CBBC /* ArrayParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayParsingStrategy.swift; sourceTree = "<group>"; };
 		F292A2E3227AC76F0048C573 /* ObjectParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectParsingStrategy.swift; sourceTree = "<group>"; };
+		F29D7B5C228F99BA00F70DE6 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F2CBFDBD228F0267009A7242 /* ArrayTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayTokenizer.swift; sourceTree = "<group>"; };
 		F2E70F3422734BB3008E0BA8 /* ParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingStrategy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,6 +90,7 @@
 				F21006512272A2A10033D0B7 /* JSONParser.swift */,
 				F2CBFDBD228F0267009A7242 /* ArrayTokenizer.swift */,
 				F262C2DD228F8D45007EF45B /* ObjectTokenizer.swift */,
+				F29D7B5C228F99BA00F70DE6 /* Parser.swift */,
 				F262C2DF228F8D92007EF45B /* Token.swift */,
 				F283CA792275759200D7CBBC /* Type.swift */,
 				F2399ECE227732E000CBFF5D /* ParsingStrategies */,
@@ -179,6 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F292A2E4227AC76F0048C573 /* ObjectParsingStrategy.swift in Sources */,
+				F29D7B5D228F99BA00F70DE6 /* Parser.swift in Sources */,
 				F283CA7C2275C4E700D7CBBC /* StringParsingStrategy.swift in Sources */,
 				F283CA822275E0F800D7CBBC /* ValueParser.swift in Sources */,
 				F283CA7E2275CA8C00D7CBBC /* BoolParsingStrategy.swift in Sources */,
