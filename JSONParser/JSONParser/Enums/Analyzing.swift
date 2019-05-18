@@ -11,6 +11,5 @@ import Foundation
 enum Analyzing {
     case Array
     case String
-    case Number
-    case Bool
+    case Element
 }
