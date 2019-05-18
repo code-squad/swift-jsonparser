@@ -9,19 +9,11 @@
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		F21006502272A1570033D0B7 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F210064F2272A1570033D0B7 /* InputView.swift */; };
-		F21006522272A2A10033D0B7 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006512272A2A10033D0B7 /* JSONParser.swift */; };
 		F21006542272A5A70033D0B7 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006532272A5A70033D0B7 /* OutputView.swift */; };
 		F262C2DC228F8C3E007EF45B /* ArrayTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CBFDBD228F0267009A7242 /* ArrayTokenizer.swift */; };
 		F262C2DE228F8D45007EF45B /* ObjectTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F262C2DD228F8D45007EF45B /* ObjectTokenizer.swift */; };
 		F262C2E0228F8D92007EF45B /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = F262C2DF228F8D92007EF45B /* Token.swift */; };
 		F283CA7A2275759200D7CBBC /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA792275759200D7CBBC /* Type.swift */; };
-		F283CA7C2275C4E700D7CBBC /* StringParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */; };
-		F283CA7E2275CA8C00D7CBBC /* BoolParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */; };
-		F283CA802275CEED00D7CBBC /* NumberParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA7F2275CEED00D7CBBC /* NumberParsingStrategy.swift */; };
-		F283CA822275E0F800D7CBBC /* ValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA812275E0F800D7CBBC /* ValueParser.swift */; };
-		F283CA832275E58400D7CBBC /* ParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E70F3422734BB3008E0BA8 /* ParsingStrategy.swift */; };
-		F283CA852275EBA200D7CBBC /* ArrayParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA842275EBA200D7CBBC /* ArrayParsingStrategy.swift */; };
-		F292A2E4227AC76F0048C573 /* ObjectParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292A2E3227AC76F0048C573 /* ObjectParsingStrategy.swift */; };
 		F29D7B5D228F99BA00F70DE6 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29D7B5C228F99BA00F70DE6 /* Parser.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,20 +33,12 @@
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		F210064F2272A1570033D0B7 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
-		F21006512272A2A10033D0B7 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		F21006532272A5A70033D0B7 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		F262C2DD228F8D45007EF45B /* ObjectTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectTokenizer.swift; sourceTree = "<group>"; };
 		F262C2DF228F8D92007EF45B /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		F283CA792275759200D7CBBC /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
-		F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringParsingStrategy.swift; sourceTree = "<group>"; };
-		F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolParsingStrategy.swift; sourceTree = "<group>"; };
-		F283CA7F2275CEED00D7CBBC /* NumberParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberParsingStrategy.swift; sourceTree = "<group>"; };
-		F283CA812275E0F800D7CBBC /* ValueParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueParser.swift; sourceTree = "<group>"; };
-		F283CA842275EBA200D7CBBC /* ArrayParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayParsingStrategy.swift; sourceTree = "<group>"; };
-		F292A2E3227AC76F0048C573 /* ObjectParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectParsingStrategy.swift; sourceTree = "<group>"; };
 		F29D7B5C228F99BA00F70DE6 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F2CBFDBD228F0267009A7242 /* ArrayTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayTokenizer.swift; sourceTree = "<group>"; };
-		F2E70F3422734BB3008E0BA8 /* ParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingStrategy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,31 +71,13 @@
 		83AE2E0E1F8CAC2800F38CC9 /* JSONParser */ = {
 			isa = PBXGroup;
 			children = (
-				F21006512272A2A10033D0B7 /* JSONParser.swift */,
-				F2CBFDBD228F0267009A7242 /* ArrayTokenizer.swift */,
-				F262C2DD228F8D45007EF45B /* ObjectTokenizer.swift */,
 				F29D7B5C228F99BA00F70DE6 /* Parser.swift */,
-				F262C2DF228F8D92007EF45B /* Token.swift */,
 				F283CA792275759200D7CBBC /* Type.swift */,
-				F2399ECE227732E000CBFF5D /* ParsingStrategies */,
+				F29D7B5E228FA88A00F70DE6 /* Tokenizer */,
 				F2399ECF227732FD00CBFF5D /* Views */,
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 			);
 			path = JSONParser;
-			sourceTree = "<group>";
-		};
-		F2399ECE227732E000CBFF5D /* ParsingStrategies */ = {
-			isa = PBXGroup;
-			children = (
-				F283CA812275E0F800D7CBBC /* ValueParser.swift */,
-				F292A2E3227AC76F0048C573 /* ObjectParsingStrategy.swift */,
-				F283CA842275EBA200D7CBBC /* ArrayParsingStrategy.swift */,
-				F283CA7B2275C4E700D7CBBC /* StringParsingStrategy.swift */,
-				F283CA7D2275CA8C00D7CBBC /* BoolParsingStrategy.swift */,
-				F283CA7F2275CEED00D7CBBC /* NumberParsingStrategy.swift */,
-				F2E70F3422734BB3008E0BA8 /* ParsingStrategy.swift */,
-			);
-			path = ParsingStrategies;
 			sourceTree = "<group>";
 		};
 		F2399ECF227732FD00CBFF5D /* Views */ = {
@@ -121,6 +87,16 @@
 				F21006532272A5A70033D0B7 /* OutputView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		F29D7B5E228FA88A00F70DE6 /* Tokenizer */ = {
+			isa = PBXGroup;
+			children = (
+				F262C2DF228F8D92007EF45B /* Token.swift */,
+				F2CBFDBD228F0267009A7242 /* ArrayTokenizer.swift */,
+				F262C2DD228F8D45007EF45B /* ObjectTokenizer.swift */,
+			);
+			path = Tokenizer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,20 +157,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F292A2E4227AC76F0048C573 /* ObjectParsingStrategy.swift in Sources */,
 				F29D7B5D228F99BA00F70DE6 /* Parser.swift in Sources */,
-				F283CA7C2275C4E700D7CBBC /* StringParsingStrategy.swift in Sources */,
-				F283CA822275E0F800D7CBBC /* ValueParser.swift in Sources */,
-				F283CA7E2275CA8C00D7CBBC /* BoolParsingStrategy.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				F21006502272A1570033D0B7 /* InputView.swift in Sources */,
 				F262C2E0228F8D92007EF45B /* Token.swift in Sources */,
-				F283CA832275E58400D7CBBC /* ParsingStrategy.swift in Sources */,
-				F283CA852275EBA200D7CBBC /* ArrayParsingStrategy.swift in Sources */,
 				F283CA7A2275759200D7CBBC /* Type.swift in Sources */,
-				F21006522272A2A10033D0B7 /* JSONParser.swift in Sources */,
 				F262C2DC228F8C3E007EF45B /* ArrayTokenizer.swift in Sources */,
-				F283CA802275CEED00D7CBBC /* NumberParsingStrategy.swift in Sources */,
 				F262C2DE228F8D45007EF45B /* ObjectTokenizer.swift in Sources */,
 				F21006542272A5A70033D0B7 /* OutputView.swift in Sources */,
 			);
