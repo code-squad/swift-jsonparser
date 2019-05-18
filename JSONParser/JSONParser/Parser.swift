@@ -3,7 +3,7 @@ import Foundation
 struct Parser {
     
     func parseString(_ input: String) -> String? {
-        guard input == "\"" else { return nil }
+        guard input.first == "\"", input.last == "\"" else { return nil }
         var input = input
         input.removeFirst()
         input.removeLast()
@@ -11,7 +11,18 @@ struct Parser {
     }
 
     func parseNumber(_ input: String) -> Number? {
-        return 0
+        return Number(input)
+    }
+    
+    func parseBool(_ input: String) -> Bool? {
+        switch input {
+        case "true":
+            return true
+        case "false":
+            return false
+        default:
+            return nil
+        }
     }
 
     func parseObject(_ input: String) -> [String: Type]? {
@@ -22,8 +33,6 @@ struct Parser {
         return
     }
 
-    func parseBool(_ input: String) -> Bool? {
-        return
-    }
+    
 
 }
