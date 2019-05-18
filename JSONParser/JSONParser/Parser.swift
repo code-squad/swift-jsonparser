@@ -3,7 +3,7 @@ import Foundation
 struct Parser {
     
     enum ParsingError: Error {
-        case cannotFindSupportedType
+        case foundUnsupportedType
         case objectKeyMustBeString
         case objectKeyMustBeOneAndOnly
     }
@@ -14,7 +14,7 @@ struct Parser {
         else if let object = try parseObject(input) { return object }
         else if let array = try parseArray(input) { return array }
         else if let number = parseNumber(input) { return number }
-        throw ParsingError.cannotFindSupportedType
+        throw ParsingError.foundUnsupportedType
     }
     
     private static func parseString(_ input: String) -> String? {
