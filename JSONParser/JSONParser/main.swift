@@ -6,6 +6,7 @@ func main() {
         
         let input = try InputView.ask(about: "분석할 JSON 데이터를 입력하세요.")
         let data = try JSONParser.parse(JSON: input)
+        OutputView.printValue(data: data)
         OutputView.printTypeCount(data: data)
         
     } catch {
