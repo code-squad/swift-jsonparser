@@ -32,20 +32,20 @@ struct ArrayTokenizer {
                 nestedArrayCount += 1
             case Token.valueSeparator:
                 guard !isParsingString, nestedArrayCount == 0 else { break }
-                appendFromBuffer(&tokenized, &buffer)
+                append(fromBuffer: &buffer, to: &tokenized)
                 continue
             default:
                 break
             }
             buffer.append(character)
         }
-        appendFromBuffer(&tokenized, &buffer)
+        append(fromBuffer: &buffer, to: &tokenized)
         return tokenized
     }
     
-    private static func appendFromBuffer(_ tokenized: inout [String], _ buffer: inout String) {
-        tokenized.append(buffer.trimmingCharacters(in: Token.whitespace))
-        buffer = ""
+    private static func append(fromBuffer buffer: inout String, to result: inout [String]) {
+        result.append(buffer.trimmingCharacters(in: Token.whitespace))
+        buffer.removeAll()
     }
     
     
