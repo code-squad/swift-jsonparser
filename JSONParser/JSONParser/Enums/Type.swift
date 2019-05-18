@@ -9,8 +9,8 @@
 import Foundation
 
 enum Type {
-    case String
-    case Bool
-    case Number
     case Array
+    case String
+    case Number
+    case Bool
 }
