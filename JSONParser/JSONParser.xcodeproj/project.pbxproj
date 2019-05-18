@@ -7,6 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E03CFB82285E59200B0FE2D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
+		0ECEB7EA229046CB00D5ED9D /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECEB7E9229046CB00D5ED9D /* Tokenizer.swift */; };
+		0ECEB7EC2290474E00D5ED9D /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECEB7EB2290474E00D5ED9D /* InputView.swift */; };
+		0ECEB7EE2290475600D5ED9D /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECEB7ED2290475600D5ED9D /* OutputView.swift */; };
+		0ECEB7F222904BC100D5ED9D /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECEB7F122904BC100D5ED9D /* Stack.swift */; };
+		0ECEB7FE2290541800D5ED9D /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECEB7F122904BC100D5ED9D /* Stack.swift */; };
+		0EFE12B222905C860039AB95 /* StackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12B122905C860039AB95 /* StackTests.swift */; };
+		0EFE12B6229060080039AB95 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECEB7E9229046CB00D5ED9D /* Tokenizer.swift */; };
+		0EFE12B8229060130039AB95 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECEB7ED2290475600D5ED9D /* OutputView.swift */; };
+		0EFE12B9229060150039AB95 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECEB7EB2290474E00D5ED9D /* InputView.swift */; };
+		0EFE12BE22906B0B0039AB95 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12BD22906B0B0039AB95 /* Token.swift */; };
+		0EFE12C222906C920039AB95 /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12C122906C920039AB95 /* TokenType.swift */; };
+		0EFE12C422906D100039AB95 /* TokenizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12C322906D100039AB95 /* TokenizerTests.swift */; };
+		0EFE12C622906D3C0039AB95 /* MyTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12C522906D3C0039AB95 /* MyTokenizer.swift */; };
+		0EFE12C722906D890039AB95 /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12C122906C920039AB95 /* TokenType.swift */; };
+		0EFE12C822906D8B0039AB95 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12BD22906B0B0039AB95 /* Token.swift */; };
+		0EFE12C922906D8F0039AB95 /* MyTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12C522906D3C0039AB95 /* MyTokenizer.swift */; };
+		0EFE12CE229073890039AB95 /* Analyzing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12CD229073890039AB95 /* Analyzing.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,11 +41,38 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0E03CFAD2285E0C300B0FE2D /* JSONParserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONParserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E03CFB12285E0C300B0FE2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0EA8E5BC22905A8D00D207AC /* StackTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StackTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0ECEB7E9229046CB00D5ED9D /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
+		0ECEB7EB2290474E00D5ED9D /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		0ECEB7ED2290475600D5ED9D /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
+		0ECEB7F122904BC100D5ED9D /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		0EFE12B122905C860039AB95 /* StackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackTests.swift; sourceTree = "<group>"; };
+		0EFE12BD22906B0B0039AB95 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		0EFE12C122906C920039AB95 /* TokenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenType.swift; sourceTree = "<group>"; };
+		0EFE12C322906D100039AB95 /* TokenizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenizerTests.swift; sourceTree = "<group>"; };
+		0EFE12C522906D3C0039AB95 /* MyTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTokenizer.swift; sourceTree = "<group>"; };
+		0EFE12CD229073890039AB95 /* Analyzing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analyzing.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0E03CFAA2285E0C300B0FE2D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0EA8E5B922905A8D00D207AC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		83AE2E091F8CAC2800F38CC9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -38,10 +83,74 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E03CFAE2285E0C300B0FE2D /* JSONParserTests */ = {
+			isa = PBXGroup;
+			children = (
+				0EFE12C322906D100039AB95 /* TokenizerTests.swift */,
+				0EFE12B122905C860039AB95 /* StackTests.swift */,
+				0E03CFB12285E0C300B0FE2D /* Info.plist */,
+			);
+			path = JSONParserTests;
+			sourceTree = "<group>";
+		};
+		0ECEB7EF229047B500D5ED9D /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				0ECEB7E9229046CB00D5ED9D /* Tokenizer.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		0ECEB7F0229047C600D5ED9D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				0ECEB7F122904BC100D5ED9D /* Stack.swift */,
+				0EFE12C522906D3C0039AB95 /* MyTokenizer.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		0EFE12BC229061D10039AB95 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				0EFE12C122906C920039AB95 /* TokenType.swift */,
+				0EFE12CD229073890039AB95 /* Analyzing.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		0EFE12CF229081EA0039AB95 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0ECEB7EB2290474E00D5ED9D /* InputView.swift */,
+				0ECEB7ED2290475600D5ED9D /* OutputView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0EFE12D0229081F90039AB95 /* Structs */ = {
+			isa = PBXGroup;
+			children = (
+				0EFE12D1229082230039AB95 /* VO */,
+				0ECEB7F0229047C600D5ED9D /* Components */,
+				0EFE12CF229081EA0039AB95 /* Views */,
+			);
+			path = Structs;
+			sourceTree = "<group>";
+		};
+		0EFE12D1229082230039AB95 /* VO */ = {
+			isa = PBXGroup;
+			children = (
+				0EFE12BD22906B0B0039AB95 /* Token.swift */,
+			);
+			path = VO;
+			sourceTree = "<group>";
+		};
 		83AE2E031F8CAC2800F38CC9 = {
 			isa = PBXGroup;
 			children = (
 				83AE2E0E1F8CAC2800F38CC9 /* JSONParser */,
+				0E03CFAE2285E0C300B0FE2D /* JSONParserTests */,
 				83AE2E0D1F8CAC2800F38CC9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +159,8 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0C1F8CAC2800F38CC9 /* JSONParser */,
+				0E03CFAD2285E0C300B0FE2D /* JSONParserTests.xctest */,
+				0EA8E5BC22905A8D00D207AC /* StackTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,6 +168,9 @@
 		83AE2E0E1F8CAC2800F38CC9 /* JSONParser */ = {
 			isa = PBXGroup;
 			children = (
+				0EFE12D0229081F90039AB95 /* Structs */,
+				0EFE12BC229061D10039AB95 /* Enums */,
+				0ECEB7EF229047B500D5ED9D /* Protocols */,
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 			);
 			path = JSONParser;
@@ -65,6 +179,40 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0E03CFAC2285E0C300B0FE2D /* JSONParserTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E03CFB42285E0C300B0FE2D /* Build configuration list for PBXNativeTarget "JSONParserTests" */;
+			buildPhases = (
+				0E03CFA92285E0C300B0FE2D /* Sources */,
+				0E03CFAA2285E0C300B0FE2D /* Frameworks */,
+				0E03CFAB2285E0C300B0FE2D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JSONParserTests;
+			productName = JSONParserTests;
+			productReference = 0E03CFAD2285E0C300B0FE2D /* JSONParserTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0EA8E5BB22905A8D00D207AC /* StackTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0EA8E5C322905A8D00D207AC /* Build configuration list for PBXNativeTarget "StackTest" */;
+			buildPhases = (
+				0EA8E5B822905A8D00D207AC /* Sources */,
+				0EA8E5B922905A8D00D207AC /* Frameworks */,
+				0EA8E5BA22905A8D00D207AC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StackTest;
+			productName = StackTest;
+			productReference = 0EA8E5BC22905A8D00D207AC /* StackTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		83AE2E0B1F8CAC2800F38CC9 /* JSONParser */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 83AE2E131F8CAC2800F38CC9 /* Build configuration list for PBXNativeTarget "JSONParser" */;
@@ -88,10 +236,18 @@
 		83AE2E041F8CAC2800F38CC9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0900;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = JK;
 				TargetAttributes = {
+					0E03CFAC2285E0C300B0FE2D = {
+						CreatedOnToolsVersion = 10.2.1;
+						ProvisioningStyle = Automatic;
+					};
+					0EA8E5BB22905A8D00D207AC = {
+						CreatedOnToolsVersion = 10.2.1;
+						ProvisioningStyle = Automatic;
+					};
 					83AE2E0B1F8CAC2800F38CC9 = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
@@ -111,22 +267,155 @@
 			projectRoot = "";
 			targets = (
 				83AE2E0B1F8CAC2800F38CC9 /* JSONParser */,
+				0E03CFAC2285E0C300B0FE2D /* JSONParserTests */,
+				0EA8E5BB22905A8D00D207AC /* StackTest */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		0E03CFAB2285E0C300B0FE2D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0EA8E5BA22905A8D00D207AC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		0E03CFA92285E0C300B0FE2D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0ECEB7FE2290541800D5ED9D /* Stack.swift in Sources */,
+				0EFE12B6229060080039AB95 /* Tokenizer.swift in Sources */,
+				0EFE12B8229060130039AB95 /* OutputView.swift in Sources */,
+				0EFE12C922906D8F0039AB95 /* MyTokenizer.swift in Sources */,
+				0EFE12C422906D100039AB95 /* TokenizerTests.swift in Sources */,
+				0E03CFB82285E59200B0FE2D /* main.swift in Sources */,
+				0EFE12B9229060150039AB95 /* InputView.swift in Sources */,
+				0EFE12B222905C860039AB95 /* StackTests.swift in Sources */,
+				0EFE12C822906D8B0039AB95 /* Token.swift in Sources */,
+				0EFE12C722906D890039AB95 /* TokenType.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0EA8E5B822905A8D00D207AC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		83AE2E081F8CAC2800F38CC9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ECEB7EE2290475600D5ED9D /* OutputView.swift in Sources */,
+				0ECEB7EC2290474E00D5ED9D /* InputView.swift in Sources */,
+				0EFE12BE22906B0B0039AB95 /* Token.swift in Sources */,
+				0EFE12C622906D3C0039AB95 /* MyTokenizer.swift in Sources */,
+				0ECEB7EA229046CB00D5ED9D /* Tokenizer.swift in Sources */,
+				0ECEB7F222904BC100D5ED9D /* Stack.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				0EFE12C222906C920039AB95 /* TokenType.swift in Sources */,
+				0EFE12CE229073890039AB95 /* Analyzing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		0E03CFB22285E0C300B0FE2D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 8BQHKQSA4Y;
+				INFOPLIST_FILE = JSONParserTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = developer.OOwl.JSONParserTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		0E03CFB32285E0C300B0FE2D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 8BQHKQSA4Y;
+				INFOPLIST_FILE = JSONParserTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = developer.OOwl.JSONParserTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		0EA8E5C122905A8D00D207AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 8BQHKQSA4Y;
+				INFOPLIST_FILE = StackTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = developer.OOwl.StackTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		0EA8E5C222905A8D00D207AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 8BQHKQSA4Y;
+				INFOPLIST_FILE = StackTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = developer.OOwl.StackTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		83AE2E111F8CAC2800F38CC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -254,6 +543,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0E03CFB42285E0C300B0FE2D /* Build configuration list for PBXNativeTarget "JSONParserTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E03CFB22285E0C300B0FE2D /* Debug */,
+				0E03CFB32285E0C300B0FE2D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0EA8E5C322905A8D00D207AC /* Build configuration list for PBXNativeTarget "StackTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0EA8E5C122905A8D00D207AC /* Debug */,
+				0EA8E5C222905A8D00D207AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		83AE2E071F8CAC2800F38CC9 /* Build configuration list for PBXProject "JSONParser" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

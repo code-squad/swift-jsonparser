@@ -1,5 +1,5 @@
 //
-//  Type.swift
+//  Token.swift
 //  JSONParser
 //
 //  Created by 이동영 on 19/05/2019.
@@ -8,9 +8,10 @@
 
 import Foundation
 
-enum Type {
-    case Array
-    case String
-    case Number
-    case Bool
+struct Token {
+    var type: TokenType
+    var value : String
 }
+
+
+

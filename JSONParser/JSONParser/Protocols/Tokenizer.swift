@@ -9,7 +9,6 @@
 import Foundation
 
 protocol Tokenizer {
-    var lexer:Lexer { get }
     func tokenize(_ string:String) -> [Token]
 }
 

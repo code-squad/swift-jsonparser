@@ -15,7 +15,7 @@ struct InputView {
         case aboutJSON  = "분석할 JSON 데이터를 입력하세요."
     }
     
-   private func ask(_ Q:Question){
+    private func ask(_ Q:Question){
         print(Q)
     }
     
