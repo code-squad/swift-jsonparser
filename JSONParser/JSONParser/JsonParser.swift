@@ -30,7 +30,7 @@ struct JsonParser {
         }
     }
     /// 배열 내의 원소가 어떤 타입인지 판단하는 함수
-    func parsingData(beforeData : String) throws -> Json {
+    private func parsingData(beforeData : String) throws -> Json {
         var convertedElement: Json
         let afterData = beforeData.trimmingCharacters(in: .whitespacesAndNewlines)
         if afterData.first == Sign.frontCurlyBracket, afterData.last == Sign.backCurlyBracket {
@@ -40,7 +40,8 @@ struct JsonParser {
             for dictionaryDatum in isolatedDictionaryData {
                 _ = try valueOfArrayOrDistinct(dataElement: dictionaryDatum, dataMent: distinctAfterData.distinctMent)
             }
-            convertedElement = try TypeDictionary(json: distinctAfterData.input)
+            let convertedDictionaryData = try convertDictionary(jsonData: isolatedDictionaryData)
+            convertedElement = TypeDictionary.init(json: convertedDictionaryData)
         } else if let _ = Int(afterData) {
             convertedElement = TypeInt.init(json: afterData)
         } else if let _ = Bool(afterData) {
@@ -52,8 +53,19 @@ struct JsonParser {
         }
         return convertedElement
     }
+    /// 원소가 Dictionary타입일때 [String:Json]로 인자를 넘겨주기 위해 해당 타입으로 변환하는 함수
+    private func convertDictionary(jsonData: [String]) throws -> [String:Json] {
+        var jsonDictionary = [String:Json]()
+        for index in 0..<jsonData.count {
+            let values = jsonData[index]
+            let value = try ifKeyExist(dictionaryDataElement: values)
+            let keyAndValue = values.components(separatedBy: ":")
+            jsonDictionary[keyAndValue[0]] = try parsingData(beforeData: value)
+        }
+        return jsonDictionary
+    }
     /// 입력된 원소에 key값이 있는 데이터인 경우 값만을 리턴하는 함수
-    func ifKeyExist(dictionaryDataElement: String) throws -> String{
+    private func ifKeyExist(dictionaryDataElement: String) throws -> String{
         let refinedDatum = dictionaryDataElement.components(separatedBy: "\(Sign.colon)")
         let removeBlankDatum = refinedDatum[0].trimmingCharacters(in: .whitespacesAndNewlines)
         if removeBlankDatum.first != Sign.doubleQuote || removeBlankDatum.last != Sign.doubleQuote {

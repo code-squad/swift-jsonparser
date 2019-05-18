@@ -9,21 +9,14 @@
 import Foundation
 
 struct TypeDictionary: Json {
-    private(set) var json : [String:Json]
-    let jsonParser = JsonParser()
+    private(set) var json = [String:Json]()
     
-    init (json: String) throws {
-        self.json = [String:Json]()
-        var data = json
-        data.removeFirst()
-        data.removeLast()
-        let dictionaryData = data.components(separatedBy: ",")
-        for index in 0..<dictionaryData.count {
-            let values = dictionaryData[index]
-            let value = try jsonParser.ifKeyExist(dictionaryDataElement: values)
-            let keyAndValue = values.components(separatedBy: ":")
-            self.json[keyAndValue[0]] = try jsonParser.parsingData(beforeData: value)
-        }
+    init (json: String) {
+        self.json = [:]
+    }
+    
+    init (json: [String:Json]) {
+        self.json = json
     }
 }
 
