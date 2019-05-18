@@ -27,8 +27,7 @@ struct ObjectTokenizer {
         for character in input {
             if character == Token.quotationMark {
                 isParsingString.toggle()
-            } else {
-                guard !isParsingString else { break }
+            } else if !isParsingString {
                 switch character {
                 case Token.endObject:
                     nestedObjectCount -= 1
