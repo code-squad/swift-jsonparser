@@ -8,8 +8,26 @@
 
 import Foundation
 
-enum Analyzing {
-    case Array
-    case String
-    case Element
+typealias StartMark = Character
+typealias EndMark = Character
+
+enum Analyzing: StartMark {
+    case Array = "["
+    case Element = " "
+    case String = "\""
+    
+    func isEnd(_ c: Character) -> Bool {
+        var endMark: EndMark
+        
+        switch(self){
+        case .Array:
+            endMark = "]"
+        case .Element:
+            endMark = ","
+        case .String:
+            endMark = "\""
+        }
+        
+        return c == endMark
+    }
 }
