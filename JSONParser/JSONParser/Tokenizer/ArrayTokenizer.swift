@@ -19,31 +19,38 @@ struct ArrayTokenizer {
         var buffer = ""
         var isParsingString = false
         var nestedArrayCount: UInt = 0
+        var nestedObjectCount: UInt = 0
         
         for character in input {
-            switch character {
-            case Token.quotationMark:
+            if character == Token.quotationMark {
                 isParsingString.toggle()
-            case Token.endArray:
+            } else {
                 guard !isParsingString else { break }
-                nestedArrayCount -= 1
-            case Token.beginArray:
-                guard !isParsingString else { break }
-                nestedArrayCount += 1
-            case Token.valueSeparator:
-                guard !isParsingString, nestedArrayCount == 0 else { break }
-                append(fromBuffer: &buffer, to: &tokenized)
-                continue
-            default:
-                break
+                switch character {
+                case Token.endArray:
+                    nestedArrayCount -= 1
+                case Token.beginArray:
+                    nestedArrayCount += 1
+                case Token.endObject:
+                    nestedObjectCount -= 1
+                case Token.beginObject:
+                    nestedObjectCount += 1
+                case Token.valueSeparator:
+                    guard nestedArrayCount == 0, nestedObjectCount == 0 else { break }
+                    move(fromBuffer: &buffer, to: &tokenized)
+                    continue
+                default:
+                    break
+                }
+                
             }
             buffer.append(character)
         }
-        append(fromBuffer: &buffer, to: &tokenized)
+        move(fromBuffer: &buffer, to: &tokenized)
         return tokenized
     }
     
-    private static func append(fromBuffer buffer: inout String, to result: inout [String]) {
+    private static func move(fromBuffer buffer: inout String, to result: inout [String]) {
         result.append(buffer.trimmingCharacters(in: Token.whitespace))
         buffer.removeAll()
     }
