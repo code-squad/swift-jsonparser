@@ -6,6 +6,9 @@ struct ObjectTokenizer {
         case cannotDetectBeginOrEndOfObject
         case objectKeyShouldBeOneAndOnly
         case invalidNestedStructure
+        case invalidObjectGrammar
+        case duplicatedColon
+        case bufferIsEmpty
     }
     
     static func tokenize(_ input: String) throws -> [String: String] {
@@ -52,6 +55,9 @@ struct ObjectTokenizer {
                     isParsingKey = true
                     continue
                 case Token.nameSeparator:
+                    guard isParsingKey else {
+                        throw TokenizingError.duplicatedColon
+                    }
                     isParsingKey = false
                     continue
                 default:
@@ -64,12 +70,19 @@ struct ObjectTokenizer {
                 valueBuffer.append(character)
             }
         }
+        
+        if isParsingKey, tokenizedInput.isEmpty {
+            return tokenizedInput
+        }
+        
         try move(fromKeyBuffer: &keyBuffer, valueBuffer: &valueBuffer, to: &tokenizedInput)
         return tokenizedInput
     }
     
     private static func move(fromKeyBuffer keyBuffer: inout String, valueBuffer: inout String, to result: inout [String: String]) throws {
-        
+        guard !keyBuffer.isEmpty, !valueBuffer.isEmpty else {
+            throw TokenizingError.bufferIsEmpty
+        }
         let key = keyBuffer.trimmingCharacters(in: Token.whitespace)
         let value = valueBuffer.trimmingCharacters(in: Token.whitespace)
         guard result[key] == nil else {

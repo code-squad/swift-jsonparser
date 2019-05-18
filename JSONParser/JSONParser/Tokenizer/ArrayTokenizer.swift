@@ -5,6 +5,8 @@ struct ArrayTokenizer {
     enum TokenizingError: Error {
         case cannotDetectBeginOrEndOfArray
         case invalidNestedStructure
+        case invalidArrayGrammar
+        case bufferIsEmpty
     }
     
     static func tokenize(_ input: String) throws -> [String] {
@@ -43,7 +45,7 @@ struct ArrayTokenizer {
                     nestedObjectCount += 1
                 case Token.valueSeparator:
                     guard nestedArrayCount == 0, nestedObjectCount == 0 else { break }
-                    move(fromBuffer: &buffer, to: &tokenizedInput)
+                    try move(fromBuffer: &buffer, to: &tokenizedInput)
                     continue
                 default:
                     break
@@ -51,11 +53,17 @@ struct ArrayTokenizer {
             }
             buffer.append(character)
         }
-        move(fromBuffer: &buffer, to: &tokenizedInput)
+        guard !buffer.isEmpty else {
+            return tokenizedInput
+        }
+        try move(fromBuffer: &buffer, to: &tokenizedInput)
         return tokenizedInput
     }
     
-    private static func move(fromBuffer buffer: inout String, to result: inout [String]) {
+    private static func move(fromBuffer buffer: inout String, to result: inout [String]) throws {
+        guard !buffer.isEmpty else {
+            throw TokenizingError.bufferIsEmpty
+        }
         result.append(buffer.trimmingCharacters(in: Token.whitespace))
         buffer.removeAll()
     }

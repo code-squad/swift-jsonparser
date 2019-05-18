@@ -31,6 +31,9 @@ extension Array: Type where Element == Type {
     var typeDescription: String { return "배열" }
     
     var countDescription: String {
+        guard !self.isEmpty else {
+            return "빈 배열입니다."
+        }
         var counts = [String: Int]()
         for item in self {
             counts[item.typeDescription] = (counts[item.typeDescription] ?? 0) + 1
@@ -47,7 +50,9 @@ extension Dictionary: Type where Key == String ,Value == Type {
     var typeDescription: String { return "오브젝트" }
     
     var countDescription: String {
-        
+        guard !self.isEmpty else {
+            return "빈 오브젝트입니다."
+        }
         var counts = [String: Int]()
         for (_, value) in self {
             counts[value.typeDescription] = (counts[value.typeDescription] ?? 0) + 1

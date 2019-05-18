@@ -18,7 +18,7 @@ struct Parser {
     }
     
     private static func parseString(_ input: String) -> String? {
-        guard input.first == Token.quotationMark else { return nil }
+        guard input.first == Token.quotationMark, input.last == Token.quotationMark else { return nil }
         var input = input
         input.removeFirst()
         input.removeLast()
