@@ -4,6 +4,7 @@ struct ObjectTokenizer {
     
     enum TokenizingError: Error {
         case cannotDetectBeginOrEndOfObject
+        case objectKeyShouldBeOneAndOnly
     }
     
     static func tokenize(_ input: String) throws -> [String: String] {
@@ -34,7 +35,7 @@ struct ObjectTokenizer {
                 nestedObjectCount += 1
             case Token.valueSeparator:
                 guard !isParsingString, nestedObjectCount == 0 else { break }
-                append(fromKeyBuffer: &keyBuffer, valueBuffer: &valueBuffer, to: &tokenized)
+                try append(fromKeyBuffer: &keyBuffer, valueBuffer: &valueBuffer, to: &tokenized)
                 isParsingKey = true
                 continue
             case Token.nameSeparator:
@@ -50,17 +51,18 @@ struct ObjectTokenizer {
             }
             
         }
-        append(fromKeyBuffer: &keyBuffer, valueBuffer: &valueBuffer, to: &tokenized)
+        try append(fromKeyBuffer: &keyBuffer, valueBuffer: &valueBuffer, to: &tokenized)
         return tokenized
     }
     
-    private static func append(fromKeyBuffer keyBuffer: inout String, valueBuffer: inout String, to result: inout [String: String]) {
+    private static func append(fromKeyBuffer keyBuffer: inout String, valueBuffer: inout String, to result: inout [String: String]) throws {
         
         let key = keyBuffer.trimmingCharacters(in: Token.whitespace)
         let value = valueBuffer.trimmingCharacters(in: Token.whitespace)
-        
+        guard result[key] == nil else {
+            throw TokenizingError.objectKeyShouldBeOneAndOnly
+        }
         result[key] = value
-        
         keyBuffer.removeAll()
         valueBuffer.removeAll()
     }
