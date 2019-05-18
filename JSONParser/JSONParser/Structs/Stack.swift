@@ -20,13 +20,14 @@ struct Stack<T>{
     }
     
     mutating func push(_ e:T){
-        self.elements.insert(e, at: 0)
+        self.elements.append(e)
     }
     
     mutating func pop() throws -> T {
         guard let lastElement = self.elements.popLast() else {
             throw Exception.Empty
         }
+        
         return lastElement
     }
     
@@ -43,6 +44,10 @@ struct Stack<T>{
     
     func show(){
         print(self.elements)
+    }
+    
+    mutating func clear(){
+        self.elements.removeAll()
     }
     
     enum Exception: String,Error,CustomStringConvertible{
