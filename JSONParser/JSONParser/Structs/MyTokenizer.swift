@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+struct MyTokenizer: Tokenizer {
+    var lexer: Lexer = MyLexer()
+    
+    func tokenize(_ string: String) -> [Token] {
+        return []
+    }
+}

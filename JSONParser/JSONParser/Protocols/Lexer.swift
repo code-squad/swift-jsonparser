@@ -8,8 +8,11 @@
 
 import Foundation
 
-struct Lexer {
+protocol Lexer {
     
 }
+
+
+
 
 
