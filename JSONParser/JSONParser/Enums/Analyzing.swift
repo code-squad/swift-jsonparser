@@ -19,7 +19,7 @@ enum Analyzing: StartMark {
     func isEnd(_ c: Character) -> Bool {
         var endMark: EndMark
         
-        switch(self){
+        switch self{
         case .Array:
             endMark = "]"
         case .Element:
@@ -30,4 +30,11 @@ enum Analyzing: StartMark {
         
         return c == endMark
     }
+    
+  static func isStart(_ c: Character) -> Bool {
+        
+        guard (Analyzing.init(rawValue: c) != nil) else { return false}
+        return true
+    }
+    
 }

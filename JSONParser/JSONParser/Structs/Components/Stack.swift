@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Stack<T>{
+struct Stack<T> {
     private var elements:[T]
     
     init(){

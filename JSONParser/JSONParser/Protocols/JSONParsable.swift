@@ -1,5 +1,5 @@
 //
-//  Token.swift
+//  JsonParsable.swift
 //  JSONParser
 //
 //  Created by 이동영 on 19/05/2019.
@@ -8,10 +8,6 @@
 
 import Foundation
 
-struct Token {
-    var type: JSONParsable
-    var value : String
+protocol JSONParsable {
+    
 }
-
-
-

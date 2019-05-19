@@ -25,6 +25,11 @@
 		0EFE12C822906D8B0039AB95 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12BD22906B0B0039AB95 /* Token.swift */; };
 		0EFE12C922906D8F0039AB95 /* MyTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12C522906D3C0039AB95 /* MyTokenizer.swift */; };
 		0EFE12CE229073890039AB95 /* Analyzing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12CD229073890039AB95 /* Analyzing.swift */; };
+		0EFE12D42290A9F20039AB95 /* Analyzing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12CD229073890039AB95 /* Analyzing.swift */; };
+		0EFE12D82291636D0039AB95 /* JSONParsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12D72291636D0039AB95 /* JSONParsable.swift */; };
+		0EFE12DE229168F20039AB95 /* Symbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12DD229168F20039AB95 /* Symbol.swift */; };
+		0EFE12E1229169450039AB95 /* ArraySymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12E0229169450039AB95 /* ArraySymbol.swift */; };
+		0EFE12E32291695B0039AB95 /* StringSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12E22291695B0039AB95 /* StringSymbol.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +59,10 @@
 		0EFE12C322906D100039AB95 /* TokenizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenizerTests.swift; sourceTree = "<group>"; };
 		0EFE12C522906D3C0039AB95 /* MyTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTokenizer.swift; sourceTree = "<group>"; };
 		0EFE12CD229073890039AB95 /* Analyzing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analyzing.swift; sourceTree = "<group>"; };
+		0EFE12D72291636D0039AB95 /* JSONParsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParsable.swift; sourceTree = "<group>"; };
+		0EFE12DD229168F20039AB95 /* Symbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbol.swift; sourceTree = "<group>"; };
+		0EFE12E0229169450039AB95 /* ArraySymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArraySymbol.swift; sourceTree = "<group>"; };
+		0EFE12E22291695B0039AB95 /* StringSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSymbol.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,6 +106,8 @@
 			isa = PBXGroup;
 			children = (
 				0ECEB7E9229046CB00D5ED9D /* Tokenizer.swift */,
+				0EFE12D72291636D0039AB95 /* JSONParsable.swift */,
+				0EFE12DD229168F20039AB95 /* Symbol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -131,6 +142,7 @@
 		0EFE12D0229081F90039AB95 /* Structs */ = {
 			isa = PBXGroup;
 			children = (
+				0EFE12DF229169340039AB95 /* Symbols */,
 				0EFE12D1229082230039AB95 /* VO */,
 				0ECEB7F0229047C600D5ED9D /* Components */,
 				0EFE12CF229081EA0039AB95 /* Views */,
@@ -144,6 +156,15 @@
 				0EFE12BD22906B0B0039AB95 /* Token.swift */,
 			);
 			path = VO;
+			sourceTree = "<group>";
+		};
+		0EFE12DF229169340039AB95 /* Symbols */ = {
+			isa = PBXGroup;
+			children = (
+				0EFE12E0229169450039AB95 /* ArraySymbol.swift */,
+				0EFE12E22291695B0039AB95 /* StringSymbol.swift */,
+			);
+			path = Symbols;
 			sourceTree = "<group>";
 		};
 		83AE2E031F8CAC2800F38CC9 = {
@@ -305,6 +326,7 @@
 				0EFE12B222905C860039AB95 /* StackTests.swift in Sources */,
 				0EFE12C822906D8B0039AB95 /* Token.swift in Sources */,
 				0EFE12C722906D890039AB95 /* TokenType.swift in Sources */,
+				0EFE12D42290A9F20039AB95 /* Analyzing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,14 +342,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				0ECEB7EE2290475600D5ED9D /* OutputView.swift in Sources */,
+				0EFE12E32291695B0039AB95 /* StringSymbol.swift in Sources */,
 				0ECEB7EC2290474E00D5ED9D /* InputView.swift in Sources */,
 				0EFE12BE22906B0B0039AB95 /* Token.swift in Sources */,
 				0EFE12C622906D3C0039AB95 /* MyTokenizer.swift in Sources */,
 				0ECEB7EA229046CB00D5ED9D /* Tokenizer.swift in Sources */,
 				0ECEB7F222904BC100D5ED9D /* Stack.swift in Sources */,
+				0EFE12DE229168F20039AB95 /* Symbol.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				0EFE12C222906C920039AB95 /* TokenType.swift in Sources */,
+				0EFE12E1229169450039AB95 /* ArraySymbol.swift in Sources */,
 				0EFE12CE229073890039AB95 /* Analyzing.swift in Sources */,
+				0EFE12D82291636D0039AB95 /* JSONParsable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

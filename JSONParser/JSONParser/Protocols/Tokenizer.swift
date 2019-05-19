@@ -9,6 +9,6 @@
 import Foundation
 
 protocol Tokenizer {
-    func tokenize(_ string:String) -> [Token]
+    mutating func  tokenize(_ string:String) throws -> [Token]
 }
 
