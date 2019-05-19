@@ -20,14 +20,14 @@ extension String {
     }
     
     //정규표현식에 해당하는 문자열 배열 리턴
-    func matches(for regex: String, in text: String) -> [String] {
+    func matches(for regex: String) -> [String] {
         do {
             let regex = try NSRegularExpression(pattern: regex)
-            let results = regex.matches(in: text,
-                                        range: NSRange(text.startIndex..., in: text))
+            let results = regex.matches(in: self,
+                                        range: NSRange(self.startIndex..., in: self))
             return results.compactMap { (result) -> String? in
-                guard let range = Range(result.range, in: text) else { return nil }
-                return String(text[range])
+                guard let range = Range(result.range, in: self) else { return nil }
+                return String(self[range])
             }
         } catch {
             return []
