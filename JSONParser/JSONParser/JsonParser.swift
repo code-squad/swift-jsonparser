@@ -9,21 +9,6 @@
 import Foundation
 
 struct JsonParser {
-    //정규표현식에 해당하는 문자열 배열 리턴
-    static private func matches(for regex: String, in text: String) -> [String] {
-        do {
-            let regex = try NSRegularExpression(pattern: regex)
-            let results = regex.matches(in: text,
-                                        range: NSRange(text.startIndex..., in: text))
-            return results.compactMap { (result) -> String? in
-                guard let range = Range(result.range, in: text) else { return nil }
-                return String(text[range])
-            }
-        } catch {
-            return []
-        }
-    }
-    
     static func parseJson (_ input: String) -> [JsonType] {
         let devideCharacter = DevideCharacter(rawValue: input.first ?? ":") ?? .colon
         let elements: [String]

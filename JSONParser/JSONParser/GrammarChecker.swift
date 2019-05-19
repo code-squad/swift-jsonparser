@@ -8,17 +8,6 @@
 
 import Foundation
 
-extension String {
-    
-    /// 문자열의 정규식 일치 여부를 확인합니다.
-    ///
-    /// - Parameter pattern: 정규식 패턴 문자열
-    /// - Returns: true 혹은 false
-    func matches(_ pattern: String) -> Bool {
-        return self.range(of: pattern, options: .regularExpression) != nil
-    }
-}
-
 struct GrammarChecker {
     static func checkJsonGrammar(_ input: String) throws {
         var verifyJsonGrammerPass = false
