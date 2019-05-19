@@ -16,7 +16,7 @@ struct JsonParser {
         
         if devideCharacter == DevideCharacter.squareBracketOpen {
             let elementsFromArray = RegexGrammar.elementsFromArray
-            elements = matches(for: elementsFromArray.rawValue, in: input)
+            elements = input.matches(for: elementsFromArray.rawValue)
             json = elementsToJson(elements)
         } else {
             
@@ -48,7 +48,7 @@ struct JsonParser {
         var jsonObject = [String:JsonType]()
         
         let elementsFromObject = RegexGrammar.elementsFromObject
-        let elements = matches(for: elementsFromObject.rawValue, in: input)
+        let elements = input.matches(for: elementsFromObject.rawValue)
         
         let colon = DevideCharacter.colon
         var elementSplited: [String]
@@ -67,7 +67,7 @@ struct JsonParser {
     static private func elementToArray (_ element: String) -> [JsonType] {
         var jsonArray = [JsonType]()
         let elementsFromArray = RegexGrammar.elementsFromArray
-        let elements = matches(for: element, in: elementsFromArray.rawValue)
+        let elements = elementsFromArray.rawValue.matches(for: element)
     
         for element in elements {
             jsonArray.append(getJsonValue(element))
