@@ -15,16 +15,17 @@ struct JsonParser {
             let regex = try NSRegularExpression(pattern: regex)
             let results = regex.matches(in: text,
                                         range: NSRange(text.startIndex..., in: text))
-            return results.map {
-                String(text[Range($0.range, in: text)!])
+            return results.compactMap { (result) -> String? in
+                guard let range = Range(result.range, in: text) else { return nil }
+                return String(text[range])
             }
-        } catch let _ {
+        } catch {
             return []
         }
     }
     
     static func parseJson (_ input: String) -> [JsonType] {
-        let devideCharacter = DevideCharacter(rawValue: input.first!) ?? .colon
+        let devideCharacter = DevideCharacter(rawValue: input.first ?? ":") ?? .colon
         let elements: [String]
         let json: [JsonType]
         
