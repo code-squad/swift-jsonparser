@@ -27,8 +27,7 @@ struct OutputView {
     }
     
     func printElements (_ element: JsonType) {
-        
-//        elementToString(element))
+        print(element.string)
     }
     
     

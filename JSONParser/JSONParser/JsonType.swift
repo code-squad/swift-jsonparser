@@ -24,6 +24,60 @@ enum JsonType {
         case .array(_): return JsonTypeName.array
         }
     }
+    
+    var string: String {
+        switch self {
+        case let .array(array): return arrayToString(array)
+        case let .bool(bool): return boolToString(bool)
+        case let .int(int): return String(int)
+        case let .string(string): return String(string)
+        case .object(_): return objectToString(self)
+        }
+    }
+    
+    private func objectToString (_ object: JsonType) -> String {
+        var result: String = "{"
+        var valueObject = ""
+        
+        if case let JsonType.object(object) = object {
+            for (key, value) in object {
+                valueObject = value.string
+                result += "\n\t\(key) : \(valueObject),"
+            }
+        }
+        
+        result.removeLast()
+        result += "\n}"
+        return result
+    }
+    
+    private func arrayToString (_ array: [JsonType]) -> String {
+        var result: String = ""
+        
+        if array.count>1 {
+            result += "["
+        }
+        
+        for element in array {
+            result += element.string
+            result += ","
+        }
+        result.removeLast()
+        
+        if array.count>1 {
+            result += "]"
+        }
+        
+        return result
+    }
+    
+    private func boolToString (_ bool: Bool) -> String {
+        if bool {
+            return "true"
+        } else {
+            return "false"
+        }
+    }
 }
 
 enum JsonTypeName: String {
