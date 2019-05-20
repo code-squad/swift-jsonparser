@@ -13,5 +13,5 @@ struct JSONSymbols {
     static let closedBracket  = "]"
     static let comma = ","
     static let blank = " "
-    static let doubleQuotation: Character = "\""
+    static let doubleQuotation = "\""
 }
