@@ -11,15 +11,16 @@ import Foundation
 struct Parser {
     
     static func parse(_ tokens: [String]) throws -> [JSONValue] {
+        var jsonArray = [JSONValue]()
+        
         if isWrappedWithBrackets(using: tokens) {
-            
-            let innerRange = 1...tokens.count - 2
-            let innerValues = Array(tokens[innerRange])
-            return try parseIntoJSONValues(using: innerValues)
+            jsonArray = try createJSONArray(using: tokens)
         }
         
-        throw ParserError.invalidFormatToParse
-        
+        if jsonArray.isEmpty {
+            throw ParserError.invalidFormatToParse
+        }
+        return jsonArray
     }
     
     static private func isWrappedWithBrackets(using tokens: [String]) -> Bool {
@@ -27,17 +28,21 @@ struct Parser {
             && tokens[tokens.count-1] == JSONSymbols.closedBracket
     }
     
-    static private func parseIntoJSONValues(using tokens: [String]) throws -> [JSONValue] {
-        var values: [JSONValue] = []
-        
+    static private func createJSONArray(using tokens: [String]) throws -> [JSONValue] {
+        var jsonArray = Array<JSONValue>()
         for token in tokens {
-            let value = try JSONValueFactory.make(token: token)
-            values.append(value)
+            if (token == JSONSymbols.openBracket || token == JSONSymbols.closedBracket || token == JSONSymbols.comma) {
+                continue
+            }
+            let parsedValue = try convertIntoJSONValue(using: token)
+            jsonArray.append(parsedValue)
         }
-        
-        if values.isEmpty { throw ParserError.impossibleToParse }
-        
-        return values
+        return jsonArray
+    }
+    
+    static private func convertIntoJSONValue(using token: String) throws -> JSONValue {
+        let convertedValue = try JSONValueFactory.make(token: token)
+        return convertedValue
     }
     
 }
