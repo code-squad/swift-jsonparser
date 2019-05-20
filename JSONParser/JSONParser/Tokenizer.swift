@@ -10,16 +10,12 @@ import Foundation
 
 struct Tokenizer {
     static let emptyString = ""
-    
+    static let blankWithComma = " ,"
     static func execute(using input: String) throws -> [String] {
-        var tokenDivider = CharacterSet(charactersIn: JSONSymbols.comma)
-        tokenDivider.insert(charactersIn: JSONSymbols.blank)
-        let tokens = input.components(separatedBy: tokenDivider)
-        let validTokens = tokens.filter(){ token in token != emptyString }
-        
-        if validTokens.isEmpty { throw TokenizerError.impossibleToTokenize }
-        return tokens.filter(){ token in token != emptyString }
-        
+        let blankAddedInput = input.replacingOccurrences(of: JSONSymbols.comma, with: blankWithComma)
+        let tokens = blankAddedInput.components(separatedBy: JSONSymbols.blank)
+        if tokens.isEmpty { throw TokenizerError.impossibleToTokenize }
+        return tokens
     }
     
 }
