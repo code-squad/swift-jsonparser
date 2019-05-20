@@ -7,3 +7,25 @@
 //
 
 import Foundation
+
+struct JSONArray {
+    private(set) var jsonValues: [JSONValue]
+    
+    var count: Int {
+        return jsonValues.count
+    }
+    
+    init() {
+        self.jsonValues = []
+    }
+    
+    mutating func append(_ newElement: JSONValue) {
+        jsonValues.append(newElement)
+    }
+}
+
+extension JSONArray: JSONValue {
+    static var typeDescription: String {
+        return "배열"
+    }
+}
