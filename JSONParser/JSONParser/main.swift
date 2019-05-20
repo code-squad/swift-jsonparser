@@ -11,7 +11,7 @@ import Foundation
 func main () {
     var inputView = InputView()
     let outputView = OutputView()
-    var json = [JsonType]()
+
     while true {
         inputView.readInput()
         do {
@@ -21,10 +21,10 @@ func main () {
         catch let error as InputError { print(error.rawValue) }
         catch { print(error) }
     }
-    json = JsonParser.parseJson(inputView.valueEntered)
+    let json = JsonParser.parseJson(inputView.valueEntered)
     let message = MessageMaker.makeMessage(json)
     outputView.printMessage(message)
-    outputView.printElements(json, typeName: message.1)
+    outputView.printElements(json)
 }
 
 main()

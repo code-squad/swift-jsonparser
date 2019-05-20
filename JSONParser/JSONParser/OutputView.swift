@@ -26,89 +26,10 @@ struct OutputView {
         print(ment)
     }
     
-    func printElements (_ elements: [JsonType], typeName: JsonTypeName) {
-        var result: String = ""
+    func printElements (_ element: JsonType) {
         
-        if typeName == JsonTypeName.object {
-            result = objectToString(elements[0])
-        } else {
-            result = arrayToString(elements)
-        }
-        
-        print(result)
+//        elementToString(element))
     }
     
-    private func objectToString (_ object: JsonType) -> String {
-        var result: String = "{"
-        var valueObject = ""
-        
-        if case let JsonType.object(object) = object {
-            for (key, value) in object {
-                valueObject = valueToString(value)
-                result += "\n\t\(key) : \(valueObject),"
-            }
-        }
-        
-        result.removeLast()
-        result += "\n}"
-        return result
-    }
     
-    private func valueToString (_ json: JsonType) -> String {
-        var valueString = "["
-        
-        switch json {
-        case let .array(array): valueString += arrayInArrayToString(array)
-        case let .bool(bool): valueString = boolToString(bool)
-        case let .int(int): valueString = String(int)
-        case let .string(string): valueString = String(string)
-        case .object(_): valueString = objectToString(json)
-        }
-        
-        return valueString
-    }
-    
-    private func arrayToString (_ array: [JsonType]) -> String {
-        var result: String = ""
-        
-        if array.count>1 {
-            result += "["
-        }
-        
-        for element in array {
-            result += valueToString(element)
-            result += ",\n"
-        }
-        result.removeLast()
-        result.removeLast()
-        
-        if array.count>1 {
-            result += "["
-        }
-        
-        return result
-    }
-    
-    private func arrayInArrayToString (_ array: [JsonType]) -> String {
-        var valueArray = ""
-        var valueString = ""
-        
-        for value in array {
-            valueArray = valueToString(value)
-            valueString += "\((valueArray)), "
-        }
-        valueString.removeLast()
-        valueString.removeLast()
-        valueString += "]"
-        
-        return valueString
-    }
-    
-    private func boolToString (_ bool: Bool) -> String {
-        if bool {
-            return "true"
-        } else {
-            return "false"
-        }
-    }
 }

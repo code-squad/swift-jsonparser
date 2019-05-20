@@ -9,21 +9,17 @@
 import Foundation
 
 struct JsonParser {
-    static func parseJson (_ input: String) -> [JsonType] {
+    static func parseJson (_ input: String) -> JsonType {
         let devideCharacter = DevideCharacter(rawValue: input.first ?? ":") ?? .colon
         let elements: [String]
-        let json: [JsonType]
         
         if devideCharacter == DevideCharacter.squareBracketOpen {
             let elementsFromArray = RegexGrammar.elementsFromArray
             elements = input.matches(for: elementsFromArray.rawValue)
-            json = elementsToJson(elements)
-        } else {
-            
-            json = [elementToObject(input)]
+            return JsonType.array(elementsToJson(elements))
         }
         
-        return json
+        return elementToObject(input)
     }
     
     static private func elementsToJson (_ elements: [String]) -> [JsonType] {
