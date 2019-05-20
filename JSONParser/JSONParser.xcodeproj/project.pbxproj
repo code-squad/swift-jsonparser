@@ -14,6 +14,7 @@
 		F262C2DC228F8C3E007EF45B /* ArrayTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CBFDBD228F0267009A7242 /* ArrayTokenizer.swift */; };
 		F262C2DE228F8D45007EF45B /* ObjectTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F262C2DD228F8D45007EF45B /* ObjectTokenizer.swift */; };
 		F262C2E0228F8D92007EF45B /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = F262C2DF228F8D92007EF45B /* Token.swift */; };
+		F27110C72292991D009D823D /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27110C62292991D009D823D /* Tokenizer.swift */; };
 		F283CA7A2275759200D7CBBC /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA792275759200D7CBBC /* Type.swift */; };
 		F29D7B5D228F99BA00F70DE6 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29D7B5C228F99BA00F70DE6 /* Parser.swift */; };
 /* End PBXBuildFile section */
@@ -37,6 +38,7 @@
 		F21006532272A5A70033D0B7 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		F262C2DD228F8D45007EF45B /* ObjectTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectTokenizer.swift; sourceTree = "<group>"; };
 		F262C2DF228F8D92007EF45B /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		F27110C62292991D009D823D /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
 		F283CA792275759200D7CBBC /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		F29D7B5C228F99BA00F70DE6 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F29D7B5F228FB8E900F70DE6 /* FormatValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatValidator.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			children = (
 				F262C2DF228F8D92007EF45B /* Token.swift */,
 				F2CBFDBD228F0267009A7242 /* ArrayTokenizer.swift */,
+				F27110C62292991D009D823D /* Tokenizer.swift */,
 				F262C2DD228F8D45007EF45B /* ObjectTokenizer.swift */,
 			);
 			path = Tokenizer;
@@ -161,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F29D7B5D228F99BA00F70DE6 /* Parser.swift in Sources */,
+				F27110C72292991D009D823D /* Tokenizer.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				F21006502272A1570033D0B7 /* InputView.swift in Sources */,
 				F262C2E0228F8D92007EF45B /* Token.swift in Sources */,
