@@ -9,14 +9,16 @@
 import Foundation
 
 struct Tokenizer {
+    static let emptyString = ""
     
     static func execute(using input: String) throws -> [String] {
-        
-        let tokens = input.components(separatedBy: [" ", ","])
-        let validTokens = tokens.filter(){ token in token != "" }
+        var tokenDivider = CharacterSet(charactersIn: JSONSymbols.comma)
+        tokenDivider.insert(charactersIn: JSONSymbols.blank)
+        let tokens = input.components(separatedBy: tokenDivider)
+        let validTokens = tokens.filter(){ token in token != emptyString }
         
         if validTokens.isEmpty { throw TokenizerError.impossibleToTokenize }
-        return tokens.filter(){ token in token != "" }
+        return tokens.filter(){ token in token != emptyString }
         
     }
     
