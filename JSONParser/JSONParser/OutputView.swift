@@ -31,6 +31,8 @@ struct OutputView {
         
         if typeName == JsonTypeName.object {
             result = objectToString(elements[0])
+        } else {
+            result = arrayToString(elements)
         }
         
         print(result)
@@ -48,35 +50,58 @@ struct OutputView {
         }
         
         result.removeLast()
-        
         result += "\n}"
-        
         return result
     }
     
     private func valueToString (_ json: JsonType) -> String {
-        var valueOfString = "["
-        var objectValue = ""
+        var valueString = "["
+        
         switch json {
-        case let .array(objectArray):
-            for value in objectArray {
-                objectValue = valueToString(value)
-                valueOfString += "\((objectValue)), "
-            }
-            valueOfString.removeLast()
-            valueOfString.removeLast()
-            valueOfString += "]"
-        case let .bool(objectBool):
-            if objectBool {
-                valueOfString = "true"
+        case let .array(array): valueString += arrayInArrayToString(array)
+        case let .bool(bool):
+            if bool {
+                valueString = "true"
             } else {
-                valueOfString = "false"
+                valueString = "false"
             }
-        case let .int(objectInt): valueOfString = String(objectInt)
-        case let .string(objectString): valueOfString = String(objectString)
-        case .object(_): break
+        case let .int(int): valueString = String(int)
+        case let .string(string): valueString = String(string)
+        case .object(_):
+            valueString = objectToString(json)
         }
         
-        return valueOfString
+        return valueString
+    }
+    
+    private func arrayToString (_ array: [JsonType]) -> String {
+        var result: String = "["
+        
+        for element in array {
+            result += valueToString(element)
+            result += ",\n\t"
+        }
+        result.removeLast()
+        result.removeLast()
+        result.removeLast()
+        
+        result += "\n]"
+        
+        return result
+    }
+    
+    private func arrayInArrayToString (_ array: [JsonType]) -> String {
+        var valueArray = ""
+        var valueString = ""
+        
+        for value in array {
+            valueArray = valueToString(value)
+            valueString += "\((valueArray)), "
+        }
+        valueString.removeLast()
+        valueString.removeLast()
+        valueString += "]"
+        
+        return valueString
     }
 }
