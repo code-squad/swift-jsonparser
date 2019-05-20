@@ -24,4 +24,9 @@ extension String: JSONValue {
     static var typeDescription: String { return "문자열" }
 }
 
+extension Array: JSONValue where Element: JSONValue {
+    static var typeDescription: String {
+        return "배열"
+    }
+}
 
