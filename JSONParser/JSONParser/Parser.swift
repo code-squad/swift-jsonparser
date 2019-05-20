@@ -8,7 +8,7 @@ struct Parser {
         case objectKeyMustBeOneAndOnly
     }
     
-    static func parseValue(_ input: String) throws -> Type {
+    static func parseValue(_ input: String) throws -> JsonExplainable {
         if let string = parseString(input) { return string }
         else if let bool = parseBool(input) { return bool }
         else if let object = try parseObject(input) { return object }
@@ -40,11 +40,11 @@ struct Parser {
         }
     }
 
-    private static func parseObject(_ input: String) throws -> [String: Type]? {
+    private static func parseObject(_ input: String) throws -> [String: JsonExplainable]? {
         guard input.first == Token.beginObject else { return nil }
         let tokenizedInput = try ObjectTokenizer.tokenize(input)
         if tokenizedInput.isEmpty { return tokenizedInput }
-        var result = [String: Type]()
+        var result = [String: JsonExplainable]()
         for (key, value) in tokenizedInput {
             guard let key = parseString(key) else {
                 throw ParsingError.objectKeyMustBeString
@@ -55,11 +55,11 @@ struct Parser {
         return result
     }
 
-    private static func parseArray(_ input: String) throws -> [Type]? {
+    private static func parseArray(_ input: String) throws -> [JsonExplainable]? {
         guard input.first == Token.beginArray else { return nil }
         let tokenizedInput = try ArrayTokenizer.tokenize(input)
         if tokenizedInput.isEmpty { return tokenizedInput }
-        var result = [Type]()
+        var result = [JsonExplainable]()
         for value in tokenizedInput {
             result.append(try parseValue(value))
         }
