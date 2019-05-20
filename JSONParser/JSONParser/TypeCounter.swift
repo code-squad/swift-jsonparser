@@ -10,29 +10,27 @@ import Foundation
 
 struct TypeCounter {
     static func getTotalTypeCount(of values: [JSONValue]) -> [(String, Int)] {
-        let boolCount   = countBool(in: values)
-        let numberCount = countNumber(in: values)
-        let stringCount = countString(in: values)
-        
+        var boolCount = 0,  numberCount = 0, stringCount = 0
+        for value in values {
+            switch value {
+            case is Bool:
+                boolCount += 1
+            case is Int:
+                numberCount += 1
+            case is String:
+                stringCount += 1
+            default:
+                break
+            }
+        }
+        return createTotalCountPair(boolCount: boolCount, numberCount: numberCount, stringCount: stringCount)
+    }
+    
+    static private func createTotalCountPair(boolCount: Int, numberCount: Int, stringCount: Int) -> [(String, Int)] {
         var totalCountPair: [(String, Int)] = []
         totalCountPair.append((Bool.typeDescription, boolCount))
         totalCountPair.append((Int.typeDescription, numberCount))
         totalCountPair.append((String.typeDescription, stringCount))
         return totalCountPair
-    }
-    
-    static func countBool(in values: [JSONValue]) -> Int {
-        let boolElements = values.filter({ value in value is Bool })
-        return boolElements.count
-    }
-    
-    static func countNumber(in values: [JSONValue]) -> Int {
-        let numberElements = values.filter({ value in value is Int })
-        return numberElements.count
-    }
-    
-    static func countString(in values: [JSONValue]) -> Int {
-        let stringElements = values.filter({ value in value is String })
-        return stringElements.count
     }
 }
