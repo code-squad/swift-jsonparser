@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+struct JSONObject {
+    var keyValuePairs: [String : JSONValue]
+    
+    init() {
+        keyValuePairs = [String : JSONValue]()
+    }
+
+}
+
+extension JSONObject: JSONValue {
+    static var typeDescription: String {
+        return "객체"
+    }
+}
