@@ -59,12 +59,7 @@ struct OutputView {
         
         switch json {
         case let .array(array): valueString += arrayInArrayToString(array)
-        case let .bool(bool):
-            if bool {
-                valueString = "true"
-            } else {
-                valueString = "false"
-            }
+        case let .bool(bool): valueString = boolToString(bool)
         case let .int(int): valueString = String(int)
         case let .string(string): valueString = String(string)
         case .object(_):
@@ -103,5 +98,13 @@ struct OutputView {
         valueString += "]"
         
         return valueString
+    }
+    
+    private func boolToString (_ bool: Bool) -> String {
+        if bool {
+            return "true"
+        } else {
+            return "false"
+        }
     }
 }
