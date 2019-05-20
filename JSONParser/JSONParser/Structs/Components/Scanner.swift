@@ -11,6 +11,7 @@ import Foundation
 struct Scanner {
     var context: Analyzing
     var elements: [Character]
+    var buffer = [Character]()
     var curser: Int = 0
     
     init(context: Analyzing, elements: [Character], curser:Int = 0 ){
@@ -19,27 +20,30 @@ struct Scanner {
     }
     
     func next() -> String {
+        self.elements.map{
+            isEnd($0)
+        }
         return ""
     }
     
     func isEnd(_ c: Character) -> Bool {
         let currentCharactor = elements[curser]
-        return context.isEnd(currentCharactor)
+        return self.context.isEnd(currentCharactor)
     }
     
     func hasNext() -> Bool {
-        return curser > elements.count
+        return self.curser > self.elements.count
     }
     
-    mutating func next() {
+    mutating func nextCurser() {
         if(self.hasNext()){
             self.curser += 1
         }
     }
     
-    func nextCharacter() -> Character {
-        
-        return elements[curser]
+    mutating func nextCharacter() -> Character {
+        self.nextCurser()
+        return self.elements[self.curser]
     }
     
 }

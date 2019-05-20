@@ -28,7 +28,6 @@ enum Analyzing: StartMark {
         case .Array:
             endMarks.append("]")
         }
-        
         return endMarks.contains(c)
     }
     
