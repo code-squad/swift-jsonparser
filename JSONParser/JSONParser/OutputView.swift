@@ -62,25 +62,29 @@ struct OutputView {
         case let .bool(bool): valueString = boolToString(bool)
         case let .int(int): valueString = String(int)
         case let .string(string): valueString = String(string)
-        case .object(_):
-            valueString = objectToString(json)
+        case .object(_): valueString = objectToString(json)
         }
         
         return valueString
     }
     
     private func arrayToString (_ array: [JsonType]) -> String {
-        var result: String = "["
+        var result: String = ""
+        
+        if array.count>1 {
+            result += "["
+        }
         
         for element in array {
             result += valueToString(element)
-            result += ",\n\t"
+            result += ",\n"
         }
         result.removeLast()
         result.removeLast()
-        result.removeLast()
         
-        result += "\n]"
+        if array.count>1 {
+            result += "["
+        }
         
         return result
     }
