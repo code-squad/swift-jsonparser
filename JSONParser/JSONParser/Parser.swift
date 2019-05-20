@@ -12,20 +12,18 @@ struct Parser {
     
     static func parse(_ tokens: [String]) throws -> [JSONValue] {
         var jsonArray = [JSONValue]()
-        
         if isWrappedWithBrackets(using: tokens) {
             jsonArray = try createJSONArray(using: tokens)
         }
-        
         if jsonArray.isEmpty {
-            throw ParserError.invalidFormatToParse
+            throw JSONError.invalidFormatToParse
         }
         return jsonArray
     }
     
     static private func isWrappedWithBrackets(using tokens: [String]) -> Bool {
         return tokens[0] == JSONSymbols.openBracket
-            && tokens[tokens.count-1] == JSONSymbols.closedBracket
+               && tokens[tokens.count-1] == JSONSymbols.closedBracket
     }
     
     static private func createJSONArray(using tokens: [String]) throws -> [JSONValue] {
