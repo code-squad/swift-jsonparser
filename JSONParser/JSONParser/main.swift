@@ -24,6 +24,7 @@ func main () {
     json = JsonParser.parseJson(inputView.valueEntered)
     let message = MessageMaker.makeMessage(json)
     outputView.printMessage(message)
+    outputView.printElements(json, typeName: message.1)
 }
 
 main()

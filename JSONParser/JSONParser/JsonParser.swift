@@ -55,7 +55,9 @@ struct JsonParser {
         
         for element in elements {
             elementSplited = element.components(separatedBy: String(colon.rawValue))
-            elementSplited[0].removeFirst()
+            if elementSplited[0].first == " " {
+                elementSplited[0].removeFirst()
+            }
             elementSplited[0].removeLast()
             elementSplited[1].removeFirst()
             jsonObject[elementSplited[0]] = getJsonValue(elementSplited[1])
@@ -66,8 +68,8 @@ struct JsonParser {
     
     static private func elementToArray (_ element: String) -> [JsonType] {
         var jsonArray = [JsonType]()
-        let elementsFromArray = RegexGrammar.elementsFromArray
-        let elements = elementsFromArray.rawValue.matches(for: element)
+        let elementsFromArray = RegexGrammar.elementsFromArrayInArray
+        let elements = element.matches(for: elementsFromArray.rawValue)
     
         for element in elements {
             jsonArray.append(getJsonValue(element))
