@@ -8,21 +8,24 @@
 
 import Foundation
 
-
-InputView.printInstruction()
-
-var parsedValues: [JSONValue]!
-
-do {
-    let input = try InputView.read()
-    let tokens = try Tokenizer.execute(using: input)
-    parsedValues = try Parser.parse(tokens)
-} catch let e as JSONParserError {
-    print(e.message)
-}
-
-if parsedValues != nil {
+func main() {
+    var parsedValues: [JSONValue]!
+    InputView.printInstruction()
+    do {
+        let input = try InputView.read()
+        let tokens = try Tokenizer.execute(using: input)
+        parsedValues = try Parser.parse(tokens)
+    } catch let e as JSONError {
+        print(e.message)
+        return
+    } catch {
+        print("Other Unexpected Error")
+        return
+    }
+    
     OutputView.printJSONDescription(of: parsedValues)
+    
 }
 
+main()
 
