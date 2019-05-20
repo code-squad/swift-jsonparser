@@ -21,12 +21,29 @@ class ContextTests: XCTestCase {
     }
     
     func testStringContextEnd(){
+        //THEN
         XCTAssertTrue(self.stringContext.isEnd("\""))
     }
     
     func testElementContextEnd(){
+        //THEN
         XCTAssertTrue(self.elementContext.isEnd(","))
         XCTAssertTrue(self.elementContext.isEnd("]"))
+    }
+    
+    func testContainerContextStart(){
+        //THEN
+        XCTAssertTrue(self.containerContext.isStart(" "))
+    }
+    
+    func testStringContextStart(){
+        //THEN
+        XCTAssertFalse(self.stringContext.isStart(" "))
+    }
+    
+    func testElementContextStart(){
+        //THEN
+        XCTAssertTrue(self.elementContext.isStart("\""))
     }
 }
 
