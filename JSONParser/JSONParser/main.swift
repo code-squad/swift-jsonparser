@@ -10,10 +10,8 @@ import Foundation
 
 
 var tknr = MyTokenizer()
-_ = try tknr.tokenize("[ \"Hi, jk\", 4, false,]")
+_ = try tknr.tokenize("[ \"Hello,World!\", 4, false,]")
 
-
-//
 //입력받아 -> String
 //
 //분석해 -> [Token]

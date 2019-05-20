@@ -11,7 +11,7 @@ import XCTest
 class TokenizerTests: XCTestCase {
 
     //GIVEN
-    var tokenizer:Tokenizer = MyTokenizer()
+    var tokenizer: Tokenizer = MyTokenizer()
     
     func testTokenize(){
         //GIVEN

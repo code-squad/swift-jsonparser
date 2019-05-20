@@ -10,5 +10,6 @@ import Foundation
 
 protocol Symbol {
     var startSymbol: String { get  }
-    var endSymbol: String { get  }
+    var endSymbol: String { get }
 }
+

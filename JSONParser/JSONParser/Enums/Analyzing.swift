@@ -17,24 +17,33 @@ enum Analyzing: StartMark {
     case String = "\""
     
     func isEnd(_ c: Character) -> Bool {
-        var endMark: EndMark
+        var endMarks = [EndMark]()
         
-        switch self{
-        case .Array:
-            endMark = "]"
-        case .Element:
-            endMark = ","
+        switch (self){
         case .String:
-            endMark = "\""
+            endMarks.append("\"")
+        case .Element:
+            endMarks.append(",")
+            fallthrough
+        case .Array:
+            endMarks.append("]")
         }
         
-        return c == endMark
+        return endMarks.contains(c)
     }
     
-  static func isStart(_ c: Character) -> Bool {
+    func isStart(_ c: Character) -> Bool {
+        var availableStartMarks = [StartMark]()
         
-        guard (Analyzing.init(rawValue: c) != nil) else { return false}
-        return true
+        switch (self){
+        case .Array,.Element:
+            availableStartMarks.append(Analyzing.Element.rawValue)
+            availableStartMarks.append(Analyzing.String.rawValue)
+            availableStartMarks.append(Analyzing.Array.rawValue)
+        case .String:
+            ()
+        }
+        return availableStartMarks.contains(c)
     }
     
 }
