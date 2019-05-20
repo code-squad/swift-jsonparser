@@ -13,11 +13,12 @@ class ScannerTests: XCTestCase {
     var scanner : Scanner!
     
     override func setUp() {
-        self.scanner = Scanner(context: .Array, elements: "\"Hello, World!\"".map{$0}, curser: 0 )
+        self.scanner = Scanner(context: .Array, string: "\"Hello, World!\" , 4")
     }
     
-    func testScan(){
-        XCTAssertEqual(self.scanner.scan(), "\"Hello, World!\"")
+    func testNext(){
+        XCTAssertEqual(self.scanner.next(), "\"Hello, World!\"")
+        XCTAssertEqual(self.scanner.next(), "4")
     }
 
    
