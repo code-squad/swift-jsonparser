@@ -46,11 +46,10 @@ struct JsonParser {
         let elementsFromObject = RegexGrammar.elementsFromObject
         let elements = input.matches(for: elementsFromObject.rawValue)
         
-        let colon = DevideCharacter.colon
         var elementSplited: [String]
         
         for element in elements {
-            elementSplited = element.components(separatedBy: String(colon.rawValue))
+            elementSplited = element.components(separatedBy: String(DevideCharacter.colon.rawValue))
             if elementSplited[0].first == " " {
                 elementSplited[0].removeFirst()
             }

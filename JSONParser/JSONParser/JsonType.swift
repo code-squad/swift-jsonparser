@@ -36,10 +36,7 @@ enum JsonType {
     }
     
     private func objectToString (_ object: JsonType) -> String {
-        let curlyBracketOpen = DevideCharacter.curlyBracketOpen
-        let curlyBracketClose = DevideCharacter.curlyBracketClose
-        
-        var result: String = String(curlyBracketOpen.rawValue)
+        var result: String = String(DevideCharacter.curlyBracketOpen.rawValue)
         var valueObject = ""
         
         if case let JsonType.object(object) = object {
@@ -51,29 +48,25 @@ enum JsonType {
         
         result.removeLast()
         result += "\n"
-        result += String(curlyBracketClose.rawValue)
+        result += String(DevideCharacter.curlyBracketClose.rawValue)
         return result
     }
     
     private func arrayToString (_ array: [JsonType]) -> String {
-        let squareBracketOpen = DevideCharacter.squareBracketOpen
-        let squareBracketClose = DevideCharacter.squareBracketClose
-        let comma = DevideCharacter.comma
-        
         var result: String = ""
         
         if array.count>1 {
-            result += String(squareBracketOpen.rawValue)
+            result += String(DevideCharacter.squareBracketOpen.rawValue)
         }
         
         for element in array {
             result += element.string
-            result += String(comma.rawValue)
+            result += String(DevideCharacter.comma.rawValue)
         }
         result.removeLast()
         
         if array.count>1 {
-            result += String(squareBracketClose.rawValue)
+            result += String(DevideCharacter.squareBracketClose.rawValue)
         }
         
         return result
