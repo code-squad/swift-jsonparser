@@ -10,10 +10,9 @@ import Foundation
 
 struct JsonParser {
     static func parseJson (_ input: String) -> JsonType {
-        let devideCharacter = DevideCharacter(rawValue: input.first ?? ":") ?? .colon
         let elements: [String]
         
-        if devideCharacter == DevideCharacter.squareBracketOpen {
+        if input.first == DevideCharacter.squareBracketOpen.rawValue {
             let elementsFromArray = RegexGrammar.elementsFromArray
             elements = input.matches(for: elementsFromArray.rawValue)
             return JsonType.array(elementsToJson(elements))
