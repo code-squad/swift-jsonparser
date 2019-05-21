@@ -11,12 +11,11 @@ import Foundation
 struct GrammarChecker {
     static func checkJsonGrammar(_ input: String) throws {
         var verifyJsonGrammerPass = false
-        let devideCharacter = DevideCharacter(rawValue: input.first ?? ":") ?? .colon
-        
-        if devideCharacter == DevideCharacter.squareBracketOpen {
+  
+        if input.first == DevideCharacter.squareBracketOpen.rawValue {
             verifyJsonGrammerPass = checkArrayGrammar(input)
         }
-        if devideCharacter == DevideCharacter.curlyBracketOpen {
+        if input.first == DevideCharacter.curlyBracketOpen.rawValue {
            verifyJsonGrammerPass = checkObjectGrammar(input)
         }
         
