@@ -9,19 +9,23 @@
 import XCTest
 
 class ScannerTests: XCTestCase {
-
+    
     var scanner : Scanner!
     
     override func setUp() {
-        self.scanner = Scanner(context: .Array, string: "\"Hello, World!\" , 4")
+        self.scanner = Scanner(context: .Array, string: "\"Hello, World!\" , 4 , true")
     }
     
     func testNext(){
-        XCTAssertEqual(self.scanner.next(), "\"Hello, World!\"")
-        XCTAssertEqual(self.scanner.next(), "4")
+        XCTAssertEqual(try self.scanner.next(), "\"Hello, World!\"")
+        XCTAssertEqual(try self.scanner.next(), "4")
+        XCTAssertEqual(try self.scanner.next(), "true")
     }
-
-   
-
+    
+//    func testbuf(){
+//        self.scanner.buf()
+//        print(self.scanner.buffer)
+//    }
+    
 }
 

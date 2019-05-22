@@ -1,5 +1,5 @@
 //
-//  TokenType.swift
+//  Buffer.swift
 //  JSONParser
 //
 //  Created by 이동영 on 21/05/2019.
@@ -7,10 +7,3 @@
 //
 
 import Foundation
-
-enum TokenType {
-    case Array
-    case Number
-    case String
-    case Bool
-}

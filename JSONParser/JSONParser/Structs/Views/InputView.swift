@@ -24,8 +24,9 @@ struct InputView {
     }
     
     public func run() -> String {
-        ask(Question.aboutJSON)
+        self.ask(Question.aboutJSON)
         return fetchInput()
     }
+    
 }
 

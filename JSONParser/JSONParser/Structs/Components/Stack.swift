@@ -16,7 +16,7 @@ struct Stack<T> {
     }
     
     func isEmpty() -> Bool {
-        return elements.count > 0 ? false : true
+        return self.elements.count > 0 ? false : true
     }
     
     mutating func push(_ e:T){
@@ -27,7 +27,6 @@ struct Stack<T> {
         guard let lastElement = self.elements.popLast() else {
             throw Exception.Empty
         }
-        
         return lastElement
     }
     

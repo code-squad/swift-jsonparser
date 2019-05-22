@@ -8,8 +8,9 @@
 
 import Foundation
 
-protocol Token {
-    var value : String { get }
+struct  Token {
+    var type: TokenType
+    var value : String
 }
 
 

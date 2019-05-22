@@ -11,8 +11,8 @@ import XCTest
 class ContextTests: XCTestCase {
     
     //GIVEN
-    let containerContext = Context.Container
-    let elementContext = Context.Element
+    let containerContext = Context.Array
+    let elementContext = Context.Value
     let stringContext = Context.String
     
     func testContainerContextEnd(){
@@ -23,6 +23,7 @@ class ContextTests: XCTestCase {
     func testStringContextEnd(){
         //THEN
         XCTAssertTrue(self.stringContext.isEnd("\""))
+        XCTAssertFalse(self.stringContext.isEnd(" "))
     }
     
     func testElementContextEnd(){
@@ -39,6 +40,7 @@ class ContextTests: XCTestCase {
     func testStringContextStart(){
         //THEN
         XCTAssertFalse(self.stringContext.isStart(" "))
+        XCTAssertFalse(self.stringContext.isStart(","))
     }
     
     func testElementContextStart(){

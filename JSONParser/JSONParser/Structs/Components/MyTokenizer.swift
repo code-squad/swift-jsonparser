@@ -9,10 +9,10 @@
 import Foundation
 
 struct MyTokenizer: Tokenizer {
-    var nestedContext  = Stack<Scanner>()
     
     mutating func tokenize(_ string: String) throws -> [Token] {
         return []
     }
+    
 }
 

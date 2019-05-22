@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+struct Symbols {
+    static let openBracket: Character = "["
+    static let closeBracket: Character = "]"
+    static let comma: Character = ","
+    static let doubleQuotation: Character = "\""
+    static let whiteSpace: Character = " "
+}
