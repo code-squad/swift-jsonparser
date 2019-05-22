@@ -2,89 +2,50 @@
 //  Scanner.swift
 //  JSONParser
 //
-//  Created by 이동영 on 21/05/2019.
+//  Created by 이동영 on 23/05/2019.
 //  Copyright © 2019 JK. All rights reserved.
 //
 
 import Foundation
 
-struct Scanner{
-    var currentContext: Context
-    var nestedContexts =  Stack<Context>()
-    private let characters: [Character]
-    private var buffer = [Character]()
-    private var curser: Int = -1
+struct Scanner {
+    var nestedContexts: Stack<Context>
+    var currentContext: Context { return try! nestedContexts.peek()}
+    var buffer: Buffer<Character>
+    var string: String
+    var curser: Int = -1
     
-    init(context: Context, string: String) {
-        self.nestedContexts.push(context)
-        self.currentContext = context
-        self.characters = string.map{ $0 }
+    init(string: String ) {
+        self.buffer = Buffer()
+        self.string = string
+        self.nestedContexts = Stack()
+        self.nestedContexts.push(Context.Value)
     }
     
-    mutating func next() throws -> String {
-        try  self.buffering()
-        let nextString = String.init(self.buffer)
+    mutating func next() -> String {
+        self.fillBuffer()
+        let string = String.init(self.buffer.readAll())
         self.clearBuffer()
-        
-        return nextString
+        return string
     }
     
-    mutating func buffering() throws {
-        var c: Character = nextChar()
-        self.enterContext(c)
-        self.write(c)
-        if(c == Symbols.openBracket ){
-            self.nestedContexts.push(.Value)
-            self.nextCurser()
-            return
-             print(self.nestedContexts)
-        }
-        while needContinue(c){
-            c = nextChar()
-            self.write(c)
-        }
-        try self.exitContext()
-    }
-    
-    func needContinue(_ c: Character ) -> Bool {
-        if(self.currentContext == .String) && (self.buffer.count < 3) { return true }
-        return !self.currentContext.isStart(c) && !self.currentContext.isEnd(c)
-    }
-    
-    mutating func enterContext(_ c: Character){
-        guard let newContext = Context.init(rawValue: c) else { return }
-        self.currentContext = newContext
-        self.nestedContexts.push(newContext)
-        print("\(newContext)컨텍스트 접속" )
+    mutating func enter(context:Context){
+        self.nestedContexts.push(context)
     }
     
     mutating func exitContext() throws {
-        print("\(try self.nestedContexts.peek())컨텍스트 이웃" )
-        _ = try self.nestedContexts.pop()
-        self.currentContext = try self.nestedContexts.peek()
+       _ = try self.nestedContexts.pop()
+    }
+  
+    mutating func clearBuffer(){
+        self.buffer.clear()
+    }
+    
+    func fillBuffer(){
         
     }
     
-    mutating func clearBuffer(){
-        self.buffer.removeAll()
+    mutating func nextCurser(){
+        self.curser += 1
     }
-    
-    private mutating func write(_ c: Character){
-        self.buffer.append(c)
-    }
-    
-    func hasNext() -> Bool {
-        return self.characters.count > self.curser
-    }
-    
-    private mutating func nextCurser(){
-        self.curser = self.hasNext() ? self.curser + 1 : self.curser
-    }
-    
-    private mutating func nextChar() -> Character {
-        self.nextCurser()
-        return self.characters[self.curser]
-    }
-    
 }
-

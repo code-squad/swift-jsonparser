@@ -1,52 +1,39 @@
 //
-//  Context.swift
+//  Context2.swift
 //  JSONParser
 //
-//  Created by 이동영 on 21/05/2019.
+//  Created by 이동영 on 23/05/2019.
 //  Copyright © 2019 JK. All rights reserved.
 //
 
 import Foundation
 
-typealias StartSymbol = Character
-typealias EndSymbol = Character
-
-enum Context: StartSymbol {
+enum Context{
+    case Array
+    case Value
+    case String
     
-    case Array = "["
-    case Value = " "
-    case String = "\""
+    func canInclude(context: Context) -> Bool {
+        switch self {
+        case .Array: // 배열은
+            return context == .Value || context == .Array  // Value,Array 포함할수 있어
+        case .Value:
+            return context != .Value // Value 빼곤 다 포함할 수 있어
+        case .String:
+            return false // 못해
+        }
+    }
     
-    func isStart(_ char: Character) -> Bool {
-        var startSymbols = [StartSymbol]()
-        
+    func isFinish(where:Character) -> Bool {
         switch self {
         case .Array:
-            startSymbols.append(Symbols.whiteSpace)
-            startSymbols.append(Symbols.openBracket)
+            ()
         case .Value:
-            startSymbols.append(Symbols.doubleQuotation)
+            ()
         case .String:
             ()
         }
-        return startSymbols.contains(char)
-    }
-    
-    func isEnd(_ char: Character) -> Bool {
-        var endSymbols = [EndSymbol]()
-        
-        switch self {
-        case .Value:
-            endSymbols.append(Symbols.comma)
-            fallthrough
-        case .Array:
-            endSymbols.append(Symbols.closeBracket)
-        case .String:
-            endSymbols.append(Symbols.doubleQuotation)
-        }
-        return endSymbols.contains(char)
+        return false
     }
     
 }
-
-
