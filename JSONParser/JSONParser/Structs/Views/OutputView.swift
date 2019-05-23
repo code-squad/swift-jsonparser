@@ -29,7 +29,7 @@ struct OutputView {
         return result
     }
     
-    mutating func makeSentence() -> String {
+   private mutating func makeSentence() -> String {
         let statistics = self.statistics()
         var sentence = "총 \(self.total)개의 데이터 중에 "
         sentence += statistics

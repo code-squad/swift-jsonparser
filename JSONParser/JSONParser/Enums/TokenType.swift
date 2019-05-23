@@ -23,20 +23,20 @@ enum TokenType: String {
         return .None
     }
     
-    static func isArray(_ string: String) -> Bool {
+    private static func isArray(_ string: String) -> Bool {
         return ["[","]"].contains(string)
     }
 
-    static func isNumber(_ string: String) -> Bool {
+    private static func isNumber(_ string: String) -> Bool {
         guard Int.init(string) != nil else { return false }
         return true
     }
     
-    static func isString(_ string: String) -> Bool {
+    private static func isString(_ string: String) -> Bool {
         return string.first == "\"" && string.last == "\""
     }
     
-    static func isBoolean(_ string: String) -> Bool {
+    private static func isBoolean(_ string: String) -> Bool {
         guard Bool.init(string) != nil else { return false }
         return true
     }

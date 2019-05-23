@@ -9,8 +9,8 @@
 import Foundation
 
 struct Token {
-    var type: TokenType
-    var value: String
+    private (set) var type: TokenType
+    private (set) var value: String
 }
 
 

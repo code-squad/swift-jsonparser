@@ -9,7 +9,7 @@
 import Foundation
 
 struct Buffer<T> {
-    var elements = [T]()
+    private var elements = [T]()
     
     func size() -> Int {
         return self.elements.count

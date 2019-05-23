@@ -9,7 +9,7 @@
 import Foundation
 
 struct MyTokenizer: Tokenizer {
-    var scanner: Scanner
+    private var scanner: Scanner
     
     init(string: String) {
         self.scanner = Scanner.init(string: string)
