@@ -15,6 +15,7 @@ class JSONParserUnitTest: XCTestCase {
         XCTAssertTrue(checkInvalidJsonObjectFormat(testInput), "error")
         
     }
+    
     func checkInvalidJsonObjectFormat(_ input: String) -> Bool{
         var isJsonObject = true
         isJsonObject &= checkPrefixSuffixFormat(input)
