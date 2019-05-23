@@ -20,7 +20,6 @@
 		0E9B9B302296699D007637B6 /* TokenGenerater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9B9B2C2296689B007637B6 /* TokenGenerater.swift */; };
 		0E9B9B342296807C007637B6 /* TokenCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9B9B332296807C007637B6 /* TokenCounter.swift */; };
 		0EC890EF22934BA200EB51DA /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC890EE22934BA200EB51DA /* TokenType.swift */; };
-		0EC890F922934DA400EB51DA /* ContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC890F822934DA400EB51DA /* ContextTests.swift */; };
 		0EC890FF22934DC900EB51DA /* ContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC890FE22934DC900EB51DA /* ContextTests.swift */; };
 		0EC8910122934ECA00EB51DA /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC890EE22934BA200EB51DA /* TokenType.swift */; };
 		0EC891042293509100EB51DA /* Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC891032293509100EB51DA /* Symbols.swift */; };
@@ -67,8 +66,6 @@
 		0EA8E5BC22905A8D00D207AC /* StackTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StackTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EC890EE22934BA200EB51DA /* TokenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenType.swift; sourceTree = "<group>"; };
 		0EC890F622934DA400EB51DA /* ContextTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContextTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0EC890F822934DA400EB51DA /* ContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextTests.swift; sourceTree = "<group>"; };
-		0EC890FA22934DA400EB51DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0EC890FE22934DC900EB51DA /* ContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextTests.swift; sourceTree = "<group>"; };
 		0EC891032293509100EB51DA /* Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbols.swift; sourceTree = "<group>"; };
 		0ECEB7E9229046CB00D5ED9D /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
@@ -126,15 +123,6 @@
 				0E03CFB12285E0C300B0FE2D /* Info.plist */,
 			);
 			path = JSONParserTests;
-			sourceTree = "<group>";
-		};
-		0EC890F722934DA400EB51DA /* ContextTests */ = {
-			isa = PBXGroup;
-			children = (
-				0EC890F822934DA400EB51DA /* ContextTests.swift */,
-				0EC890FA22934DA400EB51DA /* Info.plist */,
-			);
-			path = ContextTests;
 			sourceTree = "<group>";
 		};
 		0EC891022293508400EB51DA /* Symbols */ = {
@@ -200,7 +188,6 @@
 			children = (
 				83AE2E0E1F8CAC2800F38CC9 /* JSONParser */,
 				0E03CFAE2285E0C300B0FE2D /* JSONParserTests */,
-				0EC890F722934DA400EB51DA /* ContextTests */,
 				83AE2E0D1F8CAC2800F38CC9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -407,7 +394,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0EC890F922934DA400EB51DA /* ContextTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
