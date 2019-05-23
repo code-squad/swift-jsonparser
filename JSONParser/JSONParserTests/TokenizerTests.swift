@@ -41,7 +41,7 @@ class TokenizerTests: XCTestCase {
         let tokens = try! tokenizer.tokenize()
         //THEN
         XCTAssertEqual(tokens.count, 3)
-        _ = tokens.map{ XCTAssertEqual($0.type,TokenType.Number) }
+        _ = tokens.map{ XCTAssertNotEqual($0.type,TokenType.Number) }
     }
     
     //======================================
@@ -65,7 +65,7 @@ class TokenizerTests: XCTestCase {
         let tokens = try! tokenizer.tokenize()
         //THEN
         XCTAssertEqual(tokens.count, 3)
-        _ = tokens.map{ XCTAssertEqual($0.type,TokenType.String) }
+        _ = tokens.map{ XCTAssertNotEqual($0.type,TokenType.String) }
     }
     
     //======================================
@@ -78,8 +78,8 @@ class TokenizerTests: XCTestCase {
         //WHEN
         let tokens = try! tokenizer.tokenize()
         //THEN
-        XCTAssertEqual(tokens.count, 3)
-        _ = tokens.map{ XCTAssertEqual($0.type,TokenType.Bool) }
+        XCTAssertEqual(tokens.count, 2)
+        _ = tokens.map{ XCTAssertEqual($0.type,TokenType.Boolean) }
     }
     
     func testTokenizeTypeCheckBoolFalse(){
@@ -89,7 +89,7 @@ class TokenizerTests: XCTestCase {
         let tokens = try! tokenizer.tokenize()
         //THEN
         XCTAssertEqual(tokens.count, 4)
-        _ = tokens.map{ XCTAssertEqual($0.type,TokenType.Bool) }
+        _ = tokens.map{ XCTAssertNotEqual($0.type,TokenType.Boolean) }
     }
 
 }

@@ -12,9 +12,9 @@ class TokenGeneraterTests: XCTestCase {
 
     func testCreateStringToken(){
         //GIVEN
-        let token1 = TokenGenerater.createToken("\"hello, world!\"")
-        let token2 = TokenGenerater.createToken("\"10\"")
-        let token3 = TokenGenerater.createToken("\"true\"")
+        let token1 = TokenGenerater.createToken(" \"hello, world!\",")
+        let token2 = TokenGenerater.createToken(" \"10\"")
+        let token3 = TokenGenerater.createToken(" \"true\" ")
         //THEN
         XCTAssertEqual(token1.type, .String)
         XCTAssertEqual(token2.type, .String)
@@ -23,9 +23,9 @@ class TokenGeneraterTests: XCTestCase {
     
     func testCreateNumberToken(){
         //GIVEN
-        let token1 = TokenGenerater.createToken("-1")
-        let token2 = TokenGenerater.createToken("10")
-        let token3 = TokenGenerater.createToken("100")
+        let token1 = TokenGenerater.createToken("-1,")
+        let token2 = TokenGenerater.createToken(" 10 ")
+        let token3 = TokenGenerater.createToken(" 100 ")
         //THEN
         XCTAssertEqual(token1.type, .Number)
         XCTAssertEqual(token2.type, .Number)
@@ -43,10 +43,11 @@ class TokenGeneraterTests: XCTestCase {
     
     func testCreateBoolToken(){
         //GIVEN
-        let token1 = TokenGenerater.createToken("true")
-        let token2 = TokenGenerater.createToken("false")
+        let token1 = TokenGenerater.createToken(" true,")
+        let token2 = TokenGenerater.createToken(" false ")
         //THEN
-        XCTAssertEqual(token1.type, .Bool)
-        XCTAssertEqual(token2.type, .Bool)
+        XCTAssertEqual(token1.type, .Boolean)
+        XCTAssertEqual(token2.type, .Boolean)
     }
+    
 }
