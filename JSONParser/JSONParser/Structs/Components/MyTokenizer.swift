@@ -16,9 +16,12 @@ struct MyTokenizer: Tokenizer {
     }
     
     mutating func tokenize() throws -> [Token] {
-        return []
+        var strings = [String]()
+        while(scanner.hasNext()){
+            strings.append(try scanner.next())
+        }
+        return strings.map { TokenGenerater.createToken($0) }.filter { $0.type != .Array }
     }
-    
     
 }
 
