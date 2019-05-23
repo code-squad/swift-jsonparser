@@ -35,7 +35,6 @@
 		0EFE12C622906D3C0039AB95 /* MyTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12C522906D3C0039AB95 /* MyTokenizer.swift */; };
 		0EFE12C822906D8B0039AB95 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12BD22906B0B0039AB95 /* Token.swift */; };
 		0EFE12C922906D8F0039AB95 /* MyTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12C522906D3C0039AB95 /* MyTokenizer.swift */; };
-		0EFE12D82291636D0039AB95 /* JSONParsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFE12D72291636D0039AB95 /* JSONParsable.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -73,7 +72,6 @@
 		0EFE12BD22906B0B0039AB95 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		0EFE12C322906D100039AB95 /* TokenizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenizerTests.swift; sourceTree = "<group>"; };
 		0EFE12C522906D3C0039AB95 /* MyTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTokenizer.swift; sourceTree = "<group>"; };
-		0EFE12D72291636D0039AB95 /* JSONParsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParsable.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,7 +141,6 @@
 			isa = PBXGroup;
 			children = (
 				0ECEB7E9229046CB00D5ED9D /* Tokenizer.swift */,
-				0EFE12D72291636D0039AB95 /* JSONParsable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -426,7 +423,6 @@
 				0EC890EF22934BA200EB51DA /* TokenType.swift in Sources */,
 				0EC891042293509100EB51DA /* Symbols.swift in Sources */,
 				0E1A03F22295C48600B3A6AA /* Context.swift in Sources */,
-				0EFE12D82291636D0039AB95 /* JSONParsable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

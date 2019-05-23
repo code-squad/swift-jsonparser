@@ -30,20 +30,20 @@ struct Scanner {
         return string
     }
     
-    mutating func enter(context: Context){
+    private mutating func enter(context: Context){
         if !self.currentContext.canInclude(context: context){ return }
         self.nestedContexts.push(context)
     }
     
-    mutating func exitContext() throws {
+    private mutating func exitContext() throws {
         _ = try self.nestedContexts.pop()
     }
     
-    mutating func clearBuffer(){
+    private mutating func clearBuffer(){
         self.buffer.clear()
     }
     
-    mutating func fillBuffer() throws {
+    private mutating func fillBuffer() throws {
         while(self.hasNext()){
             let c = nextChar()
             if let context = Context.init(rawValue: c){
@@ -73,7 +73,7 @@ struct Scanner {
         
     }
     
-    mutating func nextCurser(){
+    private mutating func nextCurser(){
         self.curser += 1
     }
     
@@ -81,12 +81,12 @@ struct Scanner {
         return self.curser < self.charaters.count-1
     }
     
-    mutating func nextChar() -> Character {
+    private mutating func nextChar() -> Character {
         self.nextCurser()
         return self.charaters[self.curser]
     }
     
-    enum Exception: String, Error, CustomStringConvertible {
+    private enum Exception: String, Error, CustomStringConvertible {
         var description: String {return self.rawValue}
         
         case EOL = "END OF LINE"
