@@ -20,7 +20,8 @@ struct MyTokenizer: Tokenizer {
         while(scanner.hasNext()){
             strings.append(try scanner.next())
         }
-        return strings.map { TokenGenerater.createToken($0) }.filter { $0.type != .Array }
+        let tokens = strings.map { TokenGenerater.createToken($0) }
+        return tokens.filter {  ![TokenType.Array,TokenType.None].contains($0.type) }
     }
     
 }
