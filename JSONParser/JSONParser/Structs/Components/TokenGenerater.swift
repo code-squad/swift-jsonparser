@@ -12,7 +12,7 @@ struct TokenGenerater {
     
     static public func createToken(_ string: String) -> Token {
         let nomalized = self.normalize(string)
-        let type = determinType(value: nomalized)
+        let type = determineType(value: nomalized)
         return Token.init(type: type, value: nomalized)
     }
     
@@ -35,7 +35,7 @@ struct TokenGenerater {
         }
     }
     
-    private static func determinType(value:String) -> TokenType {
+    private static func determineType(value:String) -> TokenType {
         return TokenType.of(value)
     }
     
