@@ -10,7 +10,25 @@ import Foundation
 
 struct Validator: Validatable {
     
+    func hasQuotation(in token: String) -> Bool {
+        guard token.first == "\"" && token.last == "\"" else {
+            return false
+        }
+        return true
+    }
     
+    func isBool(of token: String) -> Bool {
+        guard JSONKeyword.bools.contains(token) else {
+            return false
+        }
+        return true
+    }
+    
+    func isNumber(of token: String) -> Bool {
+        let tokenCharacters = CharacterSet(charactersIn: token)
+        let differenceCharacters = tokenCharacters.subtracting(CharacterSet.decimalDigits)
+        return differenceCharacters.isEmpty
+    }
 }
 
 protocol Validatable {
