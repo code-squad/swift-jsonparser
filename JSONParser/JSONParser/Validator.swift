@@ -8,6 +8,13 @@
 
 import Foundation
 
-struct Validator {
+struct Validator: Validatable {
     
+    
+}
+
+protocol Validatable {
+    func hasQuotation(in token: String) -> Bool
+    func isBool(of token: String) -> Bool
+    func isNumber(of token: String) -> Bool
 }
