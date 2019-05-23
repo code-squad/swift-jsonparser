@@ -39,5 +39,4 @@ struct TokenGenerater {
         return TokenType.of(value)
     }
     
-    
 }

@@ -18,7 +18,8 @@ struct JSONParser {
                 var tokenizer = MyTokenizer.init(string: userInput)
                 let tokens = try tokenizer.tokenize()
                 let counter = TokenCounter.count(tokens: tokens)
-                
+                var outPutview = OutputView.init(numOf: counter)
+                outPutview.run()
                 errorOccurred = false
             }catch {
                 errorOccurred = true
