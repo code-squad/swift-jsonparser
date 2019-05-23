@@ -30,7 +30,7 @@ struct Scanner {
         return string
     }
     
-    private mutating func enter(context: Context){
+    private mutating func enter(context: Context) {
         if !self.currentContext.canInclude(context: context){ return }
         self.nestedContexts.push(context)
     }
@@ -73,7 +73,7 @@ struct Scanner {
         
     }
     
-    private mutating func nextCurser(){
+    private mutating func nextCurser() {
         self.curser += 1
     }
     

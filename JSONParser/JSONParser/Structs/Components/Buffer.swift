@@ -15,7 +15,7 @@ struct Buffer<T> {
         return self.elements.count
     }
     
-    mutating func write(e:T){
+    mutating func write(e:T) {
         self.elements.append(e)
     }
     
@@ -27,7 +27,7 @@ struct Buffer<T> {
         return self.elements
     }
     
-    mutating func clear(){
+    mutating func clear() {
         self.elements.removeAll()
     }
 

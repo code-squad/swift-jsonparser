@@ -146,7 +146,6 @@
 		0ECEB7EF229047B500D5ED9D /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				0EFE12BD22906B0B0039AB95 /* Token.swift */,
 				0ECEB7E9229046CB00D5ED9D /* Tokenizer.swift */,
 			);
 			path = Protocols;
@@ -155,6 +154,7 @@
 		0ECEB7F0229047C600D5ED9D /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				0EFE12BD22906B0B0039AB95 /* Token.swift */,
 				0ECEB7F122904BC100D5ED9D /* Stack.swift */,
 				0EFE12C522906D3C0039AB95 /* MyTokenizer.swift */,
 				0E1A03EF2293F55200B3A6AA /* Buffer.swift */,
@@ -186,18 +186,10 @@
 			isa = PBXGroup;
 			children = (
 				0EC891022293508400EB51DA /* Symbols */,
-				0EFE12E42291BF0A0039AB95 /* Tokens */,
 				0ECEB7F0229047C600D5ED9D /* Components */,
 				0EFE12CF229081EA0039AB95 /* Views */,
 			);
 			path = Structs;
-			sourceTree = "<group>";
-		};
-		0EFE12E42291BF0A0039AB95 /* Tokens */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Tokens;
 			sourceTree = "<group>";
 		};
 		83AE2E031F8CAC2800F38CC9 = {

@@ -23,13 +23,13 @@ struct TokenGenerater {
         return normalized
     }
     
-    private static func normalizeFirst(_ string: inout String){
+    private static func normalizeFirst(_ string: inout String) {
         if(Symbols.whiteSpace == string.first){
             string.removeFirst()
         }
     }
     
-    private static func normalizeLast(_ string: inout String){
+    private static func normalizeLast(_ string: inout String) {
         if([Symbols.comma,Symbols.whiteSpace].contains(string.last)){
             string.removeLast()
         }

@@ -19,7 +19,7 @@ struct Stack<T> {
         return self.elements.count > 0 ? false : true
     }
     
-    mutating func push(_ e:T){
+    mutating func push(_ e:T) {
         self.elements.append(e)
     }
     
@@ -41,15 +41,15 @@ struct Stack<T> {
         return self.elements.count
     }
     
-    func show(){
+    func show() {
         print(self.elements)
     }
     
-    mutating func clear(){
+    mutating func clear() {
         self.elements.removeAll()
     }
     
-    enum Exception: String,Error,CustomStringConvertible{
+    enum Exception: String,Error,CustomStringConvertible {
         var description: String { return self.rawValue}
         
         case Empty = "스택이 비었습니다."
