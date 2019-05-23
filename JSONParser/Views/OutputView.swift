@@ -10,15 +10,17 @@ import Foundation
 
 struct OutputView {
     static private let unit = "개"
-    static func printJsonInformation (_ parsingResult: JsonFormatter){
-//        print("총 \(parsingResult.totalCount)개의 데이터 중에",terminator :"")
-//        print("\(LexicalType.string.description) \(parsingResult.stringCount)\(unit)",terminator :", ")
-//        print("\(LexicalType.intNumber.description) \(parsingResult.intCount)\(unit)",terminator :", ")
-//        print("\(LexicalType.bool.description) \(parsingResult.boolCount)\(unit)",terminator :"")
-        print("가 포함되어 있습니다.")
+    static func printJsonInformation (_ format : JsonFormatter){
+        var result = "총 \(format.totalCount)개의 데이터 중에"
+        let descendingOrderDictionary = format.descendingOrderByValueCountInformation
+        for element in descendingOrderDictionary {
+            if element.value == 0 {
+                continue
+            }
+            result += " \(element.key) \(element.value)\(unit),"
+        }
+        result.removeLast()
+        result += "가 포함되어 있습니다."
+        print(result)
     }
-    
-//    static func printJsonElementsCluster (_ parsingResult: JsonFormatter){
-//        print(parsingResult.jsonFormmatClusteredElementList)
-//    }
 }
