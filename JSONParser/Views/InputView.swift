@@ -16,5 +16,4 @@ struct InputView {
         }
         return input
     }
-    
 }

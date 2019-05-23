@@ -1,8 +1,8 @@
 //
-//  JsonArray.swift
+//  LexicalType.swift
 //  JSONParser
 //
-//  Created by hw on 14/05/2019.
+//  Created by hw on 23/05/2019.
 //  Copyright © 2019 JK. All rights reserved.
 //
 
