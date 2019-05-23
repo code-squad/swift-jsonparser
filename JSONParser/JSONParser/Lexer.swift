@@ -13,42 +13,43 @@
 // a lexer would attach tags like number, word, punctuation etc.
 
 import Foundation
-enum LexicalType: String, CustomStringConvertible{
-    case intNumber = "Int"
-    case bool = "Bool"
-    case string = "String"
-    
-    var description: String {
-        switch self {
-        case .intNumber :
-            return "숫자"
-        case .string :
-            return "문자열"
-        case .bool :
-            return "부울"
-        }
-    }
-}
-
-typealias LexPair = (type: LexicalType , content: String)
 
 struct Lexer {
-    static func analyzeLexing (tokenList : [String]) throws -> [LexPair]{
-        var result = [LexPair]()
-        for token in tokenList {
-            let testStringResult = isString(token)
-            let testNumberResult = isNumeric(token)
-            let testBooleanResult = isBoolean(token)
-            let lexicalType = try decideElementLexicalType(string: testStringResult, number: testNumberResult, bool: testBooleanResult)
-            result.append(LexPair(type: lexicalType, content: token))
-        }
+    
+    static func confirmTokenDataType (_ token : String ) throws -> LexicalType {
+        let testStringResult = isString(token)
+        let testNumberResult = isNumeric(token)
+        let testBooleanResult = isBoolean(token)
+        let testJsonObjectResult = isJsonObject(token)
+        let testJsonArrayResult = isJsonArray(token)
+        let result = try decideElementLexicalType(string: testStringResult, number: testNumberResult, bool: testBooleanResult,
+                                                  jsonObject: testJsonObjectResult, jsonArray: testJsonArrayResult)
         return result
     }
-
-    static private func decideElementLexicalType( string: Bool, number: Bool, bool : Bool) throws -> LexicalType {
+    
+    static func checkInputType ( _ input: String) -> LexicalType {
+        var type : LexicalType = LexicalType.string
+        let trimInput = input.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimInput[trimInput.startIndex] == "[" && trimInput[trimInput.index(before: trimInput.endIndex)] == "]"  {
+            type = LexicalType.jsonArray
+        }
+        if trimInput[trimInput.startIndex] == "{" && trimInput[trimInput.index(before: trimInput.endIndex)] == "}" {
+            type = LexicalType.jsonObject
+        }
+        return type
+    }
+    
+    static private func decideElementLexicalType( string: Bool = false,
+                                                  number: Bool = false,
+                                                  bool : Bool = false,
+                                                  jsonObject: Bool = false,
+                                                  jsonArray: Bool = false) throws -> LexicalType {
         var result: LexicalType? = string ? LexicalType.string : nil
         result = number ? LexicalType.intNumber : result
         result = bool ? LexicalType.bool : result
+        result = jsonObject ? LexicalType.jsonObject : result
+        result = jsonArray ? LexicalType.jsonArray : result
+        
         guard let resultType = result else {
             throw ErrorCode.lexicalTypeError
         }
@@ -72,4 +73,13 @@ struct Lexer {
         }
         return true
     }
+    
+    static private func isJsonObject (_ token: String) -> Bool {
+        return token[0] == "{" && token[token.count-1] == "}"
+    }
+    
+    static private func isJsonArray (_ token: String ) -> Bool {
+        return token[0] == "[" && token[token.count-1] == "]"
+    }
+    
 }
