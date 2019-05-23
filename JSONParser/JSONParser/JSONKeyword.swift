@@ -16,4 +16,5 @@ struct JSONKeyword {
     static let quotation = "\""
     static let `true` = "true"
     static let `false` = "false"
+    static let bools = [`true`, `false`]
 }
