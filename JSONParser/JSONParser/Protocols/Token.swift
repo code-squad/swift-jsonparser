@@ -8,10 +8,9 @@
 
 import Foundation
 
-struct  Token {
+struct Token {
     var type: TokenType
-    var value : String
+    var value: String
 }
-
 
 

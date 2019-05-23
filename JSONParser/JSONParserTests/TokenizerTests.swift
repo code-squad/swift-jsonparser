@@ -14,7 +14,6 @@ class TokenizerTests: XCTestCase {
         
         //GIVEN
         var tokenizer: Tokenizer = MyTokenizer(string: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false , \"Hello, World!\" ]")
-        
         //WHEN
         let tokens = try! tokenizer.tokenize()
         //THEN
