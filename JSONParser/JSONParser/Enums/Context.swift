@@ -8,32 +8,33 @@
 
 import Foundation
 
-enum Context{
-    case Array
-    case Value
-    case String
+enum Context: Character {
+    typealias RawValue = Character
+    
+    case Array = "["
+    case Value = " "
+    case String = "\""
     
     func canInclude(context: Context) -> Bool {
         switch self {
-        case .Array: // 배열은
-            return context == .Value || context == .Array  // Value,Array 포함할수 있어
+        case .Array:
+            return context == .Value || context == .Array
         case .Value:
-            return context != .Value // Value 빼곤 다 포함할 수 있어
+            return context != .Value
         case .String:
-            return false // 못해
+            return false
         }
     }
     
-    func isFinish(where:Character) -> Bool {
+    func isFinish(inCaseOf: Character) -> Bool {
         switch self {
         case .Array:
-            ()
+            return inCaseOf == Symbols.closeBracket
         case .Value:
-            ()
+            return [Symbols.closeBracket,Symbols.comma,Symbols.whiteSpace].contains(inCaseOf)
         case .String:
-            ()
+            return inCaseOf == Symbols.doubleQuotation
         }
-        return false
     }
     
 }
