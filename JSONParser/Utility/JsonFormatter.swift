@@ -10,10 +10,76 @@ import Foundation
 
 struct JsonFormatter{
     
-    private var jsonPairs: JsonArray
+    private var jsonData : JsonParsable
+    private (set) var countDictionary: [String: Int]
+    private (set) var totalCount = 0
+    private (set) var descendingOrderByValueCountInformation : [(key: String, value: Int)] = [(key:String, value: Int)]()
     
-    init(jsonArray: JsonArray){
-        self.jsonPairs = jsonArray
+    init(jsonData: JsonParsable) throws {
+        self.jsonData = jsonData
+        countDictionary = [String: Int]()
+        try countDataTypeOfElementInJsonData()
+        self.descendingOrderByValueCountInformation = self.countDictionary.sorted{ $0.value > $1.value }
     }
-  
+    
+    mutating private func initiateCountDictionary () {
+        for element in LexicalType.allCases {
+            self.countDictionary.updateValue(0, forKey: element.description)
+        }
+    }
+    
+    mutating func countDataTypeOfElementInJsonData() throws {
+        let jsonLexicalType = try Lexer.confirmTokenDataType(jsonData.toString())
+        switch jsonLexicalType {
+        case .jsonArray :
+            try countElementTypeInJsonArray()
+        case .jsonObject:
+            try countElemntTypeInJsonObject()
+        default:
+            throw ErrorCode.lexicalTypeError
+        }
+
+    }
+    
+    private mutating func checkElementDataType(_ element : JsonValue) {
+        self.totalCount += 1
+        switch element.jsonValue{
+        case is Bool:
+            let currentCount = countDictionary[LexicalType.bool.description] ?? 0
+            countDictionary[LexicalType.bool.description] = currentCount + 1
+        case is Int:
+            let currentCount = countDictionary[LexicalType.intNumber.description] ?? 0
+            countDictionary[LexicalType.intNumber.description] = currentCount + 1
+        case is JsonObject:
+            let currentCount = countDictionary[LexicalType.jsonObject.description] ?? 0
+            countDictionary[LexicalType.jsonObject.description] = currentCount + 1
+        case is JsonArray:
+            let currentCount = countDictionary[LexicalType.jsonArray.description] ?? 0
+            countDictionary[LexicalType.jsonArray.description] = currentCount + 1
+        case is String :
+            let currentCount = countDictionary[LexicalType.string.description] ?? 0
+            countDictionary[LexicalType.string.description] = currentCount + 1
+        default:
+            break
+        }
+    }
+    
+    private mutating func countElemntTypeInJsonObject() throws {
+        guard let jsonObject: JsonObject = self.jsonData as? JsonObject else{
+            throw ErrorCode.convertJsonObjectError
+        }
+        for (_, element) in jsonObject.keyValueSet.enumerated() {
+            checkElementDataType(element.value)
+        }
+    }
+    
+    private mutating func countElementTypeInJsonArray() throws {
+        guard let jsonArray: JsonArray = self.jsonData as? JsonArray else{
+            throw ErrorCode.convertJsonArrayError
+        }
+        for element in jsonArray.arrayList {
+            checkElementDataType(element)
+        }
+    }
+    
 }
