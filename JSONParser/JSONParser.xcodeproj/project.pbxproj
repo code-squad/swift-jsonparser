@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		C28016442292896800562E55 /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28016432292896800562E55 /* JSONObject.swift */; };
-		C28016462292A2AA00562E55 /* TokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28016452292A2AA00562E55 /* TokenView.swift */; };
 		C28016482292F12500562E55 /* JSONArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28016472292F12500562E55 /* JSONArray.swift */; };
+		C2DB9D6C229660E600E35FB8 /* TokenReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DB9D6B229660E600E35FB8 /* TokenReader.swift */; };
 		C2FAED9C228E98A00045F639 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAED9B228E98A00045F639 /* InputView.swift */; };
 		C2FAED9E228E99580045F639 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAED9D228E99580045F639 /* Tokenizer.swift */; };
 		C2FAEDA0228E9AD40045F639 /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAED9F228E9AD40045F639 /* JSONValue.swift */; };
@@ -38,8 +38,8 @@
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C28016432292896800562E55 /* JSONObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONObject.swift; sourceTree = "<group>"; };
-		C28016452292A2AA00562E55 /* TokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenView.swift; sourceTree = "<group>"; };
 		C28016472292F12500562E55 /* JSONArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONArray.swift; sourceTree = "<group>"; };
+		C2DB9D6B229660E600E35FB8 /* TokenReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReader.swift; sourceTree = "<group>"; };
 		C2FAED9B228E98A00045F639 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		C2FAED9D228E99580045F639 /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
 		C2FAED9F228E9AD40045F639 /* JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValue.swift; sourceTree = "<group>"; };
@@ -85,7 +85,7 @@
 				C2FAED9B228E98A00045F639 /* InputView.swift */,
 				C2FAEDA7228EA2B10045F639 /* OutputView.swift */,
 				C2FAED9D228E99580045F639 /* Tokenizer.swift */,
-				C28016452292A2AA00562E55 /* TokenView.swift */,
+				C2DB9D6B229660E600E35FB8 /* TokenReader.swift */,
 				C2FAEDA3228E9DBA0045F639 /* Parser.swift */,
 				C2FAED9F228E9AD40045F639 /* JSONValue.swift */,
 				C28016432292896800562E55 /* JSONObject.swift */,
@@ -158,7 +158,6 @@
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				C2FAEDA0228E9AD40045F639 /* JSONValue.swift in Sources */,
-				C28016462292A2AA00562E55 /* TokenView.swift in Sources */,
 				C2FAEDA8228EA2B10045F639 /* OutputView.swift in Sources */,
 				C28016482292F12500562E55 /* JSONArray.swift in Sources */,
 				C28016442292896800562E55 /* JSONObject.swift in Sources */,
@@ -166,6 +165,7 @@
 				C2FAEDA2228E9CAE0045F639 /* JSONSymbols.swift in Sources */,
 				C2FAED9E228E99580045F639 /* Tokenizer.swift in Sources */,
 				C2FAEDAC228EC9D60045F639 /* JSONValueFactory.swift in Sources */,
+				C2DB9D6C229660E600E35FB8 /* TokenReader.swift in Sources */,
 				C2FAEDAA228EAC500045F639 /* TypeCounter.swift in Sources */,
 				C2FAED9C228E98A00045F639 /* InputView.swift in Sources */,
 				C2FAEDAE228ED0A80045F639 /* JSONParserError.swift in Sources */,

@@ -1,33 +1,29 @@
 //
-//  TokenView.swift
+//  TokenReader.swift
 //  JSONParser
 //
-//  Created by Daheen Lee on 20/05/2019.
+//  Created by Daheen Lee on 23/05/2019.
 //  Copyright © 2019 JK. All rights reserved.
 //
 
 import Foundation
 
-struct TokenView {
-    private var index = 0
+struct TokenReader {
+    private var currentIndex: Int
     private var tokens: [String]
     
     init(tokens: [String]) {
         self.tokens = tokens
-    }
-    
-    func hasNext() -> Bool {
-        let nextIndex = index + 1
-        return nextIndex < tokens.count
+        self.currentIndex = -1
     }
     
     mutating func next() -> String? {
         var nextToken: String?
-        let nextIndex = index + 1
+        let nextIndex = currentIndex + 1
         
         if (nextIndex < tokens.count) {
             nextToken = tokens[nextIndex]
-            index += 1
+            currentIndex += 1
         }
         return nextToken
     }
