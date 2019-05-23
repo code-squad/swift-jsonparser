@@ -9,12 +9,19 @@
 import Foundation
 
 struct JSONObject {
-    var keyValuePairs: [String : JSONValue]
+    private var keyValuePairs: [String : JSONValue]
+    
+    var count: Int {
+        return keyValuePairs.count
+    }
     
     init() {
         keyValuePairs = [String : JSONValue]()
     }
-
+    
+    mutating func add(key: String, value: JSONValue) {
+        keyValuePairs.updateValue(value, forKey: key)
+    }
 }
 
 extension JSONObject: JSONValue {
