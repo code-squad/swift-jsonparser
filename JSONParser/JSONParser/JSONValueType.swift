@@ -9,24 +9,24 @@
 import Foundation
 
 protocol JSONValueType {
-    var type: String { get }
+   static var typeDescription: String { get }
 }
 
 extension String: JSONValueType {
-    var type: String {
+    static var typeDescription: String {
         return "문자열"
     }
 }
 
 typealias Number = Int
 extension Number: JSONValueType {
-    var type: String {
+    static var typeDescription: String {
         return "숫자"
     }
 }
 
 extension Bool: JSONValueType {
-    var type: String {
+    static var typeDescription: String {
         return "부울"
     }
 }
