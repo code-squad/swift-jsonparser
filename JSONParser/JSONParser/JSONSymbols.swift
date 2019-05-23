@@ -8,12 +8,15 @@
 
 import Foundation
 
-struct JSONSymbols {
-    static let openBracket  = "["
-    static let closedBracket  = "]"
-    static let openBrace = "{"
-    static let closedBrace = "}"
-    static let comma = ","
-    static let blank = " "
-    static let doubleQuotation = "\""
+enum JSONSymbols: String {
+    case openBracket  = "["
+    case closedBracket  = "]"
+    case openBrace = "{"
+    case closedBrace = "}"
+    case comma = ","
+    case blank = " "
+    case doubleQuotation = "\""
+    case colon = ":"
+    
+
 }
