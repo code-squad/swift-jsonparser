@@ -10,14 +10,13 @@ import XCTest
 
 class TokenizerTests: XCTestCase {
 
-    //GIVEN
-    var tokenizer: Tokenizer = MyTokenizer()
-    
     func testTokenize(){
+        
         //GIVEN
-        let target = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false , \"Hello, World!\" ]"
+        var tokenizer: Tokenizer = MyTokenizer(string: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false , \"Hello, World!\" ]")
+        
         //WHEN
-        let tokens = try! self.tokenizer.tokenize(target)
+        let tokens = try! tokenizer.tokenize()
         //THEN
         XCTAssertEqual(tokens.count, 8)
     }
@@ -28,8 +27,9 @@ class TokenizerTests: XCTestCase {
     
     func testTokenizeTypeCheckNumberSuccess(){
         //GIVEN
-        let target = "[ 10, -4, 100 ]"
-        let tokens = try! self.tokenizer.tokenize(target)
+        var tokenizer: Tokenizer = MyTokenizer(string: "[ 10, -4, 100 ]")
+        //WHEN
+        let tokens = try! tokenizer.tokenize()
         //THEN
         XCTAssertEqual(tokens.count, 3)
         _ = tokens.map{ XCTAssertEqual($0.type,TokenType.Number) }
@@ -37,11 +37,12 @@ class TokenizerTests: XCTestCase {
     
     func testTokenizeTypeCheckNumberFalse(){
         //GIVEN
-        let target = "[ \"실패\", true, \"100\" ]"
-        let tokens = try! self.tokenizer.tokenize(target)
+        var tokenizer: Tokenizer = MyTokenizer(string: "[ \"실패\", true, \"100\" ]")
+        //WHEN
+        let tokens = try! tokenizer.tokenize()
         //THEN
         XCTAssertEqual(tokens.count, 3)
-        _ = tokens.map{ XCTAssertNotEqual($0.type,TokenType.Number) }
+        _ = tokens.map{ XCTAssertEqual($0.type,TokenType.Number) }
     }
     
     //======================================
@@ -50,8 +51,9 @@ class TokenizerTests: XCTestCase {
     
     func testTokenizeTypeCheckStringSuccess(){
         //GIVEN
-        let target = "[ \"10\", \"true\", \"hello, world\" ]"
-        let tokens = try! self.tokenizer.tokenize(target)
+        var tokenizer: Tokenizer = MyTokenizer(string: "[ \"10\", \"true\", \"hello, world\" ]")
+        //WHEN
+        let tokens = try! tokenizer.tokenize()
         //THEN
         XCTAssertEqual(tokens.count, 3)
         _ = tokens.map{ XCTAssertEqual($0.type,TokenType.String) }
@@ -59,11 +61,12 @@ class TokenizerTests: XCTestCase {
     
     func testTokenizeTypeCheckStringFalse(){
         //GIVEN
-        let target = "[ 실패, true, 100 ]"
-        let tokens = try! self.tokenizer.tokenize(target)
+        var tokenizer: Tokenizer = MyTokenizer(string: "[ 실패, true, 100 ]")
+        //WHEN
+        let tokens = try! tokenizer.tokenize()
         //THEN
         XCTAssertEqual(tokens.count, 3)
-        _ = tokens.map{ XCTAssertNotEqual($0.type,TokenType.String) }
+        _ = tokens.map{ XCTAssertEqual($0.type,TokenType.String) }
     }
     
     //======================================
@@ -72,8 +75,9 @@ class TokenizerTests: XCTestCase {
     
     func testTokenizeTypeCheckBoolSuccess(){
         //GIVEN
-        let target = "[ true, false ]"
-        let tokens = try! self.tokenizer.tokenize(target)
+        var tokenizer: Tokenizer = MyTokenizer(string: "[ true, false ]")
+        //WHEN
+        let tokens = try! tokenizer.tokenize()
         //THEN
         XCTAssertEqual(tokens.count, 3)
         _ = tokens.map{ XCTAssertEqual($0.type,TokenType.Bool) }
@@ -81,11 +85,12 @@ class TokenizerTests: XCTestCase {
     
     func testTokenizeTypeCheckBoolFalse(){
         //GIVEN
-        let target = "[ \"실패\", \"true\", \"false\", \"100\" ]"
-        let tokens = try! self.tokenizer.tokenize(target)
+        var tokenizer: Tokenizer = MyTokenizer(string: "[ \"실패\", \"true\", \"false\", \"100\" ]")
+        //WHEN
+        let tokens = try! tokenizer.tokenize()
         //THEN
         XCTAssertEqual(tokens.count, 4)
-        _ = tokens.map{ XCTAssertNotEqual($0.type,TokenType.Bool) }
+        _ = tokens.map{ XCTAssertEqual($0.type,TokenType.Bool) }
     }
 
 }

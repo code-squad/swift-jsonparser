@@ -11,42 +11,49 @@ import XCTest
 class ContextTests: XCTestCase {
     
     //GIVEN
-    let containerContext = Context.Array
-    let elementContext = Context.Value
+    let arrayContext = Context.Array
+    let valueContext = Context.Value
     let stringContext = Context.String
     
-    func testContainerContextEnd(){
+    func testArrayontextStart(){
+        //WHEN
+        guard let context = Context.init(rawValue: "[") else { return }
         //THEN
-        XCTAssertTrue(self.containerContext.isEnd("]"))
+        XCTAssertTrue(self.arrayContext.canInclude(context: context))
+    }
+    
+    func testArrayContextEnd(){
+        //THEN
+        XCTAssertTrue(self.arrayContext.isFinish(inCaseOf: "]"))
+    }
+    func testStringContextStart(){
+        //WHEN
+        guard let context = Context.init(rawValue: "\"") else { return }
+        //THEN
+        XCTAssertTrue(self.valueContext.canInclude(context: context))
     }
     
     func testStringContextEnd(){
         //THEN
-        XCTAssertTrue(self.stringContext.isEnd("\""))
-        XCTAssertFalse(self.stringContext.isEnd(" "))
+        XCTAssertTrue(self.stringContext.isFinish(inCaseOf: "\""))
+        XCTAssertFalse(self.stringContext.isFinish(inCaseOf: " "))
     }
     
-    func testElementContextEnd(){
+   
+    
+    func testValueContextStart(){
+        //WHEN
+        guard let context = Context.init(rawValue: " ") else { return }
         //THEN
-        XCTAssertTrue(self.elementContext.isEnd(","))
-        XCTAssertTrue(self.elementContext.isEnd("]"))
+        XCTAssertTrue(self.arrayContext.canInclude(context: context))
     }
     
-    func testContainerContextStart(){
+    func testValueContextEnd(){
         //THEN
-        XCTAssertTrue(self.containerContext.isStart(" "))
+        XCTAssertTrue(self.valueContext.isFinish(inCaseOf: ","))
+        XCTAssertTrue(self.valueContext.isFinish(inCaseOf: "]"))
     }
     
-    func testStringContextStart(){
-        //THEN
-        XCTAssertFalse(self.stringContext.isStart(" "))
-        XCTAssertFalse(self.stringContext.isStart(","))
-    }
-    
-    func testElementContextStart(){
-        //THEN
-        XCTAssertTrue(self.elementContext.isStart("\""))
-    }
 }
 
 
