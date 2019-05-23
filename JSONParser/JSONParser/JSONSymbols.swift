@@ -18,5 +18,16 @@ enum JSONSymbols: String {
     case doubleQuotation = "\""
     case colon = ":"
     
-
+    func equals(_ token: String) -> Bool {
+        return self.rawValue == token
+    }
+    
+    func equals(_ token: Character) -> Bool {
+        let convertedToken = String(token)
+        return equals(convertedToken)
+    }
+    
+    func notEquals(_ token: String) -> Bool {
+        return !equals(token)
+    }
 }
