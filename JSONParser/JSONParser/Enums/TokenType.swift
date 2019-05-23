@@ -8,12 +8,12 @@
 
 import Foundation
 
-enum TokenType {
-    case Array
-    case Number
-    case String
-    case Boolean
-    case None
+enum TokenType: String {
+    case Array = "배열"
+    case Number = "숫자"
+    case String = "문자열"
+    case Boolean = "부울"
+    case None = "X"
     
     static func of(_ string: String) -> TokenType {
         if isArray(string) { return .Array }
@@ -41,4 +41,9 @@ enum TokenType {
         return true
     }
     
+}
+extension TokenType: CustomStringConvertible {
+    var description: String {
+        return self.rawValue
+    }
 }
