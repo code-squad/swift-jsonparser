@@ -9,8 +9,13 @@
 import Foundation
 
 struct MyTokenizer: Tokenizer {
+    var scanner: Scanner
     
-    mutating func tokenize(_ string: String) throws -> [Token] {
+    init(string: String) {
+        self.scanner = Scanner.init(string: string)
+    }
+    
+    mutating func tokenize() throws -> [Token] {
         return []
     }
     
