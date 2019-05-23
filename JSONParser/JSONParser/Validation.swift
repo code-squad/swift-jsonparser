@@ -8,17 +8,49 @@
 
 import Foundation
 
+
 struct Validation {
     
-    static func checkInvalidArrayFormat (_ input : String) throws  {
+    static func checkInvalidJsonObjectFormat(_ input: String) -> Bool{
+        var isJsonObject = true
+        isJsonObject &= checkPrefixSuffixFormat(input)
+        isJsonObject &= checkJsonObjectKeyValueFormat(input)
+        return isJsonObject
+    }
+    
+    static private func checkPrefixSuffixFormat(_ input: String) -> Bool {
+        var isJsonObject = true
+        isJsonObject &= input.hasPrefix("{") && input.hasSuffix("}")
+        return isJsonObject
+    }
+    
+    static private func checkJsonObjectKeyValueFormat(_ input: String) -> Bool {
+        var isJsonObject = true
+        let filterPattern = ["{","}"]
+        let removeFirstAndLastCharacter = input.filter{(value) in return !filterPattern.contains(String(value))}
+        let keyValuePreSeperated = removeFirstAndLastCharacter.components(separatedBy: ",").map{ (value) in return //
+            String(value).components(separatedBy: ":").map{value in return String(value)}}
+        for element in keyValuePreSeperated {
+            isJsonObject &= element.count == 2 ? true : false
+        }
+        return isJsonObject
+    }
+    
+    static func checkInvalidJsonArrayFormat (_ input : String) throws  {
         var isValid: Bool = true
-        isValid &= checkStartSquareBracket(input)
-        isValid &= checkEndSquareBracket(input)
+        /// array check
+        isValid &= isJsonArrayFormat(input)
+        /// object check
+        isValid |= checkInvalidJsonObjectFormat(input)
         if !isValid{
             throw ErrorCode.invalidJsonFormat
         }
     }
-   
+    
+    static func isJsonArrayFormat(_ input : String ) -> Bool {
+        return checkStartSquareBracket(input) && checkEndSquareBracket(input)
+    }
+
     static private func checkStartSquareBracket(_ input: String) -> Bool {
         return input[input.startIndex] == "[" ? true : false
     }
@@ -28,9 +60,5 @@ struct Validation {
     }
 }
 
-extension Bool {
-    static func &= (lhs: inout Bool, rhs: Bool) {
-        lhs = lhs && rhs
-    }
-}
+
 
