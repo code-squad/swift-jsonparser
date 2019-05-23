@@ -14,7 +14,8 @@ enum ErrorCode: Error, CustomStringConvertible{
     case invalidJsonFormat
     case lexicalTypeError
     case notFoundKey
-    
+    case convertJsonObjectError
+    case convertJsonArrayError
     var description: String  {
         get{
             switch self{
@@ -26,6 +27,10 @@ enum ErrorCode: Error, CustomStringConvertible{
                 return "요소 Type 이 문자열, 숫자, 불린 값 어느 경우도 해당하지 않습니다."
             case .notFoundKey:
                 return "JsonObject에서 해당 key에 대한 value 값이 없습니다."
+            case .convertJsonObjectError:
+                return "JsonObject로 변환 과정에 오류가 있습니다."
+            case .convertJsonArrayError:
+                return "JsonArray로 변환 과정에 오류가 있습니다."
             }
         }
     }
