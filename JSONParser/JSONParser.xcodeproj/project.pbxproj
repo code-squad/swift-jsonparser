@@ -18,6 +18,7 @@
 		0E9B9B2D2296689B007637B6 /* TokenGenerater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9B9B2C2296689B007637B6 /* TokenGenerater.swift */; };
 		0E9B9B2F22966903007637B6 /* TokenGeneraterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9B9B2E22966903007637B6 /* TokenGeneraterTests.swift */; };
 		0E9B9B302296699D007637B6 /* TokenGenerater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9B9B2C2296689B007637B6 /* TokenGenerater.swift */; };
+		0E9B9B342296807C007637B6 /* TokenCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9B9B332296807C007637B6 /* TokenCounter.swift */; };
 		0EC890EF22934BA200EB51DA /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC890EE22934BA200EB51DA /* TokenType.swift */; };
 		0EC890F922934DA400EB51DA /* ContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC890F822934DA400EB51DA /* ContextTests.swift */; };
 		0EC890FF22934DC900EB51DA /* ContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC890FE22934DC900EB51DA /* ContextTests.swift */; };
@@ -62,6 +63,7 @@
 		0E9B9B272295CA45007637B6 /* Scanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scanner.swift; sourceTree = "<group>"; };
 		0E9B9B2C2296689B007637B6 /* TokenGenerater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenGenerater.swift; sourceTree = "<group>"; };
 		0E9B9B2E22966903007637B6 /* TokenGeneraterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenGeneraterTests.swift; sourceTree = "<group>"; };
+		0E9B9B332296807C007637B6 /* TokenCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCounter.swift; sourceTree = "<group>"; };
 		0EA8E5BC22905A8D00D207AC /* StackTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StackTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EC890EE22934BA200EB51DA /* TokenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenType.swift; sourceTree = "<group>"; };
 		0EC890F622934DA400EB51DA /* ContextTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContextTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +162,7 @@
 				0E1A03EF2293F55200B3A6AA /* Buffer.swift */,
 				0E9B9B272295CA45007637B6 /* Scanner.swift */,
 				0E9B9B2C2296689B007637B6 /* TokenGenerater.swift */,
+				0E9B9B332296807C007637B6 /* TokenCounter.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -414,6 +417,7 @@
 			files = (
 				0ECEB7EE2290475600D5ED9D /* OutputView.swift in Sources */,
 				0ECEB7EC2290474E00D5ED9D /* InputView.swift in Sources */,
+				0E9B9B342296807C007637B6 /* TokenCounter.swift in Sources */,
 				0EFE12BE22906B0B0039AB95 /* Token.swift in Sources */,
 				0EFE12C622906D3C0039AB95 /* MyTokenizer.swift in Sources */,
 				0ECEB7EA229046CB00D5ED9D /* Tokenizer.swift in Sources */,

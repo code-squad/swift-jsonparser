@@ -7,3 +7,14 @@
 //
 
 import Foundation
+
+struct TokenCounter {
+    
+    static func count(tokens:[Token]) -> [TokenType: Int]{
+        var numOf = [TokenType: Int]()
+        _ = tokens.map{
+            numOf[$0.type] = numOf[$0.type] ?? 0 + 1
+        }
+        return numOf
+    }
+}
