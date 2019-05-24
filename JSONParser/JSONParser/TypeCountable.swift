@@ -10,4 +10,5 @@ import Foundation
 
 protocol TypeCountable {
     var elementCount: Int { get }
+    var elements: [JSONValue] { get }
 }
