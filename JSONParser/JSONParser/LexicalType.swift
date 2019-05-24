@@ -9,11 +9,7 @@
 import Foundation
 
 enum LexicalType: CustomStringConvertible, CaseIterable {
-    
-    static var allCases : [LexicalType]{
-        return [ .intNumber, .bool, .string, .jsonObject, .jsonArray]
-    }
-    
+
     case intNumber
     case bool
     case string
