@@ -86,6 +86,7 @@
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				C2FAED9B228E98A00045F639 /* InputView.swift */,
 				C2FAEDA7228EA2B10045F639 /* OutputView.swift */,
+				C2FAEDA9228EAC500045F639 /* TypeCounter.swift */,
 				C2FAED9D228E99580045F639 /* Tokenizer.swift */,
 				C2DB9D6B229660E600E35FB8 /* TokenReader.swift */,
 				C2FAEDA3228E9DBA0045F639 /* Parser.swift */,
@@ -94,7 +95,6 @@
 				C28016432292896800562E55 /* JSONObject.swift */,
 				C28016472292F12500562E55 /* JSONArray.swift */,
 				C2FAEDAB228EC9D60045F639 /* JSONValueFactory.swift */,
-				C2FAEDA9228EAC500045F639 /* TypeCounter.swift */,
 				C2FAEDA1228E9CAE0045F639 /* JSONSymbols.swift */,
 				C2FAEDAD228ED0A80045F639 /* JSONParserError.swift */,
 			);
