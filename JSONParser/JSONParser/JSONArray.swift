@@ -11,10 +11,6 @@ import Foundation
 struct JSONArray {
     private(set) var jsonValues: [JSONValue]
     
-    var count: Int {
-        return jsonValues.count
-    }
-    
     init() {
         self.jsonValues = []
     }
@@ -27,5 +23,11 @@ struct JSONArray {
 extension JSONArray: JSONValue {
     static var typeDescription: String {
         return "배열"
+    }
+}
+
+extension JSONArray: TypeCountable {
+    var elementCount: Int {
+        return jsonValues.count
     }
 }
