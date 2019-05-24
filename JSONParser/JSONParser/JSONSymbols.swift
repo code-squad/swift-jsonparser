@@ -30,4 +30,8 @@ enum JSONSymbols: String {
     func notEquals(_ token: String) -> Bool {
         return !equals(token)
     }
+    
+    func notEquals(_ token: Character) -> Bool {
+        return !equals(token)
+    }
 }
