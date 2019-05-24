@@ -1,32 +1,32 @@
 import Foundation
 
-protocol JsonExplainable {
+protocol JSONType {
     var typeDescription: String { get }
     var countDescription: String { get }
 }
 
-protocol JsonSingleValueExplainable: JsonExplainable { }
+protocol JSONSingleValueType: JSONType { }
 
-extension JsonSingleValueExplainable {
+extension JSONSingleValueType {
     var countDescription: String {
         return "총 1개의 데이터 중에 \(self.typeDescription) 1개가 포함되어 있습니다."
     }
 }
 
-extension String: JsonSingleValueExplainable {
+extension String: JSONSingleValueType {
     var typeDescription: String { return "문자열" }
 }
 
 typealias Number = Double
-extension Number: JsonSingleValueExplainable {
+extension Number: JSONSingleValueType {
     var typeDescription: String { return "숫자" }
 }
 
-extension Bool: JsonSingleValueExplainable {
+extension Bool: JSONSingleValueType {
     var typeDescription: String { return "부울" }
 }
 
-extension Array: JsonExplainable where Element == JsonExplainable {
+extension Array: JSONType where Element == JSONType {
     
     var typeDescription: String { return "배열" }
     
@@ -45,7 +45,7 @@ extension Array: JsonExplainable where Element == JsonExplainable {
     
 }
 
-extension Dictionary: JsonExplainable where Key == String ,Value == JsonExplainable {
+extension Dictionary: JSONType where Key == String ,Value == JSONType {
     
     var typeDescription: String { return "오브젝트" }
     
