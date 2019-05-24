@@ -1,6 +1,6 @@
 import Foundation
 
-struct ArrayTokenizer {
+struct Tokenizer {
     
     enum TokenizingError: Error {
         case cannotDetectBeginOrEndOfArray
@@ -9,20 +9,19 @@ struct ArrayTokenizer {
         case bufferIsEmpty
     }
     
-    /// 처음과 끝의 괄호가 제거된 후에 사용해야 함.
-    static func tokenize(_ input: String) throws -> [String] {
+    static func arrayTokenize(input: String) throws -> [String] {
+        guard FormatValidator.validateArrayFormat(input)
+    }
+    
+    private static func separateValues(input: String) throws -> [String] {
         
-        var input = input
-        input.removeFirst()
-        input.removeLast()
-        let values = input.trimmingCharacters(in: Token.whitespace)
+        let input = input.trimmingCharacters(in: Token.whitespace)
         
-        guard FormatValidator.validateArrayFormat(values) else {
-            throw TokenizingError.invalidArrayGrammar
-        }
+        if input == "" { return [] }
         
         var result = [String]()
         var buffer = ""
+        
         var isParsingString = false
         var nestedArrayCount: UInt = 0
         var nestedObjectCount: UInt = 0
@@ -60,16 +59,13 @@ struct ArrayTokenizer {
             }
         }
         
-        for character in values {
+        for character in input {
             if character == Token.quotationMark {
                 isParsingString.toggle()
             } else if !isParsingString {
                 try parse(character: character)
             }
             buffer.append(character)
-        }
-        guard !buffer.isEmpty else {
-            return result
         }
         try moveBufferToResult()
         return result

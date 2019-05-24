@@ -57,7 +57,7 @@ struct Parser {
 
     private static func parseArray(_ input: String) throws -> [JsonExplainable]? {
         guard input.first == Token.beginArray else { return nil }
-        let tokenizedInput = try ArrayTokenizer.tokenize(input)
+        let tokenizedInput = try Tokenizer.tokenize(input)
         if tokenizedInput.isEmpty { return tokenizedInput }
         var result = [JsonExplainable]()
         for value in tokenizedInput {

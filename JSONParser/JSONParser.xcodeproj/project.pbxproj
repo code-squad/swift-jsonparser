@@ -11,7 +11,7 @@
 		F21006502272A1570033D0B7 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F210064F2272A1570033D0B7 /* InputView.swift */; };
 		F21006542272A5A70033D0B7 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006532272A5A70033D0B7 /* OutputView.swift */; };
 		F226936D2290202200657871 /* FormatValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29D7B5F228FB8E900F70DE6 /* FormatValidator.swift */; };
-		F262C2DC228F8C3E007EF45B /* ArrayTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CBFDBD228F0267009A7242 /* ArrayTokenizer.swift */; };
+		F262C2DC228F8C3E007EF45B /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CBFDBD228F0267009A7242 /* Tokenizer.swift */; };
 		F262C2DE228F8D45007EF45B /* ObjectTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F262C2DD228F8D45007EF45B /* ObjectTokenizer.swift */; };
 		F262C2E0228F8D92007EF45B /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = F262C2DF228F8D92007EF45B /* Token.swift */; };
 		F283CA7A2275759200D7CBBC /* JsonExplainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283CA792275759200D7CBBC /* JsonExplainable.swift */; };
@@ -40,7 +40,7 @@
 		F283CA792275759200D7CBBC /* JsonExplainable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonExplainable.swift; sourceTree = "<group>"; };
 		F29D7B5C228F99BA00F70DE6 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F29D7B5F228FB8E900F70DE6 /* FormatValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatValidator.swift; sourceTree = "<group>"; };
-		F2CBFDBD228F0267009A7242 /* ArrayTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayTokenizer.swift; sourceTree = "<group>"; };
+		F2CBFDBD228F0267009A7242 /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				F262C2DF228F8D92007EF45B /* Token.swift */,
-				F2CBFDBD228F0267009A7242 /* ArrayTokenizer.swift */,
+				F2CBFDBD228F0267009A7242 /* Tokenizer.swift */,
 				F262C2DD228F8D45007EF45B /* ObjectTokenizer.swift */,
 			);
 			path = Tokenizer;
@@ -166,7 +166,7 @@
 				F262C2E0228F8D92007EF45B /* Token.swift in Sources */,
 				F283CA7A2275759200D7CBBC /* JsonExplainable.swift in Sources */,
 				F226936D2290202200657871 /* FormatValidator.swift in Sources */,
-				F262C2DC228F8C3E007EF45B /* ArrayTokenizer.swift in Sources */,
+				F262C2DC228F8C3E007EF45B /* Tokenizer.swift in Sources */,
 				F262C2DE228F8D45007EF45B /* ObjectTokenizer.swift in Sources */,
 				F21006542272A5A70033D0B7 /* OutputView.swift in Sources */,
 			);
