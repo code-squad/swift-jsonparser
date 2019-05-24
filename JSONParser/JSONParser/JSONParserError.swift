@@ -55,3 +55,12 @@ enum JSONValueFactoryError: String, JSONError {
     }
 }
 
+enum OutputError: String, JSONError {
+    case impossibleToCountElement = "파싱된 json 값의 요소를 셀 수 없습니다."
+    case impossibleToPrintDescription = "json value의 정보를 출력할 수 없습니다."
+    
+    var message: String {
+        return self.rawValue
+    }
+}
+
