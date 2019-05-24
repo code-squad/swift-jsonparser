@@ -6,11 +6,52 @@ struct Tokenizer {
         case cannotDetectBeginOrEndOfArray
         case invalidNestedStructure
         case invalidArrayGrammar
+        case invalidObjectGrammar
         case bufferIsEmpty
+        case cannotFindNameSeparator
+        case objectKeyShouldBeOneAndOnly
     }
     
     static func arrayTokenize(input: String) throws -> [String] {
-        guard FormatValidator.validateArrayFormat(input)
+        guard FormatValidator.validateArrayFormat(input) else {
+            throw TokenizingError.invalidArrayGrammar
+        }
+        return try separateValues(input: input)
+    }
+    
+    static func objectTokenize(input: String) throws -> [String: String] {
+        guard FormatValidator.validateObjectFormat(input) else {
+            throw TokenizingError.invalidObjectGrammar
+        }
+        let separatedInput = try separateValues(input: input)
+        var result = [String: String]()
+        for value in separatedInput {
+            let keyAndValue = try splitKeyAndValue(keyAndValue: value)
+            guard result[keyAndValue.key] == nil else {
+                throw TokenizingError.objectKeyShouldBeOneAndOnly
+            }
+            result[keyAndValue.key] = keyAndValue.value
+        }
+        return result
+    }
+    
+    private static func splitKeyAndValue(keyAndValue: String) throws -> (key: String, value: String) {
+        var value = keyAndValue
+        var key = ""
+        var isParsingKey = false
+        for character in keyAndValue {
+            if character == Token.quotationMark { isParsingKey.toggle() }
+            if isParsingKey {
+                key.append(value.removeFirst())
+            } else {
+                break
+            }
+        }
+        guard let nameSeparatorIndex = value.firstIndex(of: Token.nameSeparator) else {
+            throw TokenizingError.cannotFindNameSeparator
+        }
+        value.removeSubrange(value.startIndex...nameSeparatorIndex)
+        return (key, value)
     }
     
     private static func separateValues(input: String) throws -> [String] {
