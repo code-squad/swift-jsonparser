@@ -34,7 +34,7 @@ struct JsonFormatter{
         case .jsonArray :
             try countElementTypeInJsonArray()
         case .jsonObject:
-            try countElemntTypeInJsonObject()
+            try countElementTypeInJsonObject()
         default:
             throw ErrorCode.lexicalTypeError
         }
@@ -64,7 +64,7 @@ struct JsonFormatter{
         }
     }
     
-    private mutating func countElemntTypeInJsonObject() throws {
+    private mutating func countElementTypeInJsonObject() throws {
         guard let jsonObject: JsonObject = self.jsonData as? JsonObject else{
             throw ErrorCode.convertJsonObjectError
         }
