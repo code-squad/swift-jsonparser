@@ -21,7 +21,7 @@ struct JSONArray {
 }
 
 extension JSONArray: JSONValue {
-    static var typeDescription: String {
+    var typeDescription: String {
         return "배열"
     }
 }
@@ -29,5 +29,8 @@ extension JSONArray: JSONValue {
 extension JSONArray: TypeCountable {
     var elementCount: Int {
         return jsonValues.count
+    }
+    var elements: [JSONValue] {
+        return jsonValues
     }
 }

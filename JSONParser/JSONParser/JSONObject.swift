@@ -21,7 +21,7 @@ struct JSONObject {
 }
 
 extension JSONObject: JSONValue {
-    static var typeDescription: String {
+    var typeDescription: String {
         return "객체"
     }
 }
@@ -29,5 +29,9 @@ extension JSONObject: JSONValue {
 extension JSONObject: TypeCountable {
     var elementCount: Int {
         return keyValuePairs.count
+    }
+    
+    var elements: [JSONValue] {
+        return Array(keyValuePairs.values)
     }
 }
