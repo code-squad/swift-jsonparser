@@ -13,18 +13,16 @@ struct JSONValueFactory {
     static let falseString = "false"
     
     static func make(token: String) throws -> JSONValue {
-        guard let firstCharacter = token.first else { throw JSONError.impossibleToCreateJSONValue }
-        
-        if String(firstCharacter) == JSONSymbols.doubleQuotation {
+        let firstCharacter = token[token.startIndex]
+        if JSONSymbols.doubleQuotation.equals(firstCharacter) {
             return String(token)
         }
-        if token == trueString {
-            return true
+        if token == trueString || token == falseString {
+            guard let convertedValue = Bool(token) else {
+                throw JSONError.impossibleToCreateJSONValue
+            }
+            return convertedValue
         }
-        if token == falseString {
-            return false
-        }
-        
         guard let numberValue = Int(token) else {
             throw JSONError.impossibleToCreateJSONValue
         }
