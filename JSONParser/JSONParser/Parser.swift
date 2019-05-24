@@ -9,38 +9,76 @@
 import Foundation
 
 struct Parser {
+    private var tokenReader: TokenReader
     
-    static func parse(_ tokens: [String]) throws -> [JSONValue] {
-        var jsonArray = [JSONValue]()
-        if isWrappedWithBrackets(using: tokens) {
-            jsonArray = try createJSONArray(using: tokens)
-        }
-        if jsonArray.isEmpty {
-            throw JSONError.invalidFormatToParse
-        }
-        return jsonArray
+    init(tokens: [String]) {
+        self.tokenReader = TokenReader(tokens: tokens)
     }
     
-    static private func isWrappedWithBrackets(using tokens: [String]) -> Bool {
-        return tokens[0] == JSONSymbols.openBracket
-               && tokens[tokens.count-1] == JSONSymbols.closedBracket
+    mutating func parse() throws -> JSONValue {
+        let token = try tokenReader.next()
+        guard let tokenSymbol = JSONSymbols(rawValue: token) else { throw JSONError.invalidFormatToParse }
+        switch tokenSymbol {
+        case .openBrace:
+            return try parseObject()
+        case .openBracket:
+            return try parseArray()
+        default:
+            throw JSONError.impossibleToParse
+        }
     }
     
-    static private func createJSONArray(using tokens: [String]) throws -> [JSONValue] {
-        var jsonArray = Array<JSONValue>()
-        for token in tokens {
-            if (token == JSONSymbols.openBracket || token == JSONSymbols.closedBracket || token == JSONSymbols.comma) {
-                continue
+    private mutating func parseObject() throws -> JSONValue {
+        var object = JSONObject()
+        var token = try tokenReader.next()
+        while JSONSymbols.closedBrace.notEquals(token) {
+            if JSONSymbols.comma.equals(token) {
+                token = try tokenReader.next()
             }
-            let parsedValue = try convertIntoJSONValue(using: token)
-            jsonArray.append(parsedValue)
+            if isString(token) {
+                let key = token
+                token = try tokenReader.next()
+                let value = try parseValue(token)
+                object.add(key: key, value: value)
+            }
+            token = try tokenReader.next()
         }
-        return jsonArray
+        return object
     }
     
-    static private func convertIntoJSONValue(using token: String) throws -> JSONValue {
-        let convertedValue = try JSONValueFactory.make(token: token)
-        return convertedValue
+    private func isString(_ token: String) -> Bool {
+        let firstCharacter = token[token.startIndex]
+        return JSONSymbols.doubleQuotation.equals(firstCharacter)
+    }
+    
+    private mutating func parseArray() throws -> JSONValue {
+        var jsonArray = JSONArray()
+        var token = try tokenReader.next()
+        while JSONSymbols.closedBracket.notEquals(token) {
+            if JSONSymbols.comma.equals(token) {
+                token = try tokenReader.next()
+            }
+            let parsedValue = try parseValue(token)
+            jsonArray.append(parsedValue)
+            token = try tokenReader.next()
+        }
+        return jsonArray 
+    }
+    
+    private mutating func parseValue(_ token: String) throws -> JSONValue {
+        guard let tokenSymbol = JSONSymbols(rawValue: token) else {
+            return try JSONValueFactory.make(token: token)
+        }
+        switch tokenSymbol {
+        case .openBrace:
+            return try parseObject()
+        case .openBracket:
+            return try parseArray()
+        case .colon:
+            return try parseValue(try tokenReader.next())
+        default:
+            throw JSONError.impossibleToParse // need to specify
+        }
     }
     
 }
