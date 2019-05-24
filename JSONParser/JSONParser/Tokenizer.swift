@@ -23,8 +23,7 @@ struct Tokenizer {
         var token = String()
         var isOutOfString = true
         
-        for index in jsonData.indices {
-            let character = jsonData[index]
+        for character in jsonData {
             if JSONSymbols.doubleQuotation.equals(character) {
                 isOutOfString = !isOutOfString
             }
