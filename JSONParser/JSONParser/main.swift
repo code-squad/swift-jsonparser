@@ -9,12 +9,14 @@
 import Foundation
 
 func main() {
-    var parsedValues: [JSONValue]!
+    var parsedValue: JSONValue!
     InputView.printInstruction()
     do {
         let input = try InputView.read()
-        let tokens = try Tokenizer.execute(using: input)
-        parsedValues = try Parser.parse(tokens)
+        let tokens = try Tokenizer.execute(jsonData: input)
+        var jsonParser = Parser(tokens: tokens)
+        parsedValue = try jsonParser.parse()
+        try OutputView.printJSONDescription(of: parsedValue)
     } catch let e as JSONError {
         print(e.message)
         return
@@ -22,9 +24,6 @@ func main() {
         print("Other Unexpected Error")
         return
     }
-    
-    OutputView.printJSONDescription(of: parsedValues)
-    
 }
 
 main()
