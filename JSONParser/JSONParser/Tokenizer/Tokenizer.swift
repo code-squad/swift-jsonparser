@@ -61,17 +61,17 @@ struct Tokenizer {
         var isParsingKey = false
         for character in keyAndValue {
             if character == Token.quotationMark { isParsingKey.toggle() }
-            if isParsingKey {
-                key.append(value.removeFirst())
-            } else {
+            if !isParsingKey, character == Token.nameSeparator {
                 break
             }
+            key.append(value.removeFirst())
         }
         guard let nameSeparatorIndex = value.firstIndex(of: Token.nameSeparator) else {
             throw TokenizingError.cannotFindNameSeparator
         }
         value.removeSubrange(value.startIndex...nameSeparatorIndex)
-        return (key, value)
+        
+        return (key, value.trimmingCharacters(in: Token.whitespace))
     }
     
     private static func separateValues(input: String) throws -> [String] {
@@ -120,15 +120,17 @@ struct Tokenizer {
             default:
                 break
             }
+            buffer.append(character)
         }
         
         for character in input {
             if character == Token.quotationMark {
                 isParsingString.toggle()
+                buffer.append(character)
             } else if !isParsingString {
                 try parse(character: character)
             }
-            buffer.append(character)
+            
         }
         try moveBufferToResult()
         return result
