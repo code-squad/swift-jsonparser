@@ -10,20 +10,20 @@ import Foundation
 
 struct JsonArray : JsonParsable {
     
-    private (set) var arrayList : [JsonValue]
+    private (set) var arrayList : [JsonParsable]
     
     init(){
-        self.arrayList = [JsonValue]()
+        self.arrayList = [JsonParsable]()
     }
     
     init(_ input: [JsonParsable]){
         self.init()
         for index in 0..<input.count {
-            arrayList.append(JsonValue(input[index]))
+            arrayList.append(input[index])
         }
     }
     
-    mutating func add(value: JsonValue){
+    mutating func add(value: JsonParsable){
         self.arrayList.append(value)
     }
     
@@ -31,9 +31,9 @@ struct JsonArray : JsonParsable {
         get {
             var result = "\(JsonBrackets.StartSquareBracket.rawValue) "
             for index in 0..<arrayList.count-1{
-            result += " \(arrayList[index].jsonValue.description),"
+            result += " \(arrayList[index].description),"
             }
-            result += " \(arrayList[arrayList.count-1].jsonValue.description) \(JsonBrackets.EndSquareBracket.rawValue)"
+            result += " \(arrayList[arrayList.count-1].description) \(JsonBrackets.EndSquareBracket.rawValue)"
             return result
         }
     }

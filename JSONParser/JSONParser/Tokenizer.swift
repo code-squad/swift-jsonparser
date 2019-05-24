@@ -37,7 +37,7 @@ struct Tokenizer {
         let trimmedInput = input[1..<input.count-1]
         let keyValueList = trimmedInput.components(separatedBy: TokenSplitStandard.comma.rawValue)
         var keys: [String] = [String]()
-        var values: [JsonValue] = [JsonValue]()
+        var values: [JsonParsable] = [JsonParsable]()
         for eachKeyValue in keyValueList{
             let keyValuePair: [String] = eachKeyValue
                                                 .components(separatedBy: TokenSplitStandard.semicolon.rawValue)
@@ -51,9 +51,9 @@ struct Tokenizer {
     }
     
     /// subroutine of jsonObject
-    private func convertJsonObjectStringValueToElementDataType(_ tokenValue : String ) throws -> JsonValue {
+    private func convertJsonObjectStringValueToElementDataType(_ tokenValue : String ) throws -> JsonParsable {
         let lexicalType = try Lexer.confirmTokenDataType(tokenValue)
-        let result : JsonValue = createJsonValueFromJsonObject(type: lexicalType, token: tokenValue)
+        let result : JsonParsable = createJsonValueFromJsonObject(type: lexicalType, token: tokenValue)
         return result
     }
     
@@ -67,16 +67,16 @@ struct Tokenizer {
         return result
     }
     
-    private func createJsonValueFromJsonObject (type: LexicalType, token : String ) -> JsonValue {
-        var result : JsonValue = JsonValue.init(token)
+    private func createJsonValueFromJsonObject (type: LexicalType, token : String ) -> JsonParsable {
+        var result : JsonParsable = token
         switch type {
         case .bool :
             if let boolValue = Bool(token) {
-                result = JsonValue.init(boolValue)
+                result = boolValue
             }
         case .intNumber:
             if let intValue = Int(token) {
-                result = JsonValue.init(intValue)
+                result = intValue
             }
         default :
             break
@@ -88,18 +88,18 @@ struct Tokenizer {
         switch type {
         case .bool :
             if let boolValue = Bool(token) {
-                jsonArray.add(value: JsonValue.init(boolValue))
+                jsonArray.add(value: boolValue)
             }
             break
         case .intNumber:
             if let intValue = Int(token) {
-                jsonArray.add(value: JsonValue.init(intValue))
+                jsonArray.add(value: intValue)
             }
         case .string:
-            jsonArray.add(value: JsonValue.init(token))
+            jsonArray.add(value: token)
         case .jsonObject:
             let jsonObject =  try handleStringAsJsonObject(token)
-            jsonArray.add(value: JsonValue.init(jsonObject))
+            jsonArray.add(value: jsonObject)
         case .jsonArray:
             break
         }

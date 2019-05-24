@@ -41,9 +41,9 @@ struct JsonFormatter{
 
     }
     
-    private mutating func checkElementDataType(_ element : JsonValue) {
+    private mutating func checkElementDataType(_ element : JsonParsable) {
         self.totalCount += 1
-        switch element.jsonValue{
+        switch element{
         case is Bool:
             let currentCount = countDictionary[LexicalType.bool] ?? 0
             countDictionary[LexicalType.bool] = currentCount + 1

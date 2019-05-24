@@ -9,24 +9,24 @@
 import Foundation
 
 struct JsonObject : JsonParsable {
-    private (set) var keyValueSet : [String : JsonValue]
+    private (set) var keyValueSet : [String : JsonParsable]
     
     init(){
-        self.keyValueSet = [String : JsonValue]()
+        self.keyValueSet = [String : JsonParsable]()
     }
     
-    init(keys: [String], values: [JsonValue]){
-        self.keyValueSet = [String : JsonValue]()
+    init(keys: [String], values: [JsonParsable]){
+        self.keyValueSet = [String : JsonParsable]()
         for index in 0..<keys.count{
             keyValueSet.updateValue(values[index], forKey: keys[index])
         }
     }
 
-    mutating func add(key: String, value : JsonValue ){
+    mutating func add(key: String, value : JsonParsable ){
         self.keyValueSet.updateValue(value, forKey: key)
     }
     
-    func searchValue(key: String) throws -> JsonValue {
+    func searchValue(key: String) throws -> JsonParsable {
         guard let result = keyValueSet[key] else {
             throw ErrorCode.notFoundKey
         }
@@ -40,7 +40,7 @@ struct JsonObject : JsonParsable {
             })
             var result = "\(JsonBrackets.StartCurlyBrace.rawValue) "
             for sortedPair in sortedKeyValueSet {
-                result += "\(sortedPair.element.key) : \(sortedPair.element.value.jsonValue.description), "
+                result += "\(sortedPair.element.key) : \(sortedPair.element.value.description), "
             }
             result.removeLast(2)
             result += " \(JsonBrackets.EndCurlyBrace.rawValue)"
