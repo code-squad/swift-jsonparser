@@ -33,17 +33,18 @@ struct JsonObject : JsonParsable {
        return result
     }
     
-    func toString() -> String {
-        let sortedKeyValueSet = keyValueSet.enumerated().sorted(by: { ( pair1, pair2) -> Bool in
-            return pair1.element.key < pair2.element.key
-        })
-        var result = "{ "
-        for sortedPair in sortedKeyValueSet {
-            result += "\(sortedPair.element.key) : \(sortedPair.element.value.jsonValue.toString()), "
+    var description: String {
+        get {
+            let sortedKeyValueSet = keyValueSet.enumerated().sorted(by: { ( pair1, pair2) -> Bool in
+                return pair1.element.key < pair2.element.key
+            })
+            var result = "{ "
+            for sortedPair in sortedKeyValueSet {
+                result += "\(sortedPair.element.key) : \(sortedPair.element.value.jsonValue.description), "
+            }
+            result.removeLast(2)
+            result += " }"
+            return result
         }
-        result.removeLast(2)
-        result += " }"
-        return result
     }
-    
 }

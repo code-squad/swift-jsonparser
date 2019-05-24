@@ -27,13 +27,14 @@ struct JsonArray : JsonParsable {
         self.arrayList.append(value)
     }
     
-    func toString() -> String {
-        var result = "[ "
-        for index in 0..<arrayList.count-1{
-            result += " \(arrayList[index].jsonValue.toString()),"
+    var description: String {
+        get {
+            var result = "[ "
+            for index in 0..<arrayList.count-1{
+            result += " \(arrayList[index].jsonValue.description),"
+            }
+            result += " \(arrayList[arrayList.count-1].jsonValue.description) ]"
+            return result
         }
-        result += " \(arrayList[arrayList.count-1].jsonValue.toString()) ]"
-        return result
     }
-    
 }

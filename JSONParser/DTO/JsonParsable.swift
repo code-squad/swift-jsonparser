@@ -8,24 +8,30 @@
 
 import Foundation
 
-protocol JsonParsable {
-    func toString() -> String
+protocol JsonParsable : CustomStringConvertible{
+    var description: String {get}
 }
 
 extension String : JsonParsable {
-    func toString() -> String {
-        return self
+    var description : String {
+        get {
+            return self
+        }
     }
 }
 
 extension Int : JsonParsable {
-    func toString() -> String {
-        return String(self)
+    var description : String {
+        get {
+            return String(self)
+        }
     }
 }
 
 extension Bool : JsonParsable {
-    func toString() -> String {
-        return String(self)
+    var description : String {
+        get {
+            return String(self)
+        }
     }
 }

@@ -29,7 +29,7 @@ struct JsonFormatter{
     }
     
     mutating func countDataTypeOfElementInJsonData() throws {
-        let jsonLexicalType = try Lexer.confirmTokenDataType(jsonData.toString())
+        let jsonLexicalType = try Lexer.confirmTokenDataType(jsonData.description)
         switch jsonLexicalType {
         case .jsonArray :
             try countElementTypeInJsonArray()
