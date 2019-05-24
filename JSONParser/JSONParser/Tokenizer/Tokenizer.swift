@@ -1,9 +1,9 @@
 import Foundation
 
 extension String {
-    func trimmingStructure(begin: Character, end: Character) -> String? {
+    func trimmingStructure(begin: Character, end: Character) throws -> String {
         guard self.first == begin, self.last == end else {
-            return nil
+            throw Tokenizer.Error.invalidStructure
         }
         var result = self
         result.removeFirst()
@@ -14,33 +14,28 @@ extension String {
 
 struct Tokenizer {
     
-    enum TokenizingError: Error {
-        case cannotDetectBeginOrEndOfArray
-        case cannotDetectBeginOrEndOfObject
+    enum Error: Swift.Error {
         case invalidNestedStructure
         case invalidArrayGrammar
         case invalidObjectGrammar
         case bufferIsEmpty
         case cannotFindNameSeparator
         case objectKeyShouldBeOneAndOnly
+        case invalidStructure
     }
     
     static func arrayTokenize(input: String) throws -> [String] {
-        guard let input = input.trimmingStructure(begin: Structure.beginArray, end: Structure.endArray) else {
-            throw TokenizingError.cannotDetectBeginOrEndOfArray
-        }
+        let input = try input.trimmingStructure(begin: Structure.beginArray, end: Structure.endArray)
         guard FormatValidator.validateArrayFormat(input) else {
-            throw TokenizingError.invalidArrayGrammar
+            throw Error.invalidArrayGrammar
         }
         return try separateValues(input: input)
     }
     
     static func objectTokenize(input: String) throws -> [String: String] {
-        guard let input = input.trimmingStructure(begin: Structure.beginObject, end: Structure.endObject) else {
-            throw TokenizingError.cannotDetectBeginOrEndOfObject
-        }
+        let input = try input.trimmingStructure(begin: Structure.beginObject, end: Structure.endObject)
         guard FormatValidator.validateObjectFormat(input) else {
-            throw TokenizingError.invalidObjectGrammar
+            throw Error.invalidObjectGrammar
         }
         
         let separatedInput = try separateValues(input: input)
@@ -48,7 +43,7 @@ struct Tokenizer {
         for value in separatedInput {
             let keyAndValue = try splitKeyAndValue(keyAndValue: value)
             guard result[keyAndValue.key] == nil else {
-                throw TokenizingError.objectKeyShouldBeOneAndOnly
+                throw Error.objectKeyShouldBeOneAndOnly
             }
             result[keyAndValue.key] = keyAndValue.value
         }
@@ -67,7 +62,7 @@ struct Tokenizer {
             key.append(value.removeFirst())
         }
         guard let nameSeparatorIndex = value.firstIndex(of: Structure.nameSeparator) else {
-            throw TokenizingError.cannotFindNameSeparator
+            throw Error.cannotFindNameSeparator
         }
         value.removeSubrange(value.startIndex...nameSeparatorIndex)
         
@@ -89,7 +84,7 @@ struct Tokenizer {
         
         func moveBufferToResult() throws {
             guard !buffer.isEmpty else {
-                throw TokenizingError.bufferIsEmpty
+                throw Error.bufferIsEmpty
             }
             let whitespaceTrimmedString = buffer.trimmingCharacters(in: Structure.whitespace)
             
@@ -101,14 +96,14 @@ struct Tokenizer {
             switch character {
             case Structure.endArray:
                 guard nestedArrayCount > 0 else {
-                    throw TokenizingError.invalidNestedStructure
+                    throw Error.invalidNestedStructure
                 }
                 nestedArrayCount -= 1
             case Structure.beginArray:
                 nestedArrayCount += 1
             case Structure.endObject:
                 guard nestedObjectCount > 0 else {
-                    throw TokenizingError.invalidNestedStructure
+                    throw Error.invalidNestedStructure
                 }
                 nestedObjectCount -= 1
             case Structure.beginObject:
