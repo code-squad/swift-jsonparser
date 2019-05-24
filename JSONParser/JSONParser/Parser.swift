@@ -8,12 +8,12 @@ struct Parser {
         case objectKeyMustBeOneAndOnly
     }
     
-    static func parseValue(_ input: String) throws -> JsonExplainable {
+    static func parseValue(_ input: String) throws -> JSONType {
         if let string = parseString(input) { return string }
         else if let bool = parseBool(input) { return bool }
+        else if let number = parseNumber(input) { return number }
         else if let object = try parseObject(input) { return object }
         else if let array = try parseArray(input) { return array }
-        else if let number = parseNumber(input) { return number }
         throw ParsingError.foundUnsupportedType
     }
     
@@ -24,7 +24,7 @@ struct Parser {
         input.removeLast()
         return input
     }
-
+    
     private static func parseNumber(_ input: String) -> Number? {
         return Number(input)
     }
@@ -39,12 +39,12 @@ struct Parser {
             return nil
         }
     }
-
-    private static func parseObject(_ input: String) throws -> [String: JsonExplainable]? {
+    
+    private static func parseObject(_ input: String) throws -> [String: JSONType]? {
         guard input.first == Token.beginObject else { return nil }
         let tokenizedInput = try Tokenizer.objectTokenize(input: input)
         if tokenizedInput.isEmpty { return tokenizedInput }
-        var result = [String: JsonExplainable]()
+        var result = [String: JSONType]()
         for (key, value) in tokenizedInput {
             guard let key = parseString(key) else {
                 throw ParsingError.objectKeyMustBeString
@@ -54,17 +54,17 @@ struct Parser {
         }
         return result
     }
-
-    private static func parseArray(_ input: String) throws -> [JsonExplainable]? {
+    
+    private static func parseArray(_ input: String) throws -> [JSONType]? {
         guard input.first == Token.beginArray else { return nil }
         let tokenizedInput = try Tokenizer.arrayTokenize(input: input)
         if tokenizedInput.isEmpty { return tokenizedInput }
-        var result = [JsonExplainable]()
+        var result = [JSONType]()
         for value in tokenizedInput {
             result.append(try parseValue(value))
         }
         return result
     }
     
-
+    
 }
