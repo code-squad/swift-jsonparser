@@ -17,14 +17,13 @@ struct TokenReader {
         self.currentIndex = -1
     }
     
-    mutating func next() -> String? {
-        var nextToken: String?
+    mutating func next() throws -> String {
         let nextIndex = currentIndex + 1
-        
-        if (nextIndex < tokens.count) {
-            nextToken = tokens[nextIndex]
-            currentIndex += 1
+        if nextIndex >= tokens.count {
+            throw JSONError.hasNoNextToken
         }
+        let nextToken = tokens[nextIndex]
+        currentIndex = nextIndex
         return nextToken
     }
 }
