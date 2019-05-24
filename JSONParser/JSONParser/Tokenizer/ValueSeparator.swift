@@ -3,7 +3,7 @@ import Foundation
 extension String {
     func trimmingStructure(begin: Character, end: Character) throws -> String {
         guard self.first == begin, self.last == end else {
-            throw Tokenizer.Error.invalidStructure
+            throw ValueSeparator.Error.invalidStructure
         }
         var result = self
         result.removeFirst()
@@ -12,7 +12,7 @@ extension String {
     }
 }
 
-struct Tokenizer {
+struct ValueSeparator {
     
     enum Error: Swift.Error {
         case invalidNestedStructure
@@ -24,7 +24,7 @@ struct Tokenizer {
         case invalidStructure
     }
     
-    static func arrayTokenize(input: String) throws -> [String] {
+    static func separatingArray(input: String) throws -> [String] {
         let input = try input.trimmingStructure(begin: Structure.beginArray, end: Structure.endArray)
         guard FormatValidator.validateArrayFormat(input) else {
             throw Error.invalidArrayGrammar
@@ -32,7 +32,7 @@ struct Tokenizer {
         return try separateValues(input: input)
     }
     
-    static func objectTokenize(input: String) throws -> [String: String] {
+    static func separatingObject(input: String) throws -> [String: String] {
         let input = try input.trimmingStructure(begin: Structure.beginObject, end: Structure.endObject)
         guard FormatValidator.validateObjectFormat(input) else {
             throw Error.invalidObjectGrammar

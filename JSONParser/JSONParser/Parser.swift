@@ -42,7 +42,7 @@ struct Parser {
     
     private static func parseObject(_ input: String) throws -> [String: JSONType]? {
         guard input.first == Structure.beginObject else { return nil }
-        let tokenizedInput = try Tokenizer.objectTokenize(input: input)
+        let tokenizedInput = try ValueSeparator.separatingObject(input: input)
         if tokenizedInput.isEmpty { return tokenizedInput }
         var result = [String: JSONType]()
         for (key, value) in tokenizedInput {
@@ -57,7 +57,7 @@ struct Parser {
     
     private static func parseArray(_ input: String) throws -> [JSONType]? {
         guard input.first == Structure.beginArray else { return nil }
-        let tokenizedInput = try Tokenizer.arrayTokenize(input: input)
+        let tokenizedInput = try ValueSeparator.separatingArray(input: input)
         if tokenizedInput.isEmpty { return tokenizedInput }
         var result = [JSONType]()
         for value in tokenizedInput {
