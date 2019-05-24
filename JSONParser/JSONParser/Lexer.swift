@@ -17,14 +17,22 @@ import Foundation
 struct Lexer {
     
     static func confirmTokenDataType (_ token : String ) throws -> LexicalType {
-        let testStringResult = isString(token)
-        let testNumberResult = isNumeric(token)
-        let testBooleanResult = isBoolean(token)
-        let testJsonObjectResult = isJsonObject(token)
-        let testJsonArrayResult = isJsonArray(token)
-        let result = try decideElementLexicalType(string: testStringResult, number: testNumberResult, bool: testBooleanResult,
-                                                  jsonObject: testJsonObjectResult, jsonArray: testJsonArrayResult)
-        return result
+        if  isNumeric(token) {
+            return LexicalType.intNumber
+        }
+        if isBoolean(token){
+            return LexicalType.bool
+        }
+        if isJsonObject(token) {
+            return LexicalType.jsonObject
+        }
+        if isJsonArray(token) {
+            return LexicalType.jsonArray
+        }
+        if isString(token) {
+            return LexicalType.string
+        }
+        throw ErrorCode.lexicalTypeError
     }
     
     static func checkInputType ( _ input: String) -> LexicalType {
@@ -38,23 +46,6 @@ struct Lexer {
             type = LexicalType.jsonObject
         }
         return type
-    }
-    
-    static private func decideElementLexicalType( string: Bool = false,
-                                                  number: Bool = false,
-                                                  bool : Bool = false,
-                                                  jsonObject: Bool = false,
-                                                  jsonArray: Bool = false) throws -> LexicalType {
-        var result: LexicalType? = string ? LexicalType.string : nil
-        result = number ? LexicalType.intNumber : result
-        result = bool ? LexicalType.bool : result
-        result = jsonObject ? LexicalType.jsonObject : result
-        result = jsonArray ? LexicalType.jsonArray : result
-        
-        guard let resultType = result else {
-            throw ErrorCode.lexicalTypeError
-        }
-        return resultType
     }
     
     static private func isString (_ token : String) -> Bool {
