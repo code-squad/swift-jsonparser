@@ -11,10 +11,6 @@ import Foundation
 struct JSONObject {
     private var keyValuePairs: [String : JSONValue]
     
-    var count: Int {
-        return keyValuePairs.count
-    }
-    
     init() {
         keyValuePairs = [String : JSONValue]()
     }
@@ -27,5 +23,11 @@ struct JSONObject {
 extension JSONObject: JSONValue {
     static var typeDescription: String {
         return "객체"
+    }
+}
+
+extension JSONObject: TypeCountable {
+    var elementCount: Int {
+        return keyValuePairs.count
     }
 }
