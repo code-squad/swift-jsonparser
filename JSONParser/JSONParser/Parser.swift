@@ -17,14 +17,16 @@ struct Parser {
     
     mutating func parse() throws -> JSONValue {
         let token = try tokenReader.next()
-        guard let tokenSymbol = JSONSymbols(rawValue: token) else { throw JSONError.invalidFormatToParse }
+        guard let tokenSymbol = JSONSymbols(rawValue: token) else {
+            throw ParserError.invalidSymbolToParse
+        }
         switch tokenSymbol {
         case .openBrace:
             return try parseObject()
         case .openBracket:
             return try parseArray()
         default:
-            throw JSONError.impossibleToParse
+            throw ParserError.invalidFirstSymbolOfJSONData
         }
     }
     
@@ -77,7 +79,7 @@ struct Parser {
         case .colon:
             return try parseValue(try tokenReader.next())
         default:
-            throw JSONError.impossibleToParse // need to specify
+            throw ParserError.impossibleToParse 
         }
     }
     
