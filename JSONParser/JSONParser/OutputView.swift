@@ -9,24 +9,29 @@
 import Foundation
 
 struct OutputView {
-    static func printJSONDescription(of values: [JSONValue]) {
-        let totalCount = values.count
-        let typeCountDescription = getTypeCountDescription(of: values)
-        let finalDescription = "총 \(totalCount)개의 데이터 중에\(typeCountDescription)가 포함되어 있습니다"
-        
-        print(finalDescription)
+    static let suffixCountDescription = "가 포함되어 있습니다."
+    static func printJSONDescription(of value: JSONValue) throws {
+        switch (value) {
+        case is TypeCountable:
+            guard let typeCountableJSONValue = value as? JSONValue&TypeCountable else {
+                throw OutputError.impossibleToCountElement
+            }
+            printTypeCountDescription(of: typeCountableJSONValue)
+        default:
+            throw OutputError.impossibleToPrintDescription
+        }
     }
     
-    static private func getTypeCountDescription(of values: [JSONValue]) -> String {
-        var typeCountDescription: String = ""
-        let totalTypeCountPair = TypeCounter.getTotalTypeCount(of: values)
+    static private func printTypeCountDescription(of value: JSONValue & TypeCountable) {
+        let prefixCountDescription = "총 \(value.elementCount)개의 \(value.typeDescription) 데이터 중에"
+        var typeCountDescription = String()
+        let totalTypeCountPair = TypeCounter.getTotalTypeCount(of: value)
         for (typeDescription, count) in totalTypeCountPair {
-            if count != 0 {
-                typeCountDescription += " \(typeDescription) \(count)개,"
-            }
+            typeCountDescription += " \(typeDescription) \(count)개,"
         }
         let range = typeCountDescription.startIndex..<typeCountDescription.index(before: typeCountDescription.endIndex)
-        return String(typeCountDescription[range])
+        let middleCountDescription = typeCountDescription[range]
+        return print(prefixCountDescription, middleCountDescription, suffixCountDescription)
     }
     
 }
