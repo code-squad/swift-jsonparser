@@ -1,6 +1,6 @@
 import Foundation
 
-struct Token {
+struct Structure {
     static let beginArray: Character = "["
     static let endArray: Character = "]"
     static let beginObject: Character = "{"

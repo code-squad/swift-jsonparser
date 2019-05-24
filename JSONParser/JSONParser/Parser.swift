@@ -18,7 +18,7 @@ struct Parser {
     }
     
     private static func parseString(_ input: String) -> String? {
-        guard input.first == Token.quotationMark, input.last == Token.quotationMark else { return nil }
+        guard input.first == Structure.quotationMark, input.last == Structure.quotationMark else { return nil }
         var input = input
         input.removeFirst()
         input.removeLast()
@@ -41,7 +41,7 @@ struct Parser {
     }
     
     private static func parseObject(_ input: String) throws -> [String: JSONType]? {
-        guard input.first == Token.beginObject else { return nil }
+        guard input.first == Structure.beginObject else { return nil }
         let tokenizedInput = try Tokenizer.objectTokenize(input: input)
         if tokenizedInput.isEmpty { return tokenizedInput }
         var result = [String: JSONType]()
@@ -56,7 +56,7 @@ struct Parser {
     }
     
     private static func parseArray(_ input: String) throws -> [JSONType]? {
-        guard input.first == Token.beginArray else { return nil }
+        guard input.first == Structure.beginArray else { return nil }
         let tokenizedInput = try Tokenizer.arrayTokenize(input: input)
         if tokenizedInput.isEmpty { return tokenizedInput }
         var result = [JSONType]()
@@ -65,6 +65,5 @@ struct Parser {
         }
         return result
     }
-    
     
 }

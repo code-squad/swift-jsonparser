@@ -1,7 +1,7 @@
 import Foundation
 
 extension String {
-    func checkingAndTrimmingCharacters(begin: Character, end: Character) -> String? {
+    func trimmingStructure(begin: Character, end: Character) -> String? {
         guard self.first == begin, self.last == end else {
             return nil
         }
@@ -26,7 +26,7 @@ struct Tokenizer {
     }
     
     static func arrayTokenize(input: String) throws -> [String] {
-        guard let input = input.checkingAndTrimmingCharacters(begin: Token.beginArray, end: Token.endArray) else {
+        guard let input = input.trimmingStructure(begin: Structure.beginArray, end: Structure.endArray) else {
             throw TokenizingError.cannotDetectBeginOrEndOfArray
         }
         guard FormatValidator.validateArrayFormat(input) else {
@@ -36,7 +36,7 @@ struct Tokenizer {
     }
     
     static func objectTokenize(input: String) throws -> [String: String] {
-        guard let input = input.checkingAndTrimmingCharacters(begin: Token.beginObject, end: Token.endObject) else {
+        guard let input = input.trimmingStructure(begin: Structure.beginObject, end: Structure.endObject) else {
             throw TokenizingError.cannotDetectBeginOrEndOfObject
         }
         guard FormatValidator.validateObjectFormat(input) else {
@@ -60,23 +60,23 @@ struct Tokenizer {
         var key = ""
         var isParsingKey = false
         for character in keyAndValue {
-            if character == Token.quotationMark { isParsingKey.toggle() }
-            if !isParsingKey, character == Token.nameSeparator {
+            if character == Structure.quotationMark { isParsingKey.toggle() }
+            if !isParsingKey, character == Structure.nameSeparator {
                 break
             }
             key.append(value.removeFirst())
         }
-        guard let nameSeparatorIndex = value.firstIndex(of: Token.nameSeparator) else {
+        guard let nameSeparatorIndex = value.firstIndex(of: Structure.nameSeparator) else {
             throw TokenizingError.cannotFindNameSeparator
         }
         value.removeSubrange(value.startIndex...nameSeparatorIndex)
         
-        return (key, value.trimmingCharacters(in: Token.whitespace))
+        return (key, value.trimmingCharacters(in: Structure.whitespace))
     }
     
     private static func separateValues(input: String) throws -> [String] {
         
-        let input = input.trimmingCharacters(in: Token.whitespace)
+        let input = input.trimmingCharacters(in: Structure.whitespace)
         
         if input == "" { return [] }
         
@@ -91,7 +91,7 @@ struct Tokenizer {
             guard !buffer.isEmpty else {
                 throw TokenizingError.bufferIsEmpty
             }
-            let whitespaceTrimmedString = buffer.trimmingCharacters(in: Token.whitespace)
+            let whitespaceTrimmedString = buffer.trimmingCharacters(in: Structure.whitespace)
             
             result.append(whitespaceTrimmedString)
             buffer.removeAll()
@@ -99,21 +99,21 @@ struct Tokenizer {
         
         func parse(character: Character) throws {
             switch character {
-            case Token.endArray:
+            case Structure.endArray:
                 guard nestedArrayCount > 0 else {
                     throw TokenizingError.invalidNestedStructure
                 }
                 nestedArrayCount -= 1
-            case Token.beginArray:
+            case Structure.beginArray:
                 nestedArrayCount += 1
-            case Token.endObject:
+            case Structure.endObject:
                 guard nestedObjectCount > 0 else {
                     throw TokenizingError.invalidNestedStructure
                 }
                 nestedObjectCount -= 1
-            case Token.beginObject:
+            case Structure.beginObject:
                 nestedObjectCount += 1
-            case Token.valueSeparator:
+            case Structure.valueSeparator:
                 guard nestedArrayCount == 0, nestedObjectCount == 0 else { break }
                 try moveBufferToResult()
                 return
@@ -124,7 +124,7 @@ struct Tokenizer {
         }
         
         for character in input {
-            if character == Token.quotationMark {
+            if character == Structure.quotationMark {
                 isParsingString.toggle()
                 buffer.append(character)
             } else if !isParsingString {
@@ -135,11 +135,4 @@ struct Tokenizer {
         try moveBufferToResult()
         return result
     }
-    
-    
-    
 }
-
-
-
-
