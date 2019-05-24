@@ -20,7 +20,7 @@ struct TokenReader {
     mutating func next() throws -> String {
         let nextIndex = currentIndex + 1
         if nextIndex >= tokens.count {
-            throw JSONError.hasNoNextToken
+            throw TokenReaderError.hasNoNextToken
         }
         let nextToken = tokens[nextIndex]
         currentIndex = nextIndex
