@@ -11,25 +11,20 @@ import Foundation
 struct Tokenizer {
     static let commaWithBlank = " ,"
     
-    private let input: String
-    
-    init(input: String) {
-        self.input = input.replacingOccurrences(of: JSONSymbols.comma.rawValue, with: Tokenizer.commaWithBlank)
-    }
-    
-    func execute() throws -> [String] {
-        let tokens = try tokenize()
+    static func execute(jsonData: String) throws -> [String] {
+        let blankAddedData = jsonData.replacingOccurrences(of: JSONSymbols.comma.rawValue, with: commaWithBlank)
+        let tokens = try tokenize(blankAddedData)
         if tokens.isEmpty { throw JSONError.impossibleToTokenize }
         return tokens
     }
     
-    private func tokenize() throws -> [String] {
+    private static func tokenize(_ jsonData: String) throws -> [String] {
         var tokens = [String]()
         var token = String()
         var isOutOfString = true
         
-        for index in input.indices {
-            let character = input[index]
+        for index in jsonData.indices {
+            let character = jsonData[index]
             if JSONSymbols.doubleQuotation.equals(character) {
                 isOutOfString = !isOutOfString
             }
