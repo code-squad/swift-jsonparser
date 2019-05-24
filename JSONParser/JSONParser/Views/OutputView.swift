@@ -2,7 +2,7 @@ import Foundation
 
 struct OutputView {
     
-    static func printTypeCount(data: JsonExplainable) {
+    static func printTypeCount(data: JSONType) {
         print(data.countDescription)
     }
     
