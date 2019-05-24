@@ -14,7 +14,7 @@ struct Tokenizer {
     static func execute(jsonData: String) throws -> [String] {
         let blankAddedData = jsonData.replacingOccurrences(of: JSONSymbols.comma.rawValue, with: commaWithBlank)
         let tokens = try tokenize(blankAddedData)
-        if tokens.isEmpty { throw JSONError.impossibleToTokenize }
+        if tokens.isEmpty { throw TokenizerError.impossibleToTokenize }
         return tokens
     }
     
