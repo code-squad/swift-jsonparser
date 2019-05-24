@@ -38,12 +38,12 @@ struct JsonObject : JsonParsable {
             let sortedKeyValueSet = keyValueSet.enumerated().sorted(by: { ( pair1, pair2) -> Bool in
                 return pair1.element.key < pair2.element.key
             })
-            var result = "{ "
+            var result = "\(JsonBrackets.StartCurlyBrace.rawValue) "
             for sortedPair in sortedKeyValueSet {
                 result += "\(sortedPair.element.key) : \(sortedPair.element.value.jsonValue.description), "
             }
             result.removeLast(2)
-            result += " }"
+            result += " \(JsonBrackets.EndCurlyBrace.rawValue)"
             return result
         }
     }

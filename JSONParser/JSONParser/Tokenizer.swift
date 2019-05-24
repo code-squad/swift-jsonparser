@@ -35,11 +35,13 @@ struct Tokenizer {
     
     private func handleStringAsJsonObject(_ input: String) throws -> JsonParsable {
         let trimmedInput = input[1..<input.count-1]
-        let keyValueList = trimmedInput.components(separatedBy: ",")
+        let keyValueList = trimmedInput.components(separatedBy: TokenSplitStandard.comma.rawValue)
         var keys: [String] = [String]()
         var values: [JsonValue] = [JsonValue]()
         for eachKeyValue in keyValueList{
-            let keyValuePair: [String] = eachKeyValue.components(separatedBy: ":").map { $0.trimmingCharacters(in: .whitespacesAndNewlines)}
+            let keyValuePair: [String] = eachKeyValue
+                                                .components(separatedBy: TokenSplitStandard.semicolon.rawValue)
+                                                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines)}
             let valueDataType = try convertJsonObjectStringValueToElementDataType(keyValuePair[1])
             keys.append(keyValuePair[0])
             values.append(valueDataType)
@@ -109,7 +111,7 @@ struct Tokenizer {
         var element = ""
         while index <= input.count-2 {
             index += 1
-            if input[index] == "{" {
+            if input[index] == JsonBrackets.StartCurlyBrace.rawValue {
                 let result = concatenateJsonObjectString(inputString: input, outerIndex: index)
                 index = result.innerIndex+1
                 queue.add(result.jsonObject)
@@ -120,7 +122,7 @@ struct Tokenizer {
                 element = ""
                 continue
             }
-            if input[index] != " " {
+            if input[index] != TokenSplitStandard.whitespace.rawValue {
                 element += input[index]
             }
         }
@@ -131,7 +133,7 @@ struct Tokenizer {
     func concatenateJsonObjectString (inputString : String, outerIndex: Int) -> (jsonObject: String, innerIndex: Int){
         var offset = outerIndex
         var jsonObject = ""
-        while inputString[offset] != "}" {
+        while inputString[offset] != JsonBrackets.EndCurlyBrace.rawValue {
             jsonObject += inputString[offset]
             offset += 1
         }
@@ -140,11 +142,11 @@ struct Tokenizer {
     }
     
     func isTokenCommaBlank(input: String, index: Int ) -> Bool {
-        return (input[index] == "," || input[index] == " " )
+        return (input[index] == TokenSplitStandard.comma.rawValue || input[index] == TokenSplitStandard.whitespace.rawValue )
     }
     
     func isValidElement(_ element: String) -> Bool {
-        return element != " " && element != ""
+        return element != TokenSplitStandard.whitespace.rawValue && element != ""
     }
     
 }

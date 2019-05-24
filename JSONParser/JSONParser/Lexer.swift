@@ -30,10 +30,11 @@ struct Lexer {
     static func checkInputType ( _ input: String) -> LexicalType {
         var type : LexicalType = LexicalType.string
         let trimInput = input.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimInput[trimInput.startIndex] == "[" && trimInput[trimInput.index(before: trimInput.endIndex)] == "]"  {
+        if trimInput[trimInput.startIndex] == JsonBrackets.StartSquareBracket.characterSymbol &&
+            trimInput[trimInput.index(before: trimInput.endIndex)] == JsonBrackets.EndSquareBracket.characterSymbol  {
             type = LexicalType.jsonArray
         }
-        if trimInput[trimInput.startIndex] == "{" && trimInput[trimInput.index(before: trimInput.endIndex)] == "}" {
+        if trimInput[trimInput.startIndex] == JsonBrackets.StartCurlyBrace.characterSymbol && trimInput[trimInput.index(before: trimInput.endIndex)] == JsonBrackets.EndCurlyBrace.characterSymbol {
             type = LexicalType.jsonObject
         }
         return type
@@ -57,7 +58,8 @@ struct Lexer {
     }
     
     static private func isString (_ token : String) -> Bool {
-        return token.hasPrefix("\"") && token.hasSuffix("\"") ? true : false
+        return token.hasPrefix(TokenSplitStandard.quatation.rawValue)
+                && token.hasSuffix(TokenSplitStandard.quatation.rawValue) ? true : false
     }
     
     static private func isNumeric (_ token : String) -> Bool {
@@ -75,11 +77,11 @@ struct Lexer {
     }
     
     static private func isJsonObject (_ token: String) -> Bool {
-        return token[0] == "{" && token[token.count-1] == "}"
+        return token[0] == JsonBrackets.StartCurlyBrace.rawValue && token[token.count-1] == JsonBrackets.EndCurlyBrace.rawValue
     }
     
     static private func isJsonArray (_ token: String ) -> Bool {
-        return token[0] == "[" && token[token.count-1] == "]"
+        return token[0] == JsonBrackets.StartSquareBracket.rawValue && token[token.count-1] == JsonBrackets.EndSquareBracket.rawValue
     }
     
 }

@@ -30,6 +30,8 @@
 		C52E70C82293E7F3008AEC89 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC75522840C9300D99C02 /* OutputView.swift */; };
 		C52E70CB22968A9C008AEC89 /* LexicalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E70CA22968A9C008AEC89 /* LexicalType.swift */; };
 		C52E70CD2296972F008AEC89 /* LexicalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E70CA22968A9C008AEC89 /* LexicalType.swift */; };
+		C52E70ED2297B870008AEC89 /* JsonBrackets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E70EC2297B870008AEC89 /* JsonBrackets.swift */; };
+		C52E70EF2297BAC7008AEC89 /* TokenSplitStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E70EE2297BAC7008AEC89 /* TokenSplitStandard.swift */; };
 		C56AC7482281758E00D99C02 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7472281758E00D99C02 /* InputView.swift */; };
 		C56AC74A2281764500D99C02 /* ErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7492281764500D99C02 /* ErrorCode.swift */; };
 		C56AC74C228177FA00D99C02 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74B228177FA00D99C02 /* Validation.swift */; };
@@ -64,6 +66,8 @@
 		C52E70B12292BF65008AEC89 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		C52E70C42292D370008AEC89 /* TokenizerUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenizerUnitTest.swift; sourceTree = "<group>"; };
 		C52E70CA22968A9C008AEC89 /* LexicalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LexicalType.swift; sourceTree = "<group>"; };
+		C52E70EC2297B870008AEC89 /* JsonBrackets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonBrackets.swift; sourceTree = "<group>"; };
+		C52E70EE2297BAC7008AEC89 /* TokenSplitStandard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSplitStandard.swift; sourceTree = "<group>"; };
 		C56AC7472281758E00D99C02 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		C56AC7492281764500D99C02 /* ErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCode.swift; sourceTree = "<group>"; };
 		C56AC74B228177FA00D99C02 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
@@ -139,6 +143,8 @@
 				C56AC7492281764500D99C02 /* ErrorCode.swift */,
 				C52E70B12292BF65008AEC89 /* Utility.swift */,
 				C52D24C422851BDF006E7F4E /* JsonFormatter.swift */,
+				C52E70EC2297B870008AEC89 /* JsonBrackets.swift */,
+				C52E70EE2297BAC7008AEC89 /* TokenSplitStandard.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -263,8 +269,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C52D24C522851BDF006E7F4E /* JsonFormatter.swift in Sources */,
+				C52E70EF2297BAC7008AEC89 /* TokenSplitStandard.swift in Sources */,
 				C52D2533228AAB27006E7F4E /* JsonArray.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				C52E70ED2297B870008AEC89 /* JsonBrackets.swift in Sources */,
 				C56AC7522282CAF500D99C02 /* Lexer.swift in Sources */,
 				C56AC74E228195C800D99C02 /* Tokenizer.swift in Sources */,
 				C52E70B22292BF65008AEC89 /* Utility.swift in Sources */,
