@@ -1,9 +1,22 @@
 import Foundation
 
+extension String {
+    func checkingAndTrimmingCharacters(begin: Character, end: Character) -> String? {
+        guard self.first == begin, self.last == end else {
+            return nil
+        }
+        var result = self
+        result.removeFirst()
+        result.removeLast()
+        return result
+    }
+}
+
 struct Tokenizer {
     
     enum TokenizingError: Error {
         case cannotDetectBeginOrEndOfArray
+        case cannotDetectBeginOrEndOfObject
         case invalidNestedStructure
         case invalidArrayGrammar
         case invalidObjectGrammar
@@ -13,6 +26,9 @@ struct Tokenizer {
     }
     
     static func arrayTokenize(input: String) throws -> [String] {
+        guard let input = input.checkingAndTrimmingCharacters(begin: Token.beginArray, end: Token.endArray) else {
+            throw TokenizingError.cannotDetectBeginOrEndOfArray
+        }
         guard FormatValidator.validateArrayFormat(input) else {
             throw TokenizingError.invalidArrayGrammar
         }
@@ -20,9 +36,13 @@ struct Tokenizer {
     }
     
     static func objectTokenize(input: String) throws -> [String: String] {
+        guard let input = input.checkingAndTrimmingCharacters(begin: Token.beginObject, end: Token.endObject) else {
+            throw TokenizingError.cannotDetectBeginOrEndOfObject
+        }
         guard FormatValidator.validateObjectFormat(input) else {
             throw TokenizingError.invalidObjectGrammar
         }
+        
         let separatedInput = try separateValues(input: input)
         var result = [String: String]()
         for value in separatedInput {
@@ -71,7 +91,9 @@ struct Tokenizer {
             guard !buffer.isEmpty else {
                 throw TokenizingError.bufferIsEmpty
             }
-            result.append(buffer.trimmingCharacters(in: Token.whitespace))
+            let whitespaceTrimmedString = buffer.trimmingCharacters(in: Token.whitespace)
+            
+            result.append(whitespaceTrimmedString)
             buffer.removeAll()
         }
         
