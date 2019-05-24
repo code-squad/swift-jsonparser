@@ -17,7 +17,7 @@ struct InputView {
     
     static func read() throws -> String {
         guard let input = readLine() else {
-            throw JSONError.invalidInputFormat
+            throw InputError.invalidInputFormat
         }
         return input
     }
