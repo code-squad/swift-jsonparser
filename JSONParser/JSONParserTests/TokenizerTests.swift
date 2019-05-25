@@ -13,7 +13,7 @@ class TokenizerTests: XCTestCase {
     func testTokenize(){
         
         //GIVEN
-        var tokenizer: Tokenizer = MyTokenizer(string: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false , \"Hello, World!\" ]")
+        var tokenizer: Tokenizer = MyTokenizer(string: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, \"Hello, World!\" ]")
         //WHEN
         let tokens = try! tokenizer.tokenize()
         //THEN
@@ -64,7 +64,7 @@ class TokenizerTests: XCTestCase {
         //WHEN
         let tokens = try! tokenizer.tokenize()
         //THEN
-        XCTAssertEqual(tokens.count, 3)
+        XCTAssertEqual(tokens.count, 2)
         _ = tokens.map{ XCTAssertNotEqual($0.type,TokenType.String) }
     }
     
