@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+protocol Parser {
+    mutating func parse() -> String
+}
