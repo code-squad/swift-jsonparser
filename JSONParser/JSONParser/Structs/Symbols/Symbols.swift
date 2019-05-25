@@ -9,9 +9,9 @@
 import Foundation
 
 struct Symbols {
-    static let openBracket: Character = "["
-    static let closeBracket: Character = "]"
+    static let leftBracket: Character = "["
+    static let rightBracket: Character = "]"
     static let comma: Character = ","
-    static let doubleQuotation: Character = "\""
+    static let doubleQuotes: Character = "\""
     static let whiteSpace: Character = " "
 }
