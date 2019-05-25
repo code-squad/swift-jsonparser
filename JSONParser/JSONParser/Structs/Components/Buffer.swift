@@ -15,8 +15,8 @@ struct Buffer<T> {
         return self.elements.count
     }
     
-    mutating func write(e:T) {
-        self.elements.append(e)
+    mutating func write(element:T) {
+        self.elements.append(element)
     }
     
     func read(at:Int) -> T {

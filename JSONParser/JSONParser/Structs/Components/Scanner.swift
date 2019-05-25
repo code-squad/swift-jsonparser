@@ -26,12 +26,12 @@ struct Scanner {
         try self.fillBuffer()
         let string = String.init(self.buffer.readAll())
         self.clearBuffer()
-        if string.count == 0 { throw Exception.EOL}
+        if string.count == 0 { throw Exception.EOL }
         return string
     }
     
     private mutating func enter(context: Context) {
-        if !self.currentContext.canInclude(context: context){ return }
+        guard self.currentContext.canInclude(context: context) else { return }
         self.nestedContexts.push(context)
     }
     
@@ -45,51 +45,51 @@ struct Scanner {
     
     private mutating func fillBuffer() throws {
         while(self.hasNext()){
-            let c = nextChar()
-            if(try !self.needContinue(c: c)){ return }
-            self.buffer.write(e: c)
+            let character = nextCharacter()
+            if(try !self.needContinue(character: character)){ return }
+            self.buffer.write(element: character)
         }
     }
     
-    private mutating func needContinue(c: Character) throws -> Bool {
-        if let context = Context.init(rawValue: c){
-            if(try isEnd(context: context, c: c)){
+    private mutating func needContinue(character: Character) throws -> Bool {
+        if let context = Context.init(rawValue: character){
+            if(try isEnd(context: context, character: character)){
                 return false
             }
         }
-        else if(self.currentContext.isFinish(inCaseOf: c)){
-            self.buffer.write(e: c)
+        else if(self.currentContext.isFinish(inCaseOf: character)){
+            self.buffer.write(element: character)
             try self.exitContext()
             return false
         }
         return true
     }
 
-    private mutating func isEnd (context:Context,c:Character) throws -> Bool {
+    private mutating func isEnd (context:Context, character:Character) throws -> Bool {
         if(self.currentContext.canInclude(context: context)){
-            if enterStringContext(context: context, c: c){ return true }
+            if enterStringContext(context: context, character: character){ return true }
         }
-        else if(self.currentContext.isFinish(inCaseOf: c)) {
+        else if(self.currentContext.isFinish(inCaseOf: character)) {
             let beforeContext = self.currentContext
-            if try exitStringContext(beforeContext: beforeContext,char:c) { return true }
+            if try exitStringContext(beforeContext: beforeContext,character:character) { return true }
             try self.exitContext()
         }
         return false
     }
     
-    private mutating func exitStringContext(beforeContext:Context,char:Character) throws -> Bool {
+    private mutating func exitStringContext(beforeContext:Context, character:Character) throws -> Bool {
         if beforeContext != .String {
-            self.buffer.write(e: char)
+            self.buffer.write(element: character)
             try self.exitContext()
             return true
         }
         return false
     }
     
-    private mutating func enterStringContext(context:Context,c:Character) -> Bool {
+    private mutating func enterStringContext(context:Context, character:Character) -> Bool {
         self.enter(context: context)
         if currentContext == .Array {
-            self.buffer.write(e: c)
+            self.buffer.write(element: character)
             return true
         }
         return false
@@ -103,7 +103,7 @@ struct Scanner {
         return self.curser < self.charaters.count-1
     }
     
-    private mutating func nextChar() -> Character {
+    private mutating func nextCharacter() -> Character {
         self.nextCurser()
         return self.charaters[self.curser]
     }

@@ -36,7 +36,7 @@ struct TokenGenerater {
     }
     
     private static func determineType(value:String) -> TokenType {
-        return TokenType.of(value)
+        return TokenType.createTokenType(value)
     }
     
 }
