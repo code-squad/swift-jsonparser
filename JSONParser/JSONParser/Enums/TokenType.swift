@@ -15,7 +15,7 @@ enum TokenType: String {
     case Boolean = "부울"
     case None = "X"
     
-    static func of(_ string: String) -> TokenType {
+    static func createTokenType(_ string: String) -> TokenType {
         if isArray(string) { return .Array }
         if isNumber(string) { return .Number }
         if isString(string) { return .String }
@@ -28,8 +28,7 @@ enum TokenType: String {
     }
 
     private static func isNumber(_ string: String) -> Bool {
-        guard Int.init(string) != nil else { return false }
-        return true
+        return Int.init(string) != nil 
     }
     
     private static func isString(_ string: String) -> Bool {
@@ -37,8 +36,7 @@ enum TokenType: String {
     }
     
     private static func isBoolean(_ string: String) -> Bool {
-        guard Bool.init(string) != nil else { return false }
-        return true
+        return Bool.init(string) != nil
     }
     
 }
