@@ -9,10 +9,10 @@
 import Foundation
 
 struct MyTokenizer: Tokenizer {
-    private var scanner: Scanner
-    
+    var scanner: MyScanner
+   
     init(string: String) {
-        self.scanner = Scanner.init(string: string)
+        self.scanner = MyScanner.init(string: string)
     }
     
     mutating func tokenize() throws -> [Token] {
@@ -22,6 +22,10 @@ struct MyTokenizer: Tokenizer {
         }
         let tokens = strings.map { TokenGenerater.createToken($0) }
         return tokens.filter {  ![TokenType.Array,TokenType.None].contains($0.type) }
+    }
+    
+    func hasMoreTokens() -> Bool {
+        return true
     }
     
 }
