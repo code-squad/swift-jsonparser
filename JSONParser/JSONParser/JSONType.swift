@@ -45,7 +45,8 @@ extension Array: JSONType where Element == JSONType {
     
 }
 
-extension Dictionary: JSONType where Key == String ,Value == JSONType {
+typealias Object = Dictionary
+extension Object: JSONType where Key == String ,Value == JSONType {
     
     var typeDescription: String { return "오브젝트" }
     

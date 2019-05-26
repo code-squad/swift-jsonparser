@@ -74,7 +74,8 @@
 				F29D7B5C228F99BA00F70DE6 /* Parser.swift */,
 				F29D7B5F228FB8E900F70DE6 /* FormatValidator.swift */,
 				F283CA792275759200D7CBBC /* JSONType.swift */,
-				F29D7B5E228FA88A00F70DE6 /* Tokenizer */,
+				F262C2DF228F8D92007EF45B /* Structure.swift */,
+				F2CBFDBD228F0267009A7242 /* ValueSeparator.swift */,
 				F2399ECF227732FD00CBFF5D /* Views */,
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 			);
@@ -88,15 +89,6 @@
 				F21006532272A5A70033D0B7 /* OutputView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		F29D7B5E228FA88A00F70DE6 /* Tokenizer */ = {
-			isa = PBXGroup;
-			children = (
-				F262C2DF228F8D92007EF45B /* Structure.swift */,
-				F2CBFDBD228F0267009A7242 /* ValueSeparator.swift */,
-			);
-			path = Tokenizer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
