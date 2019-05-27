@@ -15,230 +15,186 @@ import XCTest
 
 class TokenizerUnitTest: XCTestCase {
 
-    /// 5/20 unitTest
-    func testSimpleJsonArrayTokenize() throws {
-        let testSimpleInput = "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false ]"
-        let result = try splitFirstLevelToken(testSimpleInput)
-        XCTAssert(result is JsonArray , "json array 문자열 분석 실패 ")
+    let testInputJsonObject = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true }, true, \"context\" ]"
+    let testSimpleInput = "[ 10 , \"jk\", 4, \"314\", 99, \"cro ng\", false, [\"json\", \"Array\"], \"[ SquareBr, acke, tTest ]\", {\"abc\" : 10, \"bool\" : true}, \"{, {. [, [, curly , , ] ] ] ] \" ]"
+    let testJsonObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true, \"{ : }\" : \"curly bracket : \", \"curly bracket\":{ \"key\" : value } }"
+
+    /// 5/25 unitTest
+    func testWhiteSpaceAndNewLineTokenize() {
+        print("======= testWhiteSpaceAndNewLineTokenize ========")
+        let whitespaceSplitResult = tokenizedWithWhiteSpace(testSimpleInput)
+        print("## test : > \(whitespaceSplitResult.components(separatedBy: ["&"]).filter{!$0.isEmpty})")
+        XCTAssert(whitespaceSplitResult.components(separatedBy: "&").count == 20, "actual : \(whitespaceSplitResult.components(separatedBy: "&").count)")
+    }
+    
+    func testCommaTokenize(){
+        print("======= testCommaTokenize ========")
+        let whitespaceSplitResult = tokenizedWithWhiteSpace(testSimpleInput)
+        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
+        print("## test : > \(commaSplitResult.components(separatedBy: ["@", "&"]).filter{!$0.isEmpty})")
+        XCTAssert(commaSplitResult.components(separatedBy: ["@", "&"]).filter{!$0.isEmpty}.count == 19, "actual : \(commaSplitResult.components(separatedBy: "&").count)")
     }
 
-    func testNestedJsonArrayTokenized() throws {
-        let testInputJsonObject = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true }, true, \"context\" ]"
-        let result = try splitFirstLevelToken(testInputJsonObject)
-        print("test JsonArray result : > \(result.toString())")
-        XCTAssert(result is JsonArray , "json array 문자열 분석 실패 ")
-
+    func testSquareBracket() {
+        print("======= testSquareBracket ========")
+        let whitespaceSplitResult = tokenizedWithWhiteSpace(testSimpleInput)
+        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
+        let splitSquareBracket = tokenizeWithSquareBrackets(commaSplitResult)
+        XCTAssert(splitSquareBracket.components(separatedBy: ["^", "$"]).filter{ !$0.isEmpty }.count == 7, "actual :>  \(splitSquareBracket.components(separatedBy: ["^", "$"]).filter{ !$0.isEmpty }.count)" )
+        
+        print("## test : > \(splitSquareBracket.components(separatedBy: ["@", "&", "^", "$"]).filter{ !$0.isEmpty })")
+        XCTAssert(splitSquareBracket.components(separatedBy: ["@", "&", "^", "$"]).filter{ !$0.isEmpty }.count == 21, "actual count : \(splitSquareBracket.components(separatedBy: ["@", "&", "^", "$"]).filter{ !$0.isEmpty }.count)")
     }
     
-    func testJsonObjectTokenize() throws {
-        let testJsonObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
-        let result = try splitFirstLevelToken(testJsonObject)
-        print("test JsonObject result : > \(result.toString())")
-        XCTAssert(result is JsonObject , "json object 문자열 분석 실패 ")
-
+    func testCurlyBracket(){
+        print("======= testCurlyBracket ========")
+        let whitespaceSplitResult = tokenizedWithWhiteSpace(testJsonObject)
+        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
+        let splitCurlyBracket = tokenizeWithCurlyBrackets(commaSplitResult)
+        print("result : \(splitCurlyBracket.components(separatedBy: ["^", "$", "&", "@"]).filter{!$0.isEmpty && $0 != " "})")
+        XCTAssert(splitCurlyBracket.components(separatedBy: ["^", "$", "&", "@"]).filter{!$0.isEmpty}.count == 23, "actual count : \(splitCurlyBracket.components(separatedBy: ["^", "$", "&", "@"]).filter{!$0.isEmpty}.count)")
     }
     
-    func splitFirstLevelToken(_ input : String) throws -> JsonParsable {
-        var result : JsonParsable
-        let type = checkInputType(input)
-        switch type {
-        case .jsonObject:
-            result = try handleStringAsJsonObject(input)
-            break
-        case .jsonArray:
-            let jsonArray = testHandleStringAsJsonArray(input)
-            result = try testConvertJsonArrayElementDataType(tokenList: jsonArray)
-            break
-        default :
-            throw ErrorCode.invalidJsonFormat
-        }
+    /// :
+    func testSemicolon(){
+        print("======= testSemicolon ========")
+        let whitespaceSplitResult = tokenizedWithWhiteSpace(testJsonObject)
+        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
+        let splitCurlyBracket = tokenizeWithCurlyBrackets(commaSplitResult)
+        let splitSemicolon = tokenizedWithSemicolon(splitCurlyBracket)
+        print("result : \(splitSemicolon.components(separatedBy: ["^", "$", "&", "@", "#"]).filter{!$0.isEmpty})")
+        XCTAssert(splitSemicolon.components(separatedBy: ["^", "$", "&", "@", "#"]).filter{!$0.isEmpty}.count == 17, "actual count : \(splitSemicolon.components(separatedBy: ["^", "$", "&", "@", "#"]).filter{!$0.isEmpty}.count)")
+    }
+    
+    private func tokenizedWithSemicolon(_ input: String) -> String {
+        let tokens = input.components(separatedBy: ":").joined(separator: "#").trimmingCharacters(in: .whitespacesAndNewlines)
+        let result = restoreSplitSingleSymbolInStringQuatation(tokens: tokens, originCharacter: ":", splitCharacter: "#")
+        return result
+    }
+    /// " "
+    private func tokenizedWithWhiteSpace(_ input: String) -> String{
+        let tokens = input.components(separatedBy: .whitespacesAndNewlines).filter {!$0.isEmpty}.joined(separator : "&")
+        let result = restoreSplitSingleSymbolInStringQuatation(tokens: tokens, originCharacter: " ", splitCharacter: "&")
+        
+        return result
+    }
+    /// ,
+    private func tokenizedWithComma(_ input: String) -> String{
+        let tokens = input.components(separatedBy: ",").joined(separator: "@").trimmingCharacters(in: .whitespacesAndNewlines)
+        let result = restoreSplitSingleSymbolInStringQuatation(tokens: tokens, originCharacter: ",", splitCharacter: "@")
         return result
     }
     
-    private func handleStringAsJsonObject(_ input: String) throws -> JsonParsable {
-        let trimmedInput = input[1..<input.count-1]
-        let keyValueList = trimmedInput.components(separatedBy: ",")
-        var keys: [String] = [String]()
-        var values: [JsonValue] = [JsonValue]()
-        for eachKeyValue in keyValueList{
-            let keyValuePair: [String] = eachKeyValue.components(separatedBy: ":").map { $0.trimmingCharacters(in: .whitespacesAndNewlines)}
-            let valueDataType = try convertJsonObjectStringValueToElementDataType(keyValuePair[1])
-            keys.append(keyValuePair[0])
-            values.append(valueDataType)
-        }
-        let jsonObject: JsonObject = JsonObject.init(keys: keys, values: values)
-        return jsonObject
-    }
-    
-    //subroutine of jsonObject
-    private func convertJsonObjectStringValueToElementDataType(_ tokenValue : String ) throws -> JsonValue {
-        let lexicalType = try confirmTokenDataType(tokenValue)
-        let result : JsonValue = createJsonValueFromJsonObject(type: lexicalType, token: tokenValue)
+    /// [ ]
+    private func tokenizeWithSquareBrackets(_ input: String) -> String {
+        var tokens = input.components(separatedBy: "[").joined(separator: "^[^")
+        tokens = tokens.components(separatedBy: "]").joined(separator: "$]$")
+        var result = restoreSplitPairSymbolInStringQuatation(tokens: tokens, originCharacter: "[", splitCharacter: "^[^")
+        result = restoreSplitPairSymbolInStringQuatation(tokens: result, originCharacter: "]", splitCharacter: "$]$")
         return result
     }
     
-    private func createJsonValueFromJsonObject (type: LexicalType, token : String ) -> JsonValue {
-        var result : JsonValue = JsonValue.init(token)
-        switch type {
-        case .bool :
-            if let boolValue = Bool(token) {
-                result = JsonValue.init(boolValue)
-            }
-        case .intNumber:
-            if let intValue = Int(token) {
-                result = JsonValue.init(intValue)
-            }
-        default :
-            break
-        }
+    private func tokenizeWithCurlyBrackets(_ input: String) -> String {
+        var tokens = input.components(separatedBy: "{").joined(separator: "^{^")
+        tokens = tokens.components(separatedBy: "}").joined(separator: "$}$")
+        var result = restoreSplitPairSymbolInStringQuatation(tokens: tokens, originCharacter: "{", splitCharacter: "^{^")
+        result = restoreSplitPairSymbolInStringQuatation(tokens: result, originCharacter: "}", splitCharacter: "$}$")
         return result
     }
     
-    private func confirmTokenDataType (_ token : String ) throws -> LexicalType {
-        let testStringResult = isString(token)
-        let testNumberResult = isNumeric(token)
-        let testBooleanResult = isBoolean(token)
-        let testJsonObjectResult = isJsonObject(token)
-        let testJsonArrayResult = isJsonArray(token)
-        let result = try decideElementLexicalType(string: testStringResult, number: testNumberResult, bool: testBooleanResult, jsonObject: testJsonObjectResult, jsonArray: testJsonArrayResult)
-        return result
-    }
-    
-    //subroutine of jsonArray
-    func testConvertJsonArrayElementDataType (tokenList : [String]) throws -> JsonParsable{
-        var result = JsonArray()
-        for token in tokenList {
-            let lexicalType = try confirmTokenDataType(token)
-            try saveJsonValueInJsonArray(jsonArray: &result, token: token, type: lexicalType)
-        }
-        return result
-    }
-    
-    private func saveJsonValueInJsonArray (jsonArray: inout JsonArray, token: String,  type: LexicalType) throws {
-        switch type {
-        case .bool :
-            if let boolValue = Bool(token) {
-                jsonArray.add(value: JsonValue.init(boolValue))
-            }
-            break
-        case .intNumber:
-            if let intValue = Int(token) {
-                jsonArray.add(value: JsonValue.init(intValue))
-            }
-        case .string:
-            jsonArray.add(value: JsonValue.init(token))
-        case .jsonObject:
-            let jsonObject =  try handleStringAsJsonObject(token)
-            jsonArray.add(value: JsonValue.init(jsonObject))
-        case .jsonArray:
-            break
-        }
-    }
-    
-    func testHandleStringAsJsonArray (_ input: String) -> [String] {
-        var queue : Queue <String> = Queue <String>()
+    private func restoreSplitPairSymbolInStringQuatation(tokens: String, startSeparator : String = "\"", endSeparator: String = "\"", originCharacter: String, splitCharacter: String) -> String {
+        var result = ""
         var index = 0
-        var element = ""
-        while index <= input.count-2 {
+        while index < tokens.count {
+            result += tokens[index]
+            // \" 를 보았을 경우, stack을 쌓는다.
+            if tokens[index] == startSeparator {
+                index += 1
+                result += complieStackFromBrackets(index: &index, tokens: tokens, end: endSeparator, originCharacter: originCharacter,  splitBy: splitCharacter)
+                continue
+            }
             index += 1
-            if input[index] == "{" {
-                let result = concatenateJsonObjectString(inputString: input, outerIndex: index)
-                index = result.innerIndex+1
-                queue.add(result.jsonObject)
+        }
+        return result
+    }
+    
+    private func complieStackFromBrackets (index : inout Int, tokens: String, end: String, originCharacter: String, splitBy splitCharacter : String ) -> String {
+        var stack : Stack<String> = Stack<String>()
+        stack.push(tokens[index])
+        var result = ""
+        var innerIndex = index
+        // resotreBlockSeparator 가 다시 나올때 까지 stack을 쌓는다.
+        while true {
+            innerIndex += 1
+            /// check ^[^ or $[$ or ^{^ or ${$ and push stack except ^ or $
+            if ( innerIndex - 2 >= 0 && tokens[innerIndex - 2] == splitCharacter[0] &&
+                tokens[innerIndex - 1] == splitCharacter[1] && tokens[innerIndex ] == splitCharacter[2]){
+                guard let bracket = stack.pop() else {
+                    continue
+                }
+                stack.pop()         // pop ^ or  $
+                stack.push(bracket) // push [ ] { }
                 continue
             }
-            if isTokenCommaBlank(input: input, index: index) && isValidElement(element) {
-                queue.add(element)
-                element = ""
+            ///else
+            stack.push(tokens[innerIndex])
+            if tokens[innerIndex] == end {      // ""\"
+                result += popAllStackAsFIFO(stack)
+                index = innerIndex + 1
+                break
+            }
+        }
+        return result
+    }
+    
+    private func restoreSplitSingleSymbolInStringQuatation(tokens: String, startSeparator : String = "\"", endSeparator: String = "\"", originCharacter: String, splitCharacter: String) -> String {
+        var result = ""
+        var index = 0
+        while index < tokens.count {
+            result += tokens[index]
+            // \" 를 보았을 경우, stack을 쌓는다.
+            if tokens[index] == startSeparator {
+                index += 1
+                result += complieStackBetweenRestoreBlock(index: &index, tokens: tokens, end: endSeparator, originCharacter: originCharacter,  splitBy: splitCharacter)
                 continue
             }
-            if input[index] != " " {
-                element += input[index]
+            index += 1
+        }
+        return result
+    }
+    
+    private func complieStackBetweenRestoreBlock (index : inout Int, tokens: String, end: String, originCharacter: String, splitBy splitCharacter : String ) -> String {
+        var stack : Stack<String> = Stack<String>()
+        stack.push(tokens[index])
+        var result = ""
+        var innerIndex = index
+        // resotreBlockSeparator 가 다시 나올때 까지 stack을 쌓는다.
+        while true {
+            innerIndex += 1
+            tokens[innerIndex] == splitCharacter ? stack.push(originCharacter) : stack.push(tokens[innerIndex])
+            if tokens[innerIndex] == end {
+                index = innerIndex + 1
+                result += popAllStackAsFIFO(stack)
+                index = innerIndex + 1
+                break
             }
         }
-        
-        let jsonValueList = queue.toArray()
-        XCTAssert(jsonValueList.count > 0, "파싱 실패 : 배열이 비었습니다.")
-        return jsonValueList
+        return result
     }
     
-    private func checkInputType ( _ input: String) -> LexicalType {
-        var type : LexicalType = LexicalType.string
-        let trimInput = input.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimInput[trimInput.startIndex] == "[" && trimInput[trimInput.index(before: trimInput.endIndex)] == "]"  {
-            type = LexicalType.jsonArray
+    private func popAllStackAsFIFO(_ input: Stack<String> ) -> String {
+        var result = ""
+        var stack = input
+        while !stack.isEmpty() {
+            guard let popValue = stack.pop() else {
+                continue
+            }
+            result =  popValue + result
         }
-        if trimInput[trimInput.startIndex] == "{" && trimInput[trimInput.index(before: trimInput.endIndex)] == "}" {
-            type = LexicalType.jsonObject
-        }
-        return type
+        return result
     }
-    
-    func concatenateJsonObjectString (inputString : String, outerIndex: Int) -> (jsonObject: String, innerIndex: Int){
-        var offset = outerIndex
-        var jsonObject = ""
-        while inputString[offset] != "}" {
-            jsonObject += inputString[offset]
-            offset += 1
-        }
-        jsonObject += inputString[offset]
-        return (jsonObject, offset)
-    }
-    
-    func isTokenCommaBlank(input: String, index: Int ) -> Bool {
-        return (input[index] == "," || input[index] == " " )
-    }
-    
-    func isValidElement(_ element: String) -> Bool {
-        return element != " " && element != ""
-    }
-    
-   
-    
-    
-    /***********************
-     *** Lexing Analysis ***
-     ***********************
-     */
-    
-    private func decideElementLexicalType( string: Bool = false, number: Bool = false, bool : Bool = false, jsonObject: Bool = false, jsonArray: Bool = false) throws -> LexicalType {
-        var result: LexicalType? = string ? LexicalType.string : nil
-        result = number ? LexicalType.intNumber : result
-        result = bool ? LexicalType.bool : result
-        result = jsonObject ? LexicalType.jsonObject : result
-        result = jsonArray ? LexicalType.jsonArray : result
-        
-        guard let resultType = result else {
-            throw ErrorCode.lexicalTypeError
-        }
-        return resultType
-    }
-    
-    private func isString (_ token : String) -> Bool {
-        return token.hasPrefix("\"") && token.hasSuffix("\"") ? true : false
-    }
-    
-    private func isNumeric (_ token : String) -> Bool {
-        guard let _: Int = Int(token) else {
-            return false
-        }
-        return true
-    }
-    
-    private func isBoolean (_ token : String) -> Bool {
-        guard let _: Bool = Bool(token) else {
-            return false
-        }
-        return true
-    }
-    
-    private func isJsonObject (_ token: String) -> Bool {
-        return token[0] == "{" && token[token.count-1] == "}"
-    }
-    
-    private func isJsonArray (_ token: String ) -> Bool {
-        return token[0] == "[" && token[token.count-1] == "]"
-    }
+
+
 }
 
 
