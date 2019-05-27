@@ -31,7 +31,7 @@ extension Array: JSONType where Element == JSONType {
     var typeDescription: String { return "배열" }
     
     var countDescription: String {
-        guard !self.isEmpty else {
+        if self.isEmpty {
             return "빈 배열입니다."
         }
         var counts = [String: Int]()
@@ -51,7 +51,7 @@ extension Object: JSONType where Key == String ,Value == JSONType {
     var typeDescription: String { return "오브젝트" }
     
     var countDescription: String {
-        guard !self.isEmpty else {
+        if self.isEmpty {
             return "빈 오브젝트입니다."
         }
         var counts = [String: Int]()
