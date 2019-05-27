@@ -19,7 +19,7 @@ protocol JsonType {
     var typeDescription: String { get }
 }
 
-extension Double: JsonType {
+extension Int: JsonType {
     var typeDescription: String {
         return TypeName.number.rawValue
     }

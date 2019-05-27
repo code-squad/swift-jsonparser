@@ -9,18 +9,18 @@
 import Foundation
 
 struct Parser {
-    static func parse(tokens: [String]) -> [JsonType] {
+    static func parse(tokens: [String]) -> JsonArray {
         var parseResult: [JsonType] = []
         
         for token in tokens {
             parseResult.append(parse(token: token))
         }
         
-        return parseResult
+        return JsonArray(array: parseResult)
     }
     
     private static func parse(token: String) -> JsonType {
-        if let result = Double(token) {
+        if let result = Int(token) {
             return result
         }
         
