@@ -15,138 +15,164 @@
 import Foundation
 
 struct Tokenizer {
-    
-    func tokenize(_ input : String) throws -> JsonParsable {
-        var result : JsonParsable
-        let type = Lexer.checkInputType(input)
-        switch type {
-        case .jsonObject:
-            result = try handleStringAsJsonObject(input)
-            break
-        case .jsonArray:
-            let jsonArray = handleStringAsJsonArray(input)
-            result = try convertJsonArrayElementDataType(tokenList: jsonArray)
-            break
-        default :
-            throw ErrorCode.invalidJsonFormat
-        }
-        return result
+    func tokenize(_ input : String) throws -> [String] {
+        var tokenList : [String] = [String]()
+        
+        
+        return tokenList
+    }
+    private func tokenizeWithSquareBrackets(_ input: String) -> [String ] {
+        var tokens = input.components(separatedBy: ["[","]"])
+        print(tokens)
+        return tokens
     }
     
-    private func handleStringAsJsonObject(_ input: String) throws -> JsonParsable {
-        let trimmedInput = input[1..<input.count-1]
-        let keyValueList = trimmedInput.components(separatedBy: TokenSplitStandard.comma.rawValue)
-        var keys: [String] = [String]()
-        var values: [JsonParsable] = [JsonParsable]()
-        for eachKeyValue in keyValueList{
-            let keyValuePair: [String] = eachKeyValue
-                                                .components(separatedBy: TokenSplitStandard.semicolon.rawValue)
-                                                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines)}
-            let valueDataType = try convertJsonObjectStringValueToElementDataType(keyValuePair[1])
-            keys.append(keyValuePair[0])
-            values.append(valueDataType)
-        }
-        let jsonObject: JsonObject = JsonObject.init(keys: keys, values: values)
-        return jsonObject
+    private func tokenizeWithCurlyBrackets(_ input: String) -> [String] {
+        var tokens = input.components(separatedBy: ["{", "}"])
+        return tokens
     }
     
-    /// subroutine of jsonObject
-    private func convertJsonObjectStringValueToElementDataType(_ tokenValue : String ) throws -> JsonParsable {
-        let lexicalType = try Lexer.confirmTokenDataType(tokenValue)
-        let result : JsonParsable = createJsonValueFromJsonObject(type: lexicalType, token: tokenValue)
-        return result
+    private func tokenizedWithComma(_ input: String) -> [String]{
+        var tokens = input.components(separatedBy: ",")
+        return tokens
     }
     
-    /// subroutine of jsonArray
-    private func convertJsonArrayElementDataType (tokenList : [String]) throws -> JsonParsable{
-        var result = JsonArray()
-        for token in tokenList {
-            let lexicalType = try Lexer.confirmTokenDataType(token)
-            try saveJsonValueInJsonArray(jsonArray: &result, token: token, type: lexicalType)
-        }
-        return result
+    private func tokenizedWithWhiteSpace(_ input: String) -> [String]{
+        var tokens = input.components(separatedBy: " ")
+        return tokens
     }
-    
-    private func createJsonValueFromJsonObject (type: LexicalType, token : String ) -> JsonParsable {
-        var result : JsonParsable = token
-        switch type {
-        case .bool :
-            if let boolValue = Bool(token) {
-                result = boolValue
-            }
-        case .intNumber:
-            if let intValue = Int(token) {
-                result = intValue
-            }
-        default :
-            break
-        }
-        return result
-    }
-    
-    private func saveJsonValueInJsonArray (jsonArray: inout JsonArray, token: String,  type: LexicalType) throws {
-        switch type {
-        case .bool :
-            if let boolValue = Bool(token) {
-                jsonArray.add(value: boolValue)
-            }
-            break
-        case .intNumber:
-            if let intValue = Int(token) {
-                jsonArray.add(value: intValue)
-            }
-        case .string:
-            jsonArray.add(value: token)
-        case .jsonObject:
-            let jsonObject =  try handleStringAsJsonObject(token)
-            jsonArray.add(value: jsonObject)
-        case .jsonArray:
-            break
-        }
-    }
-    
-    private func handleStringAsJsonArray (_ input: String) -> [String] {
-        var queue : Queue <String> = Queue <String>()
-        var index = 0
-        var element = ""
-        while index <= input.count-2 {
-            index += 1
-            if input[index] == JsonBrackets.StartCurlyBrace.rawValue {
-                let result = concatenateJsonObjectString(inputString: input, outerIndex: index)
-                index = result.innerIndex+1
-                queue.add(result.jsonObject)
-                continue
-            }
-            if isTokenCommaBlank(input: input, index: index) && isValidElement(element) {
-                queue.add(element)
-                element = ""
-                continue
-            }
-            if input[index] != TokenSplitStandard.whitespace.rawValue {
-                element += input[index]
-            }
-        }
-        let jsonValueList = queue.toArray()
-        return jsonValueList
-    }
-    
-    func concatenateJsonObjectString (inputString : String, outerIndex: Int) -> (jsonObject: String, innerIndex: Int){
-        var offset = outerIndex
-        var jsonObject = ""
-        while inputString[offset] != JsonBrackets.EndCurlyBrace.rawValue {
-            jsonObject += inputString[offset]
-            offset += 1
-        }
-        jsonObject += inputString[offset]
-        return (jsonObject, offset)
-    }
-    
-    func isTokenCommaBlank(input: String, index: Int ) -> Bool {
-        return (input[index] == TokenSplitStandard.comma.rawValue || input[index] == TokenSplitStandard.whitespace.rawValue )
-    }
-    
-    func isValidElement(_ element: String) -> Bool {
-        return element != TokenSplitStandard.whitespace.rawValue && element != ""
-    }
+
+//    func tokenize(_ input : String) throws -> [JsonParsable] {
+//        var result : JsonParsable
+//        let type = Lexer.checkInputType(input)
+//        switch type {
+//        case .jsonObject:
+//            result = try handleStringAsJsonObject(input)
+//            break
+//        case .jsonArray:
+//            let jsonArray = handleStringAsJsonArray(input)
+//            result = try convertJsonArrayElementDataType(tokenList: jsonArray)
+//            break
+//        default :
+//            throw ErrorCode.invalidJsonFormat
+//        }
+//        return result
+//    }
+//
+//    private func handleStringAsJsonObject(_ input: String) throws -> JsonParsable {
+//        let trimmedInput = input[1..<input.count-1]
+//        let keyValueList = trimmedInput.components(separatedBy: TokenSplitStandard.comma.rawValue)
+//        var keys: [String] = [String]()
+//        var values: [JsonParsable] = [JsonParsable]()
+//        for eachKeyValue in keyValueList{
+//            let keyValuePair: [String] = eachKeyValue
+//                                                .components(separatedBy: TokenSplitStandard.semicolon.rawValue)
+//                                                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines)}
+//            let valueDataType = try convertJsonObjectStringValueToElementDataType(keyValuePair[1])
+//            keys.append(keyValuePair[0])
+//            values.append(valueDataType)
+//        }
+//        let jsonObject: JsonObject = JsonObject.init(keys: keys, values: values)
+//        return jsonObject
+//    }
+//    
+//    /// subroutine of jsonObject
+//    private func convertJsonObjectStringValueToElementDataType(_ tokenValue : String ) throws -> JsonParsable {
+//        let lexicalType = try Lexer.confirmTokenDataType(tokenValue)
+//        let result : JsonParsable = createJsonValueFromJsonObject(type: lexicalType, token: tokenValue)
+//        return result
+//    }
+//    
+//    /// subroutine of jsonArray
+//    private func convertJsonArrayElementDataType (tokenList : [String]) throws -> JsonParsable{
+//        var result = JsonArray()
+//        for token in tokenList {
+//            let lexicalType = try Lexer.confirmTokenDataType(token)
+//            try saveJsonValueInJsonArray(jsonArray: &result, token: token, type: lexicalType)
+//        }
+//        return result
+//    }
+//    
+//    private func createJsonValueFromJsonObject (type: LexicalType, token : String ) -> JsonParsable {
+//        var result : JsonParsable = token
+//        switch type {
+//        case .bool :
+//            if let boolValue = Bool(token) {
+//                result = boolValue
+//            }
+//        case .intNumber:
+//            if let intValue = Int(token) {
+//                result = intValue
+//            }
+//        default :
+//            break
+//        }
+//        return result
+//    }
+//    
+//    private func saveJsonValueInJsonArray (jsonArray: inout JsonArray, token: String,  type: LexicalType) throws {
+//        switch type {
+//        case .bool :
+//            if let boolValue = Bool(token) {
+//                jsonArray.add(value: boolValue)
+//            }
+//            break
+//        case .intNumber:
+//            if let intValue = Int(token) {
+//                jsonArray.add(value: intValue)
+//            }
+//        case .string:
+//            jsonArray.add(value: token)
+//        case .jsonObject:
+//            let jsonObject =  try handleStringAsJsonObject(token)
+//            jsonArray.add(value: jsonObject)
+//        case .jsonArray:
+//            break
+//        }
+//    }
+//    
+//    private func handleStringAsJsonArray (_ input: String) -> [String] {
+//        var queue : Queue <String> = Queue <String>()
+//        var index = 0
+//        var element = ""
+//        while index <= input.count-2 {
+//            index += 1
+//            if input[index] == JsonBrackets.StartCurlyBrace.rawValue {
+//                let result = concatenateJsonObjectString(inputString: input, outerIndex: index)
+//                index = result.innerIndex+1
+//                queue.add(result.jsonObject)
+//                continue
+//            }
+//            if isTokenCommaBlank(input: input, index: index) && isValidElement(element) {
+//                queue.add(element)
+//                element = ""
+//                continue
+//            }
+//            if input[index] != TokenSplitStandard.whitespace.rawValue {
+//                element += input[index]
+//            }
+//        }
+//        let jsonValueList = queue.toArray()
+//        return jsonValueList
+//    }
+//    
+//    private func concatenateJsonObjectString (inputString : String, outerIndex: Int) -> (jsonObject: String, innerIndex: Int){
+//        var offset = outerIndex
+//        var jsonObject = ""
+//        while inputString[offset] != JsonBrackets.EndCurlyBrace.rawValue {
+//            jsonObject += inputString[offset]
+//            offset += 1
+//        }
+//        jsonObject += inputString[offset]
+//        return (jsonObject, offset)
+//    }
+//    
+//    private func isTokenCommaBlank(input: String, index: Int ) -> Bool {
+//        return (input[index] == TokenSplitStandard.comma.rawValue || input[index] == TokenSplitStandard.whitespace.rawValue )
+//    }
+//    
+//    private func isValidElement(_ element: String) -> Bool {
+//        return element != TokenSplitStandard.whitespace.rawValue && element != ""
+//    }
     
 }
