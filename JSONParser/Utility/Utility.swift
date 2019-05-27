@@ -9,6 +9,8 @@
 import Foundation
 
 struct Stack <T> {
+    
+    
     var stack : [T]
     init(){
         stack = [T]()
@@ -23,6 +25,12 @@ struct Stack <T> {
     mutating func peek() -> T?{
         return stack.last
     }
+    
+    func isEmpty() -> Bool {
+        return stack.count == 0 
+    }
+    
+   
 }
 
 struct Queue <T> {
@@ -34,6 +42,9 @@ struct Queue <T> {
         get{
             return queue.count
         }
+    }
+    func isEmpty() -> Bool {
+        return queue.count == 0
     }
     mutating func add(_ element : T){
         queue.append(element)
