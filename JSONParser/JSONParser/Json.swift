@@ -11,3 +11,4 @@ import Foundation
 protocol Json {
     init (json: String)
 }
+

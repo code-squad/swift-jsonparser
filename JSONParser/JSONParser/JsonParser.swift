@@ -90,9 +90,7 @@ struct JsonParser {
     }
     /// 입력한 데이터의 내부에 객체가 존재할 경우 데이터를 나누는 함수
     private func dictionaryInArray(input: String) -> [String] {
-        let frontCurlyNumber = Sign.frontCurlyBracket.unicodeScalars.map { $0.value }.reduce(0, +)
-        let backCurlyNumber = Sign.backCurlyBracket.unicodeScalars.map { $0.value }.reduce(0, +)
-        let curlyBrackets : CharacterSet = [Unicode.Scalar(frontCurlyNumber) ?? " ", Unicode.Scalar(backCurlyNumber) ?? " "]
+        let curlyBrackets = CharacterSet(charactersIn: "\(Sign.frontCurlyBracket)+\(Sign.backCurlyBracket)")
         var dictionaryInData = input.components(separatedBy: curlyBrackets).filter{ $0 != "" }
         for index in 0..<dictionaryInData.count {
             if dictionaryInData[index].first == Sign.comma || dictionaryInData[index].last == Sign.comma {

@@ -28,3 +28,7 @@ func main() {
 }
 
 main()
+
+//"[{\"name\":\"Aiden\", \"age\" : {\"name\" : \"churi\", \"age\" : 26 } }, 7, \"Hello, world\", true]"
+//"{\"name\" : \"Hello,world\", \"age\" : [7, true, 9]}"
+

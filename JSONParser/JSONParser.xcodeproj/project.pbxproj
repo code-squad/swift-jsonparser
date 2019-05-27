@@ -16,6 +16,7 @@
 		156AD8D6227C114600200BD8 /* TypeBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156AD8D5227C114600200BD8 /* TypeBool.swift */; };
 		156AD8DA2280882600200BD8 /* Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156AD8D92280882600200BD8 /* Json.swift */; };
 		156AD8EF2284667D00200BD8 /* TypeDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156AD8EE2284667D00200BD8 /* TypeDictionary.swift */; };
+		15A71A93229BC1BD00896DE7 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A71A92229BC1BD00896DE7 /* Tokenizer.swift */; };
 		15BDCD5B228ABFE800C28E60 /* Sign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BDCD5A228ABFE800C28E60 /* Sign.swift */; };
 		15BDCD5D228B0E5E00C28E60 /* DataMent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BDCD5C228B0E5E00C28E60 /* DataMent.swift */; };
 		15BDCD63228FEDD900C28E60 /* MentOfCounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BDCD62228FEDD900C28E60 /* MentOfCounts.swift */; };
@@ -44,6 +45,7 @@
 		156AD8D5227C114600200BD8 /* TypeBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeBool.swift; sourceTree = "<group>"; };
 		156AD8D92280882600200BD8 /* Json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Json.swift; sourceTree = "<group>"; };
 		156AD8EE2284667D00200BD8 /* TypeDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeDictionary.swift; sourceTree = "<group>"; };
+		15A71A92229BC1BD00896DE7 /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
 		15BDCD5A228ABFE800C28E60 /* Sign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sign.swift; sourceTree = "<group>"; };
 		15BDCD5C228B0E5E00C28E60 /* DataMent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMent.swift; sourceTree = "<group>"; };
 		15BDCD62228FEDD900C28E60 /* MentOfCounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentOfCounts.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				15BDCD5A228ABFE800C28E60 /* Sign.swift */,
 				15BDCD5C228B0E5E00C28E60 /* DataMent.swift */,
 				15BDCD62228FEDD900C28E60 /* MentOfCounts.swift */,
+				15A71A92229BC1BD00896DE7 /* Tokenizer.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				156AD8DA2280882600200BD8 /* Json.swift in Sources */,
 				156AD8C7227AC34E00200BD8 /* InputView.swift in Sources */,
+				15A71A93229BC1BD00896DE7 /* Tokenizer.swift in Sources */,
 				15BDCD5D228B0E5E00C28E60 /* DataMent.swift in Sources */,
 				15BDCD5B228ABFE800C28E60 /* Sign.swift in Sources */,
 				156AD8CD227AC4EB00200BD8 /* ErrorMessage.swift in Sources */,
