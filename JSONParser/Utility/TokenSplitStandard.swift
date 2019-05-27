@@ -25,5 +25,7 @@ enum TokenSplitStandard : String{
             return " "
         }
     }
-    
+    func isWhiteSpace (_ input: String) -> Bool {
+        return true
+    }
 }

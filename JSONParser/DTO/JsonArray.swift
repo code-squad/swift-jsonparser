@@ -29,7 +29,7 @@ struct JsonArray : JsonParsable {
     
     var description: String {
         get {
-            var result = "\(JsonBrackets.StartSquareBracket.rawValue) "
+            var result = "\(JsonBrackets.StartSquareBracket) "
             for index in 0..<arrayList.count-1{
             result += " \(arrayList[index].description),"
             }

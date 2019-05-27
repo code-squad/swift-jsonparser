@@ -9,13 +9,13 @@
 import Foundation
 
 
-enum JsonBrackets: String {
+enum JsonBrackets: String  {
     
     case StartCurlyBrace = "{"
     case EndCurlyBrace = "}"
     case StartSquareBracket = "["
     case EndSquareBracket = "]"
-    
+
     var characterSymbol: Character {
         switch self {
         case .StartCurlyBrace:
