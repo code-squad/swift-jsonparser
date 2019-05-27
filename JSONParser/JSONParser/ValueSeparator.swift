@@ -121,11 +121,11 @@ struct ValueSeparator {
         for character in input {
             if character == Structure.quotationMark {
                 isParsingString.toggle()
-                buffer.append(character)
             } else if !isParsingString {
                 try parse(character: character)
+                continue
             }
-            
+            buffer.append(character)
         }
         try moveBufferToResult()
         return result
