@@ -16,6 +16,7 @@ enum JsonBrackets: String  {
     case StartSquareBracket = "["
     case EndSquareBracket = "]"
 
+    
     var characterSymbol: Character {
         switch self {
         case .StartCurlyBrace:

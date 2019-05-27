@@ -29,11 +29,12 @@ struct JsonArray : JsonParsable {
     
     var description: String {
         get {
-            var result = "\(JsonBrackets.StartSquareBracket) "
+            var result = "\(TokenSplitSign.squareBracketStart.description) "
             for index in 0..<arrayList.count-1{
-            result += " \(arrayList[index].description),"
+                let cur = arrayList[index].description
+                result += " \(arrayList[index].description),"
             }
-            result += " \(arrayList[arrayList.count-1].description) \(JsonBrackets.EndSquareBracket.rawValue)"
+            result += " \(arrayList[arrayList.count-1].description) \(TokenSplitSign.squareBracketEnd.description)"
             return result
         }
     }

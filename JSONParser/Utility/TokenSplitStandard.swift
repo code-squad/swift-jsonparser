@@ -8,12 +8,13 @@
 
 import Foundation
 
-enum TokenSplitStandard : String{
+enum TokenSplitStandard : String, CustomStringConvertible{
     case semicolon = ":"
     case comma = ","
     case quatation = "\""
     case whitespace = " "
-    var characterSymbol: Character {
+    
+    var description: String {
         switch self{
         case .comma:
             return ","
@@ -25,7 +26,16 @@ enum TokenSplitStandard : String{
             return " "
         }
     }
-    func isWhiteSpace (_ input: String) -> Bool {
-        return true
+    var characterSymbol: Character {
+        switch self{
+        case .comma:
+            return ","
+        case .quatation:
+            return "\""
+        case .semicolon:
+            return ":"
+        case .whitespace:
+            return " "
+        }
     }
 }

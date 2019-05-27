@@ -1,95 +1,46 @@
 //
-//  TokenizerUnitTest.swift
+//  TokenizerTest.swift
 //  JSONParserUnitTest
 //
-//  Created by hw on 20/05/2019.
+//  Created by hw on 27/05/2019.
 //  Copyright © 2019 JK. All rights reserved.
 //
 
-import XCTest
+import Foundation
 
-//{ "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true }
-//[ { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true }, false, 1, { "name" : "YOON JISU", "alias" : "crong", "level" : 4, "married" : true }, true, "context", "314", 314 ]
-//[ 10, "jk", 4, "314", 99, "crong", false ]
-
-
-class TokenizerUnitTest: XCTestCase {
-
-    let testInputJsonObject = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true }, true, \"context\" ]"
-    let testSimpleInput = "[ 10 , \"jk\", 4, \"314\", 99, \"cro ng\", false, [\"json\", \"Array\"], \"[ SquareBr, acke, tTest ]\", {\"abc\" : 10, \"bool\" : true}, \"{, {. [, [, curly , , ] ] ] ] \" ]"
-    let testJsonObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true, \"{ : }\" : \"curly bracket : \", \"curly bracket\":{ \"key\" : value } }"
-
-    /// 5/25 unitTest
-//    func testWhiteSpaceAndNewLineTokenize() {
-//        print()
-//        print("======= testWhiteSpaceAndNewLineTokenize ========")
-//        let whitespaceSplitResult = tokenizedWithWhiteSpace(testSimpleInput)
-//        print("## test : > \(whitespaceSplitResult.components(separatedBy: ["&"]).filter{!$0.isEmpty})")
-//        XCTAssert(whitespaceSplitResult.components(separatedBy: "&").count == 20, "actual : \(whitespaceSplitResult.components(separatedBy: "&").count)")
-//    }
-//
-//    func testCommaTokenize(){
-//        print()
-//        print("======= testCommaTokenize ========")
-//        let whitespaceSplitResult = tokenizedWithWhiteSpace(testSimpleInput)
-//        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
-//        print("## test : > \(commaSplitResult.components(separatedBy: ["@", "&"]).filter{!$0.isEmpty})")
-//        XCTAssert(commaSplitResult.components(separatedBy: ["@", "&"]).filter{!$0.isEmpty}.count == 31, "actual : \(commaSplitResult.components(separatedBy: ["@", "&"]).filter{!$0.isEmpty}.count)")
-//    }
-//
-//    func testSquareBracket() {
-//        print()
-//        print("======= testSquareBracket ========")
-//        let whitespaceSplitResult = tokenizedWithWhiteSpace(testSimpleInput)
-//        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
-//        let splitSquareBracket = tokenizeWithSquareBrackets(commaSplitResult)
-//        XCTAssert(splitSquareBracket.components(separatedBy: ["^", "$"]).filter{ !$0.isEmpty }.count == 7, "actual :>  \(splitSquareBracket.components(separatedBy: ["^", "$"]).filter{ !$0.isEmpty }.count)" )
-//
-//        print("## test : > \(splitSquareBracket.components(separatedBy: ["@", "&", "^", "$"]).filter{ !$0.isEmpty })")
-//        XCTAssert(splitSquareBracket.components(separatedBy: ["@", "&", "^", "$"]).filter{ !$0.isEmpty }.count == 33, "actual count : \(splitSquareBracket.components(separatedBy: ["@", "&", "^", "$"]).filter{ !$0.isEmpty }.count)")
-//    }
-//
-//    func testCurlyBracket(){
-//        print()
-//        print("======= testCurlyBracket ========")
-//        let whitespaceSplitResult = tokenizedWithWhiteSpace(testJsonObject)
-//        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
-//        let splitCurlyBracket = tokenizeWithCurlyBrackets(commaSplitResult)
-//        print("result : \(splitCurlyBracket.components(separatedBy: ["^", "$", "&", "@"]).filter{!$0.isEmpty && $0 != " "})")
-//        XCTAssert(splitCurlyBracket.components(separatedBy: ["^", "$", "&", "@"]).filter{!$0.isEmpty}.count == 28, "actual count : \(splitCurlyBracket.components(separatedBy: ["^", "$", "&", "@"]).filter{!$0.isEmpty}.count)")
-//    }
-//
-//    /// :
-//    func testSemicolon(){
-//        print()
-//        print("======= testSemicolon ========")
-//        let whitespaceSplitResult = tokenizedWithWhiteSpace(testJsonObject)
-//        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
-//        let splitCurlyBracket = tokenizeWithCurlyBrackets(commaSplitResult)
-//        let splitSemicolon = tokenizedWithSemicolon(splitCurlyBracket)
-//        print("result : \(splitSemicolon.components(separatedBy: ["^", "$", "&", "@", "#"]).filter{!$0.isEmpty})")
-//        XCTAssert(splitSemicolon.components(separatedBy: ["^", "$", "&", "@", "#"]).filter{!$0.isEmpty}.count == 29, "actual count : \(splitSemicolon.components(separatedBy: ["^", "$", "&", "@", "#"]).filter{!$0.isEmpty}.count)")
-//    }
-
-    private func tokenizedWithSemicolon(_ input: String) -> String {
+struct TestTokenizer {
+    func tokenize(_ input : String) -> [String] {
+        var tokenList : [String] = [String]()
+        print("original : \(input)")
+        var result = tokenizeWithWhiteSpace(input)
+        result = tokenizeWithComma(result)
+        result = tokenizeWithSquareBrackets(result)
+        result = tokenizeWithCurlyBrackets(result)
+        result = tokenizeWithSemicolon(result)
+        tokenList = result.components(separatedBy: ["^", "$", "&", "@", "#"]).filter{!$0.isEmpty}
+        
+        return tokenList
+    }
+    
+    private func tokenizeWithSemicolon(_ input: String) -> String {
         let tokens = input.components(separatedBy: ":").joined(separator: "#:#").trimmingCharacters(in: .whitespacesAndNewlines)
         let result = restoreSplitPairSymbolInStringQuatation(tokens: tokens, originCharacter: ":", splitCharacter: "#:#")
         return result
     }
     /// " "
-    private func tokenizedWithWhiteSpace(_ input: String) -> String{
+    private func tokenizeWithWhiteSpace(_ input: String) -> String{
         let tokens = input.components(separatedBy: .whitespacesAndNewlines).filter {!$0.isEmpty}.joined(separator : "&")
         let result = restoreSplitSingleSymbolInStringQuatation(tokens: tokens, originCharacter: " ", splitCharacter: "&")
-
+        
         return result
     }
     /// ,
-    private func tokenizedWithComma(_ input: String) -> String{
+    private func tokenizeWithComma(_ input: String) -> String{
         let tokens = input.components(separatedBy: ",").joined(separator: "@,@").trimmingCharacters(in: .whitespacesAndNewlines)
         let result = restoreSplitPairSymbolInStringQuatation(tokens: tokens, originCharacter: ",", splitCharacter: "@,@")
         return result
     }
-
+    
     /// [ ]
     private func tokenizeWithSquareBrackets(_ input: String) -> String {
         var tokens = input.components(separatedBy: "[").joined(separator: "^[^")
@@ -98,7 +49,7 @@ class TokenizerUnitTest: XCTestCase {
         result = restoreSplitPairSymbolInStringQuatation(tokens: result, originCharacter: "]", splitCharacter: "$]$")
         return result
     }
-
+    
     private func tokenizeWithCurlyBrackets(_ input: String) -> String {
         var tokens = input.components(separatedBy: "{").joined(separator: "^{^")
         tokens = tokens.components(separatedBy: "}").joined(separator: "$}$")
@@ -106,7 +57,7 @@ class TokenizerUnitTest: XCTestCase {
         result = restoreSplitPairSymbolInStringQuatation(tokens: result, originCharacter: "}", splitCharacter: "$}$")
         return result
     }
-
+    
     private func restoreSplitPairSymbolInStringQuatation(tokens: String, startSeparator : String = "\"", endSeparator: String = "\"", originCharacter: String, splitCharacter: String) -> String {
         var result = ""
         var index = 0
@@ -122,7 +73,7 @@ class TokenizerUnitTest: XCTestCase {
         }
         return result
     }
-
+    
     private func complieStackFromBrackets (index : inout Int, tokens: String, end: String, originCharacter: String, splitBy splitCharacter : String ) -> String {
         var stack : Stack<String> = Stack<String>()
         stack.push(tokens[index])
@@ -151,7 +102,7 @@ class TokenizerUnitTest: XCTestCase {
         }
         return result
     }
-
+    
     private func restoreSplitSingleSymbolInStringQuatation(tokens: String, startSeparator : String = "\"", endSeparator: String = "\"", originCharacter: String, splitCharacter: String) -> String {
         var result = ""
         var index = 0
@@ -167,7 +118,7 @@ class TokenizerUnitTest: XCTestCase {
         }
         return result
     }
-
+    
     private func complieStackBetweenRestoreBlock (index : inout Int, tokens: String, end: String, originCharacter: String, splitBy splitCharacter : String ) -> String {
         var stack : Stack<String> = Stack<String>()
         stack.push(tokens[index])
@@ -186,7 +137,7 @@ class TokenizerUnitTest: XCTestCase {
         }
         return result
     }
-
+    
     private func popAllStackAsFIFO(_ input: Stack<String> ) -> String {
         var result = ""
         var stack = input
@@ -199,7 +150,4 @@ class TokenizerUnitTest: XCTestCase {
         return result
     }
 
-
 }
-
-

@@ -1,20 +1,15 @@
 //
-//  Lexer.swift
-//  JSONParser
+//  Lexer2.swift
+//  JSONParserUnitTest
 //
-//  Created by hw on 08/05/2019.
+//  Created by hw on 27/05/2019.
 //  Copyright © 2019 JK. All rights reserved.
 //
 
-// A lexer is basically a tokenizer, but it usually attaches extra context to the tokens -- this token is a number,
-// that token is a string literal, this other token is an equality operator.
-// https://www.quora.com/Whats-the-difference-between-a-tokenizer-lexer-and-parser
-// A lexer does the same plus attachs extra information to each token. If we tokenize into words,
-// a lexer would attach tags like number, word, punctuation etc.
-
 import Foundation
 
-struct Lexer {
+
+struct Lexer2 {
     
     static func confirmTokenDataType (_ token : String ) throws -> LexicalType {
         if  isNumeric(token) {
@@ -32,7 +27,6 @@ struct Lexer {
         if isString(token) {
             return LexicalType.string
         }
-        
         throw ErrorCode.lexicalTypeError
     }
     
@@ -51,7 +45,7 @@ struct Lexer {
     
     static private func isString (_ token : String) -> Bool {
         return token.hasPrefix(TokenSplitStandard.quatation.rawValue)
-                && token.hasSuffix(TokenSplitStandard.quatation.rawValue) ? true : false
+            && token.hasSuffix(TokenSplitStandard.quatation.rawValue) ? true : false
     }
     
     static private func isNumeric (_ token : String) -> Bool {
@@ -75,19 +69,6 @@ struct Lexer {
     static private func isJsonArray (_ token: String ) -> Bool {
         return token[0] == JsonBrackets.StartSquareBracket.rawValue && token[token.count-1] == JsonBrackets.EndSquareBracket.rawValue
     }
-    
-    
-    static private func isSquareBracketStart(_ input: String ) -> Bool {
-        return input.count == 1 && input == TokenSplitSign.squareBracketStart.description ? true : false
-    }
-    static private func isSquareBracketEnd(_ input: String ) -> Bool {
-        return input.count == 1 && input == TokenSplitSign.squareBracketEnd.description ? true : false
-    }
-    static private func isCurlyBracketStart(_ input: String) -> Bool {
-        return input.count == 1 && input == TokenSplitSign.curlyBracketStart.description ? true : false
-    }
-    static private func isCurlyBracketEnd(_ input: String) -> Bool {
-        return input.count == 1 && input == TokenSplitSign.curlyBracketEnd.description ? true : false
-    }
-    
+
+   
 }

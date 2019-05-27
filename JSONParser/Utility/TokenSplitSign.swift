@@ -8,16 +8,37 @@
 
 import Foundation
 
-enum TokenSplitSign : String{
-    case semicolon = "#"
-    case comma = "@"
-    case quatation = "\""
-    case whitespace = "&"
-    case squareBracketStart = "^[^"
-    case squareBracketEnd = "$]$"
-
-    case curlyBracketStart = "^{^"
-    case curlyBracketEnd = "$}$"
+enum TokenSplitSign : CustomStringConvertible{
+    case semicolon 
+    case comma
+    case quatation
+    case whitespace
     
+    case squareBracketStart
+    case squareBracketEnd
+    case curlyBracketStart
+    case curlyBracketEnd
+    var description: String {
+        switch self{
+        case .semicolon:
+            return ":"
+        case .comma:
+            return ","
+        case .quatation:
+            return "\""
+        case .whitespace :
+            return " "
+        case .squareBracketStart:
+            return "["
+        case .squareBracketEnd:
+            return "]"
+        case .curlyBracketStart:
+            return "{"
+        case .curlyBracketEnd:
+            return "}"
+            
+        }
+        
+    }
     
 }

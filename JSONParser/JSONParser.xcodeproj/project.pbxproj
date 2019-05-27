@@ -34,7 +34,11 @@
 		C52E70F222991D2B008AEC89 /* JsonBrackets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E70EC2297B870008AEC89 /* JsonBrackets.swift */; };
 		C52E70F322991D2E008AEC89 /* TokenSplitStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E70EE2297BAC7008AEC89 /* TokenSplitStandard.swift */; };
 		C52E70F522992676008AEC89 /* TokenSplitSign.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E70F422992675008AEC89 /* TokenSplitSign.swift */; };
-		C52E70F7229BD8A7008AEC89 /* ParserUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E70F6229BD8A7008AEC89 /* ParserUnitTest.swift */; };
+		C52E70F9229BE560008AEC89 /* ParserUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E70F8229BE560008AEC89 /* ParserUnitTest.swift */; };
+		C52E70FF229BE9FE008AEC89 /* TokenizerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E70FE229BE9FE008AEC89 /* TokenizerTest.swift */; };
+		C52E7101229BEA06008AEC89 /* ParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E7100229BEA06008AEC89 /* ParserTest.swift */; };
+		C52E7102229BF016008AEC89 /* TokenSplitSign.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E70F422992675008AEC89 /* TokenSplitSign.swift */; };
+		C52E7104229BFD63008AEC89 /* Lexer2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E7103229BFD63008AEC89 /* Lexer2.swift */; };
 		C56AC7482281758E00D99C02 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7472281758E00D99C02 /* InputView.swift */; };
 		C56AC74A2281764500D99C02 /* ErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7492281764500D99C02 /* ErrorCode.swift */; };
 		C56AC74C228177FA00D99C02 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74B228177FA00D99C02 /* Validation.swift */; };
@@ -72,7 +76,10 @@
 		C52E70EE2297BAC7008AEC89 /* TokenSplitStandard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSplitStandard.swift; sourceTree = "<group>"; };
 		C52E70F02297E223008AEC89 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		C52E70F422992675008AEC89 /* TokenSplitSign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSplitSign.swift; sourceTree = "<group>"; };
-		C52E70F6229BD8A7008AEC89 /* ParserUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserUnitTest.swift; sourceTree = "<group>"; };
+		C52E70F8229BE560008AEC89 /* ParserUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserUnitTest.swift; sourceTree = "<group>"; };
+		C52E70FE229BE9FE008AEC89 /* TokenizerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenizerTest.swift; sourceTree = "<group>"; };
+		C52E7100229BEA06008AEC89 /* ParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTest.swift; sourceTree = "<group>"; };
+		C52E7103229BFD63008AEC89 /* Lexer2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer2.swift; sourceTree = "<group>"; };
 		C56AC7472281758E00D99C02 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		C56AC7492281764500D99C02 /* ErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCode.swift; sourceTree = "<group>"; };
 		C56AC74B228177FA00D99C02 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
@@ -136,9 +143,10 @@
 		C52D24F222892FE0006E7F4E /* JSONParserUnitTest */ = {
 			isa = PBXGroup;
 			children = (
+				C52E70FD229BE9EB008AEC89 /* New Group */,
 				C52D24F322892FE0006E7F4E /* JSONParserUnitTest.swift */,
 				C52E70C42292D370008AEC89 /* TokenizerUnitTest.swift */,
-				C52E70F6229BD8A7008AEC89 /* ParserUnitTest.swift */,
+				C52E70F8229BE560008AEC89 /* ParserUnitTest.swift */,
 				C52D24F522892FE0006E7F4E /* Info.plist */,
 			);
 			path = JSONParserUnitTest;
@@ -182,6 +190,16 @@
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 			);
 			path = ApplicationMain;
+			sourceTree = "<group>";
+		};
+		C52E70FD229BE9EB008AEC89 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				C52E70FE229BE9FE008AEC89 /* TokenizerTest.swift */,
+				C52E7100229BEA06008AEC89 /* ParserTest.swift */,
+				C52E7103229BFD63008AEC89 /* Lexer2.swift */,
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,7 +319,8 @@
 			files = (
 				C52E70BA2292D01F008AEC89 /* JsonObject.swift in Sources */,
 				C52E70F322991D2E008AEC89 /* TokenSplitStandard.swift in Sources */,
-				C52E70F7229BD8A7008AEC89 /* ParserUnitTest.swift in Sources */,
+				C52E70F9229BE560008AEC89 /* ParserUnitTest.swift in Sources */,
+				C52E7104229BFD63008AEC89 /* Lexer2.swift in Sources */,
 				C52E70C52292D370008AEC89 /* TokenizerUnitTest.swift in Sources */,
 				C52E70BB2292D028008AEC89 /* Tokenizer.swift in Sources */,
 				C52E70F222991D2B008AEC89 /* JsonBrackets.swift in Sources */,
@@ -310,6 +329,9 @@
 				C52E70BE2292D067008AEC89 /* Lexer.swift in Sources */,
 				C52E70BD2292D02E008AEC89 /* Validation.swift in Sources */,
 				C52E70BC2292D02C008AEC89 /* Utility.swift in Sources */,
+				C52E70FF229BE9FE008AEC89 /* TokenizerTest.swift in Sources */,
+				C52E7101229BEA06008AEC89 /* ParserTest.swift in Sources */,
+				C52E7102229BF016008AEC89 /* TokenSplitSign.swift in Sources */,
 				C52E70CD2296972F008AEC89 /* LexicalType.swift in Sources */,
 				C52E70C32292D1E1008AEC89 /* JSONParserUnitTest.swift in Sources */,
 				C52E70B82292D01C008AEC89 /* JsonParsable.swift in Sources */,
