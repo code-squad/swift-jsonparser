@@ -38,7 +38,6 @@ struct JsonFormatter{
         default:
             throw ErrorCode.lexicalTypeError
         }
-
     }
     
     private mutating func checkElementDataType(_ element : JsonParsable) {

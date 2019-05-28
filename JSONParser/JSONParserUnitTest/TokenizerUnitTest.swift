@@ -131,8 +131,8 @@ class TokenizerUnitTest: XCTestCase {
         while true {
             innerIndex += 1
             /// check ^[^ or $[$ or ^{^ or ${$ and push stack except ^ or $
-            if ( innerIndex - 2 >= 0 && tokens[innerIndex - 2] == splitCharacter[0] &&
-                tokens[innerIndex - 1] == splitCharacter[1] && tokens[innerIndex ] == splitCharacter[2]){
+            if (innerIndex - 2 >= 0 && tokens[innerIndex - 2] == splitCharacter[0] &&
+                tokens[innerIndex - 1] == splitCharacter[1] && tokens[innerIndex] == splitCharacter[2]){
                 guard let bracket = stack.pop() else {
                     continue
                 }
@@ -197,8 +197,6 @@ class TokenizerUnitTest: XCTestCase {
         }
         return result
     }
-
-
 }
 
 

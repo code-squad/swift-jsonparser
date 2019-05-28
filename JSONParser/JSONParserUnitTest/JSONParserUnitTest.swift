@@ -13,7 +13,6 @@ class JSONParserUnitTest: XCTestCase {
     func testCheckInvalidJsonObjectFormat(){
         var testInput = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
         XCTAssertTrue(checkInvalidJsonObjectFormat(testInput), "error")
-        
     }
     
     func checkInvalidJsonObjectFormat(_ input: String) -> Bool{
@@ -41,7 +40,5 @@ class JSONParserUnitTest: XCTestCase {
         }
         return isJsonObject
     }
-    
-   
 
 }

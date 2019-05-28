@@ -18,6 +18,7 @@ enum TokenSplitSign : CustomStringConvertible{
     case squareBracketEnd
     case curlyBracketStart
     case curlyBracketEnd
+    
     var description: String {
         switch self{
         case .semicolon:

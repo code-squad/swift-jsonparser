@@ -50,8 +50,8 @@ struct Lexer {
     }
     
     static private func isString (_ token : String) -> Bool {
-        return token.hasPrefix(TokenSplitStandard.quatation.rawValue)
-                && token.hasSuffix(TokenSplitStandard.quatation.rawValue) ? true : false
+        return token.hasPrefix(TokenSplitSign.quatation.description)
+                && token.hasSuffix(TokenSplitSign.quatation.description) ? true : false
     }
     
     static private func isNumeric (_ token : String) -> Bool {
@@ -74,20 +74,6 @@ struct Lexer {
     
     static private func isJsonArray (_ token: String ) -> Bool {
         return token[0] == JsonBrackets.StartSquareBracket.rawValue && token[token.count-1] == JsonBrackets.EndSquareBracket.rawValue
-    }
-    
-    
-    static private func isSquareBracketStart(_ input: String ) -> Bool {
-        return input.count == 1 && input == TokenSplitSign.squareBracketStart.description ? true : false
-    }
-    static private func isSquareBracketEnd(_ input: String ) -> Bool {
-        return input.count == 1 && input == TokenSplitSign.squareBracketEnd.description ? true : false
-    }
-    static private func isCurlyBracketStart(_ input: String) -> Bool {
-        return input.count == 1 && input == TokenSplitSign.curlyBracketStart.description ? true : false
-    }
-    static private func isCurlyBracketEnd(_ input: String) -> Bool {
-        return input.count == 1 && input == TokenSplitSign.curlyBracketEnd.description ? true : false
     }
     
 }

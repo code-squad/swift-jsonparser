@@ -10,7 +10,6 @@ import Foundation
 
 struct Stack <T> {
     
-    
     var stack : [T]
     init(){
         stack = [T]()
@@ -20,10 +19,10 @@ struct Stack <T> {
             return stack.count
         }
     }
+    
     mutating func push(_ element : T){
         stack.append(element)
     }
-    
     mutating func pop() -> T?{
         return stack.popLast()
     }
@@ -35,7 +34,6 @@ struct Stack <T> {
         return stack.count == 0 
     }
     
-   
 }
 
 struct Queue <T> {
@@ -51,6 +49,11 @@ struct Queue <T> {
     func isEmpty() -> Bool {
         return queue.count == 0
     }
+    
+    func toArray() -> [T] {
+        return self.queue
+    }
+    
     mutating func add(_ element : T){
         queue.append(element)
     }
@@ -62,16 +65,12 @@ struct Queue <T> {
     mutating func peek() -> T?{
         return queue.last
     }
-    
+
     mutating func find(_ int : Int) -> T{
         if int < queue.count && int >= 0 {
             return queue[int]
         }
         return -1 as! T
-    }
-    
-    func toArray() -> [T] {
-        return self.queue
     }
 }
 

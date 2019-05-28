@@ -290,8 +290,8 @@ class ParserUnitTest: XCTestCase {
         return result
     }
     private func isString (_ token : String) -> Bool {
-        return token.hasPrefix(TokenSplitStandard.quatation.description)
-            && token.hasSuffix(TokenSplitStandard.quatation.description) ? true : false
+        return token.hasPrefix(TokenSplitSign.quatation.description)
+            && token.hasSuffix(TokenSplitSign.quatation.description) ? true : false
     }
     
     private func isNumeric (_ token : String) -> Bool {
@@ -307,15 +307,19 @@ class ParserUnitTest: XCTestCase {
         }
         return true
     }
+    
     private func isSquareBracketStart(_ input: String ) -> Bool {
         return input.count == 1 && input == TokenSplitSign.squareBracketStart.description ? true : false
     }
+    
     private func isSquareBracketEnd(_ input: String ) -> Bool {
         return input.count == 1 && input == TokenSplitSign.squareBracketEnd.description ? true : false
     }
+    
     private func isCurlyBracketStart(_ input: String) -> Bool {
         return input.count == 1 && input == TokenSplitSign.curlyBracketStart.description ? true : false
     }
+    
     private func isCurlyBracketEnd(_ input: String) -> Bool {
         return input.count == 1 && input == TokenSplitSign.curlyBracketEnd.description ? true : false
     }

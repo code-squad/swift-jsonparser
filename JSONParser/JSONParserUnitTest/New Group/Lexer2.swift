@@ -43,12 +43,12 @@ struct Lexer2 {
         return type
     }
     
-    static private func isString (_ token : String) -> Bool {
-        return token.hasPrefix(TokenSplitStandard.quatation.rawValue)
-            && token.hasSuffix(TokenSplitStandard.quatation.rawValue) ? true : false
+    static func isString (_ token : String) -> Bool {
+        return token.hasPrefix(TokenSplitSign.quatation.description)
+            && token.hasSuffix(TokenSplitSign.quatation.description) ? true : false
     }
     
-    static private func isNumeric (_ token : String) -> Bool {
+    static func isNumeric (_ token : String) -> Bool {
         guard let _: Int = Int(token) else {
             return false
         }
@@ -69,6 +69,5 @@ struct Lexer2 {
     static private func isJsonArray (_ token: String ) -> Bool {
         return token[0] == JsonBrackets.StartSquareBracket.rawValue && token[token.count-1] == JsonBrackets.EndSquareBracket.rawValue
     }
-
-   
+    
 }
