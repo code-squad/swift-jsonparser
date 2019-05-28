@@ -46,12 +46,12 @@ struct Tokenizer {
         let splitResult = trimmingResult.split(separator: TokenElement.comma.rawValue)
         let rawTokens = splitResult.map { String($0).trimmingCharacters(in: .whitespaces) }
         
-        let tokens = verify(rawTokens: rawTokens)
+        let tokens = convert(rawTokens: rawTokens)
         
         return tokens
     }
     
-    private static func verify(rawTokens: [String]) -> [String] {
+    private static func convert(rawTokens: [String]) -> [String] {
         var tokens: [String] = []
         var token = ""
         var firstOfToken: TokenElement?
