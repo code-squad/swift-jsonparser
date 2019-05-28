@@ -8,6 +8,6 @@
 
 import XCTest
 
-class ParserTests: XCTestCase {
+class MyListParserTests: XCTestCase {
     
 }

@@ -8,7 +8,7 @@
 
 import XCTest
 
-class ScannerTests: XCTestCase {
+class MyScannerTests: XCTestCase {
     var scanner: Scanner!
     var characters = [Character]()
     

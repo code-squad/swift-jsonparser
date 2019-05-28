@@ -8,7 +8,7 @@
 
 import XCTest
 
-class TokenizerTests: XCTestCase {
+class MyTokenizerTests: XCTestCase {
     //GIVEN
     let input = "[ 24, \"Hello, World\", \"513\", false ]"
     var tokenizer: Tokenizer!
@@ -16,7 +16,7 @@ class TokenizerTests: XCTestCase {
     
     override func setUp() {
         //WHEN
-        self.tokenizer = MyTokenizer(json: input)
+        self.tokenizer = MyTokenizer(input)
         self.tokens = try! tokenizer.tokenize()
     }
     
