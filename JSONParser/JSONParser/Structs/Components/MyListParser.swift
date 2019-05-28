@@ -25,18 +25,18 @@ struct MyListParser: Parser {
     
     private mutating func assembleToken() {
         var isString = false
-        var indexs = MyStack<Int>()
+        var indexsOfInsideString = MyStack<Int>()
         for (index,token) in self.tokens.enumerated() {
             if isString {
-                indexs.push(index)
+                indexsOfInsideString.push(index)
             }
             if(token == .DoubleQuotation){
                 isString.toggle()
                 self.tokens[index] = .String
             }
         }
-        while !indexs.isEmpty(){
-            guard let index = indexs.pop() else { return }
+        while !indexsOfInsideString.isEmpty(){
+            guard let index = indexsOfInsideString.pop() else { return }
             self.tokens.remove(at: index )
         }
     }
