@@ -11,7 +11,6 @@ import Foundation
 struct TestTokenizer {
     func tokenize(_ input : String) -> [String] {
         var tokenList : [String] = [String]()
-        print("original : \(input)")
         var result = tokenizeWithWhiteSpace(input)
         result = tokenizeWithComma(result)
         result = tokenizeWithSquareBrackets(result)
