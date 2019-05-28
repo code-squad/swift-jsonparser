@@ -21,10 +21,19 @@ struct InputView {
         }
     }
     
-    func readText() throws -> String {
+    enum Question: String {
+        case enterJSONData
+    }
+    
+    func readText(ask question: Question) throws -> String {
+        print(question.rawValue)
         guard let input = readLine(), !input.isEmpty else {
             throw Error.isEmptyInput
         }
         return input
+    }
+    
+    func readJSON() throws -> String {
+        return try readText(ask: .enterJSONData)
     }
 }
