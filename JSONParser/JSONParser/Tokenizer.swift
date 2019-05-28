@@ -25,7 +25,7 @@ struct Tokenizer {
         
         for character in jsonData {
             if JSONSymbols.doubleQuotation.equals(character) {
-                isOutOfString = !isOutOfString
+                isOutOfString.toggle()
             }
             if JSONSymbols.blank.equals(character) && isOutOfString {
                 tokens.append(token)
