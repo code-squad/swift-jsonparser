@@ -8,8 +8,11 @@
 
 import Foundation
 
-struct MyParser: Parser {
+struct ListParser: Parser {
+    let tokens: [Token]
+    
     func parse() -> String {
         return ""
     }
+    
 }

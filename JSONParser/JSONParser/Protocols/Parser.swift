@@ -9,5 +9,5 @@
 import Foundation
 
 protocol Parser {
-    mutating func parse() -> String
+    mutating func parse() -> Dictionary<Token, Int>
 }

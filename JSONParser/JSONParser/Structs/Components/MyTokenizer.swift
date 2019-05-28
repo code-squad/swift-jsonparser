@@ -25,7 +25,7 @@ struct MyTokenizer: Tokenizer {
     }
     
     private mutating func split() throws -> [String] {
-        var units = [String]()
+        var units = Array<String>()
         
         while let character = self.scanner.next() {
             switch character {
