@@ -9,7 +9,7 @@
 import XCTest
 
 class MyStackTests: XCTestCase {
-    //GIVEN
+    //Given
     var stack = MyStack<Int>()
     let firstElement = 1
     let secondElement = 2
@@ -17,7 +17,7 @@ class MyStackTests: XCTestCase {
     var beforeSize = 0
     
     override func setUp() {
-        //GIVEN
+        //Given
         self.stack.push(firstElement)
         self.stack.push(secondElement)
         self.stack.push(lastElement)
@@ -25,23 +25,23 @@ class MyStackTests: XCTestCase {
     }
     
     func testClear(){
-        //WHEN
+        //When
         self.stack.clear()
         
-        //THEN
+        //Then
         XCTAssertTrue(self.stack.isEmpty())
     }
     
     func testIsEmptyTrue(){
-        //GIVEN
+        //Given
         self.stack.clear()
         
-        //THEN
+        //Then
         XCTAssertTrue(self.stack.isEmpty())
     }
     
     func testIsEmptyFalse(){
-        //THEN
+        //Then
         XCTAssertFalse(self.stack.isEmpty())
     }
     
@@ -55,22 +55,22 @@ class MyStackTests: XCTestCase {
     
     func testPop(){
         //THEN
-        XCTAssertEqual(try self.stack.pop(),self.lastElement)
+        XCTAssertEqual(self.stack.pop(),self.lastElement)
         XCTAssertEqual(self.stack.size(),self.beforeSize-1)
     }
     
-    func testPopThrowError(){
+    func testPopNil(){
         //WHEN
         self.stack.clear()
         
         //THEN
-        XCTAssertThrowsError(try self.stack.pop())
+        XCTAssertNil(self.stack.pop())
     }
     
     func testPeek(){
         //THEN
         XCTAssertEqual(self.beforeSize, self.stack.size())
-        XCTAssertEqual(try self.stack.peek(),self.lastElement)
+        XCTAssertEqual(self.stack.peek(),self.lastElement)
     }
 
 }
