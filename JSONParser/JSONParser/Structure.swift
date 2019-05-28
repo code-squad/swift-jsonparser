@@ -10,4 +10,14 @@ struct Structure {
     static let quotationMark: Character = "\""
     
     static let whitespace: CharacterSet = [" "]
+    
+    static let tokens = [
+        beginArray,
+        endArray,
+        beginObject,
+        endObject,
+        nameSeparator,
+        valueSeparator,
+        quotationMark
+    ]
 }
