@@ -17,7 +17,7 @@ class ScannerTests: XCTestCase {
         self.scanner = MyScanner.init(string: "24")
         
         //When
-        while self.scanner.hasNext() {
+        while self.scanner.hasNext(){
             self.characters.append(try! self.scanner.next())
         }
         
@@ -30,12 +30,12 @@ class ScannerTests: XCTestCase {
         self.scanner = MyScanner.init(string: "\"Hi, Jk\"")
         
         //When
-        while self.scanner.hasNext() {
+        while self.scanner.hasNext(){
             self.characters.append(try! self.scanner.next())
         }
         
         //Then
-        XCTAssertEqual(self.characters,["\"","H","i"," ","J","k","\""])
+        XCTAssertEqual(self.characters,["\"","H","i",","," ", "J","k","\""])
     }
     
     func testNextBool(){
@@ -43,7 +43,7 @@ class ScannerTests: XCTestCase {
         self.scanner = MyScanner.init(string: "true")
         
         //When
-        while self.scanner.hasNext() {
+        while self.scanner.hasNext(){
             self.characters.append(try! self.scanner.next())
         }
         
@@ -56,11 +56,20 @@ class ScannerTests: XCTestCase {
         self.scanner = MyScanner.init(string: " ")
         
         //When
-        while self.scanner.hasNext() {
+        while self.scanner.hasNext(){
             self.characters.append(try! self.scanner.next())
         }
         
         //Then
         XCTAssertEqual(self.characters,[" "])
+    }
+    
+    func testNextThrowError(){
+        //Given
+        self.scanner = MyScanner.init(string: "")
+        
+        //Then
+        XCTAssertThrowsError(try self.scanner.next())
+        
     }
 }
