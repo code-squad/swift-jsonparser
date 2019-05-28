@@ -10,17 +10,17 @@ import XCTest
 
 class TokenizerTests: XCTestCase {
     //GIVEN
-    let input = "[ 24, \"Hello, World!\", \"513\", false ]"
+    let input = "[ 24, \"Hello, World\", \"513\", false ]"
     var tokenizer: Tokenizer!
     var tokens: [Token]!
     
     override func setUp() {
         //WHEN
         self.tokenizer = MyTokenizer(json: input)
-        tokens = try! tokenizer.tokenize()
+        self.tokens = try! tokenizer.tokenize()
     }
     
-    func testTokensCount(){
+    func testTokensCount() { 
         //THEN
         XCTAssertEqual(tokens.count, 21)
     }

@@ -12,12 +12,12 @@ class ScannerTests: XCTestCase {
     var scanner: Scanner!
     var characters = [Character]()
     
-    func testNextNumber(){
+    func testNextNumber() {
         //Given
         self.scanner = MyScanner.init(string: "24")
         
         //When
-        while self.scanner.hasNext(){
+        while self.scanner.hasNext() {
             self.characters.append(self.scanner.next()!)
         }
         
@@ -25,51 +25,50 @@ class ScannerTests: XCTestCase {
         XCTAssertEqual(self.characters,["2","4"])
     }
     
-    func testNextString(){
+    func testNextString() {
         //Given
         self.scanner = MyScanner.init(string: "\"Hi, Jk\"")
         
         //When
-        while self.scanner.hasNext(){
+        while self.scanner.hasNext() {
             self.characters.append(self.scanner.next()!)
         }
         
         //Then
-        XCTAssertEqual(self.characters,["\"","H","i",","," ", "J","k","\""])
+        XCTAssertEqual(self.characters, ["\"","H","i",","," ", "J","k","\""])
     }
     
-    func testNextBool(){
+    func testNextBool() {
         //Given
         self.scanner = MyScanner.init(string: "true")
         
         //When
-        while self.scanner.hasNext(){
+        while self.scanner.hasNext() {
             self.characters.append(self.scanner.next()!)
         }
         
         //Then
-        XCTAssertEqual(self.characters,["t","r","u","e"])
+        XCTAssertEqual(self.characters, ["t","r","u","e"])
     }
     
-    func testNextInt(){
+    func testNextInt() {
         //Given
         self.scanner = MyScanner.init(string: " ")
         
         //When
-        while self.scanner.hasNext(){
+        while self.scanner.hasNext() {
             self.characters.append(self.scanner.next()!)
         }
         
         //Then
-        XCTAssertEqual(self.characters,[" "])
+        XCTAssertEqual(self.characters, [" "])
     }
     
-    func testNextThrowError(){
+    func testNextThrowError() {
         //Given
         self.scanner = MyScanner.init(string: "")
         
         //Then
-        XCTAssertEqual(self.scanner.next(),nil)
-        
+        XCTAssertEqual(self.scanner.next(), nil)
     }
 }

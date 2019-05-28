@@ -17,44 +17,75 @@ class TokenFactoryTests: XCTestCase {
         self.tokenFactory = MyTokenFactory()
     }
     
-    func testCreateNumberToken(){
+    func testCreateNumberToken() {
         //WHEN
         let input = "1"
         let token = self.tokenFactory.createToken(string: input)
+        
         //THEN
         XCTAssertEqual(token, Token.Number(1))
     }
     
-    func testCreateBoolToken(){
+    func testCreateBoolToken() {
         //WHEN
         let input = "true"
         let token = self.tokenFactory.createToken(string: input)
+        
         //THEN
         XCTAssertEqual(token, Token.Bool(true))
     }
     
-    func testCreateStringToken(){
+    func testCreateValueToken() {
         //WHEN
-        let input = "\"Hello, World!\""
+        let input = "Hello"
         let token = self.tokenFactory.createToken(string: input)
+        
         //THEN
-        XCTAssertEqual(token, Token.String("Hello, World!"))
+        XCTAssertEqual(token, Token.Value("Hello"))
     }
     
-    func testCreateCommaToken(){
-        //WHEN
-        let input = ","
-        let token = self.tokenFactory.createToken(string: input)
-        //THEN
-        XCTAssertEqual(token, Token.Comma)
-    }
-    
-    func testCreateWhiteSpaceToken(){
+    func testCreateWhiteSpaceToken() {
         //WHEN
         let input = " "
         let token = self.tokenFactory.createToken(string: input)
+        
         //THEN
         XCTAssertEqual(token, Token.WhiteSpace)
     }
     
+    func testCreateCommaToken() {
+        //WHEN
+        let input = ","
+        let token = self.tokenFactory.createToken(string: input)
+        
+        //THEN
+        XCTAssertEqual(token, Token.Comma)
+    }
+    
+    func testCreateDoubleQuotationToken() {
+        //WHEN
+        let input = "\""
+        let token = self.tokenFactory.createToken(string: input)
+        
+        //THEN
+        XCTAssertEqual(token, Token.DoubleQuotation)
+    }
+    
+    func testCreateLeftBraketToken() {
+        //WHEN
+        let input = "["
+        let token = self.tokenFactory.createToken(string: input)
+        
+        //THEN
+        XCTAssertEqual(token, Token.LeftBraket)
+    }
+    
+    func testCreateRightBraketToken() {
+        //WHEN
+        let input = "]"
+        let token = self.tokenFactory.createToken(string: input)
+        
+        //THEN
+        XCTAssertEqual(token, Token.RightBraket)
+    }
 }
