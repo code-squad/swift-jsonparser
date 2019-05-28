@@ -24,16 +24,16 @@ struct Tokenizer: JsonParserable {
     private func patternInspect(index: String.Index, inputText: String, countPattern: [String:Int]) -> [String:Int] {
         var counts = countPattern
         if inputText[index] == Sign.frontCurlyBracket {
-            counts["dictionary"] = counts["dictionary"] ?? 0 + 1
+            counts["dictionary"] = counts["dictionary"]! + 1
         } else if counts["string"] == 0, inputText[index] == Sign.doubleQuote {
-            counts["string"] = counts["string"] ?? 0 + 1
+            counts["string"] = counts["string"]! + 1
         } else if inputText[index] == Sign.frontSquareBracket {
-            counts["array"] = counts["array"] ?? 0 + 1
-        } else if counts["dictionary"] ?? 0 > 0, inputText[index] == Sign.backSquareBracket {
+            counts["array"] = counts["array"]! + 1
+        } else if counts["dictionary"]! > 0, inputText[index] == Sign.backCurlyBracket {
             counts["dictionary"] = counts["dictionary"]! - 1
-        } else if counts["string"] ?? 0 > 0, inputText[index] == Sign.doubleQuote {
+        } else if counts["string"]! > 0, inputText[index] == Sign.doubleQuote {
             counts["string"] = counts["string"]! - 1
-        } else if counts["array"] ?? 0 > 0, inputText[index] == Sign.backSquareBracket {
+        } else if counts["array"]! > 0, inputText[index] == Sign.backSquareBracket {
             counts["array"] = counts["array"]! - 1
         }
         return counts
@@ -57,7 +57,7 @@ struct Tokenizer: JsonParserable {
     }
     
     /// 입력받은 문자열이 배열의 형태인 경우 Token들을 나누고 이들을 배열의 형태로 다시 만드는 함수
-    private mutating func buildArray(inputString: String) -> [String] {
+    mutating func buildArray(inputString: String) -> [String] {
         let textToAnalyze = removeBothSides(inputText: inputString)
         for i in textToAnalyze.indices {
             countPattern = patternInspect(index: i, inputText: textToAnalyze, countPattern: countPattern)
@@ -70,7 +70,7 @@ struct Tokenizer: JsonParserable {
     }
     
     /// 입력받은 문자열이 딕셔너리 형태인 경우 Token들을 나누고 이들을 딕셔너리 형태로 다시 만드는 함수
-    private mutating func buildDictionary(inputString: String) -> [String:String] {
+    mutating func buildDictionary(inputString: String) -> [String:String] {
         let textToAnalyze = removeBothSides(inputText: inputString)
         for i in textToAnalyze.indices {
             countPattern = patternInspect(index: i, inputText: textToAnalyze, countPattern: countPattern)
@@ -90,12 +90,12 @@ struct Tokenizer: JsonParserable {
     }
     
     /// 한 문자씩 Scan하고 Token으로 나누는 함수
-    mutating func scannerAndTokenizer(text: String?) throws -> JsonParserable {
+    mutating func scannerAndTokenizer(text: String?) throws{
         let inputString = try distinctNil(input: text)
         if inputString.first == Sign.frontSquareBracket, inputString.last == Sign.backSquareBracket {
-            return buildArray(inputString: inputString) as! JsonParserable
+            arrayJson = buildArray(inputString: inputString)
         } else if inputString.first == Sign.frontCurlyBracket, inputString.last == Sign.backCurlyBracket {
-            return buildDictionary(inputString: inputString) as! JsonParserable
+            dictionaryJson = buildDictionary(inputString: inputString)
         } else {
             throw ErrorMessage.notArray
         }

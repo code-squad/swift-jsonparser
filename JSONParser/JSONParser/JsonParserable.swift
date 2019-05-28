@@ -9,5 +9,6 @@
 import Foundation
 
 protocol JsonParserable {
-    
+    var arrayJson: [String] { get }
+    var dictionaryJson: [String:String] { get }
 }

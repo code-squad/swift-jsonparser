@@ -122,4 +122,40 @@ struct JsonParser {
         return (json: jsonData, dataMent: data.distinctMent)
     }
  */
+    private func parsingData(beforeData : String) throws -> Json {
+        var convertedElement: Json
+        var convertedDictionaryData = [String:Json]()
+        let afterData = beforeData.trimmingCharacters(in: .whitespacesAndNewlines)
+        if afterData.first == Sign.frontCurlyBracket, afterData.last == Sign.backCurlyBracket {
+            var tokenizer = Tokenizer()
+            let convertedData = tokenizer.buildDictionary(inputString: beforeData)
+            for (key, value) in convertedData {
+                convertedDictionaryData[key] = try parsingData(beforeData: value)
+            }
+            convertedElement = TypeDictionary.init(json: convertedDictionaryData)
+        } else if let _ = Int(afterData) {
+            convertedElement = TypeInt.init(json: afterData)
+        } else if let _ = Bool(afterData) {
+            convertedElement = TypeBool.init(json: afterData)
+        } else if afterData.first == Sign.doubleQuote, afterData.last == Sign.doubleQuote {
+            convertedElement = TypeString.init(json: afterData)
+        } else {
+            throw ErrorMessage.wrongValue
+        }
+        return convertedElement
+    }
+    
+    func parsing(inputData: JsonParserable) throws -> (json: [Json],dataMent: String){
+        var jsonData: [Json] = []
+        if inputData.arrayJson != [], inputData.dictionaryJson.isEmpty {
+            for element in inputData.arrayJson{
+                let convertedElement = try parsingData(beforeData: element)
+                jsonData.append(convertedElement)
+            }
+            return (json: jsonData, dataMent: DataMent.arrayMent.rawValue)
+        } else if inputData.dictionaryJson.isEmpty == false, inputData.arrayJson == [] {
+            
+        }
+        return (json: jsonData, dataMent: DataMent.arrayMent.rawValue)
+    }
 }
