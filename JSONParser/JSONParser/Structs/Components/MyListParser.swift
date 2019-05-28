@@ -30,12 +30,12 @@ struct MyListParser: Parser {
             if isString {
                 indexsOfInsideString.push(index)
             }
-            if(token == .DoubleQuotation){
+            if(token == .DoubleQuotation) {
                 isString.toggle()
                 self.tokens[index] = .String
             }
         }
-        while !indexsOfInsideString.isEmpty(){
+        while !indexsOfInsideString.isEmpty() {
             guard let index = indexsOfInsideString.pop() else { return }
             self.tokens.remove(at: index )
         }

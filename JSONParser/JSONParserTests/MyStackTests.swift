@@ -24,7 +24,7 @@ class MyStackTests: XCTestCase {
         self.beforeSize = self.stack.size()
     }
     
-    func testClear(){
+    func testClear() {
         //When
         self.stack.clear()
         
@@ -32,7 +32,7 @@ class MyStackTests: XCTestCase {
         XCTAssertTrue(self.stack.isEmpty())
     }
     
-    func testIsEmptyTrue(){
+    func testIsEmptyTrue() {
         //Given
         self.stack.clear()
         
@@ -40,35 +40,35 @@ class MyStackTests: XCTestCase {
         XCTAssertTrue(self.stack.isEmpty())
     }
     
-    func testIsEmptyFalse(){
+    func testIsEmptyFalse() {
         //Then
         XCTAssertFalse(self.stack.isEmpty())
     }
     
-    func testPush(){
-        //WHEN
+    func testPush() {
+        //When
         self.stack.push(4)
         
-        //THEN
+        //Then
         XCTAssertEqual(self.stack.size(), self.beforeSize + 1)
     }
     
-    func testPop(){
-        //THEN
+    func testPop() {
+        //Then
         XCTAssertEqual(self.stack.pop(),self.lastElement)
         XCTAssertEqual(self.stack.size(),self.beforeSize-1)
     }
     
-    func testPopNil(){
-        //WHEN
+    func testPopNil() {
+        //When
         self.stack.clear()
         
-        //THEN
+        //Then
         XCTAssertNil(self.stack.pop())
     }
     
-    func testPeek(){
-        //THEN
+    func testPeek() {
+        //Then
         XCTAssertEqual(self.beforeSize, self.stack.size())
         XCTAssertEqual(self.stack.peek(),self.lastElement)
     }
