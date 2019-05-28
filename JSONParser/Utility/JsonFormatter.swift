@@ -29,15 +29,15 @@ struct JsonFormatter{
     }
     
     mutating func countDataTypeOfElementInJsonData() throws {
-        let jsonLexicalType = try Lexer.confirmTokenDataType(jsonData.description)
-        switch jsonLexicalType {
-        case .jsonArray :
+        if self.jsonData is JsonArray {
             try countElementTypeInJsonArray()
-        case .jsonObject:
-            try countElementTypeInJsonObject()
-        default:
-            throw ErrorCode.lexicalTypeError
+            return
         }
+        if self.jsonData is JsonObject {
+            try countElementTypeInJsonObject()
+            return
+        }
+        throw ErrorCode.createJsonFormatterError
     }
     
     private mutating func checkElementDataType(_ element : JsonParsable) {
@@ -80,5 +80,4 @@ struct JsonFormatter{
             checkElementDataType(element)
         }
     }
-    
 }

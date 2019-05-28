@@ -36,19 +36,6 @@ struct Lexer {
         throw ErrorCode.lexicalTypeError
     }
     
-    static func checkInputType ( _ input: String) -> LexicalType {
-        var type : LexicalType = LexicalType.string
-        let trimInput = input.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimInput[trimInput.startIndex] == JsonBrackets.StartSquareBracket.characterSymbol &&
-            trimInput[trimInput.index(before: trimInput.endIndex)] == JsonBrackets.EndSquareBracket.characterSymbol  {
-            type = LexicalType.jsonArray
-        }
-        if trimInput[trimInput.startIndex] == JsonBrackets.StartCurlyBrace.characterSymbol && trimInput[trimInput.index(before: trimInput.endIndex)] == JsonBrackets.EndCurlyBrace.characterSymbol {
-            type = LexicalType.jsonObject
-        }
-        return type
-    }
-    
     static private func isString (_ token : String) -> Bool {
         return token.hasPrefix(TokenSplitSign.quatation.description)
                 && token.hasSuffix(TokenSplitSign.quatation.description) ? true : false
@@ -69,11 +56,11 @@ struct Lexer {
     }
     
     static private func isJsonObject (_ token: String) -> Bool {
-        return token[0] == JsonBrackets.StartCurlyBrace.rawValue && token[token.count-1] == JsonBrackets.EndCurlyBrace.rawValue
+        return token[0] == TokenSplitSign.curlyBracketStart.description && token[token.count-1] == TokenSplitSign.curlyBracketEnd.description
     }
     
     static private func isJsonArray (_ token: String ) -> Bool {
-        return token[0] == JsonBrackets.StartSquareBracket.rawValue && token[token.count-1] == JsonBrackets.EndSquareBracket.rawValue
+        return token[0] == TokenSplitSign.squareBracketStart.description && token[token.count-1] == TokenSplitSign.squareBracketEnd.description
     }
     
 }

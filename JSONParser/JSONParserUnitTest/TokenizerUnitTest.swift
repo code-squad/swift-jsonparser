@@ -11,7 +11,9 @@ import XCTest
 //{ "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true }
 //[ { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true }, false, 1, { "name" : "YOON JISU", "alias" : "crong", "level" : 4, "married" : true }, true, "context", "314", 314 ]
 //[ 10, "jk", 4, "314", 99, "crong", false ]
-
+//[ { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true }, { "name" : "YOON JISU", "alias" : "crong", "level" : 4, "married" : true } ]
+//[ 10 , "jk", 4, "314", 99, "cro ng", false, ["json", "Array"], "[ SquareBr, acke, tTest ]", {"abc" : 10, "bool" : true}, "{, {. [, [, curly , , ] ] ] ] " ]
+//{ "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true, "{ : }" : "curly bracket : ", "curly bracket":{ "key" : value } }
 class TokenizerUnitTest: XCTestCase {
 
     let testInputJsonObject = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true }, true, \"context\" ]"
