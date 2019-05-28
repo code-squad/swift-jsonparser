@@ -56,19 +56,33 @@ struct Tokenizer: JsonParserable {
         arrayJson.append(input)
     }
     
+    /// 한 문자씩 넣은 원소들을 합칠 조건을 판단하고 합치는 함수
+    private mutating func determineWhenToCombine(index: String.Index, textToAnalyze: String) throws {
+        if (countPattern["dictionary"] == 0 && countPattern["string"] == 0 && countPattern["array"] == 0) && (textToAnalyze[index] == Sign.comma || index == textToAnalyze.index(before: textToAnalyze.endIndex)) {
+            inputData()
+        } else if countPattern["dictionary"] == 0, countPattern["string"] == 0, countPattern["array"] == 0, textToAnalyze[index] == Sign.colon {
+            throw ErrorMessage.invalidFormat
+        }
+    }
+    
     /// 입력받은 문자열이 배열의 형태인 경우 Token들을 나누고 이들을 배열의 형태로 다시 만드는 함수
     mutating func buildArray(inputString: String) throws -> [String] {
         let textToAnalyze = removeBothSides(inputText: inputString)
-        for i in textToAnalyze.indices {
-            countPattern = patternInspect(index: i, inputText: textToAnalyze, countPattern: countPattern)
-            inputElement.append(String(textToAnalyze[i]))
-            if (countPattern["dictionary"] == 0 && countPattern["string"] == 0 && countPattern["array"] == 0) && (textToAnalyze[i] == Sign.comma || i == textToAnalyze.index(before: textToAnalyze.endIndex)) {
-                inputData()
-            } else if countPattern["dictionary"] == 0, countPattern["string"] == 0, countPattern["array"] == 0, textToAnalyze[i] == Sign.colon {
-                throw ErrorMessage.invalidFormat
-            }
+        for index in textToAnalyze.indices {
+            countPattern = patternInspect(index: index, inputText: textToAnalyze, countPattern: countPattern)
+            inputElement.append(String(textToAnalyze[index]))
+            try determineWhenToCombine(index: index, textToAnalyze: textToAnalyze)
         }
         return arrayJson
+    }
+    
+    /// 배열의 원소들을 조합해서 딕셔너리로 만드는 함수
+    mutating func combinateElement(index: Int){
+        if index % 2 == 0, arrayJson[index].last == Sign.colon {
+            arrayJson[index] = arrayJson[index].trimmingCharacters(in: CharacterSet(charactersIn: "\(Sign.colon)"))
+            arrayJson[index] = arrayJson[index].trimmingCharacters(in: .whitespacesAndNewlines)
+            dictionaryJson[arrayJson[index]] = arrayJson[index+1]
+        }
     }
     
     /// 입력받은 문자열이 딕셔너리 형태인 경우 Token들을 나누고 이들을 딕셔너리 형태로 다시 만드는 함수
@@ -81,12 +95,8 @@ struct Tokenizer: JsonParserable {
                 inputData()
             }
         }
-        for j in 0..<arrayJson.count-1 {
-            if j % 2 == 0, arrayJson[j].last == Sign.colon {
-                arrayJson[j] = arrayJson[j].trimmingCharacters(in: CharacterSet(charactersIn: "\(Sign.colon)"))
-                arrayJson[j] = arrayJson[j].trimmingCharacters(in: .whitespacesAndNewlines)
-                dictionaryJson[arrayJson[j]] = arrayJson[j+1]
-            }
+        for index in 0..<arrayJson.count-1 {
+            combinateElement(index: index)
         }
         return dictionaryJson
     }

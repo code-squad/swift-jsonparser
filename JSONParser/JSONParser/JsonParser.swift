@@ -11,18 +11,25 @@ import Foundation
 struct JsonParser {
     var arrayJsonData: [Json] = []
     var dictionaryJsonData = [String:Json]()
+    
+    /// [String:String] 형태의 딕셔너리를 [String:Json]으로 바꿔주는 함수
+    private func convertDictionary(convertedData: [String:String]) throws -> [String:Json] {
+        var convertedDictionaryData = [String:Json]()
+        for (key, value) in convertedData {
+            try GrammerChecker().distinctKeyType(key: key)
+            convertedDictionaryData[key] = try parsingData(beforeData: value)
+        }
+        return convertedDictionaryData
+    }
     /// 원소들을 조건에 따라 해당타입으로 파싱해주는 함수
     private func parsingData(beforeData : String) throws -> Json {
         var convertedElement: Json
-        var convertedDictionaryData = [String:Json]()
+        
         let afterData = beforeData.trimmingCharacters(in: .whitespacesAndNewlines)
         if afterData.first == Sign.frontCurlyBracket, afterData.last == Sign.backCurlyBracket {
             var tokenizer = Tokenizer()
             let convertedData = tokenizer.buildDictionary(inputString: beforeData)
-            for (key, value) in convertedData {
-                try distinctKeyType(key: key)
-                convertedDictionaryData[key] = try parsingData(beforeData: value)
-            }
+            let convertedDictionaryData = try convertDictionary(convertedData: convertedData)
             convertedElement = TypeDictionary.init(json: convertedDictionaryData)
         } else if let _ = Int(afterData) {
             convertedElement = TypeInt.init(json: afterData)
@@ -36,20 +43,6 @@ struct JsonParser {
         return convertedElement
     }
     
-    /// 딕셔너리의 key가 String이 아니면 에러를 반환하는 함수
-    private func distinctKeyType(key: String) throws {
-        if key.first != Sign.doubleQuote || key.last != Sign.doubleQuote {
-            throw ErrorMessage.wrongKey
-        }
-    }
-    
-    ///
-    private func distinctInArray(value: String) throws {
-        if value.first == Sign.frontSquareBracket, value.last == Sign.backSquareBracket {
-            throw ErrorMessage.invalidFormat
-        }
-    }
-    
     /// 배열이나 딕셔너리를 받아서 파싱하고 멘트를 반환하는 함수
     mutating func parsing(inputData: JsonParserable) throws -> String{
         if inputData.arrayJson != [], inputData.dictionaryJson.isEmpty {
@@ -60,8 +53,6 @@ struct JsonParser {
             return DataMent.arrayMent.rawValue
         } else if inputData.dictionaryJson.isEmpty == false {
             for (key, value) in inputData.dictionaryJson{
-                try distinctKeyType(key: key)
-                try distinctInArray(value: value)
                 let convertedElement = try parsingData(beforeData: value)
                 dictionaryJsonData[key] = convertedElement
             }

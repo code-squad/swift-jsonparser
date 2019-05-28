@@ -12,12 +12,14 @@ func main() {
     while true {
         let input = InputView()
         let output = OutputView()
-        var jsonParser = JsonParser()
         var tokenizer = Tokenizer()
+        var grammarChecker = GrammerChecker()
+        var jsonParser = JsonParser()
         let data = input.readJson()
         do {
             try tokenizer.scannerAndTokenizer(text: data)
-            let parsingData = try jsonParser.parsing(inputData: tokenizer)
+            let afterTestData = try grammarChecker.grammarTest(jsonData: tokenizer)
+            let parsingData = try jsonParser.parsing(inputData: afterTestData)
             output.printElements(jsonParser: jsonParser, dataMent: parsingData)
             break
         }catch let error as ErrorMessage{
