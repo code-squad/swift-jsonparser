@@ -9,13 +9,11 @@
 import Foundation
 
 struct MyTokenizer: Tokenizer {
-    let json: String
     var scanner: MyScanner
     let factory = MyTokenFactory()
     
-    init(json: String) {
-        self.json = json
-        self.scanner = MyScanner.init(string: json)
+    init(_ string: String) {
+        self.scanner = MyScanner.init(string: string)
     }
     
     mutating func tokenize() throws -> [Token] {

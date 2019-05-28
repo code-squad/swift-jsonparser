@@ -9,11 +9,10 @@
 import Foundation
 
 struct MyScanner: Scanner {
-   
     let string: String
-    var curser : String.Index
+    var curser: String.Index
     
-    init(string: String){
+    init(string: String) {
         self.string = string
         self.curser = self.string.startIndex
     }
@@ -36,5 +35,4 @@ struct MyScanner: Scanner {
         self.moveCurser()
         return character
     }
-    
 }
