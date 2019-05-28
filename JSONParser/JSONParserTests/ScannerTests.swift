@@ -18,7 +18,7 @@ class ScannerTests: XCTestCase {
         
         //When
         while self.scanner.hasNext(){
-            self.characters.append(try! self.scanner.next())
+            self.characters.append(self.scanner.next()!)
         }
         
         //Then
@@ -31,7 +31,7 @@ class ScannerTests: XCTestCase {
         
         //When
         while self.scanner.hasNext(){
-            self.characters.append(try! self.scanner.next())
+            self.characters.append(self.scanner.next()!)
         }
         
         //Then
@@ -44,7 +44,7 @@ class ScannerTests: XCTestCase {
         
         //When
         while self.scanner.hasNext(){
-            self.characters.append(try! self.scanner.next())
+            self.characters.append(self.scanner.next()!)
         }
         
         //Then
@@ -57,7 +57,7 @@ class ScannerTests: XCTestCase {
         
         //When
         while self.scanner.hasNext(){
-            self.characters.append(try! self.scanner.next())
+            self.characters.append(self.scanner.next()!)
         }
         
         //Then
@@ -69,7 +69,7 @@ class ScannerTests: XCTestCase {
         self.scanner = MyScanner.init(string: "")
         
         //Then
-        XCTAssertThrowsError(try self.scanner.next())
+        XCTAssertEqual(self.scanner.next(),nil)
         
     }
 }

@@ -9,6 +9,7 @@
 import Foundation
 
 struct MyScanner: Scanner {
+   
     let string: String
     var curser : String.Index
     
@@ -21,18 +22,19 @@ struct MyScanner: Scanner {
         return self.curser != self.string.endIndex
     }
     
-    mutating func next() throws -> Character {
-        guard self.hasNext() else { throw Error.EOL }
-        let character = self.string[self.curser]
-            self.nextCurser()
-        return character
+    mutating func backCurser() {
+        self.curser = self.string.index(before: self.curser)
     }
     
-    private mutating func nextCurser() {
+    mutating func moveCurser() {
         self.curser = self.string.index(after: self.curser)
     }
     
-    enum Error: String, Swift.Error {
-        case EOL = "END OF LINE"
+    mutating func next() -> Character? {
+        guard self.hasNext() else { return nil }
+        let character = self.string[self.curser]
+        self.moveCurser()
+        return character
     }
+    
 }
