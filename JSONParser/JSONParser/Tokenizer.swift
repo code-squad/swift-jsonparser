@@ -8,78 +8,30 @@
 
 import Foundation
 
-enum TokenElement: Character {
-    case startOfArray = "["
-    case endOfArray = "]"
-    case comma = ","
-    case whitespaces = " "
-    case string = "\""
-    
-    var pair: Character {
-        switch self {
-        case .string:
-            return TokenElement.string.rawValue
-        default:
-            return TokenElement.whitespaces.rawValue
-        }
-    }
-    
-    init?(first: Character?) {
-        switch first {
-        case TokenElement.string.rawValue:
-            self = .string
-        default:
-            self = .whitespaces
-        }
-    }
-}
-
 struct Tokenizer {
     static func tokenize(input: String) throws -> [String] {
-        guard input.first == TokenElement.startOfArray.rawValue, input.last == TokenElement.endOfArray.rawValue else {
+        guard input.first == "[", input.last == "]" else {
             throw TypeError.unsupportedType
         }
         
-        let arrayBracket = CharacterSet(charactersIn: "\(TokenElement.startOfArray.rawValue)\(TokenElement.endOfArray.rawValue)")
+        let arrayToken: [Character] = ["[", "]", ",", " ", "\""]
         
-        let trimmingResult = input.trimmingCharacters(in: arrayBracket)
-        let splitResult = trimmingResult.split(separator: TokenElement.comma.rawValue)
-        let rawTokens = splitResult.map { String($0).trimmingCharacters(in: .whitespaces) }
+        var rawToken = ""
+        var rawTokens: [String] = []
         
-        if rawTokens.isEmpty {
-            throw TokenizeError.noValue
-        }
-        
-        let tokens = convert(rawTokens: rawTokens)
-        
-        return tokens
-    }
-    
-    private static func convert(rawTokens: [String]) -> [String] {
-        var tokens: [String] = []
-        var token = ""
-        var firstOfToken: TokenElement?
-        
-        for rawToken in rawTokens {
-            if firstOfToken == nil {
-                firstOfToken = TokenElement(first: rawToken.first)
-            }
-            
-            if firstOfToken == TokenElement.whitespaces {
-                tokens.append(rawToken)
-                firstOfToken = nil
-            } else if rawToken.last == firstOfToken?.pair {
-                token = token + rawToken
-                tokens.append(token)
+        for value in input {
+            if arrayToken.contains(value) {
+                rawTokens.append(rawToken)
+                rawTokens.append(String(value))
                 
-                firstOfToken = nil
-                token.removeAll()
+                rawToken.removeAll()
             } else {
-                token = token + rawToken + ", "
+                rawToken.append(value)
             }
         }
         
+        let tokens = rawTokens.filter { $0 != "" }
+        
         return tokens
     }
-    
 }
