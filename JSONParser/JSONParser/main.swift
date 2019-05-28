@@ -9,12 +9,11 @@
 import Foundation
 
 func main() {
-    let input = InputView()
-    let output = OutputView()
-    var jsonParser = JsonParser()
-    var tokenizer = Tokenizer()
-    
     while true {
+        let input = InputView()
+        let output = OutputView()
+        var jsonParser = JsonParser()
+        var tokenizer = Tokenizer()
         let data = input.readJson()
         do {
             try tokenizer.scannerAndTokenizer(text: data)

@@ -20,6 +20,7 @@ struct JsonParser {
             var tokenizer = Tokenizer()
             let convertedData = tokenizer.buildDictionary(inputString: beforeData)
             for (key, value) in convertedData {
+                try distinctKeyType(key: key)
                 convertedDictionaryData[key] = try parsingData(beforeData: value)
             }
             convertedElement = TypeDictionary.init(json: convertedDictionaryData)
@@ -36,7 +37,7 @@ struct JsonParser {
     }
     
     private func distinctKeyType(key: String) throws {
-        if key.first != "\"" || key.last != "\"" {
+        if key.first != Sign.doubleQuote || key.last != Sign.doubleQuote {
             throw ErrorMessage.wrongKey
         }
     }
