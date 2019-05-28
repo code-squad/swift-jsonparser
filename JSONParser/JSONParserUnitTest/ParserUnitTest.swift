@@ -15,7 +15,6 @@ class ParserUnitTest: XCTestCase {
     let test = "[ \"json\", [ false, 10 ], \"Array\" ]"
     let testJsonObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true, \"{ : }\" : \":\", \"curly bracket\":{ \"key\" : \"value\", \"size\" : 10, \"content\" : [ 10, 20, 30, 40 ] } }"
     
-    
     func testParseJsonObjectInJsonArray(){
         let tokenList1 = tokenizer.tokenize(testInputJsonObject)
         if tokenList1[0] == TokenSplitSign.squareBracketStart.description && tokenList1[tokenList1.count-1] == TokenSplitSign.squareBracketEnd.description {
@@ -103,10 +102,7 @@ class ParserUnitTest: XCTestCase {
     
     private func makeJsonObject(_ tokenList: [String] ) -> JsonParsable {
         var jsonObject: JsonObject = JsonObject()
-        var stackForArray : Stack<String> = Stack<String>()
-        var stackForObject : Stack<String> = Stack<String>()
         var index = 0
-        var innerIndex = index
         while index < tokenList.count {
             index += 1
             if index >= tokenList.count {
@@ -117,72 +113,19 @@ class ParserUnitTest: XCTestCase {
             }
             if tokenList[index] == ":" {
                 /// find key : value
-                let key = tokenList[index-1]
-                index = index + 1                   // n + 1, value 시작에 해당하는 값.
-                let value = tokenList[index]
-
+                let (key, value) = getKeyValueFromTokenizedJsonObject(tokenList: tokenList, index: &index)
                 /// check value type
-                if isNumeric(value) {
-                    guard let intValue = Int(tokenList[index]) else {
-                        continue
-                    }
-                    jsonObject.add(key: key, value: intValue)
-                    continue
-                }
-                if isBoolean(value) {
-                    guard let boolValue = Bool(tokenList[index]) else {
-                        continue
-                    }
-                    jsonObject.add(key: key, value: boolValue)
-                    continue
-                }
-                if isString(value){
-                    jsonObject.add(key: key, value: value)
+                if  tryToAddIntegerElementInJsonObject(value: value, key: key, jsonObject: &jsonObject) ||
+                    tryToAddBooleanElementInJsonObject(value: value, key: key, jsonObject: &jsonObject) ||
+                    tryToAddStringElementInJsonObject(value: value, key: key, jsonObject: &jsonObject) {
                     continue
                 }
                 if isCurlyBracketStart(tokenList[index]){
-                    stackForObject.push(tokenList[index])
-                    innerIndex = index + 1
-                    var curlyBracketCnt = 1
-                    while (curlyBracketCnt != 0 ){
-                        if isCurlyBracketStart(tokenList[innerIndex]){
-                            curlyBracketCnt += 1
-                        }else if isCurlyBracketEnd(tokenList[innerIndex]) {
-                            curlyBracketCnt -= 1
-                        }
-                        stackForObject.push(tokenList[innerIndex])
-                        innerIndex += 1
-                    }
-                    let allStackElement = makeStringFromStack(&stackForObject)
-                    //recursive logic
-                    let jsonObjectElement = tokenizer.tokenize(allStackElement)
-                    let recursiveJsonObjectElement = makeJsonObject(jsonObjectElement)
-                    /// add recursive Element to jsonArray
-                    jsonObject.add(key: key, value: recursiveJsonObjectElement )
-                    index = innerIndex
+                    saveJsonObjectElementInJsonObject(tokenList: tokenList, index: &index, key: key, jsonObject: &jsonObject)
                     continue
                 }
                 if isSquareBracketStart(tokenList[index]){                  /// [
-                    stackForArray.push(tokenList[index])
-                    innerIndex = index + 1
-                    var squareBracketCnt : Int = 1
-                    while (squareBracketCnt != 0 ){
-                        if isSquareBracketStart(tokenList[innerIndex]){
-                            squareBracketCnt += 1
-                        }else if isSquareBracketEnd(tokenList[innerIndex]) {
-                            squareBracketCnt -= 1
-                        }
-                        stackForArray.push(tokenList[innerIndex])
-                        innerIndex += 1
-                    }
-                    let allStackElement = makeStringFromStack(&stackForArray)
-                    
-                    //recursive logic
-                    let jsonArrayElement = tokenizer.tokenize(allStackElement)
-                    let recursiveJsonArrayElement = makeJsonArray(jsonArrayElement)
-                    /// add recursive Element to jsonArray
-                    jsonObject.add(key: key, value: recursiveJsonArrayElement )
-                    index = innerIndex
+                    saveJsonArrayElementInJsonObject(tokenList: tokenList, index: &index, key: key, jsonObject: &jsonObject)
                     continue
                 }
             }
@@ -190,94 +133,154 @@ class ParserUnitTest: XCTestCase {
         return jsonObject
     }
     
+    private func saveJsonObjectElementInJsonObject(tokenList : [String], index: inout Int, key: String, jsonObject: inout JsonObject)  {
+        var (stackForObject, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start : isCurlyBracketStart, end : isCurlyBracketEnd)
+        let recursiveJsonObjectElement = buildRecursivlyFromStackToJsonElement(stackForObject: &stackForObject, recursiveFunction: makeJsonObject)
+        jsonObject.add(key: key, value: recursiveJsonObjectElement )
+        index = innerIndex
+    }
+    
+    private func saveJsonArrayElementInJsonObject(tokenList : [String], index: inout Int, key: String,  jsonObject: inout JsonObject)  {
+        var (stackForArray, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start: isSquareBracketStart, end: isSquareBracketEnd)
+        let recursiveJsonArrayElement = buildRecursivlyFromStackToJsonElement(stackForObject: &stackForArray, recursiveFunction: makeJsonArray)
+        jsonObject.add(key: key, value: recursiveJsonArrayElement )
+        index = innerIndex
+    }
+    
+    private func getKeyValueFromTokenizedJsonObject( tokenList: [String], index: inout Int ) -> (key: String, value: String){
+        let key = tokenList[index-1]
+        index = index + 1                   // n + 1, value 시작에 해당하는 값.
+        let value = tokenList[index]
+        return (key, value)
+    }
+    
+    private func buildRecursivlyFromStackToJsonElement (stackForObject : inout Stack<String>, recursiveFunction: ([String]) -> JsonParsable ) -> JsonParsable {
+        let allStackElement = makeStringFromStack(&stackForObject)
+        //recursive logic
+        let jsonElement = tokenizer.tokenize(allStackElement)
+        let recursiveJsonParsableElement = recursiveFunction(jsonElement)
+        return recursiveJsonParsableElement
+    }
+    
+    private func buildStackForNestedElement (tokenList: [String], index: Int, start: (String) -> Bool , end: (String) -> Bool ) -> (Stack<String>, innerIndex: Int) {
+        var stackForNestedElement : Stack<String> = Stack<String>()
+        stackForNestedElement.push(tokenList[index])
+        var innerIndex = index + 1
+        var bracketCnt : Int = 1
+        while (bracketCnt != 0 ){
+            if start(tokenList[innerIndex]){
+                bracketCnt += 1
+            }else if end(tokenList[innerIndex]) {
+                bracketCnt -= 1
+            }
+            stackForNestedElement.push(tokenList[innerIndex])
+            innerIndex += 1
+        }
+        return (stackForNestedElement, innerIndex)
+    }
+    
     
     private func makeJsonArray(_ tokenList: [String] ) -> JsonParsable {
         var jsonArray: JsonArray = JsonArray()
-        var stack : Stack<String> = Stack<String>()
         var index = 0
-        var innerIndex = index
-    
         while index < tokenList.count {
             index += 1
             if index == tokenList.count {
                 break
             }
-            
-            if isNumeric(tokenList[index]) {
-                guard let intValue = Int(tokenList[index]) else {
-                    continue
-                }
-                jsonArray.add(value: intValue)
+            if  tryToAddIntegerElementInJsonArray(tokenElement: tokenList[index], jsonArray: &jsonArray) ||
+                tryToAddBooleanElementInJsonArray(tokenElement: tokenList[index], jsonArray: &jsonArray) ||
+                tryToAddStringElementInJsonArray(tokenElement:  tokenList[index], jsonArray: &jsonArray) {
                 continue
             }
-            if isBoolean(tokenList[index]) {
-                guard let boolValue = Bool(tokenList[index]) else {
-                    continue
-                }
-                jsonArray.add(value: boolValue)
-                continue
-            }
-            if isString(tokenList[index]){
-                jsonArray.add(value: tokenList[index])
-                continue
-            }
-            
             if isSquareBracketStart(tokenList[index]){                  /// [
-                stack.push(tokenList[index])
-                innerIndex = index + 1
-                var squareBracketCnt : Int = 1
-                while (squareBracketCnt != 0 ){
-                    if isSquareBracketStart(tokenList[innerIndex]){
-                        squareBracketCnt += 1
-                    }else if isSquareBracketEnd(tokenList[innerIndex]) {
-                        squareBracketCnt -= 1
-                    }
-                    stack.push(tokenList[innerIndex])
-                    innerIndex += 1
-                }
-                let allStackElement = makeStringFromStack(&stack)
-                
-                //recursive logic
-                let jsonArrayElement = tokenizer.tokenize(allStackElement)
-                let recursiveJsonArrayElement = makeJsonArray(jsonArrayElement)
-                
-                /// add recursive Element to jsonArray
-                jsonArray.add(value: recursiveJsonArrayElement )
-                index = innerIndex
+                saveJsonArrayElementInJsonArray(tokenList: tokenList, index: &index, jsonArray: &jsonArray)
                 continue
             }
-            
             if isCurlyBracketStart(tokenList[index]){
-                var stackForObject : Stack<String> = Stack<String>()
-                stackForObject.push(tokenList[index])
-                innerIndex = index + 1
-                var curlyBracketCnt = 1
-                while (curlyBracketCnt != 0 ){
-                    if isCurlyBracketStart(tokenList[innerIndex]){
-                        curlyBracketCnt += 1
-                    }else if isCurlyBracketEnd(tokenList[innerIndex]) {
-                        curlyBracketCnt -= 1
-                    }
-                    stackForObject.push(tokenList[innerIndex])
-                    innerIndex += 1
-                }
-                let allStackElement = makeStringFromStack(&stackForObject)
-                //recursive logic
-                let jsonObjectElement = tokenizer.tokenize(allStackElement)
-                let recursiveJsonObjectElement = makeJsonArray(jsonObjectElement)
-                /// add recursive Element to jsonArray
-                jsonArray.add(value: recursiveJsonObjectElement )
-                index = innerIndex
+                saveJsonObjectElementInJsonArray(tokenList: tokenList, index: &index, jsonArray: &jsonArray)
                 continue
             }
         }
         return jsonArray
     }
     
-   
+    private func saveJsonArrayElementInJsonArray(tokenList : [String], index: inout Int, jsonArray: inout JsonArray) {
+        var (stackForArray, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start : isSquareBracketStart, end : isSquareBracketEnd)
+        let recursiveJsonArrayElement = buildRecursivlyFromStackToJsonElement(stackForObject: &stackForArray, recursiveFunction: makeJsonArray)
+        /// add recursive Element to jsonArray
+        jsonArray.add(value: recursiveJsonArrayElement )
+        index = innerIndex
+    }
+    
+    private func saveJsonObjectElementInJsonArray(tokenList : [String], index: inout Int, jsonArray: inout JsonArray) {
+        var (stackForArray, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start : isCurlyBracketStart, end : isCurlyBracketEnd)
+        let recursiveJsonObjectElement = buildRecursivlyFromStackToJsonElement(stackForObject: &stackForArray, recursiveFunction: makeJsonObject)
+        /// add recursive Element to jsonArray
+        jsonArray.add(value: recursiveJsonObjectElement )
+        index = innerIndex
+    }
+    
+    private func tryToAddIntegerElementInJsonObject(value: String, key: String, jsonObject: inout JsonObject) -> Bool {
+        if isNumeric(value) {
+            guard let intValue = Int(value) else {
+                return false
+            }
+            jsonObject.add(key: key, value: intValue)
+            return true
+        }
+        return false
+    }
+    
+    private func tryToAddBooleanElementInJsonObject(value: String, key: String, jsonObject: inout JsonObject) -> Bool {
+        if isBoolean(value) {
+            guard let boolValue = Bool(value) else {
+                return false
+            }
+            jsonObject.add(key: key, value: boolValue)
+            return true
+        }
+        return false
+    }
+    
+    private func tryToAddStringElementInJsonObject(value: String, key: String, jsonObject: inout JsonObject) -> Bool {
+        if isString(value){
+            jsonObject.add(key: key, value: value)
+            return true
+        }
+        return false
+    }
+    
+    private func tryToAddIntegerElementInJsonArray(tokenElement: String, jsonArray: inout JsonArray) -> Bool {
+        if isNumeric(tokenElement) {
+            guard let intValue = Int(tokenElement) else {
+                return false
+            }
+            jsonArray.add(value: intValue)
+            return true
+        }
+        return false
+    }
+    private func tryToAddBooleanElementInJsonArray(tokenElement: String, jsonArray: inout JsonArray) -> Bool {
+        if isBoolean(tokenElement) {
+            guard let boolValue = Bool(tokenElement) else {
+                return false
+            }
+            jsonArray.add(value: boolValue)
+            return true
+        }
+        return false
+    }
+    private func tryToAddStringElementInJsonArray(tokenElement: String, jsonArray: inout JsonArray) -> Bool {
+        if isString(tokenElement){
+            jsonArray.add(value: tokenElement)
+            return true
+        }
+        return false
+    }
+    
     private func makeStringFromStack (_ stack: inout Stack<String> ) -> String {
         var result = ""
-        
         while !stack.isEmpty(){
             guard let currentValue = stack.pop()else {
                 break

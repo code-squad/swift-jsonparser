@@ -137,6 +137,7 @@ struct TestTokenizer {
         return result
     }
     
+    
     private func popAllStackAsFIFO(_ input: Stack<String> ) -> String {
         var result = ""
         var stack = input

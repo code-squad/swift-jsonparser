@@ -12,7 +12,6 @@ import XCTest
 //[ { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true }, false, 1, { "name" : "YOON JISU", "alias" : "crong", "level" : 4, "married" : true }, true, "context", "314", 314 ]
 //[ 10, "jk", 4, "314", 99, "crong", false ]
 
-
 class TokenizerUnitTest: XCTestCase {
 
     let testInputJsonObject = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true }, true, \"context\" ]"
@@ -20,56 +19,56 @@ class TokenizerUnitTest: XCTestCase {
     let testJsonObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true, \"{ : }\" : \"curly bracket : \", \"curly bracket\":{ \"key\" : value } }"
 
     /// 5/25 unitTest
-//    func testWhiteSpaceAndNewLineTokenize() {
-//        print()
-//        print("======= testWhiteSpaceAndNewLineTokenize ========")
-//        let whitespaceSplitResult = tokenizedWithWhiteSpace(testSimpleInput)
-//        print("## test : > \(whitespaceSplitResult.components(separatedBy: ["&"]).filter{!$0.isEmpty})")
-//        XCTAssert(whitespaceSplitResult.components(separatedBy: "&").count == 20, "actual : \(whitespaceSplitResult.components(separatedBy: "&").count)")
-//    }
-//
-//    func testCommaTokenize(){
-//        print()
-//        print("======= testCommaTokenize ========")
-//        let whitespaceSplitResult = tokenizedWithWhiteSpace(testSimpleInput)
-//        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
-//        print("## test : > \(commaSplitResult.components(separatedBy: ["@", "&"]).filter{!$0.isEmpty})")
-//        XCTAssert(commaSplitResult.components(separatedBy: ["@", "&"]).filter{!$0.isEmpty}.count == 31, "actual : \(commaSplitResult.components(separatedBy: ["@", "&"]).filter{!$0.isEmpty}.count)")
-//    }
-//
-//    func testSquareBracket() {
-//        print()
-//        print("======= testSquareBracket ========")
-//        let whitespaceSplitResult = tokenizedWithWhiteSpace(testSimpleInput)
-//        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
-//        let splitSquareBracket = tokenizeWithSquareBrackets(commaSplitResult)
-//        XCTAssert(splitSquareBracket.components(separatedBy: ["^", "$"]).filter{ !$0.isEmpty }.count == 7, "actual :>  \(splitSquareBracket.components(separatedBy: ["^", "$"]).filter{ !$0.isEmpty }.count)" )
-//
-//        print("## test : > \(splitSquareBracket.components(separatedBy: ["@", "&", "^", "$"]).filter{ !$0.isEmpty })")
-//        XCTAssert(splitSquareBracket.components(separatedBy: ["@", "&", "^", "$"]).filter{ !$0.isEmpty }.count == 33, "actual count : \(splitSquareBracket.components(separatedBy: ["@", "&", "^", "$"]).filter{ !$0.isEmpty }.count)")
-//    }
-//
-//    func testCurlyBracket(){
-//        print()
-//        print("======= testCurlyBracket ========")
-//        let whitespaceSplitResult = tokenizedWithWhiteSpace(testJsonObject)
-//        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
-//        let splitCurlyBracket = tokenizeWithCurlyBrackets(commaSplitResult)
-//        print("result : \(splitCurlyBracket.components(separatedBy: ["^", "$", "&", "@"]).filter{!$0.isEmpty && $0 != " "})")
-//        XCTAssert(splitCurlyBracket.components(separatedBy: ["^", "$", "&", "@"]).filter{!$0.isEmpty}.count == 28, "actual count : \(splitCurlyBracket.components(separatedBy: ["^", "$", "&", "@"]).filter{!$0.isEmpty}.count)")
-//    }
-//
-//    /// :
-//    func testSemicolon(){
-//        print()
-//        print("======= testSemicolon ========")
-//        let whitespaceSplitResult = tokenizedWithWhiteSpace(testJsonObject)
-//        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
-//        let splitCurlyBracket = tokenizeWithCurlyBrackets(commaSplitResult)
-//        let splitSemicolon = tokenizedWithSemicolon(splitCurlyBracket)
-//        print("result : \(splitSemicolon.components(separatedBy: ["^", "$", "&", "@", "#"]).filter{!$0.isEmpty})")
-//        XCTAssert(splitSemicolon.components(separatedBy: ["^", "$", "&", "@", "#"]).filter{!$0.isEmpty}.count == 29, "actual count : \(splitSemicolon.components(separatedBy: ["^", "$", "&", "@", "#"]).filter{!$0.isEmpty}.count)")
-//    }
+    func testWhiteSpaceAndNewLineTokenize() {
+        print()
+        print("======= testWhiteSpaceAndNewLineTokenize ========")
+        let whitespaceSplitResult = tokenizedWithWhiteSpace(testSimpleInput)
+        print("## test : > \(whitespaceSplitResult.components(separatedBy: ["&"]).filter{!$0.isEmpty})")
+        XCTAssert(whitespaceSplitResult.components(separatedBy: "&").count == 20, "actual : \(whitespaceSplitResult.components(separatedBy: "&").count)")
+    }
+
+    func testCommaTokenize(){
+        print()
+        print("======= testCommaTokenize ========")
+        let whitespaceSplitResult = tokenizedWithWhiteSpace(testSimpleInput)
+        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
+        print("## test : > \(commaSplitResult.components(separatedBy: ["@", "&"]).filter{!$0.isEmpty})")
+        XCTAssert(commaSplitResult.components(separatedBy: ["@", "&"]).filter{!$0.isEmpty}.count == 31, "actual : \(commaSplitResult.components(separatedBy: ["@", "&"]).filter{!$0.isEmpty}.count)")
+    }
+
+    func testSquareBracket() {
+        print()
+        print("======= testSquareBracket ========")
+        let whitespaceSplitResult = tokenizedWithWhiteSpace(testSimpleInput)
+        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
+        let splitSquareBracket = tokenizeWithSquareBrackets(commaSplitResult)
+        XCTAssert(splitSquareBracket.components(separatedBy: ["^", "$"]).filter{ !$0.isEmpty }.count == 7, "actual :>  \(splitSquareBracket.components(separatedBy: ["^", "$"]).filter{ !$0.isEmpty }.count)" )
+
+        print("## test : > \(splitSquareBracket.components(separatedBy: ["@", "&", "^", "$"]).filter{ !$0.isEmpty })")
+        XCTAssert(splitSquareBracket.components(separatedBy: ["@", "&", "^", "$"]).filter{ !$0.isEmpty }.count == 33, "actual count : \(splitSquareBracket.components(separatedBy: ["@", "&", "^", "$"]).filter{ !$0.isEmpty }.count)")
+    }
+
+    func testCurlyBracket(){
+        print()
+        print("======= testCurlyBracket ========")
+        let whitespaceSplitResult = tokenizedWithWhiteSpace(testJsonObject)
+        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
+        let splitCurlyBracket = tokenizeWithCurlyBrackets(commaSplitResult)
+        print("result : \(splitCurlyBracket.components(separatedBy: ["^", "$", "&", "@"]).filter{!$0.isEmpty && $0 != " "})")
+        XCTAssert(splitCurlyBracket.components(separatedBy: ["^", "$", "&", "@"]).filter{!$0.isEmpty}.count == 28, "actual count : \(splitCurlyBracket.components(separatedBy: ["^", "$", "&", "@"]).filter{!$0.isEmpty}.count)")
+    }
+
+    /// :
+    func testSemicolon(){
+        print()
+        print("======= testSemicolon ========")
+        let whitespaceSplitResult = tokenizedWithWhiteSpace(testJsonObject)
+        let commaSplitResult = tokenizedWithComma(whitespaceSplitResult)
+        let splitCurlyBracket = tokenizeWithCurlyBrackets(commaSplitResult)
+        let splitSemicolon = tokenizedWithSemicolon(splitCurlyBracket)
+        print("result : \(splitSemicolon.components(separatedBy: ["^", "$", "&", "@", "#"]).filter{!$0.isEmpty})")
+        XCTAssert(splitSemicolon.components(separatedBy: ["^", "$", "&", "@", "#"]).filter{!$0.isEmpty}.count == 29, "actual count : \(splitSemicolon.components(separatedBy: ["^", "$", "&", "@", "#"]).filter{!$0.isEmpty}.count)")
+    }
 
     private func tokenizedWithSemicolon(_ input: String) -> String {
         let tokens = input.components(separatedBy: ":").joined(separator: "#:#").trimmingCharacters(in: .whitespacesAndNewlines)
