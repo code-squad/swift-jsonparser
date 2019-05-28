@@ -9,18 +9,18 @@
 import Foundation
 
 struct MyListParser: Parser {
-    private var statistics: Dictionary<Token, Int>
+    private var numOf: Dictionary<Token, Int>
     private var tokens: Array<Token>
     
     init(tokens: Array<Token>) {
         self.tokens = tokens
-        self.statistics = Dictionary<Token, Int>()
+        self.numOf = Dictionary<Token, Int>()
     }
     
     mutating func parse() -> Dictionary<Token, Int> {
         self.assembleToken()
-        _ = self.tokens.map{ self.statistics[$0] = (self.statistics[$0] ?? 0) + 1 }
-       return self.statistics.filter{ !Token.symbols.contains($0.key) }
+        _ = self.tokens.map{ self.numOf[$0] = (self.numOf[$0] ?? 0) + 1 }
+       return self.numOf.filter{ !Token.symbols.contains($0.key) }
     }
     
     private mutating func assembleToken() {

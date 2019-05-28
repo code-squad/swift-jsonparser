@@ -9,13 +9,13 @@
 import Foundation
 
 struct InputView {
-    private enum Question: String,CustomStringConvertible {
-        var description: String { return self.rawValue}
+    private enum Question: String, CustomStringConvertible {
+        var description: String { return self.rawValue }
         
-        case aboutJSON  = "분석할 JSON 데이터를 입력하세요.\n공백과 ','의 양식을 지켜주세요.\nex) [ 10, \"Hi, JK!\", 4, \"314\", 99, \"Bye, crong!\", false ] "
+        case aboutJSON  = "분석할 JSON 데이터를 입력하세요.\n공백과 ','의 양식을 지켜주세요.\nex) [ 10, \"Hi, JK\", 4, \"314\", 99, \"Bye, crong\", false ] "
     }
     
-    private func ask(_ question:Question) {
+    private func ask(_ question: Question) {
         print(question)
     }
     
@@ -27,6 +27,5 @@ struct InputView {
         self.ask(Question.aboutJSON)
         return fetchInput()
     }
-    
 }
 

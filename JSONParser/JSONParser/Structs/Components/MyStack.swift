@@ -16,7 +16,7 @@ struct MyStack<T> {
     }
     
     func isEmpty() -> Bool {
-        return self.elements.count > 0 ? false : true
+        return self.elements.count <= 0 
     }
     
     mutating func push(_ e: T) {

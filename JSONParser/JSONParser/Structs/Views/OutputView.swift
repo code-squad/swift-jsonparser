@@ -9,10 +9,32 @@
 import Foundation
 
 struct OutputView {
-    let result: String
+    private var numOf: Dictionary<Token, Int>
+    private var total: Int = 0
     
-    mutating func run() {
-        print(self.result)
+    init(numOf: Dictionary<Token, Int>) {
+        self.numOf = numOf
     }
     
+    mutating func run() {
+        print(self.makeSentence())
+    }
+    
+    private mutating func statistics() -> String {
+        var result = ""
+        _ = self.numOf.map{ (type,count) in
+            self.total += count
+            result += " \(type) \(count)개, "
+        }
+        return result
+    }
+    
+    mutating func makeSentence() -> String {
+        let statistics = self.statistics()
+        var sentence = "총 \(self.total)개의 데이터 중에 "
+        sentence += statistics
+        sentence += "포함되어 있습니다."
+        return sentence
+    }
+
 }
