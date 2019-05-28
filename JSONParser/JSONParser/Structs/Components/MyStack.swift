@@ -23,16 +23,16 @@ struct MyStack<T> {
         self.elements.append(e)
     }
     
-    mutating func pop() throws -> T {
+    mutating func pop() -> T? {
         guard let lastElement = self.elements.popLast() else {
-            throw Exception.Empty
+            return nil
         }
         return lastElement
     }
     
-    func peek() throws -> T {
+    func peek() -> T? {
         guard let lastElement = self.elements.last else {
-            throw Exception.Empty
+            return nil
         }
         return lastElement
     }
@@ -48,11 +48,6 @@ struct MyStack<T> {
     mutating func clear() {
         self.elements.removeAll()
     }
-    
-    enum Exception: String, Error, CustomStringConvertible {
-        var description: String { return self.rawValue}
-        
-        case Empty = "스택이 비었습니다."
-    }
+   
 }
 
