@@ -207,7 +207,6 @@ struct TestParser {
         return token.hasPrefix(TokenSplitSign.quatation.description)
             && token.hasSuffix(TokenSplitSign.quatation.description) ? true : false
     }
-    
     private func isNumeric (_ token : String) -> Bool {
         guard let _: Int = Int(token) else {
             return false

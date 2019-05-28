@@ -10,9 +10,19 @@ import Foundation
 
 struct Parser {
     
-    var tokenizer: TestTokenizer = TestTokenizer()
-    
-    func makeJsonArray(_ tokenList: [String] ) -> JsonParsable {
+    var tokenizer: Tokenizer = Tokenizer()
+    func parse(_ tokenList: [String] ) -> JsonParsable {
+        var result : JsonParsable = ""
+        
+        if tokenList[0] == TokenSplitSign.curlyBracketStart.description && tokenList[tokenList.count-1] ==
+            TokenSplitSign.curlyBracketEnd.description {
+            result = makeJsonObject(tokenList)
+        }else if tokenList[0] == TokenSplitSign.squareBracketStart.description && tokenList[tokenList.count-1] == TokenSplitSign.squareBracketEnd.description {
+            result = makeJsonArray(tokenList)
+        }
+        return result
+    }
+    private func makeJsonArray(_ tokenList: [String] ) -> JsonParsable {
         var jsonArray: JsonArray = JsonArray()
         var index = 0
         while index < tokenList.count {
@@ -37,7 +47,7 @@ struct Parser {
         return jsonArray
     }
     
-    func makeJsonObject(_ tokenList: [String] ) -> JsonParsable {
+    private func makeJsonObject(_ tokenList: [String] ) -> JsonParsable {
         var jsonObject: JsonObject = JsonObject()
         var index = 0
         while index < tokenList.count {

@@ -10,10 +10,16 @@ import Foundation
 
 struct Main {
     static private func parseInputJsonData (_ data: String) throws -> JsonParsable {
+        let tokenList = tokenize(data)
+        let parser: Parser = Parser()
+        let jsonData = parser.parse(tokenList)
+        return jsonData
+    }
+    
+    static private func tokenize(_ data: String) -> [String] {
         let tokenizer : Tokenizer = Tokenizer()
         let tokenList = try tokenizer.tokenize(data)
-        let result = try Parser.composeToken(tokenList)
-        return result
+        return tokenList
     }
     
     static func main () throws {
