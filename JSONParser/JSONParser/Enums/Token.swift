@@ -9,12 +9,19 @@
 import Foundation
 
 enum Token{
+    case Array(Array<Any>)
+    
     case Number(Int)
     case Bool(Bool)
+    case Value(String)
     case String(String)
     
     case WhiteSpace
     case Comma
+    case DoubleQuotes
+    
+    case LeftBraket
+    case RightBraket
     
 }
 
@@ -29,9 +36,17 @@ extension Token: Equatable {
             equal = a == b
         case let (.String(a),.String(b)):
             equal = a == b
+        case let (.Value(a),.Value(b)):
+            equal = a == b
         case (.WhiteSpace,.WhiteSpace):
             equal = true
         case (.Comma,.Comma):
+            equal = true
+        case (.DoubleQuotes,.DoubleQuotes):
+            equal = true
+        case (.LeftBraket,.LeftBraket):
+            equal = true
+        case (.RightBraket,.RightBraket):
             equal = true
         default :
             ()
