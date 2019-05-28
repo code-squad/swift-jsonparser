@@ -57,13 +57,15 @@ struct Tokenizer: JsonParserable {
     }
     
     /// 입력받은 문자열이 배열의 형태인 경우 Token들을 나누고 이들을 배열의 형태로 다시 만드는 함수
-    mutating func buildArray(inputString: String) -> [String] {
+    mutating func buildArray(inputString: String) throws -> [String] {
         let textToAnalyze = removeBothSides(inputText: inputString)
         for i in textToAnalyze.indices {
             countPattern = patternInspect(index: i, inputText: textToAnalyze, countPattern: countPattern)
             inputElement.append(String(textToAnalyze[i]))
             if (countPattern["dictionary"] == 0 && countPattern["string"] == 0 && countPattern["array"] == 0) && (textToAnalyze[i] == Sign.comma || i == textToAnalyze.index(before: textToAnalyze.endIndex)) {
                 inputData()
+            } else if countPattern["dictionary"] == 0, countPattern["string"] == 0, countPattern["array"] == 0, textToAnalyze[i] == Sign.colon {
+                throw ErrorMessage.invalidFormat
             }
         }
         return arrayJson
@@ -93,7 +95,7 @@ struct Tokenizer: JsonParserable {
     mutating func scannerAndTokenizer(text: String?) throws{
         let inputString = try distinctNil(input: text)
         if inputString.first == Sign.frontSquareBracket, inputString.last == Sign.backSquareBracket {
-            arrayJson = buildArray(inputString: inputString)
+            arrayJson = try buildArray(inputString: inputString)
         } else if inputString.first == Sign.frontCurlyBracket, inputString.last == Sign.backCurlyBracket {
             dictionaryJson = buildDictionary(inputString: inputString)
         } else {

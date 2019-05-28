@@ -36,11 +36,20 @@ struct JsonParser {
         return convertedElement
     }
     
+    /// 딕셔너리의 key가 String이 아니면 에러를 반환하는 함수
     private func distinctKeyType(key: String) throws {
         if key.first != Sign.doubleQuote || key.last != Sign.doubleQuote {
             throw ErrorMessage.wrongKey
         }
     }
+    
+    ///
+    private func distinctInArray(value: String) throws {
+        if value.first == Sign.frontSquareBracket, value.last == Sign.backSquareBracket {
+            throw ErrorMessage.invalidFormat
+        }
+    }
+    
     /// 배열이나 딕셔너리를 받아서 파싱하고 멘트를 반환하는 함수
     mutating func parsing(inputData: JsonParserable) throws -> String{
         if inputData.arrayJson != [], inputData.dictionaryJson.isEmpty {
@@ -52,6 +61,7 @@ struct JsonParser {
         } else if inputData.dictionaryJson.isEmpty == false {
             for (key, value) in inputData.dictionaryJson{
                 try distinctKeyType(key: key)
+                try distinctInArray(value: value)
                 let convertedElement = try parsingData(beforeData: value)
                 dictionaryJsonData[key] = convertedElement
             }
