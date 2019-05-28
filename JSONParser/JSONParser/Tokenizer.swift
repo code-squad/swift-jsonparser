@@ -26,7 +26,7 @@ enum TokenElement: Character {
     
     init?(first: Character?) {
         switch first {
-        case "\"":
+        case TokenElement.string.rawValue:
             self = .string
         default:
             self = .whitespaces
@@ -45,6 +45,10 @@ struct Tokenizer {
         let trimmingResult = input.trimmingCharacters(in: arrayBracket)
         let splitResult = trimmingResult.split(separator: TokenElement.comma.rawValue)
         let rawTokens = splitResult.map { String($0).trimmingCharacters(in: .whitespaces) }
+        
+        if rawTokens.isEmpty {
+            throw TokenizeError.noValue
+        }
         
         let tokens = convert(rawTokens: rawTokens)
         

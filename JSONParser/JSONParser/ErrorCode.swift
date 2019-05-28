@@ -19,6 +19,17 @@ enum TypeError: Error {
     }
 }
 
+enum TokenizeError: Error {
+    case noValue
+    
+    var description: String {
+        switch self {
+        case .noValue:
+            return "값이 없음"
+        }
+    }
+}
+
 enum ParseError: Error {
     case invalidValue
     
