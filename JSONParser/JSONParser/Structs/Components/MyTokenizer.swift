@@ -11,65 +11,63 @@ import Foundation
 struct MyTokenizer: Tokenizer {
     let json: String
     var scanner: MyScanner
+    let factory = MyTokenFactory()
     
     init(json: String){
         self.json = json
         self.scanner = MyScanner.init(string: json)
     }
     
-    func tokenize() throws -> [Token] {
-        var tokens = [Token]()
-        tokens.append(Token.Comma)
+    mutating func tokenize() throws -> [Token] {
+        let units = try self.split()
+        let tokens = units.map{ self.factory.createToken(string: $0 )}
         return tokens
     }
     
-    mutating func split() throws -> [String] {
+    private mutating func split() throws -> [String] {
         var units = [String]()
         
         while let character = self.scanner.next(){
             switch character {
-            case "[":
-                ()
-            case "]":
-                ()
-            case "\"":
-                ()
-            case ",":
-                ()
-            case " ":
-                ()
+            case "[","]",","," ",
+                 "\"":
+                units.append(String(character))
             case "0"..."9":
-                ()
+                units.append(getNumber())
+                self.scanner.backCurser()
+                
             default:
-                ()
+                units.append(getValue())
+                self.scanner.backCurser()
             }
         }
         return units
     }
     
-    mutating func getNumber() -> String {
-        self.scanner.backCurser()
+    private mutating func getNumber() -> String {
         var number = ""
+        self.scanner.backCurser()
         while let character = self.scanner.next() {
             if (character.isNumber){
                 number = "\(number)\(character)"
                 continue
             }
+            break
         }
-        self.scanner.backCurser()
         return number
     }
     
-    mutating func getValue() -> String {
-        self.scanner.backCurser()
+    private mutating func getValue() -> String {
         var value = ""
+        self.scanner.backCurser()
         while let character = self.scanner.next() {
             if !(character.isWhitespace || character.isPunctuation){
                 value = "\(value)\(character)"
+                print(character)
                 continue
             }
+            break
         }
-        self.scanner.backCurser()
         return value
     }
     
