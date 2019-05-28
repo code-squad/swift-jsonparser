@@ -22,7 +22,7 @@ struct InputView {
     }
     
     enum Question: String {
-        case enterJSONData
+        case enterJSONData = "분석할 JSON 데이터를 입력하세요."
     }
     
     static func readText(ask question: Question) throws -> String {
@@ -33,7 +33,7 @@ struct InputView {
         return input
     }
     
-    static func readJSON() throws -> String {
+    static func readJSONData() throws -> String {
         return try readText(ask: .enterJSONData)
     }
 }
