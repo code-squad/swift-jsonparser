@@ -10,5 +10,5 @@ import Foundation
 
 protocol Scanner {
     func hasNext() -> Bool
-    mutating func next() throws -> String
+    mutating func next() throws -> Character
 }
