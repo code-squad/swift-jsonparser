@@ -14,13 +14,6 @@ struct JsonObject : JsonParsable {
     init(){
         self.keyValueSet = [String : JsonParsable]()
     }
-    
-    init(keys: [String], values: [JsonParsable]){
-        self.keyValueSet = [String : JsonParsable]()
-        for index in 0..<keys.count{
-            keyValueSet.updateValue(values[index], forKey: keys[index])
-        }
-    }
 
     mutating func add(key: String, value : JsonParsable ){
         self.keyValueSet.updateValue(value, forKey: key)

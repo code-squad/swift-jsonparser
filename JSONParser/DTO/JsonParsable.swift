@@ -35,3 +35,21 @@ extension Bool : JsonParsable {
         }
     }
 }
+
+extension Array: JsonParsable {
+    var description : String {
+        get{
+            var result = "\(TokenSplitSign.squareBracketStart.description) "
+            for index in 0..<self.count-1{
+                let cur = self[index]
+                guard let jsonElement = self[index] as? JsonParsable else {
+                    return result
+                }
+                result += " \(jsonElement.description),"
+            }
+            result.popLast()
+            result += " \(TokenSplitSign.squareBracketEnd.description)"
+            return result
+        }
+    }
+}

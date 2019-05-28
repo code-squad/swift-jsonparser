@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct Lexer2 {
+struct TestLexer {
     
     static func confirmTokenDataType (_ token : String ) throws -> LexicalType {
         if  isNumeric(token) {
