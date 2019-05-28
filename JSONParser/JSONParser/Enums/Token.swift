@@ -10,7 +10,7 @@ import Foundation
 
 enum Token{
     case Array(Array<Any>)
-    
+
     case Number(Int)
     case Bool(Bool)
     case Value(String)
@@ -18,7 +18,7 @@ enum Token{
     
     case WhiteSpace
     case Comma
-    case DoubleQuotes
+    case DoubleQuotation
     
     case LeftBraket
     case RightBraket
@@ -29,7 +29,7 @@ extension Token: Equatable {
     static func == (lhs: Token, rhs: Token) -> Bool {
         var equal = false
         
-        switch (lhs,rhs){
+        switch (lhs,rhs) {
         case let (.Number(a),.Number(b)):
             equal = a == b
         case let (.Bool(a),.Bool(b)):
@@ -42,7 +42,7 @@ extension Token: Equatable {
             equal = true
         case (.Comma,.Comma):
             equal = true
-        case (.DoubleQuotes,.DoubleQuotes):
+        case (.DoubleQuotation,.DoubleQuotation):
             equal = true
         case (.LeftBraket,.LeftBraket):
             equal = true

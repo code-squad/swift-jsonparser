@@ -13,7 +13,7 @@ struct MyTokenizer: Tokenizer {
     var scanner: MyScanner
     let factory = MyTokenFactory()
     
-    init(json: String){
+    init(json: String) {
         self.json = json
         self.scanner = MyScanner.init(string: json)
     }
@@ -27,7 +27,7 @@ struct MyTokenizer: Tokenizer {
     private mutating func split() throws -> [String] {
         var units = [String]()
         
-        while let character = self.scanner.next(){
+        while let character = self.scanner.next() {
             switch character {
             case "[","]",","," ",
                  "\"":
@@ -35,7 +35,6 @@ struct MyTokenizer: Tokenizer {
             case "0"..."9":
                 units.append(getNumber())
                 self.scanner.backCurser()
-                
             default:
                 units.append(getValue())
                 self.scanner.backCurser()
@@ -48,7 +47,7 @@ struct MyTokenizer: Tokenizer {
         var number = ""
         self.scanner.backCurser()
         while let character = self.scanner.next() {
-            if (character.isNumber){
+            if (character.isNumber) {
                 number = "\(number)\(character)"
                 continue
             }
@@ -63,7 +62,6 @@ struct MyTokenizer: Tokenizer {
         while let character = self.scanner.next() {
             if !(character.isWhitespace || character.isPunctuation){
                 value = "\(value)\(character)"
-                print(character)
                 continue
             }
             break
