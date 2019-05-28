@@ -14,10 +14,10 @@ struct MyTokenFactory: TokenFactory {
         var token: Token
         
         if (string.isNumber) {
-            token = Token.Number(Int(string)!)
+            token = Token.Number
         }
         else if (string.isBool) {
-            token = Token.Bool(Bool(string)!)
+            token = Token.Bool
         }
         else if (string.isWhiteSpace) {
             token = Token.WhiteSpace
@@ -35,11 +35,9 @@ struct MyTokenFactory: TokenFactory {
             token = Token.RightBraket
         }
         else {
-            token = Token.Value(string)
+            token = Token.Value
         }
         return token
     }
-    
-   
     
 }
