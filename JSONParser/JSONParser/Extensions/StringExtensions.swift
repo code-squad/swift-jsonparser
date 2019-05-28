@@ -9,36 +9,12 @@
 import Foundation
 
 extension String {
-
-    func isNumber() -> Bool {
-        return Int(self) != nil
-    }
-    
-    func isBool() -> Bool {
-        return Bool(self) != nil
-    }
-    
-    func isString() -> Bool {
-        return self.first == "\"" && self.last == "\""
-    }
-    
-    func isWhiteSpace() -> Bool {
-        return self == " "
-    }
-    
-    func isComma() -> Bool {
-        return self == ","
-    }
-    
-    func isDoubleQuotation() -> Bool {
-        return self == "\""
-    }
-    
-    func isLeftBraket() -> Bool {
-        return self == "["
-    }
-    
-    func isRightBraket() -> Bool {
-        return self == "]"
-    }
+    var isNumber: Bool { return Int(self) != nil }
+    var isBool: Bool { return Bool(self) != nil }
+    var isString: Bool { return self.first == "\"" && self.last == "\"" }
+    var isWhiteSpace: Bool { return self == " " }
+    var isComma: Bool { return self == "," }
+    var isDoubleQuotation: Bool { return self == "\"" }
+    var isLeftBraket: Bool { return self == "[" }
+    var isRightBraket: Bool { return self == "]" }
 }
