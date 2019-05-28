@@ -9,17 +9,17 @@
 import Foundation
 
 struct Parser {
-    static func parse(tokens: [String]) -> JsonArray {
+    static func parse(tokens: [String]) throws -> JsonArray {
         var parseResult: [JsonType] = []
         
         for token in tokens {
-            parseResult.append(parse(token: token))
+            parseResult.append(try parse(token: token))
         }
         
         return JsonArray(array: parseResult)
     }
     
-    private static func parse(token: String) -> JsonType {
+    private static func parse(token: String) throws -> JsonType {
         if let result = Int(token) {
             return result
         }
@@ -36,6 +36,6 @@ struct Parser {
             return token
         }
         
-        return token
+        throw ParseError.invalidValue
     }
 }

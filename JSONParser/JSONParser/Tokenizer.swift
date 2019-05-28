@@ -37,7 +37,7 @@ enum TokenElement: Character {
 struct Tokenizer {
     static func tokenize(input: String) throws -> [String] {
         guard input.first == TokenElement.startOfArray.rawValue, input.last == TokenElement.endOfArray.rawValue else {
-            return []
+            throw TypeError.unsupportedType
         }
         
         let arrayBracket = CharacterSet(charactersIn: "\(TokenElement.startOfArray.rawValue)\(TokenElement.endOfArray.rawValue)")
