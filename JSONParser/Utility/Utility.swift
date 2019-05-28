@@ -15,6 +15,11 @@ struct Stack <T> {
     init(){
         stack = [T]()
     }
+    var size: Int {
+        get{
+            return stack.count
+        }
+    }
     mutating func push(_ element : T){
         stack.append(element)
     }
