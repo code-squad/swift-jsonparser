@@ -25,7 +25,7 @@ struct InputView {
         case enterJSONData
     }
     
-    func readText(ask question: Question) throws -> String {
+    static func readText(ask question: Question) throws -> String {
         print(question.rawValue)
         guard let input = readLine(), !input.isEmpty else {
             throw Error.isEmptyInput
@@ -33,7 +33,7 @@ struct InputView {
         return input
     }
     
-    func readJSON() throws -> String {
+    static func readJSON() throws -> String {
         return try readText(ask: .enterJSONData)
     }
 }
