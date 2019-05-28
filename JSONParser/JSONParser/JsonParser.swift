@@ -122,6 +122,9 @@ struct JsonParser {
         return (json: jsonData, dataMent: data.distinctMent)
     }
  */
+    var arrayJsonData: [Json] = []
+    var dictionaryJsonData = [String:Json]()
+    /// 원소들을 조건에 따라 해당타입으로 파싱해주는 함수
     private func parsingData(beforeData : String) throws -> Json {
         var convertedElement: Json
         var convertedDictionaryData = [String:Json]()
@@ -145,17 +148,23 @@ struct JsonParser {
         return convertedElement
     }
     
-    func parsing(inputData: JsonParserable) throws -> (json: [Json],dataMent: String){
-        var jsonData: [Json] = []
+    /// 배열이나 딕셔너리를 받아서 파싱하고 멘트를 반환하는 함수
+    mutating func parsing(inputData: JsonParserable) throws -> String{
         if inputData.arrayJson != [], inputData.dictionaryJson.isEmpty {
             for element in inputData.arrayJson{
                 let convertedElement = try parsingData(beforeData: element)
-                jsonData.append(convertedElement)
+                arrayJsonData.append(convertedElement)
             }
-            return (json: jsonData, dataMent: DataMent.arrayMent.rawValue)
-        } else if inputData.dictionaryJson.isEmpty == false, inputData.arrayJson == [] {
-            
+            return DataMent.arrayMent.rawValue
+        } else if inputData.dictionaryJson.isEmpty == false/*, inputData.arrayJson.isEmpty*/ {
+            for (key, value) in inputData.dictionaryJson{
+                let convertedElement = try parsingData(beforeData: value)
+                dictionaryJsonData[key] = convertedElement
+            }
+            return DataMent.dictionaryMent.rawValue
+        } else {
+            throw ErrorMessage.notArray
         }
-        return (json: jsonData, dataMent: DataMent.arrayMent.rawValue)
+        
     }
 }

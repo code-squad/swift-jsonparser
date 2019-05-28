@@ -11,7 +11,7 @@ import Foundation
 func main() {
     let input = InputView()
     let output = OutputView()
-    let jsonParser = JsonParser()
+    var jsonParser = JsonParser()
     var tokenizer = Tokenizer()
     //var jsonParserable = JsonParserable()
     
@@ -21,7 +21,7 @@ func main() {
             try tokenizer.scannerAndTokenizer(text: data)
             let parsingData = try jsonParser.parsing(inputData: tokenizer)
             //let jsonData = try parsing.buildArray(inputData: data)
-            output.printElements(jsonData: parsingData)
+            output.printElements(jsonParser: jsonParser, dataMent: parsingData)
             break
         }catch let error as ErrorMessage{
             print(error.rawValue)
