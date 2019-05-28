@@ -13,25 +13,25 @@ struct MyTokenFactory: TokenFactory {
     func createToken(string: String) -> Token {
         var token: Token
         
-        if (isNumber(string)) {
+        if (string.isNumber()) {
             token = Token.Number(Int(string)!)
         }
-        else if (isBool(string)) {
+        else if (string.isBool()) {
             token = Token.Bool(Bool(string)!)
         }
-        else if (isWhiteSpace(string)) {
+        else if (string.isWhiteSpace()) {
             token = Token.WhiteSpace
         }
-        else if (isComma(string)) {
+        else if (string.isComma()) {
             token = Token.Comma
         }
-        else if (isDoubleQuotation(string)) {
+        else if (string.isDoubleQuotation()) {
             token = Token.DoubleQuotation
         }
-        else if (isLeftBraket(string)) {
+        else if (string.isLeftBraket()) {
             token = Token.LeftBraket
         }
-        else if (isRightBraket(string)) {
+        else if (string.isRightBraket()) {
             token = Token.RightBraket
         }
         else {
@@ -40,36 +40,6 @@ struct MyTokenFactory: TokenFactory {
         return token
     }
     
-    private func isNumber(_ string: String) -> Bool {
-        return Int(string) != nil
-    }
-    
-    private func isBool(_ string: String) -> Bool {
-        return Bool(string) != nil
-    }
-    
-    private func isString(_ string: String) -> Bool {
-        return string.first == "\"" && string.last == "\""
-    }
-    
-    private func isWhiteSpace(_ string: String) -> Bool {
-        return string == " "
-    }
-    
-    private func isComma(_ string: String) -> Bool {
-        return string == ","
-    }
-    
-    private func isDoubleQuotation(_ string: String) -> Bool {
-        return string == "\""
-    }
-    
-    private func isLeftBraket(_ string: String) -> Bool {
-        return string == "["
-    }
-    
-    private func isRightBraket(_ string: String) -> Bool {
-        return string == "]"
-    }
+   
     
 }
