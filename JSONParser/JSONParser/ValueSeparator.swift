@@ -3,7 +3,7 @@ import Foundation
 extension String {
     func trimmingStructure(begin: Character, end: Character) throws -> String {
         guard self.first == begin, self.last == end else {
-            throw ValueSeparator.Error.invalidStructure
+            throw ValueSeparatorError.invalidStructure
         }
         var result = self
         result.removeFirst()
@@ -12,22 +12,22 @@ extension String {
     }
 }
 
+enum ValueSeparatorError: Error {
+    case invalidNestedStructure
+    case invalidArrayGrammar
+    case invalidObjectGrammar
+    case bufferIsEmpty
+    case cannotFindNameSeparator
+    case objectKeyShouldBeOneAndOnly
+    case invalidStructure
+}
+
 struct ValueSeparator {
-    
-    enum Error: Swift.Error {
-        case invalidNestedStructure
-        case invalidArrayGrammar
-        case invalidObjectGrammar
-        case bufferIsEmpty
-        case cannotFindNameSeparator
-        case objectKeyShouldBeOneAndOnly
-        case invalidStructure
-    }
     
     static func separatingArray(input: String) throws -> [String] {
         let input = try input.trimmingStructure(begin: Structure.beginArray, end: Structure.endArray)
         guard FormatValidator.validateArrayFormat(input) else {
-            throw Error.invalidArrayGrammar
+            throw ValueSeparatorError.invalidArrayGrammar
         }
         return try separateValues(input: input)
     }
@@ -35,7 +35,7 @@ struct ValueSeparator {
     static func separatingObject(input: String) throws -> [String: String] {
         let input = try input.trimmingStructure(begin: Structure.beginObject, end: Structure.endObject)
         guard FormatValidator.validateObjectFormat(input) else {
-            throw Error.invalidObjectGrammar
+            throw ValueSeparatorError.invalidObjectGrammar
         }
         
         let separatedInput = try separateValues(input: input)
@@ -43,7 +43,7 @@ struct ValueSeparator {
         for value in separatedInput {
             let keyAndValue = try splitKeyAndValue(keyAndValue: value)
             guard result[keyAndValue.key] == nil else {
-                throw Error.objectKeyShouldBeOneAndOnly
+                throw ValueSeparatorError.objectKeyShouldBeOneAndOnly
             }
             result[keyAndValue.key] = keyAndValue.value
         }
@@ -62,7 +62,7 @@ struct ValueSeparator {
             key.append(value.removeFirst())
         }
         guard let nameSeparatorIndex = value.firstIndex(of: Structure.nameSeparator) else {
-            throw Error.cannotFindNameSeparator
+            throw ValueSeparatorError.cannotFindNameSeparator
         }
         value.removeSubrange(value.startIndex...nameSeparatorIndex)
         
@@ -84,7 +84,7 @@ struct ValueSeparator {
         
         func moveBufferToResult() throws {
             guard !buffer.isEmpty else {
-                throw Error.bufferIsEmpty
+                throw ValueSeparatorError.bufferIsEmpty
             }
             let whitespaceTrimmedString = buffer.trimmingCharacters(in: Structure.whitespace)
             
@@ -96,14 +96,14 @@ struct ValueSeparator {
             switch character {
             case Structure.endArray:
                 guard nestedArrayCount > 0 else {
-                    throw Error.invalidNestedStructure
+                    throw ValueSeparatorError.invalidNestedStructure
                 }
                 nestedArrayCount -= 1
             case Structure.beginArray:
                 nestedArrayCount += 1
             case Structure.endObject:
                 guard nestedObjectCount > 0 else {
-                    throw Error.invalidNestedStructure
+                    throw ValueSeparatorError.invalidNestedStructure
                 }
                 nestedObjectCount -= 1
             case Structure.beginObject:

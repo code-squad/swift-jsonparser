@@ -1,12 +1,12 @@
 import Foundation
 
+enum ParserError: Error {
+    case foundUnsupportedType
+    case objectKeyMustBeString
+    case objectKeyMustBeOneAndOnly
+}
+
 struct Parser {
-    
-    enum Error: Swift.Error {
-        case foundUnsupportedType
-        case objectKeyMustBeString
-        case objectKeyMustBeOneAndOnly
-    }
     
     static func parseValue(_ input: String) throws -> JSONType {
         if let string = parseString(input) { return string }
@@ -14,7 +14,7 @@ struct Parser {
         else if let number = parseNumber(input) { return number }
         else if let object = try parseObject(input) { return object }
         else if let array = try parseArray(input) { return array }
-        throw Error.foundUnsupportedType
+        throw ParserError.foundUnsupportedType
     }
     
     private static func parseString(_ input: String) -> String? {
@@ -47,7 +47,7 @@ struct Parser {
         var result = [String: JSONType]()
         for (key, value) in tokenizedInput {
             guard let key = parseString(key) else {
-                throw Error.objectKeyMustBeString
+                throw ParserError.objectKeyMustBeString
             }
             let value = try parseValue(value)
             result[key] = value
