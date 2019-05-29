@@ -12,6 +12,13 @@ struct Lexer {
     
     enum Error: Swift.Error {
         case invalidCharacter(Character)
+        
+        var localizedDescription: String {
+            switch self {
+            case .invalidCharacter(let character):
+                return "유효하지 않은 문자 \(character)가 입력되었습니다."
+            }
+        }
     }
     
     private let input: String
