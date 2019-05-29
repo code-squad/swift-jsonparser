@@ -28,6 +28,23 @@ struct Lexer {
         position = input.index(after: position)
     }
     
+    private mutating func getNumber() -> Int {
+        var value = 0
+        
+        while let nextCharacter = peek() {
+            switch nextCharacter {
+            case "0" ... "9" :
+                let digitValue = Int(String(nextCharacter)) ?? 0
+                value = 10 * value + digitValue
+                advance()
+            default:
+                return value
+            }
+        }
+        
+        return value
+    }
+    
     mutating func tokenize() -> [Token] {
         var tokens = [Token]()
         
@@ -41,9 +58,8 @@ struct Lexer {
                 tokens.append(.string(stringValue))
                 advance()
             case "0" ... "9":
-                let digitValue = Int(String(nextCharacter)) ?? 0
-                tokens.append(.number(digitValue))
-                advance()
+                let value = getNumber()
+                tokens.append(.number(value))
             case ",":
                 tokens.append(.comma)
                 advance()
