@@ -16,7 +16,7 @@ struct Parser {
         var localizedDescription: String {
             switch self {
             case .invalidToken(let token):
-                return "유효하지 않은 토큰 \(token) 입니다."
+                return "유효하지 않은 토큰 \(token.description) 입니다."
             }
         }
     }
