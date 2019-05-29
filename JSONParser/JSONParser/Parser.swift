@@ -15,4 +15,13 @@ struct Parser {
     init(tokens: [Token]) {
         self.tokens = tokens
     }
+    
+    private mutating func getNextToken() -> Token? {
+        guard position < tokens.count else {
+            return nil
+        }
+        let token = tokens[position]
+        position += 1
+        return token
+    }
 }
