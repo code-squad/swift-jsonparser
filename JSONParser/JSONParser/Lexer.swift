@@ -9,6 +9,11 @@
 import Foundation
 
 struct Lexer {
+    
+    enum Error: Swift.Error {
+        case invalidCharacter(Character)
+    }
+    
     let input: String
     var position: String.Index
     
@@ -62,7 +67,7 @@ struct Lexer {
         return value
     }
     
-    mutating func tokenize() -> [Token] {
+    mutating func tokenize() throws -> [Token] {
         var tokens = [Token]()
         
         while let nextCharacter = peek() {
@@ -82,7 +87,7 @@ struct Lexer {
             case " ":
                 advance()
             default:
-                break
+                throw Error.invalidCharacter(nextCharacter)
             }
         }
         return tokens
