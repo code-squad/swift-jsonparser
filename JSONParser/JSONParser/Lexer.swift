@@ -77,7 +77,11 @@ struct Lexer {
                 advance()
             case "a" ... "z", "A" ... "Z":
                 let value = getString()
-                tokens.append(.string(value))
+                if let boolValue = Bool(value) {
+                    tokens.append(.bool(boolValue))
+                } else {
+                    tokens.append(.string(value))
+                }
             case "0" ... "9":
                 let value = getNumber()
                 tokens.append(.number(value))
