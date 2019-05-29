@@ -16,5 +16,3 @@ func main() {
 }
 
 main()
-
-

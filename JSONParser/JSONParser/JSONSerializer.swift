@@ -1,6 +1,14 @@
 import Foundation
 
-struct JSONSerializer {
+extension JSONType {
+    func serialized() -> String {
+        var serializer = JSONSerializer()
+        serializer.serializeJSON(self)
+        return serializer.string
+    }
+}
+
+fileprivate struct JSONSerializer {
     
     private (set) var string = ""
     
@@ -61,14 +69,14 @@ struct JSONSerializer {
     
     private mutating func serializeObject(_ object: [String: JSONType]) {
         
-        var isFirstValue = true
+        var isFirst = true
         
         string += "{\n"
         indentCount += 1
         
         for (key,value) in object {
-            if isFirstValue {
-                isFirstValue = false
+            if isFirst {
+                isFirst = false
             } else {
                 string += ",\n"
             }

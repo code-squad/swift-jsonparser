@@ -7,8 +7,6 @@ struct OutputView {
     }
     
     static func showSerializedJSON(data: JSONType) {
-        var serializer = JSONSerializer()
-        serializer.serializeJSON(data)
-        print(serializer.string)
+        print(data.serialized())
     }
 }
