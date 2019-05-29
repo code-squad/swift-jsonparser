@@ -12,6 +12,11 @@ struct Lexer {
     let input: String
     var position: String.Index
     
+    init(input: String) {
+        self.input = input
+        self.position = self.input.startIndex
+    }
+    
     func peek() -> Character? {
         guard position < input.endIndex else {
             return nil
