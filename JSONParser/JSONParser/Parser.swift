@@ -24,4 +24,22 @@ struct Parser {
         position += 1
         return token
     }
+    
+    mutating func parse() -> [Any] {
+        var jsonArray = [Any]()
+        
+        while let token = getNextToken() {
+            switch token {
+            case .doubleQuotation:
+                break
+            case .string(let string):
+                jsonArray.append(string)
+            case .number(let number):
+                jsonArray.append(number)
+            case .comma:
+                break
+            }
+        }
+        return jsonArray
+    }
 }
