@@ -9,5 +9,5 @@
 import Foundation
 
 protocol ParseStrategy {
-    mutating func parse() -> String
+    mutating func parse() -> Parsable
 }
