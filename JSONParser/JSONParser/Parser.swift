@@ -9,6 +9,18 @@
 import Foundation
 
 struct Parser {
+    
+    enum Error: Swift.Error {
+        case invalidToken(Token)
+        
+        var localizedDescription: String {
+            switch self {
+            case .invalidToken(let token):
+                return "유효하지 않은 토큰 \(token) 입니다."
+            }
+        }
+    }
+    
     private let tokens: [Token]
     private var position = 0
     
@@ -34,7 +46,7 @@ struct Parser {
         return value
     }
     
-    mutating func parse() -> [Any] {
+    mutating func parse() throws -> [Any] {
         var jsonArray = [Any]()
         
         while let token = getNextToken() {
@@ -44,10 +56,12 @@ struct Parser {
                 jsonArray.append(stringValue)
             case .number(let number):
                 jsonArray.append(number)
-            case .comma, .string:
+            case .comma:
                 break
             case .bool(let bool):
                 jsonArray.append(bool)
+            case .string:
+                throw Parser.Error.invalidToken(token)
             }
         }
         return jsonArray
