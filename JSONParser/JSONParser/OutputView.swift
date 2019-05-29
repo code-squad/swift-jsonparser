@@ -10,16 +10,12 @@ import Foundation
 
 struct OutputView {
     static let suffixCountDescription = "가 포함되어 있습니다."
+    static let emptyString = ""
     static func printJSONDescription(of value: JSONValue) throws {
-        switch (value) {
-        case is TypeCountable:
-            guard let typeCountableJSONValue = value as? JSONValue&TypeCountable else {
-                throw OutputError.impossibleToCountElement
-            }
-            printTypeCountDescription(of: typeCountableJSONValue)
-        default:
-            throw OutputError.impossibleToPrintDescription
+        guard let typeCountableJSONValue = value as? JSONValue & TypeCountable else {
+            throw OutputError.impossibleToCountElement
         }
+        printTypeCountDescription(of: typeCountableJSONValue)
     }
     
     static private func printTypeCountDescription(of value: JSONValue & TypeCountable) {
@@ -31,7 +27,6 @@ struct OutputView {
         }
         let range = typeCountDescription.startIndex..<typeCountDescription.index(before: typeCountDescription.endIndex)
         let middleCountDescription = typeCountDescription[range]
-        return print(prefixCountDescription, middleCountDescription, suffixCountDescription)
+        return print(prefixCountDescription, middleCountDescription, suffixCountDescription, separator: emptyString)
     }
-    
 }
