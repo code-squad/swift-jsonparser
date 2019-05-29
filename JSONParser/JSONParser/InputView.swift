@@ -28,7 +28,7 @@ struct InputView {
     static func readText(ask question: Question) throws -> String {
         print(question.rawValue)
         guard let input = readLine(), !input.isEmpty else {
-            throw Error.isEmptyInput
+            throw InputView.Error.isEmptyInput
         }
         return input
     }
