@@ -2,8 +2,9 @@ import Foundation
 
 func main() {
     
-    let input = InputView.ask(about: "분석할 JSON 데이터를 입력하세요.")
-
+    InputView.show("분석할 JSON 데이터를 입력하세요.")
+    let input = InputView.ask("JSON")
+    
     do {
         
         let data = try Parser.parseValue(input)
