@@ -11,6 +11,7 @@ import Foundation
 enum Token {
     case doubleQuotation
     case comma
+    case bool(Bool)
     case string(String)
     case number(Int)
 }

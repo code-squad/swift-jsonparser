@@ -38,6 +38,8 @@ struct Parser {
                 jsonArray.append(number)
             case .comma:
                 break
+            case .bool(let bool):
+                jsonArray.append(bool)
             }
         }
         return jsonArray
