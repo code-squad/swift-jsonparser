@@ -1,6 +1,6 @@
 import Foundation
 
-protocol JSONType {
+protocol JSONType: CustomStringConvertible {
     var typeDescription: String { get }
     var countDescription: String { get }
 }
