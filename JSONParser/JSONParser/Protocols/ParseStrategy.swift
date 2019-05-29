@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol Parser {
-    mutating func parse() -> Dictionary<Token, Int>
+protocol ParseStrategy {
+    mutating func parse() -> String
 }
