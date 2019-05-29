@@ -28,6 +28,23 @@ struct Lexer {
         position = input.index(after: position)
     }
     
+    private mutating func getString() -> String {
+        var value = ""
+        
+        while let nextCharacter = peek() {
+            switch nextCharacter {
+            case "a" ... "z", "A" ... "Z":
+                let stringValue = String(nextCharacter)
+                value = value + stringValue
+                advance()
+            default:
+                return value
+            }
+        }
+        
+        return value
+    }
+    
     private mutating func getNumber() -> Int {
         var value = 0
         
@@ -54,9 +71,8 @@ struct Lexer {
                 tokens.append(.doubleQuotation)
                 advance()
             case "a" ... "z", "A" ... "Z":
-                let stringValue = String(nextCharacter)
-                tokens.append(.string(stringValue))
-                advance()
+                let value = getString()
+                tokens.append(.string(value))
             case "0" ... "9":
                 let value = getNumber()
                 tokens.append(.number(value))
