@@ -11,9 +11,7 @@ import Foundation
 struct TypeDictionary: Json {
     private(set) var json = [String:Json]()
     
-    init (json: String) {
-        self.json = [:]
-    }
+    init (json: String) {}
     
     init (json: [String:Json]) {
         self.json = json

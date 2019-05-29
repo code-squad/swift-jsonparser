@@ -104,9 +104,9 @@ struct Tokenizer: JsonParserable {
     /// 한 문자씩 Scan하고 Token으로 나누는 함수
     mutating func scannerAndTokenizer(text: String?) throws{
         let inputString = try distinctNil(input: text)
-        if inputString.first == Sign.frontSquareBracket, inputString.last == Sign.backSquareBracket {
+        if inputString.match(text: RegularExpression.arrayType) {
             arrayJson = try buildArray(inputString: inputString)
-        } else if inputString.first == Sign.frontCurlyBracket, inputString.last == Sign.backCurlyBracket {
+        } else if inputString.match(text: RegularExpression.dictionaryType) {
             dictionaryJson = buildDictionary(inputString: inputString)
         } else {
             throw ErrorMessage.notArray

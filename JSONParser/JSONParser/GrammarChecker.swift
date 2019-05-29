@@ -18,7 +18,7 @@ struct GrammerChecker {
     
     /// 딕셔너리의 value가 배열일떄 에러를 반환하는 함수
     func distinctInArray(value: String) throws {
-        if value.first == Sign.frontSquareBracket, value.last == Sign.backSquareBracket {
+        if value.match(text: RegularExpression.arrayType) {
             throw ErrorMessage.invalidFormat
         }
     }

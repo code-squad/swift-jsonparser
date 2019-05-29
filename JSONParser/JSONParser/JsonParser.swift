@@ -8,6 +8,12 @@
 
 import Foundation
 
+extension String {
+    func match (text: String) -> Bool {
+        return self.range(of: text, options: .regularExpression)  != nil
+    }
+}
+
 struct JsonParser {
     var arrayJsonData: [Json] = []
     var dictionaryJsonData = [String:Json]()
@@ -21,21 +27,22 @@ struct JsonParser {
         }
         return convertedDictionaryData
     }
+    
     /// 원소들을 조건에 따라 해당타입으로 파싱해주는 함수
     private func parsingData(beforeData : String) throws -> Json {
         var convertedElement: Json
         
         let afterData = beforeData.trimmingCharacters(in: .whitespacesAndNewlines)
-        if afterData.first == Sign.frontCurlyBracket, afterData.last == Sign.backCurlyBracket {
+        if afterData.match(text: RegularExpression.dictionaryType) {
             var tokenizer = Tokenizer()
             let convertedData = tokenizer.buildDictionary(inputString: beforeData)
             let convertedDictionaryData = try convertDictionary(convertedData: convertedData)
             convertedElement = TypeDictionary.init(json: convertedDictionaryData)
-        } else if let _ = Int(afterData) {
+        } else if afterData.match(text: RegularExpression.intType) {
             convertedElement = TypeInt.init(json: afterData)
-        } else if let _ = Bool(afterData) {
+        } else if afterData.match(text: RegularExpression.boolType) {
             convertedElement = TypeBool.init(json: afterData)
-        } else if afterData.first == Sign.doubleQuote, afterData.last == Sign.doubleQuote {
+        } else if afterData.match(text: RegularExpression.stringType) {
             convertedElement = TypeString.init(json: afterData)
         } else {
             throw ErrorMessage.wrongValue
