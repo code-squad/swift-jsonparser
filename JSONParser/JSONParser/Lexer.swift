@@ -17,14 +17,14 @@ struct Lexer {
         self.position = self.input.startIndex
     }
     
-    func peek() -> Character? {
+    private func peek() -> Character? {
         guard position < input.endIndex else {
             return nil
         }
         return input[position]
     }
     
-    mutating func advance() {
+    private mutating func advance() {
         position = input.index(after: position)
     }
     
