@@ -14,8 +14,8 @@ struct Lexer {
         case invalidCharacter(Character)
     }
     
-    let input: String
-    var position: String.Index
+    private let input: String
+    private(set) var position: String.Index
     
     init(input: String) {
         self.input = input
