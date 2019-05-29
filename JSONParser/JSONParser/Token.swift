@@ -14,4 +14,19 @@ enum Token {
     case bool(Bool)
     case string(String)
     case number(Int)
+    
+    var description: String {
+        switch self {
+        case .doubleQuotation:
+            return "\""
+        case .comma:
+            return ","
+        case .bool(let bool):
+            return String(bool)
+        case .string(let string):
+            return string
+        case .number(let number):
+            return String(number)
+        }
+    }
 }
