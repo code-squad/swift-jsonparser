@@ -10,6 +10,7 @@
 		30E7C1E0229D7A560043FA28 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7C1DF229D7A560043FA28 /* InputView.swift */; };
 		30E7C1E2229E1E6A0043FA28 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7C1E1229E1E6A0043FA28 /* Lexer.swift */; };
 		30E7C1E4229E1F9E0043FA28 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7C1E3229E1F9E0043FA28 /* Token.swift */; };
+		30E7C1E6229E45CF0043FA28 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7C1E5229E45CF0043FA28 /* Parser.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		30E7C1DF229D7A560043FA28 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		30E7C1E1229E1E6A0043FA28 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		30E7C1E3229E1F9E0043FA28 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		30E7C1E5229E45CF0043FA28 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,6 +69,7 @@
 				30E7C1DF229D7A560043FA28 /* InputView.swift */,
 				30E7C1E1229E1E6A0043FA28 /* Lexer.swift */,
 				30E7C1E3229E1F9E0043FA28 /* Token.swift */,
+				30E7C1E5229E45CF0043FA28 /* Parser.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -131,6 +134,7 @@
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				30E7C1E2229E1E6A0043FA28 /* Lexer.swift in Sources */,
+				30E7C1E6229E45CF0043FA28 /* Parser.swift in Sources */,
 				30E7C1E0229D7A560043FA28 /* InputView.swift in Sources */,
 				30E7C1E4229E1F9E0043FA28 /* Token.swift in Sources */,
 			);
