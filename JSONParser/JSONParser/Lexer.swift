@@ -98,7 +98,7 @@ struct Lexer {
             case " ":
                 advance()
             default:
-                throw Error.invalidCharacter(nextCharacter)
+                throw Lexer.Error.invalidCharacter(nextCharacter)
             }
         }
         return tokens
