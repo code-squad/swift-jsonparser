@@ -8,5 +8,3 @@
 
 import Foundation
 
-extension Token: Hashable {
-}
