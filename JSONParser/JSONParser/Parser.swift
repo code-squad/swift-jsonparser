@@ -9,7 +9,6 @@
 import Foundation
 
 struct Parser {
-    
     private let tokens: [Token]
     private var position = 0
     
