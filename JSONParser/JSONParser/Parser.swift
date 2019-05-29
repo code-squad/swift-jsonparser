@@ -56,7 +56,7 @@ struct Parser {
                 jsonArray.append(stringValue)
             case .number(let number):
                 jsonArray.append(number)
-            case .comma:
+            case .comma, .openSquareBracket, .closeSquareBracket:
                 break
             case .bool(let bool):
                 jsonArray.append(bool)

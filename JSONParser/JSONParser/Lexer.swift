@@ -79,6 +79,12 @@ struct Lexer {
         
         while let nextCharacter = peek() {
             switch nextCharacter {
+            case "[":
+                tokens.append(.openSquareBracket)
+                advance()
+            case "]":
+                tokens.append(.closeSquareBracket)
+                advance()
             case "\"":
                 tokens.append(.doubleQuotation)
                 advance()

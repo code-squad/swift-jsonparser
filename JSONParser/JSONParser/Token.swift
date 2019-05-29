@@ -9,6 +9,8 @@
 import Foundation
 
 enum Token: Equatable {
+    case openSquareBracket
+    case closeSquareBracket
     case doubleQuotation
     case comma
     case bool(Bool)
@@ -17,6 +19,10 @@ enum Token: Equatable {
     
     var description: String {
         switch self {
+        case .openSquareBracket:
+            return "["
+        case .closeSquareBracket:
+            return "]"
         case .doubleQuotation:
             return "\""
         case .comma:
