@@ -37,7 +37,7 @@ struct Parser {
         return token
     }
     
-    mutating func getString() -> String {
+    private mutating func getString() -> String {
         var value = ""
         
         while let token = getNextToken(), token != .doubleQuotation {
