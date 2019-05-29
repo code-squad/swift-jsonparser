@@ -38,7 +38,7 @@ struct Lexer {
         
         while let nextCharacter = peek() {
             switch nextCharacter {
-            case "a" ... "z", "A" ... "Z":
+            case "A" ... "z":
                 let stringValue = String(nextCharacter)
                 value = value + stringValue
                 advance()
@@ -75,7 +75,7 @@ struct Lexer {
             case "\"":
                 tokens.append(.doubleQuotation)
                 advance()
-            case "a" ... "z", "A" ... "Z":
+            case "A" ... "z":
                 let value = getString()
                 if let boolValue = Bool(value) {
                     tokens.append(.bool(boolValue))
