@@ -2,18 +2,45 @@ import Foundation
 
 struct JSONSerializer {
     
-    static func serializeJSON(_ JSON: JSONType) -> String {
+    var indentCount = 0
+    
+    func serializeJSON(_ JSON: JSONType) -> String {
         
-        return ""
+        var result = ""
+        
+        switch JSON {
+        case let array as [JSONType]:
+            result.append(serializeArray(array))
+        case let object as [String: JSONType]:
+            result.append(serializeObject(object))
+        default:
+            result.append(JSON.description)
+        }
+        
+        return result
     }
     
-    private static func serializeArray(_ string: [JSONType]) -> String {
+    private func serializeArray(_ array: [JSONType]) -> String {
         
-        return ""
+        var result = String("[")
+        var isFirstElement = true
+        
+        for item in array {
+            if isFirstElement {
+                isFirstElement = false
+            } else {
+                result.append(", ")
+            }
+            result.append(serializeJSON(item))
+        }
+        result.append("]")
+        return result
     }
     
-    private static func serializeObject(_ serializeObject: [String: JSONType]) -> String {
+    private func serializeObject(_ object: [String: JSONType]) -> String {
         
-        return ""
+        var result = ""
+        
+        return result
     }
 }
