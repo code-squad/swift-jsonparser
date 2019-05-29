@@ -28,7 +28,7 @@ struct MyTokenizer: Tokenizer {
         while let character = self.scanner.next() {
             switch character {
             case "[","]",","," ",
-                 "\"":
+                 "\"",":","{","}":
                 units.append(String(character))
             case "0"..."9":
                 units.append(getNumber())

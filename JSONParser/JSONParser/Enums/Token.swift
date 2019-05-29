@@ -8,22 +8,27 @@
 
 import Foundation
 
-enum Token: String {
-    case Array = "배열"
+enum Token {
+    case Array
     
-    case Number = "숫자"
-    case Bool = "부울"
-    case Value = "값"
-    case String = "문자열"
+    case Number(Int)
+    case Bool(Bool)
+    case Value(String)
+    case String(String)
+    case Key(String)
     
-    case WhiteSpace = "공백"
-    case Comma = "콤마"
-    case DoubleQuotation = "쌍따옴표"
+    case WhiteSpace
+    case Comma
+    case Colon
+    case DoubleQuotation
     
-    case LeftBraket = "대괄호(좌)"
-    case RightBraket = "대괄호(우)"
+    case LeftBrace
+    case RightBrace
     
-    static let symbols: Array<Token> = [.Comma,.DoubleQuotation,.WhiteSpace,.LeftBraket,.RightBraket]
+    case LeftBraket
+    case RightBraket
+   
+    static let symbols: Array<Token> = [.Comma,.Colon,.DoubleQuotation,.LeftBrace,.RightBrace,.WhiteSpace,.LeftBraket,.RightBraket]
     
 }
 
