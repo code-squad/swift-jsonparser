@@ -2,45 +2,61 @@ import Foundation
 
 struct JSONSerializer {
     
-    var indentCount = 0
+    private (set) var serializedJSON = ""
     
-    func serializeJSON(_ JSON: JSONType) -> String {
-        
-        var result = ""
+    private var indentCount = 0
+    
+    private mutating func insertIndent() {
+        serializedJSON.append(String(repeating: "    ", count: indentCount))
+    }
+    
+    mutating func serializeJSON(_ JSON: JSONType) {
         
         switch JSON {
         case let array as [JSONType]:
-            result.append(serializeArray(array))
+            serializeArray(array)
         case let object as [String: JSONType]:
-            result.append(serializeObject(object))
+            serializeObject(object)
         default:
-            result.append(JSON.description)
+            serializedJSON.append(JSON.description)
         }
-        
-        return result
     }
     
-    private func serializeArray(_ array: [JSONType]) -> String {
+    private mutating func serializeArray(_ array: [JSONType]) {
         
-        var result = String("[")
-        var isFirstElement = true
+        var result = "["
+        var isFirstValue = true
         
         for item in array {
-            if isFirstElement {
-                isFirstElement = false
+            if isFirstValue {
+                isFirstValue = false
             } else {
-                result.append(", ")
+                result += ", "
             }
-            result.append(serializeJSON(item))
+            serializeJSON(item)
         }
-        result.append("]")
-        return result
+        result += "]"
     }
     
-    private func serializeObject(_ object: [String: JSONType]) -> String {
+    private mutating func serializeObject(_ object: [String: JSONType]) {
         
-        var result = ""
+        var result = "{"
+        var isFirstValue = true
         
-        return result
+        for (key,value) in object {
+            if isFirstValue {
+                isFirstValue = false
+            } else {
+                result += ", "
+            }
+            insertIndent()
+            result += "\(key): \(serializeJSON(value))"
+        }
+        result += "}"
     }
+    
+    
+    
+    
+    
 }
