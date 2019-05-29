@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
+		F20F03CD229E3E15002350F8 /* JSONSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20F03CC229E3E15002350F8 /* JSONSerializer.swift */; };
 		F21006502272A1570033D0B7 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F210064F2272A1570033D0B7 /* InputView.swift */; };
 		F21006542272A5A70033D0B7 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21006532272A5A70033D0B7 /* OutputView.swift */; };
 		F226936D2290202200657871 /* FormatValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29D7B5F228FB8E900F70DE6 /* FormatValidator.swift */; };
@@ -32,6 +33,7 @@
 /* Begin PBXFileReference section */
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		F20F03CC229E3E15002350F8 /* JSONSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONSerializer.swift; sourceTree = "<group>"; };
 		F210064F2272A1570033D0B7 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		F21006532272A5A70033D0B7 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		F262C2DF228F8D92007EF45B /* Structure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structure.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				F29D7B5C228F99BA00F70DE6 /* Parser.swift */,
 				F29D7B5F228FB8E900F70DE6 /* FormatValidator.swift */,
 				F283CA792275759200D7CBBC /* JSONType.swift */,
+				F20F03CC229E3E15002350F8 /* JSONSerializer.swift */,
 				F262C2DF228F8D92007EF45B /* Structure.swift */,
 				F2CBFDBD228F0267009A7242 /* ValueSeparator.swift */,
 				F2399ECF227732FD00CBFF5D /* Views */,
@@ -150,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F29D7B5D228F99BA00F70DE6 /* Parser.swift in Sources */,
+				F20F03CD229E3E15002350F8 /* JSONSerializer.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				F21006502272A1570033D0B7 /* InputView.swift in Sources */,
 				F262C2E0228F8D92007EF45B /* Structure.swift in Sources */,
