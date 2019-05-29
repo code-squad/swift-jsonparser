@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Token {
+enum Token: Equatable {
     case doubleQuotation
     case comma
     case bool(Bool)

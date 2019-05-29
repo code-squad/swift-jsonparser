@@ -25,18 +25,26 @@ struct Parser {
         return token
     }
     
+    mutating func getString() -> String {
+        var value = ""
+        
+        while let token = getNextToken(), token != .doubleQuotation {
+            value = value + token.description
+        }
+        return value
+    }
+    
     mutating func parse() -> [Any] {
         var jsonArray = [Any]()
         
         while let token = getNextToken() {
             switch token {
             case .doubleQuotation:
-                break
-            case .string(let string):
-                jsonArray.append(string)
+                let stringValue = getString()
+                jsonArray.append(stringValue)
             case .number(let number):
                 jsonArray.append(number)
-            case .comma:
+            case .comma, .string:
                 break
             case .bool(let bool):
                 jsonArray.append(bool)
