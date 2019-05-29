@@ -25,7 +25,7 @@ struct InputView {
         case enterJSONData = "분석할 JSON 데이터를 입력하세요."
     }
     
-    static func readText(ask question: Question) throws -> String {
+    private static func readText(ask question: Question) throws -> String {
         print(question.rawValue)
         guard let input = readLine(), !input.isEmpty else {
             throw InputView.Error.isEmptyInput
