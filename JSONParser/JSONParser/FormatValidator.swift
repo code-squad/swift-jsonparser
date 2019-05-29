@@ -9,12 +9,12 @@ struct FormatValidator {
     
     private static var objectRegularExpression = try! NSRegularExpression(pattern: objectPattern, options: [])
     
-    /// 양 옆 대괄호가 지워진 후 사용해야 함
+    /// 양 옆 대괄호와 공백이 지워진 후 사용해야 함
     static func validateArrayFormat(_ input: String) -> Bool {
         return arrayRegularExpression.numberOfMatches(in: input, options: [], range: NSRange(location: 0, length: input.count)) == 1
     }
     
-    /// 양 옆 중괄호가 지워진 후 사용해야 함
+    /// 양 옆 중괄호와 공백이 지워진 후 사용해야 함
     static func validateObjectFormat(_ input: String) -> Bool {
         return objectRegularExpression.numberOfMatches(in: input, options: [], range: NSRange(location: 0, length: input.count)) == 1
     }

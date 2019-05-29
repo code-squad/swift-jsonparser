@@ -8,7 +8,7 @@ extension String {
         var result = self
         result.removeFirst()
         result.removeLast()
-        return result
+        return result.trimmingCharacters(in: Structure.whitespace)
     }
 }
 
@@ -26,6 +26,7 @@ struct ValueSeparator {
     
     static func separatingArray(input: String) throws -> [String] {
         let input = try input.trimmingStructure(begin: Structure.beginArray, end: Structure.endArray)
+        
         guard FormatValidator.validateArrayFormat(input) else {
             throw ValueSeparatorError.invalidArrayGrammar
         }
@@ -66,7 +67,7 @@ struct ValueSeparator {
         }
         value.removeSubrange(value.startIndex...nameSeparatorIndex)
         
-        return (key, value.trimmingCharacters(in: Structure.whitespace))
+        return (key.trimmingCharacters(in: Structure.whitespace), value.trimmingCharacters(in: Structure.whitespace))
     }
     
     private static func separateValues(input: String) throws -> [String] {
