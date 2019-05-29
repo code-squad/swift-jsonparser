@@ -2,12 +2,12 @@ import Foundation
 
 struct JSONSerializer {
     
-    private (set) var serializedJSON = ""
+    private (set) var string = ""
     
     private var indentCount = 0
     
     private mutating func insertIndent() {
-        serializedJSON.append(String(repeating: "    ", count: indentCount))
+        string += String(repeating: "    ", count: indentCount)
     }
     
     mutating func serializeJSON(_ JSON: JSONType) {
@@ -18,45 +18,45 @@ struct JSONSerializer {
         case let object as [String: JSONType]:
             serializeObject(object)
         default:
-            serializedJSON.append(JSON.description)
+            string += JSON.description
         }
     }
     
     private mutating func serializeArray(_ array: [JSONType]) {
         
-        var result = "["
+        string += "["
         var isFirstValue = true
         
         for item in array {
             if isFirstValue {
                 isFirstValue = false
             } else {
-                result += ", "
+                string += ", "
             }
             serializeJSON(item)
         }
-        result += "]"
+        string += "]"
     }
     
     private mutating func serializeObject(_ object: [String: JSONType]) {
         
-        var result = "{"
+        string += "{\n"
+        insertIndent()
         var isFirstValue = true
+        
+        indentCount += 1
         
         for (key,value) in object {
             if isFirstValue {
                 isFirstValue = false
             } else {
-                result += ", "
+                string += ",\n"
             }
-            insertIndent()
-            result += "\(key): \(serializeJSON(value))"
+            string += "\(key): \(serializeJSON(value))"
+            
         }
-        result += "}"
+        indentCount -= 1
+        string += "}"
     }
-    
-    
-    
-    
     
 }

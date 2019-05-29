@@ -2,7 +2,13 @@ import Foundation
 
 struct OutputView {
     
-    static func printTypeCount(data: JSONType) {
+    static func showDescription(data: JSONType) {
         print(data.countDescription)
+    }
+    
+    static func showSerializedJSON(data: JSONType) {
+        var serializer = JSONSerializer()
+        serializer.serializeJSON(data)
+        print(serializer.string)
     }
 }

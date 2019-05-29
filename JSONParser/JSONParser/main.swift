@@ -7,8 +7,8 @@ func main() {
     do {
         
         let data = try Parser.parseValue(input)
-        OutputView.printTypeCount(data: data)
-        
+        OutputView.showDescription(data: data)
+        OutputView.showSerializedJSON(data: data)
     } catch {
         print(error)
     }
