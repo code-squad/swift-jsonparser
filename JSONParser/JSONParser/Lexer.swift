@@ -27,4 +27,32 @@ struct Lexer {
     mutating func advance() {
         position = input.index(after: position)
     }
+    
+    mutating func tokenize() -> [Token] {
+        var tokens = [Token]()
+        
+        while let nextCharacter = peek() {
+            switch nextCharacter {
+            case "\"":
+                tokens.append(.doubleQuotation)
+                advance()
+            case "a" ... "z", "A" ... "Z":
+                let stringValue = String(nextCharacter)
+                tokens.append(.string(stringValue))
+                advance()
+            case "0" ... "9":
+                let digitValue = Int(String(nextCharacter)) ?? 0
+                tokens.append(.number(digitValue))
+                advance()
+            case ",":
+                tokens.append(.comma)
+                advance()
+            case " ":
+                advance()
+            default:
+                break
+            }
+        }
+        return tokens
+    }
 }
