@@ -11,7 +11,6 @@ struct JSONSerializer {
     }
     
     mutating func serializeJSON(_ JSON: JSONType) {
-        
         switch JSON {
         case let str as String:
             string += "\"\(str.description)\""
@@ -44,6 +43,9 @@ struct JSONSerializer {
                 string += ",\n"
             } else {
                 string += ", "
+            }
+            if hasStructure {
+                insertIndent()
             }
             serializeJSON(item)
         }
