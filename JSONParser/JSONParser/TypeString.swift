@@ -11,7 +11,7 @@ import Foundation
 struct TypeString: Json {
     private(set) var json : String
     
-    init (json: String) {
-        self.json = json
+    init<VariousType>(json: VariousType) {
+        self.json = json as? String ?? ""
     }
 }

@@ -80,16 +80,18 @@ struct Tokenizer {
     }
     
     /// 배열의 원소들을 조합해서 딕셔너리로 만드는 함수
-    mutating func combinateElement(index: Int){
+    mutating func combinateElement(index: Int) throws {
         if index % 2 == 0, arrayJson[index].last == Sign.colon {
             arrayJson[index] = arrayJson[index].trimmingCharacters(in: CharacterSet(charactersIn: "\(Sign.colon)"))
             arrayJson[index] = arrayJson[index].trimmingCharacters(in: .whitespacesAndNewlines)
             dictionaryJson[arrayJson[index]] = arrayJson[index+1]
+        } else {
+            throw ErrorMessage.invalidFormat
         }
     }
     
     /// 입력받은 문자열이 딕셔너리 형태인 경우 Token들을 나누고 이들을 딕셔너리 형태로 다시 만드는 함수
-    mutating func buildDictionary(inputString: String) -> [String:String] {
+    mutating func buildDictionary(inputString: String) throws -> [String:String] {
         let textToAnalyze = removeBothSides(inputText: inputString)
         for i in textToAnalyze.indices {
             countPattern = patternInspect(index: i, inputText: textToAnalyze, countPattern: countPattern)
@@ -98,8 +100,11 @@ struct Tokenizer {
                 inputData()
             }
         }
+        if arrayJson.count == 1 {
+            throw ErrorMessage.invalidFormat
+        }
         for index in 0..<arrayJson.count-1 {
-            combinateElement(index: index)
+            try combinateElement(index: index)
         }
         return dictionaryJson
     }
@@ -110,7 +115,7 @@ struct Tokenizer {
         if inputString.match(text: RegularExpression.arrayType) {
             arrayJson = try buildArray(inputString: inputString)
         } else if inputString.match(text: RegularExpression.dictionaryType) {
-            dictionaryJson = buildDictionary(inputString: inputString)
+            dictionaryJson = try buildDictionary(inputString: inputString)
         } else {
             throw ErrorMessage.notArray
         }

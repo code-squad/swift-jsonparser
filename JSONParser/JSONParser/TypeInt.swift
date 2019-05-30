@@ -10,8 +10,7 @@ import Foundation
 
 struct TypeInt: Json {
     private(set) var json : Int
-    
-    init (json: String) {
-        self.json = Int(json) ?? 0
+    init<VariousType>(json: VariousType) {
+        self.json = json as? Int ?? 0
     }
 }

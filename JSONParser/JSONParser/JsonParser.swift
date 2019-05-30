@@ -35,7 +35,7 @@ struct JsonParser {
         let afterData = beforeData.trimmingCharacters(in: .whitespacesAndNewlines)
         if afterData.match(text: RegularExpression.dictionaryType) {
             var tokenizer = Tokenizer()
-            let convertedData = tokenizer.buildDictionary(inputString: beforeData)
+            let convertedData = try tokenizer.buildDictionary(inputString: beforeData)
             let convertedDictionaryData = try convertDictionary(convertedData: convertedData)
             convertedElement = TypeDictionary.init(json: convertedDictionaryData)
         } else if afterData.match(text: RegularExpression.intType) {

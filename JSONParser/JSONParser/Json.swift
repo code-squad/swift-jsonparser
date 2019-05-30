@@ -9,6 +9,6 @@
 import Foundation
 
 protocol Json {
-    init (json: String)
+    init<VariousType>(json: VariousType)
 }
 

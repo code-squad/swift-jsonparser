@@ -11,7 +11,7 @@ import Foundation
 struct TypeBool: Json {
     private(set) var json : Bool
     
-    init (json: String) {
-        self.json = Bool(json) ?? false
+    init<VariousType>(json: VariousType) {
+        self.json = json as? Bool ?? false
     }
 }
