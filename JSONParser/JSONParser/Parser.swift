@@ -10,7 +10,7 @@ import Foundation
 
 struct Parser {
     static func parse(tokens: [String]) throws -> JsonType {
-        if tokens.first == String(TokenElement.startOfArray), tokens.last == String(TokenElement.endOfArray) {
+        if tokens.first == String(JsonElement.startOfArray), tokens.last == String(JsonElement.endOfArray) {
             return try parse(array: tokens)
         } else {
             throw TypeError.unsupportedType
@@ -30,7 +30,7 @@ struct Parser {
             if isString {
                 datum = datum + token
                 
-                if token == String(TokenElement.string) {
+                if token == String(JsonElement.string) {
                     isString = false
                     data.append(try convert(token: datum))
                     datum.removeAll()
@@ -39,14 +39,14 @@ struct Parser {
                 continue
             }
             
-            if token == String(TokenElement.string) {
+            if token == String(JsonElement.string) {
                 datum = datum + token
                 isString = true
                 
                 continue
             }
             
-            if !(token == String(TokenElement.comma) || token == String(TokenElement.whitespace)) {
+            if !(token == String(JsonElement.comma) || token == String(JsonElement.whitespace)) {
                 data.append(try convert(token: token))
             }
         }
@@ -59,15 +59,15 @@ struct Parser {
             return result
         }
         
-        if token == "true" {
+        if token == JsonElement.true {
             return true
         }
         
-        if token == "false" {
+        if token == JsonElement.false {
             return false
         }
         
-        if token.first == "\"", token.last == "\"" {
+        if token.first == JsonElement.string, token.last == JsonElement.string {
             return token
         }
         

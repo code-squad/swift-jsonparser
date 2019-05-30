@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		1463FC21229D0ED100FC1B75 /* ErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1463FC20229D0ED100FC1B75 /* ErrorCode.swift */; };
 		1463FC23229D1A8C00FC1B75 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1463FC22229D1A8C00FC1B75 /* OutputView.swift */; };
-		1463FC25229FB05400FC1B75 /* TokenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1463FC24229FB05400FC1B75 /* TokenElement.swift */; };
+		1463FC25229FB05400FC1B75 /* JsonElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1463FC24229FB05400FC1B75 /* JsonElement.swift */; };
 		14694C17229298EA00D62C7B /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14694C16229298EA00D62C7B /* InputView.swift */; };
 		14694C19229299A500D62C7B /* JsonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14694C18229299A500D62C7B /* JsonType.swift */; };
 		14694C232293D4BD00D62C7B /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14694C222293D4BD00D62C7B /* Tokenizer.swift */; };
@@ -33,7 +33,7 @@
 /* Begin PBXFileReference section */
 		1463FC20229D0ED100FC1B75 /* ErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCode.swift; sourceTree = "<group>"; };
 		1463FC22229D1A8C00FC1B75 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
-		1463FC24229FB05400FC1B75 /* TokenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenElement.swift; sourceTree = "<group>"; };
+		1463FC24229FB05400FC1B75 /* JsonElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonElement.swift; sourceTree = "<group>"; };
 		14694C16229298EA00D62C7B /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		14694C18229299A500D62C7B /* JsonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonType.swift; sourceTree = "<group>"; };
 		14694C222293D4BD00D62C7B /* Tokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 				14694C222293D4BD00D62C7B /* Tokenizer.swift */,
 				14694C2422979A1F00D62C7B /* Parser.swift */,
 				1463FC20229D0ED100FC1B75 /* ErrorCode.swift */,
-				1463FC24229FB05400FC1B75 /* TokenElement.swift */,
+				1463FC24229FB05400FC1B75 /* JsonElement.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -158,7 +158,7 @@
 				1463FC21229D0ED100FC1B75 /* ErrorCode.swift in Sources */,
 				14694C2522979A1F00D62C7B /* Parser.swift in Sources */,
 				14694C17229298EA00D62C7B /* InputView.swift in Sources */,
-				1463FC25229FB05400FC1B75 /* TokenElement.swift in Sources */,
+				1463FC25229FB05400FC1B75 /* JsonElement.swift in Sources */,
 				14694C19229299A500D62C7B /* JsonType.swift in Sources */,
 				1463FC23229D1A8C00FC1B75 /* OutputView.swift in Sources */,
 			);
