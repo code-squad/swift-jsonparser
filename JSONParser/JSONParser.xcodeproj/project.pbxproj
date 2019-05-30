@@ -74,16 +74,24 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
-				FA43C77722895A5F00BAB081 /* InputView.swift */,
+				FA2C142A229701D30002F8A9 /* View */,
 				FAEC4C562291985700122FBE /* Tokenizer.swift */,
-				FA43C77F228AE36000BAB081 /* Validator.swift */,
 				FAEC4C582291989200122FBE /* Parser.swift */,
-				FAEC4C60229540D700122FBE /* OutputView.swift */,
+				FA43C77F228AE36000BAB081 /* Validator.swift */,
 				FAEC4C622297009700122FBE /* TypeCounter.swift */,
 				FAEC4C5A2291998B00122FBE /* JSONValueType.swift */,
 				FAEC4C5E22928DDA00122FBE /* JSONKeyword.swift */,
 			);
 			path = JSONParser;
+			sourceTree = "<group>";
+		};
+		FA2C142A229701D30002F8A9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FA43C77722895A5F00BAB081 /* InputView.swift */,
+				FAEC4C60229540D700122FBE /* OutputView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

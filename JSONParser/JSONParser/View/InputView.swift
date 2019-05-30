@@ -14,6 +14,5 @@ struct InputView {
         print(question)
         let prompt = readLine() ?? ""
         return prompt
-
     }
 }
