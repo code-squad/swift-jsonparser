@@ -9,7 +9,7 @@
 import Foundation
 
 struct JSONKeyword {
-    
+    static let whiteSpace = ""
     static let leftBracket = "["
     static let rightBracket = "]"
     static let comma = ","
