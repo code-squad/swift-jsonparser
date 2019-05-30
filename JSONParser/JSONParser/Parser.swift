@@ -9,17 +9,52 @@
 import Foundation
 
 struct Parser {
-    static func parse(tokens: [String]) throws -> JsonArray {
-        var parseResult: [JsonType] = []
-        
-        for token in tokens {
-            parseResult.append(try parse(token: token))
+    static func parse(tokens: [String]) throws -> JsonType {
+        if tokens.first == "[", tokens.last == "]" {
+            return try parse(array: tokens)
+        } else {
+            throw TypeError.unsupportedType
         }
-        
-        return JsonArray(array: parseResult)
     }
     
-    private static func parse(token: String) throws -> JsonType {
+    private static func parse(array: [String]) throws -> JsonArray {
+        var tokens = array
+        tokens.removeFirst()
+        tokens.removeLast()
+        
+        var data: [JsonType] = []
+        var datum: String = ""
+        var isString = false
+        
+        for token in tokens {
+            if token == "\"", isString {
+                isString = false
+                datum.append("\"")
+                data.append(try convert(token: datum))
+                datum.removeAll()
+                continue
+            }
+            
+            if token == "\"", !isString {
+                isString = true
+                datum.append("\"")
+                continue
+            }
+            
+            if isString {
+                datum = datum + token
+                continue
+            }
+            
+            if !(token == "," || token == " ") {
+                data.append(try convert(token: token))
+            }
+        }
+        
+        return JsonArray(array: data)
+    }
+    
+    private static func convert(token: String) throws -> JsonType {
         if let result = Int(token) {
             return result
         }
@@ -32,7 +67,7 @@ struct Parser {
             return false
         }
         
-        if token.first == TokenElement.string.rawValue, token.last == TokenElement.string.rawValue {
+        if token.first == "\"", token.last == "\"" {
             return token
         }
         
