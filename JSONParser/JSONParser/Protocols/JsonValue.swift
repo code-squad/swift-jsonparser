@@ -8,4 +8,14 @@
 
 import Foundation
 
-protocol JsonValue
+protocol JsonValue {
+    func describeType() -> String
+    func getJsonValue() -> String
+}
+
+extension JsonValue {
+    func getJsonValue() -> String {
+        return "\(self)"
+    }
+}
+
