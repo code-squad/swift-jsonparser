@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+protocol Converter {
+    associatedtype Before
+    associatedtype After
+    
+    func convert(before: Before) -> After
+}
