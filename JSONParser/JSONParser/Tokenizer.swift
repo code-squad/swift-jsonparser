@@ -14,7 +14,6 @@ struct Tokenizer {
         let trimmed = prompt.split(separator: " ").joined()
         let input = trimmed.splitByLeftBracket().splitByRightBracket()
         let tokens = input.components(separatedBy: ",")
-        print(tokens)
         return tokens
     }
 }
@@ -28,4 +27,3 @@ extension String {
         return self.split(separator: "]").joined()
     }
 }
-
