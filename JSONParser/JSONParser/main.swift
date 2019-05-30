@@ -18,8 +18,6 @@ func main() {
         OutputView.printParseResult(result: parseResult)
     } catch let error as TypeError {
         print(error.description)
-    } catch let error as TokenizeError {
-        print(error.description)
     } catch let error as ParseError{
         print(error.description)
     } catch {
