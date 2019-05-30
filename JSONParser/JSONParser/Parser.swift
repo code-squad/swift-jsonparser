@@ -10,10 +10,10 @@ import Foundation
 
 struct Parser {
     
-    private var validator: Validatable
+    private var converter: JSONConvertible
     
-    init(validator: Validatable) {
-        self.validator = validator
+    init(converter: JSONConvertible) {
+        self.converter = converter
     }
     
     func parse(tokens: [String]) -> [JSONValueType] {
@@ -29,7 +29,7 @@ struct Parser {
     }
     
     private func makeJSONType(by token: String) -> JSONValueType? {
-        guard let value = validator.checkType(of: token) else {
+        guard let value = converter.convert(token: token) else {
             return nil
         }
         return value
