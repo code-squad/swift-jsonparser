@@ -20,10 +20,10 @@ struct Tokenizer {
 
 extension String {
     func splitByLeftBracket() -> String {
-        return self.split(separator: "[").joined()
+        return self.replacingOccurrences(of: JSONKeyword.leftBracket, with: JSONKeyword.whiteSpace)
     }
     
     func splitByRightBracket() -> String {
-        return self.split(separator: "]").joined()
+        return self.replacingOccurrences(of: JSONKeyword.rightBracket, with: JSONKeyword.whiteSpace)
     }
 }
