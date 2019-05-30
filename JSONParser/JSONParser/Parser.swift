@@ -20,39 +20,18 @@ struct Parser {
         var values: [JSONValueType] = []
         
         for token in tokens {
-            if validator.hasQuotation(in: token) {
-                let stringToken = removeQuotation(in: token)
-                values.append(stringToken)
+            guard let value = makeJSONType(by: token) else {
+                continue
             }
-            
-            if validator.isBool(of: token) {
-                let boolToken = matchBool(in: token)
-                values.append(boolToken)
-            }
-            
-            if validator.isNumber(of: token) {
-                let numberToken = toNumber(in: token)
-                values.append(numberToken)
-            }
+            values.append(value)
         }
         return values
     }
     
-    private func removeQuotation(in token: String) -> String {
-        let trimmedToken = token.dropFirst().dropLast()
-        return String(trimmedToken)
-    }
-    
-    private func matchBool(in token: String) -> Bool {
-        if token == JSONKeyword.true {
-            return true
-        } else {
-            return false
+    private func makeJSONType(by token: String) -> JSONValueType? {
+        guard let value = validator.checkType(of: token) else {
+            return nil
         }
-    }
-    
-    private func toNumber(in token: String) -> Number {
-        let number = Number(token) ?? -1
-        return number
+        return value
     }
 }
