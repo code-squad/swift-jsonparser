@@ -59,12 +59,8 @@ struct Parser {
             return result
         }
         
-        if token == JsonElement.true {
-            return true
-        }
-        
-        if token == JsonElement.false {
-            return false
+        if token == JsonElement.true || token == JsonElement.false {
+            return token == JsonElement.true ? true : false
         }
         
         if token.first == JsonElement.string, token.last == JsonElement.string {
