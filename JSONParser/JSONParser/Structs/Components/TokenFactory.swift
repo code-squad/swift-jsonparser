@@ -8,16 +8,17 @@
 
 import Foundation
 
-struct MyTokenFactory: TokenFactory {
+struct MyTokenFactory: Factory {
+    typealias T = Token
     
-    func createToken(string: String) -> Token {
+    func create(string: String) -> Token {
         var token: Token
         
         if (string.isNumber) {
-            token = Token.Number
+            token = Token.Number(Int(string)!)
         }
         else if (string.isBool) {
-            token = Token.Bool
+            token = Token.Bool(Bool(string)!)
         }
         else if (string.isWhiteSpace) {
             token = Token.WhiteSpace
@@ -28,6 +29,15 @@ struct MyTokenFactory: TokenFactory {
         else if (string.isDoubleQuotation) {
             token = Token.DoubleQuotation
         }
+        else if (string.isColon) {
+            token = Token.Colon
+        }
+        else if (string.isLeftBrace) {
+            token = Token.LeftBrace
+        }
+        else if (string.isRightBrace) {
+            token = Token.RightBrace
+        }
         else if (string.isLeftBraket) {
             token = Token.LeftBraket
         }
@@ -35,7 +45,7 @@ struct MyTokenFactory: TokenFactory {
             token = Token.RightBraket
         }
         else {
-            token = Token.Value
+            token = Token.Value(string)
         }
         return token
     }

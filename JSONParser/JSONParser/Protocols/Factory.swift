@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol TokenFactory {
+protocol Factory {
     func createToken(string: String) -> Token
 }

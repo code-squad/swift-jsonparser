@@ -8,19 +8,19 @@
 
 import XCTest
 
-class MyTokenFactoryTests: XCTestCase {
+class TokenFactoryTests: XCTestCase {
     //Given
     var tokenFactory: TokenFactory!
     
     override func setUp() {
         //Given
-        self.tokenFactory = MyTokenFactory()
+        self.tokenFactory = TokenFactory()
     }
     
     func testCreateNumberToken() {
         //When
         let input = "1"
-        let token = self.tokenFactory.createToken(string: input)
+        let token = self.tokenFactory.create(string: input)
         
         //Then
         XCTAssertEqual(token, Token.Number(1))
@@ -29,7 +29,7 @@ class MyTokenFactoryTests: XCTestCase {
     func testCreateBoolToken() {
         //When
         let input = "true"
-        let token = self.tokenFactory.createToken(string: input)
+        let token = self.tokenFactory.create(string: input)
         
         //Then
         XCTAssertEqual(token, Token.Bool(true))
@@ -38,7 +38,7 @@ class MyTokenFactoryTests: XCTestCase {
     func testCreateValueToken() {
         //When
         let input = "Hello"
-        let token = self.tokenFactory.createToken(string: input)
+        let token = self.tokenFactory.create(string: input)
         
         //Then
         XCTAssertEqual(token, Token.Value("Hello"))
@@ -47,7 +47,7 @@ class MyTokenFactoryTests: XCTestCase {
     func testCreateWhiteSpaceToken() {
         //When
         let input = " "
-        let token = self.tokenFactory.createToken(string: input)
+        let token = self.tokenFactory.create(string: input)
         
         //Then
         XCTAssertEqual(token, Token.WhiteSpace)
@@ -56,7 +56,7 @@ class MyTokenFactoryTests: XCTestCase {
     func testCreateCommaToken() {
         //When
         let input = ","
-        let token = self.tokenFactory.createToken(string: input)
+        let token = self.tokenFactory.create(string: input)
         
         //Then
         XCTAssertEqual(token, Token.Comma)
@@ -65,7 +65,7 @@ class MyTokenFactoryTests: XCTestCase {
     func testCreateDoubleQuotationToken() {
         //When
         let input = "\""
-        let token = self.tokenFactory.createToken(string: input)
+        let token = self.tokenFactory.create(string: input)
         
         //Then
         XCTAssertEqual(token, Token.DoubleQuotation)
@@ -74,7 +74,7 @@ class MyTokenFactoryTests: XCTestCase {
     func testCreateLeftBraketToken() {
         //When
         let input = "["
-        let token = self.tokenFactory.createToken(string: input)
+        let token = self.tokenFactory.create(string: input)
         
         //Then
         XCTAssertEqual(token, Token.LeftBraket)
@@ -83,7 +83,7 @@ class MyTokenFactoryTests: XCTestCase {
     func testCreateRightBraketToken() {
         //When
         let input = "]"
-        let token = self.tokenFactory.createToken(string: input)
+        let token = self.tokenFactory.create(string: input)
         
         //Then
         XCTAssertEqual(token, Token.RightBraket)
@@ -92,7 +92,7 @@ class MyTokenFactoryTests: XCTestCase {
     func testCreateRightBraceToken() {
         //When
         let input = "}"
-        let token = self.tokenFactory.createToken(string: input)
+        let token = self.tokenFactory.create(string: input)
         
         //Then
         XCTAssertEqual(token, Token.RightBrace)
@@ -101,7 +101,7 @@ class MyTokenFactoryTests: XCTestCase {
     func testCreateLeftBraceToken() {
         //When
         let input = "{"
-        let token = self.tokenFactory.createToken(string: input)
+        let token = self.tokenFactory.create(string: input)
         
         //Then
         XCTAssertEqual(token, Token.LeftBrace)
@@ -110,7 +110,7 @@ class MyTokenFactoryTests: XCTestCase {
     func testCreateColonToken() {
         //When
         let input = ":"
-        let token = self.tokenFactory.createToken(string: input)
+        let token = self.tokenFactory.create(string: input)
         
         //Then
         XCTAssertEqual(token, Token.Colon)

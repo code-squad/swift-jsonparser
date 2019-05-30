@@ -7,3 +7,25 @@
 //
 
 import Foundation
+
+struct TokenConverter: Converter {
+    typealias Before = Token
+    typealias After = JsonValue
+    
+    func convert(before: Token) -> JsonValue? {
+        var jsonValue: JsonValue?
+        
+        switch before {
+        case .Number(let number):
+            jsonValue = Int(number)
+        case .Bool(let bool):
+            jsonValue = Bool(bool)
+        case .String(let string):
+            jsonValue = string
+        default:
+            jsonValue = nil
+        }
+        return jsonValue
+    }
+    
+}
