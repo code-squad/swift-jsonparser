@@ -66,7 +66,7 @@
    - 시작 문자에 따라 적절한 `JSONValue` instance 생성
   - { : object / [ : array / 그외 : 일반 value
    - 각각의 생성하는 method 내에서도 `JSONValue`를 생성할 수 있음
-   
+
 3. `JSONObject`, `JSONArray` type 생성
 
    - standard libarary 의 array를 쓰려고 했으나, json array의 특성만을 다룰 수 있게 따로 구조체로 만들어 내부 array propery를 조작하는 것이 적절하다고 판단
@@ -163,10 +163,46 @@ print(midtermScores["Kate"]) //90
 
 &nbsp;
 
+### Bool - toggle() method
+
+- Bool 값을 true→false, false → true 로 바꿔주는 method
+
+- toggle - 상태 값이 2개뿐이고 계속 state를 그 안에서 바꾼다는 의미
+
+- toggle means something like *switch* - have two states. Bool has two states - true or false
+
+- *Example* :  flag 변수 값 바꾸기
+
+  ```swift
+  var flag = true
+  
+  flag = !flags
+  flag.toggle()
+  ```
+
+  같은 뜻
+
+&nbsp;
+
+### Generic type - Conditionally Conforms to Protocol
+
+```swift
+extension Array: JSONValue where Element: JSONValue {}
+extension Array: JSONValue where Element == JSONValue{}
+
+Array<JSONValue>() // JSONValue 가 아님
+```
+
+solution - [protocol doesn't conform to itself](https://stackoverflow.com/questions/33112559/protocol-doesnt-conform-to-itself)
+
+(정리 예정)
+
+&nbsp;
+
 ### Example
 
 ```
-{ "name" : "KIMJUNG", "alias" : "JK", "level" : 5, "married" : true }
+{ "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true }
 ```
 
 ```
@@ -177,9 +213,8 @@ print(midtermScores["Kate"]) //90
 { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "children" : [ "hana", "hayul", "haun" ] }
 ```
 
-&nbsp;
+
 
 ### 참조
 
-- [String]
 - [Dictionary](https://developer.apple.com/documentation/swift/dictionary)
