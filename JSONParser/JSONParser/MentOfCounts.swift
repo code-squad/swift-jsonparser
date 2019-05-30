@@ -31,6 +31,7 @@ struct MentOfCounts {
         let setPrint = prints.filter { $0 != ""}.joined(separator: ", ")
         return setPrint
     }
+    
     private func distinctAndMakeMent(key: String, value: Int) -> String{
         if value > 0 {
             let ment = "\(key) \(value)개"

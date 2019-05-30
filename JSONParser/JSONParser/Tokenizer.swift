@@ -23,18 +23,21 @@ struct Tokenizer: JsonParserable {
     /// "{","\"","[","]","}"를 검사하여 해당 원소가 어디까지인지 판단하는 함수
     private func patternInspect(index: String.Index, inputText: String, countPattern: [String:Int]) -> [String:Int] {
         var counts = countPattern
+        let countDictionary = countPattern["dictionary"]!
+        let countString = countPattern["string"]!
+        let countArray = countPattern["array"]!
         if inputText[index] == Sign.frontCurlyBracket {
-            counts["dictionary"] = counts["dictionary"]! + 1
+            counts["dictionary"] = countDictionary + 1
         } else if counts["string"] == 0, inputText[index] == Sign.doubleQuote {
-            counts["string"] = counts["string"]! + 1
+            counts["string"] = countString + 1
         } else if inputText[index] == Sign.frontSquareBracket {
-            counts["array"] = counts["array"]! + 1
+            counts["array"] = countArray + 1
         } else if counts["dictionary"]! > 0, inputText[index] == Sign.backCurlyBracket {
-            counts["dictionary"] = counts["dictionary"]! - 1
+            counts["dictionary"] = countDictionary - 1
         } else if counts["string"]! > 0, inputText[index] == Sign.doubleQuote {
-            counts["string"] = counts["string"]! - 1
+            counts["string"] = countString - 1
         } else if counts["array"]! > 0, inputText[index] == Sign.backSquareBracket {
-            counts["array"] = counts["array"]! - 1
+            counts["array"] = countArray - 1
         }
         return counts
     }

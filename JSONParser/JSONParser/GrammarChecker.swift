@@ -17,11 +17,12 @@ struct GrammerChecker {
     }
     
     /// 딕셔너리의 value가 배열일떄 에러를 반환하는 함수
-    func distinctInArray(value: String) throws {
+    private func distinctInArray(value: String) throws {
         if value.match(text: RegularExpression.arrayType) {
             throw ErrorMessage.invalidFormat
         }
     }
+    
     /// 입력받은 문자열의 문법 검사
     func grammarTest(jsonData: JsonParserable) throws -> JsonParserable{
         for (key,value) in jsonData.dictionaryJson {

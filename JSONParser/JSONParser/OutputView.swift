@@ -16,6 +16,7 @@ struct OutputView {
         }
         return convertedData
     }
+    
     /// 값을 받아와서 출력하는 함수
     func printElements(jsonParser: JsonParser, dataMent:String) {
         //let jsonParser = JsonParser()
