@@ -10,11 +10,11 @@ import Foundation
 
 struct Tokenizer {
     static func tokenize(input: String) throws -> [String] {
-        guard input.first == "[", input.last == "]" else {
+        guard input.first == TokenElement.startOfArray, input.last == TokenElement.endOfArray else {
             throw TypeError.unsupportedType
         }
         
-        let arrayToken: [Character] = ["[", "]", ",", " ", "\""]
+        let arrayToken: [Character] = TokenElement.arrayToken
         
         var rawToken = ""
         var rawTokens: [String] = []
