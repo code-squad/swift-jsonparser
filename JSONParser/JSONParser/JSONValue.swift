@@ -23,3 +23,11 @@ extension Int: JSONValue {
 extension String: JSONValue {
     var typeDescription: String { return "문자열" }
 }
+
+extension Array: JSONValue where Element == JSONValue {
+    var typeDescription: String { return "배열" }
+}
+
+extension Dictionary: JSONValue where Key == String, Value == JSONValue {
+    var typeDescription: String { return "객체" }
+}
