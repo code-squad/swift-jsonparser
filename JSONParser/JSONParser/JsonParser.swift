@@ -9,7 +9,7 @@
 import Foundation
 
 extension String {
-    func match (text: String) -> Bool {
+    func match(text: String) -> Bool {
         return self.range(of: text, options: .regularExpression)  != nil
     }
 }
@@ -51,7 +51,7 @@ struct JsonParser {
     }
     
     /// 배열이나 딕셔너리를 받아서 파싱하고 멘트를 반환하는 함수
-    mutating func parsing(inputData: JsonParserable) throws -> String{
+    mutating func parsing(inputData: Tokenizer) throws -> String{
         if inputData.arrayJson != [], inputData.dictionaryJson.isEmpty {
             for element in inputData.arrayJson{
                 let convertedElement = try parsingData(beforeData: element)

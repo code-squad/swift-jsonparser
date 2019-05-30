@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Tokenizer: JsonParserable {
+struct Tokenizer {
     var arrayJson: [String] = []
     var dictionaryJson = [String:String]()
     var inputElement: [String] = []
