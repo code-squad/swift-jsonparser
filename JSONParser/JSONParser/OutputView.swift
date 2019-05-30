@@ -9,11 +9,12 @@
 import Foundation
 
 struct OutputView {
-    static let suffixCountDescription = "가 포함되어 있습니다."
-    static let emptyString = ""
+    static private let suffixCountDescription = "가 포함되어 있습니다."
+    static private let emptyString = ""
+    
     static func printJSONDescription(of value: JSONValue) throws {
         guard let typeCountableJSONValue = value as? JSONValue & TypeCountable else {
-            throw OutputError.impossibleToCountElement
+            throw OutputError.impossibleToPrintDescription
         }
         printTypeCountDescription(of: typeCountableJSONValue)
     }

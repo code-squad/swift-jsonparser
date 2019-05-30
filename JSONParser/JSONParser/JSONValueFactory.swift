@@ -14,7 +14,7 @@ struct JSONValueFactory {
     
     static func make(token: String) throws -> JSONValue {
         let firstCharacter = token[token.startIndex]
-        if JSONSymbols.doubleQuotation.equals(firstCharacter) {
+        if JSONSymbols.doubleQuotation == firstCharacter {
             return token
         }
         if token == trueString || token == falseString {

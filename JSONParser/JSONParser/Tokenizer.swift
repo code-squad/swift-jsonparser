@@ -12,7 +12,7 @@ struct Tokenizer {
     static let commaWithBlank = " ,"
     
     static func execute(jsonData: String) throws -> [String] {
-        let blankAddedData = jsonData.replacingOccurrences(of: JSONSymbols.comma.rawValue, with: commaWithBlank)
+        let blankAddedData = jsonData.replacingOccurrences(of: JSONSymbols.comma.inString, with: commaWithBlank)
         let tokens = try tokenize(blankAddedData)
         if tokens.isEmpty { throw TokenizerError.impossibleToTokenize }
         return tokens
@@ -24,10 +24,10 @@ struct Tokenizer {
         var isOutOfString = true
         
         for character in jsonData {
-            if JSONSymbols.doubleQuotation.equals(character) {
+            if JSONSymbols.doubleQuotation == character {
                 isOutOfString.toggle()
             }
-            if JSONSymbols.blank.equals(character) && isOutOfString {
+            if JSONSymbols.blank == character && isOutOfString {
                 tokens.append(token)
                 token = String()
                 continue
