@@ -34,4 +34,12 @@ struct JsonArray: JsonType {
         
         return description
     }
+    
+    init(array: [JsonType]) throws {
+        if array.count == 0 {
+            throw ParseError.noData
+        }
+        
+        self.array = array
+    }
 }

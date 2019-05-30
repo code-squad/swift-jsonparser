@@ -51,7 +51,7 @@ struct Parser {
             }
         }
         
-        return JsonArray(array: data)
+        return try JsonArray(array: data)
     }
     
     private static func convert(token: String) throws -> JsonType {

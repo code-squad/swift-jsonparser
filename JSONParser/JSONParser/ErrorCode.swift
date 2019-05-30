@@ -21,11 +21,14 @@ enum TypeError: Error {
 
 enum ParseError: Error {
     case invalidValue
+    case noData
     
     var description: String {
         switch self {
         case .invalidValue:
             return "포함될 수 없는 데이터"
+        case .noData:
+            return "데이터가 없음"
         }
     }
 }
