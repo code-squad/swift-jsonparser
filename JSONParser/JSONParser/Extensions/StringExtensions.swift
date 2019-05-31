@@ -14,7 +14,10 @@ extension String {
     var isString: Bool { return self.first == "\"" && self.last == "\"" }
     var isWhiteSpace: Bool { return self == " " }
     var isComma: Bool { return self == "," }
+    var isColon: Bool { return self == ":"}
     var isDoubleQuotation: Bool { return self == "\"" }
+    var isLeftBrace: Bool { return self == "{" }
+    var isRightBrace: Bool { return self == "}" }
     var isLeftBraket: Bool { return self == "[" }
     var isRightBraket: Bool { return self == "]" }
 }

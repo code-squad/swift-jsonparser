@@ -9,9 +9,7 @@
 import Foundation
 
 extension String: JsonValue {
-    typealias T = String
-    
-    func getValue() -> String {
-        return self
+    func describeType() -> String {
+        return "문자열"
     }
 }

@@ -9,9 +9,7 @@
 import Foundation
 
 extension JsonObject: JsonValue {
-    typealias T = JsonObject
-    
-    func getValue() -> Dictionary {
-        return self
+    func describeType() -> String {
+        return "객체"
     }
 }

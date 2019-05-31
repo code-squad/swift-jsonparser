@@ -9,9 +9,7 @@
 import Foundation
 
 extension Bool: JsonValue {
-    typealias T = Bool
-    
-    func getValue() -> Bool {
-        return self
+    func describeType() -> String {
+        return "부울"
     }
 }

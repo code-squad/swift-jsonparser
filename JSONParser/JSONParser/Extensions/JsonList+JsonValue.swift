@@ -8,10 +8,8 @@
 
 import Foundation
 
-extension JsonList : JsonValue {
-    typealias T = JsonList
-    
-    func getValue() -> Array {
-        return self
+extension JsonList: JsonValue {
+    func describeType() -> String {
+        return "배열"
     }
 }

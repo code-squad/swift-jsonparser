@@ -9,10 +9,8 @@
 import Foundation
 
 extension Int: JsonValue {
-    typealias T = Int
-    
-    func getValue() -> Int {
-        return self
+    func describeType() -> String {
+        return "숫자"
     }
 }
 
