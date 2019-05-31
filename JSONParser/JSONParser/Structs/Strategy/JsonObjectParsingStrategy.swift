@@ -9,7 +9,35 @@
 import Foundation
 
 struct JsonObjectParsingStrategy: JsonParsingStrategy {
+    typealias Indexs = Array<Int>
+    
     func parse(tokens: [Token]) -> JsonValue {
-        return [:]
+        var tokens = tokens.filter {
+            return !["\"",","," "].contains($0.getValue())
+        }
+        let converter = TokenConverter()
+        var jsonObject = JsonObject()
+        var (keyTokenIndexs,valueTokenIndexs) = separate(tokens: tokens)
+        let propertyCount = keyTokenIndexs.count
+        
+        for index in 0..<propertyCount {
+            let key = converter.convert(before: tokens[keyTokenIndexs[index]])
+            let value = converter.convert(before: tokens[valueTokenIndexs[index]])
+            jsonObject[key as! String] = value
+        }
+        return jsonObject
+    }
+    
+    private func separate(tokens: Array<Token>) -> (Indexs,Indexs) {
+        var keyTokenIndexs = Array<Int>()
+        var valueTokenIndexs = Array<Int>()
+        
+        for (index,token) in tokens.enumerated() {
+            if token == .Colon{
+                keyTokenIndexs.append(index-1)
+                valueTokenIndexs.append(index+1)
+            }
+        }
+        return (keyTokenIndexs,valueTokenIndexs)
     }
 }
