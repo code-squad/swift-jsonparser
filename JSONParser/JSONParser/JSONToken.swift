@@ -8,26 +8,24 @@
 
 import Foundation
 
-public enum JSON {
-    case dictionary([String: JSON])
-    case array([JSON])
-    case int(Int)
-    case string(String)
-    case bool(Bool)
+protocol JSONDataType {
+    static var typeDescription: String { get }
 }
 
-extension JSON {
-    var valueDescription: String {
-        switch self {
-        case .dictionary: return "Object"
-        case .array:
-            return "Array"
-        case .int(let int):
-            return String(int)
-        case .string(let string):
-            return "\"\(string)\""
-        case .bool(let bool):
-            return String(bool)
-        }
+extension String: JSONDataType {
+    static var typeDescription: String {
+        return "String"
+    }
+}
+
+extension Int: JSONDataType {
+    static var typeDescription: String {
+        return "Int"
+    }
+}
+
+extension Bool: JSONDataType {
+    static var typeDescription: String {
+        return "Bool"
     }
 }
