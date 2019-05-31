@@ -10,28 +10,32 @@ import XCTest
 
 class JsonObjectParsingStrategyTests: XCTestCase {
     //Given
-    var strategy: ParsingStrategy!
+    var strategy: JsonParsingStrategy!
     
-    let tokens = [JSONParser.Token.LeftBrace, JSONParser.Token.WhiteSpace, JSONParser.Token.DoubleQuotation, JSONParser.Token.Value("name"), JSONParser.Token.DoubleQuotation, JSONParser.Token.WhiteSpace, JSONParser.Token.Colon, JSONParser.Token.WhiteSpace, JSONParser.Token.DoubleQuotation, JSONParser.Token.Value("부엉이"), JSONParser.Token.DoubleQuotation, JSONParser.Token.WhiteSpace, JSONParser.Token.Comma, JSONParser.Token.WhiteSpace, JSONParser.Token.DoubleQuotation, JSONParser.Token.Value("age"), JSONParser.Token.DoubleQuotation, JSONParser.Token.WhiteSpace, JSONParser.Token.Colon, JSONParser.Token.WhiteSpace, JSONParser.Token.Number(27), JSONParser.Token.WhiteSpace, JSONParser.Token.Comma, JSONParser.Token.WhiteSpace, JSONParser.Token.DoubleQuotation, JSONParser.Token.Value("marreid"), JSONParser.Token.DoubleQuotation, JSONParser.Token.WhiteSpace, JSONParser.Token.Colon, JSONParser.Token.WhiteSpace, JSONParser.Token.Bool(false), JSONParser.Token.WhiteSpace, JSONParser.Token.RightBrace]
+    let tokens = [Token.LeftBrace,
+                  Token.WhiteSpace, Token.String("name"), Token.WhiteSpace, Token.Colon, Token.WhiteSpace, Token.String("부엉이"), Token.Comma,
+                  Token.WhiteSpace, Token.String("age"),Token.WhiteSpace, Token.Colon, Token.WhiteSpace, Token.Number(27), Token.Comma,
+                  Token.WhiteSpace, Token.String("married"),Token.WhiteSpace, Token.Colon, Token.WhiteSpace, Token.Bool(false), Token.WhiteSpace, Token.RightBrace]
     //=======================================================
-    // { "name" : "부엉이" , "age" : 27 , "marreid" : false }
+    // { "name":"부엉이", "age" : 27, "married" : false }
     //=======================================================
-   
-    func testListParse() {
-        //Given
-
-
-    }
-    func testObjectParse() {
+    
+    override func setUp() {
         //Given
         self.strategy = JsonObjectParsingStrategy()
-
-        //When
-        let object = self.strategy.parse(tokens: <#[Token]#>)
-
-
-        //Then
-
+    }
     
+    func testObjectParse() {
+        //Given
+        let expected: JsonObject = ["name":"부엉이", "age" : 27, "married" : false]
+        
+        //When
+        let object : JsonObject = self.strategy.parse(tokens: self.tokens) as! JsonObject
+        
+        //Then
+        XCTAssertEqual(expected["name"]!.getJsonValue(), object["name"]!.getJsonValue())
+        XCTAssertEqual(expected["age"]!.getJsonValue(), object["age"]!.getJsonValue())
+        XCTAssertEqual(expected["married"]!.getJsonValue(), object["married"]!.getJsonValue())
+        
     }
 }
