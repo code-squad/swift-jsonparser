@@ -85,7 +85,7 @@ struct Tokenizer {
             arrayJson[index] = arrayJson[index].trimmingCharacters(in: CharacterSet(charactersIn: "\(Sign.colon)"))
             arrayJson[index] = arrayJson[index].trimmingCharacters(in: .whitespacesAndNewlines)
             dictionaryJson[arrayJson[index]] = arrayJson[index+1]
-        } else {
+        } else if index % 2 == 0, arrayJson[index].last != Sign.colon{
             throw ErrorMessage.invalidFormat
         }
     }

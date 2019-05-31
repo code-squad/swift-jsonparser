@@ -37,13 +37,13 @@ struct JsonParser {
             var tokenizer = Tokenizer()
             let convertedData = try tokenizer.buildDictionary(inputString: beforeData)
             let convertedDictionaryData = try convertDictionary(convertedData: convertedData)
-            convertedElement = TypeDictionary.init(json: convertedDictionaryData)
+            convertedElement = convertedDictionaryData
         } else if afterData.match(text: RegularExpression.intType) {
-            convertedElement = TypeInt.init(json: afterData)
+            convertedElement = Int(afterData) ?? 0
         } else if afterData.match(text: RegularExpression.boolType) {
-            convertedElement = TypeBool.init(json: afterData)
+            convertedElement = Bool(afterData) ?? false
         } else if afterData.match(text: RegularExpression.stringType) {
-            convertedElement = TypeString.init(json: afterData)
+            convertedElement = afterData.trimmingCharacters(in: CharacterSet(charactersIn: "\(Sign.doubleQuote)"))
         } else {
             throw ErrorMessage.wrongValue
         }

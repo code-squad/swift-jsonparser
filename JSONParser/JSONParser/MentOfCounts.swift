@@ -15,10 +15,10 @@ struct MentOfCounts {
         
         for jsonDatum in jsonData {
             switch jsonDatum {
-            case is TypeString: countOfType["문자열"] = countOfType["문자열"]! + 1
-            case is TypeInt: countOfType["숫자"] = countOfType["숫자"]! + 1
-            case is TypeBool: countOfType["부울"] = countOfType["부울"]! + 1
-            case is TypeDictionary: countOfType["객체"] = countOfType["객체"]! + 1
+            case is String: countOfType["문자열"] = countOfType["문자열"]! + 1
+            case is Int: countOfType["숫자"] = countOfType["숫자"]! + 1
+            case is Bool: countOfType["부울"] = countOfType["부울"]! + 1
+            case is Dictionary<String, Json>: countOfType["객체"] = countOfType["객체"]! + 1
             default: break
             }
         }

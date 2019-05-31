@@ -6,12 +6,12 @@
 //  Copyright © 2019 JK. All rights reserved.
 //
 
-import Foundation
-
-struct TypeString: Json {
-    private(set) var json : String
-    
-    init<VariousType>(json: VariousType) {
-        self.json = json as? String ?? ""
-    }
-}
+//import Foundation
+//
+//struct TypeString: Json {
+//    private(set) var json : String
+//    
+//    init(json: String){
+//        self.json = json
+//    }
+//}

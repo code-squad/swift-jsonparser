@@ -6,13 +6,13 @@
 //  Copyright © 2019 JK. All rights reserved.
 //
 
-import Foundation
-
-struct TypeDictionary: Json {
-    private(set) var json = [String:Json]()
-    
-    init<VariousType>(json: VariousType) {
-        self.json = json as? [String:Json] ?? [:]
-    }
-}
+//import Foundation
+//
+//struct TypeDictionary: Json {
+//    private var json: [String:Json]
+//    
+//    init(json: [String:Json]) {
+//        self.json = json
+//    }
+//}
 

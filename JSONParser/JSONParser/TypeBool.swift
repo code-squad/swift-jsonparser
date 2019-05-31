@@ -6,12 +6,12 @@
 //  Copyright © 2019 JK. All rights reserved.
 //
 
-import Foundation
-
-struct TypeBool: Json {
-    private(set) var json : Bool
-    
-    init<VariousType>(json: VariousType) {
-        self.json = json as? Bool ?? false
-    }
-}
+//import Foundation
+//
+//struct TypeBool: Json {
+//    private var json : Bool
+//    
+//    init (json: String) {
+//        self.json = Bool(json) ?? false
+//    }
+//}

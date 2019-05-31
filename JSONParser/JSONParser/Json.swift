@@ -8,7 +8,12 @@
 
 import Foundation
 
-protocol Json {
-    init<VariousType>(json: VariousType)
-}
+protocol Json {}
 
+extension Bool: Json {}
+
+extension Int: Json {}
+
+extension String: Json {}
+
+extension Dictionary: Json{}
