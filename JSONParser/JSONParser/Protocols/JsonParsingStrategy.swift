@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol ParseStrategy {
-    mutating func parse() -> Parsable
+protocol JsonParsingStrategy {
+   func parse(tokens: [Token]) -> JsonValue
 }
