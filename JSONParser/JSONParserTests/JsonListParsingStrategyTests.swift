@@ -15,9 +15,9 @@ class JsonListParsingStrategyTests: XCTestCase {
     let tokens: Array<Token> =
         [.LeftBraket,
          .WhiteSpace, .Number(10), .Comma, 
-         .WhiteSpace, .String("\"Hello, World\""), .Comma,
+         .WhiteSpace, .String("Hello, World"), .Comma,
          .WhiteSpace, .Bool(true), .Comma,
-         .WhiteSpace, .String("\"314\""), .WhiteSpace,
+         .WhiteSpace, .String("314"), .WhiteSpace,
          .RightBraket]
     //=======================================
     //  [ 10, "Hello, World", true, "314" ]

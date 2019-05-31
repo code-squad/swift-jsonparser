@@ -15,13 +15,13 @@ class TokenConverterTests: XCTestCase {
     
     func testConvertStringJsonValue() {
         //Given
-        let tokenString = Token.String("\"Hello, World\"")
+        let tokenString = Token.String("Hello, World")
         
         //When
         let jsonValue = tokenConverter.convert(before: tokenString)
         
         //Then
-        XCTAssertEqual(jsonValue!.getJsonValue(), "\"Hello, World\"")
+        XCTAssertEqual(jsonValue!.getJsonValue(), "Hello, World")
     }
     
     func testConvertNumberJsonValue() {
