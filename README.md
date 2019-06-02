@@ -1,57 +1,119 @@
-# 진행 방법
+## JSON 문자열 분석기
 
-- JSON 문자열 분석기 요구사항을 파악한다.
-- 요구사항에 대한 구현을 완료한 후 자신의 github 아이디에 해당하는 브랜치에 Pull Request(이하 PR)를 통해 코드 리뷰 요청을 한다.
-- 코드 리뷰 피드백에 대한 개선 작업을 하고 다시 PUSH한다.
-- 모든 피드백을 완료하면 다음 단계를 도전하고 앞의 과정을 반복한다.
 
-# 코드 리뷰 과정
-> 저장소 브랜치에 자신의 github 아이디에 해당하는 브랜치가 존재해야 한다.
->
-> 자신의 github 아이디에 해당하는 브랜치가 있는지 확인한다.
 
-1. 자신의 github 아이디에 해당하는 브랜치가 없는 경우 브랜치 생성 요청 채널을 통해 브랜치 생성을 요청한다.
-프로젝트를 자신의 계정으로 fork한다. 저장소 우측 상단의 fork 버튼을 활용한다.
+## JSON
 
-2. fork한 프로젝트를 자신의 컴퓨터로 clone한다.
+JSON: Java Script Object Notation
+
+- [속성-값 쌍](https://ko.wikipedia.org/w/index.php?title=속성-값_쌍&action=edit&redlink=1)( attribute–value pairs and array data types (or any other serializable value)) 또는 "키-값 쌍"으로 이루어진 데이터 오브젝트를 전달하기 위해 인간이 읽을 수 있는 텍스트를 사용하는 [개방형 표준](https://ko.wikipedia.org/wiki/개방형_표준) 포맷이다.
+- [인터넷](https://ko.wikipedia.org/wiki/인터넷)에서 자료를 주고 받을 때 그 자료를 표현하는 방법이다.
+
+
+
+## STEP-1 단순 List 분석
+
+
+
+![array](https://www.json.org/array.gif)
+
+
+
 ```
-git clone https://github.com/{본인_아이디}/{저장소 아이디}
-ex) https://github.com/godrm/swift-jsonparser
-```
-
-3. clone한 프로젝트 이동
-```
-cd {저장소 아이디}
-ex) cd swift-jsonparser
-```
-
-4. 본인 아이디로 브랜치를 만들기 위한 checkout
-```
-git checkout -t origin/본인_아이디
-ex) git checkout -t origin/godrm
+분석할 JSON 데이터를 입력하세요.
+[ 10, "jk", 4, "314", 99, "crong", false ]
+총 7개의 데이터 중에 문자열 3개, 숫자 3개, 부울 1개가 포함되어 있습니다.
 ```
 
-5. commit
+
+
+- `InputView` : 입력
+
+------
+
+- `Tokenizer`: `,`로 입력문자열을 구분
+- `Parser`: 토큰을 `JSONValueType` 배열에 저장 //`JSONValueType`: 문자열, 숫자, 부울 타입
+- `Converter`: 토큰의 타입을 확인해서 해당 타입으로 변환
+- `TypeCounter`: `JSONValueType`배열에서 타입의 개수를 카운트
+
+------
+
+- `OutputView`: 출력
+
+
+
+## STEP-2  Object 분석
+
+
+
+![object](https://www.json.org/object.gif)
+
+
+
 ```
-git status //확인
-git rm 파일명 //삭제된 파일
-git add 파일명(or * 모두) // 추가/변경 파일
-git commit -m "메세지" // 커밋
+분석할 JSON 데이터를 입력하세요.
+{ "name" : "MINJI CHO", "alias" : "mindy", "level" : 2, "married" : false }
+총 4개의 객체 데이터 중에 문자열 2개, 숫자 1개, 부울 1개가 포함되어 있습니다.
+
+분석할 JSON 데이터를 입력하세요.
+[ { "name" : "MINJI CHO", "alias" : "mindy", "level" : 2, "married" : false }, 
+{ "name" : "HELLO HI", "alias" : "hi", "level" : 4, "married" : true } ]
+총 2개의 배열 데이터 중에 객체 2개가 포함되어 있습니다.
 ```
 
-6. 본인 원격 저장소에 올리기
+
+
 ```
-git push origin 본인_아이디
-ex) git push origin godrm
+object
+	'{' ws '}'
+	'{' members '}'
+
+members
+	member
+	member ',' member
+
+member
+	ws string ws ':' ws element
+
+string
+	"characters"
+
+array
+	'[' ws ']'
+	'[' elements ']'
+
+elements
+	element
+	element ',' element
+
+element
+	ws value ws
 ```
 
-7. pull request
-8. pull request는 github 서비스에서 진행할 수 있다.
-9. pull request는 반드시 original 저장소의 브랜치와 fork한 자신의 저장소 브랜치 이름이 같아야 하며, 브랜치 이름은 자신의 github 아이디여야 한다.
-10. code review 및 push
-11. pull request를 통해 피드백을 받는다.
-12. 코드 리뷰 피드백에 대한 개선 작업을 하고 다시 PUSH한다.
+value에는 문자열, 숫자, 부울만 있다고 가정한다.
 
-## 앞의 코드 리뷰 과정은 [영상 보기](https://www.youtube.com/watch?v=ZSZoaG0PqLg) 를 통해 참고 가능
 
-## 실습 중 모든 질문은 슬랙 채널에서...
+
+```
+'{' ws "characters" ws ':' ws value ',' ws "characters" ws ':' ws value ws '}'
+'{' ws "name" ws ':' ws "CHO MINJI" ',' ws "level" ws ':' ws 2 ws '}'
+```
+
+```
+'[' ws '{' ws "characters" ws ':' ws value ',' ws "characters" ws ':' ws value ws '}' ',' ws '{' ws "characters" ws ':' ws value ',' ws "characters" ws ':' ws value ws '}' ws ']'
+```
+
+
+
+-  `ws` , `,` 를 기준으로 토큰을 생성한다.
+- 문자열의 경우 `ws`, `,` 가 포함 되어 있을 수 있다. 
+  - 토큰을 생성할 때, `"CHO MINJI"` 가 아니라  `"CHO`  `MINJI"` 와 같이 오류가 발생할 수 있다.
+  - `isInString` 을 사용하여 `"` 의 짝이 맞춰질 때 까지 delimiter를 무시하고 한 토큰으로 묶는다.
+
+
+
+---
+
+### Reference
+
+https://json.org
