@@ -46,8 +46,8 @@ struct Parser {
         return value
     }
     
-    mutating func parse() throws -> [JSON] {
-        var jsonArray = [JSON]()
+    mutating func parse() throws -> [JSONValue] {
+        var jsonArray = [JSONValue]()
         var numberOfComma = 0
         
         if let token = getNextToken(), token != .openSquareBracket {

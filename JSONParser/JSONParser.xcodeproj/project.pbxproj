@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		300A782722A391E000EF7A33 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300A782622A391E000EF7A33 /* JSON.swift */; };
+		300A782722A391E000EF7A33 /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300A782622A391E000EF7A33 /* JSONValue.swift */; };
 		300D3EB9229EB5ED00E0CB52 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300D3EB8229EB5ED00E0CB52 /* OutputView.swift */; };
 		30E7C1E0229D7A560043FA28 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7C1DF229D7A560043FA28 /* InputView.swift */; };
 		30E7C1E2229E1E6A0043FA28 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7C1E1229E1E6A0043FA28 /* Lexer.swift */; };
@@ -29,7 +29,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		300A782622A391E000EF7A33 /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
+		300A782622A391E000EF7A33 /* JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValue.swift; sourceTree = "<group>"; };
 		300D3EB8229EB5ED00E0CB52 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		30E7C1DF229D7A560043FA28 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		30E7C1E1229E1E6A0043FA28 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
@@ -75,7 +75,7 @@
 				30E7C1E3229E1F9E0043FA28 /* Token.swift */,
 				30E7C1E5229E45CF0043FA28 /* Parser.swift */,
 				300D3EB8229EB5ED00E0CB52 /* OutputView.swift */,
-				300A782622A391E000EF7A33 /* JSON.swift */,
+				300A782622A391E000EF7A33 /* JSONValue.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -139,7 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
-				300A782722A391E000EF7A33 /* JSON.swift in Sources */,
+				300A782722A391E000EF7A33 /* JSONValue.swift in Sources */,
 				30E7C1E2229E1E6A0043FA28 /* Lexer.swift in Sources */,
 				30E7C1E6229E45CF0043FA28 /* Parser.swift in Sources */,
 				30E7C1E0229D7A560043FA28 /* InputView.swift in Sources */,
