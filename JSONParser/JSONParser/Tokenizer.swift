@@ -44,43 +44,6 @@ struct Tokenizer {
             token = ""
         }
         
-        print(tokens)
         return tokens
-    }
-    // { "name" : "MINJI CHO", "alias" : "mindy", "level" : 2, "married" : false }
-    // [ { "name" : "MINJI CHO", "alias" : "mindy", "level" : 2, "married" : false },{ "name" : "HELLO HI", "alias" : "hi", "level" : 4, "married" : true } ]
-}
-
-extension String {
-    func splitByLeftBracket() -> String {
-        return self.replacingOccurrences(of: JSONKeyword.leftSquareBracket, with: JSONKeyword.whiteSpace)
-    }
-    
-    func splitByRightBracket() -> String {
-        return self.replacingOccurrences(of: JSONKeyword.rightSquareBracket, with: JSONKeyword.whiteSpace)
-    }
-}
-
-struct Stack<Element> {
-    fileprivate var array: [Element] = []
-
-    var isEmpty: Bool {
-        return array.isEmpty
-    }
-
-    var count: Int {
-        return array.count
-    }
-
-    mutating func push(_ element: Element) {
-        array.append(element)
-    }
-
-    mutating func pop() -> Element? {
-        return array.popLast()
-    }
-
-    mutating func peek() -> Element? {
-        return array.last
     }
 }
