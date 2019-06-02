@@ -12,6 +12,8 @@ struct JSONKeyword {
     static let whiteSpace = ""
     static let leftSquareBracket = "["
     static let rightSquareBracket = "]"
+    static let leftCurlyBracket = "{"
+    static let rightCurlyBracket = "}"
     static let comma = ","
     static let quotation = "\""
     static let `true` = "true"
