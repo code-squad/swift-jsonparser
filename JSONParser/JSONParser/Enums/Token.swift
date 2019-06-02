@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Token {
+enum Token: Equatable {
     case Array
     
     case Number(Int)
@@ -27,7 +27,40 @@ enum Token {
     
     case LeftBraket
     case RightBraket
-   
+    
+    func getValue() -> String {
+        switch self{
+        case .Array:
+            return "배열"
+        case .Number(let value):
+            return "\(value)"
+        case .Bool(let value):
+            return "\(value)"
+        case .Value(let value):
+            return "\(value)"
+        case .String(let value):
+            return "\(value)"
+        case .Key(let value):
+            return "\(value)"
+        case .WhiteSpace :
+            return " "
+        case .Colon:
+            return ":"
+        case .Comma:
+            return ","
+        case .DoubleQuotation :
+            return "\""
+        case .LeftBrace:
+            return "{"
+        case .RightBrace:
+            return "}"
+        case .LeftBraket:
+            return "["
+        case .RightBraket:
+            return "]"
+        }
+    }
+    
     static let symbols: Array<Token> = [.Comma,.Colon,.DoubleQuotation,.LeftBrace,.RightBrace,.WhiteSpace,.LeftBraket,.RightBraket]
     
 }
