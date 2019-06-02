@@ -10,8 +10,8 @@ import Foundation
 
 struct JSONKeyword {
     static let whiteSpace = ""
-    static let leftBracket = "["
-    static let rightBracket = "]"
+    static let leftSquareBracket = "["
+    static let rightSquareBracket = "]"
     static let comma = ","
     static let quotation = "\""
     static let `true` = "true"
