@@ -9,5 +9,7 @@
 import Foundation
 
 protocol Factory {
-    func createToken(string: String) -> Token
+    associatedtype T
+    
+    func create(string: String) -> T
 }
