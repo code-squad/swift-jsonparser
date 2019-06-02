@@ -44,6 +44,11 @@ struct Tokenizer {
             token = ""
         }
         
-        return tokens
+        let trimmedTokens = removeAllWhiteSpaces(in: tokens)
+        return trimmedTokens
+    }
+    
+    static private func removeAllWhiteSpaces(in tokens: [String]) -> [String] {
+        return tokens.filter { !$0.isEmpty }
     }
 }
