@@ -46,8 +46,8 @@ struct Parser {
         return value
     }
     
-    mutating func parse() throws -> [Any] {
-        var jsonArray = [Any]()
+    mutating func parse() throws -> [JSON] {
+        var jsonArray = [JSON]()
         var numberOfComma = 0
         
         if let token = getNextToken(), token != .openSquareBracket {
@@ -58,16 +58,16 @@ struct Parser {
             switch token {
             case .doubleQuotation:
                 let stringValue = getString()
-                jsonArray.append(stringValue)
+                jsonArray.append(.string(stringValue))
             case .number(let number):
-                jsonArray.append(number)
+                jsonArray.append(.number(number))
             case .comma:
                 if jsonArray.count - 1 == numberOfComma && tokens.count != tokens.endIndex {
                     numberOfComma = numberOfComma + 1
                     continue
                 }
             case .bool(let bool):
-                jsonArray.append(bool)
+                jsonArray.append(.bool(bool))
             case .string, .openSquareBracket:
                 throw Parser.Error.invalidToken(token)
             case .closeSquareBracket:
