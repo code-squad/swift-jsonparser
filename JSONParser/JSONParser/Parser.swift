@@ -62,7 +62,7 @@ struct Parser {
             case .number(let number):
                 jsonArray.append(.number(number))
             case .comma:
-                if jsonArray.count - 1 == numberOfComma && tokens.count != tokens.endIndex {
+                if jsonArray.count - 1 == numberOfComma && position != tokens.endIndex {
                     numberOfComma = numberOfComma + 1
                     continue
                 }
