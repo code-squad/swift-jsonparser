@@ -11,46 +11,59 @@ import Foundation
 struct JsonParser {
     private var tokens: Array<Token>
     var strategy: JsonParsingStrategy
+    var jsonValue: JsonValue
     
     init(tokens: Array<Token>) {
         self.tokens = tokens
         self.strategy =
             tokens[0] == Token.LeftBraket ?
                 JsonListParsingStrategy() : JsonObjectParsingStrategy()
+        self.jsonValue = tokens[0] == Token.LeftBraket ?
+                JsonList() : JsonObject()
+        self.mergeStringTokens()
     }
     
     mutating func parse() -> JsonValue {
-        self.nomalizeTokens()
+        self.grouping()
         return self.strategy.parse(tokens: self.tokens)
     }
     
-    private mutating func nomalizeTokens() {
-        self.mergeStringTokens()
-        
-    }
-    
-    private mutating func grouping() {
-        for token in tokens {
-            if token == .LeftBrace {
-                
+    mutating func grouping() {
+        var tokens = Array<Token>()
+        var removingTokenIndex = MyStack<Int>()
+        var ing = false
+        for (index, token) in self.tokens.enumerated() {
+            if token == .LeftBrace || token == .RightBrace {
+                ing.toggle()
+                if !ing {
+                    self.tokens.append(token)
+                    self.tokens[index] = .List(tokens)
+                    tokens.removeAll()
+                }
+                continue
+            }
+            if ing {
+                tokens.append(token)
+                removingTokenIndex.push(index)
             }
         }
+        self.remove(indexs: &removingTokenIndex)
     }
     
     private mutating func mergeStringTokens() {
         var contents = ""
         var removingTokenIndex = MyStack<Int>()
-        var isString = false
+        var ing = false
         for (index, token) in self.tokens.enumerated() {
             if token == .DoubleQuotation {
-                isString.toggle()
-                if isString == false {
+                ing.toggle()
+                if !ing {
                     self.tokens[index] = .String(contents)
                     contents = ""
                 }
                 continue
             }
-            if isString {
+            if ing {
                 contents += token.getValue()
                 removingTokenIndex.push(index)
             }
