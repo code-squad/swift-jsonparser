@@ -21,7 +21,7 @@ struct TokenConverter: Converter {
         case .Bool(let bool):
             jsonValue = Bool(bool)
         case .String(let string):
-            jsonValue = string
+            jsonValue = String(string)
         default:
             jsonValue = nil
         }

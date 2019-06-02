@@ -30,7 +30,6 @@ struct JsonObjectParsingStrategy: JsonParsingStrategy {
     private func separate(tokens: Array<Token>) -> (Indexs,Indexs) {
         var keyTokenIndexs = Array<Int>()
         var valueTokenIndexs = Array<Int>()
-        
         for (index,token) in tokens.enumerated() {
             if token == .Colon{
                 keyTokenIndexs.append(index-1)

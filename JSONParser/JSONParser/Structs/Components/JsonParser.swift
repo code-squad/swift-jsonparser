@@ -12,17 +12,32 @@ struct JsonParser {
     private var tokens: Array<Token>
     var strategy: JsonParsingStrategy
     
-    init(tokens: Array<Token>, strategy: JsonParsingStrategy = JsonListParsingStrategy()) {
+    init(tokens: Array<Token>) {
         self.tokens = tokens
-        self.strategy = strategy
+        self.strategy =
+            tokens[0] == Token.LeftBraket ?
+                JsonListParsingStrategy() : JsonObjectParsingStrategy()
     }
     
-    public mutating func parse() -> JsonValue {
+    mutating func parse() -> JsonValue {
         self.nomalizeTokens()
         return self.strategy.parse(tokens: self.tokens)
     }
     
     private mutating func nomalizeTokens() {
+        self.mergeStringTokens()
+        
+    }
+    
+    private mutating func grouping() {
+        for token in tokens {
+            if token == .LeftBrace {
+                
+            }
+        }
+    }
+    
+    private mutating func mergeStringTokens() {
         var contents = ""
         var removingTokenIndex = MyStack<Int>()
         var isString = false
@@ -43,7 +58,7 @@ struct JsonParser {
         self.remove(indexs: &removingTokenIndex)
     }
     
-    private mutating func remove(indexs: inout MyStack<Int>){
+    private mutating func remove(indexs: inout MyStack<Int>) {
         while let removingIndex = indexs.pop() {
             self.tokens.remove(at: removingIndex)
         }

@@ -17,10 +17,10 @@ struct JSONAnalyzer{
                 let userInput = inputView.run()
                 var tokenizer = MyTokenizer.init(userInput)
                 let tokens = try tokenizer.tokenize()
-                var parser = MyListParser.init(tokens: tokens)
-                let result = parser.parse()
-                var outPutview = OutputView.init(numOf: result)
-                outPutview.run()
+                var parser = JsonParser.init(tokens: tokens)
+                let jsonValue = parser.parse()
+                var outputView = OutputView.init(jsonValue)
+                outputView.run()
                 errorOccurred = false
             }catch {
                 errorOccurred = true
@@ -31,4 +31,48 @@ struct JSONAnalyzer{
 }
 
 JSONAnalyzer.run()
-
+//enum JSONValue {
+//    case string(String)
+//    case int(Int)
+//    case double(Double)
+//    case bool(Bool)
+//    case object([String: JSONValue])
+//    case array([JSONValue])
+//}
+//
+//extension JSONValue: ExpressibleByStringLiteral {
+//    public init(stringLiteral value: String) {
+//        self = .string(value)
+//    }
+//}
+//
+//extension JSONValue: ExpressibleByIntegerLiteral {
+//    public init(integerLiteral value: Int) {
+//        self = .int(value)
+//    }
+//}
+//
+//extension JSONValue: ExpressibleByFloatLiteral {
+//    public init(floatLiteral value: Double) {
+//        self = .double(value)
+//    }
+//}
+//
+//extension JSONValue: ExpressibleByBooleanLiteral {
+//    public init(booleanLiteral value: Bool) {
+//        self = .bool(value)
+//    }
+//}
+//
+//extension JSONValue: ExpressibleByArrayLiteral {
+//    public init(arrayLiteral elements: JSONValue...) {
+//        self = .array(elements)
+//    }
+//}
+//
+//extension JSONValue: ExpressibleByDictionaryLiteral {
+//    public init(dictionaryLiteral elements: (String, JSONValue)...) {
+//        self = .object([String: JSONValue](uniqueKeysWithValues: elements))
+//    }
+//}
+//

@@ -9,7 +9,7 @@
 import Foundation
 
 struct JsonValueCounter: Counter {
-  
+    
     typealias T = JsonValue
     
     func count(target: JsonValue) -> Dictionary<String, Int> {
@@ -23,7 +23,7 @@ struct JsonValueCounter: Counter {
         return numOf
     }
     
-    func count(in object: JsonObject) -> Dictionary<String, Int> {
+    private func count(in object: JsonObject) -> Dictionary<String, Int> {
         var numOf = Dictionary<String, Int>()
         _ = object.map {
             numOf[$0.value.describeType()] = ( numOf[$0.value.describeType()] ?? 0 ) + 1
@@ -31,7 +31,7 @@ struct JsonValueCounter: Counter {
         return numOf
     }
     
-    func count(in list: JsonList) -> Dictionary<String, Int> {
+    private func count(in list: JsonList) -> Dictionary<String, Int> {
         var numOf = Dictionary<String, Int>()
         _ = list.map {
             numOf[$0.describeType()] = ( numOf[$0.describeType()] ?? 0 ) + 1

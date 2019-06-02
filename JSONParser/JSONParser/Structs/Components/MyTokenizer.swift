@@ -9,8 +9,8 @@
 import Foundation
 
 struct MyTokenizer: Tokenizer {
+    let factory = TokenFactory()
     var scanner: MyScanner
-    let factory = MyTokenFactory()
     
     init(_ string: String) {
         self.scanner = MyScanner.init(string: string)
@@ -18,7 +18,7 @@ struct MyTokenizer: Tokenizer {
     
     mutating func tokenize() throws -> [Token] {
         let units = try self.split()
-        let tokens = units.map{ self.factory.createToken(string: $0 )}
+        let tokens = units.map{ self.factory.create(string: $0 )}
         return tokens
     }
     

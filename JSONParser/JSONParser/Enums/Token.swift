@@ -9,7 +9,8 @@
 import Foundation
 
 enum Token: Equatable {
-    case Array
+    case List(Array<Token>)
+    case Object(Array<Token>)
     
     case Number(Int)
     case Bool(Bool)
@@ -30,8 +31,10 @@ enum Token: Equatable {
     
     func getValue() -> String {
         switch self{
-        case .Array:
+        case .List(_):
             return "배열"
+        case .Object(_):
+            return "객체"
         case .Number(let value):
             return "\(value)"
         case .Bool(let value):

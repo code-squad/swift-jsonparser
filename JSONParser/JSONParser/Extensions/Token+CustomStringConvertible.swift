@@ -11,8 +11,10 @@ import Foundation
 extension Token: CustomStringConvertible {
     var description: String {
         switch self{
-        case .Array:
+        case .List :
             return "배열"
+        case .Object:
+            return "객체"
         case .Number:
             return "숫자"
         case .Bool:

@@ -60,7 +60,6 @@ class JsonParserTests: XCTestCase {
         self.parser = JsonParser.init(tokens: jsonObjectTokens)
         
         //When
-        parser.setStrategy(JsonObjectParsingStrategy())
         let jsonObject = self.parser.parse() as! JsonObject
         
         //Then

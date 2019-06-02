@@ -9,8 +9,8 @@
 import Foundation
 
 struct MyScanner: Scanner {
-    let string: String
-    var curser: String.Index
+    private let string: String
+    private var curser: String.Index
     
     init(string: String) {
         self.string = string
