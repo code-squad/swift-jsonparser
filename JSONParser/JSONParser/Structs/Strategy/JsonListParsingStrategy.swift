@@ -9,12 +9,12 @@
 import Foundation
 
 struct JsonListParsingStrategy: JsonParsingStrategy {
+    private let converter = TokenConverter()
     
     func parse(tokens: Array<Token>) -> JsonValue {
-        let converter = TokenConverter()
         var jsonList = JsonList()
         for token in tokens {
-            guard let jsonValue = converter.convert(before: token) else { continue }
+            guard let jsonValue = self.converter.convert(before: token) else { continue }
             jsonList.append(jsonValue)
         }
         return jsonList

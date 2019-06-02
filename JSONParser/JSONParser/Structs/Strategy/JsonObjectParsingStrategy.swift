@@ -10,24 +10,23 @@ import Foundation
 
 struct JsonObjectParsingStrategy: JsonParsingStrategy {
     typealias Indexs = Array<Int>
+    private let converter = TokenConverter()
     
     func parse(tokens: [Token]) -> JsonValue {
         var tokens = tokens.filter {
             return !["\"",","," "].contains($0.getValue())
         }
-        let converter = TokenConverter()
         var jsonObject = JsonObject()
         var (keyTokenIndexs,valueTokenIndexs) = separate(tokens: tokens)
         let propertyCount = keyTokenIndexs.count
-        
         for index in 0..<propertyCount {
-            let key = converter.convert(before: tokens[keyTokenIndexs[index]])
-            let value = converter.convert(before: tokens[valueTokenIndexs[index]])
+            guard let key = converter.convert(before: tokens[keyTokenIndexs[index]]) else { continue }
+            let value = self.converter.convert(before: tokens[valueTokenIndexs[index]])
             jsonObject[key as! String] = value
         }
         return jsonObject
     }
-    
+
     private func separate(tokens: Array<Token>) -> (Indexs,Indexs) {
         var keyTokenIndexs = Array<Int>()
         var valueTokenIndexs = Array<Int>()
