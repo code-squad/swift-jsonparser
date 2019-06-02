@@ -8,12 +8,12 @@
 
 import Foundation
 
-enum JSONValue {
+enum JSONValue: CustomStringConvertible {
     case string(String)
     case number(Int)
     case bool(Bool)
     
-    var valueDescription: String {
+    var description: String {
         switch self {
         case .string(let string):
             return string
