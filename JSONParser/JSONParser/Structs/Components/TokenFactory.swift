@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MyTokenFactory: Factory {
+struct TokenFactory: Factory {
     typealias T = Token
     
     func create(string: String) -> Token {
@@ -28,6 +28,9 @@ struct MyTokenFactory: Factory {
         }
         else if (string.isDoubleQuotation) {
             token = Token.DoubleQuotation
+        }
+        else if (string.isString) {
+            token = Token.String(string)
         }
         else if (string.isColon) {
             token = Token.Colon
