@@ -41,7 +41,10 @@ struct Parser {
         var value = ""
         
         while let token = getNextToken(), token != .doubleQuotation {
-            value = value + token.description
+            guard case let .string(stringValue) = token else {
+                return value
+            }
+            value = value + stringValue
         }
         return value
     }
