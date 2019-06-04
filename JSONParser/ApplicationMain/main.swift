@@ -25,10 +25,11 @@ struct Main {
     static func main () throws {
         /// 입력
         var data = ""
+        
         while true {
             do {
                 data = try InputView.readStringJsonData()
-                try Validation.checkInvalidJsonArrayFormat(data)
+                try GrammarChecker.checkJsonPattern(data)
                 break
             } catch let errorType as ErrorCode  {
                 print(errorType.description)
