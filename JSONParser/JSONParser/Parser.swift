@@ -61,16 +61,16 @@ struct Parser {
             switch token {
             case .doubleQuotation:
                 let stringValue = getString()
-                jsonArray.append(.string(stringValue))
+                jsonArray.append(stringValue)
             case .number(let number):
-                jsonArray.append(.number(number))
+                jsonArray.append(number)
             case .comma:
                 if jsonArray.count - 1 == numberOfComma && position != tokens.endIndex {
                     numberOfComma = numberOfComma + 1
                     continue
                 }
             case .bool(let bool):
-                jsonArray.append(.bool(bool))
+                jsonArray.append(bool)
             case .string, .openSquareBracket:
                 throw Parser.Error.invalidToken(token)
             case .closeSquareBracket:

@@ -8,8 +8,10 @@
 
 import Foundation
 
-enum JSONValue {
-    case string(String)
-    case number(Int)
-    case bool(Bool)
-}
+protocol JSONValue { }
+
+extension String: JSONValue { }
+
+extension Int: JSONValue { }
+
+extension Bool: JSONValue { }
