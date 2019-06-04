@@ -10,15 +10,15 @@ import Foundation
 
 extension Dictionary where Key == String, Value == [JSONValue] {
     
-    var valuesCount: Int {
+    var allValuesCount: Int {
         return self.values.flatMap { $0 }.count
     }
     
-    var valuesDescription: String {
+    var allValuesDescription: String {
         return "\(self.map { "\($0) \($1.count)개" }.joined(separator: ","))"
     }
     
     var description: String {
-        return "총 \(self.valuesCount)개의 데이터 중에 \(self.valuesDescription)가 포함되어 있습니다."
+        return "총 \(self.allValuesCount)개의 데이터 중에 \(self.allValuesDescription)가 포함되어 있습니다."
     }
 }
