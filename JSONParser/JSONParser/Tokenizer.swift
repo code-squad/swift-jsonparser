@@ -32,6 +32,7 @@ struct Tokenizer {
         let result = restoreSplitPairSymbolInStringQuatation(tokens: tokens, originCharacter: ":", splitCharacter: "#:#")
         return result
     }
+    
     /// " "
     private func tokenizeWithWhiteSpace(_ input: String) -> String{
         let tokens = input.components(separatedBy: .whitespacesAndNewlines).filter {!$0.isEmpty}.joined(separator : "&")
@@ -39,6 +40,7 @@ struct Tokenizer {
         
         return result
     }
+    
     /// ,
     private func tokenizeWithComma(_ input: String) -> String{
         let tokens = input.components(separatedBy: ",").joined(separator: "@,@").trimmingCharacters(in: .whitespacesAndNewlines)
@@ -71,7 +73,7 @@ struct Tokenizer {
             // \" 를 보았을 경우, stack을 쌓는다.
             if tokens[index] == startSeparator {
                 index += 1
-                result += compileStackFromBrackets(index: &index, tokens: tokens, end: endSeparator, originCharacter: originCharacter,  splitBy: splitCharacter)
+                result += compileStackFromBrackets(index: &index, tokens: tokens, end: endSeparator, originCharacter: originCharacter, splitBy: splitCharacter)
                 continue
             }
             index += 1

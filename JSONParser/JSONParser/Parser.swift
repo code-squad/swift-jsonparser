@@ -14,11 +14,12 @@ struct Parser {
     
     func parse(_ tokenList: [String] ) -> JsonParsable {
         var result : JsonParsable = ""
-        
         if tokenList[0] == TokenSplitSign.curlyBracketStart.description && tokenList[tokenList.count-1] ==
             TokenSplitSign.curlyBracketEnd.description {
             result = makeJsonObject(tokenList)
-        }else if tokenList[0] == TokenSplitSign.squareBracketStart.description && tokenList[tokenList.count-1] == TokenSplitSign.squareBracketEnd.description {
+            return result
+        }
+        if tokenList[0] == TokenSplitSign.squareBracketStart.description && tokenList[tokenList.count-1] == TokenSplitSign.squareBracketEnd.description {
             result = makeJsonArray(tokenList)
         }
         return result
@@ -32,33 +33,37 @@ struct Parser {
             if index == tokenList.count {
                 break
             }
-            let intCheck = isIntegerValue(value: tokenList[index])
-            let booleanCheck = isBooleanValue(value: tokenList[index])
-            let stringCheck = isStringValue(value: tokenList[index])
-            
-            if intCheck.isInteger {
-                jsonArray.append(intCheck.value)
+            if tokenList[index] == TokenSplitSign.comma.description ||
+                tokenList[index] == TokenSplitSign.squareBracketEnd.description {
                 continue
             }
-            if booleanCheck.isBoolean {
-                jsonArray.append(booleanCheck.value)
-                continue
-            }
-            if isSquareBracketStart(tokenList[index]){
-                let recursiveJsonArrayElement = saveJsonArrayElementInJsonArray(tokenList: tokenList, index: &index)
-                jsonArray.append(recursiveJsonArrayElement)
-                continue
-            }
-            if isCurlyBracketStart(tokenList[index]){
-                let recursiveJsonObjectElement = saveJsonObjectElementInJsonArray(tokenList: tokenList, index: &index)
-                jsonArray.append(recursiveJsonObjectElement)
-                continue
-            }
-            if stringCheck.isString {
-                jsonArray.append(stringCheck.value)
-            }
+            let value = confirmJsonArrayValueType(tokenList: tokenList, index: &index)
+            jsonArray.append(value)
+            continue
         }
         return jsonArray
+    }
+    
+    private func confirmJsonArrayValueType(tokenList: [String], index: inout Int) -> JsonParsable {
+        let intCheck = isIntegerValue(value: tokenList[index])
+        let booleanCheck = isBooleanValue(value: tokenList[index])
+        let stringCheck = isStringValue(value: tokenList[index])
+        
+        if intCheck.isInteger {
+            return intCheck.value
+        }
+        if booleanCheck.isBoolean {
+            return booleanCheck.value
+        }
+        if isSquareBracketStart(tokenList[index]){
+            let recursiveJsonArrayElement = saveJsonArrayElementInJsonArray(tokenList: tokenList, index: &index)
+            return recursiveJsonArrayElement
+        }
+        if isCurlyBracketStart(tokenList[index]){
+            let recursiveJsonObjectElement = saveJsonObjectElementInJsonArray(tokenList: tokenList, index: &index)
+            return recursiveJsonObjectElement
+        }
+        return stringCheck.value
     }
     
     private func makeJsonObject(_ tokenList: [String]) -> JsonParsable {
@@ -69,10 +74,10 @@ struct Parser {
             if index >= tokenList.count {
                 break
             }
-            if tokenList[index] == "," {
+            if tokenList[index] == TokenSplitSign.comma.description {
                 continue
             }
-            if tokenList[index] == ":" {
+            if tokenList[index] == TokenSplitSign.semicolon.description {
                 /// find key : value
                 let (key, value) = getKeyValueFromTokenizedJsonObject(tokenList: tokenList, index: &index)
                 let jsonObjectElement = makeKeyValuePair(tokenList: tokenList, key: key, value: value, index: &index)
@@ -214,25 +219,27 @@ struct Parser {
         }
         return true
     }
+    
     private func isBoolean (_ token : String) -> Bool {
         guard let _: Bool = Bool(token) else {
             return false
         }
         return true
     }
+    
     private func isSquareBracketStart(_ input: String ) -> Bool {
         return input.count == 1 && input == TokenSplitSign.squareBracketStart.description ? true : false
     }
+    
     private func isSquareBracketEnd(_ input: String ) -> Bool {
         return input.count == 1 && input == TokenSplitSign.squareBracketEnd.description ? true : false
     }
+    
     private func isCurlyBracketStart(_ input: String) -> Bool {
         return input.count == 1 && input == TokenSplitSign.curlyBracketStart.description ? true : false
     }
+    
     private func isCurlyBracketEnd(_ input: String) -> Bool {
         return input.count == 1 && input == TokenSplitSign.curlyBracketEnd.description ? true : false
     }
-    
-    
-    
 }
