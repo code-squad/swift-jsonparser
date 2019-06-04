@@ -8,10 +8,24 @@
 
 import Foundation
 
-protocol JSONValue { }
+protocol JSONValue {
+    var typeDescription: String { get }
+}
 
-extension String: JSONValue { }
+extension String: JSONValue {
+    var typeDescription: String {
+        return "문자열"
+    }
+}
 
-extension Int: JSONValue { }
+extension Int: JSONValue {
+    var typeDescription: String {
+        return "숫자"
+    }
+}
 
-extension Bool: JSONValue { }
+extension Bool: JSONValue {
+    var typeDescription: String {
+        return "부울"
+    }
+}
