@@ -71,7 +71,7 @@ struct Tokenizer {
             // \" 를 보았을 경우, stack을 쌓는다.
             if tokens[index] == startSeparator {
                 index += 1
-                result += complieStackFromBrackets(index: &index, tokens: tokens, end: endSeparator, originCharacter: originCharacter,  splitBy: splitCharacter)
+                result += compileStackFromBrackets(index: &index, tokens: tokens, end: endSeparator, originCharacter: originCharacter,  splitBy: splitCharacter)
                 continue
             }
             index += 1
@@ -79,7 +79,7 @@ struct Tokenizer {
         return result
     }
     
-    private func complieStackFromBrackets (index : inout Int, tokens: String, end: String, originCharacter: String, splitBy splitCharacter : String ) -> String {
+    private func compileStackFromBrackets (index : inout Int, tokens: String, end: String, originCharacter: String, splitBy splitCharacter : String ) -> String {
         var stack : Stack<String> = Stack<String>()
         stack.push(tokens[index])
         var result = ""
