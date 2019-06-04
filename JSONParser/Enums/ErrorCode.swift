@@ -23,7 +23,7 @@ enum ErrorCode: Error, CustomStringConvertible{
             case .noInput:
                 return  "입력값이 없습니다."
             case .invalidJsonFormat:
-                return "유효하지 않은 json 포맷입니다."
+                return "지원하지 않는 형식을 포함하고 있습니다."
             case .lexicalTypeError:
                 return "요소 Type 이 문자열, 숫자, 불린 값 어느 경우도 해당하지 않습니다."
             case .notFoundKey:
