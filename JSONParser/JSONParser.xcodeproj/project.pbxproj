@@ -19,7 +19,6 @@
 		C52E70BA2292D01F008AEC89 /* JsonObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52D2553228D27A2006E7F4E /* JsonObject.swift */; };
 		C52E70BB2292D028008AEC89 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74D228195C800D99C02 /* Tokenizer.swift */; };
 		C52E70BC2292D02C008AEC89 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E70B12292BF65008AEC89 /* Utility.swift */; };
-		C52E70BD2292D02E008AEC89 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74B228177FA00D99C02 /* Validation.swift */; };
 		C52E70BE2292D067008AEC89 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7512282CAF500D99C02 /* Lexer.swift */; };
 		C52E70C02292D0D4008AEC89 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7472281758E00D99C02 /* InputView.swift */; };
 		C52E70C12292D0DD008AEC89 /* JsonFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52D24C422851BDF006E7F4E /* JsonFormatter.swift */; };
@@ -35,7 +34,6 @@
 		C557FBA8229ED48700D1FC8F /* GrammerCheckerUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C557FBA7229ED48700D1FC8F /* GrammerCheckerUnitTest.swift */; };
 		C56AC7482281758E00D99C02 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7472281758E00D99C02 /* InputView.swift */; };
 		C56AC74A2281764500D99C02 /* ErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7492281764500D99C02 /* ErrorCode.swift */; };
-		C56AC74C228177FA00D99C02 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74B228177FA00D99C02 /* Validation.swift */; };
 		C56AC74E228195C800D99C02 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74D228195C800D99C02 /* Tokenizer.swift */; };
 		C56AC7522282CAF500D99C02 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7512282CAF500D99C02 /* Lexer.swift */; };
 		C56AC75622840C9300D99C02 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC75522840C9300D99C02 /* OutputView.swift */; };
@@ -75,7 +73,6 @@
 		C557FBA7229ED48700D1FC8F /* GrammerCheckerUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammerCheckerUnitTest.swift; sourceTree = "<group>"; };
 		C56AC7472281758E00D99C02 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		C56AC7492281764500D99C02 /* ErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCode.swift; sourceTree = "<group>"; };
-		C56AC74B228177FA00D99C02 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		C56AC74D228195C800D99C02 /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
 		C56AC7512282CAF500D99C02 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		C56AC75522840C9300D99C02 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
@@ -128,7 +125,6 @@
 				C56AC7512282CAF500D99C02 /* Lexer.swift */,
 				C56AC74D228195C800D99C02 /* Tokenizer.swift */,
 				C52E70F02297E223008AEC89 /* Parser.swift */,
-				C56AC74B228177FA00D99C02 /* Validation.swift */,
 				C557FBA2229D3C8200D1FC8F /* GrammarChecker.swift */,
 			);
 			path = JSONParser;
@@ -305,7 +301,6 @@
 				C52E70CB22968A9C008AEC89 /* LexicalType.swift in Sources */,
 				C56AC7482281758E00D99C02 /* InputView.swift in Sources */,
 				C557FBA3229D3C8200D1FC8F /* GrammarChecker.swift in Sources */,
-				C56AC74C228177FA00D99C02 /* Validation.swift in Sources */,
 				C56AC74A2281764500D99C02 /* ErrorCode.swift in Sources */,
 				C56AC75622840C9300D99C02 /* OutputView.swift in Sources */,
 				C52D2554228D27A2006E7F4E /* JsonObject.swift in Sources */,
@@ -321,7 +316,6 @@
 				C52E70C82293E7F3008AEC89 /* OutputView.swift in Sources */,
 				C52E70C12292D0DD008AEC89 /* JsonFormatter.swift in Sources */,
 				C52E70BE2292D067008AEC89 /* Lexer.swift in Sources */,
-				C52E70BD2292D02E008AEC89 /* Validation.swift in Sources */,
 				C52E70BC2292D02C008AEC89 /* Utility.swift in Sources */,
 				C52E70FF229BE9FE008AEC89 /* TokenizerTest.swift in Sources */,
 				C52E7101229BEA06008AEC89 /* ParserTest.swift in Sources */,
