@@ -8,19 +8,8 @@
 
 import Foundation
 
-enum JSONValue: CustomStringConvertible {
+enum JSONValue {
     case string(String)
     case number(Int)
     case bool(Bool)
-    
-    var description: String {
-        switch self {
-        case .string(let string):
-            return string
-        case .number(let int):
-            return String(int)
-        case .bool(let bool):
-            return String(bool)
-        }
-    }
 }
