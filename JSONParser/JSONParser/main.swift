@@ -23,7 +23,7 @@ func main() {
     } catch let error as Parser.Error {
         print(error.localizedDescription)
     } catch {
-        print("예상치 못한 에러 발생: \(error))"
+        print("\(Message.unexpectedError): \(error)")
     }
 }
 
