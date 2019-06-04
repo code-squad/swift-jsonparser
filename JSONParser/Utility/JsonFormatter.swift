@@ -29,7 +29,7 @@ struct JsonFormatter{
     }
     
     mutating func countDataTypeOfElementInJsonData() throws {
-        if self.jsonData is JsonArray {
+        if self.jsonData is Array<JsonParsable> {
             try countElementTypeInJsonArray()
             return
         }
@@ -52,7 +52,7 @@ struct JsonFormatter{
         case is JsonObject:
             let currentCount = countDictionary[LexicalType.jsonObject] ?? 0
             countDictionary[LexicalType.jsonObject] = currentCount + 1
-        case is JsonArray:
+        case is Array<JsonParsable>:
             let currentCount = countDictionary[LexicalType.jsonArray] ?? 0
             countDictionary[LexicalType.jsonArray] = currentCount + 1
         case is String :
@@ -73,10 +73,10 @@ struct JsonFormatter{
     }
     
     private mutating func countElementTypeInJsonArray() throws {
-        guard let jsonArray: JsonArray = self.jsonData as? JsonArray else{
+        guard let jsonArray: Array<JsonParsable> = self.jsonData as? Array<JsonParsable> else{
             throw ErrorCode.convertJsonArrayError
         }
-        for element in jsonArray.arrayList {
+        for element in jsonArray {
             checkElementDataType(element)
         }
     }
