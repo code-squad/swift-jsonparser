@@ -103,8 +103,8 @@ class GrammerCheckerUnitTest: XCTestCase {
         testObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
         result = testObject.jsonPatternCheck(for: jsonObjectPattern, in: testObject)
         XCTAssert(result.count == 0, "\(testObject) is jsonObject Format")
-    
     }
+    
     func testJsonObjectKeyGrammar(){
         let testObjectWithValidKey = "{ \"key\" : \"value\"  ,  \" number \" : -10 ,  \"boolean\" : true , \"valid\": 100 , \"key\":\"\"}"
         let testObjectWithInvalidKey = "{ \"key\" : \"value\"  ,  \" number \" : -10 ,  \"boolean\" : true , \"\": 100 , \"key\":\"\"}"
@@ -149,7 +149,6 @@ class GrammerCheckerUnitTest: XCTestCase {
         testOfBooleanValue = "[ false, true, false, true, true]"
         resultForValidArrayFormat = testOfBooleanValue.jsonPatternCheck(for: jsonArrayWithPrimitiveValuePattern, in: testOfBooleanValue)
         XCTAssert(resultForValidArrayFormat.count == 1, "\(testOfBooleanValue) has in valid boolean format ")
-
     }
     
     func testJsonArrayNumericGrammar(){
@@ -216,43 +215,48 @@ class GrammerCheckerUnitTest: XCTestCase {
         testInput = "[ { \"object key\": 10 } , {10, 20}, true, false, \"string value\", { \"key\" : true , \"\": false, \"valid key \":true}]"
         result = testInput.jsonPatternCheck(for: jsonArrayWithJsonObjectPattern, in: testInput)
         XCTAssert(result.count == 0, "\(testInput) has valid JsonObject format in a given JsonArray format ")
-
     }
     
-    
-    func testCheckJsonGrammar1(){
+    func testCheckInvalidJsonArrayGrammar(){
         let invalidJsonArray = "[ \"name\" : \"KIM JUNG\" ]"
         var result = false
         result = invalidJsonArray.isJsonPattern(for: jsonObjectPattern, in: invalidJsonArray )
         result = result ? result : invalidJsonArray.isJsonPattern(for: jsonArrayWithJsonObjectPattern, in: invalidJsonArray)
         XCTAssert(!result  , "\(invalidJsonArray) is not Json format on the condition that STEP 7-3 gives" )
-        
     }
-    func testCheckJsonGrammar2(){
+    
+    func testCheckInvalidJsonObjectGrammar1(){
         let invalidJsonObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
         var result = false
         result = invalidJsonObject.isJsonPattern(for: jsonObjectPattern, in: invalidJsonObject)
         result = result ? result : invalidJsonObject.isJsonPattern(for: jsonArrayWithJsonObjectPattern, in: invalidJsonObject)
         XCTAssert(!result , "\(invalidJsonObject) is not Json format on the condition that STEP 7-3 gives" )
-
     }
-    func testCheckJsonGrammar3(){
+    
+    func testCheckInvalidJsonObjectGrammar2(){
+        let invalidJsonObject =  "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, {\"child1\" : \"hana\"}, {\"child2\": \"hayul\"}, {\"child3\" : \"haun\"} }"
+        var result = false
+        result = invalidJsonObject.isJsonPattern(for: jsonObjectPattern, in: invalidJsonObject)
+        result = result ? result : invalidJsonObject.isJsonPattern(for: jsonArrayWithJsonObjectPattern, in: invalidJsonObject)
+        XCTAssert(!result , "\(invalidJsonObject) is not Json format on the condition that STEP 7-3 gives" )
+    }
+    
+    func testCheckValidJsonObjectGrammar(){
         let validJsonObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
         var result = false
         result = validJsonObject.isJsonPattern(for: jsonObjectPattern, in: validJsonObject)
         result = result ? result : validJsonObject.isJsonPattern(for: jsonArrayWithJsonObjectPattern, in: validJsonObject)
         result ? print("\(validJsonObject) is Json format ") : print("\(validJsonObject) is not Json format on the condition that STEP 7-3 gives")
         XCTAssert(result, "\(validJsonObject) is not Json format on the condition that STEP 7-3 gives" )
-
     }
-    func testCheckJsonGrammar4() {
+    
+    func testCheckValidJsonArrayWithObjectGrammar() {
         let validJsonArray = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"
         var result = false
         result = validJsonArray.isJsonPattern(for: jsonObjectPattern, in: validJsonArray)
         result = result ? result : validJsonArray.isJsonPattern(for: jsonArrayWithJsonObjectPattern, in: validJsonArray)
         result ? print("\(validJsonArray) is Json format ") : print("\(validJsonArray) is not Json format on the condition that STEP 7-3 gives")
         XCTAssert(result, "\(validJsonArray) is not Json format on the condition that STEP 7-3 gives" )
-
     }
 
 }
