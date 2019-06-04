@@ -35,23 +35,23 @@ class ParserUnitTest: XCTestCase {
             print(result.description)
             
             //check data type
-            XCTAssert(result is JsonArray, "parse array failure")
-            guard let jsonArray = result as? JsonArray else {
+            XCTAssert(result is Array<JsonParsable>, "parse array failure")
+            guard let jsonArray = result as? Array<JsonParsable> else {
                 return
             }
             
             //check size
-            XCTAssert( jsonArray.arrayList.count == 11, "parse nested element in array failure" )
+            XCTAssert( jsonArray.count == 11, "parse nested element in array failure" )
         
             //check nested JsonArray element
-            XCTAssert(jsonArray.arrayList[7] is JsonArray, "fail to parse nested JsonArray element - \(jsonArray.arrayList[7]) is JsonArray ")
-            XCTAssert(jsonArray.arrayList[8] is String, "fail to parse nested JsonArray element - \(jsonArray.arrayList[8]) is String ")
+            XCTAssert(jsonArray[7] is Array<JsonParsable>, "fail to parse nested JsonArray element - \(jsonArray[7]) is JsonArray ")
+            XCTAssert(jsonArray[8] is String, "fail to parse nested JsonArray element - \(jsonArray[8]) is String ")
             
             //check doubly nested JsonArray element
-            guard let doublyNestedArray = jsonArray.arrayList[7] as? JsonArray else {
+            guard let doublyNestedArray = jsonArray[7] as? Array<JsonParsable> else {
                 return
             }
-            XCTAssert(doublyNestedArray.arrayList[1]  is JsonArray, "fail to parse doublyNested JsonArray element - \(doublyNestedArray.arrayList[1] ) is JsonArray ")
+            XCTAssert(doublyNestedArray[1]  is Array<JsonParsable>, "fail to parse doublyNested JsonArray element - \(doublyNestedArray[1] ) is JsonArray ")
         }
     }
     
@@ -87,12 +87,12 @@ class ParserUnitTest: XCTestCase {
                    return
                 }
                 let contentValue = try curlyBracketObject.searchValue(key: "content")
-                XCTAssert ( contentValue is JsonArray , "fail to parse nested jsonArray element in jsonObject - \(contentValue) " )
+                XCTAssert ( contentValue is Array<JsonParsable> , "fail to parse nested jsonArray element in jsonObject - \(contentValue) " )
 
-                guard let jsonArrayInObject = contentValue as? JsonArray else {
+                guard let jsonArrayInObject = contentValue as? Array<JsonParsable> else {
                     return
                 }
-                XCTAssert ( jsonArrayInObject.arrayList.count == 4 , "fail to parse nested jsonArray element in jsonObject - \(contentValue) " )
+                XCTAssert ( jsonArrayInObject.count == 4 , "fail to parse nested jsonArray element in jsonObject - \(contentValue) " )
                 
             } catch let errorType as ErrorCode{
                 print (errorType.description)
@@ -181,7 +181,7 @@ class ParserUnitTest: XCTestCase {
     
     
     private func makeJsonArray(_ tokenList: [String] ) -> JsonParsable {
-        var jsonArray: JsonArray = JsonArray()
+        var jsonArray = [JsonParsable]()
         var index = 0
         while index < tokenList.count {
             index += 1
@@ -205,19 +205,19 @@ class ParserUnitTest: XCTestCase {
         return jsonArray
     }
     
-    private func saveJsonArrayElementInJsonArray(tokenList : [String], index: inout Int, jsonArray: inout JsonArray) {
+    private func saveJsonArrayElementInJsonArray(tokenList : [String], index: inout Int, jsonArray: inout [JsonParsable]) {
         var (stackForArray, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start : isSquareBracketStart, end : isSquareBracketEnd)
         let recursiveJsonArrayElement = buildRecursivlyFromStackToJsonElement(stackForObject: &stackForArray, recursiveFunction: makeJsonArray)
         /// add recursive Element to jsonArray
-        jsonArray.add(value: recursiveJsonArrayElement )
+        jsonArray.append(recursiveJsonArrayElement )
         index = innerIndex
     }
     
-    private func saveJsonObjectElementInJsonArray(tokenList : [String], index: inout Int, jsonArray: inout JsonArray) {
+    private func saveJsonObjectElementInJsonArray(tokenList : [String], index: inout Int, jsonArray: inout [JsonParsable]) {
         var (stackForArray, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start : isCurlyBracketStart, end : isCurlyBracketEnd)
         let recursiveJsonObjectElement = buildRecursivlyFromStackToJsonElement(stackForObject: &stackForArray, recursiveFunction: makeJsonObject)
         /// add recursive Element to jsonArray
-        jsonArray.add(value: recursiveJsonObjectElement )
+        jsonArray.append(recursiveJsonObjectElement )
         index = innerIndex
     }
     
@@ -251,29 +251,29 @@ class ParserUnitTest: XCTestCase {
         return false
     }
     
-    private func tryToAddIntegerElementInJsonArray(tokenElement: String, jsonArray: inout JsonArray) -> Bool {
+    private func tryToAddIntegerElementInJsonArray(tokenElement: String, jsonArray: inout [JsonParsable]) -> Bool {
         if isNumeric(tokenElement) {
             guard let intValue = Int(tokenElement) else {
                 return false
             }
-            jsonArray.add(value: intValue)
+            jsonArray.append(intValue)
             return true
         }
         return false
     }
-    private func tryToAddBooleanElementInJsonArray(tokenElement: String, jsonArray: inout JsonArray) -> Bool {
+    private func tryToAddBooleanElementInJsonArray(tokenElement: String, jsonArray: inout [JsonParsable]) -> Bool {
         if isBoolean(tokenElement) {
             guard let boolValue = Bool(tokenElement) else {
                 return false
             }
-            jsonArray.add(value: boolValue)
+            jsonArray.append(boolValue)
             return true
         }
         return false
     }
-    private func tryToAddStringElementInJsonArray(tokenElement: String, jsonArray: inout JsonArray) -> Bool {
+    private func tryToAddStringElementInJsonArray(tokenElement: String, jsonArray: inout [JsonParsable]) -> Bool {
         if isString(tokenElement){
-            jsonArray.add(value: tokenElement)
+            jsonArray.append(tokenElement)
             return true
         }
         return false

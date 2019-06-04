@@ -52,14 +52,8 @@ extension String {
     }
 }
 class GrammerCheckerUnitTest: XCTestCase {
-    
-    let testInputJsonObject = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true }, true, \"context\" ]"
-    let testSimpleInput = "[ 10 , \"jk\", 4, \"314\", 99, \"cro ng\", false, [ \"json\", [ false, 10 ], \"Array\" ], \"[ SquareBr, acke, tTest ]\", {\"abc\" : 10, \"bool\" : true}, \"{, {. [, [, curly , , ] ] ] ] \" ]"
-    let testJsonObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true, \"{ : }\" : \":\", \"curly bracket\":{ \"key\" : \"value\", \"size\" : 10, \"content\" : [ 10, 20, 30, 40 ] } }"
-    
-    let test = "[ \"json\", [ false, 10 ], \"Array\" ]"
+
     let jsonObject = "[ \"name\" , \"KIM JUNG\" ]"
-    
    
     let jsonObjectPattern = "^\\{\\s*((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false)))((\\s*,\\s*)((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false))))*\\s*\\}$"
     

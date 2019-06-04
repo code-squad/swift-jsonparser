@@ -93,7 +93,7 @@ struct TestParser {
     
     
     private func makeJsonArray(_ tokenList: [String] ) -> JsonParsable {
-        var jsonArray: JsonArray = JsonArray()
+        var jsonArray = [JsonParsable]()
         var index = 0
         while index < tokenList.count {
             index += 1
@@ -117,19 +117,19 @@ struct TestParser {
         return jsonArray
     }
     
-    private func saveJsonArrayElementInJsonArray(tokenList : [String], index: inout Int, jsonArray: inout JsonArray) {
+    private func saveJsonArrayElementInJsonArray(tokenList : [String], index: inout Int, jsonArray: inout [JsonParsable]) {
         var (stackForArray, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start : isSquareBracketStart, end : isSquareBracketEnd)
         let recursiveJsonArrayElement = buildRecursivlyFromStackToJsonElement(stackForObject: &stackForArray, recursiveFunction: makeJsonArray)
         /// add recursive Element to jsonArray
-        jsonArray.add(value: recursiveJsonArrayElement )
+        jsonArray.append(recursiveJsonArrayElement )
         index = innerIndex
     }
     
-    private func saveJsonObjectElementInJsonArray(tokenList : [String], index: inout Int, jsonArray: inout JsonArray) {
+    private func saveJsonObjectElementInJsonArray(tokenList : [String], index: inout Int, jsonArray: inout [JsonParsable]) {
         var (stackForArray, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start : isCurlyBracketStart, end : isCurlyBracketEnd)
         let recursiveJsonObjectElement = buildRecursivlyFromStackToJsonElement(stackForObject: &stackForArray, recursiveFunction: makeJsonObject)
         /// add recursive Element to jsonArray
-        jsonArray.add(value: recursiveJsonObjectElement )
+        jsonArray.append( recursiveJsonObjectElement )
         index = innerIndex
     }
     
@@ -163,29 +163,29 @@ struct TestParser {
         return false
     }
     
-    private func tryToAddIntegerElementInJsonArray(tokenElement: String, jsonArray: inout JsonArray) -> Bool {
+    private func tryToAddIntegerElementInJsonArray(tokenElement: String, jsonArray: inout [JsonParsable]) -> Bool {
         if isNumeric(tokenElement) {
             guard let intValue = Int(tokenElement) else {
                 return false
             }
-            jsonArray.add(value: intValue)
+            jsonArray.append(intValue)
             return true
         }
         return false
     }
-    private func tryToAddBooleanElementInJsonArray(tokenElement: String, jsonArray: inout JsonArray) -> Bool {
+    private func tryToAddBooleanElementInJsonArray(tokenElement: String, jsonArray: inout [JsonParsable]) -> Bool {
         if isBoolean(tokenElement) {
             guard let boolValue = Bool(tokenElement) else {
                 return false
             }
-            jsonArray.add(value: boolValue)
+            jsonArray.append(boolValue)
             return true
         }
         return false
     }
-    private func tryToAddStringElementInJsonArray(tokenElement: String, jsonArray: inout JsonArray) -> Bool {
+    private func tryToAddStringElementInJsonArray(tokenElement: String, jsonArray: inout [JsonParsable]) -> Bool {
         if isString(tokenElement){
-            jsonArray.add(value: tokenElement)
+            jsonArray.append(tokenElement)
             return true
         }
         return false
