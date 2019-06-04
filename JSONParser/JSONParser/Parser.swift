@@ -32,12 +32,19 @@ struct Parser {
             if index == tokenList.count {
                 break
             }
-            if  tryToAddIntegerElementInJsonArray(tokenElement: tokenList[index], jsonArray: &jsonArray) ||
-                tryToAddBooleanElementInJsonArray(tokenElement: tokenList[index], jsonArray: &jsonArray) ||
-                tryToAddStringElementInJsonArray(tokenElement:  tokenList[index], jsonArray: &jsonArray) {
+            let intCheck = isIntegerValue(value: tokenList[index])
+            let booleanCheck = isBooleanValue(value: tokenList[index])
+            let stringCheck = isStringValue(value: tokenList[index])
+            
+            if intCheck.isInteger {
+                jsonArray.append(intCheck.value)
                 continue
             }
-            if isSquareBracketStart(tokenList[index]){                  
+            if booleanCheck.isBoolean {
+                jsonArray.append(booleanCheck.value)
+                continue
+            }
+            if isSquareBracketStart(tokenList[index]){
                 let recursiveJsonArrayElement = saveJsonArrayElementInJsonArray(tokenList: tokenList, index: &index)
                 jsonArray.append(recursiveJsonArrayElement)
                 continue
@@ -46,6 +53,9 @@ struct Parser {
                 let recursiveJsonObjectElement = saveJsonObjectElementInJsonArray(tokenList: tokenList, index: &index)
                 jsonArray.append(recursiveJsonObjectElement)
                 continue
+            }
+            if stringCheck.isString {
+                jsonArray.append(stringCheck.value)
             }
         }
         return jsonArray
@@ -74,11 +84,11 @@ struct Parser {
     
     private func makeKeyValuePair (tokenList: [String], key : String, value : String, index: inout Int) -> JsonParsable{
         /// check value type
-        let intCheck = tryToAddIntegerElementInJsonObject(value: value)
-        let booleanCheck = tryToAddBooleanElementInJsonObject(value: value)
-        let stringCheck = tryToAddStringElementInJsonObject(value: value)
+        let intCheck = isIntegerValue(value: value)
+        let booleanCheck = isBooleanValue(value: value)
+        let stringCheck = isStringValue(value: value)
 
-        if  intCheck.isInteger {
+        if intCheck.isInteger {
             return intCheck.value
         }
         if booleanCheck.isBoolean {
@@ -155,7 +165,7 @@ struct Parser {
         return recursiveJsonObjectElement
     }
     
-    private func tryToAddIntegerElementInJsonObject(value: String) -> (isInteger : Bool , value: Int){
+    private func isIntegerValue(value: String) -> (isInteger : Bool , value: Int){
         if isNumeric(value) {
             guard let intValue = Int(value) else {
                 return (false, -1)
@@ -165,7 +175,7 @@ struct Parser {
         return (false, -1)
     }
     
-    private func tryToAddBooleanElementInJsonObject(value: String) -> (isBoolean : Bool , value: Bool) {
+    private func isBooleanValue(value: String) -> (isBoolean : Bool , value: Bool) {
         if isBoolean(value) {
             guard let boolValue = Bool(value) else {
                 return (false, false)
@@ -175,41 +185,11 @@ struct Parser {
         return (false, false)
     }
     
-    private func tryToAddStringElementInJsonObject(value: String) -> (isString : Bool , value: String) {
+    private func isStringValue(value: String) -> (isString : Bool , value: String) {
         if isString(value){
             return (true, value)
         }
         return (false, "")
-    }
-    
-    private func tryToAddIntegerElementInJsonArray(tokenElement: String, jsonArray: inout [JsonParsable]) -> Bool {
-        if isNumeric(tokenElement) {
-            guard let intValue = Int(tokenElement) else {
-                return false
-            }
-            jsonArray.append(intValue)
-            return true
-        }
-        return false
-    }
-    
-    private func tryToAddBooleanElementInJsonArray(tokenElement: String, jsonArray: inout [JsonParsable]) -> Bool {
-        if isBoolean(tokenElement) {
-            guard let boolValue = Bool(tokenElement) else {
-                return false
-            }
-            jsonArray.append(boolValue)
-            return true
-        }
-        return false
-    }
-    
-    private func tryToAddStringElementInJsonArray(tokenElement: String, jsonArray: inout [JsonParsable]) -> Bool {
-        if isString(tokenElement){
-            jsonArray.append(tokenElement)
-            return true
-        }
-        return false
     }
     
     private func makeStringFromStack (_ stack: inout Stack<String> ) -> String {
