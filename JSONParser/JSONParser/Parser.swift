@@ -59,25 +59,28 @@ struct Parser {
                 continue
             }
             if tokenList[index] == ":" {
-                /// find key : value
-                let (key, value) = getKeyValueFromTokenizedJsonObject(tokenList: tokenList, index: &index)
-                /// check value type
-                if  tryToAddIntegerElementInJsonObject(value: value, key: key, jsonObject: &jsonObject) ||
-                    tryToAddBooleanElementInJsonObject(value: value, key: key, jsonObject: &jsonObject) ||
-                    tryToAddStringElementInJsonObject(value: value, key: key, jsonObject: &jsonObject) {
-                    continue
-                }
-                if isCurlyBracketStart(tokenList[index]){
-                    saveJsonObjectElementInJsonObject(tokenList: tokenList, index: &index, key: key, jsonObject: &jsonObject)
-                    continue
-                }
-                if isSquareBracketStart(tokenList[index]){                  /// [
-                    saveJsonArrayElementInJsonObject(tokenList: tokenList, index: &index, key: key, jsonObject: &jsonObject)
-                    continue
-                }
+                makeKeyValuePair(tokenList: tokenList, index: &index, jsonObject: &jsonObject)
             }
         }
         return jsonObject
+    }
+    
+    private func makeKeyValuePair (tokenList: [String], index: inout Int, jsonObject: inout JsonObject) {
+        /// find key : value
+        let (key, value) = getKeyValueFromTokenizedJsonObject(tokenList: tokenList, index: &index)
+        /// check value type
+        if  tryToAddIntegerElementInJsonObject(value: value, key: key, jsonObject: &jsonObject) ||
+            tryToAddBooleanElementInJsonObject(value: value, key: key, jsonObject: &jsonObject) ||
+            tryToAddStringElementInJsonObject(value: value, key: key, jsonObject: &jsonObject) {
+            return
+        }
+        if isCurlyBracketStart(tokenList[index]){
+            saveJsonObjectElementInJsonObject(tokenList: tokenList, index: &index, key: key, jsonObject: &jsonObject)
+            return
+        }
+        if isSquareBracketStart(tokenList[index]){                  /// [
+            saveJsonArrayElementInJsonObject(tokenList: tokenList, index: &index, key: key, jsonObject: &jsonObject)
+        }
     }
     
     private func saveJsonObjectElementInJsonObject(tokenList : [String], index: inout Int, key: String, jsonObject: inout JsonObject)  {
