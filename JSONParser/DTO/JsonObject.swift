@@ -33,7 +33,11 @@ struct JsonObject : JsonParsable {
             })
             var result = "\(TokenSplitSign.curlyBracketStart.description) "
             for sortedPair in sortedKeyValueSet {
-                result += "\(sortedPair.element.key) : \(sortedPair.element.value.description), "
+                if sortedPair.element.value is String {
+                    result += "\(sortedPair.element.key) : \"\(sortedPair.element.value.description)\", "
+                    continue
+                }
+                result += "\(sortedPair.element.key) : \(sortedPair.element.value), "
             }
             result.removeLast(2)
             result += " \(TokenSplitSign.curlyBracketEnd.description)"

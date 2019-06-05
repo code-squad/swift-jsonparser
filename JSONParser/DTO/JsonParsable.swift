@@ -15,7 +15,7 @@ protocol JsonParsable : CustomStringConvertible{
 extension String : JsonParsable {
     var description : String {
         get {
-            return self
+            return String(self)
         }
     }
 }
@@ -45,11 +45,14 @@ extension Array: JsonParsable {
                 guard let jsonElement = self[index] as? JsonParsable else {
                     return result
                 }
-                result += " \(jsonElement.description),"
+                result += " \(jsonElement.self.description),"
             }
             result.popLast()
             result += " \(TokenSplitSign.squareBracketEnd.description)"
+            
             return result
         }
     }
 }
+
+//[ "kai", "monkey", 10, true ]
