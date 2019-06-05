@@ -18,9 +18,10 @@ extension String: JSONDataType {
     }
 }
 
-extension Int: JSONDataType {
+typealias Number = Double
+extension Number: JSONDataType {
     static var typeDescription: String {
-        return "Int"
+        return "Number"
     }
 }
 
