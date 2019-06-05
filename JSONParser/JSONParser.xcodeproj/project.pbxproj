@@ -30,7 +30,6 @@
 		C52E7102229BF016008AEC89 /* TokenSplitSign.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E70F422992675008AEC89 /* TokenSplitSign.swift */; };
 		C557FBA3229D3C8200D1FC8F /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C557FBA2229D3C8200D1FC8F /* GrammarChecker.swift */; };
 		C557FBA8229ED48700D1FC8F /* GrammerCheckerUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C557FBA7229ED48700D1FC8F /* GrammerCheckerUnitTest.swift */; };
-		C557FBAA22A6D3D900D1FC8F /* ParserUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52E70F8229BE560008AEC89 /* ParserUnitTest.swift */; };
 		C56AC7482281758E00D99C02 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7472281758E00D99C02 /* InputView.swift */; };
 		C56AC74A2281764500D99C02 /* ErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7492281764500D99C02 /* ErrorCode.swift */; };
 		C56AC74E228195C800D99C02 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74D228195C800D99C02 /* Tokenizer.swift */; };
@@ -311,7 +310,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C557FBAA22A6D3D900D1FC8F /* ParserUnitTest.swift in Sources */,
 				C52E70BA2292D01F008AEC89 /* JsonObject.swift in Sources */,
 				C52E70BB2292D028008AEC89 /* Tokenizer.swift in Sources */,
 				C52E70C82293E7F3008AEC89 /* OutputView.swift in Sources */,

@@ -56,11 +56,144 @@ class GrammerCheckerUnitTest: XCTestCase {
     let jsonObject = "[ \"name\" , \"KIM JUNG\" ]"
    
     let jsonObjectPattern = "^\\{\\s*((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false)))((\\s*,\\s*)((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false))))*\\s*\\}$"
+   
+    /// STEP 7-4
     
+    static let startSquareBracket = "^\\["
+    static let endSquareBracket = "\\]$"
+    static let startCurlyBracket = "^\\{"
+    static let endCurlyBracket = "\\}$"
+    static let blanks = "\\s*"
+    static let commaBetweenBlank = "\(blanks),\(blanks)"
+    static let semicolon = ":"
+    static let keyString = "(\\\"[^\\\"]+\\\")"
+    static let valueQuatatedString = "(\\\"[^\\\"]*\\\")"
+    static let integerPattern = "([-]?[\\d]+)"
+    static let integerPatternWithoutParenthesis = "[-]?[\\d]+"
+    static let booleanPattern = "(true|false)"
+    static let arrayPattern = "(\\[\\s*(([-]*[\\d]+)|(\\s*(\\\"[^\\\"]*\\\")\\s*)|(true|false))(((\\s*,\\s*[-]*[\\d]+)|(\\s*,\\s*(\\\"[^\\\"]*\\\")))|((\\s*,\\s*)(true|false)))*\\s*\\])"
+    static let objectPattern = "(\\{\\s*((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false)))((\\s*,\\s*)((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false))))*\\s*\\})"
+    
+    /// 배열 내 깊이 1만큼의 배열 혹은 객체를 value로 갖는 패턴
+    let arrayOrObjectWithinJsonArrayPatternDepth1 = "\(startSquareBracket)\(blanks)(\(integerPattern)|(\(blanks)\(valueQuatatedString)\(blanks))|\(booleanPattern)|\(objectPattern)|\(arrayPattern))(((\(commaBetweenBlank)\(integerPatternWithoutParenthesis))|(\(commaBetweenBlank)\(valueQuatatedString)))|((\(commaBetweenBlank))\(booleanPattern))|(\(commaBetweenBlank)\(objectPattern))|(\(commaBetweenBlank)\(arrayPattern)))*\(blanks)\(endSquareBracket)"
+    
+    /// 객체 내 깊이 1만큼의 배열 혹은 객체를 value로 갖는 패턴
+    let arrayOrObjectWithinJsonObjectPatternDepth1 = "\(startCurlyBracket)\(blanks)(\(keyString)\(blanks)\(semicolon)\(blanks)(\(valueQuatatedString)|\(integerPattern)|\(booleanPattern)|\(objectPattern)|\(arrayPattern)))((\(blanks),\(blanks))(\(keyString)\(blanks)\(semicolon)\(blanks)(\(valueQuatatedString)|\(integerPattern)|\(booleanPattern)|\(objectPattern)|\(arrayPattern))))*\(blanks)\(endCurlyBracket)"
+    
+    /// 객체 내 배열, primitive값들을 value로 허용
+    let jsonArrayWithinjsonObjectPattern1Depth = "^\\{\\s*((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false)|(\\[\\s*(([-]*[\\d]+)|(\\s*(\\\"[^\\\"]*\\\")\\s*)|(true|false))(((\\s*,\\s*[-]*[\\d]+)|(\\s*,\\s*(\\\"[^\\\"]*\\\")))|((\\s*,\\s*)(true|false)))*\\s*\\])))((\\s*,\\s*)((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false)|(\\[\\s*(([-]*[\\d]+)|(\\s*(\\\"[^\\\"]*\\\")\\s*)|(true|false))(((\\s*,\\s*[-]*[\\d]+)|(\\s*,\\s*(\\\"[^\\\"]*\\\")))|((\\s*,\\s*)(true|false)))*\\s*\\]))))*\\s*\\}$"
+    
+    /// 객체 내 배열, 객체, primitive값들을 value로 허용
+    let jsonArrayOrJsonObjectWithinJsonObjectPatternDepth1 = "^\\{\\s*((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false)|(\\{\\s*((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false)))((\\s*,\\s*)((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false))))*\\s*\\}\\s*)|(\\[\\s*(([-]*[\\d]+)|(\\s*(\\\"[^\\\"]*\\\")\\s*)|(true|false))(((\\s*,\\s*[-]*[\\d]+)|(\\s*,\\s*(\\\"[^\\\"]*\\\")))|((\\s*,\\s*)(true|false)))*\\s*\\])))((\\s*,\\s*)((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false)|(\\{\\s*((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false)))((\\s*,\\s*)((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false))))*\\s*\\}\\s*)|(\\[\\s*(([-]*[\\d]+)|(\\s*(\\\"[^\\\"]*\\\")\\s*)|(true|false))(((\\s*,\\s*[-]*[\\d]+)|(\\s*,\\s*(\\\"[^\\\"]*\\\")))|((\\s*,\\s*)(true|false)))*\\s*\\]))))*\\s*\\}$"
+    
+    /// 원자값만 갖는 배열 패턴
     let jsonArrayWithPrimitiveValuePattern = "^\\[\\s*(([-]*[\\d]+)|(\\s*(\\\"[^\"]*\\\")\\s*)|(true|false))(((\\s*,\\s*[-]*[\\d]+)|(\\s*,\\s*(\\\"[^\"]*\\\")))|((\\s*,\\s*)(true|false)))*\\s*\\]$"
     
-    let jsonArrayWithJsonObjectPattern = "^\\[\\s*(([-]*[\\d]+)|(\\s*(\\\"[^\"]+\\\")\\s*)|(true|false)|(\\{\\s*((\\\"[^\"]+\\\")\\s*:\\s*((\\\"[^\"]*\\\")|([-]?[\\d]+)|(true|false)))((\\s*,\\s*)((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false))))*\\s*\\}))(((\\s*,\\s*[-]*[\\d]+)|(\\s*,\\s*(\\\"[^\\\"]*\\\")))|((\\s*,\\s*)(true|false))|(\\s*,\\s*(\\{\\s*((\\\"[^\"]+\\\")\\s*:\\s*((\\\"[^\"]*\\\")|([-]?[\\d]+)|(true|false)))((\\s*,\\s*)((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false))))*\\s*\\})))*\\s*\\]$"
+    /// 배열 내 value로 객체를 포함하는 패턴
+    let objectWithinJsonArrayPattern = "^\\[\\s*(([-]*[\\d]+)|(\\s*(\\\"[^\\\"]+\\\")\\s*)|(true|false)|(\\{\\s*((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false)))((\\s*,\\s*)((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false))))*\\s*\\}))(((\\s*,\\s*[-]*[\\d]+)|(\\s*,\\s*(\\\"[^\\\"]*\\\")))|((\\s*,\\s*)(true|false))|(\\s*,\\s*(\\{\\s*((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false)))((\\s*,\\s*)((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false))))*\\s*\\})))*\\s*\\]$"
+    
+    /// STEP 7-4 Depth 1
+    
+    /// Arrays or Objects is in Array or Object
+    func testJsonArrayWithinInJsonArray(){
+        /// basic 7-3
+        var testInput = "[ { \"object key\": 10 }, 10, 20, true, false, \"string value\", { \"key\" : true , \"  \": false, \"valid key \":true}]"
+        var result = testInput.jsonPatternCheck(for: arrayOrObjectWithinJsonArrayPatternDepth1, in: testInput)
+        print("test object in array result > :\n \(result)")
+        XCTAssert(result.count == 1, "\(testInput) is invalid json array format ")
 
+        testInput = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, [\"hana\", \"hayul\", \"haun\"] ,{ \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"
+        result = testInput.jsonPatternCheck(for: arrayOrObjectWithinJsonArrayPatternDepth1, in: testInput)
+        print("arrayOrObjectWithinJsonArrayPatternDepth1 result > :\n \(result)")
+        XCTAssert(result.count == 1, "\(testInput) is invalid json array format ")
+    }
+    
+    func testDoublyNestedArraysInJsonArray(){
+        var testArray = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true }  , [10, \"하율\", \"하은\"], \"hayul\", \"haun\" ]"
+        var result = testArray.jsonPatternCheck(for: arrayOrObjectWithinJsonArrayPatternDepth1, in: testArray)
+        print("배열 내 중첩 1단계인 배열 내 배열 패턴 체크 : > \(result)")
+        XCTAssert(result.count == 1, "\(testArray) is NOT jsonArray Format limited by 1 depth")
+        
+        testArray = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true },{ \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } , [\"hana\",  [ \"하나\", [\"중첩하나\", \"중첩하율\", \"중첩하은\"]  ], \"hayul\", \"haun\"] ] "
+        result = testArray.jsonPatternCheck(for: arrayOrObjectWithinJsonArrayPatternDepth1, in: testArray)
+        print("배열 내 중첩 2단계인 배열 내 배열 패턴 체크 : > \(result)")
+        XCTAssert(result.count == 0, "\(testArray) is jsonArray Format limited by 1 depth")
+    }
+    
+    func testDoublyNestedArraysInObjectInJsonArray(){
+        var testArray = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true },{ \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true, \"children\": \"Wangho\"} , [\"싱글하나\", \"싱글하율\", \"싱글하은\"] ]"
+        var result = testArray.jsonPatternCheck(for: arrayOrObjectWithinJsonArrayPatternDepth1, in: testArray)
+        print("배열 내 중첩 1단계인 배열 패턴 체크 : > \(result)")
+        XCTAssert(result.count == 1, "\(testArray) is NOT jsonArray Format limited by 1 depth")
+        
+        testArray = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true },{ \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true, \"children\": [\"중첩하나\", \"중첩하율\", \"중첩하은\"] } , ]"
+        result = testArray.jsonPatternCheck(for: arrayOrObjectWithinJsonArrayPatternDepth1, in: testArray)
+        print("배열 내 중첩 2단계인 배열 내 배열 패턴 체크 : > \(result)")
+        XCTAssert(result.count == 0, "\(testArray) is jsonArray Format limited by 1 depth")
+    }
+    
+    func testDoublyNestedObjectsInArrayInJsonArray(){
+        var testArray = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, [\"싱글하나\", \"싱글하율\", \"싱글하은\"], { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true, \"children\": \"Wangho\"}  ]"
+        var result = testArray.jsonPatternCheck(for: arrayOrObjectWithinJsonArrayPatternDepth1, in: testArray)
+        print("배열 내 중첩 1단계인 배열/객체 패턴 체크 : > \(result)")
+        XCTAssert(result.count == 1, "\(testArray) is NOT jsonArray Format limited by 1 depth")
+        
+        testArray = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, [\"싱글하나\", \"싱글하율\", \"싱글하은\" , { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true, \"children\": \"Wangho\"} ] ]"
+        result = testArray.jsonPatternCheck(for: arrayOrObjectWithinJsonArrayPatternDepth1, in: testArray)
+        print("배열 내 중첩 2단계인 배열 내 객체 패턴 체크 : > \(result)")
+        XCTAssert(result.count == 0, "\(testArray) is jsonArray Format limited by 1 depth")
+    }
+    
+    func testDoublyNestedObjectsInJsonArray(){
+        var testArray = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : \"Yumi\" }, 10, true ]"
+        var result = testArray.jsonPatternCheck(for: arrayOrObjectWithinJsonArrayPatternDepth1, in: testArray)
+        print("배열 내 중첩 1단계인 객체 패턴 체크 : > \(result)")
+        XCTAssert(result.count == 1, "\(testArray) is NOT jsonArray Format limited by 1 depth")
+
+        testArray = "[ 20, { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : { \"중첩 name\" : \"KIM JUNG\", \"중첩 alias\" : \"JK\", \"level\" : 5, \"married\" : true } }, 10, true ]"
+        result = testArray.jsonPatternCheck(for: arrayOrObjectWithinJsonArrayPatternDepth1, in: testArray)
+        print("배열 내 중첩 2단계인 객체 내 객체 패턴 체크 : > \(result)")
+        XCTAssert(result.count == 0, "\(testArray) is jsonArray Format limited by 1 depth")
+    }
+    
+    /// JsonObject 중첩 검사
+    func testJsonArrayWithinInJsonObject(){
+        let testObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
+        let result = testObject.jsonPatternCheck(for: jsonArrayWithinjsonObjectPattern1Depth, in: testObject)
+        print("객체 내 중첩 1단계인 배열 패턴 체크 : > \(result)")
+        XCTAssert(result.count == 1, "\(testObject) is jsonObject Format")
+    }
+    
+    func testDoublyNestedArraysInJsonObject(){
+        var testObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [ \"하나\", [\"중첩하나\", \"중첩하율\", \"중첩하은\"]  ] }"
+        var result = testObject.jsonPatternCheck(for: jsonArrayWithinjsonObjectPattern1Depth, in: testObject)
+        print("객체 내 중첩 2단계인 배열 내 배열 패턴 체크 : > \(result)")
+        XCTAssert(result.count == 0, "\(testObject) is jsonObject Format limited by 1 depth")
+    }
+    
+    func testDoublyNestedObjectsInArrayInJsonObject(){
+        let testObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [ \"hana\", { \"중첩 name\" : \"KIM JUNG\", \"중첩 alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"중첩 name\" : \"YOON JISU\", \"중첩 alias\" : \"crong\", \"level\" : 4, \"married\" : true } ] }"
+        let result = testObject.jsonPatternCheck(for: jsonArrayWithinjsonObjectPattern1Depth, in: testObject)
+        print("객체 내 중첩 2단계인 배열 내 객체 패턴 체크 : > \(result)")
+        XCTAssert(result.count == 0, "\(testObject) is jsonObject Format limited by 1 depth")
+    }
+    
+    func testDoublyNestedArrayInObjectInJsonObject(){
+        let testObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [ \"hana\", { \"중첩 name\" : \"KIM JUNG\", \"중첩 alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"중첩 name\" : \"YOON JISU\", \"중첩 alias\" : \"crong\", \"level\" : 4, \"married\" : true } ] }"
+        let result = testObject.jsonPatternCheck(for: arrayOrObjectWithinJsonObjectPatternDepth1, in: testObject)
+        print("객체 내 중첩 2단계인 배열 내 객체 패턴 체크 : > \(result)")
+        XCTAssert(result.count == 0, "\(testObject) is jsonObject Format limited by 1 depth")
+    }
+    
+    func testArrayOrObjectWithinJsonObjectDepth1() {
+        let testObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [ \"hana\", \"하은\" ], \"object1\" : { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, \"object2\" : { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } }"
+        let result = testObject.jsonPatternCheck(for: arrayOrObjectWithinJsonObjectPatternDepth1, in: testObject)
+        print("객체 내 중첩 1단계인 객체나 배열 패턴 체크 :  > \(result)" )
+        XCTAssert(result.count == 1, "\(testObject) 중첩단계가 2 이상이거나 잘못된 json 포맷")
+    }
+    
+    
+    /// STEP 7-3
     func testQuatatedStringAndNonQuatatedString(){
         let textWithoutQuatation = "abdcasf"
         let textWithQuatation = "\"abdcasf\""
@@ -180,36 +313,37 @@ class GrammerCheckerUnitTest: XCTestCase {
     
     func testJsonArrayWithJsonObjectGrammar(){
         var testInput = "[ { \"object key\": 10 }, 10, 20, true, false, \"string value\", { \"key\" : true , \"  \": false, \"valid key \":true}]"
-        var result = testInput.jsonPatternCheck(for: jsonArrayWithJsonObjectPattern, in: testInput)
+        
+        var result = testInput.jsonPatternCheck(for: objectWithinJsonArrayPattern, in: testInput)
         print("testJsonArrayWithJsonObjectGrammar result > :\n \(result)")
         XCTAssert(result.count == 1, "\(testInput) is invalid json array format ")
         
         testInput = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true },"
         testInput += "{ \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"
-        result = testInput.jsonPatternCheck(for: jsonArrayWithJsonObjectPattern, in: testInput)
+        result = testInput.jsonPatternCheck(for: objectWithinJsonArrayPattern, in: testInput)
         print("testJsonArrayWithJsonObjectGrammar result > :\n \(result)")
         XCTAssert(result.count == 1, "\(testInput) is invalid json array format ")
     }
     
     func testJsonArrayWithInvalidJsonObjectGrammar1(){
         let testInput = "[ { \"object key\": 10 , 10, 20, true, false, \"string value\", { \"key\" : true , \"  \": false, \"valid key \":true}]"
-        let result = testInput.jsonPatternCheck(for: jsonArrayWithJsonObjectPattern, in: testInput)
+        let result = testInput.jsonPatternCheck(for: objectWithinJsonArrayPattern, in: testInput)
         print("\(testInput) result > :\n \(result)")
         XCTAssert(result.count == 0, "\(testInput) is valid json array format ")
     }
     
     func testJsonArrayWithInvalidJsonObjectGrammar2(){
         var testInput = "[ [ \"object key\": 10 ] , 10, 20, true, false, \"string value\", { \"key\" : true , \"  \": false, \"valid key \":true}]"
-        var result = testInput.jsonPatternCheck(for: jsonArrayWithJsonObjectPattern, in: testInput)
+        var result = testInput.jsonPatternCheck(for: objectWithinJsonArrayPattern, in: testInput)
         XCTAssert(result.count == 0, "\(testInput) is valid json array format ")
         
         testInput = "[ { \"object key\": 10 } , 10, 20, true, false, \"string value\", { \"key\" : true , \"\": false, \"valid key \":true}]"
-        result = testInput.jsonPatternCheck(for: jsonArrayWithJsonObjectPattern, in: testInput)
+        result = testInput.jsonPatternCheck(for: objectWithinJsonArrayPattern, in: testInput)
         XCTAssert(result.count == 0, "\(testInput) has valid JsonObject keys in a given JsonArray format ")
         
         //key가 없는 경우
         testInput = "[ { \"object key\": 10 } , {10, 20}, true, false, \"string value\", { \"key\" : true , \"\": false, \"valid key \":true}]"
-        result = testInput.jsonPatternCheck(for: jsonArrayWithJsonObjectPattern, in: testInput)
+        result = testInput.jsonPatternCheck(for: objectWithinJsonArrayPattern, in: testInput)
         XCTAssert(result.count == 0, "\(testInput) has valid JsonObject format in a given JsonArray format ")
     }
     
@@ -217,7 +351,7 @@ class GrammerCheckerUnitTest: XCTestCase {
         let invalidJsonArray = "[ \"name\" : \"KIM JUNG\" ]"
         var result = false
         result = invalidJsonArray.isJsonPattern(for: jsonObjectPattern, in: invalidJsonArray )
-        result = result ? result : invalidJsonArray.isJsonPattern(for: jsonArrayWithJsonObjectPattern, in: invalidJsonArray)
+        result = result ? result : invalidJsonArray.isJsonPattern(for: objectWithinJsonArrayPattern, in: invalidJsonArray)
         XCTAssert(!result  , "\(invalidJsonArray) is not Json format on the condition that STEP 7-3 gives" )
     }
     
@@ -225,7 +359,7 @@ class GrammerCheckerUnitTest: XCTestCase {
         let invalidJsonObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
         var result = false
         result = invalidJsonObject.isJsonPattern(for: jsonObjectPattern, in: invalidJsonObject)
-        result = result ? result : invalidJsonObject.isJsonPattern(for: jsonArrayWithJsonObjectPattern, in: invalidJsonObject)
+        result = result ? result : invalidJsonObject.isJsonPattern(for: objectWithinJsonArrayPattern, in: invalidJsonObject)
         XCTAssert(!result , "\(invalidJsonObject) is not Json format on the condition that STEP 7-3 gives" )
     }
     
@@ -233,7 +367,7 @@ class GrammerCheckerUnitTest: XCTestCase {
         let invalidJsonObject =  "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, {\"child1\" : \"hana\"}, {\"child2\": \"hayul\"}, {\"child3\" : \"haun\"} }"
         var result = false
         result = invalidJsonObject.isJsonPattern(for: jsonObjectPattern, in: invalidJsonObject)
-        result = result ? result : invalidJsonObject.isJsonPattern(for: jsonArrayWithJsonObjectPattern, in: invalidJsonObject)
+        result = result ? result : invalidJsonObject.isJsonPattern(for: objectWithinJsonArrayPattern, in: invalidJsonObject)
         XCTAssert(!result , "\(invalidJsonObject) is not Json format on the condition that STEP 7-3 gives" )
     }
     
@@ -241,7 +375,7 @@ class GrammerCheckerUnitTest: XCTestCase {
         let validJsonObject = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }"
         var result = false
         result = validJsonObject.isJsonPattern(for: jsonObjectPattern, in: validJsonObject)
-        result = result ? result : validJsonObject.isJsonPattern(for: jsonArrayWithJsonObjectPattern, in: validJsonObject)
+        result = result ? result : validJsonObject.isJsonPattern(for: objectWithinJsonArrayPattern, in: validJsonObject)
         result ? print("\(validJsonObject) is Json format ") : print("\(validJsonObject) is not Json format on the condition that STEP 7-3 gives")
         XCTAssert(result, "\(validJsonObject) is not Json format on the condition that STEP 7-3 gives" )
     }
@@ -250,7 +384,7 @@ class GrammerCheckerUnitTest: XCTestCase {
         let validJsonArray = "[ { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, { \"name\" : \"YOON JISU\", \"alias\" : \"crong\", \"level\" : 4, \"married\" : true } ]"
         var result = false
         result = validJsonArray.isJsonPattern(for: jsonObjectPattern, in: validJsonArray)
-        result = result ? result : validJsonArray.isJsonPattern(for: jsonArrayWithJsonObjectPattern, in: validJsonArray)
+        result = result ? result : validJsonArray.isJsonPattern(for: objectWithinJsonArrayPattern, in: validJsonArray)
         result ? print("\(validJsonArray) is Json format ") : print("\(validJsonArray) is not Json format on the condition that STEP 7-3 gives")
         XCTAssert(result, "\(validJsonArray) is not Json format on the condition that STEP 7-3 gives" )
     }
