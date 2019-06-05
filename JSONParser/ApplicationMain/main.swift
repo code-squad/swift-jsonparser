@@ -18,7 +18,7 @@ struct Main {
     
     static private func tokenize(_ data: String) -> [String] {
         let tokenizer : Tokenizer = Tokenizer()
-        let tokenList = try tokenizer.tokenize(data)
+        let tokenList = tokenizer.tokenize(data)
         return tokenList
     }
     
@@ -49,4 +49,3 @@ struct Main {
 }
 
 try Main.main()
-

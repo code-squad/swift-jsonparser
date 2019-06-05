@@ -52,9 +52,7 @@ extension String {
     }
 }
 class GrammerCheckerUnitTest: XCTestCase {
-
-    let jsonObject = "[ \"name\" , \"KIM JUNG\" ]"
-   
+    
     let jsonObjectPattern = "^\\{\\s*((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false)))((\\s*,\\s*)((\\\"[^\\\"]+\\\")\\s*:\\s*((\\\"[^\\\"]*\\\")|([-]?[\\d]+)|(true|false))))*\\s*\\}$"
    
     /// STEP 7-4
