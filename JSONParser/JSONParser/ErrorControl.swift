@@ -10,11 +10,15 @@ import Foundation
 
 enum JSONError: Error, CustomStringConvertible {
     case wrongValue
+    case emptyBuffer
     
     var description: String {
         switch self {
         case .wrongValue:
             return "입력값이 유효하지 않습니다."
+            
+        case .emptyBuffer:
+            return "buffer가 비었습니다."
         }
     }
 }
