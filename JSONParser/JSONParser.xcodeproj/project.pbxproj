@@ -14,6 +14,7 @@
 		30515C4022A6EEEC00A3A234 /* String+JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30515C3F22A6EEEC00A3A234 /* String+JSONValue.swift */; };
 		30515C4222A6EEFB00A3A234 /* Int+JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30515C4122A6EEFB00A3A234 /* Int+JSONValue.swift */; };
 		30515C4422A6EF0700A3A234 /* Bool+JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30515C4322A6EF0700A3A234 /* Bool+JSONValue.swift */; };
+		30515C4622A8B54400A3A234 /* JSONContainerValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30515C4522A8B54400A3A234 /* JSONContainerValue.swift */; };
 		30E7C1E0229D7A560043FA28 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7C1DF229D7A560043FA28 /* InputView.swift */; };
 		30E7C1E2229E1E6A0043FA28 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7C1E1229E1E6A0043FA28 /* Lexer.swift */; };
 		30E7C1E4229E1F9E0043FA28 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7C1E3229E1F9E0043FA28 /* Token.swift */; };
@@ -41,6 +42,7 @@
 		30515C3F22A6EEEC00A3A234 /* String+JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+JSONValue.swift"; sourceTree = "<group>"; };
 		30515C4122A6EEFB00A3A234 /* Int+JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+JSONValue.swift"; sourceTree = "<group>"; };
 		30515C4322A6EF0700A3A234 /* Bool+JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+JSONValue.swift"; sourceTree = "<group>"; };
+		30515C4522A8B54400A3A234 /* JSONContainerValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONContainerValue.swift; sourceTree = "<group>"; };
 		30E7C1DF229D7A560043FA28 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		30E7C1E1229E1E6A0043FA28 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		30E7C1E3229E1F9E0043FA28 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				30515C4322A6EF0700A3A234 /* Bool+JSONValue.swift */,
 				30515C3B22A6D1CB00A3A234 /* Dictionary+JSONValue.swift */,
 				30515C3D22A6EE6200A3A234 /* Message.swift */,
+				30515C4522A8B54400A3A234 /* JSONContainerValue.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 			files = (
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				300A782722A391E000EF7A33 /* JSONValue.swift in Sources */,
+				30515C4622A8B54400A3A234 /* JSONContainerValue.swift in Sources */,
 				30E7C1E2229E1E6A0043FA28 /* Lexer.swift in Sources */,
 				30515C3E22A6EE6200A3A234 /* Message.swift in Sources */,
 				30515C4022A6EEEC00A3A234 /* String+JSONValue.swift in Sources */,
