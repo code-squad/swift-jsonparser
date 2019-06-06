@@ -8,4 +8,13 @@
 
 import Foundation
 
+let input = try InputView.ask(for: .request)
+let tokenizedInput = try JSONTokenizer.tokenize(data: input)
 
+let analyzedInput = try JSONLexer.analyze(data: tokenizedInput)
+
+let parsedInput = try analyzedInput.map {
+   try JSONParser.parseValue(data: $0)
+}
+
+print(parsedInput)
