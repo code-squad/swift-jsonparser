@@ -9,8 +9,8 @@
 import Foundation
 
 struct JSONParser {
+    
     static func parseValue (data: String) throws -> JSONDataType {
-        
         if let string = parseString(data: data) {
             return string
         } else if let number = parseNumber(data: data) {
@@ -18,20 +18,33 @@ struct JSONParser {
         } else if let bool = parseBool(data: data) {
             return bool
         } else {
-        throw JSONError.wrongValue
+            throw JSONError.wrongValue
         }
     }
-        
+    
     private static func parseString(data: String) -> String? {
-        return nil
+        guard data.first == "\"" && data.last == "\"" else {
+            return nil
+        }
+        var data = data
+        data.removeFirst()
+        data.removeLast()
+        return data
     }
     
     private static func parseNumber(data: String) -> Number? {
-        return nil
+        return Number(data)
     }
     
     private static func parseBool(data: String) -> Bool? {
-        return nil
+        switch data {
+        case "true":
+            return true
+        case "false":
+            return false
+        default:
+            return nil
+        }
     }
 }
 
