@@ -49,7 +49,7 @@ struct Parser {
         return value
     }
     
-    mutating func parse() throws -> [String: [JSONValue]] {
+    mutating func parse() throws -> [JSONValue] {
         var jsonArray = [JSONValue]()
         var numberOfComma = 0
         
@@ -80,6 +80,6 @@ struct Parser {
             }
         }
         
-        return Dictionary(grouping: jsonArray, by: { $0.typeDescription })
+        return jsonArray
     }
 }

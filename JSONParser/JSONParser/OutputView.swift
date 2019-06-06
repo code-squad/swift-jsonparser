@@ -10,7 +10,8 @@ import Foundation
 
 struct OutputView {
     
-    static func printJSONValues(_ jsonValues: [String: [JSONValue]]) {
-        print(jsonValues.description)
+    static func printJSONValues(_ jsonValues: [JSONValue]) {
+        let groupedJSONValues = Dictionary(grouping: jsonValues, by: { $0.typeDescription })
+        print(groupedJSONValues.description)
     }
 }
