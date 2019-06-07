@@ -17,3 +17,5 @@ extension Int: Json {}
 extension String: Json {}
 
 extension Dictionary: Json{}
+
+extension Array: Json{}

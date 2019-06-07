@@ -38,6 +38,11 @@ struct JsonParser {
             let convertedData = try tokenizer.buildDictionary(inputString: beforeData)
             let convertedDictionaryData = try convertDictionary(convertedData: convertedData)
             convertedElement = convertedDictionaryData
+        } else if afterData.match(text: RegularExpression.arrayType) {
+            var tokenizer = Tokenizer()
+            let convertedArrayData = try tokenizer.buildArray(inputString: beforeData)
+            //let convertedDictionaryData = try convertDictionary(convertedData: convertedData)
+            convertedElement = convertedArrayData
         } else if afterData.match(text: RegularExpression.intType) {
             convertedElement = Int(afterData) ?? 0
         } else if afterData.match(text: RegularExpression.boolType) {
