@@ -13,7 +13,7 @@ func main() {
         let input = InputView()
         let output = OutputView()
         var tokenizer = Tokenizer()
-        var grammarChecker = GrammerChecker()
+        let grammarChecker = GrammerChecker()
         var jsonParser = JsonParser()
         let data = input.readJson()
         do {

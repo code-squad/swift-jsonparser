@@ -16,18 +16,10 @@ struct GrammerChecker {
         }
     }
     
-    /// 딕셔너리의 value가 배열일떄 에러를 반환하는 함수
-    private func distinctInArray(value: String) throws {
-        if value.match(text: RegularExpression.arrayType) {
-            throw ErrorMessage.invalidFormat
-        }
-    }
-    
     /// 입력받은 문자열의 문법 검사
     func grammarTest(jsonData: Tokenizer) throws -> Tokenizer{
-        for (key,value) in jsonData.dictionaryJson {
+        for (key,_) in jsonData.dictionaryJson {
             try distinctKeyType(key: key)
-            try distinctInArray(value: value)
         }
         return jsonData
     }

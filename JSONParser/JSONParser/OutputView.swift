@@ -19,7 +19,6 @@ struct OutputView {
     
     /// 값을 받아와서 출력하는 함수
     func printElements(jsonParser: JsonParser, dataMent:String) {
-        //let jsonParser = JsonParser()
         var countMent: String = ""
         var jsonData: [Json] = []
         if dataMent == "배열" {
