@@ -21,11 +21,6 @@ struct Tokenizer {
         
         for character in prompt {
             
-            guard !brackets.contains(character) else {
-                tokens.append(String(character))
-                continue
-            }
-            
             if character == Character(JSONKeyword.quotation) {
                 isInString.toggle()
             }
@@ -34,7 +29,12 @@ struct Tokenizer {
                 token.append(character)
                 continue
             }
-
+            
+            guard !brackets.contains(character) else {
+                tokens.append(String(character))
+                continue
+            }
+            
             guard delimiters.contains(character) else {
                 token.append(character)
                 continue
