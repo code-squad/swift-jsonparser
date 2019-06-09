@@ -73,33 +73,15 @@ struct Parser {
     
     mutating func parse() throws -> [JSONValue] {
         var jsonArray = [JSONValue]()
-        var numberOfComma = 0
         
-        if let token = getNextToken(), token != .openSquareBracket {
-            throw Parser.Error.invalidToken(token)
+        if let token = getNextToken(),
+            let value = try getValue(), token == .openSquareBracket {
+            jsonArray.append(value)
         }
         
-        while let token = getNextToken() {
-            switch token {
-            case .doubleQuotation:
-                let stringValue = getString()
-                jsonArray.append(stringValue)
-            case .number(let number):
-                jsonArray.append(number)
-            case .comma:
-                if jsonArray.count - 1 == numberOfComma && position != tokens.endIndex {
-                    numberOfComma = numberOfComma + 1
-                    continue
-                }
-            case .bool(let bool):
-                jsonArray.append(bool)
-            case .string, .openSquareBracket:
-                throw Parser.Error.invalidToken(token)
-            case .closeSquareBracket:
-                if tokens.count != tokens.endIndex {
-                    throw Parser.Error.invalidToken(token)
-                }
-            }
+        while let token = getNextToken(),
+            let value = try getValue(), token == .comma, token != .closeSquareBracket {
+                jsonArray.append(value)
         }
         
         return jsonArray
