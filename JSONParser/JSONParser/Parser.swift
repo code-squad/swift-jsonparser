@@ -20,6 +20,7 @@ struct Parser {
             }
         }
     }
+    
     private var isTokenAvailable: Bool {
         return position < tokens.count
     }
@@ -49,6 +50,25 @@ struct Parser {
             value = value + stringValue
         }
         return value
+    }
+    
+    private mutating func getValue() throws -> JSONValue? {
+        
+        if let token = getNextToken() {
+            switch token {
+            case .doubleQuotation:
+                return getString()
+            case .number(let number):
+                return number
+            case .bool(let bool):
+                return bool
+            case .closeSquareBracket:
+                return nil
+            default:
+                throw Parser.Error.invalidToken(token)
+            }
+        }
+        return nil
     }
     
     mutating func parse() throws -> [JSONValue] {
