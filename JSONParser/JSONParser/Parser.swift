@@ -20,7 +20,9 @@ struct Parser {
             }
         }
     }
-    
+    private var isTokenAvailable: Bool {
+        return position < tokens.count
+    }
     private let tokens: [Token]
     private var position = 0
     
@@ -29,7 +31,7 @@ struct Parser {
     }
     
     private mutating func getNextToken() -> Token? {
-        guard position < tokens.count else {
+        guard isTokenAvailable else {
             return nil
         }
         let token = tokens[position]
