@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+struct DataTypeCriterion {
+    let distinguishingString = CharacterSet(charactersIn: "\"")
+    let distinguishingInt = CharacterSet.decimalDigits
+    let distinguishingBool = (true:"true", false:"false")
+}
