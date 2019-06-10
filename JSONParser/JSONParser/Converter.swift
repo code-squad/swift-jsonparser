@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+struct converter {
+    
+    static func convertToArray(JSON:String) -> [String] {
+        
+        let removedJSONArrayFormatInput = JSON.trimmingCharacters(in: FormatItem.JSONArrayFormat)
+        let removedblankInput = removedJSONArrayFormatInput.split(separator: FormatItem.blank).joined()
+        return removedblankInput.components(separatedBy: FormatItem.arraySperator)
+        
+    }
+    
+}
