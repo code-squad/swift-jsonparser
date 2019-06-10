@@ -13,6 +13,7 @@ struct Parser {
     enum Error: Swift.Error {
         case invalidToken(Token)
         case notExistToken
+        case parseStringFailed
         case parseJSONValueFailed
         case parseJSONArrayFailed
         
@@ -22,6 +23,8 @@ struct Parser {
                 return "유효하지 않은 토큰 \(token) 입니다."
             case .notExistToken:
                 return "토큰이 존재하지 않습니다."
+            case .parseStringFailed:
+                return "문자열 파싱에 실패하였습니다."
             case .parseJSONValueFailed:
                 return "JSONValue 파싱에 실패하였습니다."
             case .parseJSONArrayFailed:
@@ -49,16 +52,20 @@ struct Parser {
         return token
     }
     
-    private mutating func getString() -> String {
+    private mutating func getString() throws -> String {
         var value = ""
         
-        while let token = getNextToken(), token != .doubleQuotation {
-            guard case let .string(stringValue) = token else {
+        while let token = getNextToken() {
+            switch token {
+            case .string(let string):
+                value = value + string
+            case .doubleQuotation:
                 return value
+            default:
+                throw Parser.Error.invalidToken(token)
             }
-            value = value + stringValue
         }
-        return value
+        throw Parser.Error.parseStringFailed
     }
     
     private mutating func getJSONArray() throws -> [JSONValue]? {
@@ -68,7 +75,7 @@ struct Parser {
         while let token = getNextToken() {
             switch token {
             case .doubleQuotation:
-                let stringValue = getString()
+                let stringValue = try getString()
                 jsonArray.append(stringValue)
             case .number(let number):
                 jsonArray.append(number)
