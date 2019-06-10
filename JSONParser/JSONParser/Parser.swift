@@ -52,18 +52,30 @@ struct Parser {
         return value
     }
     
+    private mutating func getJSONArray() throws -> [JSONValue]? {
+        var jsonArray = [JSONValue]()
+        
+        while let token = getNextToken(), token != .closeSquareBracket {
+            if let value = try getValue() {
+                jsonArray.append(value)
+            }
+        }
+        
+        return jsonArray
+    }
+    
     private mutating func getValue() throws -> JSONValue? {
         
         if let token = getNextToken() {
             switch token {
+            case .openSquareBracket:
+                return try getJSONArray()
             case .doubleQuotation:
                 return getString()
             case .number(let number):
                 return number
             case .bool(let bool):
                 return bool
-            case .closeSquareBracket:
-                return nil
             default:
                 throw Parser.Error.invalidToken(token)
             }
