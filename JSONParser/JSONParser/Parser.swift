@@ -164,6 +164,9 @@ struct Parser {
         if let intValue = Int(value) {
             return .castIntSuccess(intValue)
         }
+        if let boolValue = Bool(value) {
+            return .castBoolSuccess(boolValue)
+        }
         return .defaultStringDataType(value)
     }
     

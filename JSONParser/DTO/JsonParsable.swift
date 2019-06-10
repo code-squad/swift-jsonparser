@@ -49,7 +49,6 @@ extension Array: JsonParsable {
             }
             result.popLast()
             result += " \(TokenSplitSign.squareBracketEnd.description)"
-            
             return result
         }
     }
