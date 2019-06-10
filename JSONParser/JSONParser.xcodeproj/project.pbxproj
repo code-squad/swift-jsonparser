@@ -36,6 +36,7 @@
 		C56AC74E228195C800D99C02 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74D228195C800D99C02 /* Tokenizer.swift */; };
 		C56AC7522282CAF500D99C02 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7512282CAF500D99C02 /* Lexer.swift */; };
 		C56AC75622840C9300D99C02 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC75522840C9300D99C02 /* OutputView.swift */; };
+		C5B147EF22AE88410097FDA5 /* CustomTypeCastResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B147EE22AE88410097FDA5 /* CustomTypeCastResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -74,6 +75,7 @@
 		C56AC74D228195C800D99C02 /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
 		C56AC7512282CAF500D99C02 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		C56AC75522840C9300D99C02 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
+		C5B147EE22AE88410097FDA5 /* CustomTypeCastResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTypeCastResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +193,7 @@
 				C56AC7492281764500D99C02 /* ErrorCode.swift */,
 				C52E70CA22968A9C008AEC89 /* LexicalType.swift */,
 				C52E70F422992675008AEC89 /* TokenSplitSign.swift */,
+				C5B147EE22AE88410097FDA5 /* CustomTypeCastResult.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				C52E70CB22968A9C008AEC89 /* LexicalType.swift in Sources */,
 				C56AC7482281758E00D99C02 /* InputView.swift in Sources */,
 				C557FBA3229D3C8200D1FC8F /* GrammarChecker.swift in Sources */,
+				C5B147EF22AE88410097FDA5 /* CustomTypeCastResult.swift in Sources */,
 				C56AC74A2281764500D99C02 /* ErrorCode.swift in Sources */,
 				C56AC75622840C9300D99C02 /* OutputView.swift in Sources */,
 				C52D2554228D27A2006E7F4E /* JsonObject.swift in Sources */,

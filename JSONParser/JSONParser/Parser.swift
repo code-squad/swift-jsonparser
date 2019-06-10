@@ -59,16 +59,6 @@ struct Parser {
     }
     
     private func confirmJsonValueType(tokenList: [String], index: inout Int) -> JsonParsable {
-        let intCheck = isIntegerValue(value: tokenList[index])
-        let booleanCheck = isBooleanValue(value: tokenList[index])
-        let stringCheck = isStringValue(value: tokenList[index])
-        
-        if intCheck.isInteger {
-            return intCheck.value
-        }
-        if booleanCheck.isBoolean {
-            return booleanCheck.value
-        }
         if isSquareBracketStart(tokenList[index]){
             let recursiveJsonArrayElement = saveJsonArrayElementInJsonArray(tokenList: tokenList, index: &index)
             return recursiveJsonArrayElement
@@ -77,7 +67,17 @@ struct Parser {
             let recursiveJsonObjectElement = saveJsonObjectElementInJsonArray(tokenList: tokenList, index: &index)
             return recursiveJsonObjectElement
         }
-        return stringCheck.value
+        
+        let dataTypeCheck = isCastableValue(value: tokenList[index])
+        switch dataTypeCheck {
+        case .castIntSuccess(let intValue):
+            return intValue
+        case .castBoolSuccess(let boolValue):
+            return boolValue
+        case .castStringSuccess(_):
+            break
+        }
+        return tokenList[index]
     }
     
     private func makeJsonObject(_ tokenList: [String]) -> JsonParsable {
@@ -161,31 +161,14 @@ struct Parser {
         return recursiveJsonObjectElement
     }
     
-    private func isIntegerValue(value: String) -> (isInteger : Bool , value: Int){
-        if isNumeric(value) {
-            guard let intValue = Int(value) else {
-                return (false, -1)
-            }
-            return (true,intValue)
+    private func isCastableValue(value: String) -> Result<JsonParsable> {
+        if let intValue = Int(value) {
+            return .castIntSuccess(intValue)
         }
-        return (false, -1)
-    }
-    
-    private func isBooleanValue(value: String) -> (isBoolean : Bool , value: Bool) {
-        if isBoolean(value) {
-            guard let boolValue = Bool(value) else {
-                return (false, false)
-            }
-            return (true, boolValue)
+        if let boolValue = Bool(value) {
+            return .castBoolSuccess(boolValue)
         }
-        return (false, false)
-    }
-    
-    private func isStringValue(value: String) -> (isString : Bool , value: String) {
-        if isString(value){
-            return (true, value)
-        }
-        return (false, "")
+        return .castStringSuccess(value)
     }
     
     private func makeStringFromStack (_ stack: inout Stack<String> ) -> String {
