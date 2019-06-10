@@ -11,5 +11,5 @@ import Foundation
 enum Result<T>{
     case castIntSuccess(T)
     case castBoolSuccess(T)
-    case castStringSuccess(T)
+    case defaultStringDataType(T)
 }

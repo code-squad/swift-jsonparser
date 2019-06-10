@@ -74,7 +74,7 @@ struct Parser {
             return intValue
         case .castBoolSuccess(let boolValue):
             return boolValue
-        case .castStringSuccess(_):
+        case .defaultStringDataType(_):
             break
         }
         return tokenList[index]
@@ -168,7 +168,7 @@ struct Parser {
         if let boolValue = Bool(value) {
             return .castBoolSuccess(boolValue)
         }
-        return .castStringSuccess(value)
+        return .defaultStringDataType(value)
     }
     
     private func makeStringFromStack (_ stack: inout Stack<String> ) -> String {
