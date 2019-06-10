@@ -46,7 +46,6 @@ struct Main {
             print("\(error.description)")
         }
         let description = parsingPairResult.description
-        print(description)
     }
 }
 
