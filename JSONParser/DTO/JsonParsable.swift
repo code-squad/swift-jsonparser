@@ -53,5 +53,3 @@ extension Array: JsonParsable {
         }
     }
 }
-
-//[ "kai", "monkey", 10, true ]
