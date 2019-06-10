@@ -10,19 +10,33 @@ import Foundation
 
 struct Parser {
     
-    var tokenizer: Tokenizer = Tokenizer()
+    private var tokenizer: Tokenizer = Tokenizer()
     
     func parse(_ tokenList: [String] ) -> JsonParsable {
         var result : JsonParsable = ""
-        if tokenList[0] == TokenSplitSign.curlyBracketStart.description && tokenList[tokenList.count-1] ==
-            TokenSplitSign.curlyBracketEnd.description {
+        if isJsonObject(tokenList) {
             result = makeJsonObject(tokenList)
             return result
         }
-        if tokenList[0] == TokenSplitSign.squareBracketStart.description && tokenList[tokenList.count-1] == TokenSplitSign.squareBracketEnd.description {
+        if isJsonArray(tokenList) {
             result = makeJsonArray(tokenList)
         }
         return result
+    }
+    
+    private func isJsonObject(_ tokenList : [String])-> Bool {
+        if tokenList[0] == TokenSplitSign.curlyBracketStart.description && tokenList[tokenList.count-1] ==
+            TokenSplitSign.curlyBracketEnd.description {
+            return true
+        }
+        return false
+    }
+    
+    private func isJsonArray(_ tokenList : [String])-> Bool {
+        if tokenList[0] == TokenSplitSign.squareBracketStart.description && tokenList[tokenList.count-1] == TokenSplitSign.squareBracketEnd.description {
+            return true
+        }
+        return false
     }
     
     private func makeJsonArray(_ tokenList: [String] ) -> JsonParsable {
@@ -37,14 +51,14 @@ struct Parser {
                 tokenList[index] == TokenSplitSign.squareBracketEnd.description {
                 continue
             }
-            let value = confirmJsonArrayValueType(tokenList: tokenList, index: &index)
+            let value = confirmJsonValueType(tokenList: tokenList, index: &index)
             jsonArray.append(value)
             continue
         }
         return jsonArray
     }
     
-    private func confirmJsonArrayValueType(tokenList: [String], index: inout Int) -> JsonParsable {
+    private func confirmJsonValueType(tokenList: [String], index: inout Int) -> JsonParsable {
         let intCheck = isIntegerValue(value: tokenList[index])
         let booleanCheck = isBooleanValue(value: tokenList[index])
         let stringCheck = isStringValue(value: tokenList[index])
@@ -79,36 +93,15 @@ struct Parser {
             }
             if tokenList[index] == TokenSplitSign.semicolon.description {
                 /// find key : value
-                let (key, value) = getKeyValueFromTokenizedJsonObject(tokenList: tokenList, index: &index)
-                let jsonObjectElement = makeKeyValuePair(tokenList: tokenList, key: key, value: value, index: &index)
+                let key = getKeyValueFromTokenizedJsonObject(tokenList: tokenList, index: index)
+                index = index + 1
+                let jsonObjectElement = confirmJsonValueType(tokenList: tokenList, index: &index)
                 jsonObject.add(key: key, value: jsonObjectElement )
             }
         }
         return jsonObject
     }
     
-    private func makeKeyValuePair (tokenList: [String], key : String, value : String, index: inout Int) -> JsonParsable{
-        /// check value type
-        let intCheck = isIntegerValue(value: value)
-        let booleanCheck = isBooleanValue(value: value)
-        let stringCheck = isStringValue(value: value)
-
-        if intCheck.isInteger {
-            return intCheck.value
-        }
-        if booleanCheck.isBoolean {
-            return booleanCheck.value
-        }
-        if isCurlyBracketStart(tokenList[index]){
-            let recursiveJsonObjectElement = saveJsonObjectElementInJsonObject(tokenList: tokenList, index: &index)
-            return recursiveJsonObjectElement
-        }
-        if isSquareBracketStart(tokenList[index]){                  /// [
-            let recursiveJsonArrayElement = saveJsonArrayElementInJsonObject(tokenList: tokenList, index: &index)
-            return recursiveJsonArrayElement
-        }
-        return stringCheck.value
-    }
     
     private func saveJsonObjectElementInJsonObject(tokenList : [String], index: inout Int) -> JsonParsable  {
         var (stackForObject, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start : isCurlyBracketStart, end : isCurlyBracketEnd)
@@ -124,11 +117,9 @@ struct Parser {
         return recursiveJsonArrayElement
     }
     
-    private func getKeyValueFromTokenizedJsonObject( tokenList: [String], index: inout Int) -> (key: String, value: String){
+    private func getKeyValueFromTokenizedJsonObject(tokenList: [String], index: Int) -> String {
         let key = tokenList[index-1]
-        index = index + 1
-        let value = tokenList[index]    // n + 1, value 시작에 해당하는 값.
-        return (key, value)
+        return key
     }
     
     private func buildRecursivlyFromStackToJsonElement (stackForObject : inout Stack<String>, recursiveFunction: ([String]) -> JsonParsable ) -> JsonParsable {
