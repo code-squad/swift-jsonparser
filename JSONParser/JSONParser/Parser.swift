@@ -58,7 +58,7 @@ struct Parser {
     private mutating func getJSONArray() throws -> [JSONValue]? {
         var jsonArray = [JSONValue]()
         
-        while let token = getNextToken(), token != .closeSquareBracket {
+        while isTokenAvailable {
             if let value = try getValue() {
                 jsonArray.append(value)
             }
@@ -79,7 +79,7 @@ struct Parser {
                 return number
             case .bool(let bool):
                 return bool
-            case .comma:
+            case .comma, .closeSquareBracket:
                 return nil
             default:
                 throw Parser.Error.invalidToken(token)
