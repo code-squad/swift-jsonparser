@@ -13,14 +13,7 @@ struct InputView {
         
         print(massage.rawValue)
         let input = readLine() ?? ""
-        try JSONArrayformatValidator(input: input)
         return input
-    }
-    
-    static func JSONArrayformatValidator(input:String)throws {
-        guard input.hasPrefix(FormatItem.JSONArrayContainerLeft) && input.hasSuffix(FormatItem.JSONArrayContainerRight) else{
-            throw InputError.InputError
-        }
     }
     
 }

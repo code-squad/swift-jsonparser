@@ -11,7 +11,8 @@ import Foundation
 var counter = Counter()
 
 do{
-    let json = try InputView.readInput(of: RequestMassage.requestJSON)
+    let input = try InputView.readInput(of: RequestMassage.requestJSON)
+    let json = try Validator.JSONArrayformatValidator(input: input)
     let convertedJSONToArray = converter.convertToArray(JSON: json)
     let CountNumber = try counter.dataTypeCounter(convertedJSONToArray: convertedJSONToArray)
     OutputView.printResult(countNumber: CountNumber)
