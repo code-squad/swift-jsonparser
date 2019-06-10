@@ -25,15 +25,14 @@ struct Parser {
     }
     
     private func isJsonObject(_ tokenList : [String])-> Bool {
-        if tokenList[0] == TokenSplitSign.curlyBracketStart.description && tokenList[tokenList.count-1] ==
-            TokenSplitSign.curlyBracketEnd.description {
+        if TokenSplitSign.isCurlyBracketStart(tokenList[0]) && TokenSplitSign.isCurlyBracketEnd(tokenList[tokenList.count-1]) {
             return true
         }
         return false
     }
     
     private func isJsonArray(_ tokenList : [String])-> Bool {
-        if tokenList[0] == TokenSplitSign.squareBracketStart.description && tokenList[tokenList.count-1] == TokenSplitSign.squareBracketEnd.description {
+        if TokenSplitSign.isSquareBracketStart(tokenList[0]) && TokenSplitSign.isSquareBracketEnd(tokenList[tokenList.count-1]){
             return true
         }
         return false
@@ -59,11 +58,11 @@ struct Parser {
     }
     
     private func confirmJsonValueType(tokenList: [String], index: inout Int) -> JsonParsable {
-        if isSquareBracketStart(tokenList[index]){
+        if TokenSplitSign.isSquareBracketStart(tokenList[index]){
             let recursiveJsonArrayElement = saveJsonArrayElementInJsonArray(tokenList: tokenList, index: &index)
             return recursiveJsonArrayElement
         }
-        if isCurlyBracketStart(tokenList[index]){
+        if TokenSplitSign.isCurlyBracketStart(tokenList[index]){
             let recursiveJsonObjectElement = saveJsonObjectElementInJsonArray(tokenList: tokenList, index: &index)
             return recursiveJsonObjectElement
         }
@@ -104,14 +103,14 @@ struct Parser {
     
     
     private func saveJsonObjectElementInJsonObject(tokenList : [String], index: inout Int) -> JsonParsable  {
-        var (stackForObject, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start : isCurlyBracketStart, end : isCurlyBracketEnd)
+        var (stackForObject, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start : TokenSplitSign.isCurlyBracketStart, end : TokenSplitSign.isCurlyBracketEnd)
         let recursiveJsonObjectElement = buildRecursivlyFromStackToJsonElement(stackForObject: &stackForObject, recursiveFunction: makeJsonObject)
         index = innerIndex
         return recursiveJsonObjectElement
     }
     
     private func saveJsonArrayElementInJsonObject(tokenList : [String], index: inout Int) -> JsonParsable{
-        var (stackForArray, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start: isSquareBracketStart, end: isSquareBracketEnd)
+        var (stackForArray, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start: TokenSplitSign.isSquareBracketStart, end: TokenSplitSign.isSquareBracketEnd)
         let recursiveJsonArrayElement = buildRecursivlyFromStackToJsonElement(stackForObject: &stackForArray, recursiveFunction: makeJsonArray)
         index = innerIndex
         return recursiveJsonArrayElement
@@ -148,19 +147,19 @@ struct Parser {
     }
     
     private func saveJsonArrayElementInJsonArray(tokenList : [String], index: inout Int) -> JsonParsable{
-        var (stackForArray, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start : isSquareBracketStart, end : isSquareBracketEnd)
+        var (stackForArray, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start : TokenSplitSign.isSquareBracketStart, end : TokenSplitSign.isSquareBracketEnd)
         let recursiveJsonArrayElement = buildRecursivlyFromStackToJsonElement(stackForObject: &stackForArray, recursiveFunction: makeJsonArray)
         index = innerIndex
         return recursiveJsonArrayElement
     }
     
     private func saveJsonObjectElementInJsonArray(tokenList : [String], index: inout Int) -> JsonParsable {
-        var (stackForArray, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start : isCurlyBracketStart, end : isCurlyBracketEnd)
+        var (stackForArray, innerIndex) = buildStackForNestedElement(tokenList: tokenList, index: index, start : TokenSplitSign.isCurlyBracketStart, end : TokenSplitSign.isCurlyBracketEnd)
         let recursiveJsonObjectElement = buildRecursivlyFromStackToJsonElement(stackForObject: &stackForArray, recursiveFunction: makeJsonObject)
         index = innerIndex
         return recursiveJsonObjectElement
     }
-    
+
     private func isCastableValue(value: String) -> Result<JsonParsable> {
         if let intValue = Int(value) {
             return .castIntSuccess(intValue)
@@ -199,21 +198,5 @@ struct Parser {
             return false
         }
         return true
-    }
-    
-    private func isSquareBracketStart(_ input: String ) -> Bool {
-        return input.count == 1 && input == TokenSplitSign.squareBracketStart.description ? true : false
-    }
-    
-    private func isSquareBracketEnd(_ input: String ) -> Bool {
-        return input.count == 1 && input == TokenSplitSign.squareBracketEnd.description ? true : false
-    }
-    
-    private func isCurlyBracketStart(_ input: String) -> Bool {
-        return input.count == 1 && input == TokenSplitSign.curlyBracketStart.description ? true : false
-    }
-    
-    private func isCurlyBracketEnd(_ input: String) -> Bool {
-        return input.count == 1 && input == TokenSplitSign.curlyBracketEnd.description ? true : false
     }
 }

@@ -19,6 +19,19 @@ enum TokenSplitSign : CustomStringConvertible{
     case curlyBracketStart
     case curlyBracketEnd
     
+    static func isSquareBracketStart(_ value: String) -> Bool {
+        return value == squareBracketStart.description
+    }
+    static func isSquareBracketEnd(_ value: String) -> Bool {
+        return value == squareBracketEnd.description
+    }
+    static func isCurlyBracketStart(_ value: String) -> Bool {
+        return value == curlyBracketStart.description
+    }
+    static func isCurlyBracketEnd(_ value: String) -> Bool {
+        return value == curlyBracketEnd.description
+    }
+    
     var description: String {
         switch self{
         case .semicolon:
@@ -37,9 +50,7 @@ enum TokenSplitSign : CustomStringConvertible{
             return "{"
         case .curlyBracketEnd:
             return "}"
-            
         }
-        
     }
     
 }
