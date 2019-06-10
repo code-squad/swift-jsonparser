@@ -11,7 +11,7 @@ import Foundation
 typealias CountNumbers = (intData:Int, boolData:Int, stringData:Int)
 
 struct Counter {
-    let dataTypeCriterion = DataTypeCriterion()
+    private let dataTypeCriterion = DataTypeCriterion()
     private var countInt = 0
     private var countBool = 0
     private var countString = 0
