@@ -14,8 +14,8 @@ func main() {
         var lexer = Lexer(input: input)
         let tokens = try lexer.tokenize()
         var parser = Parser(tokens: tokens)
-        let jsonValues = try parser.parse()
-        OutputView.printJSONValues(jsonValues)
+        let jsonValue = try parser.parse()
+        OutputView.printJSONValue(jsonValue)
     } catch let error as InputView.Error {
         print(error.localizedDescription)
     } catch let error as Lexer.Error {

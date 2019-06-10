@@ -12,11 +12,14 @@ struct Parser {
     
     enum Error: Swift.Error {
         case invalidToken(Token)
+        case parseJSONValueFailed
         
         var localizedDescription: String {
             switch self {
             case .invalidToken(let token):
                 return "유효하지 않은 토큰 \(token) 입니다."
+            case .parseJSONValueFailed:
+                return "JSONValue 파싱에 실패하였습니다"
             }
         }
     }
@@ -76,6 +79,8 @@ struct Parser {
                 return number
             case .bool(let bool):
                 return bool
+            case .comma:
+                return nil
             default:
                 throw Parser.Error.invalidToken(token)
             }
@@ -83,19 +88,10 @@ struct Parser {
         return nil
     }
     
-    mutating func parse() throws -> [JSONValue] {
-        var jsonArray = [JSONValue]()
-        
-        if let token = getNextToken(),
-            let value = try getValue(), token == .openSquareBracket {
-            jsonArray.append(value)
+    mutating func parse() throws -> JSONValue {
+        if let jsonValue = try getValue() {
+            return jsonValue
         }
-        
-        while let token = getNextToken(),
-            let value = try getValue(), token == .comma, token != .closeSquareBracket {
-                jsonArray.append(value)
-        }
-        
-        return jsonArray
+        throw Parser.Error.parseJSONValueFailed
     }
 }
