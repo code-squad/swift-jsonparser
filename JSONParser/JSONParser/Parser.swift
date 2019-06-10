@@ -14,6 +14,7 @@ struct Parser {
         case invalidToken(Token)
         case notExistToken
         case parseJSONValueFailed
+        case parseJSONArrayFailed
         
         var localizedDescription: String {
             switch self {
@@ -22,7 +23,9 @@ struct Parser {
             case .notExistToken:
                 return "토큰이 존재하지 않습니다."
             case .parseJSONValueFailed:
-                return "JSONValue 파싱에 실패하였습니다"
+                return "JSONValue 파싱에 실패하였습니다."
+            case .parseJSONArrayFailed:
+                return "JSONArray 파싱에 실패하였습니다."
             }
         }
     }
@@ -62,7 +65,7 @@ struct Parser {
         var jsonArray = [JSONValue]()
         var numberOfComma = 0
         
-        while let token = getNextToken(), token != .closeSquareBracket {
+        while let token = getNextToken() {
             switch token {
             case .doubleQuotation:
                 let stringValue = getString()
@@ -76,12 +79,13 @@ struct Parser {
                     throw Parser.Error.invalidToken(token)
                 }
                 numberOfComma = numberOfComma + 1
+            case .closeSquareBracket:
+                return jsonArray
             default:
                 throw Parser.Error.invalidToken(token)
             }
         }
-        
-        return jsonArray
+        throw Parser.Error.parseJSONArrayFailed
     }
     
     private mutating func getContainerValue() throws -> JSONContainerValue? {
