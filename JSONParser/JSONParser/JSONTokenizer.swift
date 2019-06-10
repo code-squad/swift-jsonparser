@@ -10,16 +10,20 @@ import Foundation
 
 struct JSONTokenizer {
     static func tokenize(data: String) throws -> [String] {
-        let tokens: [Character] = ["[", "]", ","]
+        let tokens: [Character] = [Token.beginArray, Token.endArray, Token.valueSeparator]
         var result = [String]()
         var buffer = ""
         
+        func appendBuffer(){
+            if !buffer.isEmpty {
+                result.append(buffer)
+                buffer.removeAll()
+            }
+        }
+        
         func readToken(character: Character) {
             if tokens.contains(character) {
-                if !buffer.isEmpty {
-                    result.append(buffer)
-                    buffer.removeAll()
-                }
+               appendBuffer()
                 result.append(String(character))
             } else {
                 buffer.append(character)
@@ -29,7 +33,9 @@ struct JSONTokenizer {
         for character in data {
             readToken(character: character)
         }
+        appendBuffer()
         return result
     }
-    
 }
+
+
