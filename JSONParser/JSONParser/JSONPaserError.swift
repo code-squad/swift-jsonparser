@@ -19,3 +19,11 @@ enum ConvertError: String, JSONError {
         return self.rawValue
     }
 }
+
+enum InputError: String, JSONError {
+    case InputError = "잘못된 형식의 데이터 입력입니다."
+    
+    var message: String {
+        return self.rawValue
+    }
+}
