@@ -61,29 +61,29 @@ struct Parser {
     private mutating func getJSONArray() throws -> [JSONValue]? {
         var jsonArray = [JSONValue]()
         
-        while isTokenAvailable {
-            if let value = try getValue() {
-                jsonArray.append(value)
+        while let token = getNextToken(), token != .closeSquareBracket {
+            switch token {
+            case .doubleQuotation:
+                let stringValue = getString()
+                jsonArray.append(stringValue)
+            case .number(let number):
+                jsonArray.append(number)
+            case .bool(let bool):
+                jsonArray.append(bool)
+            default:
+                throw Parser.Error.invalidToken(token)
             }
         }
         
         return jsonArray
     }
     
-    private mutating func getValue() throws -> JSONValue? {
+    private mutating func getContainerValue() throws -> JSONContainerValue? {
         
         if let token = getNextToken() {
             switch token {
             case .openSquareBracket:
                 return try getJSONArray()
-            case .doubleQuotation:
-                return getString()
-            case .number(let number):
-                return number
-            case .bool(let bool):
-                return bool
-            case .comma, .closeSquareBracket:
-                return nil
             default:
                 throw Parser.Error.invalidToken(token)
             }
@@ -91,8 +91,8 @@ struct Parser {
         throw Parser.Error.notExistToken
     }
     
-    mutating func parse() throws -> JSONValue {
-        if let jsonValue = try getValue() {
+    mutating func parse() throws -> JSONContainerValue {
+        if let jsonValue = try getContainerValue() {
             return jsonValue
         }
         throw Parser.Error.parseJSONValueFailed

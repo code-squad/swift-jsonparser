@@ -10,13 +10,7 @@ import Foundation
 
 struct OutputView {
     
-    static func printJSONValue(_ jsonValue: JSONValue) {
-        printJSONContainerValue(jsonValue)
-    }
-    
-    static private func printJSONContainerValue(_ jsonValue: JSONValue) {
-        if let jsonContainerValue = jsonValue as? JSONContainerValue {
-            print(jsonContainerValue.containerDescription)
-        }
+    static func printJSONContainerValue(_ jsonContainerValue: JSONContainerValue) {
+        print(jsonContainerValue.containerDescription)
     }
 }
