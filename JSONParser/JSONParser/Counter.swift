@@ -8,28 +8,60 @@
 
 import Foundation
 
-typealias CountNumbers = (Int,Int,Int)
+typealias CountNumbers = (intData:Int, boolData:Int, stringData:Int)
 
-struct Validator {
+struct Counter {
+    let dataTypeCriterion = DataTypeCriterion()
+    private var countInt = 0
+    private var countBool = 0
+    private var countString = 0
+    private var countCanNotConvertData = 0
+    private var canNotConvertData:[String] = []
     
-    private var countNumber = CountNumber()
-    
-    mutating func checkDataType(convertedJSONArray:[String]) -> (Int,Int,Int) {
+    mutating func dataTypeCounter(convertedJSONToArray:[String])throws -> CountNumbers {
         
-        for i in convertedJSONArray {
-            if let convertedInt = Int(i){
-                countNumber.countInt += 1
-                continue
-            }
-            if let convertedBool = Bool(i){
-                countNumber.countBool += 1
-                continue
-            }
-            if FormatItem.DoubleQuotationMark.isStrictSubset(of: CharacterSet(charactersIn: i)) {
-                countNumber.countString += 1
-                continue
-            }
+        for item in convertedJSONToArray {
+            try stringDataCount(data: item)
         }
-        return (countNumber.countInt,countNumber.countBool,countNumber.countString)
+        return (intData : countInt, boolData:countBool, stringData:countString)
+        
+    }
+    
+    private mutating func stringDataCount(data:String)throws {
+        
+        guard dataTypeCriterion.distinguishingString.isStrictSubset(of: CharacterSet(charactersIn: data)) else{
+            return try intDataCount(data: data)
+        }
+        countString += 1
+        
+    }
+    
+    private mutating func intDataCount(data:String)throws {
+        
+        guard CharacterSet(charactersIn: data).isStrictSubset(of: dataTypeCriterion.distinguishingInt) else{
+            return try boolDataCount(data: data)
+        }
+        countInt += 1
+        
+    }
+    
+    private mutating func boolDataCount(data:String)throws {
+        
+        guard data == dataTypeCriterion.distinguishingBool.true || data == dataTypeCriterion.distinguishingBool.false else{
+            canNotConvertData.append(data)
+            countCanNotConvertData += 1
+            return try canNotConvertDataPrint(countCanNotConvertData: countCanNotConvertData)
+        }
+        countBool += 1
+        
+    }
+    
+    private func canNotConvertDataPrint(countCanNotConvertData:Int)throws {
+        
+        guard countCanNotConvertData == 0 else{
+            print(canNotConvertData)
+            throw ConvertError.canNotCovertData
+        }
+        
     }
 }
