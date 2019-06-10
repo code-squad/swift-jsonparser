@@ -60,6 +60,7 @@ struct Parser {
     
     private mutating func getJSONArray() throws -> [JSONValue]? {
         var jsonArray = [JSONValue]()
+        var numberOfComma = 0
         
         while let token = getNextToken(), token != .closeSquareBracket {
             switch token {
@@ -70,6 +71,11 @@ struct Parser {
                 jsonArray.append(number)
             case .bool(let bool):
                 jsonArray.append(bool)
+            case .comma:
+                guard numberOfComma == jsonArray.count - 1 && position != tokens.endIndex else {
+                    throw Parser.Error.invalidToken(token)
+                }
+                numberOfComma = numberOfComma + 1
             default:
                 throw Parser.Error.invalidToken(token)
             }
