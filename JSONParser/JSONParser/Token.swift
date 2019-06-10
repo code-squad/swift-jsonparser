@@ -9,7 +9,7 @@
 import Foundation
 
 struct Token {
-    static let beginArray = "["
-    static let endArray = "]"
-    static let valueSeparator = ","
+    static let beginArray: Character = "["
+    static let endArray: Character = "]"
+    static let valueSeparator: Character = ","
 }
