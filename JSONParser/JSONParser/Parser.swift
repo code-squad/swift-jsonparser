@@ -53,17 +53,10 @@ struct Parser {
     }
     
     private mutating func getString() throws -> String {
-        var value = ""
         
-        while let token = getNextToken() {
-            switch token {
-            case .string(let string):
-                value = value + string
-            case .doubleQuotation:
-                return value
-            default:
-                throw Parser.Error.invalidToken(token)
-            }
+        if case let .string(stringValue)? = getNextToken(),
+            let doubleQuotationToken = getNextToken(), doubleQuotationToken == .doubleQuotation {
+            return stringValue
         }
         throw Parser.Error.parseStringFailed
     }
