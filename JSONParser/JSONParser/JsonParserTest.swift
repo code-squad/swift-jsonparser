@@ -9,25 +9,25 @@
 import XCTest
 
 class JsonParser: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    func testCorrectFormatOfJSON() {
+        XCTAssertNoThrow(try Validator.JSONArrayformatValidator(input: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]"))
     }
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testInCorrectFormatOfJSON() {
+        XCTAssertThrowsError(try Validator.JSONArrayformatValidator(input: " 10, \"jk\", 4, \"314\", 99, \"crong\", false"))
     }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    func testCanConvertData() {
+        let json = converter.convertToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]")
+        var counter = Counter()
+        XCTAssertNoThrow(try counter.dataTypeCounter(convertedJSONToArray: json))
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testContainCanNotConvertData() {
+        let json = converter.convertToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, canNotConvertData]")
+        var counter = Counter()
+        XCTAssertThrowsError(try counter.dataTypeCounter(convertedJSONToArray: json))
     }
 
 }
