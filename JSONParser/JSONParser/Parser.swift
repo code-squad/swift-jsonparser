@@ -68,24 +68,32 @@ struct Parser {
         throw Parser.Error.parseStringFailed
     }
     
-    private mutating func getJSONArray() throws -> [JSONValue]? {
-        var jsonArray = [JSONValue]()
-        var numberOfComma = 0
+    private mutating func getValue() throws -> JSONValue {
         
-        while let token = getNextToken() {
+        if let token = getNextToken() {
             switch token {
             case .doubleQuotation:
                 let stringValue = try getString()
-                jsonArray.append(stringValue)
+                return stringValue
             case .number(let number):
-                jsonArray.append(number)
+                return number
             case .bool(let bool):
-                jsonArray.append(bool)
-            case .comma:
-                guard numberOfComma == jsonArray.count - 1 && position != tokens.endIndex else {
-                    throw Parser.Error.invalidToken(token)
-                }
-                numberOfComma = numberOfComma + 1
+                return bool
+            default:
+                throw Parser.Error.invalidToken(token)
+            }
+        }
+        throw Parser.Error.parseJSONValueFailed
+    }
+    
+    private mutating func getJSONArray() throws -> [JSONValue]? {
+        var jsonArray = [JSONValue]()
+        
+        while let token = getNextToken() {
+            switch token {
+            case .openSquareBracket, .comma:
+                let value = try getValue()
+                jsonArray.append(value)
             case .closeSquareBracket:
                 return jsonArray
             default:
@@ -95,21 +103,8 @@ struct Parser {
         throw Parser.Error.parseJSONArrayFailed
     }
     
-    private mutating func getContainerValue() throws -> JSONContainerValue? {
-        
-        if let token = getNextToken() {
-            switch token {
-            case .openSquareBracket:
-                return try getJSONArray()
-            default:
-                throw Parser.Error.invalidToken(token)
-            }
-        }
-        throw Parser.Error.notExistToken
-    }
-    
     mutating func parse() throws -> JSONContainerValue {
-        if let jsonValue = try getContainerValue() {
+        if let jsonValue = try getJSONArray() {
             return jsonValue
         }
         throw Parser.Error.parseJSONValueFailed
