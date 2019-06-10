@@ -9,7 +9,7 @@
 import Foundation
 
 struct JSONDataCount {
-    static func NEWJSONTypeCount(arrayData: [JSONDataType]) throws -> [String: Int] {
+    static func JSONTypeCount(arrayData: [JSONDataType]) throws -> [String: Int] {
         var counts: [String: Int] = [:]
         for item in arrayData {
             counts[item.typeDescription] = (counts[item.typeDescription] ?? 0) + 1

@@ -11,14 +11,14 @@ import Foundation
 
 struct OutputView {
     static func printDescription(input: [JSONDataType]) throws {
-        let description = try NEWprintDataCount(arrayData: input)
+        let description = try printDataCount(arrayData: input)
         print(description)
     }
     
-    static private func NEWprintDataCount(arrayData: [JSONDataType]) throws -> String {
+    static private func printDataCount(arrayData: [JSONDataType]) throws -> String {
         var result: String = ""
         let totalCount = arrayData.count
-        let counts = try JSONDataCount.NEWJSONTypeCount(arrayData: arrayData)
+        let counts = try JSONDataCount.JSONTypeCount(arrayData: arrayData)
         for (key, value) in counts {
             result += "\(key)이 \(value)개 "
         }
