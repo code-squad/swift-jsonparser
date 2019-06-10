@@ -10,7 +10,15 @@ import Foundation
 
 struct JSONParser {
     
-    static func parseValue (data: String) throws -> JSONDataType {
+    static func parseArray(data: [String]) throws -> [JSONDataType] {
+        var result = [JSONDataType]()
+        for string in data {
+        result.append(try parseValue(data: string))
+        }
+        return result
+    }
+    
+    static func parseValue(data: String) throws -> JSONDataType {
         if let string = parseString(data: data) {
             return string
         } else if let number = parseNumber(data: data) {
