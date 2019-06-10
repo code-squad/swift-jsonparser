@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct JSONLexer {
+struct JSONAnalyzer {
     static func analyze(data: [String]) throws -> [String] {
-        guard data.first == Token.beginArray && data.last == Token.endArray else {
+        guard data.first == String(Token.beginArray) && data.last == String(Token.endArray) else {
             throw JSONError.notArray
         }
         var data = data
@@ -20,7 +20,7 @@ struct JSONLexer {
         var result = [String]()
 
         func readLexical(string: String) throws {
-            if string == Token.valueSeparator {
+            if string == String(Token.valueSeparator) {
                 if isAnalyzingValue {
                     throw JSONError.unexpectedSeperator
                 } else {
@@ -30,7 +30,7 @@ struct JSONLexer {
                 if !isAnalyzingValue {
                     throw JSONError.unexpectedSeperator
                 } else {
-                    result.append(string)
+                    result.append(string.trimmingCharacters(in: [" "]))
                     isAnalyzingValue = false
                 }
             }
@@ -42,3 +42,4 @@ struct JSONLexer {
         return result
     }
 }
+
