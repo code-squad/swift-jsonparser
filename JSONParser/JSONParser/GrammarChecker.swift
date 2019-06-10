@@ -18,7 +18,7 @@ struct GrammerChecker {
     
     /// 입력받은 문자열의 문법 검사
     func grammarTest(jsonData: Tokenizer) throws -> Tokenizer{
-        for (key,_) in jsonData.dictionaryJson {
+        for key in jsonData.dictionaryJson.keys {
             try distinctKeyType(key: key)
         }
         return jsonData

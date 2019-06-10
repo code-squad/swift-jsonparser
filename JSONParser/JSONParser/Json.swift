@@ -8,14 +8,46 @@
 
 import Foundation
 
-protocol Json {}
+protocol Json {
+    var element: Json {get}
+}
 
-extension Bool: Json {}
+extension Bool: Json {
+    var element: Json {
+        get {
+            return self
+        }
+    }
+}
 
-extension Int: Json {}
+extension Int: Json {
+    var element: Json {
+        get {
+            return self
+        }
+    }
+}
 
-extension String: Json {}
+extension String: Json {
+    var element: Json {
+        get {
+            return self
+        }
+    }
+}
 
-extension Dictionary: Json{}
+extension Dictionary: Json{
+    var element: Json {
+        get {
+            return self
+        }
+    }
+}
 
-extension Array: Json{}
+extension Array: Json{
+    var element: Json {
+        get {
+            return self
+        }
+    }
+}
