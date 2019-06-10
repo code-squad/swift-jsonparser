@@ -12,12 +12,15 @@ struct Parser {
     
     enum Error: Swift.Error {
         case invalidToken(Token)
+        case notExistToken
         case parseJSONValueFailed
         
         var localizedDescription: String {
             switch self {
             case .invalidToken(let token):
                 return "유효하지 않은 토큰 \(token) 입니다."
+            case .notExistToken:
+                return "토큰이 존재하지 않습니다."
             case .parseJSONValueFailed:
                 return "JSONValue 파싱에 실패하였습니다"
             }
@@ -85,7 +88,7 @@ struct Parser {
                 throw Parser.Error.invalidToken(token)
             }
         }
-        return nil
+        throw Parser.Error.notExistToken
     }
     
     mutating func parse() throws -> JSONValue {
