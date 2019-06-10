@@ -9,22 +9,43 @@
 import Foundation
 
 func main() {
+    let input: String
+    let tokens: [Token]
+    let jsonContianerValue: JSONContainerValue
+    
     do {
-        let input = try InputView.readJSONData()
-        var lexer = Lexer(input: input)
-        let tokens = try lexer.tokenize()
-        var parser = Parser(tokens: tokens)
-        let jsonContainerValue = try parser.parse()
-        OutputView.printJSONContainerValue(jsonContainerValue)
+        input = try InputView.readJSONData()
     } catch let error as InputView.Error {
         print(error.localizedDescription)
-    } catch let error as Lexer.Error {
-        print(error.localizedDescription)
-    } catch let error as Parser.Error {
-        print(error.localizedDescription)
+        return
     } catch {
         print("\(Message.unexpectedError): \(error)")
+        return
     }
+    
+    do {
+        var lexer = Lexer(input: input)
+        tokens = try lexer.tokenize()
+    } catch let error as Lexer.Error {
+        print(error.localizedDescription)
+        return
+    } catch {
+        print("\(Message.unexpectedError): \(error)")
+        return
+    }
+    
+    do {
+        var parser = Parser(tokens: tokens)
+        jsonContianerValue = try parser.parse()
+    } catch let error as Parser.Error {
+        print(error.localizedDescription)
+        return
+    } catch {
+        print("\(Message.unexpectedError): \(error)")
+        return
+    }
+    
+    OutputView.printJSONContainerValue(jsonContianerValue)
 }
 
 main()
