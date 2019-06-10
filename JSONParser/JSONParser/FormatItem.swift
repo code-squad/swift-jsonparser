@@ -7,6 +7,13 @@
 //
 
 import Foundation
-struct JSONArrayFormat {
-    <#fields#>
+struct FormatItem {
+    
+    static let JSONArrayFormat = CharacterSet(charactersIn: "[]")
+    static let JSONArrayContainerLeft = "["
+    static let JSONArrayContainerRight = "]"
+    static let blank:Character = " "
+    static let DoubleQuotationMark = CharacterSet(charactersIn: "\"")
+    static let arraySperator = ","
+    
 }
