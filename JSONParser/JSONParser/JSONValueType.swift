@@ -44,3 +44,41 @@ extension Bool: JSONValueType {
         return "부울"
     }
 }
+
+typealias Object = [String: JSONValueType]
+extension Object: JSONContainerType {
+    static var typeDescription: String {
+        return "객체"
+    }
+    
+    var typeDescription: String {
+        return Object.typeDescription
+    }
+    
+    var totalCount: Int {
+        return self.count
+    }
+    
+    var types: [JSONValueType.Type] {
+        return self.values.map { type(of: $0) }
+    }
+}
+
+typealias JSONArray = [JSONValueType]
+extension JSONArray: JSONContainerType {
+    static var typeDescription: String {
+        return "배열"
+    }
+    
+    var typeDescription: String {
+        return JSONArray.typeDescription
+    }
+    
+    var totalCount: Int {
+        return self.count
+    }
+    
+    var types: [JSONValueType.Type] {
+        return self.map { type(of: $0) }
+    }
+}
