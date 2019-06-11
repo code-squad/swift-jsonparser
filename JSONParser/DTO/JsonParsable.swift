@@ -8,14 +8,14 @@
 
 import Foundation
 
-protocol JsonParsable : CustomStringConvertible{
+protocol JsonParsable {
     var description: String {get}
 }
 
 extension String : JsonParsable {
     var description : String {
         get {
-            return String(self)
+            return self
         }
     }
 }
@@ -39,11 +39,21 @@ extension Bool : JsonParsable {
 extension Array: JsonParsable {
     var description : String {
         get{
-            var result = "\(TokenSplitSign.squareBracketStart.description) "
-            for index in 0..<self.count-1{
+            var result = "\(TokenSplitSign.squareBracketStart.description)"
+            for index in 0..<self.count{
                 let cur = self[index]
                 guard let jsonElement = self[index] as? JsonParsable else {
                     return result
+                }
+                if jsonElement.self is JsonObject {
+                    result += "\(jsonElement.self.description)"
+                    result.popLast()
+                    result += "\t\(TokenSplitSign.curlyBracketEnd.description),\n"
+                    continue
+                }
+                if jsonElement.self is Array {
+                    result += "\t\(jsonElement.self.description)\n\n"
+                    continue
                 }
                 result += " \(jsonElement.self.description),"
             }
