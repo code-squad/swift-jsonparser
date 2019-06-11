@@ -26,54 +26,69 @@ struct Parser {
         return token
     }
     
-    func parse(tokens: [String]) -> JSONContainerType? {
-        guard let firstToken = tokens.first else {
-            return nil
+    mutating func parse(tokens: [String]) -> JSONContainerType? {
+        while let token = nextToken() {
+            switch token {
+            case JSONKeyword.leftSquareBracket:
+                let array = parseArray(tokens: tokens)
+                return array
+            case JSONKeyword.leftCurlyBracket:
+                let object = parseObject(tokens: tokens)
+                return object
+            default:
+                return nil
+            }
         }
-        
-        if firstToken == JSONKeyword.leftSquareBracket {
-            let array = parseArray(tokens: tokens)
-            return array
-        } else if firstToken == JSONKeyword.leftCurlyBracket {
-            let object = parseObject(tokens: tokens)
-            return object
-        }
-        
         return nil
     }
     
-    private func parseArray(tokens: [String]) -> JSONContainerType {
-        var arrayDatas: [JSONValueType] = []
-        let objectTokens = makeObject(tokens: tokens)
-        for objectToken in objectTokens {
-            if objectToken.count > 1 {
-                if let object = converter.convertMultipleValue(tokens: objectToken) {
-                    arrayDatas.append(object)
-                }
-            } else {
-                if let object = converter.convertSingleValue(token: objectToken.joined()){
-                    arrayDatas.append(object)
-                }
+    mutating private func parseArray(tokens: [String]) -> JSONContainerType {
+        var arrayData: [JSONValueType] = []
+        
+        while let token = nextToken() {
+            guard token != JSONKeyword.rightSquareBracket else {
+                return arrayData
             }
-        }
-        return arrayDatas
-        
-    }
-    
-    private func parseObject(tokens: [String]) -> JSONContainerType {
-        var object: [String: JSONValueType] = [:]
-        
-        for (index, token) in tokens.enumerated() {
-            if token == JSONKeyword.colon {
-                let key = tokens[index - 1]
-                let rawValue = tokens[index + 1]
-                guard let value = makeJSONType(by: rawValue) else {
+            
+            switch token {
+            case JSONKeyword.leftCurlyBracket:
+                let objectData = parseObject(tokens: tokens)
+                arrayData.append(objectData)
+            default:
+                guard let value = makeJSONType(by: token) else {
                     continue
                 }
-                object[key] = value
+                arrayData.append(value)
             }
         }
-        return object
+        return arrayData
+    }
+    
+    mutating private func parseObject(tokens: [String]) -> JSONContainerType {
+        var objectData: [String: JSONValueType] = [:]
+        
+        while let token = nextToken() {
+            
+            guard token != JSONKeyword.rightCurlyBracket else {
+                return objectData
+            }
+            
+            guard token == JSONKeyword.colon else {
+                continue
+            }
+            
+            let previousPosition = position - 2
+            let nextPosition = position
+            let key = tokens[previousPosition]
+            let rawValue = tokens[nextPosition]
+            
+            guard let value = makeJSONType(by: rawValue) else {
+                continue
+            }
+        
+            objectData[key] = value
+        }
+        return objectData
     }
     
     private func makeJSONType(by token: String) -> JSONValueType? {
@@ -81,35 +96,5 @@ struct Parser {
             return nil
         }
         return value
-    }
-    
-    private func makeObject(tokens: [String]) -> [[String]] {
-       
-        let curlyBrackets = [JSONKeyword.leftCurlyBracket, JSONKeyword.rightCurlyBracket]
-        var isInObject = false
-        var object: [[String]] = []
-        var objectTokens: [String] = []
-    
-        for token in tokens {
-            
-            if curlyBrackets.contains(token) {
-                isInObject.toggle()
-            }
-            
-            if isInObject {
-                objectTokens.append(token)
-                continue
-            }
-            
-            guard objectTokens.count > 0 else {
-                object.append([token])
-                continue
-            }
-            
-            object.append(objectTokens)
-            objectTokens.removeAll()
-        }
-        
-        return object
     }
 }
