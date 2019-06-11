@@ -52,22 +52,12 @@ struct Parser {
         return token
     }
     
-    private mutating func getString() throws -> String {
-        
-        if case let .string(stringValue)? = getNextToken(),
-            let doubleQuotationToken = getNextToken(), doubleQuotationToken == .doubleQuotation {
-            return stringValue
-        }
-        throw Parser.Error.parseStringFailed
-    }
-    
     private mutating func getValue() throws -> JSONValue {
         
         if let token = getNextToken() {
             switch token {
-            case .doubleQuotation:
-                let stringValue = try getString()
-                return stringValue
+            case .string(let string):
+                return string
             case .number(let number):
                 return number
             case .bool(let bool):

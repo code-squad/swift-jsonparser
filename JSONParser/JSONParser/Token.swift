@@ -11,7 +11,6 @@ import Foundation
 enum Token: Equatable {
     case openSquareBracket
     case closeSquareBracket
-    case doubleQuotation
     case comma
     case bool(Bool)
     case string(String)
@@ -21,7 +20,6 @@ enum Token: Equatable {
         switch (lhs, rhs) {
         case (.openSquareBracket, .openSquareBracket),
              (.closeSquareBracket, .closeSquareBracket),
-             (.doubleQuotation, .doubleQuotation),
              (.comma, .comma):
             return true
         case (.bool(let lb), .bool(let rb)):

@@ -49,6 +49,8 @@ struct Lexer {
                 let stringValue = String(nextCharacter)
                 value = value + stringValue
                 advance()
+            case "\"":
+                return value
             default:
                 return value
             }
@@ -86,14 +88,14 @@ struct Lexer {
                 tokens.append(.closeSquareBracket)
                 advance()
             case "\"":
-                tokens.append(.doubleQuotation)
+                advance()
+                let value = getString()
+                tokens.append(.string(value))
                 advance()
             case "a" ... "z":
                 let value = getString()
                 if let boolValue = Bool(value) {
                     tokens.append(.bool(boolValue))
-                } else {
-                    tokens.append(.string(value))
                 }
             case "0" ... "9":
                 let value = getNumber()
