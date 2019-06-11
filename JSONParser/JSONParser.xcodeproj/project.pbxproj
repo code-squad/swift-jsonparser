@@ -15,7 +15,6 @@
 		FAEC4C5B2291998B00122FBE /* JSONValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC4C5A2291998B00122FBE /* JSONValueType.swift */; };
 		FAEC4C5F22928DDA00122FBE /* JSONKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC4C5E22928DDA00122FBE /* JSONKeyword.swift */; };
 		FAEC4C61229540D700122FBE /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC4C60229540D700122FBE /* OutputView.swift */; };
-		FAEC4C632297009700122FBE /* TypeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC4C622297009700122FBE /* TypeCounter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,7 +39,6 @@
 		FAEC4C5A2291998B00122FBE /* JSONValueType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValueType.swift; sourceTree = "<group>"; };
 		FAEC4C5E22928DDA00122FBE /* JSONKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONKeyword.swift; sourceTree = "<group>"; };
 		FAEC4C60229540D700122FBE /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
-		FAEC4C622297009700122FBE /* TypeCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCounter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +76,6 @@
 				FAEC4C562291985700122FBE /* Tokenizer.swift */,
 				FAEC4C582291989200122FBE /* Parser.swift */,
 				FA43C77F228AE36000BAB081 /* Converter.swift */,
-				FAEC4C622297009700122FBE /* TypeCounter.swift */,
 				FAEC4C5A2291998B00122FBE /* JSONValueType.swift */,
 				FAEC4C5E22928DDA00122FBE /* JSONKeyword.swift */,
 			);
@@ -160,7 +157,6 @@
 				FA43C780228AE36000BAB081 /* Converter.swift in Sources */,
 				FA43C77822895A5F00BAB081 /* InputView.swift in Sources */,
 				FAEC4C61229540D700122FBE /* OutputView.swift in Sources */,
-				FAEC4C632297009700122FBE /* TypeCounter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
