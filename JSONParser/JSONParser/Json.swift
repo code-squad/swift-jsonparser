@@ -9,46 +9,36 @@
 import Foundation
 
 protocol Json {
-    var ment: String {get}
+    static var ment: String {get}
 }
 
 extension Bool: Json {
-    var ment: String {
-        get {
-            return "부울"
-        }
+    static var ment: String {
+        return "부울"
     }
 }
 
 extension Int: Json {
-    var ment: String {
-        get {
-            return "숫자"
-        }
+    static var ment: String {
+        return "숫자"
     }
 }
 
 extension String: Json {
-    var ment: String {
-        get {
-            return "문자열"
-        }
+    static var ment: String {
+        return "문자열"
     }
 }
 
 extension Dictionary: Json{
-    var ment: String {
-        get {
-            return "객체"
-        }
+    static var ment: String {
+        return "객체"
     }
 }
 
 extension Array: Json{
-    var ment: String {
-        get {
-            return "배열"
-        }
+    static var ment: String {
+        return "배열"
     }
 }
 

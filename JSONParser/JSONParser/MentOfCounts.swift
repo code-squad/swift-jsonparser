@@ -10,16 +10,16 @@ import Foundation
 
 struct MentOfCounts {
     static func makeMent(jsonData: [Json]) -> String {
-        var countOfType = [String().ment: 0, Int().ment: 0, Bool().ment: 0, Dictionary<String, Json>().ment: 0, Array<Json>().ment: 0]
+        var countOfType = [String.ment: 0, Int.ment: 0, Bool.ment: 0, Dictionary<String,Json>.ment: 0, Array<Json>.ment: 0]
         var prints: [String] = []
         
         for jsonDatum in jsonData {
             switch jsonDatum {
-            case is String: countOfType[String().ment] = countOfType[String().ment]! + 1
-            case is Int: countOfType[Int().ment] = countOfType[Int().ment]! + 1
-            case is Bool: countOfType[Bool().ment] = countOfType[Bool().ment]! + 1
-            case is Array<Json>: countOfType[Array<Json>().ment] = countOfType[Array<Json>().ment]! + 1
-            case is Dictionary<String, Json>: countOfType[Dictionary<String, Json>().ment] = countOfType[Dictionary<String, Json>().ment]! + 1
+            case is String: countOfType[String.ment] = countOfType[String.ment]! + 1
+            case is Int: countOfType[Int.ment] = countOfType[Int.ment]! + 1
+            case is Bool: countOfType[Bool.ment] = countOfType[Bool.ment]! + 1
+            case is Array<Json>: countOfType[Array<Json>.ment] = countOfType[Array<Json>.ment]! + 1
+            case is Dictionary<String, Json>: countOfType[Dictionary<String, Json>.ment] = countOfType[Dictionary<String, Json>.ment]! + 1
             default: break
             }
         }
