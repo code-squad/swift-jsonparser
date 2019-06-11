@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct JSONParser {
+struct JSONParse {
     
-    var JSONParserValue:[JSONValue] = []
+    var parsedJSONValue:[JSONValue] = []
     var countInt = 0
     var countBool = 0
     var countString = 0

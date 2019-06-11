@@ -22,26 +22,26 @@ struct converter {
         
     }
     
-    mutating func parsing(JSON:[String])throws -> JSONParser {
+    mutating func parsing(JSON:[String])throws -> JSONParse {
         
-        var JSONParserData = JSONParser()
+        var JSONParserData = JSONParse()
         
         for item in JSON {
             
             if dataTypeCriterion.distinguishingString.isStrictSubset(of: CharacterSet(charactersIn: item)) {
-                JSONParserData.JSONParserValue.append(String(item))
+                JSONParserData.parsedJSONValue.append(String(item))
                 JSONParserData.countString += 1
                 continue
             }
             
             if CharacterSet(charactersIn: item).isStrictSubset(of: dataTypeCriterion.distinguishingInt){
-                JSONParserData.JSONParserValue.append(Int(item)!)
+                JSONParserData.parsedJSONValue.append(Int(item)!)
                 JSONParserData.countInt += 1
                 continue
             }
             
             if item == dataTypeCriterion.distinguishingBool.true || item == dataTypeCriterion.distinguishingBool.false {
-                JSONParserData.JSONParserValue.append(Bool(item)!)
+                JSONParserData.parsedJSONValue.append(Bool(item)!)
                 JSONParserData.countBool += 1
                 continue
             }
@@ -49,12 +49,18 @@ struct converter {
             countCanNotConvertData += 1
         }
         
+        try canNotConvertDataPrint(countCanNotConvertData: countCanNotConvertData)
+        
+        return JSONParserData
+        
+    }
+    
+    private func canNotConvertDataPrint(countCanNotConvertData:Int)throws {
+        
         guard countCanNotConvertData == 0 else{
             print(canNotConvertData)
             throw ConvertError.canNotCovertData
         }
-        
-        return JSONParserData
         
     }
     
