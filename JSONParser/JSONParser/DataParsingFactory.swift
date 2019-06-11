@@ -23,25 +23,25 @@ struct DataParsingFactory {
         var canNotParsingData:[String] = []
         var countString = 0, countInt = 0, countBool = 0
         
-        for element in datas {
+        for data in datas {
             
-            if isString(data: element) {
-                ParsedData.append(String(element))
+            if isString(data: data) {
+                ParsedData.append(String(data))
                 countString += 1
                 continue
             }
-            if isInt(data: element) {
-                ParsedData.append(Int(element)!)
+            if isInt(data: data) {
+                ParsedData.append(Int(data)!)
                 countInt += 1
                 continue
             }
-            if isBool(data: element) {
-                ParsedData.append(Bool(element)!)
+            if isBool(data: data) {
+                ParsedData.append(Bool(data)!)
                 countBool += 1
                 continue
             }
             
-            canNotParsingData.append(element)
+            canNotParsingData.append(data)
             
         }
         return (JSONParse(ParsedData, countNumbers:(countString, countInt, countBool)), CanNotParsingData(canNotParsingData))
