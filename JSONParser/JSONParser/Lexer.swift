@@ -49,10 +49,11 @@ struct Lexer {
         position = input.index(after: position)
     }
     
-    private mutating func skipDoubleQuotes() {
-        if let nextCharacter = peek(), nextCharacter == "\"" {
-            advance()
+    private mutating func skipDoubleQuotes() throws {
+        if let nextCharacter = peek(), nextCharacter != "\"" {
+            throw Lexer.Error.invalidCharacter(nextCharacter)
         }
+        advance()
     }
     
     private mutating func getString() throws -> String {
@@ -106,7 +107,7 @@ struct Lexer {
                 advance()
                 let value = try getString()
                 tokens.append(.string(value))
-                skipDoubleQuotes()
+                try skipDoubleQuotes()
             case "t", "f":
                 let value = try getBool()
                 tokens.append(.bool(value))
