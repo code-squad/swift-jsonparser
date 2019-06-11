@@ -10,9 +10,13 @@ import Foundation
 
 struct CanNotParsingData {
     
-    var canNotConvertData:[String] = []
+    init(_ canNotParsingData:[String]) {
+        self.canNotParsingData = canNotParsingData
+    }
+    
+    var canNotParsingData:[String]
     var count:Int {
-        return canNotConvertData.count
+        return canNotParsingData.count
     }
     
 }

@@ -23,8 +23,8 @@
 		64808FB922A42D8600B2DB0A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		64808FBB22A42E4E00B2DB0A /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FBA22A42E4E00B2DB0A /* Converter.swift */; };
 		64808FBC22A42E4E00B2DB0A /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FBA22A42E4E00B2DB0A /* Converter.swift */; };
-		64808FBE22A42EC400B2DB0A /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FBD22A42EC400B2DB0A /* Counter.swift */; };
-		64808FBF22A42EC400B2DB0A /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FBD22A42EC400B2DB0A /* Counter.swift */; };
+		64808FBE22A42EC400B2DB0A /* DataParsingFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FBD22A42EC400B2DB0A /* DataParsingFactory.swift */; };
+		64808FBF22A42EC400B2DB0A /* DataParsingFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FBD22A42EC400B2DB0A /* DataParsingFactory.swift */; };
 		64808FC122A42ED800B2DB0A /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FC022A42ED800B2DB0A /* InputView.swift */; };
 		64808FC222A42ED800B2DB0A /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FC022A42ED800B2DB0A /* InputView.swift */; };
 		64808FC422A42F0300B2DB0A /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FC322A42F0300B2DB0A /* OutputView.swift */; };
@@ -59,7 +59,7 @@
 		64808FB322A42D7D00B2DB0A /* JsonParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParserTest.swift; sourceTree = "<group>"; };
 		64808FB522A42D7D00B2DB0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64808FBA22A42E4E00B2DB0A /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
-		64808FBD22A42EC400B2DB0A /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
+		64808FBD22A42EC400B2DB0A /* DataParsingFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParsingFactory.swift; sourceTree = "<group>"; };
 		64808FC022A42ED800B2DB0A /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		64808FC322A42F0300B2DB0A /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		64808FC622A42FAE00B2DB0A /* RequestMassage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMassage.swift; sourceTree = "<group>"; };
@@ -139,7 +139,7 @@
 				640DF83222AFAE1E0015AF8B /* parseData */,
 				64002AAC22AEC384007359FF /* Validator.swift */,
 				64808FBA22A42E4E00B2DB0A /* Converter.swift */,
-				64808FBD22A42EC400B2DB0A /* Counter.swift */,
+				64808FBD22A42EC400B2DB0A /* DataParsingFactory.swift */,
 				64808FC922A431A700B2DB0A /* FormatItem.swift */,
 				64002AA622ACA79A007359FF /* DataTypeCriterion.swift */,
 				64808FC622A42FAE00B2DB0A /* RequestMassage.swift */,
@@ -239,7 +239,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				64808FBF22A42EC400B2DB0A /* Counter.swift in Sources */,
+				64808FBF22A42EC400B2DB0A /* DataParsingFactory.swift in Sources */,
 				64808FB922A42D8600B2DB0A /* main.swift in Sources */,
 				64808FCB22A431A700B2DB0A /* FormatItem.swift in Sources */,
 				640DF82B22AF72960015AF8B /* JSONDataType.swift in Sources */,
@@ -269,7 +269,7 @@
 				64808FC722A42FAE00B2DB0A /* RequestMassage.swift in Sources */,
 				64808FBB22A42E4E00B2DB0A /* Converter.swift in Sources */,
 				64808FC122A42ED800B2DB0A /* InputView.swift in Sources */,
-				64808FBE22A42EC400B2DB0A /* Counter.swift in Sources */,
+				64808FBE22A42EC400B2DB0A /* DataParsingFactory.swift in Sources */,
 				64002AA722ACA79A007359FF /* DataTypeCriterion.swift in Sources */,
 				64808FCA22A431A700B2DB0A /* FormatItem.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,

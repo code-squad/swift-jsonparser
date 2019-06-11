@@ -9,11 +9,17 @@
 import Foundation
 
 struct JSONParse {
+    init(_ parsedData:[JSONValue], countNumber:countNumbers) {
+        self.parsedJSONValue = parsedData
+        self.countString = countNumber.string
+        self.countInt = countNumber.int
+        self.countBool = countNumber.bool
+    }
     
-    var parsedJSONValue:[JSONValue] = []
+    var parsedJSONValue:[JSONValue]
+    var countString = 0
     var countInt = 0
     var countBool = 0
-    var countString = 0
     
 }
 
