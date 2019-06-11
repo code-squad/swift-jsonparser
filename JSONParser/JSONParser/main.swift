@@ -8,9 +8,8 @@
 
 import Foundation
 
-var dataParser = DataParsingFactory()
-
 do{
+    var dataParser = DataParsingFactory()
     let input = try InputView.readInput(of: RequestMassage.requestJSON)
     let json = try Validator.JSONArrayformatValidator(input: input)
     let convertedJSONToArray = Converter.convertToArray(JSON: json)
