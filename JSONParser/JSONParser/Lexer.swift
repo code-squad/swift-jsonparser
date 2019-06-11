@@ -12,12 +12,15 @@ struct Lexer {
     
     enum Error: Swift.Error {
         case invalidCharacter(Character)
+        case scanStringFailed
         case scanBoolFailed
         
         var localizedDescription: String {
             switch self {
             case .invalidCharacter(let character):
                 return "유효하지 않은 문자 \(character)가 입력되었습니다."
+            case .scanStringFailed:
+                return "String 값 스캔에 실패하였습니다."
             case .scanBoolFailed:
                 return "Bool 값 스캔에 실패하였습니다."
             }
@@ -43,7 +46,7 @@ struct Lexer {
         position = input.index(after: position)
     }
     
-    private mutating func getString() -> String {
+    private mutating func getString() throws -> String {
         var value = ""
         
         while let nextCharacter = peek() {
@@ -55,11 +58,11 @@ struct Lexer {
             case "\"":
                 return value
             default:
-                return value
+                throw Lexer.Error.invalidCharacter(nextCharacter)
             }
         }
         
-        return value
+        throw Lexer.Error.scanStringFailed
     }
     
     private mutating func getNumber() -> Int {
@@ -80,7 +83,7 @@ struct Lexer {
     }
     
     private mutating func getBool() throws -> Bool {
-        let value = getString()
+        let value = try getString()
         if let boolValue = Bool(value) {
             return boolValue
         }
@@ -100,7 +103,7 @@ struct Lexer {
                 advance()
             case "\"":
                 advance()
-                let value = getString()
+                let value = try getString()
                 tokens.append(.string(value))
                 advance()
             case "t", "f":
