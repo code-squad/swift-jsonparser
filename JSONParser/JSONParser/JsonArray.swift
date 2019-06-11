@@ -12,18 +12,17 @@ struct JsonArray: JsonType {
     let array: [JsonType]
     
     var typeDescription: String {
+        return TypeName.array.rawValue
+    }
+    
+    var typeCounter: [String : Int] {
         var typeCounter: [String : Int] = [:]
-        var description = "\(array.count)개의 데이터 중에 "
         
         for element in array {
             typeCounter[element.typeDescription] = (typeCounter[element.typeDescription] ?? 0) + 1
         }
         
-        for (type, count) in typeCounter {
-            description.append("\(type) \(count)개 ")
-        }
-        
-        return description
+        return typeCounter
     }
     
     init(array: [JsonType]) throws {
