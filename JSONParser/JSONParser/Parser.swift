@@ -16,22 +16,90 @@ struct Parser {
         self.converter = converter
     }
     
-    func parse(tokens: [String]) -> [JSONValueType] {
-        var values: [JSONValueType] = []
-        
-        for token in tokens {
-            guard let value = makeJSONType(by: token) else {
-                continue
-            }
-            values.append(value)
+    func parse(tokens: [String]) -> JSONContainerType? {
+        guard let firstToken = tokens.first else {
+            return nil
         }
-        return values
+        
+        if firstToken == JSONKeyword.leftSquareBracket {
+            let array = parseArray(tokens: tokens)
+            return array
+        } else if firstToken == JSONKeyword.leftCurlyBracket {
+            let dict = parseObject(tokens: tokens)
+            return dict
+        }
+        
+        return nil
+    }
+    
+    private func parseArray(tokens: [String]) -> JSONContainerType {
+        var arrayDatas: [JSONValueType] = []
+        let objectTokens = makeObject(tokens: tokens)
+        for objectToken in objectTokens {
+            if objectToken.count > 1 {
+                if let object = converter.convertMultipleValue(tokens: objectToken) {
+                    arrayDatas.append(object)
+                }
+            } else {
+                if let object = converter.convertSingleValue(token: objectToken.joined()){
+                    arrayDatas.append(object)
+                }
+            }
+        }
+        return arrayDatas
+        
+    }
+    
+    private func parseObject(tokens: [String]) -> JSONContainerType {
+        var object: [String: JSONValueType] = [:]
+        
+        for (index, token) in tokens.enumerated() {
+            if token == JSONKeyword.colon {
+                let key = tokens[index - 1]
+                let rawValue = tokens[index + 1]
+                guard let value = makeJSONType(by: rawValue) else {
+                    continue
+                }
+                object[key] = value
+            }
+        }
+        return object
     }
     
     private func makeJSONType(by token: String) -> JSONValueType? {
-        guard let value = converter.convert(token: token) else {
+        guard let value = converter.convertSingleValue(token: token) else {
             return nil
         }
         return value
+    }
+    
+    private func makeObject(tokens: [String]) -> [[String]] {
+        
+        let curlyBrackets = [JSONKeyword.leftCurlyBracket, JSONKeyword.rightCurlyBracket]
+        var isInObject = false
+        var object: [[String]] = []
+        var objectTokens: [String] = []
+    
+        for token in tokens {
+            
+            if curlyBrackets.contains(token) {
+                isInObject.toggle()
+            }
+            
+            if isInObject {
+                objectTokens.append(token)
+                continue
+            }
+            
+            guard objectTokens.count > 0 else {
+                object.append([token])
+                continue
+            }
+            
+            object.append(objectTokens)
+            objectTokens.removeAll()
+        }
+        
+        return object
     }
 }
