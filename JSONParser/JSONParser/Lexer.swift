@@ -46,7 +46,13 @@ struct Lexer {
         position = input.index(after: position)
     }
     
-    private mutating func getString() throws -> String {
+    private mutating func skipDoubleQuotes() {
+        if let nextCharacter = peek(), nextCharacter == "\"" {
+            advance()
+        }
+    }
+    
+    private mutating func getString() -> String {
         var value = ""
         
         while let nextCharacter = peek() {
@@ -55,14 +61,11 @@ struct Lexer {
                 let stringValue = String(nextCharacter)
                 value = value + stringValue
                 advance()
-            case "\"":
-                return value
             default:
-                throw Lexer.Error.invalidCharacter(nextCharacter)
+                return value
             }
         }
-        
-        throw Lexer.Error.scanStringFailed
+        return value
     }
     
     private mutating func getNumber() -> Int {
@@ -83,7 +86,7 @@ struct Lexer {
     }
     
     private mutating func getBool() throws -> Bool {
-        let value = try getString()
+        let value = getString()
         if let boolValue = Bool(value) {
             return boolValue
         }
@@ -103,9 +106,9 @@ struct Lexer {
                 advance()
             case "\"":
                 advance()
-                let value = try getString()
+                let value = getString()
                 tokens.append(.string(value))
-                advance()
+                skipDoubleQuotes()
             case "t", "f":
                 let value = try getBool()
                 tokens.append(.bool(value))
