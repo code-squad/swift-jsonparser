@@ -12,6 +12,20 @@ protocol JSONValueType {
    static var typeDescription: String { get }
 }
 
+protocol TypeCountable {
+    var totalCount: Int { get }
+    var types: [JSONValueType.Type] { get }
+    var typeDescription: String { get }
+}
+
+extension TypeCountable {
+    var countOfString: Int {
+        return types.countType(of: String.self)
+    }
+}
+
+typealias JSONContainerType = JSONValueType & TypeCountable
+
 extension String: JSONValueType {
     static var typeDescription: String {
         return "문자열"
