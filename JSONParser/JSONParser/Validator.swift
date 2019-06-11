@@ -10,7 +10,7 @@ import Foundation
 
 struct Validator {
     
-    static func JSONArrayformatValidator(input:String)throws -> String {
+    static func JSONArrayformat(input:String)throws -> String {
         guard input.hasPrefix(FormatItem.JSONArrayContainerLeft) && input.hasSuffix(FormatItem.JSONArrayContainerRight) else{
             throw InputError.InputError
         }

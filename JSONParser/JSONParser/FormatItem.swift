@@ -9,7 +9,7 @@
 import Foundation
 struct FormatItem {
     
-    static let JSONArrayFormat = CharacterSet(charactersIn: "[]")
+    static let JSONArray = CharacterSet(charactersIn: "[]")
     static let JSONArrayContainerLeft = "["
     static let JSONArrayContainerRight = "]"
     static let blank:Character = " "

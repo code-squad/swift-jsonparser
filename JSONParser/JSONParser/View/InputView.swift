@@ -9,8 +9,7 @@
 import Foundation
 struct InputView {
     
-    static func readInput(of massage:RequestMassage)throws -> String {
-        
+    static func readInput(massage:Massage)throws -> String {
         print(massage.rawValue)
         let input = readLine() ?? ""
         return input

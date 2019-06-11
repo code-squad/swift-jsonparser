@@ -20,7 +20,6 @@ struct DataParsingFactory {
     
     private func parsing(datas:[String]) -> (JSONParse,CanNotParsingData) {
         let dataTypeCriterion = DataTypeCriterion()
-        
         var ParsedData:[JSONValue] = []
         var canNotParsingData:[String] = []
         var countString = 0, countInt = 0, countBool = 0
@@ -50,15 +49,15 @@ struct DataParsingFactory {
     }
     
     private func isString(data:String, dataTypeCriterion:DataTypeCriterion) -> Bool {
-        return dataTypeCriterion.distinguishingString.isStrictSubset(of: CharacterSet(charactersIn: data))
+        return dataTypeCriterion.String.isStrictSubset(of: CharacterSet(charactersIn: data))
     }
     
     private func isInt(data:String, dataTypeCriterion:DataTypeCriterion) -> Bool {
-        return CharacterSet(charactersIn: data).isStrictSubset(of: dataTypeCriterion.distinguishingInt)
+        return CharacterSet(charactersIn: data).isStrictSubset(of: dataTypeCriterion.Int)
     }
     
     private func isBool(data:String, dataTypeCriterion:DataTypeCriterion) -> Bool {
-        return data == dataTypeCriterion.distinguishingBool.true || data == dataTypeCriterion.distinguishingBool.false
+        return data == dataTypeCriterion.Bool.true || data == dataTypeCriterion.Bool.false
     }
     
     private func canNotConvertDataPrint(data:CanNotParsingData)throws {

@@ -10,12 +10,10 @@ import Foundation
 
 struct Converter {
     
-    static func convertToArray(JSON:String) -> [String] {
-        
-        let removedJSONArrayFormatInput = JSON.trimmingCharacters(in: FormatItem.JSONArrayFormat)
-        let removedblankInput = removedJSONArrayFormatInput.split(separator: FormatItem.blank).joined()
-        return removedblankInput.components(separatedBy: FormatItem.arraySperator)
-        
+    static func JSONToArray(JSON:String) -> [String] {
+        var ConvertedJSONData = JSON.trimmingCharacters(in: FormatItem.JSONArray)
+        ConvertedJSONData = ConvertedJSONData.split(separator: FormatItem.blank).joined()
+        return ConvertedJSONData.components(separatedBy: FormatItem.arraySperator)
     }
     
 }

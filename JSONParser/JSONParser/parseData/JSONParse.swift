@@ -8,18 +8,26 @@
 
 import Foundation
 
-struct JSONParse {
-    init(_ parsedData:[JSONValue], countNumber:countNumbers) {
+protocol countable {
+    var countNumbers:countNumbers { get }
+}
+
+struct JSONParse:countable {
+    init(_ parsedData:[JSONValue], countNumbers:countNumbers) {
         self.parsedJSONValue = parsedData
-        self.countString = countNumber.string
-        self.countInt = countNumber.int
-        self.countBool = countNumber.bool
+        self.countString = countNumbers.string
+        self.countInt = countNumbers.int
+        self.countBool = countNumbers.bool
     }
     
-    var parsedJSONValue:[JSONValue]
-    var countString = 0
-    var countInt = 0
-    var countBool = 0
+    var countNumbers:countNumbers {
+        return (self.countString, self.countInt, self.countBool)
+    }
+    
+    private var parsedJSONValue:[JSONValue]
+    private var countString = 0
+    private var countInt = 0
+    private var countBool = 0
     
 }
 

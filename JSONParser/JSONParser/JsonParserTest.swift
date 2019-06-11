@@ -11,21 +11,21 @@ import XCTest
 class JsonParser: XCTestCase {
     
     func testCorrectFormatOfJSON() {
-        XCTAssertNoThrow(try Validator.JSONArrayformatValidator(input: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]"))
+        XCTAssertNoThrow(try Validator.JSONArrayformat(input: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]"))
     }
 
     func testInCorrectFormatOfJSON() {
-        XCTAssertThrowsError(try Validator.JSONArrayformatValidator(input: " 10, \"jk\", 4, \"314\", 99, \"crong\", false"))
+        XCTAssertThrowsError(try Validator.JSONArrayformat(input: " 10, \"jk\", 4, \"314\", 99, \"crong\", false"))
     }
     
     func testCanConvertData() {
-        let datas = Converter.convertToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]")
+        let datas = Converter.JSONToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]")
         var dataParser = DataParsingFactory()
         XCTAssertNoThrow(try dataParser.makeParsingData(data: datas))
     }
     
     func testContainCanNotConvertData() {
-        let datas = Converter.convertToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, canNotConvertData]")
+        let datas = Converter.JSONToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, canNotConvertData]")
         var dataParser = DataParsingFactory()
         XCTAssertThrowsError(try dataParser.makeParsingData(data: datas))
     }

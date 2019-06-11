@@ -29,8 +29,8 @@
 		64808FC222A42ED800B2DB0A /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FC022A42ED800B2DB0A /* InputView.swift */; };
 		64808FC422A42F0300B2DB0A /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FC322A42F0300B2DB0A /* OutputView.swift */; };
 		64808FC522A42F0300B2DB0A /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FC322A42F0300B2DB0A /* OutputView.swift */; };
-		64808FC722A42FAE00B2DB0A /* RequestMassage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FC622A42FAE00B2DB0A /* RequestMassage.swift */; };
-		64808FC822A42FAE00B2DB0A /* RequestMassage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FC622A42FAE00B2DB0A /* RequestMassage.swift */; };
+		64808FC722A42FAE00B2DB0A /* Massage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FC622A42FAE00B2DB0A /* Massage.swift */; };
+		64808FC822A42FAE00B2DB0A /* Massage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FC622A42FAE00B2DB0A /* Massage.swift */; };
 		64808FCA22A431A700B2DB0A /* FormatItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FC922A431A700B2DB0A /* FormatItem.swift */; };
 		64808FCB22A431A700B2DB0A /* FormatItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64808FC922A431A700B2DB0A /* FormatItem.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
@@ -62,7 +62,7 @@
 		64808FBD22A42EC400B2DB0A /* DataParsingFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParsingFactory.swift; sourceTree = "<group>"; };
 		64808FC022A42ED800B2DB0A /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		64808FC322A42F0300B2DB0A /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
-		64808FC622A42FAE00B2DB0A /* RequestMassage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMassage.swift; sourceTree = "<group>"; };
+		64808FC622A42FAE00B2DB0A /* Massage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Massage.swift; sourceTree = "<group>"; };
 		64808FC922A431A700B2DB0A /* FormatItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatItem.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -142,7 +142,7 @@
 				64808FBD22A42EC400B2DB0A /* DataParsingFactory.swift */,
 				64808FC922A431A700B2DB0A /* FormatItem.swift */,
 				64002AA622ACA79A007359FF /* DataTypeCriterion.swift */,
-				64808FC622A42FAE00B2DB0A /* RequestMassage.swift */,
+				64808FC622A42FAE00B2DB0A /* Massage.swift */,
 				64002AA922ACA9C9007359FF /* JSONPaserError.swift */,
 				640DF82922AF72960015AF8B /* JSONDataType.swift */,
 			);
@@ -246,7 +246,7 @@
 				640DF82E22AFA90A0015AF8B /* JSONParse.swift in Sources */,
 				640DF83122AFAE0D0015AF8B /* CanNotParsingData.swift in Sources */,
 				64808FC222A42ED800B2DB0A /* InputView.swift in Sources */,
-				64808FC822A42FAE00B2DB0A /* RequestMassage.swift in Sources */,
+				64808FC822A42FAE00B2DB0A /* Massage.swift in Sources */,
 				64002AAE22AEC384007359FF /* Validator.swift in Sources */,
 				64002AAB22ACA9C9007359FF /* JSONPaserError.swift in Sources */,
 				64808FBC22A42E4E00B2DB0A /* Converter.swift in Sources */,
@@ -266,7 +266,7 @@
 				64002AAA22ACA9C9007359FF /* JSONPaserError.swift in Sources */,
 				64002AAD22AEC384007359FF /* Validator.swift in Sources */,
 				640DF83022AFAE0D0015AF8B /* CanNotParsingData.swift in Sources */,
-				64808FC722A42FAE00B2DB0A /* RequestMassage.swift in Sources */,
+				64808FC722A42FAE00B2DB0A /* Massage.swift in Sources */,
 				64808FBB22A42E4E00B2DB0A /* Converter.swift in Sources */,
 				64808FC122A42ED800B2DB0A /* InputView.swift in Sources */,
 				64808FBE22A42EC400B2DB0A /* DataParsingFactory.swift in Sources */,

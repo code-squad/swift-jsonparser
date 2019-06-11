@@ -14,7 +14,7 @@ struct CanNotParsingData {
         self.canNotParsingData = canNotParsingData
     }
     
-    var canNotParsingData:[String]
+    private(set) var canNotParsingData:[String]
     var count:Int {
         return canNotParsingData.count
     }
