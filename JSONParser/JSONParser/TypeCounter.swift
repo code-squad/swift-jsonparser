@@ -10,20 +10,20 @@ import Foundation
 
 struct TypeCounter {
     
-    static func count(of jsonValues: [JSONValueType]) -> (string: Int, number: Int, bool: Int) {
-        let types = jsonValues.map { type(of: $0) }
+    static func count(of jsonValues: TypeCountable) -> (string: Int, number: Int, bool: Int, object: Int) {
+        let types = jsonValues.types
         
-        let countOfString = types.countType(of: String.self)
+        let countOfString = jsonValues.countOfString
         let countOfNumber = types.countType(of: Number.self)
         let countOfBool = types.countType(of: Bool.self)
+        let countOfObject = types.countType(of: Object.self)
         
-        let result = (countOfString, countOfNumber, countOfBool)
+        let result = (countOfString, countOfNumber, countOfBool, countOfObject)
         return result
     }
 }
 
 extension Array {
-    
     func countType<T>(of target: T) -> Int {
         return self.filter { $0 is T }.count
     }
