@@ -19,15 +19,15 @@ class JsonParser: XCTestCase {
     }
     
     func testCanConvertData() {
-        let json = Converter.convertToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]")
-        var counter = Counter()
-        XCTAssertNoThrow(try counter.dataTypeCounter(convertedJSONToArray: json))
+        let datas = Converter.convertToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]")
+        var dataParser = DataParsingFactory()
+        XCTAssertNoThrow(try dataParser.makeParsingData(data: datas))
     }
     
     func testContainCanNotConvertData() {
-        let json = Converter.convertToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, canNotConvertData]")
-        var counter = Counter()
-        XCTAssertThrowsError(try counter.dataTypeCounter(convertedJSONToArray: json))
+        let datas = Converter.convertToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, canNotConvertData]")
+        var dataParser = DataParsingFactory()
+        XCTAssertThrowsError(try dataParser.makeParsingData(data: datas))
     }
 
 }
