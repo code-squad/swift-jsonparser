@@ -12,11 +12,14 @@ struct Lexer {
     
     enum Error: Swift.Error {
         case invalidCharacter(Character)
+        case parseBoolFailed
         
         var localizedDescription: String {
             switch self {
             case .invalidCharacter(let character):
                 return "유효하지 않은 문자 \(character)가 입력되었습니다."
+            case .parseBoolFailed:
+                return "Bool 값 파싱에 실패하였습니다."
             }
         }
     }
@@ -76,6 +79,14 @@ struct Lexer {
         return value
     }
     
+    private mutating func getBool() throws -> Bool {
+        let value = getString()
+        if let boolValue = Bool(value) {
+            return boolValue
+        }
+        throw Lexer.Error.parseBoolFailed
+    }
+    
     mutating func tokenize() throws -> [Token] {
         var tokens = [Token]()
         
@@ -92,11 +103,9 @@ struct Lexer {
                 let value = getString()
                 tokens.append(.string(value))
                 advance()
-            case "a" ... "z":
-                let value = getString()
-                if let boolValue = Bool(value) {
-                    tokens.append(.bool(boolValue))
-                }
+            case "t", "f":
+                let value = try getBool()
+                tokens.append(.bool(value))
             case "0" ... "9":
                 let value = getNumber()
                 tokens.append(.number(value))
