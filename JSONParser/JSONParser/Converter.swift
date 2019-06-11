@@ -9,11 +9,12 @@
 import Foundation
 
 protocol JSONConvertible {
-    func convert(token: String) -> JSONValueType?
+    func convertSingleValue(token: String) -> JSONValueType?
+    func convertMultipleValue(tokens: [String]) -> JSONValueType?
 }
 
 struct Converter: JSONConvertible {
-    func convert(token: String) -> JSONValueType? {
+    func convertSingleValue(token: String) -> JSONValueType? {
         
         if isString(of: token) {
             return removeQuotation(in: token)
@@ -24,6 +25,22 @@ struct Converter: JSONConvertible {
         } else {
             return nil
         }
+    }
+    
+    func convertMultipleValue(tokens: [String]) -> JSONValueType? {
+        var object: [String: JSONValueType] = [:]
+        
+        for (index, token) in tokens.enumerated() {
+            if token == JSONKeyword.colon {
+                let key = tokens[index - 1]
+                let rawValue = tokens[index + 1]
+                guard let value = convertSingleValue(token: rawValue) else {
+                    continue
+                }
+                object[key] = value
+            }
+        }
+        return object
     }
     
     private func isString(of token: String) -> Bool {
