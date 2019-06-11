@@ -10,20 +10,25 @@ import Foundation
 
 struct OutputView {
     
-    static func printDescription(of input: [JSONValueType]) {
+    static func printDescription(of input: JSONContainerType) {
         let description = printTypesCount(of: input)
         print(description)
     }
     
-    static private func printTypesCount(of arrayValue: [JSONValueType]) -> String {
-        let totalCount = arrayValue.count
+    static private func printTypesCount(of arrayValue: JSONContainerType) -> String {
+        let totalCount = arrayValue.totalCount
+        
+        let type = arrayValue.typeDescription
         
         let counts = TypeCounter.count(of: arrayValue)
-        let countOfString = counts.string
+        let countOfString = arrayValue.countOfString
         let countOfNumber = counts.number
         let countOfBool = counts.bool
+        let countOfObject = counts.object
         
-        var description = "총 \(totalCount)개의 데이터 중에 "
+        let intro = "총 \(totalCount)개의 \(type) 데이터 중에 "
+        let outro = "가 포함되어 있습니다."
+        var description = intro
         
         if countOfString > 0 {
             description += "\(String.typeDescription) \(countOfString)개 "
@@ -36,6 +41,12 @@ struct OutputView {
         if countOfBool > 0 {
             description += "\(Bool.typeDescription) \(countOfBool)개 "
         }
+        
+        if countOfObject > 0 {
+            description += "\(Object.typeDescription) \(countOfObject)개 "
+        }
+        
+        description += outro
         
         return description
     }
