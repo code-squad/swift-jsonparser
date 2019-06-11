@@ -10,11 +10,12 @@ import Foundation
 
 struct Parser {
     
-    private var converter: JSONConvertible
+    private var tokens: [String]
     private var position = 0
+    private var converter: JSONConvertible = Converter()
     
-    init(converter: JSONConvertible) {
-        self.converter = converter
+    init(tokens: [String]) {
+        self.tokens = tokens
     }
     
     mutating func nextToken() -> String? {
@@ -26,14 +27,14 @@ struct Parser {
         return token
     }
     
-    mutating func parse(tokens: [String]) -> JSONContainerType? {
+    mutating func parse() -> JSONContainerType? {
         while let token = nextToken() {
             switch token {
             case JSONKeyword.leftSquareBracket:
-                let array = parseArray(tokens: tokens)
+                let array = parseArray()
                 return array
             case JSONKeyword.leftCurlyBracket:
-                let object = parseObject(tokens: tokens)
+                let object = parseObject()
                 return object
             default:
                 return nil
@@ -42,7 +43,7 @@ struct Parser {
         return nil
     }
     
-    mutating private func parseArray(tokens: [String]) -> JSONContainerType {
+    mutating private func parseArray() -> JSONContainerType {
         var arrayData: [JSONValueType] = []
         
         while let token = nextToken() {
@@ -52,7 +53,7 @@ struct Parser {
             
             switch token {
             case JSONKeyword.leftCurlyBracket:
-                let objectData = parseObject(tokens: tokens)
+                let objectData = parseObject()
                 arrayData.append(objectData)
             default:
                 guard let value = makeJSONType(by: token) else {
@@ -64,7 +65,7 @@ struct Parser {
         return arrayData
     }
     
-    mutating private func parseObject(tokens: [String]) -> JSONContainerType {
+    mutating private func parseObject() -> JSONContainerType {
         var objectData: [String: JSONValueType] = [:]
         
         while let token = nextToken() {
