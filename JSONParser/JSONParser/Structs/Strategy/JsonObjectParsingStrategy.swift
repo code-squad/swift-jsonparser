@@ -19,8 +19,11 @@ struct JsonObjectParsingStrategy: JsonParsingStrategy {
         var jsonObject = JsonObject()
         var (keyTokenIndexs,valueTokenIndexs) = separate(tokens: tokens)
         let propertyCount = keyTokenIndexs.count
+        
         for index in 0..<propertyCount {
-            guard let key = converter.convert(before: tokens[keyTokenIndexs[index]]) else { continue }
+            guard let key = converter.convert(before: tokens[keyTokenIndexs[index]]) else {
+                continue
+            }
             let value = self.converter.convert(before: tokens[valueTokenIndexs[index]])
             jsonObject[key as! String] = value
         }
@@ -30,6 +33,7 @@ struct JsonObjectParsingStrategy: JsonParsingStrategy {
     private func separate(tokens: Array<Token>) -> (Indexs,Indexs) {
         var keyTokenIndexs = Array<Int>()
         var valueTokenIndexs = Array<Int>()
+        
         for (index,token) in tokens.enumerated() {
             if token == .Colon{
                 keyTokenIndexs.append(index-1)

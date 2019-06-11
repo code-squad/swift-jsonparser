@@ -29,6 +29,14 @@ struct JsonParser {
     }
     
     mutating func grouping() {
+        
+    }
+    
+    func extract(){
+        
+    }
+    
+    mutating func grouping2() {
         var tokens = Array<Token>()
         var removingTokenIndex = MyStack<Int>()
         var ing = false

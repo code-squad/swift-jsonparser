@@ -22,6 +22,6 @@ class MyTokenizerTests: XCTestCase {
     
     func testTokensCount() { 
         //THEN
-        XCTAssertEqual(tokens.count, 21)
+        XCTAssertEqual(tokens.count, 14)
     }
 }

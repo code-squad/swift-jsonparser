@@ -27,12 +27,13 @@ struct MyTokenizer: Tokenizer {
         
         while let character = self.scanner.next() {
             switch character {
-            case "[","]",","," ",
-                 "\"",":","{","}":
+            case "[","]",","," ",":","{","}":
                 units.append(String(character))
             case "0"..."9":
                 units.append(getNumber())
                 self.scanner.backCurser()
+            case "\"":
+                units.append(getString())
             default:
                 units.append(getValue())
                 self.scanner.backCurser()
@@ -52,6 +53,19 @@ struct MyTokenizer: Tokenizer {
             break
         }
         return number
+    }
+    
+    private mutating func getString() -> String {
+        var string = "\""
+        
+        while let character = self.scanner.next() {
+            if (character != "\"") {
+                string = "\(string)\(character)"
+                continue
+            }
+            break
+        }
+        return string + "\""
     }
     
     private mutating func getValue() -> String {

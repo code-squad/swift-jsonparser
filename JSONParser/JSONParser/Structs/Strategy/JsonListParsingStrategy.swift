@@ -13,6 +13,7 @@ struct JsonListParsingStrategy: JsonParsingStrategy {
     
     func parse(tokens: Array<Token>) -> JsonValue {
         var jsonList = JsonList()
+        
         for token in tokens {
             guard let jsonValue = self.converter.convert(before: token) else { continue }
             jsonList.append(jsonValue)
