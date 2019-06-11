@@ -55,19 +55,19 @@ class JsonParserTests: XCTestCase {
     }
     
     
-    func testParsingObject() {
-        //Given
-        self.parser = JsonParser.init(tokens: jsonObjectTokens)
-        
-        //When
-        let jsonObject = self.parser.parse() as! JsonObject
-        
-        //Then
-        XCTAssertEqual(jsonObject["name"]!.getJsonValue(),"부엉이")
-        XCTAssertEqual(jsonObject["age"]!.getJsonValue(),"27")
-        XCTAssertEqual(jsonObject["married"]!.getJsonValue(),"false")
-    }
-    
+//    func testParsingObject() {
+//        //Given
+//        self.parser = JsonParser.init(tokens: jsonObjectTokens)
+//        
+//        //When
+//        let jsonObject = self.parser.parse() as! JsonObject
+//        
+//        //Then
+//        XCTAssertEqual(jsonObject["name"]!.getJsonValue(),"부엉이")
+//        XCTAssertEqual(jsonObject["age"]!.getJsonValue(),"27")
+//        XCTAssertEqual(jsonObject["married"]!.getJsonValue(),"false")
+//    }
+//    
     
     
 }
