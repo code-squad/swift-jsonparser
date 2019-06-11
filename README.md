@@ -90,7 +90,10 @@ element
 	ws value ws
 ```
 
-value에는 문자열, 숫자, 부울만 있다고 가정한다.
+- JSON 객체 값(value)에 포함될 수 있는 데이터는 문자열(String), 숫자(Number), 부울 true/false(Bool) 만 ㅇ
+
+- JSON 요소를 저장한 사전(Dictionary)에서 문자열, 숫자, 부울 요소를 구분해서 개수를 출력한다.
+- 단, JSON 배열 내부에는 객체가 포함될 수 있다고 가정한다.
 
 
 
@@ -109,6 +112,50 @@ value에는 문자열, 숫자, 부울만 있다고 가정한다.
 - 문자열의 경우 `ws`, `,` 가 포함 되어 있을 수 있다. 
   - 토큰을 생성할 때, `"CHO MINJI"` 가 아니라  `"CHO`  `MINJI"` 와 같이 오류가 발생할 수 있다.
   - `isInString` 을 사용하여 `"` 의 짝이 맞춰질 때 까지 delimiter를 무시하고 한 토큰으로 묶는다.
+
+
+
+```
+분석할 JSON 데이터를 입력하세요.
+
+{ "name" : "MINJI CHO", "alias" : "mindy", "level" : 2, "married" : false }
+
+[
+"{", 
+"\"name\"", ":", "\"MINJI CHO\"", 
+"\"alias\"", ":", "\"mindy\"", 
+"\"level\"", ":", "2", 
+"\"married\"", ":", "false", 
+"}"
+]
+```
+
+
+
+```
+분석할 JSON 데이터를 입력하세요.
+
+[ { "name" : "MINJI CHO", "alias" : "mindy", "level" : 2, "married" : false },{ "name" : "HELLO HI", "alias" : "hi", "level" : 4, "married" : true } ]
+
+[
+"[", 
+"{",
+"\"name\"", ":", "\"MINJI CHO\"", 
+"\"alias\"", ":", "\"mindy\"", 
+"\"level\"", ":", "2", 
+"\"married\"", ":", "false", 
+"}", 
+"{", 
+"\"name\"", ":", "\"HELLO HI\"", 
+"\"alias\"", ":", "\"hi\"", 
+"\"level\"", ":", "4", 
+"\"married\"", ":", "true", 
+"}", 
+"]"
+]
+```
+
+
 
 
 
