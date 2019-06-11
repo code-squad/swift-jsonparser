@@ -19,13 +19,13 @@ class JsonParser: XCTestCase {
     }
     
     func testCanConvertData() {
-        let json = converter.convertToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]")
+        let json = Converter.convertToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]")
         var counter = Counter()
         XCTAssertNoThrow(try counter.dataTypeCounter(convertedJSONToArray: json))
     }
     
     func testContainCanNotConvertData() {
-        let json = converter.convertToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, canNotConvertData]")
+        let json = Converter.convertToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, canNotConvertData]")
         var counter = Counter()
         XCTAssertThrowsError(try counter.dataTypeCounter(convertedJSONToArray: json))
     }

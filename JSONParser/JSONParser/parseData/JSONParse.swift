@@ -16,3 +16,5 @@ struct JSONParse {
     var countString = 0
     
 }
+
+

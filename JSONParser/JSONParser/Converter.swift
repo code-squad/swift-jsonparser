@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct converter {
+struct Converter {
 
     private let dataTypeCriterion = DataTypeCriterion()
     private var countCanNotConvertData = 0
@@ -22,43 +22,43 @@ struct converter {
         
     }
     
-    mutating func parsing(JSON:[String])throws -> JSONParse {
+    mutating func makeParsingData(JSON:[String])throws -> JSONParse {
         
         var JSONParserData = JSONParse()
+        var canNotParsingData =  CanNotParsingData()
         
-        for item in JSON {
+        for element in JSON {
             
-            if dataTypeCriterion.distinguishingString.isStrictSubset(of: CharacterSet(charactersIn: item)) {
-                JSONParserData.parsedJSONValue.append(String(item))
+            if dataTypeCriterion.distinguishingString.isStrictSubset(of: CharacterSet(charactersIn: element)) {
+                JSONParserData.parsedJSONValue.append(String(element))
                 JSONParserData.countString += 1
                 continue
             }
             
-            if CharacterSet(charactersIn: item).isStrictSubset(of: dataTypeCriterion.distinguishingInt){
-                JSONParserData.parsedJSONValue.append(Int(item)!)
+            if CharacterSet(charactersIn: element).isStrictSubset(of: dataTypeCriterion.distinguishingInt){
+                JSONParserData.parsedJSONValue.append(Int(element)!)
                 JSONParserData.countInt += 1
                 continue
             }
             
-            if item == dataTypeCriterion.distinguishingBool.true || item == dataTypeCriterion.distinguishingBool.false {
-                JSONParserData.parsedJSONValue.append(Bool(item)!)
+            if element == dataTypeCriterion.distinguishingBool.true || element == dataTypeCriterion.distinguishingBool.false {
+                JSONParserData.parsedJSONValue.append(Bool(element)!)
                 JSONParserData.countBool += 1
                 continue
             }
-            canNotConvertData.append(item)
-            countCanNotConvertData += 1
+            canNotParsingData.canNotConvertData.append(element)
         }
         
-        try canNotConvertDataPrint(countCanNotConvertData: countCanNotConvertData)
+        try canNotConvertDataPrint(data: canNotParsingData)
         
         return JSONParserData
         
     }
     
-    private func canNotConvertDataPrint(countCanNotConvertData:Int)throws {
+    private func canNotConvertDataPrint(data:CanNotParsingData)throws {
         
-        guard countCanNotConvertData == 0 else{
-            print(canNotConvertData)
+        guard data.count == 0 else{
+            print(data.canNotConvertData)
             throw ConvertError.canNotCovertData
         }
         

@@ -13,15 +13,15 @@ protocol JSONValue {
 }
 
 extension String: JSONValue {
-    var typeDescription: String { return "문자열" }
+    var typeDescription: String { return "StringType" }
 }
 
 extension Int: JSONValue {
-    var typeDescription: String { return "숫자" }
+    var typeDescription: String { return "IntType" }
 }
 
 extension Bool: JSONValue {
-    var typeDescription: String { return "부울" }
+    var typeDescription: String { return "BoolType" }
 }
 
 

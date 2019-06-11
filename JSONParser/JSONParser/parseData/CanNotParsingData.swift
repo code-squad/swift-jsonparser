@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+struct CanNotParsingData {
+    
+    var canNotConvertData:[String] = []
+    var count:Int {
+        return canNotConvertData.count
+    }
+    
+}
