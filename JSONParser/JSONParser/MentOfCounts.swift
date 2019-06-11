@@ -10,16 +10,16 @@ import Foundation
 
 struct MentOfCounts {
     static func makeMent(jsonData: [Json]) -> String {
-        var countOfType = ["문자열": 0, "숫자": 0, "부울": 0, "객체": 0, "배열": 0]
+        var countOfType = [String().ment: 0, Int().ment: 0, Bool().ment: 0, Dictionary<String, Json>().ment: 0, Array<Json>().ment: 0]
         var prints: [String] = []
         
         for jsonDatum in jsonData {
             switch jsonDatum {
-            case is String: countOfType["문자열"] = countOfType["문자열"]! + 1
-            case is Int: countOfType["숫자"] = countOfType["숫자"]! + 1
-            case is Bool: countOfType["부울"] = countOfType["부울"]! + 1
-            case is Array<Json>: countOfType["배열"] = countOfType["배열"]! + 1
-            case is Dictionary<String, Json>: countOfType["객체"] = countOfType["객체"]! + 1
+            case is String: countOfType[String().ment] = countOfType[String().ment]! + 1
+            case is Int: countOfType[Int().ment] = countOfType[Int().ment]! + 1
+            case is Bool: countOfType[Bool().ment] = countOfType[Bool().ment]! + 1
+            case is Array<Json>: countOfType[Array<Json>().ment] = countOfType[Array<Json>().ment]! + 1
+            case is Dictionary<String, Json>: countOfType[Dictionary<String, Json>().ment] = countOfType[Dictionary<String, Json>().ment]! + 1
             default: break
             }
         }

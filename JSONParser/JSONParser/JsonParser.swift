@@ -28,6 +28,15 @@ struct JsonParser {
         return convertedDictionaryData
     }
     
+    /// [String] 형태의 배열을 [Json]으로 바꿔주는 함수
+    private func convertArray(convertedData: [String]) throws -> [Json] {
+        var convertedArrayData = [Json]()
+        for index in 0..<convertedData.count {
+            convertedArrayData[index] = try parsingData(beforeData: convertedData[index])
+        }
+        return convertedArrayData
+    }
+    
     /// 원소들을 조건에 따라 해당타입으로 파싱해주는 함수
     private func parsingData(beforeData : String) throws -> Json {
         var convertedElement: Json
@@ -39,7 +48,8 @@ struct JsonParser {
             convertedElement = try convertDictionary(convertedData: convertedData)
         } else if afterData.match(text: RegularExpression.arrayType) {
             var tokenizer = Tokenizer()
-            convertedElement = try tokenizer.buildArray(inputString: beforeData)
+            let convertedData = try tokenizer.buildArray(inputString: beforeData)
+            convertedElement = try convertArray(convertedData: convertedData)
         } else if afterData.match(text: RegularExpression.intType) {
             convertedElement = Int(afterData) ?? 0
         } else if afterData.match(text: RegularExpression.boolType) {
