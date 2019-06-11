@@ -61,6 +61,10 @@ struct Lexer {
                 let stringValue = String(nextCharacter)
                 value = value + stringValue
                 advance()
+            case "0" ... "9" :
+                let digitValue = String(nextCharacter)
+                value = "\(value)\(digitValue)"
+                advance()
             default:
                 return value
             }
@@ -69,20 +73,11 @@ struct Lexer {
     }
     
     private mutating func getNumber() -> Int {
-        var value = 0
-        
-        while let nextCharacter = peek() {
-            switch nextCharacter {
-            case "0" ... "9" :
-                let digitValue = Int(String(nextCharacter)) ?? 0
-                value = 10 * value + digitValue
-                advance()
-            default:
-                return value
-            }
+        let value = getString()
+        if let numberValue = Int(value) {
+            return numberValue
         }
-        
-        return value
+        return 0
     }
     
     private mutating func getBool() throws -> Bool {
