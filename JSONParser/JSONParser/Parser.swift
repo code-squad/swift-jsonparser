@@ -25,8 +25,8 @@ struct Parser {
             let array = parseArray(tokens: tokens)
             return array
         } else if firstToken == JSONKeyword.leftCurlyBracket {
-            let dict = parseObject(tokens: tokens)
-            return dict
+            let object = parseObject(tokens: tokens)
+            return object
         }
         
         return nil
@@ -74,7 +74,7 @@ struct Parser {
     }
     
     private func makeObject(tokens: [String]) -> [[String]] {
-        
+       
         let curlyBrackets = [JSONKeyword.leftCurlyBracket, JSONKeyword.rightCurlyBracket]
         var isInObject = false
         var object: [[String]] = []
