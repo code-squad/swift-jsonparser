@@ -13,11 +13,9 @@ typealias countNumbers = (string:Int, int:Int, bool: Int)
 struct DataParsingFactory {
     
     mutating func makeParsingData(data:[String])throws -> JSONParse {
-        
         let (parsingData,canNotParsingData) = parsing(datas: data)
         try canNotConvertDataPrint(data: canNotParsingData)
         return parsingData
-        
     }
     
     private func parsing(datas:[String]) -> (JSONParse,CanNotParsingData) {
@@ -29,17 +27,17 @@ struct DataParsingFactory {
         
         for element in datas {
             
-            if dataTypeCriterion.distinguishingString.isStrictSubset(of: CharacterSet(charactersIn: element)) {
+            if isString(data: element, dataTypeCriterion: dataTypeCriterion) {
                 ParsedData.append(String(element))
                 countString += 1
                 continue
             }
-            if CharacterSet(charactersIn: element).isStrictSubset(of: dataTypeCriterion.distinguishingInt){
+            if isInt(data: element, dataTypeCriterion: dataTypeCriterion) {
                 ParsedData.append(Int(element)!)
                 countInt += 1
                 continue
             }
-            if element == dataTypeCriterion.distinguishingBool.true || element == dataTypeCriterion.distinguishingBool.false {
+            if isBool(data: element, dataTypeCriterion: dataTypeCriterion) {
                 ParsedData.append(Bool(element)!)
                 countBool += 1
                 continue
@@ -48,9 +46,19 @@ struct DataParsingFactory {
             canNotParsingData.append(element)
             
         }
-        
-        return (JSONParse(ParsedData, countNumber:(countString, countInt, countBool)), CanNotParsingData(canNotParsingData))
-        
+        return (JSONParse(ParsedData, countNumbers:(countString, countInt, countBool)), CanNotParsingData(canNotParsingData))
+    }
+    
+    private func isString(data:String, dataTypeCriterion:DataTypeCriterion) -> Bool {
+        return dataTypeCriterion.distinguishingString.isStrictSubset(of: CharacterSet(charactersIn: data))
+    }
+    
+    private func isInt(data:String, dataTypeCriterion:DataTypeCriterion) -> Bool {
+        return CharacterSet(charactersIn: data).isStrictSubset(of: dataTypeCriterion.distinguishingInt)
+    }
+    
+    private func isBool(data:String, dataTypeCriterion:DataTypeCriterion) -> Bool {
+        return data == dataTypeCriterion.distinguishingBool.true || data == dataTypeCriterion.distinguishingBool.false
     }
     
     private func canNotConvertDataPrint(data:CanNotParsingData)throws {
