@@ -9,7 +9,7 @@
 import Foundation
 
 struct DataTypeCriterion {
-    let String = CharacterSet(charactersIn: "\"")
-    let Int = CharacterSet.decimalDigits
-    let Bool = (true:"true", false:"false")
+    static let String = CharacterSet(charactersIn: "\"")
+    static let Int = CharacterSet.decimalDigits
+    static let Bool = (true:"true", false:"false")
 }
