@@ -16,16 +16,7 @@ struct JsonArray: JsonType {
         var description = "\(array.count)개의 데이터 중에 "
         
         for element in array {
-            switch element {
-            case is Int:
-                typeCounter[TypeName.number.rawValue] = (typeCounter[TypeName.number.rawValue] ?? 0) + 1
-            case is String:
-                typeCounter[TypeName.string.rawValue] = (typeCounter[TypeName.string.rawValue] ?? 0) + 1
-            case is Bool:
-                typeCounter[TypeName.bool.rawValue] = (typeCounter[TypeName.bool.rawValue] ?? 0) + 1
-            default:
-                break
-            }
+            typeCounter[element.typeDescription] = (typeCounter[element.typeDescription] ?? 0) + 1
         }
         
         for (type, count) in typeCounter {
