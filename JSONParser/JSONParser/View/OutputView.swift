@@ -18,32 +18,16 @@ struct OutputView {
     static private func printTypesCount(of arrayValue: JSONContainerType) -> String {
         let totalCount = arrayValue.totalCount
         
-        let type = arrayValue.typeDescription
+        let typeDescription = arrayValue.typeDescription
         
-        let counts = TypeCounter.count(of: arrayValue)
-        let countOfString = arrayValue.countOfString
-        let countOfNumber = counts.number
-        let countOfBool = counts.bool
-        let countOfObject = counts.object
-        
-        let intro = "총 \(totalCount)개의 \(type) 데이터 중에 "
+        let intro = "총 \(totalCount)개의 \(typeDescription) 데이터 중에 "
         let outro = "가 포함되어 있습니다."
         var description = intro
         
-        if countOfString > 0 {
-            description += "\(String.typeDescription) \(countOfString)개 "
-        }
+        let countDescription = arrayValue.typeCounts
         
-        if countOfNumber > 0 {
-            description += "\(Number.typeDescription) \(countOfNumber)개 "
-        }
-        
-        if countOfBool > 0 {
-            description += "\(Bool.typeDescription) \(countOfBool)개 "
-        }
-        
-        if countOfObject > 0 {
-            description += "\(Object.typeDescription) \(countOfObject)개 "
+        for (type, count) in countDescription {
+            description += "\(type) \(count)개 "
         }
         
         description += outro

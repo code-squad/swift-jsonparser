@@ -9,76 +9,69 @@
 import Foundation
 
 protocol JSONValueType {
-   static var typeDescription: String { get }
+   var typeDescription: String { get }
 }
 
 protocol TypeCountable {
     var totalCount: Int { get }
-    var types: [JSONValueType.Type] { get }
-    var typeDescription: String { get }
-}
-
-extension TypeCountable {
-    var countOfString: Int {
-        return types.countType(of: String.self)
-    }
+    var typeCounts: [String: Int] { get }
 }
 
 typealias JSONContainerType = JSONValueType & TypeCountable
 
 extension String: JSONValueType {
-    static var typeDescription: String {
+    var typeDescription: String {
         return "문자열"
     }
 }
 
 typealias Number = Int
 extension Number: JSONValueType {
-    static var typeDescription: String {
+    var typeDescription: String {
         return "숫자"
     }
 }
 
 extension Bool: JSONValueType {
-    static var typeDescription: String {
+    var typeDescription: String {
         return "부울"
     }
 }
 
 typealias Object = [String: JSONValueType]
 extension Object: JSONContainerType {
-    static var typeDescription: String {
-        return "객체"
-    }
-    
     var typeDescription: String {
-        return Object.typeDescription
+        return "객체"
     }
     
     var totalCount: Int {
         return self.count
     }
     
-    var types: [JSONValueType.Type] {
-        return self.values.map { type(of: $0) }
+    var typeCounts: [String: Int] {
+        var counts: [String: Int] = [:]
+        for (_, value) in self {
+            counts[value.typeDescription, default: 0] += 1
+        }
+        return counts
     }
 }
 
 typealias JSONArray = [JSONValueType]
 extension JSONArray: JSONContainerType {
-    static var typeDescription: String {
-        return "배열"
-    }
-    
     var typeDescription: String {
-        return JSONArray.typeDescription
+        return "배열"
     }
     
     var totalCount: Int {
         return self.count
     }
     
-    var types: [JSONValueType.Type] {
-        return self.map { type(of: $0) }
+    var typeCounts: [String: Int] {
+        var counts: [String: Int] = [:]
+        for data in self {
+            counts[data.typeDescription, default: 0] += 1
+        }
+        return counts
     }
 }
