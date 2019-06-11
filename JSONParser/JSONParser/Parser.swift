@@ -11,9 +11,19 @@ import Foundation
 struct Parser {
     
     private var converter: JSONConvertible
+    private var position = 0
     
     init(converter: JSONConvertible) {
         self.converter = converter
+    }
+    
+    mutating func nextToken() -> String? {
+        guard position < tokens.count else {
+            return nil
+        }
+        let token = tokens[position]
+        position += 1
+        return token
     }
     
     func parse(tokens: [String]) -> JSONContainerType? {
