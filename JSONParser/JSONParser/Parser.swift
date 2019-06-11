@@ -93,7 +93,7 @@ struct Parser {
     }
     
     private func makeJSONType(by token: String) -> JSONValueType? {
-        guard let value = converter.convertSingleValue(token: token) else {
+        guard let value = converter.convert(token: token) else {
             return nil
         }
         return value

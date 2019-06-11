@@ -9,11 +9,11 @@
 import Foundation
 
 protocol JSONConvertible {
-    func convertSingleValue(token: String) -> JSONValueType?
+    func convert(token: String) -> JSONValueType?
 }
 
 struct Converter: JSONConvertible {
-    func convertSingleValue(token: String) -> JSONValueType? {
+    func convert(token: String) -> JSONValueType? {
         
         if isString(of: token) {
             return removeQuotation(in: token)
