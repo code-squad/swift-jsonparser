@@ -20,6 +20,9 @@ struct TokenFactory: Factory {
         else if (string.isBool) {
             token = Token.Bool(Bool(string)!)
         }
+        else if (string.isString) {
+            token = Token.String(String(string.dropFirst().dropLast()))
+        }
         else if (string.isWhiteSpace) {
             token = Token.WhiteSpace
         }
@@ -28,9 +31,6 @@ struct TokenFactory: Factory {
         }
         else if (string.isDoubleQuotation) {
             token = Token.DoubleQuotation
-        }
-        else if (string.isString) {
-            token = Token.String(string)
         }
         else if (string.isColon) {
             token = Token.Colon
