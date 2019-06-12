@@ -12,14 +12,11 @@ func main(){
     do {
         var jsonTokenizer = JSONTokenizer()
         let input = try InputView.ask(for: .request)
-        let tokenizedInput = try jsonTokenizer.tokenize(data: input)
-        let analyzedInput = try JSONAnalyzer.analyze(data: tokenizedInput)
-        let parsedInput = try JSONParser.parseArray(data: analyzedInput)
-        try OutputView.printDescription(input: parsedInput)
-    } catch let error as JSONError {
-        print(error)
+        let tokens = try jsonTokenizer.tokenize(data: input)
+        let jsonDatas = JSONParser.parseArray(tokens: tokens)
+        try OutputView.printDescription(input: jsonDatas)
     } catch {
-        print(error)
+        print(error.localizedDescription)
     }
 }
 
