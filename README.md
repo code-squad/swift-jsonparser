@@ -31,20 +31,20 @@
 
 - `InputView` : 입력
 
-
+<br/>
 
 - `Tokenizer`: `,`로 입력문자열을 구분
 - `Parser`: 토큰을 `JSONValueType` 배열에 저장 //`JSONValueType`: `String`, `Number`, `Bool` 타입
 - `Converter`: 토큰의 타입을 확인해서 해당 타입으로 변환
 - `TypeCounter`: `JSONValueType`배열에서 타입의 개수를 카운트
 
-
+<br/>
 
 - `OutputView`: 출력
 
 ---
 
-
+<br/>
 
 ## STEP-2.  Object 분석
 
@@ -71,7 +71,7 @@
 
 - `InputView` : 입력
 
-
+<br/>
 
 - `JSONValueType`: JSON Value가 될 수 있는 타입.
   - `typeDescription`으로 자신의 타입을 설명
@@ -88,7 +88,7 @@
 
 - `Converter`: 토큰의 타입을 확인해서 해당 타입으로 변환 //`String`, `Number`, `Bool` 타입
 
-
+<br/>
 
 - `OutputView`: 출력
 
@@ -96,7 +96,7 @@
 
 ### JSON Lexical Structure (simply)
 
-```json
+```
 object
 	'{' ws '}'
 	'{' members '}'
@@ -131,12 +131,12 @@ element
 
 ### Input Format Analysis
 
-```json
+```
 '{' ws "characters" ws ':' ws value ',' ws "characters" ws ':' ws value ws '}'
 '{' ws "name" ws ':' ws "CHO MINJI" ',' ws "level" ws ':' ws 2 ws '}'
 ```
 
-```json
+```
 '[' ws '{' ws "characters" ws ':' ws value ',' ws "characters" ws ':' ws value ws '}' ',' ws '{' ws "characters" ws ':' ws value ',' ws "characters" ws ':' ws value ws '}' ws ']'
 ```
 
@@ -191,7 +191,7 @@ element
 
 
 
-
+<br/>
 
 ## Dictionary 란?
 
