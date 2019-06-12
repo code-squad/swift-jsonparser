@@ -61,13 +61,9 @@ struct Lexer {
         
         while let nextCharacter = peek() {
             switch nextCharacter {
-            case "a" ... "z":
+            case "a" ... "z", "0" ... "9" :
                 let stringValue = String(nextCharacter)
                 value = value + stringValue
-                advance()
-            case "0" ... "9" :
-                let digitValue = String(nextCharacter)
-                value = "\(value)\(digitValue)"
                 advance()
             default:
                 return value
