@@ -11,7 +11,7 @@ import Foundation
 func main() {
     let input: String
     let tokens: [Token]
-    let jsonContianerValue: JSONContainerValue
+    let jsonArray: [JSONValue]
     
     do {
         input = try InputView.readJSONData()
@@ -36,7 +36,7 @@ func main() {
     
     do {
         var parser = Parser(tokens: tokens)
-        jsonContianerValue = try parser.parse()
+        jsonArray = try parser.parse()
     } catch let error as Parser.Error {
         print(error.localizedDescription)
         return
@@ -45,7 +45,7 @@ func main() {
         return
     }
     
-    OutputView.printJSONContainerValue(jsonContianerValue)
+    OutputView.printJSONArray(jsonArray)
 }
 
 main()

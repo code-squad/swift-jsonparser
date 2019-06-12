@@ -86,7 +86,7 @@ struct Parser {
         throw Parser.Error.parseJSONArrayFailed
     }
     
-    mutating func parse() throws -> JSONContainerValue {
+    mutating func parse() throws -> [JSONValue] {
         return try getJSONArray()
     }
 }
