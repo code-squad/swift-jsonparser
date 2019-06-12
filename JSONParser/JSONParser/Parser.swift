@@ -9,7 +9,6 @@
 import Foundation
 
 struct Parser {
-    
     private var tokens: [String]
     private var position = 0
     private var converter: JSONConvertible = Converter()
@@ -37,7 +36,7 @@ struct Parser {
                 let object = parseObject()
                 return object
             default:
-                return nil
+                break
             }
         }
         return nil
@@ -50,7 +49,6 @@ struct Parser {
             guard token != JSONKeyword.rightSquareBracket else {
                 return arrayData
             }
-            
             switch token {
             case JSONKeyword.leftCurlyBracket:
                 let objectData = parseObject()
@@ -69,11 +67,9 @@ struct Parser {
         var objectData: [String: JSONValueType] = [:]
         
         while let token = nextToken() {
-            
             guard token != JSONKeyword.rightCurlyBracket else {
                 return objectData
             }
-            
             guard token == JSONKeyword.colon else {
                 continue
             }
@@ -82,11 +78,9 @@ struct Parser {
             let nextPosition = position
             let key = tokens[previousPosition]
             let rawValue = tokens[nextPosition]
-            
             guard let value = makeJSONType(by: rawValue) else {
                 continue
             }
-        
             objectData[key] = value
         }
         return objectData

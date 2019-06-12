@@ -11,6 +11,7 @@ import Foundation
 let userInput = InputView.readPrompt(for: "분석할 JSON 데이터를 입력하세요.")
 
 let tokens = Tokenizer.tokenize(from: userInput)
+
 var parser = Parser.init(tokens: tokens)
 if let jsonData = parser.parse() {
     OutputView.printDescription(of: jsonData)

@@ -17,8 +17,6 @@ protocol TypeCountable {
     var typeCounts: [String: Int] { get }
 }
 
-typealias JSONContainerType = JSONValueType & TypeCountable
-
 extension String: JSONValueType {
     var typeDescription: String {
         return "문자열"
@@ -37,6 +35,8 @@ extension Bool: JSONValueType {
         return "부울"
     }
 }
+
+typealias JSONContainerType = JSONValueType & TypeCountable
 
 typealias Object = [String: JSONValueType]
 extension Object: JSONContainerType {

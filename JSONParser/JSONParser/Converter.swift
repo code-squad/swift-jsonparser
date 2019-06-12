@@ -13,8 +13,8 @@ protocol JSONConvertible {
 }
 
 struct Converter: JSONConvertible {
+    
     func convert(token: String) -> JSONValueType? {
-        
         if isString(of: token) {
             return removeQuotation(in: token)
         } else if isBool(of: token) {
