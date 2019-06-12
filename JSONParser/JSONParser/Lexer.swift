@@ -103,7 +103,7 @@ struct Lexer {
             case Keyword.comma:
                 tokens.append(.comma)
                 advance()
-            case Keyword.emptySpace:
+            case Keyword.whiteSpace:
                 advance()
             case Keyword.doubleQuotation:
                 advance()

@@ -13,7 +13,7 @@ struct Keyword {
     static let closeSquareBracket: Character = "]"
     static let doubleQuotation: Character = "\""
     static let comma: Character = ","
-    static let emptySpace: Character = " "
+    static let whiteSpace: Character = " "
     static let `true` = "true"
     static let `false` = "false"
     static let alphanumerics = "abcdefghijklmnopqrstuvwxyz"
