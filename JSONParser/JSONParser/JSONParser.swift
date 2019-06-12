@@ -10,15 +10,13 @@ import Foundation
 
 struct JSONParser {
     
-    static func parseArray(data: [String]) throws -> [JSONDataType] {
-        var result = [JSONDataType]()
-        for string in data {
-        result.append(try parseValue(data: string))
+    static func parseArray(tokens: [String]) -> [JSONDataType] {
+      return tokens.compactMap{
+            parseValue(data:$0)
         }
-        return result
     }
     
-    static func parseValue(data: String) throws -> JSONDataType {
+    private static func parseValue(data: String) -> JSONDataType? {
         if let string = parseString(data: data) {
             return string
         } else if let number = parseNumber(data: data) {
@@ -26,7 +24,7 @@ struct JSONParser {
         } else if let bool = parseBool(data: data) {
             return bool
         } else {
-            throw JSONError.wrongValue
+            return nil
         }
     }
     
