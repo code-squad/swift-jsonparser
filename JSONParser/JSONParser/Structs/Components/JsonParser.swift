@@ -10,25 +10,34 @@ import Foundation
 
 struct JsonParser {
     private var tokens: Array<Token>
-    var strategy: JsonParsingStrategy
-    var jsonValue: JsonValue
+    private var strategy: JsonParsingStrategy
+    private var jsonValue: JsonValue
     
     init(tokens: Array<Token>) {
         self.tokens = tokens
         self.strategy =
-            tokens[0] == Token.LeftBraket ?
-                JsonListParsingStrategy() : JsonObjectParsingStrategy()
+            tokens[0] == Token.LeftBraket  ?
+                JsonListParsingStrategy(): JsonObjectParsingStrategy()
         self.jsonValue = tokens[0] == Token.LeftBraket ?
-                JsonList() : JsonObject()
+            JsonList(): JsonObject()
     }
     
     mutating func parse() -> JsonValue {
-        self.grouping()
+        while(self.group()) {}
         return self.strategy.parse(tokens: self.tokens)
     }
     
-    mutating func grouping() {
-        
+    private mutating func group() -> Bool {
+        guard let startIndex = self.tokens.firstIndex(of: Token.LeftBrace) else {
+            return false
+        }
+        guard let endIndex = self.tokens.firstIndex(of: Token.RightBrace) else {
+            return false
+        }
+        let object = Token.Object(Array(self.tokens[startIndex...endIndex]))
+        self.tokens.removeSubrange(startIndex...endIndex)
+        self.tokens.insert(object, at: startIndex)
+        return true
     }
     
     private mutating func set(strategy: JsonParsingStrategy) {
