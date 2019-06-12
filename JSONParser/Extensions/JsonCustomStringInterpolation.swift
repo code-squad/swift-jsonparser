@@ -11,13 +11,13 @@ import Foundation
 extension String.StringInterpolation {
     
     mutating func appendInterpolation(_ target: JsonParsable, count : Int ){
-        if target is JsonObject {
+        switch target {
+        case is JsonObject:
             appendInterpolation(target as! JsonObject, count: count)
-            return
-        }
-        if target is Array<JsonParsable>{
+        case is Array<JsonParsable>:
             appendInterpolation(target as! Array<JsonParsable>, count: count)
-            return
+        default :
+            appendLiteral(target.description)
         }
     }
     
