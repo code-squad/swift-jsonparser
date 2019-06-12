@@ -45,8 +45,8 @@ struct Main {
         } catch let error as ErrorCode {
             print("\(error.description)")
         }
-        let description = parsingPairResult.description
-        print(description)
+        let description = parsingPairResult
+        print("\(description, count: 1)")
     }
 }
 
