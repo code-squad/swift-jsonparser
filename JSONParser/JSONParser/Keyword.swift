@@ -16,4 +16,6 @@ struct Keyword {
     static let emptySpace: Character = " "
     static let `true` = "true"
     static let `false` = "false"
+    static let alphanumerics = "abcdefghijklmnopqrstuvwxyz"
+    static let decimalDigits = "0123456789"
 }
