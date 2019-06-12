@@ -50,7 +50,7 @@ struct Lexer {
     }
     
     private mutating func skipDoubleQuotes() throws {
-        if let nextCharacter = peek(), nextCharacter != "\"" {
+        if let nextCharacter = peek(), nextCharacter != Keyword.doubleQuotation {
             throw Lexer.Error.invalidCharacter(nextCharacter)
         }
         advance()
@@ -93,28 +93,28 @@ struct Lexer {
         
         while let nextCharacter = peek() {
             switch nextCharacter {
-            case "[":
+            case Keyword.openSquareBracket:
                 tokens.append(.openSquareBracket)
                 advance()
-            case "]":
+            case Keyword.closeSquareBracket:
                 tokens.append(.closeSquareBracket)
                 advance()
-            case "\"":
+            case Keyword.comma:
+                tokens.append(.comma)
+                advance()
+            case Keyword.emptySpace:
+                advance()
+            case Keyword.doubleQuotation:
                 advance()
                 let value = try getString()
                 tokens.append(.string(value))
                 try skipDoubleQuotes()
-            case "t", "f":
+            case Keyword.true.first, Keyword.false.first:
                 let value = try getBool()
                 tokens.append(.bool(value))
             case "0" ... "9":
                 let value = try getNumber()
                 tokens.append(.number(value))
-            case ",":
-                tokens.append(.comma)
-                advance()
-            case " ":
-                advance()
             default:
                 throw Lexer.Error.invalidCharacter(nextCharacter)
             }
