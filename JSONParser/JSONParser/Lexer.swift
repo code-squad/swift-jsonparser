@@ -49,11 +49,11 @@ struct Lexer {
         position = input.index(after: position)
     }
     
-    private mutating func skipDoubleQuotes() throws {
-        if let nextCharacter = peek(), nextCharacter != Keyword.doubleQuotation {
-            throw Lexer.Error.invalidCharacter(nextCharacter)
+    private mutating func removeDoubleQoutations(_ value: String) throws -> String {
+        if value.first == Keyword.doubleQuotation && value.last == Keyword.doubleQuotation {
+            return String(value.dropFirst().dropLast())
         }
-        advance()
+        throw Lexer.Error.scanStringFailed
     }
     
     private mutating func getString() throws -> String {
@@ -62,6 +62,7 @@ struct Lexer {
         while let nextCharacter = peek() {
             switch nextCharacter {
             case _ where Keyword.alphanumerics.contains(nextCharacter)
+                || Keyword.doubleQuotation == nextCharacter
                 || Keyword.decimalDigits.contains(nextCharacter):
                 let stringValue = String(nextCharacter)
                 value = value + stringValue
@@ -106,10 +107,9 @@ struct Lexer {
             case Keyword.whiteSpace:
                 advance()
             case Keyword.doubleQuotation:
-                advance()
                 let value = try getString()
-                tokens.append(.string(value))
-                try skipDoubleQuotes()
+                let trimmed = try removeDoubleQoutations(value)
+                tokens.append(.string(trimmed))
             case Keyword.true.first, Keyword.false.first:
                 let value = try getBool()
                 tokens.append(.bool(value))
