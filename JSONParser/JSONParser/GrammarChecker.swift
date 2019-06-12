@@ -72,7 +72,7 @@ struct GrammarChecker {
          */
         static let firstValueOfJsonArray = "(\(integerPattern)|(\(blanks)\(valueQuatatedString)\(blanks))|\(booleanPattern)|\(objectPattern)|\(arrayPattern))"
         static let restValuesOfJsonArray = "(((\(commaBetweenBlank)\(integerPatternWithoutParenthesis))|(\(commaBetweenBlank)\(valueQuatatedString)))|((\(commaBetweenBlank))\(booleanPattern))|(\(commaBetweenBlank)\(objectPattern))|(\(commaBetweenBlank)\(arrayPattern)))*"
-        static let jsonArrayPatternDepth1 = "\(startSquareBracket)\(blanks)\(firstValueOfJsonArray)\(restValuesOfJsonArray)\(blanks)\(endSquareBracket)"
+        static let jsonArrayPatternDepth1 = "\(startSquareBracket)\(blanks)\(firstValueOfJsonArray)*\(restValuesOfJsonArray)\(blanks)\(endSquareBracket)"
     }
     
     static func checkJsonPattern(_ input: String) throws  {

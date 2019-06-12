@@ -35,6 +35,10 @@
 		C56AC74E228195C800D99C02 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC74D228195C800D99C02 /* Tokenizer.swift */; };
 		C56AC7522282CAF500D99C02 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC7512282CAF500D99C02 /* Lexer.swift */; };
 		C56AC75622840C9300D99C02 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56AC75522840C9300D99C02 /* OutputView.swift */; };
+		C598F9AA22B0EEF300DE223D /* JsonCustomStringInterpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C598F9A922B0EEF300DE223D /* JsonCustomStringInterpolation.swift */; };
+		C598F9AB22B0EEFB00DE223D /* JsonCustomStringInterpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C598F9A922B0EEF300DE223D /* JsonCustomStringInterpolation.swift */; };
+		C598F9AF22B0EF6300DE223D /* JsonValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = C598F9AE22B0EF6300DE223D /* JsonValues.swift */; };
+		C598F9B022B0EF6900DE223D /* JsonValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = C598F9AE22B0EF6300DE223D /* JsonValues.swift */; };
 		C5B147EF22AE88410097FDA5 /* CustomTypeCastResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B147EE22AE88410097FDA5 /* CustomTypeCastResult.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +78,8 @@
 		C56AC74D228195C800D99C02 /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
 		C56AC7512282CAF500D99C02 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		C56AC75522840C9300D99C02 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
+		C598F9A922B0EEF300DE223D /* JsonCustomStringInterpolation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JsonCustomStringInterpolation.swift; path = Extensions/JsonCustomStringInterpolation.swift; sourceTree = SOURCE_ROOT; };
+		C598F9AE22B0EF6300DE223D /* JsonValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonValues.swift; sourceTree = "<group>"; };
 		C5B147EE22AE88410097FDA5 /* CustomTypeCastResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTypeCastResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,6 +104,8 @@
 		83AE2E031F8CAC2800F38CC9 = {
 			isa = PBXGroup;
 			children = (
+				C598F9AD22B0EF4800DE223D /* Extensions */,
+				C598F9AC22B0EF3000DE223D /* Protocols */,
 				C557FBA9229F7D7F00D1FC8F /* Enums */,
 				C52E70CE229698AA008AEC89 /* ApplicationMain */,
 				C52E70C92293E801008AEC89 /* DTO */,
@@ -163,7 +171,6 @@
 		C52E70C92293E801008AEC89 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
-				C52D2551228D2787006E7F4E /* JsonParsable.swift */,
 				C52D2553228D27A2006E7F4E /* JsonObject.swift */,
 			);
 			path = DTO;
@@ -195,6 +202,23 @@
 				C5B147EE22AE88410097FDA5 /* CustomTypeCastResult.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		C598F9AC22B0EF3000DE223D /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				C52D2551228D2787006E7F4E /* JsonParsable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		C598F9AD22B0EF4800DE223D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C598F9A922B0EEF300DE223D /* JsonCustomStringInterpolation.swift */,
+				C598F9AE22B0EF6300DE223D /* JsonValues.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,6 +314,7 @@
 			files = (
 				C52D24C522851BDF006E7F4E /* JsonFormatter.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				C598F9AA22B0EEF300DE223D /* JsonCustomStringInterpolation.swift in Sources */,
 				C52E70F12297E223008AEC89 /* Parser.swift in Sources */,
 				C52E70F522992676008AEC89 /* TokenSplitSign.swift in Sources */,
 				C56AC7522282CAF500D99C02 /* Lexer.swift in Sources */,
@@ -301,6 +326,7 @@
 				C557FBA3229D3C8200D1FC8F /* GrammarChecker.swift in Sources */,
 				C5B147EF22AE88410097FDA5 /* CustomTypeCastResult.swift in Sources */,
 				C56AC74A2281764500D99C02 /* ErrorCode.swift in Sources */,
+				C598F9AF22B0EF6300DE223D /* JsonValues.swift in Sources */,
 				C56AC75622840C9300D99C02 /* OutputView.swift in Sources */,
 				C52D2554228D27A2006E7F4E /* JsonObject.swift in Sources */,
 			);
@@ -311,9 +337,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C52E70BA2292D01F008AEC89 /* JsonObject.swift in Sources */,
+				C598F9AB22B0EEFB00DE223D /* JsonCustomStringInterpolation.swift in Sources */,
 				C52E70BB2292D028008AEC89 /* Tokenizer.swift in Sources */,
 				C52E70C82293E7F3008AEC89 /* OutputView.swift in Sources */,
 				C52E70C12292D0DD008AEC89 /* JsonFormatter.swift in Sources */,
+				C598F9B022B0EF6900DE223D /* JsonValues.swift in Sources */,
 				C52E70BE2292D067008AEC89 /* Lexer.swift in Sources */,
 				C52E70BC2292D02C008AEC89 /* Utility.swift in Sources */,
 				C52E70FF229BE9FE008AEC89 /* TokenizerTest.swift in Sources */,
@@ -386,6 +414,7 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -437,6 +466,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -445,7 +475,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -454,7 +484,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

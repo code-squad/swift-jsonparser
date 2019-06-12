@@ -11,4 +11,3 @@ import Foundation
 protocol JsonParsable {
     var description: String {get}
 }
-

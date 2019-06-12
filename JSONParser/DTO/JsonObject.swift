@@ -8,9 +8,11 @@
 
 import Foundation
 
+typealias SortedKeyValueSet = [(offset: Int, element: (key: String, value: JsonParsable))]
+
 struct JsonObject : JsonParsable {
     private (set) var keyValueSet : [String : JsonParsable]
-    
+
     init(){
         self.keyValueSet = [String : JsonParsable]()
     }
@@ -28,16 +30,18 @@ struct JsonObject : JsonParsable {
     
     var description: String {
         get {
+            var elements = [String]()
+            var results = [String]()
             let sortedKeyValueSet = keyValueSet.enumerated().sorted(by: { ( pair1, pair2) -> Bool in
                 return pair1.element.key < pair2.element.key
             })
-            var result = "\(TokenSplitSign.curlyBracketStart.description)\n"
+            results.append("\(TokenSplitSign.curlyBracketStart.description)")
             for sortedPair in sortedKeyValueSet {
-                result += "\t\(sortedPair.element.key) : \(sortedPair.element.value.description),\n"
+                elements.append("\t\(sortedPair.element.key) : \(sortedPair.element.value.description)")
             }
-            result.removeLast(2)
-            result += "\n\(TokenSplitSign.curlyBracketEnd.description)"
-            return result
+            results.append(elements.joined(separator: ",\n"))
+            results.append("\(TokenSplitSign.curlyBracketEnd.description)")
+            return results.joined(separator: "\n")
         }
     }
 }
