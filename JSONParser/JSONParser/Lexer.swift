@@ -61,9 +61,9 @@ struct Lexer {
         
         while let nextCharacter = peek() {
             switch nextCharacter {
-            case _ where Keyword.alphanumerics.contains(nextCharacter)
-                || Keyword.doubleQuotation == nextCharacter
-                || Keyword.decimalDigits.contains(nextCharacter):
+            case _ where nextCharacter.isLetter
+                || nextCharacter.isNumber
+                || Keyword.doubleQuotation == nextCharacter:
                 let stringValue = String(nextCharacter)
                 value = value + stringValue
                 advance()
@@ -113,7 +113,7 @@ struct Lexer {
             case Keyword.true.first, Keyword.false.first:
                 let value = try getBool()
                 tokens.append(.bool(value))
-            case _ where Keyword.decimalDigits.contains(nextCharacter):
+            case _ where nextCharacter.isNumber:
                 let value = try getNumber()
                 tokens.append(.number(value))
             default:
