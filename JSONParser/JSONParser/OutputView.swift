@@ -6,11 +6,6 @@
 //  Copyright © 2019 JK. All rights reserved.
 //
 
-/*
-[{"name":"aiden","age":27},[9,true],8,"hello,world"]
-[[9,8],"hello,world",{"name":"aiden","age":27,"home":true}]
- {"name":{"code":"aiden","cadence":"thope"},"age":["aiden",27],"home":true}
-*/
 import Foundation
 
 struct OutputView {
@@ -26,33 +21,34 @@ struct OutputView {
     func printElements(jsonParser: JsonParser, dataMent:String) {
         var countMent: String = ""
         var jsonData: [Json] = []
-        var convertToPrint: [String] = []
+        var jsonToPrint: [String] = []
+        var convertJson = jsonParser
         if dataMent == "배열" {
             countMent = "\(jsonParser.arrayJsonData.count)"
             jsonData = jsonParser.arrayJsonData
-            convertToPrint = jsonParser.ArrayConvertToPrint(jsonData: jsonData)
+            jsonToPrint = convertJson.convertToPrint(jsonData: jsonParser, dataMent: dataMent)
         } else if dataMent == "객체" {
             countMent = "\(jsonParser.dictionaryJsonData.count)"
             jsonData = dictionaryToArray(dictionary: jsonParser.dictionaryJsonData)
-            convertToPrint = jsonParser.DictionaryConvertToPrint(jsonData: jsonParser.dictionaryJsonData)
+            jsonToPrint = convertJson.convertToPrint(jsonData: jsonParser, dataMent: dataMent)
         }
         print("총 \(countMent)개의 \(dataMent) 데이터 중에 ", terminator: "")
         let mentByTypes = MentOfCounts.makeMent(jsonData: jsonData)
         print("\(mentByTypes)가 포함되어 있습니다.")
-        printJson(of: convertToPrint)
+        printJson(of: jsonToPrint)
     }
     
     // Json 데이터를 한줄씩 출력하도록 변환된 배열을 출력하는 함수
     private func printJson(of printJson: [String]) {
         for index in 0..<printJson.count {
-            if index == printJson.startIndex, printJson[index + 1] == "{" {
-            print(printJson[index], terminator:"")
+            if index == printJson.startIndex, printJson[index + 1] == "\(Sign.frontCurlyBracket)" {
+                print(printJson[index], terminator:"")
             } else if index == printJson.startIndex || index == printJson.endIndex-1 {
                 print(printJson[index])
-            } else if index-1 == printJson.startIndex, printJson[index] == "{" {
+            } else if index-1 == printJson.startIndex, printJson[index] == "\(Sign.frontCurlyBracket)" {
                 print(printJson[index])
             } else {
-                print(" "+printJson[index])
+                print("\(Sign.blank)"+printJson[index])
             }
         }
     }

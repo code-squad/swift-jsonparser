@@ -17,4 +17,5 @@ struct Sign {
     static let doubleQuote: Character = "\""
     static let colon: Character = ":"
     static let pipe: Character = "|"
+    static let blank: Character = " "
 }

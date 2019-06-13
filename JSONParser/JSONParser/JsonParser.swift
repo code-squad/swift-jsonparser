@@ -15,6 +15,7 @@ extension String {
 }
 
 struct JsonParser {
+    var printArray = [String]()
     var arrayJsonData: [Json] = []
     var dictionaryJsonData = [String:Json]()
     
@@ -81,60 +82,68 @@ struct JsonParser {
         }
     }
     
-    /// 배열 Json 데이터를 한줄씩 출력하는 배열로 변환하는 함수
-    func ArrayConvertToPrint(jsonData: [Json]) -> [String]{
-        var printArray = [String]()
-        printArray.append("[")
-        for index in 0..<jsonData.count {
-            switch jsonData[index]{
-            case is Dictionary<String,Json>:
-                printArray.append("{")
-                for (key, value) in jsonData[index] as! Dictionary<String,Json>{
-                    printArray.append(" \(key):\(value),")
-                }
-                printArray[printArray.endIndex-1].removeLast()
-                printArray.append("},")
-            case is Array<Json>:
-                var array = [String]()
-                for value in jsonData[index] as! Array<Json>{
-                    array.append("\(value)")
-                }
-                printArray.append("["+array.joined(separator: ",")+"],")
-            default:
-                printArray.append("\(jsonData[index]),")
+    /// Json 데이터가 배열인지 딕셔너리인지 판단하여 출력하는 배열로 변환하는 함수
+    mutating func convertToPrint(jsonData: JsonParser, dataMent: String) -> [String] {
+        if dataMent == "배열" {
+            printArray.append("\(Sign.frontSquareBracket)")
+            for index in 0..<jsonData.arrayJsonData.count {
+                arrayConvertToPrint(jsonData: jsonData.arrayJsonData, index: index)
             }
-            if index == jsonData.endIndex-1 {
-                printArray[printArray.endIndex-1].removeLast()
+            printArray.append("\(Sign.backSquareBracket)")
+            return printArray
+        } else {
+            printArray.append("\(Sign.frontCurlyBracket)")
+            for (key, value) in jsonData.dictionaryJsonData{
+                dictionaryConvertToPrint(jsonData: jsonData.dictionaryJsonData, key: key, value: value)
             }
+            printArray[printArray.endIndex-1].removeLast()
+            printArray.append("\(Sign.backCurlyBracket)")
+            return printArray
         }
-        printArray.append("]")
-        return printArray
     }
     
-    func DictionaryConvertToPrint(jsonData: [String:Json]) -> [String]{
-        var printArray = [String]()
-        printArray.append("{")
-        for (key, value) in jsonData{
-            switch value{
-            case is Dictionary<String,Json>:
-                printArray.append("\(key):{")
-                for (keyInValue, valueInValue) in value as! Dictionary<String,Json>{
-                    printArray.append(" \(keyInValue):\(valueInValue),")
-                }
-                printArray[printArray.endIndex-1].removeLast()
-                printArray.append("},")
-            case is Array<Json>:
-                var array = [String]()
-                for valueInValue in value as! Array<Json>{
-                    array.append("\(valueInValue)")
-                }
-                printArray.append(" \(key):["+array.joined(separator: ",")+"],")
-            default:
-                printArray.append(" \(key):\(value),")
+    /// 배열 Json 데이터를 한줄씩 출력하는 배열로 변환하는 함수
+    private mutating func arrayConvertToPrint(jsonData: [Json], index: Int) {//-> [String]{
+        switch jsonData[index]{
+        case is Dictionary<String,Json>:
+            printArray.append("\(Sign.frontCurlyBracket)")
+            for (key, value) in jsonData[index] as! Dictionary<String,Json>{
+                printArray.append(" \(key)\(Sign.colon)\(value)\(Sign.comma)")
             }
+            printArray[printArray.endIndex-1].removeLast()
+            printArray.append("\(Sign.backCurlyBracket)\(Sign.comma)")
+        case is Array<Json>:
+            var array = [String]()
+            for value in jsonData[index] as! Array<Json>{
+                array.append("\(value)")
+            }
+            printArray.append("\(Sign.frontSquareBracket)"+array.joined(separator: "\(Sign.comma)")+"\(Sign.backSquareBracket)\(Sign.comma)")
+        default:
+            printArray.append("\(jsonData[index])\(Sign.comma)")
         }
-        printArray[printArray.endIndex-1].removeLast()
-        printArray.append("}")
-        return printArray
+        if index == jsonData.endIndex-1 {
+            printArray[printArray.endIndex-1].removeLast()
+        }
+    }
+    
+    /// 딕셔너리 Json 데이터를 한줄씩 출력하는 배열로 변환하는 함수
+    private mutating func dictionaryConvertToPrint(jsonData: [String:Json], key: String, value: Json) {//-> [String]{
+        switch value{
+        case is Dictionary<String,Json>:
+            printArray.append("\(key)\(Sign.colon)\(Sign.frontCurlyBracket)")
+            for (keyInValue, valueInValue) in value as! Dictionary<String,Json>{
+                printArray.append(" \(keyInValue)\(Sign.colon)\(valueInValue)\(Sign.comma)")
+            }
+            printArray[printArray.endIndex-1].removeLast()
+            printArray.append("\(Sign.backCurlyBracket)\(Sign.comma)")
+        case is Array<Json>:
+            var array = [String]()
+            for valueInValue in value as! Array<Json>{
+                array.append("\(valueInValue)")
+            }
+            printArray.append(" \(key)\(Sign.colon)\(Sign.frontSquareBracket)"+array.joined(separator: "\(Sign.comma)")+"\(Sign.backSquareBracket)\(Sign.comma)")
+        default:
+            printArray.append(" \(key)\(Sign.colon)\(value)\(Sign.comma)")
+        }
     }
 }
