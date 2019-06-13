@@ -12,4 +12,8 @@ struct Token {
     static let beginArray: Character = "["
     static let endArray: Character = "]"
     static let valueSeparator: Character = ","
+    static let quatationMark: Character = "\""
+    static let nameSeparator: Character = ":"
+    static let beginObject: Character = "{"
+    static let endObject:Character = "}"
 }
