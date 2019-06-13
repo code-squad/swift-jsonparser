@@ -30,7 +30,7 @@ enum Token: Equatable {
     case RightBraket
     
     func getValue() -> String {
-        switch self{
+        switch self {
         case .List(_):
             return "배열"
         case .Object(_):
@@ -39,19 +39,17 @@ enum Token: Equatable {
             return "\(value)"
         case .Bool(let value):
             return "\(value)"
-        case .Value(let value):
-            return "\(value)"
         case .String(let value):
             return "\(value)"
         case .Key(let value):
             return "\(value)"
-        case .WhiteSpace :
+        case .WhiteSpace:
             return " "
         case .Colon:
             return ":"
         case .Comma:
             return ","
-        case .DoubleQuotation :
+        case .DoubleQuotation:
             return "\""
         case .LeftBrace:
             return "{"
@@ -61,10 +59,45 @@ enum Token: Equatable {
             return "["
         case .RightBraket:
             return "]"
+        case .Value(let value):
+            return "\(value)"
         }
     }
     
-    static let symbols: Array<Token> = [.Comma,.Colon,.DoubleQuotation,.LeftBrace,.RightBrace,.WhiteSpace,.LeftBraket,.RightBraket]
-    
+    func isSameType(_ token: Token) -> Bool {
+        switch (self,token) {
+        case (.Object(_),.Object(_)):
+            return true
+        case (.List(_),.List(_)):
+            return true
+        case (.Number(_),.Number(_)):
+            return true
+        case (.Bool(_),.Bool(_)):
+            return true
+        case (.String(_),.String(_)):
+            return true
+        case (.Key(_),.Key(_)):
+            return true
+        case (.WhiteSpace,.WhiteSpace):
+            return true
+        case (.Comma,.Comma):
+            return true
+        case (.Colon,.Colon):
+            return true
+        case (.DoubleQuotation,.DoubleQuotation):
+            return true
+        case (.LeftBrace,.LeftBrace):
+            return true
+        case (.RightBrace,.RightBrace):
+            return true
+        case (.LeftBraket,.LeftBraket):
+            return true
+        case (.RightBraket,.RightBraket):
+            return true
+        default:
+            return false
+        }
+    }
 }
+
 
