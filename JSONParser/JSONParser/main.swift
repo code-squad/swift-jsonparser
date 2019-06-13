@@ -13,7 +13,7 @@ func main(){
         var jsonTokenizer = JSONTokenizer()
         let input = try InputView.ask(for: .request)
         let tokens = try jsonTokenizer.tokenize(data: input)
-        let jsonDatas = JSONParser.parseArray(tokens: tokens)
+        let jsonDatas = JSONParser.parseDataArray(tokens: tokens)
         try OutputView.printDescription(input: jsonDatas)
     } catch {
         print(error.localizedDescription)

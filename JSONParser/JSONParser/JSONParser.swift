@@ -10,7 +10,7 @@ import Foundation
 
 struct JSONParser {
     
-    static func parseArray(tokens: [String]) -> [JSONDataType] {
+    static func parseDataArray(tokens: [String]) -> [JSONDataType] {
       return tokens.compactMap {
             parseValue(data:$0)
         }
