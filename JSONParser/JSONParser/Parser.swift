@@ -22,26 +22,23 @@ struct Parser {
         tokens.removeFirst()
         tokens.removeLast()
         
+        var unfinishedToken = ""
         var data: [JsonType] = []
-        var datum: String = ""
-        var isString = false
         
         for token in tokens {
-            if isString {
-                datum = datum + token
+            if !unfinishedToken.isEmpty {
+                unfinishedToken.append(token)
                 
-                if token == String(JsonElement.string) {
-                    isString = false
-                    data.append(try convert(token: datum))
-                    datum.removeAll()
+                if unfinishedToken.last == JsonElement.string {
+                    data.append(try convert(token: unfinishedToken))
+                    unfinishedToken.removeAll()
                 }
                 
                 continue
             }
             
-            if token == String(JsonElement.string) {
-                datum = datum + token
-                isString = true
+            if token.first == JsonElement.string, token.last != JsonElement.string {
+                unfinishedToken.append(token)
                 
                 continue
             }
