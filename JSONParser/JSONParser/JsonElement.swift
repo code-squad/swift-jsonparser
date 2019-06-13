@@ -18,5 +18,5 @@ struct JsonElement {
     static let `true` = "true"
     static let `false` = "false"
     
-    static let arrayToken = [string, comma, whitespace, startOfArray, endOfArray]
+    static let arrayToken = [comma, whitespace, startOfArray, endOfArray]
 }
