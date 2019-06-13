@@ -12,13 +12,20 @@ typealias countNumbers = (string:Int, int:Int, bool: Int)
 
 struct DataParsingFactory {
     
-    mutating func makeParsingData(data:[String])throws -> JSONParse {
-        let (parsingData,canNotParsingData) = parsing(datas: data)
+    mutating func makeParsingData(data:String)throws -> JSONParse {
+        let convertedData = convertJSONToArray(JSON: data)
+        let (parsingData,canNotParsingData) = parsing(datas: convertedData)
         try canNotConvertDataPrint(data: canNotParsingData)
         return parsingData
     }
     
-    private func parsing(datas:[String]) -> (JSONParse,CanNotParsingData) {
+    private func convertJSONToArray(JSON:String) -> [String] {
+        var ConvertedJSONData = JSON.trimmingCharacters(in: FormatItem.JSONArray)
+        ConvertedJSONData = ConvertedJSONData.split(separator: FormatItem.blank).joined()
+        return ConvertedJSONData.components(separatedBy: FormatItem.arraySperator)
+    }
+    
+    private func parsing(datas:[String]) -> (JSONParse, [String]) {
         var ParsedData:[JSONValue] = []
         var canNotParsingData:[String] = []
         var countString = 0, countInt = 0, countBool = 0
@@ -44,8 +51,9 @@ struct DataParsingFactory {
             canNotParsingData.append(data)
             
         }
-        return (JSONParse(ParsedData, countNumbers:(countString, countInt, countBool)), CanNotParsingData(canNotParsingData))
+        return (JSONParse(ParsedData, countNumbers:(countString, countInt, countBool)), canNotParsingData)
     }
+    
     
     private func isString(data:String) -> Bool {
         return DataTypeCriterion.String.isStrictSubset(of: CharacterSet(charactersIn: data))
@@ -59,10 +67,9 @@ struct DataParsingFactory {
         return data == DataTypeCriterion.Bool.true || data == DataTypeCriterion.Bool.false
     }
     
-    private func canNotConvertDataPrint(data:CanNotParsingData)throws {
+    private func canNotConvertDataPrint(data:[String])throws {
         
         guard data.count == 0 else{
-            print(data.canNotParsingData)
             throw ConvertError.canNotCovertData
         }
         

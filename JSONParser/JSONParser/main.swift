@@ -12,8 +12,7 @@ do{
     var dataParser = DataParsingFactory()
     let input = try InputView.readInput(massage: Massage.requestJSON)
     let JSON = try Validator.JSONArrayformat(input: input)
-    let convertedJSONData = Converter.JSONToArray(JSON: JSON)
-    let parsedData = try dataParser.makeParsingData(data: convertedJSONData)
+    let parsedData = try dataParser.makeParsingData(data: JSON)
     OutputView.printResult(countNumber: parsedData)
 } catch let error as JSONError {
     print(error.message)

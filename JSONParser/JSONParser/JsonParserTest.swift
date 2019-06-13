@@ -8,7 +8,7 @@
 
 import XCTest
 
-class JsonParser: XCTestCase {
+class FormatTest: XCTestCase {
     
     func testCorrectFormatOfJSON() {
         XCTAssertNoThrow(try Validator.JSONArrayformat(input: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]"))
@@ -19,15 +19,13 @@ class JsonParser: XCTestCase {
     }
     
     func testCanConvertData() {
-        let datas = Converter.JSONToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]")
         var dataParser = DataParsingFactory()
-        XCTAssertNoThrow(try dataParser.makeParsingData(data: datas))
+        XCTAssertNoThrow(try dataParser.makeParsingData(data: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]"))
     }
     
     func testContainCanNotConvertData() {
-        let datas = Converter.JSONToArray(JSON: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, canNotConvertData]")
         var dataParser = DataParsingFactory()
-        XCTAssertThrowsError(try dataParser.makeParsingData(data: datas))
+        XCTAssertThrowsError(try dataParser.makeParsingData(data: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, canNotConvertData]"))
     }
 
 }
