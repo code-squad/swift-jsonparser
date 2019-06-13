@@ -29,10 +29,7 @@ struct Parser {
             if !unfinishedToken.isEmpty {
                 unfinishedToken.append(token)
                 
-                if unfinishedToken.last == JsonElement.string {
-                    data.append(try convert(token: unfinishedToken))
-                    unfinishedToken.removeAll()
-                }
+                try finish(unfinishedToken: &unfinishedToken, data: &data)
                 
                 continue
             }
@@ -49,6 +46,13 @@ struct Parser {
         }
         
         return try JsonArray(array: data)
+    }
+    
+    private static func finish(unfinishedToken: inout String, data: inout [JsonType]) throws {
+        if unfinishedToken.last == JsonElement.string {
+            data.append(try convert(token: unfinishedToken))
+            unfinishedToken.removeAll()
+        }
     }
     
     private static func convert(token: String) throws -> JsonType {
