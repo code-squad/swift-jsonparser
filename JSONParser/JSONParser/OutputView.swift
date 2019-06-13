@@ -9,6 +9,7 @@
 /*
 [{"name":"aiden","age":27},[9,true],8,"hello,world"]
 [[9,8],"hello,world",{"name":"aiden","age":27,"home":true}]
+ {"name":{"code":"aiden","cadence":"thope"},"age":["aiden",27],"home":true}
 */
 import Foundation
 
@@ -25,19 +26,20 @@ struct OutputView {
     func printElements(jsonParser: JsonParser, dataMent:String) {
         var countMent: String = ""
         var jsonData: [Json] = []
-        var jsonTexts: [String] = []
+        var convertToPrint: [String] = []
         if dataMent == "배열" {
             countMent = "\(jsonParser.arrayJsonData.count)"
             jsonData = jsonParser.arrayJsonData
-            jsonTexts = jsonParser.printArrayJson(jsonData: jsonData)
+            convertToPrint = jsonParser.ArrayConvertToPrint(jsonData: jsonData)
         } else if dataMent == "객체" {
             countMent = "\(jsonParser.dictionaryJsonData.count)"
             jsonData = dictionaryToArray(dictionary: jsonParser.dictionaryJsonData)
+            convertToPrint = jsonParser.DictionaryConvertToPrint(jsonData: jsonParser.dictionaryJsonData)
         }
         print("총 \(countMent)개의 \(dataMent) 데이터 중에 ", terminator: "")
         let mentByTypes = MentOfCounts.makeMent(jsonData: jsonData)
         print("\(mentByTypes)가 포함되어 있습니다.")
-        printJson(of: jsonTexts)
+        printJson(of: convertToPrint)
     }
     
     // Json 데이터를 한줄씩 출력하도록 변환된 배열을 출력하는 함수

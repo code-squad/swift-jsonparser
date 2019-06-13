@@ -81,8 +81,8 @@ struct JsonParser {
         }
     }
     
-    /// 배열 Json 데이터를 출력하는 함수
-    func printArrayJson(jsonData: [Json]) -> [String]{
+    /// 배열 Json 데이터를 한줄씩 출력하는 배열로 변환하는 함수
+    func ArrayConvertToPrint(jsonData: [Json]) -> [String]{
         var printArray = [String]()
         printArray.append("[")
         for index in 0..<jsonData.count {
@@ -108,6 +108,33 @@ struct JsonParser {
             }
         }
         printArray.append("]")
+        return printArray
+    }
+    
+    func DictionaryConvertToPrint(jsonData: [String:Json]) -> [String]{
+        var printArray = [String]()
+        printArray.append("{")
+        for (key, value) in jsonData{
+            switch value{
+            case is Dictionary<String,Json>:
+                printArray.append("\(key):{")
+                for (keyInValue, valueInValue) in value as! Dictionary<String,Json>{
+                    printArray.append(" \(keyInValue):\(valueInValue),")
+                }
+                printArray[printArray.endIndex-1].removeLast()
+                printArray.append("},")
+            case is Array<Json>:
+                var array = [String]()
+                for valueInValue in value as! Array<Json>{
+                    array.append("\(valueInValue)")
+                }
+                printArray.append(" \(key):["+array.joined(separator: ",")+"],")
+            default:
+                printArray.append(" \(key):\(value),")
+            }
+        }
+        printArray[printArray.endIndex-1].removeLast()
+        printArray.append("}")
         return printArray
     }
 }
