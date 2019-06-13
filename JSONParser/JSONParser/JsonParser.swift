@@ -32,7 +32,7 @@ struct JsonParser {
     private func convertArray(convertedData: [String]) throws -> [Json] {
         var convertedArrayData = [Json]()
         for index in 0..<convertedData.count {
-            convertedArrayData[index] = try parsingData(beforeData: convertedData[index])
+            convertedArrayData.append(try parsingData(beforeData: convertedData[index]))
         }
         return convertedArrayData
     }
@@ -55,7 +55,7 @@ struct JsonParser {
         } else if afterData.match(text: RegularExpression.boolType) {
             convertedElement = Bool(afterData) ?? false
         } else if afterData.match(text: RegularExpression.stringType) {
-            convertedElement = afterData.trimmingCharacters(in: CharacterSet(charactersIn: "\(Sign.doubleQuote)"))
+            convertedElement = afterData//.trimmingCharacters(in: CharacterSet(charactersIn: "\(Sign.doubleQuote)"))
         } else {
             throw ErrorMessage.wrongValue
         }
@@ -79,5 +79,35 @@ struct JsonParser {
         } else {
             throw ErrorMessage.notArray
         }
+    }
+    
+    /// 배열 Json 데이터를 출력하는 함수
+    func printArrayJson(jsonData: [Json]) -> [String]{
+        var printArray = [String]()
+        printArray.append("[")
+        for index in 0..<jsonData.count {
+            switch jsonData[index]{
+            case is Dictionary<String,Json>:
+                printArray.append("{")
+                for (key, value) in jsonData[index] as! Dictionary<String,Json>{
+                    printArray.append(" \(key):\(value),")
+                }
+                printArray[printArray.endIndex-1].removeLast()
+                printArray.append("},")
+            case is Array<Json>:
+                var array = [String]()
+                for value in jsonData[index] as! Array<Json>{
+                    array.append("\(value)")
+                }
+                printArray.append("["+array.joined(separator: ",")+"],")
+            default:
+                printArray.append("\(jsonData[index]),")
+            }
+            if index == jsonData.endIndex-1 {
+                printArray[printArray.endIndex-1].removeLast()
+            }
+        }
+        printArray.append("]")
+        return printArray
     }
 }
