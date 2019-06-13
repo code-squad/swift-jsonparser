@@ -10,11 +10,15 @@ import Foundation
 
 struct Validator {
     
-    static func JSONIsArrayFormat(input:String)throws -> Bool {
+    static func JSONIsArrayFormat(input:String) -> Bool {
         return input.hasPrefix(FormatItem.JSONArrayContainerLeft) && input.hasSuffix(FormatItem.JSONArrayContainerRight)
     }
     
-    static func JSONIsObjectFormat(input:String) -> Bool {
-        return input.hasPrefix(FormatItem.JSONObjectContainerLeft) && input.hasSuffix(FormatItem.JSONObjectContainerRight)
+    static func JSONIsObjectFormat(input:String)throws -> Bool {
+        let isObjectFormat = input.hasPrefix(FormatItem.JSONObjectContainerLeft) && input.hasSuffix(FormatItem.JSONObjectContainerRight)
+        guard isObjectFormat else {
+            throw InputError.InputError
+        }
+        return isObjectFormat
     }
 }
