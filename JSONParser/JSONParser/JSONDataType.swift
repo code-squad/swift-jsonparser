@@ -30,3 +30,15 @@ extension Bool: JSONDataType {
         return "Bool"
     }
 }
+typealias Object = Dictionary
+extension Object: JSONDataType {
+var typeDescription: String {
+    return "Object"
+    }
+}
+
+extension Array: JSONDataType {
+    var typeDescription: String {
+        return "Array"
+    }
+}
