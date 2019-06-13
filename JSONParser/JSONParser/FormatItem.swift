@@ -12,8 +12,11 @@ struct FormatItem {
     static let JSONArray = CharacterSet(charactersIn: "[]")
     static let JSONArrayContainerLeft = "["
     static let JSONArrayContainerRight = "]"
+    static let JSONObject = CharacterSet(charactersIn: "{}")
+    static let JSONObjectContainerLeft = "{"
+    static let JSONObjectContainerRight = "}"
     static let blank:Character = " "
     static let DoubleQuotationMark = CharacterSet(charactersIn: "\"")
-    static let arraySperator = ","
+    static let elementSperator = ","
     
 }

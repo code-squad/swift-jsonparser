@@ -13,58 +13,63 @@ typealias countNumbers = (string:Int, int:Int, bool: Int)
 struct DataParsingFactory {
     
     mutating func makeParsingData(data:String)throws -> JSONParse {
-        let convertedData = convertJSONToArray(JSON: data)
+        let convertedData = convertJSONToDictionary(JSON: data)
         let (parsingData,canNotParsingData) = parsing(datas: convertedData)
         try canNotConvertDataPrint(data: canNotParsingData)
         return parsingData
     }
     
-    private func convertJSONToArray(JSON:String) -> [String] {
-        var ConvertedJSONData = JSON.trimmingCharacters(in: FormatItem.JSONArray)
+    private func convertJSONToDictionary(JSON:String) -> [String] {
+        var ConvertedJSONData = JSON.trimmingCharacters(in: FormatItem.JSONObject)
         ConvertedJSONData = ConvertedJSONData.split(separator: FormatItem.blank).joined()
-        return ConvertedJSONData.components(separatedBy: FormatItem.arraySperator)
+        return ConvertedJSONData.components(separatedBy: FormatItem.elementSperator)
     }
     
-    private func parsing(datas:[String]) -> (JSONParse, [String]) {
-        var ParsedData:[JSONValue] = []
-        var canNotParsingData:[String] = []
+    private func parsing2(datas:[String])throws -> (JSONParse) {
+        var ParsedData:[String:JSONValue] = [:]
         var countString = 0, countInt = 0, countBool = 0
+        let datas = datas.map{$0.components(separatedBy: ":")}
         
         for data in datas {
             
             if isString(data: data) {
-                ParsedData.append(String(data))
+                let key = data[0].trimmingCharacters(in: FormatItem.DoubleQuotationMark)
+                let value = String(data[1])
+                ParsedData.updateValue(value, forKey: key)
                 countString += 1
                 continue
             }
             if isInt(data: data) {
-                ParsedData.append(Int(data)!)
+                let key = data[0].trimmingCharacters(in: FormatItem.DoubleQuotationMark)
+                let value = Int(data[1])!
+                ParsedData.updateValue(value, forKey: key)
                 countInt += 1
                 continue
             }
             if isBool(data: data) {
-                ParsedData.append(Bool(data)!)
+                let key = data[0].trimmingCharacters(in: FormatItem.DoubleQuotationMark)
+                let value = Bool(data[1])!
+                ParsedData.updateValue(value, forKey: key)
                 countBool += 1
                 continue
             }
             
-            canNotParsingData.append(data)
+            throw ConvertError.canNotCovertData
             
         }
-        return (JSONParse(ParsedData, countNumbers:(countString, countInt, countBool)), canNotParsingData)
+        return (JSONParse(ParsedData, countNumbers:(countString, countInt, countBool)))
     }
     
-    
-    private func isString(data:String) -> Bool {
-        return DataTypeCriterion.String.isStrictSubset(of: CharacterSet(charactersIn: data))
+    private func isString(data:[String]) -> Bool {
+        return DataTypeCriterion.String.isStrictSubset(of: CharacterSet(charactersIn: data[1]))
     }
     
-    private func isInt(data:String) -> Bool {
-        return CharacterSet(charactersIn: data).isStrictSubset(of: DataTypeCriterion.Int)
+    private func isInt(data:[String]) -> Bool {
+        return CharacterSet(charactersIn: data[1]).isStrictSubset(of: DataTypeCriterion.Int)
     }
     
-    private func isBool(data:String) -> Bool {
-        return data == DataTypeCriterion.Bool.true || data == DataTypeCriterion.Bool.false
+    private func isBool(data:[String]) -> Bool {
+        return data[1] == DataTypeCriterion.Bool.true || data[1] == DataTypeCriterion.Bool.false
     }
     
     private func canNotConvertDataPrint(data:[String])throws {

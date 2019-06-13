@@ -13,7 +13,7 @@ protocol countable {
 }
 
 struct JSONParse:countable {
-    init(_ parsedData:[JSONValue], countNumbers:countNumbers) {
+    init(_ parsedData:[String:JSONValue], countNumbers:countNumbers) {
         self.parsedJSONValue = parsedData
         self.countString = countNumbers.string
         self.countInt = countNumbers.int
