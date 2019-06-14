@@ -14,9 +14,13 @@ struct JsonElement {
     static let whitespace: Character = " "
     static let startOfArray: Character = "["
     static let endOfArray: Character = "]"
+    static let startOfObject: Character = "{"
+    static let endOfObject: Character = "}"
     
     static let `true` = "true"
     static let `false` = "false"
     
     static let arrayToken = [comma, whitespace, startOfArray, endOfArray]
+    
+    static let supportedType = [startOfArray, endOfArray, startOfObject, endOfObject]
 }
