@@ -22,10 +22,9 @@ class Parser {
                       JSONKeyword.leftCurlyBracket: parseObject]
     
     func parse() -> JSONContainerType? {
-        while let token = scanner.nextToken() {
-            if let parseMethod = parseTable[token] {
+        while let token = scanner.nextToken(),
+            let parseMethod = parseTable[token] {
                 return parseMethod(self)()
-            }
         }
         return nil
     }
@@ -59,9 +58,8 @@ class Parser {
             guard token == JSONKeyword.colon else {
                 continue
             }
-            
-            guard let key = scanner.previousToken,
-            let rawValue = scanner.peekNextToken else {
+            guard let key = scanner.peekPreviousToken,
+                let rawValue = scanner.peekNextToken else {
                 continue
             }
             guard let value = makeJSONType(by: rawValue) else {
@@ -88,7 +86,7 @@ struct TokenScanner {
         self.tokens = tokens
     }
     
-    var previousToken: String? {
+    var peekPreviousToken: String? {
         guard position > 2 else {
             return nil
         }
