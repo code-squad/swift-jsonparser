@@ -8,26 +8,18 @@
 
 import Foundation
 
-struct Parser {
-    private var tokens: [String]
-    private var position = 0
+class Parser {
     private var converter: JSONConvertible = Converter()
+    private var scanner: TokenScanner
+    private var tokens: [String]
     
     init(tokens: [String]) {
         self.tokens = tokens
+        self.scanner = TokenScanner(tokens: tokens)
     }
     
-    mutating func nextToken() -> String? {
-        guard position < tokens.count else {
-            return nil
-        }
-        let token = tokens[position]
-        position += 1
-        return token
-    }
-    
-    mutating func parse() -> JSONContainerType? {
-        while let token = nextToken() {
+    func parse() -> JSONContainerType? {
+        while let token = scanner.nextToken() {
             switch token {
             case JSONKeyword.leftSquareBracket:
                 let array = parseArray()
@@ -42,10 +34,10 @@ struct Parser {
         return nil
     }
     
-    mutating private func parseArray() -> JSONContainerType {
+    private func parseArray() -> JSONContainerType {
         var arrayData: [JSONValueType] = []
         
-        while let token = nextToken() {
+        while let token = scanner.nextToken() {
             guard token != JSONKeyword.rightSquareBracket else {
                 return arrayData
             }
@@ -63,10 +55,10 @@ struct Parser {
         return arrayData
     }
     
-    mutating private func parseObject() -> JSONContainerType {
+    private func parseObject() -> JSONContainerType {
         var objectData: [String: JSONValueType] = [:]
         
-        while let token = nextToken() {
+        while let token = scanner.nextToken() {
             guard token != JSONKeyword.rightCurlyBracket else {
                 return objectData
             }
@@ -74,10 +66,10 @@ struct Parser {
                 continue
             }
             
-            let previousPosition = position - 2
-            let nextPosition = position
-            let key = tokens[previousPosition]
-            let rawValue = tokens[nextPosition]
+            guard let key = scanner.previousToken,
+            let rawValue = scanner.peekNextToken else {
+                continue
+            }
             guard let value = makeJSONType(by: rawValue) else {
                 continue
             }
@@ -91,5 +83,40 @@ struct Parser {
             return nil
         }
         return value
+    }
+}
+
+struct TokenScanner {
+    private var tokens: [String]
+    private var position = 0
+    
+    init(tokens: [String]) {
+        self.tokens = tokens
+    }
+    
+    var previousToken: String? {
+        guard position > 2 else {
+            return nil
+        }
+        let previousPosition = position - 2
+        let key = tokens[previousPosition]
+        return key
+    }
+    
+    var peekNextToken: String? {
+        guard position < tokens.count else {
+            return nil
+        }
+        let token = tokens[position]
+        return token
+    }
+    
+    mutating func nextToken() -> String? {
+        guard position < tokens.count else {
+            return nil
+        }
+        let token = tokens[position]
+        position += 1
+        return token
     }
 }
