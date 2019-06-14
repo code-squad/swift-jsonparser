@@ -18,17 +18,13 @@ class Parser {
         self.scanner = TokenScanner(tokens: tokens)
     }
     
+    let parseTable = [JSONKeyword.leftSquareBracket: parseArray,
+                      JSONKeyword.leftCurlyBracket: parseObject]
+    
     func parse() -> JSONContainerType? {
         while let token = scanner.nextToken() {
-            switch token {
-            case JSONKeyword.leftSquareBracket:
-                let array = parseArray()
-                return array
-            case JSONKeyword.leftCurlyBracket:
-                let object = parseObject()
-                return object
-            default:
-                break
+            if let parseMethod = parseTable[token] {
+                return parseMethod(self)()
             }
         }
         return nil
@@ -41,11 +37,9 @@ class Parser {
             guard token != JSONKeyword.rightSquareBracket else {
                 return arrayData
             }
-            switch token {
-            case JSONKeyword.leftCurlyBracket:
-                let objectData = parseObject()
-                arrayData.append(objectData)
-            default:
+            if let parseMethod = parseTable[token] {
+                arrayData.append(parseMethod(self)())
+            } else {
                 guard let value = makeJSONType(by: token) else {
                     continue
                 }
