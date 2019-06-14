@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		142B027222B33CA6004120CF /* JsonObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142B027122B33CA6004120CF /* JsonObject.swift */; };
 		1463FC21229D0ED100FC1B75 /* ErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1463FC20229D0ED100FC1B75 /* ErrorCode.swift */; };
 		1463FC23229D1A8C00FC1B75 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1463FC22229D1A8C00FC1B75 /* OutputView.swift */; };
 		1463FC25229FB05400FC1B75 /* JsonElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1463FC24229FB05400FC1B75 /* JsonElement.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		142B027122B33CA6004120CF /* JsonObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonObject.swift; sourceTree = "<group>"; };
 		1463FC20229D0ED100FC1B75 /* ErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCode.swift; sourceTree = "<group>"; };
 		1463FC22229D1A8C00FC1B75 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		1463FC24229FB05400FC1B75 /* JsonElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonElement.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				14694C18229299A500D62C7B /* JsonType.swift */,
 				14694C262297C09900D62C7B /* JsonArray.swift */,
+				142B027122B33CA6004120CF /* JsonObject.swift */,
 				14694C222293D4BD00D62C7B /* Tokenizer.swift */,
 				14694C2422979A1F00D62C7B /* Parser.swift */,
 				1463FC20229D0ED100FC1B75 /* ErrorCode.swift */,
@@ -160,6 +163,7 @@
 				14694C17229298EA00D62C7B /* InputView.swift in Sources */,
 				1463FC25229FB05400FC1B75 /* JsonElement.swift in Sources */,
 				14694C19229299A500D62C7B /* JsonType.swift in Sources */,
+				142B027222B33CA6004120CF /* JsonObject.swift in Sources */,
 				1463FC23229D1A8C00FC1B75 /* OutputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

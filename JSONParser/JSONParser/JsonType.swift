@@ -13,6 +13,7 @@ enum TypeName: String {
     case number = "숫자"
     case string = "문자열"
     case bool = "부울"
+    case object = "객체"
 }
 
 protocol JsonType {
