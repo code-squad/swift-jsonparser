@@ -10,7 +10,7 @@ import Foundation
 
 struct Tokenizer {
     static func tokenize(input: String) throws -> [String] {
-        guard input.first == JsonElement.startOfArray, input.last == JsonElement.endOfArray else {
+        if !scanError(at: input) {
             throw TypeError.unsupportedType
         }
         
@@ -33,5 +33,17 @@ struct Tokenizer {
         let tokens = rawTokens.filter { $0 != "" }
         
         return tokens
+    }
+    
+    private static func scanError(at input: String) -> Bool {
+        guard let first = input.first, let last = input.last else {
+            return false
+        }
+        
+        guard JsonElement.supportedType.contains(first), JsonElement.supportedType.contains(last) else {
+            return false
+        }
+        
+        return true
     }
 }
