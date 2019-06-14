@@ -19,7 +19,9 @@ struct JsonArray: JsonType {
         var typeCounter: [String : Int] = [:]
         
         for element in array {
-            typeCounter[element.typeDescription] = (typeCounter[element.typeDescription] ?? 0) + 1
+            let typeName = String(describing: type(of: element))
+            
+            typeCounter[typeName] = (typeCounter[typeName] ?? 0) + 1
         }
         
         return typeCounter
