@@ -1,3 +1,4 @@
+
 //
 //  MyListParser.swift
 //  JSONParser
@@ -8,39 +9,31 @@
 
 import Foundation
 
-struct JsonParser {
-    private var tokens: Array<Token>
-    private var strategy: JsonParsingStrategy
-    private var jsonValue: JsonValue
+class JsonParser {
+    private var converter = TokenConverter()
+    private var strategy: JsonParsingStrategy!
     
-    init(tokens: Array<Token>) {
-        self.tokens = tokens
-        self.strategy =
-            tokens[0] == Token.LeftBraket  ?
-                JsonListParsingStrategy(): JsonObjectParsingStrategy()
-        self.jsonValue = tokens[0] == Token.LeftBraket ?
-            JsonList(): JsonObject()
-    }
-    
-    mutating func parse() -> JsonValue {
-        while(self.group()) {}
-        return self.strategy.parse(tokens: self.tokens)
-    }
-    
-    private mutating func group() -> Bool {
-        guard let startIndex = self.tokens.firstIndex(of: Token.LeftBrace) else {
-            return false
+    func parse(tokens: inout Array<Token> ) -> JsonValue {
+        tokens = tokens.filter {
+            return ![.WhiteSpace,.Comma].contains($0)
         }
-        guard let endIndex = self.tokens.firstIndex(of: Token.RightBrace) else {
-            return false
+        if let context = tokens.first {
+            print(tokens)
+            self.selectStrategy(context: context)
         }
-        let object = Token.Object(Array(self.tokens[startIndex...endIndex]))
-        self.tokens.removeSubrange(startIndex...endIndex)
-        self.tokens.insert(object, at: startIndex)
-        return true
+        return self.strategy!.parse(tokens: &tokens)
     }
     
-    private mutating func set(strategy: JsonParsingStrategy) {
+    private func selectStrategy(context: Token) {
+        if context == .LeftBraket {
+            set(strategy: JsonListParsingStrategy(converter: self.converter))
+        }
+        else {
+            set(strategy: JsonObjectParsingStrategy(converter: self.converter))
+        }
+    }
+    
+    private func set(strategy: JsonParsingStrategy) {
         self.strategy = strategy
     }
     
