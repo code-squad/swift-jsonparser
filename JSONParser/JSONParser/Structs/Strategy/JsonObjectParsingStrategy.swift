@@ -17,20 +17,14 @@ struct JsonObjectParsingStrategy: JsonParsingStrategy {
     }
     
     func parse(tokens: inout Array<Token>) -> JsonValue {
-        var isValue = true
-        var keys = [String]() {
-            didSet{
-                isValue.toggle()
-            }
-        }
-        var values = [JsonValue]() {
-            didSet{
-                isValue.toggle()
-            }
+        var keys = [String]()
+        var values = [JsonValue]()
+        var isValue : Bool {
+            return keys.count > values.count
         }
         tokens.removeFirst()
         
-        while let token = tokens.first, token != .RightBrace {
+        while let token = tokens.first , token != .RightBrace  {
             if isValue {
                 switch token {
                 case .LeftBrace,.LeftBraket:
@@ -41,14 +35,12 @@ struct JsonObjectParsingStrategy: JsonParsingStrategy {
                     tokens.removeFirst()
                 }
             }
-            else{
+            else {
                 addKey(keys: &keys,token: token)
                 tokens.removeFirst()
             }
         }
-        
-        let jsonObject = self.assemble(keyList: keys, valueList: values)
-        return jsonObject
+        return self.assemble(keyList: keys, valueList: values)
     }
     
     private func addKey(keys: inout Array<String>, token: Token) {
@@ -63,10 +55,10 @@ struct JsonObjectParsingStrategy: JsonParsingStrategy {
         }
     }
     
-    private func assemble(keyList:Array<JsonValue>, valueList:Array<JsonValue>) -> JsonObject {
+    private func assemble(keyList:Array<String>, valueList:Array<JsonValue>) -> JsonObject {
         var jsonObject = JsonObject()
         for (index,key) in keyList.enumerated() {
-            jsonObject[key.getJsonValue()] = valueList[index]
+            jsonObject[key] = valueList[index]
         }
         return jsonObject
     }
