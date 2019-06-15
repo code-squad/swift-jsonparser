@@ -38,6 +38,48 @@ struct Lexer {
         self.position = self.input.startIndex
     }
     
+    mutating func tokenize() throws -> [Token] {
+        var tokens = [Token]()
+        
+        while let token = try getToken() {
+            tokens.append(token)
+        }
+        
+        return tokens
+    }
+    
+    private mutating func getToken() throws -> Token? {
+        guard let nextCharacter = peek() else {
+            return nil
+        }
+        switch nextCharacter {
+        case Keyword.openSquareBracket:
+            advance()
+            return .openSquareBracket
+        case Keyword.closeSquareBracket:
+            advance()
+            return .closeSquareBracket
+        case Keyword.comma:
+            advance()
+            return .comma
+        case Keyword.whiteSpace:
+            advance()
+            return nil
+        case Keyword.doubleQuotation:
+            let value = try getString()
+            let trimmed = try removeDoubleQoutations(value)
+            return .string(trimmed)
+        case Keyword.true.first, Keyword.false.first:
+            let value = try getBool()
+            return .bool(value)
+        case _ where nextCharacter.isNumber:
+            let value = try getNumber()
+            return .number(value)
+        default:
+            throw Lexer.Error.invalidCharacter(nextCharacter)
+        }
+    }
+    
     private func peek() -> Character? {
         guard position < input.endIndex else {
             return nil
@@ -88,38 +130,5 @@ struct Lexer {
             return boolValue
         }
         throw Lexer.Error.scanBoolFailed
-    }
-    
-    mutating func tokenize() throws -> [Token] {
-        var tokens = [Token]()
-        
-        while let nextCharacter = peek() {
-            switch nextCharacter {
-            case Keyword.openSquareBracket:
-                tokens.append(.openSquareBracket)
-                advance()
-            case Keyword.closeSquareBracket:
-                tokens.append(.closeSquareBracket)
-                advance()
-            case Keyword.comma:
-                tokens.append(.comma)
-                advance()
-            case Keyword.whiteSpace:
-                advance()
-            case Keyword.doubleQuotation:
-                let value = try getString()
-                let trimmed = try removeDoubleQoutations(value)
-                tokens.append(.string(trimmed))
-            case Keyword.true.first, Keyword.false.first:
-                let value = try getBool()
-                tokens.append(.bool(value))
-            case _ where nextCharacter.isNumber:
-                let value = try getNumber()
-                tokens.append(.number(value))
-            default:
-                throw Lexer.Error.invalidCharacter(nextCharacter)
-            }
-        }
-        return tokens
     }
 }
