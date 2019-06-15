@@ -10,5 +10,5 @@ import Foundation
 
 protocol Counter {
     associatedtype T
-    func count(target: T) -> Dictionary<String, Int>
+    func count(target: T) -> [String: Int]
 }

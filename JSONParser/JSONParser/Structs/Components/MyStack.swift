@@ -9,10 +9,10 @@
 import Foundation
 
 struct MyStack<T> {
-    private var elements: Array<T>
+    private var elements: [T]
     
     init() {
-        self.elements = Array<T>()
+        self.elements = [T]()
     }
     
     func isEmpty() -> Bool {

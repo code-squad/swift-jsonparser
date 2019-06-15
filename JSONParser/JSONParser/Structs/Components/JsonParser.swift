@@ -13,7 +13,7 @@ class JsonParser {
     private var converter = TokenConverter()
     private var strategy: JsonParsingStrategy!
     
-    func parse(tokens: inout Array<Token> ) -> JsonValue {
+    func parse(tokens: inout [Token]) -> JsonValue {
         tokens = tokens.filter {
             return ![.WhiteSpace,.Comma].contains($0)
         }

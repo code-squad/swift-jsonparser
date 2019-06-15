@@ -53,18 +53,4 @@ struct TokenFactory: Factory {
         return token
     }
     
-    func create(tokens: Array<Token>) -> Token {
-        guard let firstToken = tokens.first else {
-            return Token.Value("")
-        }
-        
-        switch firstToken {
-        case .LeftBrace:
-            return Token.Object(tokens.dropFirst().dropLast())
-        case .LeftBraket:
-            return Token.List(tokens.dropFirst().dropLast())
-        default:
-            return Token.Value("")
-        }
-    }
 }

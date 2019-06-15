@@ -11,7 +11,7 @@ import XCTest
 class JsonParserTests: XCTestCase {
     //Given
     var parser: JsonParser!
-    var jsonListTokens: Array<Token> =
+    var jsonListTokens: [Token] =
         [.LeftBraket,
          .WhiteSpace, .Number(10), .Comma,
          .WhiteSpace, .String("Hello, World"), .Comma,
@@ -21,7 +21,7 @@ class JsonParserTests: XCTestCase {
     //=======================================
     //  [ 10, "Hello, World", true, "314" ]
     //=======================================
-    let jsonObjectTokens: Array<Token> =
+    var jsonObjectTokens: [Token] =
         [.LeftBrace,
          .WhiteSpace,
          .String("name"),
@@ -54,20 +54,20 @@ class JsonParserTests: XCTestCase {
         XCTAssertEqual(jsonList[3].getJsonValue(), "314")
     }
     
-//    
-//    func testParsingObject() {
-//        //Given
-//        
-//        self.parser = JsonParser.init(tokens: jsonObjectTokens)
-//        
-//        //When
-//        let jsonObject = self.parser.parse() as! JsonObject
-//        
-//        //Then
-//        XCTAssertEqual(jsonObject["name"]!.getJsonValue(),"부엉이")
-//        XCTAssertEqual(jsonObject["age"]!.getJsonValue(),"27")
-//        XCTAssertEqual(jsonObject["married"]!.getJsonValue(),"false")
-//    }
+    
+    func testParsingObject() {
+        //Given
+        
+        self.parser = JsonParser.init()
+        
+        //When
+        let jsonObject = self.parser.parse(tokens: &self.jsonObjectTokens) as! JsonObject
+        
+        //Then
+        XCTAssertEqual(jsonObject["name"]!.getJsonValue(),"부엉이")
+        XCTAssertEqual(jsonObject["age"]!.getJsonValue(),"27")
+        XCTAssertEqual(jsonObject["married"]!.getJsonValue(),"false")
+    }
     
     
     

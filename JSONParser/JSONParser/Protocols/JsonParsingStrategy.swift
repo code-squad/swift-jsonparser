@@ -9,5 +9,5 @@
 import Foundation
 
 protocol JsonParsingStrategy {
-    func parse(tokens: inout Array<Token>) -> JsonValue
+    func parse(tokens: inout [Token]) -> JsonValue
 }

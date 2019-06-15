@@ -12,7 +12,7 @@ class JsonListParsingStrategyTests: XCTestCase {
     //Given
     var strategy: JsonParsingStrategy!
     
-    var tokens: Array<Token> =
+    var tokens: [Token] =
         [.LeftBraket,
          .WhiteSpace, .Number(10), .Comma, 
          .WhiteSpace, .String("Hello, World"), .Comma,

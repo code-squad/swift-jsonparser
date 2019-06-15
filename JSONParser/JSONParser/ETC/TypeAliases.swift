@@ -8,5 +8,5 @@
 
 import Foundation
 
-typealias JsonObject = Dictionary<String, JsonValue>
-typealias JsonList = Array<JsonValue>
+typealias JsonObject = [String: JsonValue]
+typealias JsonList = [JsonValue]

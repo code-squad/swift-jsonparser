@@ -9,16 +9,17 @@
 import Foundation
 
 struct JsonObjectParsingStrategy: JsonParsingStrategy {
-    typealias Indexs = Array<Int>
+    typealias Key = String
+    typealias Value = JsonValue
     private let converter: TokenConverter
     
     init(converter: TokenConverter) {
         self.converter = converter
     }
     
-    func parse(tokens: inout Array<Token>) -> JsonValue {
-        var keys = [String]()
-        var values = [JsonValue]()
+    func parse(tokens: inout [Token]) -> JsonValue {
+        var keys = [Key]()
+        var values = [Value]()
         var isValue : Bool {
             return keys.count > values.count
         }
@@ -40,26 +41,26 @@ struct JsonObjectParsingStrategy: JsonParsingStrategy {
                 tokens.removeFirst()
             }
         }
-        return self.assemble(keyList: keys, valueList: values)
+        return self.assemble(keys: keys, values: values)
     }
     
-    private func addKey(keys: inout Array<String>, token: Token) {
+    private func addKey(keys: inout [Key], token: Token) {
         if let key = self.converter.convert(before: token) {
             keys.append(key.getJsonValue())
         }
     }
     
-    private func addValue(values: inout Array<JsonValue>, token: Token) {
+    private func addValue(values: inout [Value], token: Token) {
         if let value = self.converter.convert(before: token) {
             values.append(value)
         }
     }
     
-    private func assemble(keyList:Array<String>, valueList:Array<JsonValue>) -> JsonObject {
-        var jsonObject = JsonObject()
-        for (index,key) in keyList.enumerated() {
-            jsonObject[key] = valueList[index]
-        }
-        return jsonObject
+    private func assemble(keys: [Key], values: [Value]) -> JsonObject {
+    var jsonObject = JsonObject()
+    for (index,key) in keys.enumerated() {
+        jsonObject[key] = values[index]
     }
+    return jsonObject
+}
 }
