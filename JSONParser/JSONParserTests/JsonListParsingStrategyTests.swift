@@ -12,7 +12,7 @@ class JsonListParsingStrategyTests: XCTestCase {
     //Given
     var strategy: JsonParsingStrategy!
     
-    let tokens: Array<Token> =
+    var tokens: Array<Token> =
         [.LeftBraket,
          .WhiteSpace, .Number(10), .Comma, 
          .WhiteSpace, .String("Hello, World"), .Comma,
@@ -25,7 +25,7 @@ class JsonListParsingStrategyTests: XCTestCase {
     
     override func setUp() {
         //Given
-        self.strategy = JsonListParsingStrategy()
+        self.strategy = JsonListParsingStrategy(converter: TokenConverter())
     }
     
     func testListParse() {
@@ -33,7 +33,7 @@ class JsonListParsingStrategyTests: XCTestCase {
         let expected: JsonList = [10,"Hello, World",true,"314"]
         
         //When
-        let jsonList: JsonList = self.strategy.parse(tokens: self.tokens) as! JsonList
+        let jsonList: JsonList = self.strategy.parse(tokens: &self.tokens) as! JsonList
         
         //Then
         XCTAssertEqual(expected[0].getJsonValue(), jsonList[0].getJsonValue())
