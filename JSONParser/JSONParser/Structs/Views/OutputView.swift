@@ -25,6 +25,7 @@ struct OutputView {
     private mutating func makeSentence() -> String {
         var result = ""
         var total = 0
+        print(self.jsonValue)
         let numOf = counter.count(target: self.jsonValue)
         _ = numOf.map{
             result = "\(result) \($0.key) \($0.value)개"

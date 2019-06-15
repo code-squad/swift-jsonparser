@@ -11,7 +11,7 @@ import XCTest
 class JsonParserTests: XCTestCase {
     //Given
     var parser: JsonParser!
-    let jsonListTokens: Array<Token> =
+    var jsonListTokens: Array<Token> =
         [.LeftBraket,
          .WhiteSpace, .Number(10), .Comma,
          .WhiteSpace, .String("Hello, World"), .Comma,
@@ -24,15 +24,15 @@ class JsonParserTests: XCTestCase {
     let jsonObjectTokens: Array<Token> =
         [.LeftBrace,
          .WhiteSpace,
-         .DoubleQuotation, .Value("name"), .DoubleQuotation,
+         .String("name"),
          .WhiteSpace, .Colon, .WhiteSpace,
-         .DoubleQuotation, .Value("부엉이"), .DoubleQuotation, .Comma,
+         .String("부엉이"), .Comma,
          .WhiteSpace,
-         .DoubleQuotation, .Value("age"), .DoubleQuotation,
+         .String("age"),
          .WhiteSpace, .Colon, .WhiteSpace,
          .Number(27), .Comma,
          .WhiteSpace,
-         .DoubleQuotation, .Value("married"), .DoubleQuotation,
+         .String("married"),
          .WhiteSpace, .Colon, .WhiteSpace,
          .Bool(false), .WhiteSpace,
          .RightBrace]
@@ -42,10 +42,10 @@ class JsonParserTests: XCTestCase {
 
     func testParsingList() {
         //Given
-        self.parser = JsonParser.init(tokens: jsonListTokens)
+        self.parser = JsonParser.init()
         
         //When
-        let jsonList = self.parser.parse() as! JsonList
+        let jsonList = self.parser.parse(tokens: &jsonListTokens) as! JsonList
         
         //Then
         XCTAssertEqual(jsonList[0].getJsonValue(), String(10) )
@@ -54,9 +54,10 @@ class JsonParserTests: XCTestCase {
         XCTAssertEqual(jsonList[3].getJsonValue(), "314")
     }
     
-    
+//    
 //    func testParsingObject() {
 //        //Given
+//        
 //        self.parser = JsonParser.init(tokens: jsonObjectTokens)
 //        
 //        //When
@@ -67,7 +68,7 @@ class JsonParserTests: XCTestCase {
 //        XCTAssertEqual(jsonObject["age"]!.getJsonValue(),"27")
 //        XCTAssertEqual(jsonObject["married"]!.getJsonValue(),"false")
 //    }
-//    
+    
     
     
 }

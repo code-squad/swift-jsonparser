@@ -64,11 +64,11 @@ class TokenFactoryTests: XCTestCase {
     
     func testCreateDoubleQuotationToken() {
         //When
-        let input = "\""
+        let input = "\"string\""
         let token = self.tokenFactory.create(string: input)
         
         //Then
-        XCTAssertEqual(token, Token.DoubleQuotation)
+        XCTAssertEqual(token, Token.String("string"))
     }
     
     func testCreateLeftBraketToken() {

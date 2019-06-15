@@ -9,8 +9,8 @@
 import Foundation
 
 struct MyTokenizer: Tokenizer {
-    let factory = TokenFactory()
-    var scanner: MyScanner
+    private let factory = TokenFactory()
+    private var scanner: Scanner
     
     init(_ string: String) {
         self.scanner = MyScanner.init(string: string)
@@ -18,13 +18,14 @@ struct MyTokenizer: Tokenizer {
     
     mutating func tokenize() throws -> [Token] {
         let units = try self.split()
-        let tokens = units.map{ self.factory.create(string: $0 )}
+        let tokens = units.map {
+            self.factory.create(string: $0)
+        }
         return tokens
     }
     
     private mutating func split() throws -> [String] {
         var units = Array<String>()
-        
         while let character = self.scanner.next() {
             switch character {
             case "[","]",","," ",":","{","}":
@@ -57,7 +58,6 @@ struct MyTokenizer: Tokenizer {
     
     private mutating func getString() -> String {
         var string = "\""
-        
         while let character = self.scanner.next() {
             if (character != "\"") {
                 string = "\(string)\(character)"

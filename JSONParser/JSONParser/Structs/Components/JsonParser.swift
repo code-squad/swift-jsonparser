@@ -18,7 +18,6 @@ class JsonParser {
             return ![.WhiteSpace,.Comma].contains($0)
         }
         if let context = tokens.first {
-            print(tokens)
             self.selectStrategy(context: context)
         }
         return self.strategy!.parse(tokens: &tokens)

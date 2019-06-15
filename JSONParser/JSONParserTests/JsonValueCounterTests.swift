@@ -12,9 +12,9 @@ class JsonValueCounterTests: XCTestCase {
     //Given
     let counter = JsonValueCounter()
     
-    func testObjectCount(){
+    func testObjectCount() {
         //Given
-        let object: JsonObject =  ["name":"부엉이" , "age" : 27]
+        let object: JsonObject =  ["name" : "부엉이" , "age" : 27]
         
         //When
         let numOf = self.counter.count(target: object)
@@ -24,7 +24,7 @@ class JsonValueCounterTests: XCTestCase {
         XCTAssertEqual(numOf["숫자"], 1)
     }
     
-    func testListCount(){
+    func testListCount() {
         //Given
         let list: JsonList =  ["name", true, "부엉이" , "age" , 27]
         
@@ -36,7 +36,5 @@ class JsonValueCounterTests: XCTestCase {
         XCTAssertEqual(numOf["숫자"], 1)
         XCTAssertEqual(numOf["부울"], 1)
     }
-
-    
 
 }

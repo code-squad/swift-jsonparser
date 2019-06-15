@@ -17,22 +17,21 @@ struct JsonListParsingStrategy: JsonParsingStrategy {
     
     func parse(tokens: inout Array<Token>) -> JsonValue {
         var jsonList = JsonList()
-        tokens.remove(at: 0)
+        tokens.removeFirst()
         
         while let token = tokens.first {
             switch token {
             case .LeftBraket,.LeftBrace:
-                print(tokens)
                 let result = JsonParser().parse(tokens: &tokens)
                 jsonList.append(result)
-           case .RightBraket:
-                tokens.remove(at: 0)
+            case .RightBraket:
+                tokens.removeFirst()
                 return jsonList
             default:
                 if let jsonValue = self.converter.convert(before: token) {
                     jsonList.append(jsonValue)
                 }
-                tokens.remove(at: 0)
+                tokens.removeFirst()
             }
         }
         return jsonList

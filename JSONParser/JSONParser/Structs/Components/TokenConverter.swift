@@ -14,7 +14,6 @@ struct TokenConverter: Converter {
     
     func convert(before: Token) -> JsonValue? {
         var jsonValue: JsonValue?
-        
         switch before {
         case .Number(let number):
             jsonValue = Int(number)
@@ -22,12 +21,6 @@ struct TokenConverter: Converter {
             jsonValue = Bool(bool)
         case .String(let string):
             jsonValue = String(string)
-        case .List(let tokens):
-            var parser = JsonParser.init(tokens: tokens)
-            jsonValue = parser.parse()
-        case .Object(let tokens):
-            var parser = JsonParser.init(tokens: tokens)
-            jsonValue = parser.parse()
         default:
             jsonValue = nil
         }

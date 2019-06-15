@@ -10,6 +10,3 @@ import Foundation
 
 typealias JsonObject = Dictionary<String, JsonValue>
 typealias JsonList = Array<JsonValue>
-
-
-

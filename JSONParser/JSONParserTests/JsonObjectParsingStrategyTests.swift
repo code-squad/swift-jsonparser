@@ -12,7 +12,7 @@ class JsonObjectParsingStrategyTests: XCTestCase {
     //Given
     var strategy: JsonParsingStrategy!
     
-    let tokens = [Token.LeftBrace,
+    var tokens = [Token.LeftBrace,
                   Token.WhiteSpace, Token.String("name"), Token.WhiteSpace, Token.Colon, Token.WhiteSpace, Token.String("부엉이"), Token.Comma,
                   Token.WhiteSpace, Token.String("age"),Token.WhiteSpace, Token.Colon, Token.WhiteSpace, Token.Number(27), Token.Comma,
                   Token.WhiteSpace, Token.String("married"),Token.WhiteSpace, Token.Colon, Token.WhiteSpace, Token.Bool(false), Token.WhiteSpace, Token.RightBrace]
@@ -22,7 +22,7 @@ class JsonObjectParsingStrategyTests: XCTestCase {
     
     override func setUp() {
         //Given
-        self.strategy = JsonObjectParsingStrategy()
+        self.strategy = JsonObjectParsingStrategy(converter: TokenConverter())
     }
     
     func testObjectParse() {
@@ -30,12 +30,15 @@ class JsonObjectParsingStrategyTests: XCTestCase {
         let expected: JsonObject = ["name":"부엉이", "age" : 27, "married" : false]
         
         //When
-        let object : JsonObject = self.strategy.parse(tokens: self.tokens) as! JsonObject
+        let object : JsonObject = self.strategy.parse(tokens: &self.tokens) as! JsonObject
         
+        let name = object["name"]?.getJsonValue()
+        let age = object["age"]?.getJsonValue()
+        let married = object["married"]?.getJsonValue()
         //Then
-        XCTAssertEqual(expected["name"]!.getJsonValue(), object["name"]!.getJsonValue())
-        XCTAssertEqual(expected["age"]!.getJsonValue(), object["age"]!.getJsonValue())
-        XCTAssertEqual(expected["married"]!.getJsonValue(), object["married"]!.getJsonValue())
+        XCTAssertEqual(expected["name"]!.getJsonValue(), name)
+        XCTAssertEqual(expected["age"]!.getJsonValue(), age )
+        XCTAssertEqual(expected["married"]!.getJsonValue(), married)
         
     }
 }
