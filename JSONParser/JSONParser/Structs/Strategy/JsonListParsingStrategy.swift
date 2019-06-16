@@ -9,31 +9,38 @@
 import Foundation
 
 struct JsonListParsingStrategy: JsonParsingStrategy {
+   
     private let converter: TokenConverter
     
     init(converter: TokenConverter) {
         self.converter = converter
     }
     
-    func parse(tokens: inout Array<Token>) -> JsonValue {
+    func parse(tokens: [Token], parsedIndex: Int = 0) -> ParsedResult {
         var jsonList = JsonList()
-        tokens.removeFirst()
+        var parsedIndex = parsedIndex+1
         
-        while let token = tokens.first {
-            switch token {
-            case .LeftBraket,.LeftBrace:
-                let result = JsonParser().parse(tokens: &tokens)
-                jsonList.append(result)
-            case .RightBraket:
-                tokens.removeFirst()
-                return jsonList
-            default:
-                if let jsonValue = self.converter.convert(before: token) {
-                    jsonList.append(jsonValue)
-                }
-                tokens.removeFirst()
-            }
+        var ing: Bool {
+            return tokens.count > parsedIndex
         }
-        return jsonList
+        
+        while ing {
+            let token = tokens[parsedIndex]
+            switch token {
+            case .LeftBrace,.LeftBraket:
+                let result = JsonParser().run(tokens: tokens, parsedIndex: parsedIndex)
+                parsedIndex = result.parsedIndex
+                jsonList.append(result.value)
+            case .RightBraket:
+                return (jsonList,parsedIndex+1)
+            default:
+                if let value = converter.convert(before: token) {
+                    jsonList.append(value)
+                }
+                parsedIndex+=1
+            }
+            
+        }
+        return (jsonList,parsedIndex)
     }
 }
