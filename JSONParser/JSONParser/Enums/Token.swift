@@ -66,8 +66,6 @@ enum Token: Equatable {
     
     func isSameType(_ token: Token) -> Bool {
         switch (self,token) {
-        case (.Object(_),.Object(_)):
-            return true
         case (.List(_),.List(_)):
             return true
         case (.Number(_),.Number(_)):
@@ -78,24 +76,8 @@ enum Token: Equatable {
             return true
         case (.Key(_),.Key(_)):
             return true
-        case (.WhiteSpace,.WhiteSpace):
-            return true
-        case (.Comma,.Comma):
-            return true
-        case (.Colon,.Colon):
-            return true
-        case (.DoubleQuotation,.DoubleQuotation):
-            return true
-        case (.LeftBrace,.LeftBrace):
-            return true
-        case (.RightBrace,.RightBrace):
-            return true
-        case (.LeftBraket,.LeftBraket):
-            return true
-        case (.RightBraket,.RightBraket):
-            return true
         default:
-            return false
+            return self == token
         }
     }
 }
