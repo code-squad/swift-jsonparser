@@ -13,14 +13,13 @@ class JsonParser {
     private var converter = TokenConverter()
     private var strategy: JsonParsingStrategy!
     
-    func parse(tokens: inout [Token]) -> JsonValue {
-        tokens = tokens.filter {
+    func run(tokens: [Token], parsedIndex: Int = 0) -> ParsedResult {
+        let tokens = tokens.filter {
             return ![.WhiteSpace,.Comma].contains($0)
         }
-        if let context = tokens.first {
-            self.selectStrategy(context: context)
-        }
-        return self.strategy!.parse(tokens: &tokens)
+        self.selectStrategy(context: tokens[parsedIndex])
+        let result = self.strategy!.parse(tokens: tokens, parsedIndex: parsedIndex)
+        return result
     }
     
     private func selectStrategy(context: Token) {

@@ -10,3 +10,5 @@ import Foundation
 
 typealias JsonObject = [String: JsonValue]
 typealias JsonList = [JsonValue]
+
+typealias ParsedResult = (value: JsonValue, parsedIndex: Int)
