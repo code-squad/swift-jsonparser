@@ -24,7 +24,8 @@ func main() {
     }
     
     do {
-        var lexer = Lexer(input: input)
+        let reader = Reader(input: input)
+        var lexer = Lexer(reader: reader)
         tokens = try lexer.tokenize()
     } catch let error as Lexer.Error {
         print(error.localizedDescription)

@@ -30,12 +30,10 @@ struct Lexer {
         }
     }
     
-    private let input: String
-    private(set) var position: String.Index
+    private var reader: Reader
     
-    init(input: String) {
-        self.input = input
-        self.position = self.input.startIndex
+    init(reader: Reader) {
+        self.reader = reader
     }
     
     mutating func tokenize() throws -> [Token] {
@@ -49,21 +47,21 @@ struct Lexer {
     }
     
     private mutating func nextToken() throws -> Token? {
-        guard let nextCharacter = peek() else {
+        guard let nextCharacter = reader.peek() else {
             return nil
         }
         switch nextCharacter {
         case Keyword.openSquareBracket:
-            advance()
+            reader.advance()
             return .openSquareBracket
         case Keyword.closeSquareBracket:
-            advance()
+            reader.advance()
             return .closeSquareBracket
         case Keyword.comma:
-            advance()
+            reader.advance()
             return .comma
         case Keyword.whiteSpace:
-            advance()
+            reader.advance()
             return nil
         case Keyword.doubleQuotation:
             let value = try getString()
@@ -80,17 +78,6 @@ struct Lexer {
         }
     }
     
-    private func peek() -> Character? {
-        guard position < input.endIndex else {
-            return nil
-        }
-        return input[position]
-    }
-    
-    private mutating func advance() {
-        position = input.index(after: position)
-    }
-    
     private mutating func removeDoubleQoutations(_ value: String) throws -> String {
         if value.first == Keyword.doubleQuotation && value.last == Keyword.doubleQuotation {
             return String(value.dropFirst().dropLast())
@@ -101,14 +88,14 @@ struct Lexer {
     private mutating func getString() throws -> String {
         var value = ""
         
-        while let nextCharacter = peek() {
+        while let nextCharacter = reader.peek() {
             switch nextCharacter {
             case _ where nextCharacter.isLetter
                 || nextCharacter.isNumber
                 || Keyword.doubleQuotation == nextCharacter:
                 let stringValue = String(nextCharacter)
                 value = value + stringValue
-                advance()
+                reader.advance()
             default:
                 return value
             }
