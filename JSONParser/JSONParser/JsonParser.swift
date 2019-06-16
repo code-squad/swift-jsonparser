@@ -87,7 +87,7 @@ struct JsonParser {
         if dataMent == DataMent.arrayMent.rawValue {
             printArray.append("\(Sign.frontSquareBracket)")
             for index in 0..<jsonData.arrayJsonData.count {
-                ConvertEachToPrint(key: "", value: jsonData.arrayJsonData[index])
+                convertEachToPrint(key: "", value: jsonData.arrayJsonData[index])
             }
             printArray[printArray.endIndex-1].removeLast()
             printArray.append("\(Sign.backSquareBracket)")
@@ -95,7 +95,7 @@ struct JsonParser {
         } else {
             printArray.append("\(Sign.frontCurlyBracket)")
             for (key, value) in jsonData.dictionaryJsonData{
-                ConvertEachToPrint(key: key, value: value)
+                convertEachToPrint(key: key, value: value)
             }
             printArray[printArray.endIndex-1].removeLast()
             printArray.append("\(Sign.backCurlyBracket)")
@@ -104,7 +104,7 @@ struct JsonParser {
     }
     
     /// Json 데이터를 한줄씩 출력하는 배열로 변환하는 함수
-    private mutating func ConvertEachToPrint(key: String, value: Json) {
+    private mutating func convertEachToPrint(key: String, value: Json) {
         var outputText = ""
         if key != "" {
             outputText = "\(key)\(Sign.colon)"
