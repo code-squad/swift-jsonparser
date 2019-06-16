@@ -23,11 +23,11 @@ struct OutputView {
         var jsonData: [Json] = []
         var jsonToPrint: [String] = []
         var convertJson = jsonParser
-        if dataMent == "배열" {
+        if dataMent == DataMent.arrayMent.rawValue {
             countMent = "\(jsonParser.arrayJsonData.count)"
             jsonData = jsonParser.arrayJsonData
             jsonToPrint = convertJson.convertToPrint(jsonData: jsonParser, dataMent: dataMent)
-        } else if dataMent == "객체" {
+        } else if dataMent == DataMent.dictionaryMent.rawValue {
             countMent = "\(jsonParser.dictionaryJsonData.count)"
             jsonData = dictionaryToArray(dictionary: jsonParser.dictionaryJsonData)
             jsonToPrint = convertJson.convertToPrint(jsonData: jsonParser, dataMent: dataMent)
