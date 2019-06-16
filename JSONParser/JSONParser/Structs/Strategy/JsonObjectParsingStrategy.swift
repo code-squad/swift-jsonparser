@@ -11,56 +11,51 @@ import Foundation
 struct JsonObjectParsingStrategy: JsonParsingStrategy {
     typealias Key = String
     typealias Value = JsonValue
+    
     private let converter: TokenConverter
     
     init(converter: TokenConverter) {
         self.converter = converter
     }
     
-    func parse(tokens: inout [Token]) -> JsonValue {
+    func parse(tokens: [Token], parsedIndex: Int = 0) -> ParsedResult {
         var keys = [Key]()
         var values = [Value]()
-        var isValue : Bool {
+        var parsedIndex = parsedIndex+1
+        var ing: Bool {
+            return tokens.count > parsedIndex
+        }
+        var isValue: Bool {
             return keys.count > values.count
         }
-        tokens.removeFirst()
+        var jsonObject: JsonObject {
+            return self.assemble(keys: keys, values: values)
+        }
         
-        while let token = tokens.first , token != .RightBrace  {
-            if isValue {
-                switch token {
-                case .LeftBrace,.LeftBraket:
-                    let value = JsonParser().parse(tokens: &tokens)
-                    values.append(value)
-                default:
-                    addValue(values: &values, token: token)
-                    tokens.removeFirst()
+        while ing {
+            let token = tokens[parsedIndex]
+            switch token {
+            case .LeftBraket,.LeftBrace:
+                let result = JsonParser().run(tokens: tokens, parsedIndex: parsedIndex)
+                parsedIndex = result.parsedIndex
+                values.append(result.value)
+            case .RightBrace:
+                return (jsonObject, parsedIndex+1)
+            default:
+                if let value = converter.convert(before: token) {
+                    isValue ? values.append(value) : keys.append(value.getJsonValue())
                 }
-            }
-            else {
-                addKey(keys: &keys,token: token)
-                tokens.removeFirst()
+                parsedIndex+=1
             }
         }
-        return self.assemble(keys: keys, values: values)
-    }
-    
-    private func addKey(keys: inout [Key], token: Token) {
-        if let key = self.converter.convert(before: token) {
-            keys.append(key.getJsonValue())
-        }
-    }
-    
-    private func addValue(values: inout [Value], token: Token) {
-        if let value = self.converter.convert(before: token) {
-            values.append(value)
-        }
+        return (jsonObject, parsedIndex+1)
     }
     
     private func assemble(keys: [Key], values: [Value]) -> JsonObject {
-    var jsonObject = JsonObject()
-    for (index,key) in keys.enumerated() {
-        jsonObject[key] = values[index]
+        var jsonObject = JsonObject()
+        for (index,key) in keys.enumerated() {
+            jsonObject[key] = values[index]
+        }
+        return jsonObject
     }
-    return jsonObject
-}
 }
