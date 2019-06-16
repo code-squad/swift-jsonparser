@@ -17,7 +17,7 @@ struct JSONAnalyzer{
                 let inputView = InputView()
                 let userInput = inputView.run()
                 var tokenizer = MyTokenizer.init(userInput)
-                var tokens = try tokenizer.tokenize()
+                let tokens = try tokenizer.tokenize()
                 let parser = JsonParser.init()
                 let result = parser.run(tokens: tokens)
                 let jsonContainer = result.value

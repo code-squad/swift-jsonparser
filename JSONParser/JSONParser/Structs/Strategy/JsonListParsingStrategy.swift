@@ -19,7 +19,6 @@ struct JsonListParsingStrategy: JsonParsingStrategy {
     func parse(tokens: [Token], parsedIndex: Int = 0) -> ParsedResult {
         var jsonList = JsonList()
         var parsedIndex = parsedIndex+1
-        
         var ing: Bool {
             return tokens.count > parsedIndex
         }
