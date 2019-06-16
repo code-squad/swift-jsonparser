@@ -45,7 +45,7 @@ class JsonParserTests: XCTestCase {
         self.parser = JsonParser.init()
         
         //When
-        let jsonList = self.parser.parse(tokens: &jsonListTokens) as! JsonList
+        let jsonList = self.parser.run(tokens: jsonListTokens, parsedIndex: 0).value as! JsonList
         
         //Then
         XCTAssertEqual(jsonList[0].getJsonValue(), String(10) )
@@ -61,7 +61,7 @@ class JsonParserTests: XCTestCase {
         self.parser = JsonParser.init()
         
         //When
-        let jsonObject = self.parser.parse(tokens: &self.jsonObjectTokens) as! JsonObject
+        let jsonObject = self.parser.run(tokens: self.jsonObjectTokens).value as! JsonObject
         
         //Then
         XCTAssertEqual(jsonObject["name"]!.getJsonValue(),"부엉이")

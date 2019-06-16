@@ -30,7 +30,7 @@ class JsonObjectParsingStrategyTests: XCTestCase {
         let expected: JsonObject = ["name":"부엉이", "age" : 27, "married" : false]
         
         //When
-        let object : JsonObject = self.strategy.parse(tokens: &self.tokens) as! JsonObject
+        let object : JsonObject = self.strategy.parse(tokens: self.tokens,parsedIndex: 0).value as! JsonObject
         
         let name = object["name"]?.getJsonValue()
         let age = object["age"]?.getJsonValue()

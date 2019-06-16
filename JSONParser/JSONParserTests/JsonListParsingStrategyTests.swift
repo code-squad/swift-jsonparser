@@ -33,9 +33,10 @@ class JsonListParsingStrategyTests: XCTestCase {
         let expected: JsonList = [10,"Hello, World",true,"314"]
         
         //When
-        let jsonList: JsonList = self.strategy.parse(tokens: &self.tokens) as! JsonList
+        let jsonList: JsonList = self.strategy.parse(tokens: self.tokens,parsedIndex: 0).value as! JsonList
         
         //Then
+        XCTAssertEqual(expected.count,jsonList.count)
         XCTAssertEqual(expected[0].getJsonValue(), jsonList[0].getJsonValue())
         XCTAssertEqual(expected[1].getJsonValue(), jsonList[1].getJsonValue())
         XCTAssertEqual(expected[2].getJsonValue(), jsonList[2].getJsonValue())
