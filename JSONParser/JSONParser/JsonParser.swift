@@ -56,7 +56,7 @@ struct JsonParser {
         } else if afterData.match(text: RegularExpression.boolType) {
             convertedElement = Bool(afterData) ?? false
         } else if afterData.match(text: RegularExpression.stringType) {
-            convertedElement = afterData//.trimmingCharacters(in: CharacterSet(charactersIn: "\(Sign.doubleQuote)"))
+            convertedElement = afterData
         } else {
             throw ErrorMessage.wrongValue
         }
@@ -84,7 +84,7 @@ struct JsonParser {
     
     /// Json 데이터가 배열인지 딕셔너리인지 판단하여 출력하는 배열로 변환하는 함수
     mutating func convertToPrint(jsonData: JsonParser, dataMent: String) -> [String] {
-        if dataMent == "배열" {
+        if dataMent == DataMent.arrayMent.rawValue {
             printArray.append("\(Sign.frontSquareBracket)")
             for index in 0..<jsonData.arrayJsonData.count {
                 arrayConvertToPrint(jsonData: jsonData.arrayJsonData, index: index)
@@ -103,7 +103,7 @@ struct JsonParser {
     }
     
     /// 배열 Json 데이터를 한줄씩 출력하는 배열로 변환하는 함수
-    private mutating func arrayConvertToPrint(jsonData: [Json], index: Int) {//-> [String]{
+    private mutating func arrayConvertToPrint(jsonData: [Json], index: Int) {
         switch jsonData[index]{
         case is Dictionary<String,Json>:
             printArray.append("\(Sign.frontCurlyBracket)")
@@ -127,7 +127,7 @@ struct JsonParser {
     }
     
     /// 딕셔너리 Json 데이터를 한줄씩 출력하는 배열로 변환하는 함수
-    private mutating func dictionaryConvertToPrint(jsonData: [String:Json], key: String, value: Json) {//-> [String]{
+    private mutating func dictionaryConvertToPrint(jsonData: [String:Json], key: String, value: Json) {
         switch value{
         case is Dictionary<String,Json>:
             printArray.append("\(key)\(Sign.colon)\(Sign.frontCurlyBracket)")
