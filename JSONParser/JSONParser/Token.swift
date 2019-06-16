@@ -15,21 +15,4 @@ enum Token: Equatable {
     case bool(Bool)
     case string(String)
     case number(Int)
-    
-    static func ==(lhs: Token, rhs: Token) -> Bool {
-        switch (lhs, rhs) {
-        case (.openSquareBracket, .openSquareBracket),
-             (.closeSquareBracket, .closeSquareBracket),
-             (.comma, .comma):
-            return true
-        case (.bool(let lb), .bool(let rb)):
-            return lb == rb
-        case (.string(let ls), .string(let rs)):
-            return ls == rs
-        case (.number(let ln), .number(let rn)):
-            return ln == rn
-        default:
-            return false
-        }
-    }
 }
