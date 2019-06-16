@@ -86,8 +86,8 @@ struct JsonParser {
     mutating func convertToPrint(jsonData: JsonParser, dataMent: String) -> [String] {
         if dataMent == DataMent.arrayMent.rawValue {
             printArray.append("\(Sign.frontSquareBracket)")
-            for index in 0..<jsonData.arrayJsonData.count {
-                convertEachToPrint(key: "", value: jsonData.arrayJsonData[index])
+            for value in jsonData.arrayJsonData {
+                convertEachToPrint(key: "", value: value)
             }
             printArray[printArray.endIndex-1].removeLast()
             printArray.append("\(Sign.backSquareBracket)")
