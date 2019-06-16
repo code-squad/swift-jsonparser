@@ -69,7 +69,7 @@ struct Lexer {
             return .string(trimmed)
         case Keyword.true.first, Keyword.false.first:
             let value = try getBool()
-            return .bool(value)
+            return value ? .true : .false
         case _ where nextCharacter.isNumber:
             let value = try getNumber()
             return .number(value)
