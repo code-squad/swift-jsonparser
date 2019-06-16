@@ -60,8 +60,10 @@ struct Parser {
                 return string
             case .number(let number):
                 return number
-            case .bool(let bool):
-                return bool
+            case .true:
+                return true
+            case .false:
+                return false
             default:
                 throw Parser.Error.invalidToken(token)
             }
