@@ -12,6 +12,8 @@ struct OutputView {
     static func printParseResult(result: JsonType) {
         if result is JsonArray {
             printArray(result)
+        } else if result is JsonObject {
+            printObject(result)
         }
     }
     
@@ -20,7 +22,21 @@ struct OutputView {
             return
         }
         
-        var description = "\(result.array.count)개의 데이터 중에 "
+        var description = "\(result.array.count)개의 배열 데이터 중에 "
+        
+        for (type, count) in result.typeCounter {
+            description.append("\(type) \(count)개 ")
+        }
+        
+        print(description)
+    }
+    
+    private static func printObject(_ object: JsonType) {
+        guard let result = object as? JsonObject else {
+            return
+        }
+        
+        var description = "\(result.object.count)개의 객체 데이터 중에 "
         
         for (type, count) in result.typeCounter {
             description.append("\(type) \(count)개 ")
