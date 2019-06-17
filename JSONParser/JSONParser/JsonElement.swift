@@ -16,11 +16,12 @@ struct JsonElement {
     static let endOfArray: Character = "]"
     static let startOfObject: Character = "{"
     static let endOfObject: Character = "}"
+    static let colon: Character = ":"
     
     static let `true` = "true"
     static let `false` = "false"
     
-    static let baseToken = [comma, whitespace, startOfArray, endOfArray, startOfObject, endOfObject]
+    static let baseToken = [comma, whitespace, startOfArray, endOfArray, startOfObject, endOfObject, colon]
     
     static let supportType = [startOfArray, endOfArray, startOfObject, endOfObject]
     
