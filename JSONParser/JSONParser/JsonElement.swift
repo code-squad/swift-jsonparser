@@ -9,7 +9,7 @@
 import Foundation
 
 struct JsonElement {
-    static let string: Character = "\""
+    static let doubleQuotion: Character = "\""
     static let comma: Character = ","
     static let whitespace: Character = " "
     static let startOfArray: Character = "["
@@ -26,8 +26,8 @@ struct JsonElement {
     
     static func pair(value: Character?) -> Character? {
         switch value {
-        case string:
-            return string
+        case doubleQuotion:
+            return doubleQuotion
         case startOfObject:
             return endOfObject
         case startOfArray:
