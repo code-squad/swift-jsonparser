@@ -14,31 +14,31 @@ protocol JSONDataType {
 
 extension String: JSONDataType {
      var typeDescription: String {
-        return "String"
+        return "문자열"
     }
 }
 
 typealias Number = Double
 extension Number: JSONDataType {
      var typeDescription: String {
-        return "Number"
+        return "숫자"
     }
 }
 
 extension Bool: JSONDataType {
      var typeDescription: String {
-        return "Bool"
+        return "부울"
     }
 }
 typealias Object = Dictionary
 extension Object: JSONDataType {
 var typeDescription: String {
-    return "Object"
+    return "객체"
     }
 }
 
 extension Array: JSONDataType {
     var typeDescription: String {
-        return "Array"
+        return "배열"
     }
 }
