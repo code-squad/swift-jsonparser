@@ -36,16 +36,14 @@ struct Parser {
                 continue
             }
             
-            if token.first == JsonElement.string, token.last != JsonElement.string {
-                unfinishedToken.append(token)
-                
-                continue
-            }
+            let pairResult = JsonElement.pair(value: token.first)
             
-            if token.first == JsonElement.startOfObject, token.last != JsonElement.endOfObject {
-                unfinishedToken.append(token)
-                
-                continue
+            if token.last != pairResult {
+                if pairResult != nil {
+                    unfinishedToken.append(token)
+                    
+                    continue
+                }
             }
             
             if !(token == String(JsonElement.comma) || token == String(JsonElement.whitespace)) {
@@ -68,12 +66,7 @@ struct Parser {
     }
     
     private static func finish(unfinishedToken: inout String, data: inout [JsonType]) throws {
-        if unfinishedToken.first == JsonElement.string && unfinishedToken.last == JsonElement.string {
-            data.append(try convert(token: unfinishedToken))
-            unfinishedToken.removeAll()
-        }
-
-        if unfinishedToken.first == JsonElement.startOfObject && unfinishedToken.last == JsonElement.endOfObject {
+        if JsonElement.pair(value: unfinishedToken.first) == unfinishedToken.last {
             data.append(try convert(token: unfinishedToken))
             unfinishedToken.removeAll()
         }

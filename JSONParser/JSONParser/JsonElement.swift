@@ -23,4 +23,17 @@ struct JsonElement {
     static let baseToken = [comma, whitespace, startOfArray, endOfArray, startOfObject, endOfObject]
     
     static let supportType = [startOfArray, endOfArray, startOfObject, endOfObject]
+    
+    static func pair(value: Character?) -> Character? {
+        switch value {
+        case string:
+            return string
+        case startOfObject:
+            return endOfObject
+        case startOfArray:
+            return endOfArray
+        default:
+            return nil
+        }
+    }
 }
