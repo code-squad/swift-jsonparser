@@ -12,6 +12,8 @@ struct Parser {
     static func parse(tokens: [String]) throws -> JsonType {
         if tokens.first == String(JsonElement.startOfArray), tokens.last == String(JsonElement.endOfArray) {
             return try parse(array: tokens)
+        } else if tokens.first == String(JsonElement.startOfObject), tokens.last == String(JsonElement.endOfObject) {
+            return try parse(object: tokens)
         } else {
             throw TypeError.unsupportedType
         }
@@ -40,6 +42,12 @@ struct Parser {
                 continue
             }
             
+            if token.first == JsonElement.startOfObject, token.last != JsonElement.endOfObject {
+                unfinishedToken.append(token)
+                
+                continue
+            }
+            
             if !(token == String(JsonElement.comma) || token == String(JsonElement.whitespace)) {
                 data.append(try convert(token: token))
             }
@@ -48,8 +56,24 @@ struct Parser {
         return try JsonArray(array: data)
     }
     
+    private static func parse(object: [String]) throws -> JsonObject {
+        var tokens = object
+        tokens.removeFirst()
+        tokens.removeLast()
+        
+        var unfinishedToken = ""
+        var data: [String : JsonType] = [:]
+        
+        return try JsonObject(object: data)
+    }
+    
     private static func finish(unfinishedToken: inout String, data: inout [JsonType]) throws {
-        if unfinishedToken.last == JsonElement.string {
+        if unfinishedToken.first == JsonElement.string && unfinishedToken.last == JsonElement.string {
+            data.append(try convert(token: unfinishedToken))
+            unfinishedToken.removeAll()
+        }
+
+        if unfinishedToken.first == JsonElement.startOfObject && unfinishedToken.last == JsonElement.endOfObject {
             data.append(try convert(token: unfinishedToken))
             unfinishedToken.removeAll()
         }
@@ -65,6 +89,10 @@ struct Parser {
         }
         
         if token.first == JsonElement.string, token.last == JsonElement.string {
+            return token
+        }
+        
+        if token.first == JsonElement.startOfObject, token.last == JsonElement.endOfObject {
             return token
         }
         
