@@ -28,30 +28,35 @@ struct Parser {
         var data: [JsonType] = []
         
         for token in tokens {
-            if !unfinishedToken.isEmpty {
-                unfinishedToken.append(token)
-                
-                try finish(unfinishedToken: &unfinishedToken, data: &data)
-                
-                continue
+            unfinishedToken.append(token)
+            
+            if isTokenFinish(unfinishedToken) {
+                data.append(try convert(token: unfinishedToken))
+                unfinishedToken.removeAll()
             }
             
-            let pairResult = JsonElement.pair(value: token.first)
-            
-            if token.last != pairResult {
-                if pairResult != nil {
-                    unfinishedToken.append(token)
-                    
-                    continue
-                }
-            }
-            
-            if !(token == String(JsonElement.comma) || token == String(JsonElement.whitespace)) {
-                data.append(try convert(token: token))
+            if unfinishedToken.last == " " || unfinishedToken.last == "," {
+                unfinishedToken.removeLast()
             }
         }
         
         return try JsonArray(array: data)
+    }
+    
+    private static func isTokenFinish(_ unfinishedToken: String) -> Bool {
+        let pairResult = JsonElement.pair(value: unfinishedToken.first)
+        
+        if pairResult != unfinishedToken.last {
+            if pairResult != nil {
+                return false
+            }
+        }
+        
+        if unfinishedToken == " " || unfinishedToken == "," {
+            return false
+        }
+        
+        return true
     }
     
     private static func parse(object: [String]) throws -> JsonObject {
@@ -65,13 +70,6 @@ struct Parser {
         return try JsonObject(object: data)
     }
     
-    private static func finish(unfinishedToken: inout String, data: inout [JsonType]) throws {
-        if JsonElement.pair(value: unfinishedToken.first) == unfinishedToken.last {
-            data.append(try convert(token: unfinishedToken))
-            unfinishedToken.removeAll()
-        }
-    }
-    
     private static func convert(token: String) throws -> JsonType {
         if let result = Int(token) {
             return result
@@ -81,7 +79,7 @@ struct Parser {
             return token == JsonElement.true ? true : false
         }
         
-        if token.first == JsonElement.string, token.last == JsonElement.string {
+        if token.first == JsonElement.doubleQuotion, token.last == JsonElement.doubleQuotion {
             return token
         }
         
