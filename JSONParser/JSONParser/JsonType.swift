@@ -37,15 +37,3 @@ extension Bool: JsonType {
         return TypeName.bool.rawValue
     }
 }
-
-extension Array: JsonType where Element: JsonType {
-    var typeDescription: String {
-        return TypeName.array.rawValue
-    }
-}
-
-extension Dictionary: JsonType where Key == String, Value == JsonType {
-    var typeDescription: String {
-        return TypeName.object.rawValue
-    }
-}
