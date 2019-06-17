@@ -9,25 +9,55 @@
 import XCTest
 
 class GrammerCheckerTests: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    // Given
+    let checker = GrammerChecker()
+    
+    let listFormat = "[ \"부엉이\" , \"27\" , 25 , true ]"
+    let objectFormat = "{ \"name\" : \"부엉이\" , \"age\" : 27 , \"married\" : false }"
+    let outOfFormObject = "{ name : \"부엉이\" , \"age\" : 27 , \"married\" : false }"
+    let outOfFormJson = "[ \"name\" : \"KIM JUNG\" ]"
+    
+    func testCheckOutOfForm() {
+        //Then
+        XCTAssertTrue(self.checker.check(format: self.outOfFormJson))
     }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testCheckListFormat() {
+        //Then
+        XCTAssertTrue(self.checker.check(format: self.listFormat))
     }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    func testCheckObjectFormat() {
+        //Then
+        XCTAssertTrue(self.checker.check(format: self.objectFormat))
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testCheckObjectListFormat() {
+        //Given
+        let objectListFormat = "[\(objectFormat), \(objectFormat)]"
+        //Then
+        XCTAssertTrue(self.checker.check(format: objectListFormat))
     }
-
+    
+    func testCheckNestedListFormat() {
+        //Given
+        let nestedListFormat = "[\(listFormat), \(listFormat)]"
+        //Then
+        XCTAssertTrue(self.checker.check(format: nestedListFormat))
+    }
+    
+    func testCheckHasObjectListFormat() {
+        //Given
+        let hasListObjectFormat = "{ \"list\" : \(listFormat)}"
+        //Then
+        XCTAssertFalse(self.checker.check(format:hasListObjectFormat))
+    }
+    
+    func testCheckHasObjectObjectFormat() {
+        //Given
+        let hasObjectObjectFormat = "{ \"list\" : \(self.objectFormat)}"
+        //Then
+        XCTAssertFalse(self.checker.check(format:hasObjectObjectFormat))
+    }
 }

@@ -51,6 +51,11 @@
 		0EB7459D229FCC2B0096072C /* TokenConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB74596229FB6310096072C /* TokenConverter.swift */; };
 		0EB7459E229FCC640096072C /* Int+JsonValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB7457D229EFB690096072C /* Int+JsonValue.swift */; };
 		0EB7459F229FCC790096072C /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB74594229FB5F40096072C /* Converter.swift */; };
+		0EBF306722B7A6E700198003 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF306622B7A6E700198003 /* Checker.swift */; };
+		0EBF306822B7A71600198003 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF306622B7A6E700198003 /* Checker.swift */; };
+		0EBF306A22B7A73000198003 /* GrammerChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF306922B7A73000198003 /* GrammerChecker.swift */; };
+		0EBF306B22B7A74900198003 /* GrammerChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF306922B7A73000198003 /* GrammerChecker.swift */; };
+		0EBF306D22B7A78300198003 /* GrammerCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF306C22B7A78300198003 /* GrammerCheckerTests.swift */; };
 		0ECD2379229BFDEE0036A5DF /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD2378229BFDEE0036A5DF /* Token.swift */; };
 		0ECD237B229BFEA00036A5DF /* MyTokenizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD237A229BFEA00036A5DF /* MyTokenizerTests.swift */; };
 		0ECD237D229BFEC20036A5DF /* JsonObjectParsingStrategyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD237C229BFEC20036A5DF /* JsonObjectParsingStrategyTests.swift */; };
@@ -116,6 +121,9 @@
 		0EB74594229FB5F40096072C /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 		0EB74596229FB6310096072C /* TokenConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenConverter.swift; sourceTree = "<group>"; };
 		0EB7459A229FBBCC0096072C /* TokenConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenConverterTests.swift; sourceTree = "<group>"; };
+		0EBF306622B7A6E700198003 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
+		0EBF306922B7A73000198003 /* GrammerChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammerChecker.swift; sourceTree = "<group>"; };
+		0EBF306C22B7A78300198003 /* GrammerCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammerCheckerTests.swift; sourceTree = "<group>"; };
 		0EC890F622934DA400EB51DA /* ContextTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContextTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ECD2378229BFDEE0036A5DF /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		0ECD237A229BFEA00036A5DF /* MyTokenizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTokenizerTests.swift; sourceTree = "<group>"; };
@@ -169,6 +177,7 @@
 		0E03CFAE2285E0C300B0FE2D /* JSONParserTests */ = {
 			isa = PBXGroup;
 			children = (
+				0EBF306C22B7A78300198003 /* GrammerCheckerTests.swift */,
 				0EB5D4EB22A3BC5400CC4375 /* JsonValueCounterTests.swift */,
 				0E6E362F22A11E9F0018F4D6 /* JsonParserTests.swift */,
 				0E787F8722A0D81600B8A686 /* JsonListParsingStrategyTests.swift */,
@@ -224,6 +233,7 @@
 				0E801D64229DA884005C82FF /* JsonParser.swift */,
 				0EB74596229FB6310096072C /* TokenConverter.swift */,
 				0EB5D4E922A3BC0000CC4375 /* JsonValueCounter.swift */,
+				0EBF306922B7A73000198003 /* GrammerChecker.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -238,6 +248,7 @@
 				0EB74578229EFAB20096072C /* JsonValue.swift */,
 				0EB74594229FB5F40096072C /* Converter.swift */,
 				0EB5D4E722A3BA5500CC4375 /* Counter.swift */,
+				0EBF306622B7A6E700198003 /* Checker.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -466,10 +477,12 @@
 				0EB7459F229FCC790096072C /* Converter.swift in Sources */,
 				0EB5D4ED22A3BC5600CC4375 /* JsonValueCounter.swift in Sources */,
 				0ECD238A229C021E0036A5DF /* MyScanner.swift in Sources */,
+				0EBF306D22B7A78300198003 /* GrammerCheckerTests.swift in Sources */,
 				0EB7458D229FB2240096072C /* TypeAliases.swift in Sources */,
 				0ECD2388229C02190036A5DF /* MyTokenizer.swift in Sources */,
 				0EFE12B6229060080039AB95 /* Tokenizer.swift in Sources */,
 				0ECD237F229BFEE60036A5DF /* MyScannerTests.swift in Sources */,
+				0EBF306822B7A71600198003 /* Checker.swift in Sources */,
 				0EB7459D229FCC2B0096072C /* TokenConverter.swift in Sources */,
 				0EB74592229FB2330096072C /* JsonObject+JsonValue.swift in Sources */,
 				0EFE12B8229060130039AB95 /* OutputView.swift in Sources */,
@@ -481,6 +494,7 @@
 				0E03CFB82285E59200B0FE2D /* main.swift in Sources */,
 				0E6E363022A11E9F0018F4D6 /* JsonParserTests.swift in Sources */,
 				0EB74590229FB22E0096072C /* String+JsonValue.swift in Sources */,
+				0EBF306B22B7A74900198003 /* GrammerChecker.swift in Sources */,
 				0EB7459E229FCC640096072C /* Int+JsonValue.swift in Sources */,
 				0EFE12B9229060150039AB95 /* InputView.swift in Sources */,
 				0EB7458F229FB22C0096072C /* Bool+JsonValue.swift in Sources */,
@@ -511,11 +525,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E787F8222A0D71100B8A686 /* JsonObjectParsingStrategy.swift in Sources */,
+				0EBF306722B7A6E700198003 /* Checker.swift in Sources */,
 				0EB74582229EFC500096072C /* String+JsonValue.swift in Sources */,
 				0EB7458A229EFF220096072C /* JsonList+JsonValue.swift in Sources */,
 				0E801D60229D534C005C82FF /* MyStack.swift in Sources */,
 				0ECD238D229C16930036A5DF /* Factory.swift in Sources */,
 				0EB7458C229EFF360096072C /* JsonObject+JsonValue.swift in Sources */,
+				0EBF306A22B7A73000198003 /* GrammerChecker.swift in Sources */,
 				0ECEB7EE2290475600D5ED9D /* OutputView.swift in Sources */,
 				0EB74580229EFC220096072C /* Bool+JsonValue.swift in Sources */,
 				0EFEDB9022AFF5A500823BDF /* JSONAnalyzer.swift in Sources */,
