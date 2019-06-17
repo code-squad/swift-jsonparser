@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
+		C22752E722B85FB50045DAC7 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22752E622B85FB50045DAC7 /* GrammarChecker.swift */; };
 		C2DB9D6C229660E600E35FB8 /* TokenReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DB9D6B229660E600E35FB8 /* TokenReader.swift */; };
 		C2F645EF22979D66001974B3 /* TypeCountable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F645EE22979D66001974B3 /* TypeCountable.swift */; };
 		C2FAED9C228E98A00045F639 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAED9B228E98A00045F639 /* InputView.swift */; };
@@ -36,6 +37,7 @@
 /* Begin PBXFileReference section */
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		C22752E622B85FB50045DAC7 /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
 		C2DB9D6B229660E600E35FB8 /* TokenReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReader.swift; sourceTree = "<group>"; };
 		C2F645EE22979D66001974B3 /* TypeCountable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCountable.swift; sourceTree = "<group>"; };
 		C2FAED9B228E98A00045F639 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				C2FAED9B228E98A00045F639 /* InputView.swift */,
+				C22752E622B85FB50045DAC7 /* GrammarChecker.swift */,
 				C2FAEDA7228EA2B10045F639 /* OutputView.swift */,
 				C2FAEDA9228EAC500045F639 /* TypeCounter.swift */,
 				C2FAED9D228E99580045F639 /* Tokenizer.swift */,
@@ -153,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C22752E722B85FB50045DAC7 /* GrammarChecker.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				C2FAEDA0228E9AD40045F639 /* JSONValue.swift in Sources */,
 				C2FAEDA8228EA2B10045F639 /* OutputView.swift in Sources */,
