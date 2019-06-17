@@ -36,7 +36,7 @@ struct JsonObjectParsingStrategy: JsonParsingStrategy {
             let token = tokens[parsedIndex]
             switch token {
             case .LeftBraket,.LeftBrace:
-                let result = JsonParser().run(tokens: tokens, parsedIndex: parsedIndex)
+                let result = JsonParser.run(tokens: tokens, parsedIndex: parsedIndex)
                 parsedIndex = result.parsedIndex
                 values.append(result.value)
             case .RightBrace:

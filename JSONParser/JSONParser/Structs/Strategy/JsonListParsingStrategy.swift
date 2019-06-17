@@ -11,7 +11,6 @@ import Foundation
 struct JsonListParsingStrategy: JsonParsingStrategy {
    
     private let converter: TokenConverter
-    
     init(converter: TokenConverter) {
         self.converter = converter
     }
@@ -27,7 +26,7 @@ struct JsonListParsingStrategy: JsonParsingStrategy {
             let token = tokens[parsedIndex]
             switch token {
             case .LeftBrace,.LeftBraket:
-                let result = JsonParser().run(tokens: tokens, parsedIndex: parsedIndex)
+                let result = JsonParser.run(tokens: tokens, parsedIndex: parsedIndex)
                 parsedIndex = result.parsedIndex
                 jsonList.append(result.value)
             case .RightBraket:

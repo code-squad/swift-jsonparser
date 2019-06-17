@@ -10,29 +10,23 @@
 import Foundation
 
 class JsonParser {
-    private var converter = TokenConverter()
+    static private var converter = TokenConverter()
     private var strategy: JsonParsingStrategy!
     
-    func run(tokens: [Token], parsedIndex: Int = 0) -> ParsedResult {
+    static func run(tokens: [Token], parsedIndex: Int = 0) -> ParsedResult {
         let tokens = tokens.filter {
             return ![.WhiteSpace,.Comma].contains($0)
         }
-        self.selectStrategy(context: tokens[parsedIndex])
-        let result = self.strategy!.parse(tokens: tokens, parsedIndex: parsedIndex)
+        let strategy = selectStrategy(context: tokens[parsedIndex])
+        let result = strategy.parse(tokens: tokens, parsedIndex: parsedIndex)
         return result
     }
     
-    private func selectStrategy(context: Token) {
+    static private func selectStrategy(context: Token) -> JsonParsingStrategy{
         if context == .LeftBraket {
-            set(strategy: JsonListParsingStrategy(converter: self.converter))
+            return JsonListParsingStrategy(converter: JsonParser.converter)
         }
-        else {
-            set(strategy: JsonObjectParsingStrategy(converter: self.converter))
-        }
-    }
-    
-    private func set(strategy: JsonParsingStrategy) {
-        self.strategy = strategy
+        return JsonObjectParsingStrategy(converter: JsonParser.converter)
     }
     
 }
