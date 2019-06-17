@@ -35,8 +35,8 @@ struct Parser {
                 unfinishedToken.removeAll()
             }
             
-            if unfinishedToken.last == " " || unfinishedToken.last == "," {
-                unfinishedToken.removeLast()
+            if unfinishedToken == " " || unfinishedToken == "," {
+                unfinishedToken.removeAll()
             }
         }
         
