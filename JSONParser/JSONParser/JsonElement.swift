@@ -20,7 +20,7 @@ struct JsonElement {
     static let `true` = "true"
     static let `false` = "false"
     
-    static let arrayToken = [comma, whitespace, startOfArray, endOfArray]
+    static let baseToken = [comma, whitespace, startOfArray, endOfArray, startOfObject, endOfObject]
     
-    static let supportedType = [startOfArray, endOfArray, startOfObject, endOfObject]
+    static let supportType = [startOfArray, endOfArray, startOfObject, endOfObject]
 }

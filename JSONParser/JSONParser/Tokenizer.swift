@@ -14,13 +14,13 @@ struct Tokenizer {
             throw TypeError.unsupportedType
         }
         
-        let arrayToken: [Character] = JsonElement.arrayToken
+        let baseToken: [Character] = JsonElement.baseToken
         
         var rawToken = ""
         var rawTokens: [String] = []
         
         for value in input {
-            if arrayToken.contains(value) {
+            if baseToken.contains(value) {
                 rawTokens.append(rawToken)
                 rawTokens.append(String(value))
                 
@@ -40,7 +40,7 @@ struct Tokenizer {
             return false
         }
         
-        guard JsonElement.supportedType.contains(first), JsonElement.supportedType.contains(last) else {
+        guard JsonElement.supportType.contains(first), JsonElement.supportType.contains(last) else {
             return false
         }
         
