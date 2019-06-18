@@ -24,7 +24,8 @@ struct Lexer {
     private let delimeterTokenList: [Character: Token] = [
         Keyword.openSquareBracket: .openSquareBracket,
         Keyword.closeSquareBracket: .closeSquareBracket,
-        Keyword.comma: .comma
+        Keyword.comma: .comma,
+        Keyword.colon: .colon
     ]
     private var reader: Reader
     
