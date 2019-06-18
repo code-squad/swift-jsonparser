@@ -10,12 +10,12 @@ import Foundation
 
 class Parser {
     private var converter: JSONConvertible = Converter()
-    private var scanner: TokenScanner
+    private var scanner: TokenScannable
     private var tokens: [String]
     
-    init(tokens: [String]) {
+    init(tokens: [String], scanner: TokenScannable) {
         self.tokens = tokens
-        self.scanner = TokenScanner(tokens: tokens)
+        self.scanner = scanner
     }
     
     let parseTable = [JSONKeyword.leftSquareBracket: parseArray,
