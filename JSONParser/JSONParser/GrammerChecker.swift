@@ -21,4 +21,20 @@ struct GrammerChecker {
         static let extendedValue = "\(value)|\(object)"
         static let array = "(\\[(\(whiteSpace)(\(extendedValue))*\(whiteSpace))*])"
     }
+    
+    static func isJSONFormat(of input: String) -> Bool {
+        guard containsMatch(of: Pattern.array, inString: input) else {
+            return containsMatch(of: Pattern.object, inString: input)
+        }
+        return true
+    }
+    
+    static private func containsMatch(of pattern: String, inString string: String) -> Bool {
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+            return false
+        }
+        let range = NSRange(string.startIndex..., in: string)
+        let matchCount = regex.numberOfMatches(in: string, options: [], range: range) == 1
+        return matchCount
+    }
 }
