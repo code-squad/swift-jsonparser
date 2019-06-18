@@ -213,8 +213,145 @@ solution - [protocol doesn't conform to itself](https://stackoverflow.com/questi
 { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "children" : [ "hana", "hayul", "haun" ] }
 ```
 
+```
+[ { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true }, { "name" : "YOON JISU", "alias" : "crong", "level" : 4, "married" : true } ]
+```
+
 
 
 ### 참조
 
 - [Dictionary](https://developer.apple.com/documentation/swift/dictionary)
+
+&nbsp;
+
+## 📌 Step 7-3 : 규칙 검사하기
+
+### 정규표현식
+
+- 반복
+  - `n+` : 앞의 문자가 0번 이상 반복
+  - `n*` : 앞의 문자가 1번 이상 반복
+- `^n` : ~로 시작
+- `n$` : ~로 끝난다
+- whitespace `\s` == `[ \t\r\n\f]`
+  - space, tabe, line break, form feed..
+- 숫자 `\d` == `[0-9]`
+- word like character `\w` == 숫자, 글자, _(underscore)
+- `(x|y|x)` : OR operation
+- `()` capturing group 
+
+
+
+```
+//object { string : jsonvalue (, string : jsonvalue) } 형태
+\{\s*\"[\w\s]+\"\s*\:\s*(true|false|\"[\w\s]*\"|[\d]+)\s*((?:,\s*\"[\w\s]+\"\s*\:\s*(true|false|\"[\w\s]*\"|[\d]+))*)\s*\}
+
+//공백은 0개 이상 있을 수 있다.
+\s*
+
+// string ""안에 \w(문자,숫자),\s(공백) 들어갈 수 있음. key는 ""(emptystring) 안되게 함(1개 이상)
+"[\w\s]+"
+
+// jsonvalue - 3개 유형 중 하나
+// true / false
+// number : \d, 1개 이상.
+// string : "" 안에 문자,숫자,공백. 0개 이상
+(true|false|\"[\w\s]*\"|[\d]+)
+
+// (, string : jsonvalue) 0개 이상 반복
+// non-capturing 사용 (?: ~~~)
+// ((반복되는 부분)*) 다시 감싸줘야 됨
+```
+
+
+
+#### 특수 기호 in swift
+
+- swift 에서는 특수기호 앞에 `\` 붙어야 됨.
+- regex 에서 `\` 와 같이 쓰이는 기호는 두개 붙여야 됨..
+- Swift == regex
+  - `\.` == `.` 
+  -  `\\.` == `\.`
+
+&nbsp;
+
+#### 유의할 점
+
+- 정규표현식에서 사용되는 문자 이외에는 모두 앞에 `\\` 를 붙여줘야 함 (`\\{`)
+- 원래 `\`랑 같이 쓰이는건 `\\`로 바꿔야 함
+- double quotation 은 `\"`
+
+```
+// swift pattern for json object
+"\\{\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\}"
+
+
+// swift pattern for json array
+"\\[\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\]"
+
+
+// array element 에 jsonobject 추가
+"\\[\\s*(true|false|\"[\\w\\s]*\"|[\\d]+|\\{\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\})\\s*((?:,\\s*(true|false|\"[\\w\\s]*\"|[\\d]+|\\{\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\}))*)\\s*\\]"
+
+// object element 에 array 추가
+"\\{\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+|\\[\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\])\\s*((?:,\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+|\\[\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\]))*)\\s*\\}"
+
+```
+
+
+
+(참조) JSON String 
+
+![JSON String](https://www.json.org/string.gif)
+
+&nbsp;
+
+### NSRegularExpression 사용하기
+
+regex pattern 에 매치되는지 확인할 때 사용
+
+- init : pattern과 option 설정
+
+- `matches` method  
+
+  - input : pattern 검사될 string, 검사될 string의 range(`NSRange`)
+  - output : 매치된 문자열들 -  `[NSTextCheckingResult]`
+
+- `NSTextCheckingResult`
+
+  > An occurrence of textual content found during the analysis of a block of text, such as when matching a regular expression.
+
+  - `var range: NSRange` : Returns the range of the result that the receiver represents.
+
+    받은 표현(input string)에서 매치된 부분의 범위!
+
+  - `NSRange` → `Range` 로 변경해서 input의 substring 을 구하면 됨
+
+    - `String(input[range])`
+
+&nbsp;
+
+### 요구사항
+
+```
+- 사용자가 입력한 JSON 데이터 문자열 문법 검사를 담당하는 GrammarChecker 구조체를 추가한다.
+- JSON 표준 문법에 맞는지 검사한다.
+- 현재 지원하는 JSON 형식 외에 다른 구조에 대해서도 판단하도록 구현한다.
+  - 예를 들어, JSON 객체 내에 배열이나 객체가 중첩해서 포함된 경우는 걸러낸다. 
+  - 스위프트 파운데이션에 포함된 정규 표현식 처리 클래스를 적극 활용한다. NSRegularExpression
+```
+
+- object - value : string, number, bool
+
+  ```
+  "^\\{\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\}$"
+  ```
+
+- array element 로 object 는 허용 (string, number, bool, object)
+
+  ```
+  "^\\[\\s*(true|false|\"[\\w\\s]*\"|[\\d]+|\\{\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\})\\s*((?:,\\s*(true|false|\"[\\w\\s]*\"|[\\d]+|\\{\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\}))*)\\s*\\]$"
+  ```
+
+  
