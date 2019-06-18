@@ -9,26 +9,37 @@
 import Foundation
 
 struct JSONParser {
+    private var readTokens: TokenReader
     
-    static func parseDataArray(tokens: [String]) -> [JSONDataType] {
-      return tokens.compactMap {
-            parseValue(data:$0)
-        }
+    init(tokens: [String]) {
+        self.readTokens = TokenReader(tokens: tokens)
     }
     
-    private static func parseValue(data: String) -> JSONDataType? {
+     func parseArray(tokens: [String]) -> [JSONDataType]? {
+        var result = [JSONDataType]()
+        guard tokens.first == "[" else { return nil }
+        var reader = TokenReader(tokens: tokens)
+        
+        while let token = reader.getNextToken() {
+            if let value = parseValue(data: token) {
+                result.append(value)
+            }
+        }
+        return result
+    }
+    
+     func parseValue(data: String) -> JSONDataType? {
         if let string = parseString(data: data) {
             return string
         } else if let number = parseNumber(data: data) {
             return number
         } else if let bool = parseBool(data: data) {
             return bool
-        } else {
-            return nil
         }
+        return nil
     }
     
-    private static func parseString(data: String) -> String? {
+    private  func parseString(data: String) -> String? {
         guard data.first == "\"" && data.last == "\"" else {
             return nil
         }
@@ -38,25 +49,44 @@ struct JSONParser {
         return data
     }
     
-    private static func parseNumber(data: String) -> Number? {
+    private func parseNumber(data: String) -> Number? {
         return Number(data)
     }
     
-    private static func parseBool(data: String) -> Bool? {
-        switch data {
-        case "true":
-            return true
-        case "false":
-            return false
-        default:
-            return nil
-        }
+    private func parseBool(data: String) -> Bool? {
+        return Bool(data)
     }
     
-//    private static func parseObject(data: String) -> [String: JSONDataType]? {
-//        
-//    }
+    private mutating func parseObject(data: String) throws -> [String: JSONDataType]? {
+        var objectData = Dictionary<String, JSONDataType>()
+        var token = readTokens.getNextToken()
+        
+        while String(Token.endObject) != token {
+            if String(Token.valueSeparator) == token {
+                token = readTokens.getNextToken()
+            }
+            if isString(token: data) {
+                let (key,value) = try scanToken(token: data)
+                objectData[key] = value
+            }
+            token = readTokens.getNextToken()
+        }
+        return objectData
+    }
+    
+    private mutating func isString(token: String)-> Bool {
+        let firstCharacter = token[token.startIndex]
+        return Token.quatationMark == firstCharacter
+    }
+    
+    mutating func scanToken(token: String?) throws -> (String,JSONDataType){
+        guard let key = token else { throw JSONError.TokensError }
+        guard let token = readTokens.getNextToken() else {
+            throw JSONError.TokensError
+        }
+        guard let value = parseValue(data: token) else {
+            throw JSONError.TokensError
+        }
+        return (key,value)
+    }
 }
-
-
-
