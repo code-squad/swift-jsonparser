@@ -12,15 +12,19 @@ struct GrammerChecker {
     
     struct Pattern {
         static let bool = "(true|false)"
-        static let string = "\"[\\w\\s]+\""
+        static let string = "\"[^\"]+\""
         static let number = "[0-9]+"
-        static let whiteSpace = "[\\s]*"
-        static let value = "\(bool)|\(number)|\(string)"
-        static let keyValue = "\(whiteSpace)\(string)\(whiteSpace):\(whiteSpace)[(\(number)|\(string)|\(bool)]*\(whiteSpace)"
-        static let object = "\\{[[\(keyValue)][,]?]+\\}"
-        static let extendedValue = "\(value)|\(object)"
-        static let array = "(\\[(\(whiteSpace)(\(extendedValue))*\(whiteSpace))*])"
+        static let whiteSpace = "\\s*"
+        static let value = "(\(bool)|\(number)|\(string))"
+        static let keyValue = "\(whiteSpace)\(string)\(whiteSpace):\(whiteSpace)(\(number)|\(string)|\(bool))*\(whiteSpace),?"
+        static let object = "\\{((\(keyValue))?\(whiteSpace))*\\}"
+        static let extendedValue = "(\(value)|\(object))"
+        static let array = "\\[(\(whiteSpace)\(extendedValue)?\(whiteSpace),?)*\\]"
     }
+//    static let keyValue = "(\(whiteSpace)\(string)\(whiteSpace):\(whiteSpace)((\(number)|\(string)|\(bool))*\(whiteSpace),?)"
+//    static let object = "\\{\(keyValue)*\(whiteSpace)*\\}"
+//    static let extendedValue = "\(value)|\(object)"
+//    static let array = "\\[((\(whiteSpace)(\(extendedValue))*\(whiteSpace)),?)*\(whiteSpace)*\\]"
     
     static func isJSONFormat(of input: String) -> Bool {
         guard containsMatch(of: Pattern.array, inString: input) else {
@@ -34,7 +38,9 @@ struct GrammerChecker {
             return false
         }
         let range = NSRange(string.startIndex..., in: string)
-        let matchCount = regex.numberOfMatches(in: string, options: [], range: range) == 1
-        return matchCount
+        guard let matchResult = regex.firstMatch(in: string, options: [], range: range) else {
+            return false
+        }
+        return matchResult.range == range
     }
 }
