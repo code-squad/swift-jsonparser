@@ -9,47 +9,47 @@
 import Foundation
 
 enum Token: Equatable {
-    case Number(Int)
-    case Bool(Bool)
-    case Value(String)
-    case String(String)
+    case number(Int)
+    case bool(Bool)
+    case value(String)
+    case string(String)
     
-    case WhiteSpace
-    case Comma
-    case Colon
-    case DoubleQuotation
+    case ws
+    case comma
+    case colon
+    case doubleQuotation
     
-    case LeftBrace
-    case RightBrace
+    case leftBrace
+    case rightBrace
     
-    case LeftBraket
-    case RightBraket
+    case leftBraket
+    case rightBraket
     
     func getValue() -> String {
         switch self {
-        case .Number(let value):
+        case .number(let value):
             return "\(value)"
-        case .Bool(let value):
+        case .bool(let value):
             return "\(value)"
-        case .String(let value):
+        case .string(let value):
             return "\(value)"
-        case .WhiteSpace:
+        case .ws:
             return " "
-        case .Colon:
+        case .colon:
             return ":"
-        case .Comma:
+        case .comma:
             return ","
-        case .DoubleQuotation:
+        case .doubleQuotation:
             return "\""
-        case .LeftBrace:
+        case .leftBrace:
             return "{"
-        case .RightBrace:
+        case .rightBrace:
             return "}"
-        case .LeftBraket:
+        case .leftBraket:
             return "["
-        case .RightBraket:
+        case .rightBraket:
             return "]"
-        case .Value(let value):
+        case .value(let value):
             return "\(value)"
             
         }

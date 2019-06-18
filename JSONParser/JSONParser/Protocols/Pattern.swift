@@ -1,5 +1,5 @@
 //
-//  Pattern.swift
+//  Regex.swift
 //  JSONParser
 //
 //  Created by 이동영 on 18/06/2019.
@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+protocol Regex {
+    var regex: Regex { get }
+}
