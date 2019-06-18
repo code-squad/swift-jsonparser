@@ -61,23 +61,23 @@ struct Lexer {
             return token
         }
         
-        switch nextCharacter {
-        case Keyword.whiteSpace:
-            reader.advance()
-            return nil
-        case Keyword.doubleQuotation:
-            let value = try getString()
-            let trimmed = try removeDoubleQoutations(value)
-            return .string(trimmed)
-        case Keyword.true.first, Keyword.false.first:
-            let value = try getBool()
-            return value ? .true : .false
-        case _ where nextCharacter.isNumber:
-            let value = try getNumber()
-            return .number(value)
-        default:
-            throw Lexer.Error.invalidCharacter(nextCharacter)
+        if nextCharacter.isAlphanumeric {
+            let string = try getString()
+            
+            if let number = Int(string) {
+                return .number(number)
+            }
+            
+            switch string {
+            case Keyword.true: return .true
+            case Keyword.false: return .false
+            default: return nil
+            }
         }
+        
+        let string = try getString()
+        let trimmed = try removeDoubleQoutations(string)
+        return .string(trimmed)
     }
     
     private mutating func removeDoubleQoutations(_ value: String) throws -> String {
@@ -119,5 +119,12 @@ struct Lexer {
             return boolValue
         }
         throw Lexer.Error.scanBoolFailed
+    }
+}
+
+
+extension Character {
+    var isAlphanumeric: Bool {
+        return self.isLetter || self.isNumber
     }
 }
