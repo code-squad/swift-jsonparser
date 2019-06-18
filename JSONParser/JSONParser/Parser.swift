@@ -71,7 +71,7 @@ struct Parser {
         throw Parser.Error.parseJSONValueFailed
     }
     
-    private mutating func getJSONArray() throws -> [JSONValue] {
+    private mutating func parseJSONArray() throws -> [JSONValue] {
         var jsonArray = [JSONValue]()
         
         while let token = getNextToken() {
@@ -89,6 +89,6 @@ struct Parser {
     }
     
     mutating func parse() throws -> [JSONValue] {
-        return try getJSONArray()
+        return try parseJSONArray()
     }
 }
