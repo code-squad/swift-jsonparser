@@ -12,6 +12,7 @@ func main() {
     InputView.printInstruction()
     do {
         let input = try InputView.read()
+        try GrammarChecker.check(input: input)
         let tokens = try Tokenizer.execute(jsonData: input)
         var jsonParser = Parser(tokens: tokens)
         let parsedValue = try jsonParser.parse()
