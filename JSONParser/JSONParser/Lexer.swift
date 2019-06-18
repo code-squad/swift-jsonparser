@@ -76,15 +76,8 @@ struct Lexer {
         }
         
         let string = getString()
-        let trimmed = try removeDoubleQoutations(string)
-        return .string(trimmed)
-    }
-    
-    private mutating func removeDoubleQoutations(_ value: String) throws -> String {
-        if value.first == Keyword.doubleQuotation && value.last == Keyword.doubleQuotation {
-            return String(value.dropFirst().dropLast())
-        }
-        throw Lexer.Error.scanStringFailed
+        let word = StringUtility.removeDoubleQuotations(string)
+        return .string(word)
     }
     
     private mutating func getString() -> String {
