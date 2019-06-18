@@ -14,3 +14,11 @@ extension Int: JsonValue {
     }
 }
 
+extension Int {
+    static postfix func -- (lhs: inout Int) {
+        lhs-=1
+    }
+    static postfix func ++ (lhs: inout Int) {
+        lhs+=1
+    }
+}
