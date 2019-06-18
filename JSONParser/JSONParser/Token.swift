@@ -9,15 +9,14 @@
 import Foundation
 
 enum Token: Equatable {
-    // delimeter
+    case openCurlyBracket
+    case closeCurlyBracket
     case openSquareBracket
     case closeSquareBracket
     case comma
     case colon
-    // keyword
     case `true`
     case `false`
-    // literal
     case string(String)
     case number(Int)
 }

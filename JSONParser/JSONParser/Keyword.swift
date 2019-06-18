@@ -9,6 +9,8 @@
 import Foundation
 
 struct Keyword {
+    static let openCurlyBracket: Character = "{"
+    static let closeCurlyBracket: Character = "}"
     static let openSquareBracket: Character = "["
     static let closeSquareBracket: Character = "]"
     static let doubleQuotation: Character = "\""
