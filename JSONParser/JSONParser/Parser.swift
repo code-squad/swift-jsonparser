@@ -24,35 +24,35 @@ struct Parser {
         tokens.removeFirst()
         tokens.removeLast()
         
-        var unfinishedToken = ""
+        var unfinishedTokens: [String] = []
         var data: [JsonType] = []
         
         for token in tokens {
-            unfinishedToken.append(token)
+            unfinishedTokens.append(token)
             
-            if isTokenFinish(unfinishedToken) {
-                data.append(try convert(token: unfinishedToken))
-                unfinishedToken.removeAll()
+            if isTokenFinish(unfinishedTokens) {
+                data.append(try convert(tokens: unfinishedTokens))
+                unfinishedTokens.removeAll()
             }
             
-            if unfinishedToken == " " || unfinishedToken == "," {
-                unfinishedToken.removeAll()
+            if unfinishedTokens.first == " " || unfinishedTokens.first == "," {
+                unfinishedTokens.removeAll()
             }
         }
         
         return try JsonArray(array: data)
     }
     
-    private static func isTokenFinish(_ unfinishedToken: String) -> Bool {
-        let pairResult = JsonElement.pair(value: unfinishedToken.first)
+    private static func isTokenFinish(_ unfinishedTokens: [String]) -> Bool {
+        let pairResult = JsonElement.pair(value: unfinishedTokens.first?.first)
         
-        if pairResult != unfinishedToken.last {
+        if pairResult != unfinishedTokens.last?.last {
             if pairResult != nil {
                 return false
             }
         }
         
-        if unfinishedToken == " " || unfinishedToken == "," {
+        if unfinishedTokens.first == " " || unfinishedTokens.first == "," {
             return false
         }
         
@@ -70,7 +70,9 @@ struct Parser {
         return try JsonObject(object: data)
     }
     
-    private static func convert(token: String) throws -> JsonType {
+    private static func convert(tokens: [String]) throws -> JsonType {
+        let token = tokens.joined()
+        
         if let result = Int(token) {
             return result
         }
@@ -84,7 +86,7 @@ struct Parser {
         }
         
         if token.first == JsonElement.startOfObject, token.last == JsonElement.endOfObject {
-            return token
+            return try parse(object: tokens)
         }
         
         throw ParseError.invalidValue
