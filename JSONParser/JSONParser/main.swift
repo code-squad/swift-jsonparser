@@ -8,7 +8,7 @@
 
 import Foundation
 
-func main() {
+func run() {
     let input: String
     let tokens: [Token]
     let jsonArray: [JSONValue]
@@ -49,4 +49,4 @@ func main() {
     OutputView.printJSONArray(jsonArray)
 }
 
-main()
+run()
