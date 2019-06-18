@@ -15,7 +15,7 @@ class TokenConverterTests: XCTestCase {
     
     func testConvertStringJsonValue() {
         //Given
-        let tokenString = Token.String("Hello, World")
+        let tokenString = Token.string("Hello, World")
         
         //When
         let jsonValue = tokenConverter.convert(before: tokenString)
@@ -26,7 +26,7 @@ class TokenConverterTests: XCTestCase {
     
     func testConvertNumberJsonValue() {
         //Given
-        let tokenNumber = Token.Number(3)
+        let tokenNumber = Token.number(3)
         
         //When
         let jsonValue = tokenConverter.convert(before: tokenNumber)
@@ -36,7 +36,7 @@ class TokenConverterTests: XCTestCase {
     
     func testConvertJsonValue() {
         //Given
-        let tokenBool = Token.Bool(true)
+        let tokenBool = Token.bool(true)
         
         //When
         let jsonValue = tokenConverter.convert(before: tokenBool)

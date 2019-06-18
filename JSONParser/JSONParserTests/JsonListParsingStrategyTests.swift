@@ -13,12 +13,12 @@ class JsonListParsingStrategyTests: XCTestCase {
     var strategy: JsonParsingStrategy!
     
     var tokens: [Token] =
-        [.LeftBraket,
-         .WhiteSpace, .Number(10), .Comma, 
-         .WhiteSpace, .String("Hello, World"), .Comma,
-         .WhiteSpace, .Bool(true), .Comma,
-         .WhiteSpace, .String("314"), .WhiteSpace,
-         .RightBraket]
+        [.leftBraket,
+         .ws, .number(10), .comma,
+         .ws, .string("Hello, World"), .comma,
+         .ws, .bool(true), .comma,
+         .ws, .string("314"), .ws,
+         .rightBraket]
     //=======================================
     //  [ 10, "Hello, World", true, "314" ]
     //=======================================

@@ -12,10 +12,10 @@ class JsonObjectParsingStrategyTests: XCTestCase {
     //Given
     var strategy: JsonParsingStrategy!
     
-    var tokens = [Token.LeftBrace,
-                  Token.WhiteSpace, Token.String("name"), Token.WhiteSpace, Token.Colon, Token.WhiteSpace, Token.String("부엉이"), Token.Comma,
-                  Token.WhiteSpace, Token.String("age"),Token.WhiteSpace, Token.Colon, Token.WhiteSpace, Token.Number(27), Token.Comma,
-                  Token.WhiteSpace, Token.String("married"),Token.WhiteSpace, Token.Colon, Token.WhiteSpace, Token.Bool(false), Token.WhiteSpace, Token.RightBrace]
+    var tokens: [Token] = [.leftBrace,
+                  .ws, .string("name"), .ws, .colon, .ws, .string("부엉이"), .comma,
+                  .ws, .string("age"),.ws, .colon, .ws, .number(27), .comma,
+                  .ws, .string("married"),.ws, .colon, .ws, .bool(false), .ws, .rightBrace]
     //=======================================================
     // { "name":"부엉이", "age" : 27, "married" : false }
     //=======================================================

@@ -10,24 +10,33 @@
 import Foundation
 
 struct JSONAnalyzer{
-    static func run() {
-        var errorOccurred: Bool = false
-        repeat {
-            do {
-                let inputView = InputView()
-                let userInput = inputView.run()
-                var tokenizer = MyTokenizer.init(userInput)
-                let tokens = try tokenizer.tokenize()
-                let parser = JsonParser.init()
-                let result = parser.run(tokens: tokens)
-                let jsonContainer = result.value
-                var outputView = OutputView.init(jsonContainer)
-                outputView.run()
-                errorOccurred = false
-            } catch {
-                errorOccurred = true
-                print(error)
+    
+    func run() throws {
+        let inputView = InputView()
+        let userInput = inputView.run()
+        let checker = GrammerChecker()
+        guard checker.check(format: userInput) else {
+            throw Error.wrongFormat
+        }
+        var tokenizer = MyTokenizer.init(userInput)
+        let tokens = tokenizer.tokenize()
+        let result = JsonParser.run(tokens: tokens)
+        let jsonContainer = result.value
+        var outputView = OutputView.init(jsonContainer)
+        outputView.run()
+    }
+    
+}
+// -MARK:Error
+extension JSONAnalyzer {
+    enum Error: Swift.Error {
+        case wrongFormat
+        
+        var localizedDescription: String {
+            switch self {
+            case .wrongFormat:
+                return "지원하지 않는 JSON형식 입니다."
             }
-        } while errorOccurred
+        }
     }
 }
