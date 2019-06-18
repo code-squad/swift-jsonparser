@@ -30,6 +30,11 @@ struct Lexer {
         }
     }
     
+    private let delimeterTokenList: [Character: Token] = [
+        Keyword.openSquareBracket: .openSquareBracket,
+        Keyword.closeSquareBracket: .closeSquareBracket,
+        Keyword.comma: .comma
+    ]
     private var reader: Reader
     
     init(reader: Reader) {
@@ -50,16 +55,13 @@ struct Lexer {
         guard let nextCharacter = reader.peek() else {
             return nil
         }
+        
+        if let token = delimeterTokenList[nextCharacter] {
+            reader.advance()
+            return token
+        }
+        
         switch nextCharacter {
-        case Keyword.openSquareBracket:
-            reader.advance()
-            return .openSquareBracket
-        case Keyword.closeSquareBracket:
-            reader.advance()
-            return .closeSquareBracket
-        case Keyword.comma:
-            reader.advance()
-            return .comma
         case Keyword.whiteSpace:
             reader.advance()
             return nil
