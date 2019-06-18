@@ -30,15 +30,16 @@ extension Bool: JSONDataType {
         return "부울"
     }
 }
-typealias Object = Dictionary
-extension Object: JSONDataType {
-var typeDescription: String {
-    return "객체"
+
+extension Array: JSONDataType where Element == JSONDataType {
+    var typeDescription: String {
+        return "배열"
     }
 }
 
-extension Array: JSONDataType {
+typealias Object = Dictionary
+extension Object: JSONDataType where Key == String, Value == JSONDataType {
     var typeDescription: String {
-        return "배열"
+        return "객체"
     }
 }
