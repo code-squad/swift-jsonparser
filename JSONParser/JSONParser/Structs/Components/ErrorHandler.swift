@@ -7,3 +7,21 @@
 //
 
 import Foundation
+
+struct ErrorHandler {
+    
+    func handle(logic: () throws -> ()) {
+        var occurError = false
+        
+        repeat {
+            do{
+                try logic()
+                occurError = false
+            }
+            catch {
+                print(error.localizedDescription)
+                occurError = true
+            }
+        } while occurError
+    }
+}
