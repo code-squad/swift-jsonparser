@@ -12,20 +12,11 @@ struct Lexer {
     
     enum Error: Swift.Error {
         case invalidCharacter(Character)
-        case scanStringFailed
-        case scanNumberFailed
-        case scanBoolFailed
         
         var localizedDescription: String {
             switch self {
             case .invalidCharacter(let character):
                 return "유효하지 않은 문자 \(character)가 입력되었습니다."
-            case .scanStringFailed:
-                return "String 값 스캔에 실패하였습니다."
-            case .scanNumberFailed:
-                return "Number 값 스캔에 실패하였습니다."
-            case .scanBoolFailed:
-                return "Bool 값 스캔에 실패하였습니다."
             }
         }
     }
@@ -90,7 +81,6 @@ struct Lexer {
         return value
     }
 }
-
 
 extension Character {
     var isAlphanumeric: Bool {
