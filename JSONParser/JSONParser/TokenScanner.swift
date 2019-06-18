@@ -8,7 +8,13 @@
 
 import Foundation
 
-struct TokenScanner {
+protocol TokenScannable {
+    var peekPreviousToken: String? { get }
+    var peekNextToken: String? { get }
+    mutating func nextToken() -> String?
+}
+
+struct TokenScanner: TokenScannable {
     private var tokens: [String]
     private var position = 0
     
