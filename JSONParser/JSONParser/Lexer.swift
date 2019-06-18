@@ -62,7 +62,7 @@ struct Lexer {
             switch string {
             case Keyword.true: return .true
             case Keyword.false: return .false
-            default: return nil
+            default: throw Lexer.Error.invalidCharacter(nextCharacter)
             }
         }
         
