@@ -20,7 +20,7 @@ class GrammerCheckerTests: XCTestCase {
     
     func testCheckOutOfForm() {
         //Then
-        XCTAssertTrue(self.checker.check(format: self.outOfFormJson))
+        XCTAssertFalse(self.checker.check(format: self.outOfFormJson))
     }
     
     func testCheckListFormat() {
@@ -36,6 +36,7 @@ class GrammerCheckerTests: XCTestCase {
     func testCheckObjectListFormat() {
         //Given
         let objectListFormat = "[\(objectFormat), \(objectFormat)]"
+        
         //Then
         XCTAssertTrue(self.checker.check(format: objectListFormat))
     }
@@ -43,6 +44,7 @@ class GrammerCheckerTests: XCTestCase {
     func testCheckNestedListFormat() {
         //Given
         let nestedListFormat = "[\(listFormat), \(listFormat)]"
+        
         //Then
         XCTAssertTrue(self.checker.check(format: nestedListFormat))
     }
@@ -50,14 +52,16 @@ class GrammerCheckerTests: XCTestCase {
     func testCheckHasObjectListFormat() {
         //Given
         let hasListObjectFormat = "{ \"list\" : \(listFormat)}"
+        
         //Then
-        XCTAssertFalse(self.checker.check(format:hasListObjectFormat))
+        XCTAssertTrue(self.checker.check(format:hasListObjectFormat))
     }
     
     func testCheckHasObjectObjectFormat() {
         //Given
         let hasObjectObjectFormat = "{ \"list\" : \(self.objectFormat)}"
+        
         //Then
-        XCTAssertFalse(self.checker.check(format:hasObjectObjectFormat))
+        XCTAssertTrue(self.checker.check(format:hasObjectObjectFormat))
     }
 }
