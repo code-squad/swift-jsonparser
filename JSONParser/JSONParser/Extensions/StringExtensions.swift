@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+// -MARK: - Fomat
 extension String {
     var isNumber: Bool { return Int(self) != nil }
     var isBool: Bool { return Bool(self) != nil }
@@ -20,4 +20,10 @@ extension String {
     var isRightBrace: Bool { return self == "}" }
     var isLeftBraket: Bool { return self == "[" }
     var isRightBraket: Bool { return self == "]" }
+}
+// -MARK: - Range
+extension String {
+    var range: NSRange {
+        return NSRange.init(location: 0, length: self.count)
+    }
 }
