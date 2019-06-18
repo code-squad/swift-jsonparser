@@ -7,8 +7,10 @@
 //
 
 import Foundation
-
+// - MARK: - JSON
 typealias JsonObject = [String: JsonValue]
 typealias JsonList = [JsonValue]
-
+// - MARK: - Parser
 typealias ParsedResult = (value: JsonValue, parsedIndex: Int)
+// - MARK: - Regex
+typealias Regex = String
