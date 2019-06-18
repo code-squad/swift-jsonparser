@@ -62,7 +62,7 @@ struct Lexer {
         }
         
         if nextCharacter.isAlphanumeric {
-            let string = try getString()
+            let string = getString()
             
             if let number = Int(string) {
                 return .number(number)
@@ -75,7 +75,7 @@ struct Lexer {
             }
         }
         
-        let string = try getString()
+        let string = getString()
         let trimmed = try removeDoubleQoutations(string)
         return .string(trimmed)
     }
@@ -87,38 +87,14 @@ struct Lexer {
         throw Lexer.Error.scanStringFailed
     }
     
-    private mutating func getString() throws -> String {
+    private mutating func getString() -> String {
         var value = ""
-        
-        while let nextCharacter = reader.peek() {
-            switch nextCharacter {
-            case _ where nextCharacter.isLetter
-                || nextCharacter.isNumber
-                || Keyword.doubleQuotation == nextCharacter:
-                let stringValue = String(nextCharacter)
-                value = value + stringValue
+        while let nextCharacter = reader.peek(),
+            nextCharacter.isAlphanumeric || nextCharacter == Keyword.doubleQuotation {
+                value = value + String(nextCharacter)
                 reader.advance()
-            default:
-                return value
-            }
         }
-        throw Lexer.Error.scanStringFailed
-    }
-    
-    private mutating func getNumber() throws -> Int {
-        let value = try getString()
-        if let numberValue = Int(value) {
-            return numberValue
-        }
-        throw Lexer.Error.scanNumberFailed
-    }
-    
-    private mutating func getBool() throws -> Bool {
-        let value = try getString()
-        if let boolValue = Bool(value) {
-            return boolValue
-        }
-        throw Lexer.Error.scanBoolFailed
+        return value
     }
 }
 
