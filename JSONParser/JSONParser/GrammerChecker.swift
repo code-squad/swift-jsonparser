@@ -18,8 +18,8 @@ struct GrammerChecker {
         static let value = "(\(bool)|\(number)|\(string))"
         static let keyValue = "\(whiteSpace)\(string)\(whiteSpace):\(whiteSpace)(\(number)|\(string)|\(bool))*\(whiteSpace),?"
         static let object = "\\{((\(keyValue))?\(whiteSpace))*\\}"
-        static let extendedValue = "(\(value)|\(object))"
-        static let array = "\\[(\(whiteSpace)\(extendedValue)?\(whiteSpace),?)*\\]"
+        static let valueWithObject = "(\(value)|\(object))"
+        static let array = "\\[(\(whiteSpace)\(valueWithObject)?\(whiteSpace),?)*\\]"
     }
     
     static func isJSONFormat(of input: String) -> Bool {
