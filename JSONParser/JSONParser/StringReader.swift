@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct StringReader: Reader {
+struct StringReader {
     
     private let input: String
     private(set) var position: String.Index

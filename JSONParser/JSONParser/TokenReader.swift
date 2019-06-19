@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TokenReader: Reader {
+struct TokenReader {
     
     private let tokens: [Token]
     private(set) var position = 0
