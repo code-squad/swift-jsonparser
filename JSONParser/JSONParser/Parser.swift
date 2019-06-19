@@ -86,14 +86,6 @@ struct Parser {
         
         while let token = currentToken, token != .closeSquareBracket {
             switch token {
-            case .string(let string):
-                jsonArray.append(string)
-            case .number(let number):
-                jsonArray.append(number)
-            case .true:
-                jsonArray.append(true)
-            case .false:
-                jsonArray.append(false)
             case .openSquareBracket:
                 let value = try parseJSONArray()
                 jsonArray.append(value)
@@ -103,7 +95,8 @@ struct Parser {
             case .comma:
                 break
             default:
-                throw Parser.Error.invalidToken(token)
+                let value = try getValue()
+                jsonArray.append(value)
             }
             advance()
         }
