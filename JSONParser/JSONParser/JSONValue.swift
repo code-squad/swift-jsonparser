@@ -12,6 +12,12 @@ protocol JSONValue {
     var typeDescription: String { get }
 }
 
+extension JSONValue {
+    var string: String? {
+        return self as? String
+    }
+}
+
 extension String: JSONValue {
     var typeDescription: String {
         return "문자열"

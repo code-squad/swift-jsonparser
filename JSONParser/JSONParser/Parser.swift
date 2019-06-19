@@ -101,19 +101,19 @@ struct Parser {
         
         advance()
         while let token = currentToken, token != .closeCurlyBracket {
-            switch token {
-            case .string(let string):
-                key = string
-            case .colon:
-                advance()
-                let value = try parseJSONValue()
-                jsonObject.updateValue(value, forKey: key)
-                key = ""
-            case .comma:
+            
+            if token == .comma || token == .colon {
                 advance()
                 continue
-            default:
-                throw Parser.Error.invalidToken(token)
+            }
+            
+            let value = try parseJSONValue()
+            
+            if let string = value.string {
+                key = string
+            } else {
+                jsonObject.updateValue(value, forKey: key)
+                key = ""
             }
             advance()
         }
