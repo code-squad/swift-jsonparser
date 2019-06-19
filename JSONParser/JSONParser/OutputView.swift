@@ -28,6 +28,6 @@ struct OutputView {
         }
         let range = typeCountDescription.startIndex..<typeCountDescription.index(before: typeCountDescription.endIndex)
         let middleCountDescription = typeCountDescription[range]
-        return print(prefixCountDescription, middleCountDescription, suffixCountDescription, separator: emptyString)
+        print(prefixCountDescription, middleCountDescription, suffixCountDescription, separator: emptyString)
     }
 }
