@@ -12,7 +12,10 @@ func main() {
     InputView.printInstruction()
     do {
         let input = try InputView.read()
-        try GrammarChecker.check(input: input)
+        let isJSONPattern = try GrammarChecker.check(input: input)
+        if !isJSONPattern {
+            throw GrammarCheckerError.matchNoPattern
+        }
         let tokens = try Tokenizer.execute(jsonData: input)
         var jsonParser = Parser(tokens: tokens)
         let parsedValue = try jsonParser.parse()
