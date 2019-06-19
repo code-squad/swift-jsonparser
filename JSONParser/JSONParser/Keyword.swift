@@ -16,7 +16,6 @@ struct Keyword {
     static let doubleQuotation: Character = "\""
     static let comma: Character = ","
     static let colon: Character = ":"
-    static let whiteSpace: Character = " "
     static let `true` = "true"
     static let `false` = "false"
 }
