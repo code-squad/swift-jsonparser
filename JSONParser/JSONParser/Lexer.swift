@@ -50,6 +50,8 @@ struct Lexer {
             return nil
         }
         
+        skipWhiteSpaces()
+        
         if let token = singleTokenList[nextCharacter] {
             reader.advance()
             return token
@@ -72,6 +74,15 @@ struct Lexer {
         let string = getString()
         let word = StringUtility.removeDoubleQuotations(string)
         return .string(word)
+    }
+    
+    private mutating func skipWhiteSpaces() {
+        while let nextCharacter = reader.peek() {
+            if !nextCharacter.isWhitespace {
+                break
+            }
+            reader.advance()
+        }
     }
     
     private mutating func getString() -> String {
