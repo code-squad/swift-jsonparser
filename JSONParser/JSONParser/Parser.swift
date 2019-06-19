@@ -88,11 +88,41 @@ struct Parser {
         throw Parser.Error.parseJSONArrayFailed
     }
     
+    private mutating func parseJSONObject() throws -> [String: JSONValue] {
+        var jsonObject = [String: JSONValue]()
+        var k: String?
+        var v: JSONValue?
+        
+        while let token = getNextToken() {
+            switch token {
+            case .openCurlyBracket, .comma:
+                let value = try getValue()
+                k = "\(value)"
+            case .colon:
+                let value = try getValue()
+                v = value
+                if let key = k,
+                    let value = v {
+                    jsonObject.updateValue(value, forKey: key)
+                    k = nil
+                    v = []
+                }
+            case .closeCurlyBracket:
+                return jsonObject
+            default:
+                throw Parser.Error.invalidToken(token)
+            }
+        }
+        throw Parser.Error.parseJSONValueFailed
+    }
+    
     mutating func parse() throws -> JSONValue {
         if let token = currentToken {
             switch token {
             case .openSquareBracket:
                 return try parseJSONArray()
+            case .openCurlyBracket:
+                return try parseJSONObject()
             default:
                 throw Parser.Error.invalidToken(token)
             }
