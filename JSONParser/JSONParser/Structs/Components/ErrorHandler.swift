@@ -19,7 +19,9 @@ struct ErrorHandler {
                 occurError = false
             }
             catch {
+                print("\n============================")
                 print(error.localizedDescription)
+                print("============================\n")
                 occurError = true
             }
         } while occurError

@@ -34,7 +34,6 @@ struct JsonValueCounter: Counter {
     
     private func count(in list: JsonList) -> [String: Int] {
         var numOf = [String: Int]()
-        
         _ = list.map {
             numOf[$0.describeType()] = ( numOf[$0.describeType()] ?? 0 ) + 1
         }

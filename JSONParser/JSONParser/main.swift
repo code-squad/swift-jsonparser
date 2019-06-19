@@ -6,4 +6,9 @@
 //  Copyright © 2017 JK. All rights reserved.
 //
 //
-JSONAnalyzer.run()
+
+
+import Foundation
+
+let handler = ErrorHandler()
+handler.handle(logic: JSONAnalyzer().run)
