@@ -14,16 +14,24 @@ struct ErrorHandler {
         var occurError = false
         
         repeat {
-            do{
+            do {
                 try logic()
                 occurError = false
             }
+            catch let error as GrammerChecker.Error {
+                self.alertMessage(error.localizedDescription)
+                occurError = true
+            }
             catch {
-                print("\n============================")
-                print(error.localizedDescription)
-                print("============================\n")
+                self.alertMessage(error.localizedDescription)
                 occurError = true
             }
         } while occurError
+    }
+    
+    private func alertMessage(_ message: String) {
+        print("\n==============================")
+        print("\t\(message)")
+        print("==============================\n")
     }
 }

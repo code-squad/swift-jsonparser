@@ -46,18 +46,17 @@ struct GrammerChecker: Checker {
 }
 // -MARK: - + Error
 extension GrammerChecker {
-    enum Error: Swift.Error,LocalizedError {
+    enum Error: Swift.Error{
         case unsupportedFormat
         case unsupportedRegex
         
-        var errorDescription: String? {
+        var localizedDescription: String {
             switch self {
             case .unsupportedFormat:
                 return "지원하지않는 JSON 형식입니다."
             case .unsupportedRegex:
                 return "정규표현식 형식이 올바르지 않습니다."
             }
-            
         }
     }
 }

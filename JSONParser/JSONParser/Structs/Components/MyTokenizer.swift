@@ -28,7 +28,6 @@ struct MyTokenizer: Tokenizer {
     
     private func split() -> [String] {
         let pattern = Pattern.tokens
-        
         let regex = try! NSRegularExpression(pattern: pattern, options: [])
         let matches = regex.matches(in: self.string, options: [], range: self.string.range)
         let units = matches.map {
