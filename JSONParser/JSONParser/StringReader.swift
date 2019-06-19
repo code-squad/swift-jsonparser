@@ -8,7 +8,13 @@
 
 import Foundation
 
-struct StringReader {
+protocol Reader {
+    associatedtype T
+    mutating func peek() -> T?
+    mutating func advance()
+}
+
+struct StringReader: Reader {
     
     private let input: String
     private(set) var position: String.Index
