@@ -34,9 +34,7 @@ struct GrammerChecker {
             return false
         }
         let range = NSRange(string.startIndex..., in: string)
-        guard let matchResult = regex.firstMatch(in: string, options: [], range: range) else {
-            return false
-        }
-        return matchResult.range == range
+        let matchRange = regex.rangeOfFirstMatch(in: string, options: [], range: range)
+        return matchRange == range
     }
 }
