@@ -24,10 +24,6 @@ struct GrammarChecker {
         }
         let range = NSRange(input.startIndex...,  in: input)
         let matches = regex.matches(in: input, options: [], range: range)
-        let matchedString = matches.map { match -> String in
-            let range = Range(match.range, in: input)!
-            return String(input[range])
-        }
-        return matchedString.count == 1 && matchedString[0] == input
+        return matches.count == 1
     }
 }
