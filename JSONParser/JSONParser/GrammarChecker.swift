@@ -12,13 +12,10 @@ struct GrammarChecker {
     static private let arrayPattern = "^\\[\\s*(true|false|\"[\\w\\s]*\"|[\\d]+|\\{\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\})\\s*((?:,\\s*(true|false|\"[\\w\\s]*\"|[\\d]+|\\{\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\}))*)\\s*\\]$"
     static private let objectPattern = "^\\{\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\}$"
     
-    static func check(input: String) throws {
+    static func check(input: String) throws -> Bool {
         let isJSONArray = try match(for: arrayPattern, input: input)
         let isJSONObject = try match(for: objectPattern, input: input)
-        if isJSONArray || isJSONObject {
-            return
-        }
-        throw GrammarCheckerError.matchNoPattern
+        return isJSONArray || isJSONObject
     }
     
     static private func match(for pattern: String, input: String) throws -> Bool {
