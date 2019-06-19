@@ -37,7 +37,7 @@ func run() {
     
     do {
         var parser = Parser(tokens: tokens)
-        jsonValue = try parser.parse()
+        jsonValue = try parser.parseJSONValue()
     } catch let error as Parser.Error {
         print(error.localizedDescription)
         return

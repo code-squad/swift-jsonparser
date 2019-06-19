@@ -56,7 +56,7 @@ struct Parser {
         return token
     }
     
-    private mutating func getValue() throws -> JSONValue {
+    mutating func parseJSONValue() throws -> JSONValue {
         
         if let token = currentToken {
             switch token {
@@ -94,7 +94,7 @@ struct Parser {
                 advance()
                 continue
             default:
-                jsonValue = try getValue()
+                jsonValue = try parseJSONValue()
             }
             jsonArray.append(jsonValue)
             advance()
@@ -113,7 +113,7 @@ struct Parser {
                 key = string
             case .colon:
                 advance()
-                let value = try getValue()
+                let value = try parseJSONValue()
                 jsonObject.updateValue(value, forKey: key)
                 key = ""
             case .comma:
@@ -125,19 +125,5 @@ struct Parser {
             advance()
         }
         return jsonObject
-    }
-    
-    mutating func parse() throws -> JSONValue {
-        if let token = currentToken {
-            switch token {
-            case .openSquareBracket:
-                return try parseJSONArray()
-            case .openCurlyBracket:
-                return try parseJSONObject()
-            default:
-                throw Parser.Error.invalidToken(token)
-            }
-        }
-        throw Parser.Error.notExistToken
     }
 }
