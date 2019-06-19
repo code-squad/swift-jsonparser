@@ -29,10 +29,10 @@ struct Lexer {
         Keyword.comma: .comma,
         Keyword.colon: .colon
     ]
-    private var reader: StringReader
+    private var stringReader: StringReader
     
-    init(reader: StringReader) {
-        self.reader = reader
+    init(stringReader: StringReader) {
+        self.stringReader = stringReader
     }
     
     mutating func tokenize() throws -> [Token] {
@@ -46,14 +46,14 @@ struct Lexer {
     }
     
     private mutating func nextToken() throws -> Token? {
-        guard let nextCharacter = reader.peek() else {
+        guard let nextCharacter = stringReader.peek() else {
             return nil
         }
         
         skipWhiteSpaces()
         
         if let token = singleTokenList[nextCharacter] {
-            reader.advance()
+            stringReader.advance()
             return token
         }
         
@@ -77,20 +77,20 @@ struct Lexer {
     }
     
     private mutating func skipWhiteSpaces() {
-        while let nextCharacter = reader.peek() {
+        while let nextCharacter = stringReader.peek() {
             if !nextCharacter.isWhitespace {
                 break
             }
-            reader.advance()
+            stringReader.advance()
         }
     }
     
     private mutating func getString() -> String {
         var value = ""
-        while let nextCharacter = reader.peek(),
+        while let nextCharacter = stringReader.peek(),
             nextCharacter.isAlphanumeric || nextCharacter == Keyword.doubleQuotation {
                 value = value + String(nextCharacter)
-                reader.advance()
+                stringReader.advance()
         }
         return value
     }
