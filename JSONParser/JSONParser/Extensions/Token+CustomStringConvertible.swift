@@ -11,35 +11,29 @@ import Foundation
 extension Token: CustomStringConvertible {
     var description: String {
         switch self{
-        case .List :
-            return "배열"
-        case .Object:
-            return "객체"
-        case .Number:
+        case .number:
             return "숫자"
-        case .Bool:
+        case .bool:
             return "부울"
-        case .String:
+        case .string:
             return "문자열"
-        case .Key(_):
-            return "키"
-        case .WhiteSpace:
+        case .ws:
             return "공백"
-        case .Colon:
+        case .colon:
             return "콜론"
-        case .Comma:
+        case .comma:
             return "콤마"
-        case .DoubleQuotation:
+        case .doubleQuotation:
             return "쌍따옴표"
-        case .LeftBrace:
+        case .leftBrace:
             return "중괄호(좌)"
-        case .RightBrace:
+        case .rightBrace:
             return "중괄호(우)"
-        case .LeftBraket:
+        case .leftBraket:
             return "대괄호(좌)"
-        case .RightBraket:
+        case .rightBraket:
             return "대괄호(우)"
-        case .Value:
+        case .value:
             return "값"
         }
     }
