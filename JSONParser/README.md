@@ -317,6 +317,7 @@ regex pattern 에 매치되는지 확인할 때 사용
 
   - input : pattern 검사될 string, 검사될 string의 range(`NSRange`)
   - output : 매치된 문자열들 -  `[NSTextCheckingResult]`
+  - Output ` [NSTextCheckingResult]` 의 count 가 1 == *정규식 패턴에 검사 대상 string 전체가 완전히 일치한다*
 
 - `NSTextCheckingResult`
 
@@ -355,3 +356,9 @@ regex pattern 에 매치되는지 확인할 때 사용
   ```
 
   
+
+### Feedback
+
+- 함수는 어떤 값을 리턴하면서 체크 결과를 알려주는 것이 좋다.
+- 리턴값 없이 에러 throw 하는 건 좋지 않다
+- 
