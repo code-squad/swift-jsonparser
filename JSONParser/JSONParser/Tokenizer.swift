@@ -9,12 +9,26 @@
 import Foundation
 
 struct Tokenizer {
-    /// 입력받은 문자열을 모두쪼개서 배열로반환하는 메소드
+    
     func tokenize(input: String) -> [String] {
+        let splitedInputs = Array(input.split(separator: ","))
+        
         var tokens = Array<String>()
         
-        for token in input {
-            tokens.append(String(token))
+        for index in 0 ..< splitedInputs.count {
+            tokens.append(String(splitedInputs[index]))
+            tokens.append(",")
+        }
+            tokens.removeLast()
+        
+        if tokens[0].first == "[" {
+            tokens[0].removeFirst()
+            tokens.insert("[", at: 0)
+        }
+        
+        if tokens[tokens.count-1].last == "]" {
+            tokens[tokens.count-1].removeLast()
+            tokens.insert("]", at: tokens.count)
         }
         
         return tokens
