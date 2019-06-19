@@ -44,9 +44,7 @@ struct Parser {
     }
     
     private mutating func advance() {
-        if isTokenAvailable {
-            position = position + 1
-        }
+        position = position + 1
     }
     
     private mutating func getNextToken() -> Token? {
