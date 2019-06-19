@@ -30,26 +30,15 @@ struct Parser {
         }
     }
     
-    private var isTokenAvailable: Bool {
-        return position < tokens.count
-    }
-    private var currentToken: Token? {
-        return isTokenAvailable ? tokens[position] : nil
-    }
-    private let tokens: [Token]
-    private var position = 0
+    private var tokenReader: TokenReader
     
-    init(tokens: [Token]) {
-        self.tokens = tokens
-    }
-    
-    private mutating func advance() {
-        position = position + 1
+    init(tokenReader: TokenReader) {
+        self.tokenReader = tokenReader
     }
     
     mutating func parseJSONValue() throws -> JSONValue {
         
-        if let token = currentToken {
+        if let token = tokenReader.peek() {
             switch token {
             case .openSquareBracket:
                 return try parseJSONArray()
@@ -73,15 +62,15 @@ struct Parser {
     private mutating func parseJSONArray() throws -> [JSONValue] {
         var jsonArray = [JSONValue]()
         
-        advance()
-        while let token = currentToken, token != .closeSquareBracket {
+        tokenReader.advance()
+        while let token = tokenReader.peek(), token != .closeSquareBracket {
             if token == .comma {
-                advance()
+                tokenReader.advance()
                 continue
             }
             let jsonValue = try parseJSONValue()
             jsonArray.append(jsonValue)
-            advance()
+            tokenReader.advance()
         }
         return jsonArray
     }
@@ -90,11 +79,11 @@ struct Parser {
         var jsonObject = [String: JSONValue]()
         var key = ""
         
-        advance()
-        while let token = currentToken, token != .closeCurlyBracket {
+        tokenReader.advance()
+        while let token = tokenReader.peek(), token != .closeCurlyBracket {
             
             if token == .comma || token == .colon {
-                advance()
+                tokenReader.advance()
                 continue
             }
             
@@ -106,7 +95,7 @@ struct Parser {
                 jsonObject.updateValue(value, forKey: key)
                 key = ""
             }
-            advance()
+            tokenReader.advance()
         }
         return jsonObject
     }
