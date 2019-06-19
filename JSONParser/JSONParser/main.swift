@@ -19,7 +19,7 @@ func main() {
             let parsedValue = try jsonParser.parse()
             try OutputView.printJSONDescription(of: parsedValue)
         } else {
-            print("지원하지 않는 형식입니다.")
+            print(GrammarCheckerError.unsupportedPattern.message)
         }
     } catch let error as JSONError {
         print(error.message)
