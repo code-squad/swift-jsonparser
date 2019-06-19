@@ -15,40 +15,40 @@ struct TokenFactory: Factory {
         var token: Token
         
         if (string.isNumber) {
-            token = Token.Number(Int(string)!)
+            token = Token.number(Int(string)!)
         }
         else if (string.isBool) {
-            token = Token.Bool(Bool(string)!)
+            token = Token.bool(Bool(string)!)
         }
         else if (string.isString) {
-            token = Token.String(String(string.dropFirst().dropLast()))
+            token = Token.string(String(string.dropFirst().dropLast()))
         }
         else if (string.isWhiteSpace) {
-            token = Token.WhiteSpace
+            token = Token.ws
         }
         else if (string.isComma) {
-            token = Token.Comma
+            token = Token.comma
         }
         else if (string.isDoubleQuotation) {
-            token = Token.DoubleQuotation
+            token = Token.doubleQuotation
         }
         else if (string.isColon) {
-            token = Token.Colon
+            token = Token.colon
         }
         else if (string.isLeftBrace) {
-            token = Token.LeftBrace
+            token = Token.leftBrace
         }
         else if (string.isRightBrace) {
-            token = Token.RightBrace
+            token = Token.rightBrace
         }
         else if (string.isLeftBraket) {
-            token = Token.LeftBraket
+            token = Token.leftBraket
         }
         else if (string.isRightBraket) {
-            token = Token.RightBraket
+            token = Token.rightBraket
         }
         else {
-            token = Token.Value(string)
+            token = Token.value(string)
         }
         return token
     }

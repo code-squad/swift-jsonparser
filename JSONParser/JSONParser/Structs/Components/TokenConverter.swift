@@ -15,11 +15,11 @@ struct TokenConverter: Converter {
     func convert(before: Token) -> JsonValue? {
         var jsonValue: JsonValue?
         switch before {
-        case .Number(let number):
+        case .number(let number):
             jsonValue = Int(number)
-        case .Bool(let bool):
+        case .bool(let bool):
             jsonValue = Bool(bool)
-        case .String(let string):
+        case .string(let string):
             jsonValue = String(string)
         default:
             jsonValue = nil

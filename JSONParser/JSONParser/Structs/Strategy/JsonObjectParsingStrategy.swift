@@ -35,11 +35,11 @@ struct JsonObjectParsingStrategy: JsonParsingStrategy {
         while ing {
             let token = tokens[parsedIndex]
             switch token {
-            case .LeftBraket,.LeftBrace:
+            case .leftBraket,.leftBrace:
                 let result = JsonParser.run(tokens: tokens, parsedIndex: parsedIndex)
                 parsedIndex = result.parsedIndex
                 values.append(result.value)
-            case .RightBrace:
+            case .rightBrace:
                 return (jsonObject, parsedIndex+1)
             default:
                 if let value = converter.convert(before: token) {

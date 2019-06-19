@@ -9,8 +9,8 @@
 import Foundation
 
 struct JsonListParsingStrategy: JsonParsingStrategy {
-   
     private let converter: TokenConverter
+    
     init(converter: TokenConverter) {
         self.converter = converter
     }
@@ -25,11 +25,11 @@ struct JsonListParsingStrategy: JsonParsingStrategy {
         while ing {
             let token = tokens[parsedIndex]
             switch token {
-            case .LeftBrace,.LeftBraket:
+            case .leftBrace,.leftBraket:
                 let result = JsonParser.run(tokens: tokens, parsedIndex: parsedIndex)
                 parsedIndex = result.parsedIndex
                 jsonList.append(result.value)
-            case .RightBraket:
+            case .rightBraket:
                 return (jsonList,parsedIndex+1)
             default:
                 if let value = converter.convert(before: token) {
