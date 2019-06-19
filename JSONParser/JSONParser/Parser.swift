@@ -97,6 +97,9 @@ struct Parser {
             case .openSquareBracket:
                 let value = try parseJSONArray()
                 jsonArray.append(value)
+            case .openCurlyBracket:
+                let value = try parseJSONObject()
+                jsonArray.append(value)
             case .comma:
                 break
             case .closeSquareBracket:
