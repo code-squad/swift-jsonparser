@@ -233,6 +233,7 @@ solution - [protocol doesn't conform to itself](https://stackoverflow.com/questi
   - `n+` : 앞의 문자가 0번 이상 반복
   - `n*` : 앞의 문자가 1번 이상 반복
 - `^n` : ~로 시작
+- []안에서 쓰일 땐, 아닌 것 
 - `n$` : ~로 끝난다
 - whitespace `\s` == `[ \t\r\n\f]`
   - space, tabe, line break, form feed..
@@ -361,4 +362,79 @@ regex pattern 에 매치되는지 확인할 때 사용
 
 - 함수는 어떤 값을 리턴하면서 체크 결과를 알려주는 것이 좋다.
 - 리턴값 없이 에러 throw 하는 건 좋지 않다
+
+
+
+## :pushpin: Step 7-4 중첩 구조
+
+### 요구사항
+
+- json value 에 <u>object, array</u>, bool, number, string 포함
+- 한단계 중첩만 허용
+
+- 예시
+
+  ```
+  분석할 JSON 데이터를 입력하세요.
+  { "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "children" : [ "hana", "hayul", "haun" ] }
+  총 4개의 객체 데이터 중에 문자열 2개, 숫자 1개, 배열 1개가 포함되어 있습니다.
+  
+  분석할 JSON 데이터를 입력하세요.
+  [ { "name" : "master's course", "opened" : true }, [ "java", "javascript", "swift" ] ]
+  총 2개의 배열 데이터 중에 객체 1개와 배열 1개가 포함되어 있습니다.
+  ```
+
+
+
+### 구현
+
+- 한단계 중첩
+
+  - Object : value 에 object 가 올 수 있다. 그 object 의 value 엔 object 허용 안함
+  - array : element 에 array 가 올 수 있다. 그 array 의 element엔 array 허용 X
+
+- string 패턴
+
+  - `"` 이 아닌 모든 것 => `\"[^\"]+\"`
+
+  - array (bool, number, string)
+
+    ```
+    "\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]"
+    ```
+
+  - object (bool, number, string)
+
+    ```
+    "\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]"
+    ```
+
+    
+
+- object
+
+  - value - bool, number, string, array(b,n,s), object(이 object는 b,n,s만)
+
+    ```
+    // object with bool, number, string
+    "^\\{\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\}$"
+    
+    "^\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\}|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\])\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\}|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]))*)\\s*\\}$"
+    ```
+
+- array
+
+  - array(b,n,s)
+
+    ```
+    // swift pattern for json array
+    "\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]"
+    ```
+
+  - element : object(b,n,s), array(b,n,s), b, n, s
+
+    ```
+    "^\\[\\s*(true|false|\"[^\"]*\"|[\\d]+|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\})\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\}))*)\\s*\\]$"
+    ```
+
 - 
