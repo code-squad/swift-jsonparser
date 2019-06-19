@@ -111,13 +111,14 @@ struct Parser {
             switch token {
             case .string(let string):
                 key = string
-            case .comma:
-                let value = try getValue()
-                key = "\(value)"
             case .colon:
+                advance()
                 let value = try getValue()
                 jsonObject.updateValue(value, forKey: key)
                 key = ""
+            case .comma:
+                advance()
+                continue
             default:
                 throw Parser.Error.invalidToken(token)
             }
