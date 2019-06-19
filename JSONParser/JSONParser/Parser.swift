@@ -60,8 +60,11 @@ struct Parser {
     
     private mutating func getValue() throws -> JSONValue {
         
-        if let token = getNextToken() {
+        advance()
+        if let token = currentToken {
             switch token {
+            case .openCurlyBracket:
+                return try parseJSONObject()
             case .string(let string):
                 return string
             case .number(let number):
@@ -111,9 +114,12 @@ struct Parser {
         var k: String?
         var v: JSONValue?
         
-        while let token = getNextToken() {
+        advance()
+        while let token = currentToken {
             switch token {
-            case .openCurlyBracket, .comma:
+            case .string(let string):
+                k = string
+            case .comma:
                 let value = try getValue()
                 k = "\(value)"
             case .colon:
@@ -130,6 +136,7 @@ struct Parser {
             default:
                 throw Parser.Error.invalidToken(token)
             }
+            advance()
         }
         throw Parser.Error.parseJSONValueFailed
     }
