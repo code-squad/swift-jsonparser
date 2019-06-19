@@ -58,7 +58,6 @@ struct Parser {
     
     private mutating func getValue() throws -> JSONValue {
         
-        advance()
         if let token = currentToken {
             switch token {
             case .openSquareBracket:
@@ -82,8 +81,8 @@ struct Parser {
     
     private mutating func parseJSONArray() throws -> [JSONValue] {
         var jsonArray = [JSONValue]()
-        advance()
         
+        advance()
         while let token = currentToken, token != .closeSquareBracket {
             switch token {
             case .openSquareBracket:
