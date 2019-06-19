@@ -47,15 +47,6 @@ struct Parser {
         position = position + 1
     }
     
-    private mutating func getNextToken() -> Token? {
-        guard isTokenAvailable else {
-            return nil
-        }
-        let token = tokens[position]
-        position += 1
-        return token
-    }
-    
     mutating func parseJSONValue() throws -> JSONValue {
         
         if let token = currentToken {
