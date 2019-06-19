@@ -86,10 +86,6 @@ struct Parser {
         advance()
         while let token = currentToken, token != .closeSquareBracket {
             switch token {
-            case .openSquareBracket:
-                jsonValue = try parseJSONArray()
-            case .openCurlyBracket:
-                jsonValue = try parseJSONObject()
             case .comma:
                 advance()
                 continue
