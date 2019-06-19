@@ -9,8 +9,8 @@
 import Foundation
 
 struct GrammarChecker {
-    static private let arrayPattern = "^\\[\\s*(true|false|\"[\\w\\s]*\"|[\\d]+|\\{\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\})\\s*((?:,\\s*(true|false|\"[\\w\\s]*\"|[\\d]+|\\{\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\}))*)\\s*\\]$"
-    static private let objectPattern = "^\\{\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+)\\s*((?:,\\s*\"[\\w\\s]+\"\\s*\\:\\s*(true|false|\"[\\w\\s]*\"|[\\d]+))*)\\s*\\}$"
+    static private let arrayPattern = "^\\[\\s*(true|false|\"[^\"]*\"|[\\d]+|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\})\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\}))*)\\s*\\]$"
+    static private let objectPattern = "^\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\}|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\])\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\}|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]))*)\\s*\\}$"
     
     static func check(input: String) throws -> Bool {
         let isJSONArray = try match(for: arrayPattern, input: input)
