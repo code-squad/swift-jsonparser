@@ -116,26 +116,20 @@ struct Parser {
     
     private mutating func parseJSONObject() throws -> [String: JSONValue] {
         var jsonObject = [String: JSONValue]()
-        var k: String?
-        var v: JSONValue?
+        var key = ""
         
         advance()
         while let token = currentToken {
             switch token {
             case .string(let string):
-                k = string
+                key = string
             case .comma:
                 let value = try getValue()
-                k = "\(value)"
+                key = "\(value)"
             case .colon:
                 let value = try getValue()
-                v = value
-                if let key = k,
-                    let value = v {
-                    jsonObject.updateValue(value, forKey: key)
-                    k = nil
-                    v = []
-                }
+                jsonObject.updateValue(value, forKey: key)
+                key = ""
             case .closeCurlyBracket:
                 return jsonObject
             default:
