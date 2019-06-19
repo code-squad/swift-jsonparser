@@ -81,22 +81,22 @@ struct Parser {
     
     private mutating func parseJSONArray() throws -> [JSONValue] {
         var jsonArray = [JSONValue]()
+        var jsonValue: JSONValue
         
         advance()
         while let token = currentToken, token != .closeSquareBracket {
             switch token {
             case .openSquareBracket:
-                let value = try parseJSONArray()
-                jsonArray.append(value)
+                jsonValue = try parseJSONArray()
             case .openCurlyBracket:
-                let value = try parseJSONObject()
-                jsonArray.append(value)
+                jsonValue = try parseJSONObject()
             case .comma:
-                break
+                advance()
+                continue
             default:
-                let value = try getValue()
-                jsonArray.append(value)
+                jsonValue = try getValue()
             }
+            jsonArray.append(jsonValue)
             advance()
         }
         return jsonArray
