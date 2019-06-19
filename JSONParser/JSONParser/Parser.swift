@@ -63,6 +63,8 @@ struct Parser {
         advance()
         if let token = currentToken {
             switch token {
+            case .openSquareBracket:
+                return try parseJSONArray()
             case .openCurlyBracket:
                 return try parseJSONObject()
             case .string(let string):
