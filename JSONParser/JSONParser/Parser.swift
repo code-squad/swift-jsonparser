@@ -14,7 +14,6 @@ struct Parser {
         case invalidToken(Token)
         case notExistToken
         case parseJSONValueFailed
-        case parseJSONArrayFailed
         
         var localizedDescription: String {
             switch self {
@@ -24,8 +23,6 @@ struct Parser {
                 return "토큰이 존재하지 않습니다."
             case .parseJSONValueFailed:
                 return "JSONValue 파싱에 실패하였습니다."
-            case .parseJSONArrayFailed:
-                return "JSONArray 파싱에 실패하였습니다."
             }
         }
     }
