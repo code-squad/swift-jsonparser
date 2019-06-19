@@ -43,6 +43,12 @@ struct Parser {
         self.tokens = tokens
     }
     
+    private mutating func advance() {
+        if isTokenAvailable {
+            position = position + 1
+        }
+    }
+    
     private mutating func getNextToken() -> Token? {
         guard isTokenAvailable else {
             return nil
@@ -73,17 +79,29 @@ struct Parser {
     
     private mutating func parseJSONArray() throws -> [JSONValue] {
         var jsonArray = [JSONValue]()
+        advance()
         
-        while let token = getNextToken() {
+        while let token = currentToken {
             switch token {
-            case .openSquareBracket, .comma:
-                let value = try getValue()
+            case .string(let string):
+                jsonArray.append(string)
+            case .number(let number):
+                jsonArray.append(number)
+            case .true:
+                jsonArray.append(true)
+            case .false:
+                jsonArray.append(false)
+            case .openSquareBracket:
+                let value = try parseJSONArray()
                 jsonArray.append(value)
+            case .comma:
+                break
             case .closeSquareBracket:
                 return jsonArray
             default:
                 throw Parser.Error.invalidToken(token)
             }
+            advance()
         }
         throw Parser.Error.parseJSONArrayFailed
     }
