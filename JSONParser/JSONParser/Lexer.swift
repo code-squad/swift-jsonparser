@@ -21,7 +21,7 @@ struct Lexer {
         }
     }
     
-    private let singleTokenList: [Character: Token] = [
+    private let delimeterTokenList: [Character: Token] = [
         Keyword.openCurlyBracket: .openCurlyBracket,
         Keyword.closeCurlyBracket: .closeCurlyBracket,
         Keyword.openSquareBracket: .openSquareBracket,
@@ -52,7 +52,7 @@ struct Lexer {
         
         skipWhiteSpaces()
         
-        if let token = singleTokenList[nextCharacter] {
+        if let token = delimeterTokenList[nextCharacter] {
             stringReader.advance()
             return token
         }
