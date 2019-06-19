@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Token {
+enum Token: Equatable {
     case openCurlyBracket
     case closeCurlyBracket
     case openSquareBracket
