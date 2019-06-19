@@ -18,7 +18,7 @@ extension Array: JSONValue, JSONContainerValue where Element == JSONValue {
     }
     var containerDescription: String {
         let groupedJSONValues = Dictionary(grouping: self, by: { $0.typeDescription })
-        return "총 \(self.count)개의 데이터 중에 \(groupedJSONValues.map { "\($0) \($1.count)개" }.joined(separator: ","))가 포함되어 있습니다."
+        return "총 \(self.count)개의 \(self.typeDescription) 데이터 중에 \(groupedJSONValues.map { "\($0) \($1.count)개" }.joined(separator: ","))가 포함되어 있습니다."
     }
 }
 
@@ -31,6 +31,6 @@ extension Dictionary: JSONValue, JSONContainerValue where Key == String, Value =
         for value in self.values {
             groupedJSONValues[value.typeDescription] = (groupedJSONValues[value.typeDescription] ?? 0) + 1
         }
-        return "총 \(self.count)개의 데이터 중에 \(groupedJSONValues.map { "\($0) \($1)개" }.joined(separator: ","))가 포함되어 있습니다."
+        return "총 \(self.count)개의 \(self.typeDescription) 데이터 중에 \(groupedJSONValues.map { "\($0) \($1)개" }.joined(separator: ","))가 포함되어 있습니다."
     }
 }
