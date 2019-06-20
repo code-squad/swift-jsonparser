@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		300A782722A391E000EF7A33 /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300A782622A391E000EF7A33 /* JSONValue.swift */; };
 		300D3EB9229EB5ED00E0CB52 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300D3EB8229EB5ED00E0CB52 /* OutputView.swift */; };
+		3033F19D22BB769100FADD3B /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3033F19C22BB769100FADD3B /* GrammarChecker.swift */; };
 		303E66AD22B9150E009789A1 /* StringUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303E66AC22B9150E009789A1 /* StringUtility.swift */; };
 		30498C6122B086E1008045D8 /* Keyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30498C6022B086E1008045D8 /* Keyword.swift */; };
 		30515C3E22A6EE6200A3A234 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30515C3D22A6EE6200A3A234 /* Message.swift */; };
@@ -36,6 +37,7 @@
 /* Begin PBXFileReference section */
 		300A782622A391E000EF7A33 /* JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValue.swift; sourceTree = "<group>"; };
 		300D3EB8229EB5ED00E0CB52 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
+		3033F19C22BB769100FADD3B /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
 		303E66AC22B9150E009789A1 /* StringUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtility.swift; sourceTree = "<group>"; };
 		30498C6022B086E1008045D8 /* Keyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyword.swift; sourceTree = "<group>"; };
 		30515C3D22A6EE6200A3A234 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				30498C6022B086E1008045D8 /* Keyword.swift */,
 				303E66AC22B9150E009789A1 /* StringUtility.swift */,
 				30D0751A22BB4B4200F97E0B /* Reader.swift */,
+				3033F19C22BB769100FADD3B /* GrammarChecker.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3033F19D22BB769100FADD3B /* GrammarChecker.swift in Sources */,
 				30D0751B22BB4B4200F97E0B /* Reader.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				300A782722A391E000EF7A33 /* JSONValue.swift in Sources */,
