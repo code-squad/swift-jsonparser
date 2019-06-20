@@ -9,12 +9,9 @@
 import Foundation
 
 struct GrammarChecker {
-    static private let arrayPattern = "^\\[\\s*(true|false|\"[^\"]*\"|[\\d]+|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\})\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\}))*)\\s*\\]$"
-    static private let objectPattern = "^\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\}|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\])\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\}|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]))*)\\s*\\}$"
-    
     static func check(input: String) -> Bool {
-        let isJSONArray = match(for: arrayPattern, input: input)
-        let isJSONObject = match(for: objectPattern, input: input)
+        let isJSONArray = match(for: RegexPattern.nestedArray, input: input)
+        let isJSONObject = match(for: RegexPattern.nestedObject, input: input)
         return isJSONArray || isJSONObject
     }
     
