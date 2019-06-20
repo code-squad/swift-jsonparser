@@ -27,9 +27,9 @@ struct Parser {
         }
     }
     
-    private var tokenReader: TokenReader
+    private var tokenReader: Reader<Token>
     
-    init(tokenReader: TokenReader) {
+    init(tokenReader: Reader<Token>) {
         self.tokenReader = tokenReader
     }
     

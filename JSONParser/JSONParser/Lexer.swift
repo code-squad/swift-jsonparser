@@ -29,9 +29,9 @@ struct Lexer {
         Keyword.comma: .comma,
         Keyword.colon: .colon
     ]
-    private var stringReader: StringReader
+    private var stringReader: Reader<Character>
     
-    init(stringReader: StringReader) {
+    init(stringReader: Reader<Character>) {
         self.stringReader = stringReader
     }
     
