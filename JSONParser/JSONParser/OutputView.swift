@@ -9,12 +9,18 @@
 import Foundation
 
 struct OutputView {
+    static private let unsupportedPatternMessage = "지원하지 않는 형식입니다."
     static private let suffixCountDescription = "가 포함되어 있습니다."
     static private let emptyString = ""
     
-    static func printJSONDescription(of value: JSONValue) throws {
+    static func noticeUnsupportedPattern() {
+        print(unsupportedPatternMessage)
+    }
+    
+    static func printJSONDescription(of value: JSONValue) {
         guard let typeCountableJSONValue = value as? JSONValue & TypeCountable else {
-            throw OutputError.impossibleToPrintDescription
+            noticeUnsupportedPattern()
+            return
         }
         printTypeCountDescription(of: typeCountableJSONValue)
     }
