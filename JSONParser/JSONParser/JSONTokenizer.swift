@@ -9,16 +9,15 @@
 import Foundation
 
 struct JSONTokenizer {
-    private let tokens: [Character] = [Token.beginArray, Token.endArray, Token.valueSeparator,Token.beginObject, Token.endObject, Token.nameSeparator]
+    private var tokens: [Character] = [Token.beginArray, Token.endArray, Token.valueSeparator,Token.beginObject, Token.endObject, Token.nameSeparator]
     private var result = [String]()
     private var buffer = ""
- 
     mutating func tokenize(data: String) throws -> [String] {
         for character in data {
             readToken(character: character)
         }
-        let rere = result.filter { !$0.isEmpty }
-        return rere
+        let resultToken = result.filter { !$0.isEmpty }
+        return resultToken
     }
     
     private mutating func readToken(character: Character) {
