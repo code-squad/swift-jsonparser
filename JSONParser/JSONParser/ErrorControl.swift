@@ -14,6 +14,8 @@ enum JSONError: Error {
     case notArray
     case unexpectedSeperator
     case TokensError
+    case parseJSONArrayFailed
+    case parseJSONObjectFailed
     
     var localizedDescription: String {
         switch self {
@@ -27,6 +29,10 @@ enum JSONError: Error {
             return "예상치 못한 ,가 나왔습니다."
         case .TokensError:
             return "다음 token 값이 없습니다."
+        case .parseJSONArrayFailed:
+            return "JSONArray 파싱에 실패하였습니다."
+        case .parseJSONObjectFailed:
+            return "JSONObject 파싱에 실패하였습니다."
         }
     }
 }
