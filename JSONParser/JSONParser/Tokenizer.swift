@@ -13,12 +13,12 @@ struct Tokenizer {
     
     static func execute(jsonData: String) throws -> [String] {
         let blankAddedData = jsonData.replacingOccurrences(of: JSONSymbols.comma.inString, with: commaWithBlank)
-        let tokens = try tokenize(blankAddedData)
+        let tokens = tokenize(blankAddedData)
         if tokens.isEmpty { throw TokenizerError.impossibleToTokenize }
         return tokens
     }
     
-    private static func tokenize(_ jsonData: String) throws -> [String] {
+    private static func tokenize(_ jsonData: String) -> [String] {
         var tokens = [String]()
         var token = String()
         var isOutOfString = true
