@@ -13,6 +13,10 @@ struct OutputView {
     static private let suffixCountDescription = "가 포함되어 있습니다."
     static private let emptyString = ""
     
+    static func printMessage(of error: JSONError) {
+        print(error.message)
+    }
+    
     static func noticeUnsupportedPattern() {
         print(unsupportedPatternMessage)
     }
