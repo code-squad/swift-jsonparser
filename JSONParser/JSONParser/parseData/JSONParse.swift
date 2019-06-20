@@ -8,27 +8,37 @@
 
 import Foundation
 
-protocol countable {
-    var countNumbers:countNumbers { get }
+protocol countable:JSONValue {
+    var countNumbers:(string: Int, int: Int, bool: Int, allData: Int, object: Int) { get }
 }
 
-struct JSONParse:countable {
-    init(_ parsedData:[String:JSONValue], countNumbers:countNumbers) {
-        self.parsedJSONValue = parsedData
-        self.countString = countNumbers.string
-        self.countInt = countNumbers.int
-        self.countBool = countNumbers.bool
+struct JSONObject:countable {
+    init(parsingData:[String:JSONValue], Numbers:CountNumbers) {
+        self.dictionary = parsingData
+        (self.countString, self.countInt, self.countBool) = Numbers
     }
-    
-    var countNumbers:countNumbers {
-        return (self.countString, self.countInt, self.countBool)
+    private var dictionary:[String:JSONValue] = [:]
+    private var countString:Int = 0, countInt:Int = 0, countBool:Int = 0, countObject:Int = 0
+    private var countAllData:Int { return dictionary.count}
+    var countNumbers:(string: Int, int: Int, bool: Int, allData: Int, object: Int) {
+        return (self.countString, self.countInt, self.countBool, self.countAllData, self.countObject)
     }
-    
-    private var parsedJSONValue:[JSONValue]
-    private var countString = 0
-    private var countInt = 0
-    private var countBool = 0
-    
+    var typeDescription: String { return "JSONParseObject" }
+}
+
+struct JSONArray:countable {
+    init(parsingData:[JSONValue], Numbers:CountNumbers, objectNumber:Int = 0) {
+        self.array = parsingData
+        (self.countString, self.countInt, self.countBool) = Numbers
+        self.countObject = objectNumber
+    }
+    private var array:[JSONValue] = []
+    private var countString:Int = 0, countInt:Int = 0, countBool:Int = 0, countObject:Int = 0
+    private var countAllData:Int { return array.count}
+    var countNumbers:(string: Int, int: Int, bool: Int, allData: Int, object: Int) {
+        return (self.countString, self.countInt, self.countBool, self.countAllData, self.countObject)
+    }
+    var typeDescription: String { return "JSONParseArray" }
 }
 
 
