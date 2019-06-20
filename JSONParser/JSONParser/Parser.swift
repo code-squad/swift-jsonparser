@@ -59,13 +59,10 @@ struct Parser {
         
         tokenReader.advance()
         while let token = tokenReader.peek(), token != .closeSquareBracket {
-            if token == .comma {
-                tokenReader.advance()
-                continue
-            }
             let jsonValue = try parseJSONValue()
             jsonArray.append(jsonValue)
             tokenReader.advance()
+            skipCommaToken()
         }
         return jsonArray
     }
@@ -75,14 +72,11 @@ struct Parser {
         
         tokenReader.advance()
         while let token = tokenReader.peek(), token != .closeCurlyBracket {
-            if token == .comma {
-                tokenReader.advance()
-                continue
-            }
             if let (key, value) = try parseKeyValue() {
                 jsonObject.updateValue(value, forKey: key)
             }
             tokenReader.advance()
+            skipCommaToken()
         }
         return jsonObject
     }
@@ -98,5 +92,11 @@ struct Parser {
         tokenReader.advance()
         let value = try parseJSONValue()
         return (key, value)
+    }
+    
+    private mutating func skipCommaToken() {
+        if let token = tokenReader.peek(), token == .comma {
+            tokenReader.advance()
+        }
     }
 }
