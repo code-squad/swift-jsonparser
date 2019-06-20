@@ -9,23 +9,34 @@
 import XCTest
 
 class FormatTest: XCTestCase {
-    
+
     func testCorrectFormatOfJSON() {
-        XCTAssertNoThrow(try Validator.JSONArrayformat(input: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]"))
+        var dataParser = DataParsingFactory()
+        XCTAssertNoThrow(try dataParser.makeParsingData(input: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]"))
     }
 
     func testInCorrectFormatOfJSON() {
-        XCTAssertThrowsError(try Validator.JSONArrayformat(input: " 10, \"jk\", 4, \"314\", 99, \"crong\", false"))
+        var dataParser = DataParsingFactory()
+        XCTAssertThrowsError(try dataParser.makeParsingData(input: " 10, \"jk\", 4, \"314\", 99, \"crong\", false"))
     }
     
-    func testCanConvertData() {
+    func testCanConvertArray() {
         var dataParser = DataParsingFactory()
-        XCTAssertNoThrow(try dataParser.makeParsingData(data: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]"))
+        XCTAssertNoThrow(try dataParser.makeParsingData(input: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]"))
     }
     
     func testContainCanNotConvertData() {
         var dataParser = DataParsingFactory()
-        XCTAssertThrowsError(try dataParser.makeParsingData(data: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, canNotConvertData]"))
+        XCTAssertThrowsError(try dataParser.makeParsingData(input: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, canNotConvertData]"))
     }
-
+    
+    func testCanConvertArrayContainObject() {
+        var dataParser = DataParsingFactory()
+        XCTAssertNoThrow(try dataParser.makeParsingData(input: "[{ \"name\" : \"KIM JUNG\"}, { \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, true, 5, \"alias\"]"))
+    }
+    
+    func testCanNotConvertArrayContainObject() {
+        var dataParser = DataParsingFactory()
+        XCTAssertThrowsError(try dataParser.makeParsingData(input: "[ {\"name\" : \"KIM JUNG\", { \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, true, 5, \"alias\"]"))
+    }
 }
