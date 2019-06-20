@@ -47,14 +47,6 @@ enum JSONValueFactoryError: String, JSONError {
     }
 }
 
-enum OutputError: String, JSONError {
-    case impossibleToPrintDescription = "json value의 정보를 출력할 수 없습니다."
-    
-    var message: String {
-        return self.rawValue
-    }
-}
-
 enum GrammarCheckerError: String, JSONError {
     case invalidRegexPattern = "잘못된 regular expression 형식입니다."
     case unsupportedPattern = "지원하지 않는 형식을 포함하고 있습니다."
