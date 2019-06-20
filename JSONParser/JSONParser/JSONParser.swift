@@ -9,42 +9,40 @@
 import Foundation
 
 struct JSONParser {
-    private var readTokens: TokenReader
+    private var reader: TokenReader
     
     init(tokens: [String]) {
-        self.readTokens = TokenReader(tokens: tokens)
+        self.reader = TokenReader(tokens: tokens)
     }
     
     mutating func parse() throws -> JSONDataType {
-        let tokens = try readTokens.getNextToken()
+        let tokens = try reader.getNextToken()
         switch tokens {
         case "[" :
-           return try parseArray()
+            return try parseArray()
         case "{" :
-           return  try parseObject()
+            return  try parseObject()
         default :
             throw JSONError.TokensError
         }
     }
     
-    
-    mutating func parseArray() throws -> JSONDataType {
-        var token = try readTokens.getNextToken()
+    private mutating func parseArray() throws -> JSONDataType {
+        var token = try reader.getNextToken()
         var result = [JSONDataType]()
         while String(Token.endArray) != token {
             if token == String(Token.valueSeparator){
-                token = try readTokens.getNextToken()
+                token = try reader.getNextToken()
             }
-            
-            let value = try parseSingleValue(data: token)
+            let value = try self.parseMultiValue(token)
             result.append(value)
-            token = try readTokens.getNextToken()
+            token = try reader.getNextToken()
         }
         return result
     }
     
     
-    private  func parseString(data: String) -> String? {
+    private func parseString(data: String) -> String? {
         guard data.first == "\"" && data.last == "\"" else {
             return nil
         }
@@ -64,36 +62,36 @@ struct JSONParser {
     
     private mutating func parseObject() throws -> JSONDataType {
         var objectData = Dictionary<String, JSONDataType>()
-        var token = try readTokens.getNextToken()
+        var token = try reader.getNextToken()
         while String(Token.endObject) != token {
             if String(Token.valueSeparator) == token {
-                token = try readTokens.getNextToken()
+                token = try reader.getNextToken()
             }
             if isString(token: token) {
                 let key = token
-                token = try readTokens.getNextToken()
+                token = try reader.getNextToken()
                 let value = try parseSingleValue(data: token)
                 objectData[key] = value
             }
-            token = try readTokens.getNextToken()
+            token = try reader.getNextToken()
         }
         return objectData
     }
     
-    private mutating func isString(token: String) -> Bool {
+    private func isString(token: String) -> Bool {
         let firstCharacter = token.first
         return Token.quatationMark == firstCharacter
     }
     
-    mutating func scanToken(token: String?) throws -> (String,JSONDataType){
+    private mutating func scanToken(token: String?) throws -> (String,JSONDataType){
         guard let key = token else { throw JSONError.TokensError }
-        let token = try readTokens.getNextToken()
+        let token = try reader.getNextToken()
         let value = try parseSingleValue(data: token)
         return (key,value)
     }
     
-    
-    func parseSingleValue(data: String) throws -> JSONDataType {
+    private mutating func parseSingleValue(data: String) throws -> JSONDataType {
+        print(data)
         if let string = parseString(data: data) {
             return string
         } else if let number = parseNumber(data: data) {
@@ -101,7 +99,6 @@ struct JSONParser {
         } else if let bool = parseBool(data: data) {
             return bool
         }
-        
         throw JSONError.wrongValue
     }
     
@@ -112,7 +109,7 @@ struct JSONParser {
         case String(Token.beginArray):
             return try parseArray()
         case String(Token.nameSeparator):
-            return try parseMultiValue(try readTokens.getNextToken())
+            return try parseMultiValue(try reader.getNextToken())
         default:
             return try parseSingleValue(data: token)
         }
