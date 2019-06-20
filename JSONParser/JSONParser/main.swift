@@ -8,26 +8,29 @@
 
 import Foundation
 
-func main() {
-    InputView.printInstruction()
+func parseIntoJSON(from input: String) -> JSONValue? {
     do {
-        let input = try InputView.read()
-        let isJSONPattern = try GrammarChecker.check(input: input)
-        if isJSONPattern {
-            let tokens = try Tokenizer.execute(jsonData: input)
-            var jsonParser = Parser(tokens: tokens)
-            let parsedValue = try jsonParser.parse()
-            try OutputView.printJSONDescription(of: parsedValue)
-        } else {
-            print(GrammarCheckerError.unsupportedPattern.message)
-        }
+        let tokens = try Tokenizer.execute(jsonData: input)
+        var jsonParser = Parser(tokens: tokens)
+        let parsedValue = try jsonParser.parse()
+        return parsedValue
     } catch let error as JSONError {
-        print(error.message)
-        return
+        OutputView.printMessage(of: error)
+        return nil
     } catch {
         print("Other Unexpected Error")
+        return nil
+    }
+}
+
+func main() {
+    InputView.printInstruction()
+    let input = InputView.read()
+    guard GrammarChecker.check(input: input), let jsonData = parseIntoJSON(from: input) else {
+        OutputView.noticeUnsupportedPattern()
         return
     }
+    OutputView.printJSONDescription(of: jsonData)
 }
 
 main()
