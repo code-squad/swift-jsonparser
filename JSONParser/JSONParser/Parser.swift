@@ -35,7 +35,7 @@ struct Parser {
                 unfinishedTokens.removeAll()
             }
             
-            if unfinishedTokens.first == " " || unfinishedTokens.first == "," {
+            if unfinishedTokens.first == String(JsonElement.whitespace) || unfinishedTokens.first == String(JsonElement.comma) {
                 unfinishedTokens.removeAll()
             }
         }
@@ -55,7 +55,11 @@ struct Parser {
         for token in objectTokens {
             let refineResult = try refine(object: token)
             
-            data[refineResult[0]] = try convert(tokens: [refineResult[2]])
+            guard let key = refineResult.first, let value = refineResult.last else {
+                throw ParseError.invalidValue
+            }
+            
+            data[key] = try convert(tokens: [value])
         }
         
         return try JsonObject(object: data)
@@ -70,7 +74,7 @@ struct Parser {
             }
         }
         
-        if unfinishedTokens.first == " " || unfinishedTokens.first == "," {
+        if unfinishedTokens.first == String(JsonElement.whitespace) || unfinishedTokens.first == String(JsonElement.comma) {
             return false
         }
         
@@ -109,7 +113,7 @@ struct Parser {
                 unfinishedTokens.removeAll()
             }
             
-            if unfinishedTokens.first == " " {
+            if unfinishedTokens.first == String(JsonElement.whitespace) {
                 unfinishedTokens.removeAll()
             }
         }
