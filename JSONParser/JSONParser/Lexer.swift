@@ -64,10 +64,8 @@ struct Lexer {
                 return .number(number)
             }
             
-            switch string {
-            case Keyword.true: return .true
-            case Keyword.false: return .false
-            default: throw Lexer.Error.invalidCharacter(nextCharacter)
+            if let bool = Bool(string) {
+                return .bool(bool)
             }
         }
         

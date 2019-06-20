@@ -15,8 +15,7 @@ enum Token: Equatable {
     case closeSquareBracket
     case comma
     case colon
-    case `true`
-    case `false`
     case string(String)
     case number(Int)
+    case bool(Bool)
 }
