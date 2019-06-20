@@ -16,8 +16,10 @@ struct Tokenizer {
         let mark: [Character] = ["[","]","\"",","]
         
         func tempToTokens() {
-            tokens.append(temp)
-            temp.removeAll()
+            if !temp.isEmpty {
+                tokens.append(temp)
+                temp.removeAll()
+            }
         }
         
         for character in input {
