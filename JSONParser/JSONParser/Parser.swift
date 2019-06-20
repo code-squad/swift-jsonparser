@@ -61,11 +61,16 @@ class Parser {
                 let rawValue = scanner.nextToken() else {
                     continue
             }
-            guard let value = makeJSONType(by: rawValue) else {
-                continue
-            }
             let key = token
-            objectData[key] = value
+            
+            if let parseMethod = parseTable[rawValue] {
+                objectData[key] = parseMethod(self)()
+            } else {
+                guard let value = makeJSONType(by: rawValue) else {
+                    continue
+                }
+                objectData[key] = value
+            }
         }
         return objectData
     }
