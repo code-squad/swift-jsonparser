@@ -36,6 +36,7 @@ class Parser {
             guard token != JSONKeyword.rightSquareBracket else {
                 return arrayData
             }
+            
             if let parseMethod = parseTable[token] {
                 arrayData.append(parseMethod(self)())
             } else {
@@ -55,16 +56,15 @@ class Parser {
             guard token != JSONKeyword.rightCurlyBracket else {
                 return objectData
             }
-            guard token == JSONKeyword.colon else {
-                continue
-            }
-            guard let key = scanner.peekPreviousToken,
-                let rawValue = scanner.peekNextToken else {
-                continue
+            
+            guard scanner.nextToken() == JSONKeyword.colon,
+                let rawValue = scanner.nextToken() else {
+                    continue
             }
             guard let value = makeJSONType(by: rawValue) else {
                 continue
             }
+            let key = token
             objectData[key] = value
         }
         return objectData

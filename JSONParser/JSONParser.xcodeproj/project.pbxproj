@@ -100,9 +100,9 @@
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
 				FA2C142A229701D30002F8A9 /* View */,
+				FADB7D9222B8CF45006E5AA5 /* GrammerChecker.swift */,
 				FAEC4C562291985700122FBE /* Tokenizer.swift */,
 				FAEC4C582291989200122FBE /* Parser.swift */,
-				FADB7D9222B8CF45006E5AA5 /* GrammerChecker.swift */,
 				FADB7D9022B8CC1F006E5AA5 /* TokenScanner.swift */,
 				FA43C77F228AE36000BAB081 /* Converter.swift */,
 				FAEC4C5A2291998B00122FBE /* JSONValueType.swift */,
