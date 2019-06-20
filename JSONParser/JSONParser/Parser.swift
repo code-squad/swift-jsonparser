@@ -36,7 +36,6 @@ struct Parser {
     mutating func parseJSONValue() throws -> JSONValue {
         
         defer {
-            tokenReader.advance()
             skipCommaToken()
         }
         
@@ -96,6 +95,7 @@ struct Parser {
     }
     
     private mutating func skipCommaToken() {
+        tokenReader.advance()
         if let token = tokenReader.peek(), token == .comma {
             tokenReader.advance()
         }
