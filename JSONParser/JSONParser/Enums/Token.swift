@@ -11,7 +11,6 @@ import Foundation
 enum Token: Equatable {
     case number(Int)
     case bool(Bool)
-    case value(String)
     case string(String)
     
     case ws
@@ -49,9 +48,6 @@ enum Token: Equatable {
             return "["
         case .rightBraket:
             return "]"
-        case .value(let value):
-            return "\(value)"
-            
         }
     }
     

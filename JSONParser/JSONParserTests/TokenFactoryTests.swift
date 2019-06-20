@@ -34,16 +34,7 @@ class TokenFactoryTests: XCTestCase {
         //Then
         XCTAssertEqual(token, Token.bool(true))
     }
-    
-    func testCreateValueToken() {
-        //When
-        let input = "Hello"
-        let token = self.tokenFactory.create(string: input)
-        
-        //Then
-        XCTAssertEqual(token, Token.value("Hello"))
-    }
-    
+  
     func testCreateWhiteSpaceToken() {
         //When
         let input = " "

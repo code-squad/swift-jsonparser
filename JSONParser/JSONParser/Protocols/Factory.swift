@@ -11,5 +11,5 @@ import Foundation
 protocol Factory {
     associatedtype T
     
-    func create(string: String) -> T
+    func create(string: String) -> T?
 }

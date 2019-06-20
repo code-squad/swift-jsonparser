@@ -11,8 +11,8 @@ import Foundation
 struct TokenFactory: Factory {
     typealias T = Token
     
-    func create(string: String) -> Token {
-        var token: Token
+    func create(string: String) -> Token? {
+        var token: Token?
         
         if (string.isNumber) {
             token = Token.number(Int(string)!)
@@ -46,9 +46,6 @@ struct TokenFactory: Factory {
         }
         else if (string.isRightBraket) {
             token = Token.rightBraket
-        }
-        else {
-            token = Token.value(string)
         }
         return token
     }
