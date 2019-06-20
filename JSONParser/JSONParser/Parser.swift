@@ -35,6 +35,11 @@ struct Parser {
     
     mutating func parseJSONValue() throws -> JSONValue {
         
+        defer {
+            tokenReader.advance()
+            skipCommaToken()
+        }
+        
         if let token = tokenReader.peek() {
             switch token {
             case .openSquareBracket:
@@ -61,8 +66,6 @@ struct Parser {
         while let token = tokenReader.peek(), token != .closeSquareBracket {
             let jsonValue = try parseJSONValue()
             jsonArray.append(jsonValue)
-            tokenReader.advance()
-            skipCommaToken()
         }
         return jsonArray
     }
@@ -75,8 +78,6 @@ struct Parser {
             if let (key, value) = try parseKeyValue() {
                 jsonObject.updateValue(value, forKey: key)
             }
-            tokenReader.advance()
-            skipCommaToken()
         }
         return jsonObject
     }
