@@ -26,11 +26,3 @@ func main() {
 }
 
 main()
-
-// { "name" : "MINJI CHO", "alias" : "mindy", "level" : 2, "married" : false }
-
-// [ { "name" : "MINJI CHO", "alias" : "mindy", "level" : 2, "married" : false },{ "name" : "HELLO HI", "alias" : "hi", "level" : 4, "married" : true } ]
-
-// [ { "name" : "MINJI CHO", "alias" : "mindy", "level" : 2, "married" : false },true, "hihi", false, { "name" : "HELLO HI", "alias" : "hi", "level" : 4, "married" : true } ]
-
-// [ { "name" : "MINJI CHO", "alias" : "mindy", "level" : 2, "married" : false },{ "name" : "HELLO HI", "alias" : "hi", "level" : 4, "married" : true }, true, "hello, world!", "{}{" ]
