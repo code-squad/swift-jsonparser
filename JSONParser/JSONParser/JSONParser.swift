@@ -15,29 +15,34 @@ struct JSONParser {
         self.readTokens = TokenReader(tokens: tokens)
     }
     
-     func parseArray(tokens: [String]) -> [JSONDataType]? {
+    mutating func parse() throws -> JSONDataType {
+        let tokens = try readTokens.getNextToken()
+        switch tokens {
+        case "[" :
+           return try parseArray()
+        case "{" :
+           return  try parseObject()
+        default :
+            throw JSONError.TokensError
+        }
+    }
+    
+    
+    mutating func parseArray() throws -> JSONDataType {
+        var token = try readTokens.getNextToken()
         var result = [JSONDataType]()
-        guard tokens.first == "[" else { return nil }
-        var reader = TokenReader(tokens: tokens)
-        
-        while let token = reader.getNextToken() {
-            if let value = parseValue(data: token) {
-                result.append(value)
+        while String(Token.endArray) != token {
+            if token == String(Token.valueSeparator){
+                token = try readTokens.getNextToken()
             }
+            
+            let value = try parseSingleValue(data: token)
+            result.append(value)
+            token = try readTokens.getNextToken()
         }
         return result
     }
     
-     func parseValue(data: String) -> JSONDataType? {
-        if let string = parseString(data: data) {
-            return string
-        } else if let number = parseNumber(data: data) {
-            return number
-        } else if let bool = parseBool(data: data) {
-            return bool
-        }
-        return nil
-    }
     
     private  func parseString(data: String) -> String? {
         guard data.first == "\"" && data.last == "\"" else {
@@ -57,36 +62,59 @@ struct JSONParser {
         return Bool(data)
     }
     
-    private mutating func parseObject(data: String) throws -> [String: JSONDataType]? {
+    private mutating func parseObject() throws -> JSONDataType {
         var objectData = Dictionary<String, JSONDataType>()
-        var token = readTokens.getNextToken()
-        
+        var token = try readTokens.getNextToken()
         while String(Token.endObject) != token {
             if String(Token.valueSeparator) == token {
-                token = readTokens.getNextToken()
+                token = try readTokens.getNextToken()
             }
-            if isString(token: data) {
-                let (key,value) = try scanToken(token: data)
+            if isString(token: token) {
+                let key = token
+                token = try readTokens.getNextToken()
+                let value = try parseSingleValue(data: token)
                 objectData[key] = value
             }
-            token = readTokens.getNextToken()
+            token = try readTokens.getNextToken()
         }
         return objectData
     }
     
-    private mutating func isString(token: String)-> Bool {
-        let firstCharacter = token[token.startIndex]
+    private mutating func isString(token: String) -> Bool {
+        let firstCharacter = token.first
         return Token.quatationMark == firstCharacter
     }
     
     mutating func scanToken(token: String?) throws -> (String,JSONDataType){
         guard let key = token else { throw JSONError.TokensError }
-        guard let token = readTokens.getNextToken() else {
-            throw JSONError.TokensError
-        }
-        guard let value = parseValue(data: token) else {
-            throw JSONError.TokensError
-        }
+        let token = try readTokens.getNextToken()
+        let value = try parseSingleValue(data: token)
         return (key,value)
+    }
+    
+    
+    func parseSingleValue(data: String) throws -> JSONDataType {
+        if let string = parseString(data: data) {
+            return string
+        } else if let number = parseNumber(data: data) {
+            return number
+        } else if let bool = parseBool(data: data) {
+            return bool
+        }
+        
+        throw JSONError.wrongValue
+    }
+    
+    private mutating func parseMultiValue(_ token: String) throws -> JSONDataType {
+        switch token {
+        case String(Token.beginObject):
+            return try parseObject()
+        case String(Token.beginArray):
+            return try parseArray()
+        case String(Token.nameSeparator):
+            return try parseMultiValue(try readTokens.getNextToken())
+        default:
+            return try parseSingleValue(data: token)
+        }
     }
 }
