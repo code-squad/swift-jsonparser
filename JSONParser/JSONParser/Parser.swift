@@ -43,6 +43,24 @@ struct Parser {
         return try JsonArray(array: data)
     }
     
+    private static func parse(object: [String]) throws -> JsonObject {
+        var tokens = object
+        tokens.removeFirst()
+        tokens.removeLast()
+        
+        var data: [String : JsonType] = [:]
+        
+        let objectTokens = separateObject(tokens: tokens)
+        
+        for token in objectTokens {
+            let refineResult = try refine(object: token)
+            
+            data[refineResult[0]] = try convert(tokens: [refineResult[2]])
+        }
+        
+        return try JsonObject(object: data)
+    }
+    
     private static func isTokenFinish(_ unfinishedTokens: [String]) -> Bool {
         let pairResult = JsonElement.pair(value: unfinishedTokens.first?.first)
         
@@ -59,15 +77,44 @@ struct Parser {
         return true
     }
     
-    private static func parse(object: [String]) throws -> JsonObject {
-        var tokens = object
-        tokens.removeFirst()
-        tokens.removeLast()
+    private static func separateObject(tokens: [String]) -> [[String]] {
+        var objectTokens: [[String]] = []
+        var unfinishedTokens: [String] = []
         
-        var unfinishedToken = ""
-        var data: [String : JsonType] = [:]
+        for token in tokens {
+            if token == String(JsonElement.comma) {
+                objectTokens.append(unfinishedTokens)
+                unfinishedTokens.removeAll()
+                
+                continue
+            }
+            
+            unfinishedTokens.append(token)
+        }
         
-        return try JsonObject(object: data)
+        objectTokens.append(unfinishedTokens)
+        
+        return objectTokens
+    }
+    
+    private static func refine(object: [String]) throws -> [String] {
+        var unfinishedTokens: [String] = []
+        var result: [String] = []
+        
+        for token in object {
+            unfinishedTokens.append(token)
+            
+            if isTokenFinish(unfinishedTokens) {
+                result.append(unfinishedTokens.joined())
+                unfinishedTokens.removeAll()
+            }
+            
+            if unfinishedTokens.first == " " {
+                unfinishedTokens.removeAll()
+            }
+        }
+        
+        return result
     }
     
     private static func convert(tokens: [String]) throws -> JsonType {
