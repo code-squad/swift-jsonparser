@@ -72,26 +72,31 @@ struct Parser {
     
     private mutating func parseJSONObject() throws -> [String: JSONValue] {
         var jsonObject = [String: JSONValue]()
-        var key = ""
         
         tokenReader.advance()
         while let token = tokenReader.peek(), token != .closeCurlyBracket {
-            
-            if token == .comma || token == .colon {
+            if token == .comma {
                 tokenReader.advance()
                 continue
             }
-            
-            let value = try parseJSONValue()
-            
-            if let string = value.string {
-                key = string
-            } else {
+            if let (key, value) = try parseKeyValue() {
                 jsonObject.updateValue(value, forKey: key)
-                key = ""
             }
             tokenReader.advance()
         }
         return jsonObject
+    }
+    
+    private mutating func parseKeyValue() throws -> (String, JSONValue)? {
+        guard case let .string(key)? = tokenReader.peek() else {
+            return nil
+        }
+        tokenReader.advance()
+        guard tokenReader.peek() == .colon else {
+            return nil
+        }
+        tokenReader.advance()
+        let value = try parseJSONValue()
+        return (key, value)
     }
 }
