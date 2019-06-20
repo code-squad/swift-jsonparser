@@ -8,10 +8,10 @@
 
 import Foundation
 
-func main() {
+func run() {
     let input: String
     let tokens: [Token]
-    let jsonArray: [JSONValue]
+    let jsonValue: JSONValue
     
     do {
         input = try InputView.readJSONData()
@@ -24,7 +24,9 @@ func main() {
     }
     
     do {
-        var lexer = Lexer(input: input)
+        let characters = Array(input)
+        let stringReader = Reader(elements: characters)
+        var lexer = Lexer(stringReader: stringReader)
         tokens = try lexer.tokenize()
     } catch let error as Lexer.Error {
         print(error.localizedDescription)
@@ -35,8 +37,9 @@ func main() {
     }
     
     do {
-        var parser = Parser(tokens: tokens)
-        jsonArray = try parser.parse()
+        let tokenReader = Reader(elements: tokens)
+        var parser = Parser(tokenReader: tokenReader)
+        jsonValue = try parser.parseJSONValue()
     } catch let error as Parser.Error {
         print(error.localizedDescription)
         return
@@ -45,7 +48,7 @@ func main() {
         return
     }
     
-    OutputView.printJSONArray(jsonArray)
+    OutputView.printJSONValue(jsonValue)
 }
 
-main()
+run()

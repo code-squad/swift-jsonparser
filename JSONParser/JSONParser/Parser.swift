@@ -13,9 +13,7 @@ struct Parser {
     enum Error: Swift.Error {
         case invalidToken(Token)
         case notExistToken
-        case parseStringFailed
         case parseJSONValueFailed
-        case parseJSONArrayFailed
         
         var localizedDescription: String {
             switch self {
@@ -23,39 +21,26 @@ struct Parser {
                 return "유효하지 않은 토큰 \(token) 입니다."
             case .notExistToken:
                 return "토큰이 존재하지 않습니다."
-            case .parseStringFailed:
-                return "문자열 파싱에 실패하였습니다."
             case .parseJSONValueFailed:
                 return "JSONValue 파싱에 실패하였습니다."
-            case .parseJSONArrayFailed:
-                return "JSONArray 파싱에 실패하였습니다."
             }
         }
     }
     
-    private var isTokenAvailable: Bool {
-        return position < tokens.count
-    }
-    private let tokens: [Token]
-    private var position = 0
+    private var tokenReader: Reader<Token>
     
-    init(tokens: [Token]) {
-        self.tokens = tokens
+    init(tokenReader: Reader<Token>) {
+        self.tokenReader = tokenReader
     }
     
-    private mutating func getNextToken() -> Token? {
-        guard isTokenAvailable else {
-            return nil
-        }
-        let token = tokens[position]
-        position += 1
-        return token
-    }
-    
-    private mutating func getValue() throws -> JSONValue {
+    mutating func parseJSONValue() throws -> JSONValue {
         
-        if let token = getNextToken() {
+        if let token = tokenReader.peek() {
             switch token {
+            case .openSquareBracket:
+                return try parseJSONArray()
+            case .openCurlyBracket:
+                return try parseJSONObject()
             case .string(let string):
                 return string
             case .number(let number):
@@ -69,24 +54,49 @@ struct Parser {
         throw Parser.Error.parseJSONValueFailed
     }
     
-    private mutating func getJSONArray() throws -> [JSONValue] {
+    private mutating func parseJSONArray() throws -> [JSONValue] {
         var jsonArray = [JSONValue]()
         
-        while let token = getNextToken() {
-            switch token {
-            case .openSquareBracket, .comma:
-                let value = try getValue()
-                jsonArray.append(value)
-            case .closeSquareBracket:
-                return jsonArray
-            default:
-                throw Parser.Error.invalidToken(token)
-            }
+        tokenReader.advance()
+        while let token = tokenReader.peek(), token != .closeSquareBracket {
+            let jsonValue = try parseJSONValue()
+            jsonArray.append(jsonValue)
+            tokenReader.advance()
+            skipCommaToken()
         }
-        throw Parser.Error.parseJSONArrayFailed
+        return jsonArray
     }
     
-    mutating func parse() throws -> [JSONValue] {
-        return try getJSONArray()
+    private mutating func parseJSONObject() throws -> [String: JSONValue] {
+        var jsonObject = [String: JSONValue]()
+        
+        tokenReader.advance()
+        while let token = tokenReader.peek(), token != .closeCurlyBracket {
+            if let (key, value) = try parseKeyValue() {
+                jsonObject.updateValue(value, forKey: key)
+            }
+            tokenReader.advance()
+            skipCommaToken()
+        }
+        return jsonObject
+    }
+    
+    private mutating func parseKeyValue() throws -> (String, JSONValue)? {
+        guard case let .string(key)? = tokenReader.peek() else {
+            return nil
+        }
+        tokenReader.advance()
+        guard tokenReader.peek() == .colon else {
+            return nil
+        }
+        tokenReader.advance()
+        let value = try parseJSONValue()
+        return (key, value)
+    }
+    
+    private mutating func skipCommaToken() {
+        if let token = tokenReader.peek(), token == .comma {
+            tokenReader.advance()
+        }
     }
 }

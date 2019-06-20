@@ -10,7 +10,13 @@ import Foundation
 
 struct OutputView {
     
-    static func printJSONArray(_ jsonArray: [JSONValue]) {
-        print(jsonArray.containerDescription)
+    static func printJSONValue(_ jsonValue: JSONValue) {
+        if let jsonContainerValue = jsonValue as? JSONContainerValue {
+            printJSONContainerValue(jsonContainerValue)
+        }
+    }
+    
+    private static func printJSONContainerValue(_ jsonContainerValue: JSONContainerValue) {
+        print(jsonContainerValue.containerDescription)
     }
 }
