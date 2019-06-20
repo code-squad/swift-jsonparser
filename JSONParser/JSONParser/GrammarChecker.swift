@@ -12,15 +12,15 @@ struct GrammarChecker {
     static private let arrayPattern = "^\\[\\s*(true|false|\"[^\"]*\"|[\\d]+|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\})\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\}))*)\\s*\\]$"
     static private let objectPattern = "^\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\}|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\])\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+|\\{\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*\"[^\"]+\"\\s*\\:\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\}|\\[\\s*(true|false|\"[^\"]*\"|[\\d]+)\\s*((?:,\\s*(true|false|\"[^\"]*\"|[\\d]+))*)\\s*\\]))*)\\s*\\}$"
     
-    static func check(input: String) throws -> Bool {
-        let isJSONArray = try match(for: arrayPattern, input: input)
-        let isJSONObject = try match(for: objectPattern, input: input)
+    static func check(input: String) -> Bool {
+        let isJSONArray = match(for: arrayPattern, input: input)
+        let isJSONObject = match(for: objectPattern, input: input)
         return isJSONArray || isJSONObject
     }
     
-    static private func match(for pattern: String, input: String) throws -> Bool {
+    static private func match(for pattern: String, input: String) -> Bool {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else {
-            throw GrammarCheckerError.invalidRegexPattern
+            return false
         }
         let range = NSRange(input.startIndex...,  in: input)
         let matches = regex.matches(in: input, options: [], range: range)
