@@ -91,7 +91,6 @@ struct JSONParser {
     }
     
     private mutating func parseSingleValue(data: String) throws -> JSONDataType {
-        print(data)
         if let string = parseString(data: data) {
             return string
         } else if let number = parseNumber(data: data) {
@@ -115,3 +114,4 @@ struct JSONParser {
         }
     }
 }
+
