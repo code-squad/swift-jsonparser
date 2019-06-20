@@ -13,9 +13,10 @@ struct Tokenizer {
     func tokenize(input: String) -> [String] {
         var temp = ""
         var tokens = Array<String>()
+        var mark: [Character] = ["[","]","\"",","]
         
         for character in input {
-            if character == "," {
+            if mark.contains(character) {
                 tokens.append(temp)
                 temp.removeAll()
                 tokens.append(String(character))
