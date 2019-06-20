@@ -12,14 +12,6 @@ protocol JSONError: Error {
     var message: String { get }
 }
 
-enum InputError: String, JSONError {
-    case invalidInputFormat = "잘못된 입력입니다."
-    
-    var message: String {
-        return self.rawValue
-    }
-}
-
 enum TokenizerError: String, JSONError {
     case impossibleToTokenize = "입력 문자열을 나눌 수 없습니다."
     
