@@ -9,11 +9,10 @@
 import Foundation
 
 do{
-    var dataParser = DataParsingFactory()
-    let input = try InputView.readInput(massage: Massage.requestJSON)
-    let JSON = try Validator.JSONArrayformat(input: input)
-    let parsedData = try dataParser.makeParsingData(data: JSON)
-    OutputView.printResult(countNumber: parsedData)
+    let input = try InputView.readInput(massage: .requestJSON)
+    var factory = DataParsingFactory()
+    let parsedData = try factory.makeParsingData(input: input)
+    OutputView.printResult(data: parsedData)
 } catch let error as JSONError {
     print(error.message)
 }

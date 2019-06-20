@@ -10,11 +10,15 @@ import Foundation
 
 struct OutputView {
     
-    static func printResult(countNumber:countable) {
-        let dataOfString = countNumber.countNumbers.string
-        let dataOfInt = countNumber.countNumbers.int
-        let dataOfBool = countNumber.countNumbers.bool
-        print("총\(dataOfInt + dataOfBool + dataOfString) 개의 데이터 중에 문자열 \(dataOfString)개, 숫자 \(dataOfInt)개, 부울 \(dataOfBool)개가 포함되어 있습니다.")
+    static func printResult(data:countable) {
+        
+        if data.countNumbers.object > 0 {
+            print("총\(data.countNumbers.allData) 개의 데이터 중에 객체 \(data.countNumbers.object)개, 문자열 \(data.countNumbers.string)개, 숫자 \(data.countNumbers.int)개, 부울 \(data.countNumbers.bool)개가 포함되어 있습니다.")
+            return
+        }
+        
+        print("총\(data.countNumbers.allData) 개의 데이터 중에 문자열 \(data.countNumbers.string)개, 숫자 \(data.countNumbers.int)개, 부울 \(data.countNumbers.bool)개가 포함되어 있습니다.")
+        
     }
     
 }
