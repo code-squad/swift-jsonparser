@@ -10,6 +10,7 @@ import Foundation
 
 struct OutputView {
     static private let unsupportedPatternMessage = "지원하지 않는 형식입니다."
+    static private let unexpectedErrorMessage = "Other Unexpected Error"
     static private let suffixCountDescription = "가 포함되어 있습니다."
     static private let emptyString = ""
     
@@ -17,6 +18,9 @@ struct OutputView {
         print(error.message)
     }
     
+    static func printUnexpectedErrorMessage() {
+        print(unexpectedErrorMessage)
+    }
     static func noticeUnsupportedPattern() {
         print(unsupportedPatternMessage)
     }

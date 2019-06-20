@@ -18,7 +18,7 @@ func parseIntoJSON(from input: String) -> JSONValue? {
         OutputView.printMessage(of: error)
         return nil
     } catch {
-        print("Other Unexpected Error")
+        OutputView.printUnexpectedErrorMessage()
         return nil
     }
 }
