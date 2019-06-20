@@ -7,16 +7,33 @@
 //
 
 import Foundation
-struct FormatItem {
-    
-    static let JSONArray = CharacterSet(charactersIn: "[]")
-    static let JSONArrayContainerLeft = "["
-    static let JSONArrayContainerRight = "]"
-    static let JSONObject = CharacterSet(charactersIn: "{}")
-    static let JSONObjectContainerLeft = "{"
-    static let JSONObjectContainerRight = "}"
-    static let blank:Character = " "
-    static let DoubleQuotationMark = CharacterSet(charactersIn: "\"")
-    static let elementSperator = ","
-    
+
+protocol HasFormatItem {
+    var container: CharacterSet { get }
+    var containerOpen:Character { get }
+    var containerClose:Character { get }
+    var blank: Character { get }
+    var elementSperator: String { get }
+}
+
+struct Array:HasFormatItem {
+    var container = CharacterSet(charactersIn: "[]")
+    var containerOpen:Character = "["
+    var containerClose:Character = "]"
+    var blank: Character = " "
+    var elementSperator = ","
+}
+
+struct Object:HasFormatItem {
+    var container = CharacterSet(charactersIn: "{}")
+    var containerOpen:Character = "{"
+    var containerClose:Character = "}"
+    var blank: Character = " "
+    var elementSperator = ","
+}
+
+struct TypeCriterion {
+    static let String = CharacterSet(charactersIn: "\"")
+    static let Int = CharacterSet.decimalDigits
+    static let Bool = (true:"true", false:"false")
 }
