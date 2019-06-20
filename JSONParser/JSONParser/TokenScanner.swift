@@ -9,8 +9,6 @@
 import Foundation
 
 protocol TokenScannable {
-    var peekPreviousToken: String? { get }
-    var peekNextToken: String? { get }
     mutating func nextToken() -> String?
 }
 
@@ -20,23 +18,6 @@ struct TokenScanner: TokenScannable {
     
     init(tokens: [String]) {
         self.tokens = tokens
-    }
-    
-    var peekPreviousToken: String? {
-        guard position > 2 else {
-            return nil
-        }
-        let previousPosition = position - 2
-        let key = tokens[previousPosition]
-        return key
-    }
-    
-    var peekNextToken: String? {
-        guard position < tokens.count else {
-            return nil
-        }
-        let token = tokens[position]
-        return token
     }
     
     mutating func nextToken() -> String? {
