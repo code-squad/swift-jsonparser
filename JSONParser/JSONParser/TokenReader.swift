@@ -8,19 +8,20 @@
 
 import Foundation
 struct TokenReader {
-    private var tokens = [String]()
-    private var currentIndex: Int
+    private var tokens: [String]
+    private var currentIndex: Int = -1
     
     
-    init(tokens: [String]) {
+    init(tokens: [String], currentIndex: Int = -1) {
         self.tokens = tokens
-        self.currentIndex = -1
+        self.currentIndex = currentIndex
     }
     
-    mutating func getNextToken()  -> String? {
+    
+    mutating func getNextToken() throws -> String {
         let nextIndex = currentIndex + 1
         if nextIndex >= tokens.count {
-            return nil
+            throw JSONError.TokensError
         }
         let nextToken = tokens[nextIndex]
         currentIndex = nextIndex
