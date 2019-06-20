@@ -10,10 +10,11 @@ import Foundation
 
 func main(){
     do {
-        var jsonTokenizer = JSONTokenizer()
         let input = try InputView.ask(for: .request)
+        var jsonTokenizer = JSONTokenizer()
         let tokens = try jsonTokenizer.tokenize(data: input)
-        let jsonDatas = JSONParser.parseDataArray(tokens: tokens)
+        var parser = JSONParser(tokens: tokens)
+        let jsonDatas = try parser.parse()
         try OutputView.printDescription(input: jsonDatas)
     } catch {
         print(error.localizedDescription)
