@@ -39,10 +39,7 @@ class Parser {
             
             if let parseMethod = parseTable[token] {
                 arrayData.append(parseMethod(self)())
-            } else {
-                guard let value = makeJSONType(by: token) else {
-                    continue
-                }
+            } else if let value = makeJSONType(by: token) {
                 arrayData.append(value)
             }
         }
@@ -65,10 +62,7 @@ class Parser {
             
             if let parseMethod = parseTable[rawValue] {
                 objectData[key] = parseMethod(self)()
-            } else {
-                guard let value = makeJSONType(by: rawValue) else {
-                    continue
-                }
+            } else if let value = makeJSONType(by: rawValue) {
                 objectData[key] = value
             }
         }
