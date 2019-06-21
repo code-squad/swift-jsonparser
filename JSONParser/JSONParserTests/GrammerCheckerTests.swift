@@ -22,20 +22,20 @@ class GrammerCheckerTests: XCTestCase {
     
     func testCheckOutOfForm() {
         //Then
-        XCTAssertThrowsError(try self.checker.check(format: self.outOfFormJson))
+        XCTAssertFalse(try self.checker.check(format: self.outOfFormJson))
     }
     
     func testCheckListFormat() {
         //Then
-        XCTAssertNoThrow(try self.checker.check(format: self.listFormat))
-        XCTAssertNoThrow(try self.checker.check(format: self.listFormat2))
-        XCTAssertNoThrow(try self.checker.check(format: self.listFormat3))
+        XCTAssertTrue(self.checker.check(format: self.listFormat))
+        XCTAssertTrue(try self.checker.check(format: self.listFormat2))
+        XCTAssertTrue(try self.checker.check(format: self.listFormat3))
     }
     
     
     func testCheckObjectFormat() {
         //Then
-        XCTAssertNoThrow(try self.checker.check(format: self.objectFormat))
+        XCTAssertTrue(self.checker.check(format: self.objectFormat))
     }
     
     func testCheckObjectListFormat() {
@@ -43,7 +43,7 @@ class GrammerCheckerTests: XCTestCase {
         let objectListFormat = "[\(objectFormat), \(objectFormat)]"
         
         //Then
-        XCTAssertNoThrow(try self.checker.check(format: objectListFormat))
+        XCTAssertTrue(self.checker.check(format: objectListFormat))
     }
     
     func testCheckNestedListFormat() {
@@ -51,7 +51,7 @@ class GrammerCheckerTests: XCTestCase {
         let nestedListFormat = "[\(listFormat), \(listFormat)]"
         
         //Then
-        XCTAssertThrowsError(try self.checker.check(format: nestedListFormat))
+        XCTAssertFalse(self.checker.check(format: nestedListFormat))
     }
     
     func testCheckHasObjectListFormat() {
@@ -59,7 +59,7 @@ class GrammerCheckerTests: XCTestCase {
         let hasListObjectFormat = "{ \"list\" : \(listFormat)}"
         
         //Then
-        XCTAssertThrowsError(try self.checker.check(format:hasListObjectFormat))
+        XCTAssertFalse(self.checker.check(format:hasListObjectFormat))
     }
     
     func testCheckHasObjectObjectFormat() {
@@ -67,6 +67,6 @@ class GrammerCheckerTests: XCTestCase {
         let hasObjectObjectFormat = "{ \"list\" : \(self.objectFormat)}"
         
         //Then
-        XCTAssertThrowsError(try self.checker.check(format:hasObjectObjectFormat))
+        XCTAssertFalse(self.checker.check(format:hasObjectObjectFormat))
     }
 }

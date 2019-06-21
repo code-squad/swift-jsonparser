@@ -20,7 +20,7 @@ struct MyTokenizer: Tokenizer {
     
     mutating func tokenize() -> [Token] {
         let units = self.split()
-        let tokens = units.map {
+        let tokens = units.compactMap {
             self.factory.create(string: $0)
         }
         return tokens

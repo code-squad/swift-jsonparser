@@ -9,15 +9,14 @@
 import Foundation
 
 struct ErrorHandler {
-    
     static func handle(error: Error) {
         let outputView = OutputView()
         
         switch error {
         case let error as GrammerChecker.Error:
-            outputView.output(error.localizedDescription)
+            outputView.run(error.localizedDescription)
         default:
-            outputView.output(error.localizedDescription)
+            outputView.run(error.localizedDescription)
         }
     }
 }

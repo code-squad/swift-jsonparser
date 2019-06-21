@@ -10,29 +10,25 @@ import Foundation
 
 struct OutputView {
     let counter = JsonValueCounter()
-    let jsonValue: JsonValue
     
-    
-    init(_ jsonValue: JsonValue ) {
-        self.jsonValue = jsonValue
+    func output(_ json: JsonValue) {
+        print(makeSentence(json: json))
     }
     
-    mutating func run() {
-        let result = self.makeSentence()
-        print(result)
+    func run(_ message: String) {
+        print(message)
     }
     
-    private mutating func makeSentence() -> String {
+    private func makeSentence(json: JsonValue) -> String {
         var result = ""
         var total = 0
-        print(self.jsonValue)
-        let numOf = counter.count(target: self.jsonValue)
-        _ = numOf.map{
+        let countOf = counter.count(target: json)
+        _ = countOf.map{
             result = "\(result) \($0.key) \($0.value)개"
             total += $0.value
         }
         result += "가 포함되어 있습니다."
-        result = "총 \(total)개의 \(self.jsonValue.describeType()) 데이터 중에\(result)"
+        result = "총 \(total)개의 \(json.describeType()) 데이터 중에\(result)"
         return result
     }
     

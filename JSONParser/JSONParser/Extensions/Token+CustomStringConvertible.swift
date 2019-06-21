@@ -33,8 +33,6 @@ extension Token: CustomStringConvertible {
             return "대괄호(좌)"
         case .rightBraket:
             return "대괄호(우)"
-        case .value:
-            return "값"
         }
     }
 }
