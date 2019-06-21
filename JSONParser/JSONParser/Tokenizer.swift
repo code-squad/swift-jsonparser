@@ -10,28 +10,46 @@ import Foundation
 
 struct Tokenizer {
     
-    func tokenize(input: String) -> [String] {
-        var temp = ""
-        var tokens = Array<String>()
-        let mark: [Character] = ["[","]","\"",","]
-        
-        func tempToTokens() {
-            if !temp.isEmpty {
-                tokens.append(temp)
-                temp.removeAll()
-            }
+    private var temp = ""
+    private var tokens = [String]()
+
+    
+    private mutating func tempToTokens() {
+        if !temp.isEmpty {
+            tokens.append(temp)
+            temp.removeAll()
         }
+    }
+    
+    
+    mutating func tokenize(input: String) -> [String] {
+        
+        let structures: [Character] = ["[","]",","]
+        var isString = false // "를 만나야 string이기때문에 기본값은 false
         
         for character in input {
-            if mark.contains(character) {
-                tempToTokens()
-                tokens.append(String(character))
+            
+            if character == "\"" {
+                isString.toggle()
             }
-            else {
+            
+            if isString {
                 temp.append(character)
+            } else {
+                guard character != " " else {
+                    continue
+                }
+                if structures.contains(character) {
+                    tempToTokens()
+                    tokens.append(String(character))
+                } else {
+                    temp.append(character)
+                }
             }
+            
         }
         tempToTokens()
         return tokens
     }
 }
+
