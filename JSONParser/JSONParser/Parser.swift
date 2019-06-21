@@ -68,10 +68,8 @@ struct Parser {
     private static func isTokenFinish(_ unfinishedTokens: [String]) -> Bool {
         let pairResult = JsonElement.pair(value: unfinishedTokens.first?.first)
         
-        if pairResult != unfinishedTokens.last?.last {
-            if pairResult != nil {
-                return false
-            }
+        if pairResult != unfinishedTokens.last?.last, pairResult != nil {
+            return false
         }
         
         if unfinishedTokens.first == String(JsonElement.whitespace) || unfinishedTokens.first == String(JsonElement.comma) {
