@@ -15,11 +15,15 @@ func run() {
     
     do {
         input = try InputView.readJSONData()
+        if !GrammarChecker.checkRule(input, rule: JSONValidationRule()) {
+            print(ErrorMessage.validationFailed)
+            return
+        }
     } catch let error as InputView.Error {
         print(error.localizedDescription)
         return
     } catch {
-        print("\(Message.unexpectedError): \(error)")
+        print("\(ErrorMessage.unexpectedError): \(error)")
         return
     }
     
@@ -32,7 +36,7 @@ func run() {
         print(error.localizedDescription)
         return
     } catch {
-        print("\(Message.unexpectedError): \(error)")
+        print("\(ErrorMessage.unexpectedError): \(error)")
         return
     }
     
@@ -44,7 +48,7 @@ func run() {
         print(error.localizedDescription)
         return
     } catch {
-        print("\(Message.unexpectedError): \(error)")
+        print("\(ErrorMessage.unexpectedError): \(error)")
         return
     }
     
