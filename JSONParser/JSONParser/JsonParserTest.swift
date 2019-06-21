@@ -11,32 +11,32 @@ import XCTest
 class FormatTest: XCTestCase {
 
     func testCorrectFormatOfJSON() {
-        var dataParser = DataParsingFactory()
+        var dataParser = Parser()
         XCTAssertNoThrow(try dataParser.makeParsingData(input: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]"))
     }
 
     func testInCorrectFormatOfJSON() {
-        var dataParser = DataParsingFactory()
+        var dataParser = Parser()
         XCTAssertThrowsError(try dataParser.makeParsingData(input: " 10, \"jk\", 4, \"314\", 99, \"crong\", false"))
     }
     
     func testCanConvertArray() {
-        var dataParser = DataParsingFactory()
+        var dataParser = Parser()
         XCTAssertNoThrow(try dataParser.makeParsingData(input: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false]"))
     }
     
     func testContainCanNotConvertData() {
-        var dataParser = DataParsingFactory()
+        var dataParser = Parser()
         XCTAssertThrowsError(try dataParser.makeParsingData(input: "[ 10, \"jk\", 4, \"314\", 99, \"crong\", false, canNotConvertData]"))
     }
     
     func testCanConvertArrayContainObject() {
-        var dataParser = DataParsingFactory()
+        var dataParser = Parser()
         XCTAssertNoThrow(try dataParser.makeParsingData(input: "[{ \"name\" : \"KIM JUNG\"}, { \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, true, 5, \"alias\"]"))
     }
     
     func testCanNotConvertArrayContainObject() {
-        var dataParser = DataParsingFactory()
+        var dataParser = Parser()
         XCTAssertThrowsError(try dataParser.makeParsingData(input: "[ {\"name\" : \"KIM JUNG\", { \"alias\" : \"JK\", \"level\" : 5, \"married\" : true }, true, 5, \"alias\"]"))
     }
 }

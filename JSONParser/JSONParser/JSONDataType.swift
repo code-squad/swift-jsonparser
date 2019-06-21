@@ -14,6 +14,18 @@ protocol JSONValue {
 
 extension String: JSONValue {
     var typeDescription: String { return "StringType" }
+    
+    func isString() -> Bool {
+        return TypeCriterion.String.isStrictSubset(of: CharacterSet(charactersIn: self))
+    }
+    
+    func isInt() -> Bool {
+        return CharacterSet(charactersIn: self).isStrictSubset(of: TypeCriterion.Int)
+    }
+    
+    func isBool() -> Bool {
+        return self == TypeCriterion.Bool.true || self == TypeCriterion.Bool.false
+    }
 }
 
 extension Int: JSONValue {

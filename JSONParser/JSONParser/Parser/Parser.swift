@@ -53,17 +53,17 @@ struct Parser {
             
             guard !element.isEmpty else{ continue }
             
-            if isString(data: element) {
+            if element.isString() {
                 ParsedData.append(String(element))
                 countString += 1
                 continue
             }
-            if isInt(data: element) {
+            if element.isInt() {
                 ParsedData.append(Int(element)!)
                 countInt += 1
                 continue
             }
-            if isBool(data: element) {
+            if element.isBool() {
                 ParsedData.append(Bool(element)!)
                 countBool += 1
                 continue
@@ -88,24 +88,24 @@ struct Parser {
         
         for element in canParseDataArray {
             
-            guard isString(data: element[0]) else{
+            guard element[0].isString() else{
                 throw InputError.formatError
             }
             let key = element[0].trimmingCharacters(in: TypeCriterion.String)
             
-            if isString(data: element[1]) {
+            if element[1].isString() {
                 let value = element[1].trimmingCharacters(in: TypeCriterion.String)
                 ParsedData.updateValue(value, forKey: key)
                 countString += 1
                 continue
             }
-            if isInt(data: element[1]) {
+            if element[1].isInt() {
                 let value = Int(element[1])!
                 ParsedData.updateValue(value, forKey: key)
                 countInt += 1
                 continue
             }
-            if isBool(data: element[1]) {
+            if element[1].isBool() {
                 let value = Bool(element[1])!
                 ParsedData.updateValue(value, forKey: key)
                 countBool += 1
@@ -147,17 +147,6 @@ struct Parser {
         }
         return (object, String(arrayData))
     }
-    
-    private func isString(data:String) -> Bool {
-        return TypeCriterion.String.isStrictSubset(of: CharacterSet(charactersIn: data))
-    }
-    
-    private func isInt(data:String) -> Bool {
-        return CharacterSet(charactersIn: data).isStrictSubset(of: TypeCriterion.Int)
-    }
-    
-    private func isBool(data:String) -> Bool {
-        return data == TypeCriterion.Bool.true || data == TypeCriterion.Bool.false
-    }
+
     
 }
