@@ -9,15 +9,12 @@
 import Foundation
 
 struct JSONValueFactory {
-    static let trueString = "true"
-    static let falseString = "false"
-    
     static func make(token: String) throws -> JSONValue {
         let firstCharacter = token[token.startIndex]
         if JSONSymbols.doubleQuotation == firstCharacter {
             return token
         }
-        if token == trueString || token == falseString {
+        if token == JSONSymbols.trueString || token == JSONSymbols.falseString {
             return try make(boolean: token)
         }
         guard let numberValue = Int(token) else {
@@ -28,9 +25,9 @@ struct JSONValueFactory {
     
     private static func make(boolean: String) throws -> Bool{
         switch boolean {
-        case trueString:
+        case JSONSymbols.trueString:
             return true
-        case falseString:
+        case JSONSymbols.falseString:
             return false
         default:
             throw JSONValueFactoryError.impossibleToConvertIntoBool

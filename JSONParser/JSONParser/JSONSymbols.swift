@@ -17,6 +17,8 @@ struct JSONSymbols {
     static let blank: Character = " "
     static let doubleQuotation: Character = "\""
     static let colon: Character = ":"
+    static let trueString = "true"
+    static let falseString = "false"
 }
 
 extension Character {
