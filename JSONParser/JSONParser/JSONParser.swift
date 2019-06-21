@@ -16,11 +16,11 @@ struct JSONParser {
     }
     
     mutating func parse() throws -> JSONDataType {
-        let tokens = try reader.getNextToken()
-        switch tokens {
-        case "[" :
+        let token = try reader.getNextToken()
+        switch token {
+        case String(Token.beginArray) :
             return try parseArray()
-        case "{" :
+        case String(Token.beginObject) :
             return  try parseObject()
         default :
             throw JSONError.TokensError
