@@ -10,28 +10,15 @@ import Foundation
 
 struct ErrorHandler {
     
-    func handle(logic: () throws -> ()) {
-        var occurError = false
+    static func handle(error: Error) {
+        let outputView = OutputView()
         
-        repeat {
-            do {
-                try logic()
-                occurError = false
-            }
-            catch let error as GrammerChecker.Error {
-                self.alertMessage(error.localizedDescription)
-                occurError = true
-            }
-            catch {
-                self.alertMessage(error.localizedDescription)
-                occurError = true
-            }
-        } while occurError
-    }
-    
-    private func alertMessage(_ message: String) {
-        print("\n==============================")
-        print("\t\(message)")
-        print("==============================\n")
+        switch error {
+        case let error as GrammerChecker.Error:
+            outputView.output(error.localizedDescription)
+        default:
+            outputView.output(error.localizedDescription)
+        }
     }
 }
+
