@@ -9,18 +9,19 @@
 import Foundation
 
 struct GrammarChecker {
-    private static let objectRegex = "^\\{ ?((|, ?)(\"[a-zA-Z0-9]+\" ?: ?)(\"[a-zA-Z0-9 ]+\"|[0-9]+|true|false))+ ?\\}$"
-    private static let arrayRegex = "^\\[ ?((|, ?)(\"[a-zA-Z0-9 ]+\"|[0-9]+|true|false|(\\{ ?((|, ?)(\"[a-zA-Z0-9]+\" ?: ?)(\"[a-zA-Z0-9 ]+\"|[0-9]+|true|false))+ ?\\})))+ ?\\]$"
+    private static let string = "\"[a-zA-Z0-9 ]+\""
+    private static let number = "[0-9]+"
+    private static let bool = "(true|false)"
+    private static let ws = " ?"
     
-    static func checkGrammar(input: String) throws {
-        if !matches(input) {
-            throw GrammarCheckError.noMatchesPattern
-        }
-    }
+    private static let nestedObject = "\\{\(ws)((|,\(ws))(\(string)\(ws):\(ws))(\(string)|\(number)|\(bool)))+\(ws)\\}"
     
-    private static func matches(_ value: String) -> Bool {
-        let isArray = value.range(of: arrayRegex, options: .regularExpression) != nil
-        let isObject = value.range(of: objectRegex, options: .regularExpression) != nil
+    private static let objectRegex = "^\\{\(ws)((|,\(ws))(\(string)\(ws):\(ws))(\(string)|\(number)|\(bool)))+\(ws)\\}$"
+    private static let arrayRegex = "^\\[\(ws)((|,\(ws))(\(string)|\(number)|\(bool)|(\(nestedObject))))+\(ws)\\]$"
+    
+    static func checkGrammar(input: String) -> Bool {
+        let isArray = input.range(of: arrayRegex, options: .regularExpression) != nil
+        let isObject = input.range(of: objectRegex, options: .regularExpression) != nil
         
         return isArray || isObject
     }
