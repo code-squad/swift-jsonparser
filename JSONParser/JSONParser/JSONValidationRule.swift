@@ -1,16 +1,12 @@
 //
-//  ValidationRule.swift
+//  JSONValidationRule.swift
 //  JSONParser
 //
-//  Created by BLU on 21/06/2019.
+//  Created by BLU on 22/06/2019.
 //  Copyright © 2019 JK. All rights reserved.
 //
 
 import Foundation
-
-protocol ValidationRule {
-    func isValid(_ value: String) -> Bool
-}
 
 struct JSONValidationRule: ValidationRule {
     private let arrayPattern = #"^\[ ?((|, ?)(\"[\w ]+\"|[\d]+|true|false|(\{ ?((|, ?)(\"[\w]+\" ?: ?)(\"[\w ]+\"|[\d]+|true|false))+ ?\})))+ ?\]$"#
