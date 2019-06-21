@@ -24,19 +24,19 @@ struct Parser {
         tokens.removeFirst()
         tokens.removeLast()
         
-        var unfinishedTokens: [String] = []
+        var incompleteTypeTokens: [String] = []
         var data: [JsonType] = []
         
         for token in tokens {
-            unfinishedTokens.append(token)
+            incompleteTypeTokens.append(token)
             
-            if isTokenFinish(unfinishedTokens) {
-                data.append(try convert(tokens: unfinishedTokens))
-                unfinishedTokens.removeAll()
+            if isTypeComplete(incompleteTypeTokens) {
+                data.append(try convert(tokens: incompleteTypeTokens))
+                incompleteTypeTokens.removeAll()
             }
             
-            if unfinishedTokens.first == String(JsonElement.whitespace) || unfinishedTokens.first == String(JsonElement.comma) {
-                unfinishedTokens.removeAll()
+            if incompleteTypeTokens.first == String(JsonElement.whitespace) || incompleteTypeTokens.first == String(JsonElement.comma) {
+                incompleteTypeTokens.removeAll()
             }
         }
         
@@ -65,14 +65,14 @@ struct Parser {
         return try JsonObject(object: data)
     }
     
-    private static func isTokenFinish(_ unfinishedTokens: [String]) -> Bool {
-        let pairResult = JsonElement.pair(value: unfinishedTokens.first?.first)
+    private static func isTypeComplete(_ incompleteTypeTokens: [String]) -> Bool {
+        let pairResult = JsonElement.pair(value: incompleteTypeTokens.first?.first)
         
-        if pairResult != unfinishedTokens.last?.last, pairResult != nil {
+        if pairResult != incompleteTypeTokens.last?.last, pairResult != nil {
             return false
         }
         
-        if unfinishedTokens.first == String(JsonElement.whitespace) || unfinishedTokens.first == String(JsonElement.comma) {
+        if incompleteTypeTokens.first == String(JsonElement.whitespace) || incompleteTypeTokens.first == String(JsonElement.comma) {
             return false
         }
         
@@ -81,38 +81,38 @@ struct Parser {
     
     private static func separateObject(tokens: [String]) -> [[String]] {
         var objectTokens: [[String]] = []
-        var unfinishedTokens: [String] = []
+        var incompleteTypeTokens: [String] = []
         
         for token in tokens {
             if token == String(JsonElement.comma) {
-                objectTokens.append(unfinishedTokens)
-                unfinishedTokens.removeAll()
+                objectTokens.append(incompleteTypeTokens)
+                incompleteTypeTokens.removeAll()
                 
                 continue
             }
             
-            unfinishedTokens.append(token)
+            incompleteTypeTokens.append(token)
         }
         
-        objectTokens.append(unfinishedTokens)
+        objectTokens.append(incompleteTypeTokens)
         
         return objectTokens
     }
     
     private static func refine(object: [String]) throws -> [String] {
-        var unfinishedTokens: [String] = []
+        var incompleteTypeTokens: [String] = []
         var result: [String] = []
         
         for token in object {
-            unfinishedTokens.append(token)
+            incompleteTypeTokens.append(token)
             
-            if isTokenFinish(unfinishedTokens) {
-                result.append(unfinishedTokens.joined())
-                unfinishedTokens.removeAll()
+            if isTypeComplete(incompleteTypeTokens) {
+                result.append(incompleteTypeTokens.joined())
+                incompleteTypeTokens.removeAll()
             }
             
-            if unfinishedTokens.first == String(JsonElement.whitespace) {
-                unfinishedTokens.removeAll()
+            if incompleteTypeTokens.first == String(JsonElement.whitespace) {
+                incompleteTypeTokens.removeAll()
             }
         }
         
