@@ -9,38 +9,16 @@
 import Foundation
 
 struct OutputView {
-    static func printParseResult(result: JsonType) {
-        if result is JsonArray {
-            printArray(result)
-        } else if result is JsonObject {
-            printObject(result)
-        }
-    }
-    
-    private static func printArray(_ array: JsonType) {
-        guard let result = array as? JsonArray else {
-            return
-        }
+    static func printParseResult(result: Countable) {
+        var resultCount = 0
+        var description = ""
         
-        var description = "\(result.array.count)개의 배열 데이터 중에 "
-        
-        for (type, count) in result.typeCounter {
+        for (type, count) in result.typeCount {
             description.append("\(type) \(count)개 ")
+            resultCount = resultCount + count
         }
         
-        print(description)
-    }
-    
-    private static func printObject(_ object: JsonType) {
-        guard let result = object as? JsonObject else {
-            return
-        }
-        
-        var description = "\(result.object.count)개의 객체 데이터 중에 "
-        
-        for (type, count) in result.typeCounter {
-            description.append("\(type) \(count)개 ")
-        }
+        description = "\(resultCount)개의 \(String(describing: type(of: result))) 데이터 중에 \(description)"
         
         print(description)
     }

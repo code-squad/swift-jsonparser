@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct JsonArray: JsonType {
+struct JsonArray: JsonType, Countable {
     let array: [JsonType]
     
     var typeDescription: String {
         return TypeName.array.rawValue
     }
     
-    var typeCounter: [String : Int] {
+    var typeCount: [String : Int] {
         var typeCounter: [String : Int] = [:]
         
         for element in array {

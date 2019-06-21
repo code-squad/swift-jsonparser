@@ -9,7 +9,7 @@
 import Foundation
 
 struct Parser {
-    static func parse(tokens: [String]) throws -> JsonType {
+    static func parse(tokens: [String]) throws -> Countable {
         if tokens.first == String(JsonElement.startOfArray), tokens.last == String(JsonElement.endOfArray) {
             return try parse(array: tokens)
         } else if tokens.first == String(JsonElement.startOfObject), tokens.last == String(JsonElement.endOfObject) {
