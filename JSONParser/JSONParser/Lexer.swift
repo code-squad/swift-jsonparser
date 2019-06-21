@@ -46,11 +46,11 @@ struct Lexer {
     }
     
     private mutating func nextToken() -> Token? {
+        skipWhiteSpaces()
+
         guard let nextCharacter = stringReader.peek() else {
             return nil
         }
-        
-        skipWhiteSpaces()
         
         if let token = delimeterTokenList[nextCharacter] {
             stringReader.advance()
