@@ -11,42 +11,35 @@ import Foundation
 struct GrammerChecker: Checker {
     typealias T = String
     
-    func check(format: String) throws {
+    func check(format: String) -> Bool {
         let maxDepth = format.filter{
             return ["[","{"].contains($0)
             }.count
-        let isPosslible =  try checkList(format: format,depth: maxDepth) || ( try checkObject(format: format, depth: maxDepth) )
-        guard isPosslible else {
-            throw Error.unsupportedFormat
-        }
-        return 
+        return self.checkObject(format: format, depth: maxDepth) || self.checkList(format: format, depth: maxDepth)
     }
     
-    private func checkObject(format: String, depth: Int = 0) throws -> Bool {
+    private func checkObject(format: String, depth: Int = 0) -> Bool {
         let regex = Pattern.object
-        return try check(string: format, pattern: regex)
+        return check(string: format, pattern: regex)
     }
     
-    private func checkList(format: String, depth: Int = 0) throws -> Bool {
+    private func checkList(format: String, depth: Int = 0) -> Bool {
         let regex = Pattern.list
-        return try check(string: format, pattern: regex)
+        return check(string: format, pattern: regex)
     }
     
-    private func check(string: String, pattern: String) throws -> Bool {
+    private func check(string: String, pattern: String) -> Bool {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
-            throw Error.unsupportedRegex
+            return false
         }
-        if let match = regex.firstMatch(in: string, options: [], range: string.range) {
-            let result = NSString.init(string:string).substring(with: (match.range))
-            return result.range == string.range
-        }
-        return false
+        let matchRange = regex.rangeOfFirstMatch(in: string, options: [], range: string.range)
+        return matchRange == string.range
     }
     
 }
 // -MARK: - + Error
 extension GrammerChecker {
-    enum Error: Swift.Error{
+    enum Error: Swift.Error {
         case unsupportedFormat
         case unsupportedRegex
         
