@@ -9,7 +9,7 @@
 import Foundation
 
 struct JSONTokenizer {
-    private var tokens: [Character] = [Token.beginArray, Token.endArray, Token.valueSeparator,Token.beginObject, Token.endObject, Token.nameSeparator]
+    private var tokens: [Character] = [Token.beginArray, Token.endArray, Token.comma,Token.beginObject, Token.endObject, Token.colon]
     private var result = [String]()
     private var buffer = ""
     mutating func tokenize(data: String) throws -> [String] {
