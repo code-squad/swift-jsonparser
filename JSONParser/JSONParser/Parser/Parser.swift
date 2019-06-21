@@ -15,23 +15,21 @@ struct Parser {
     mutating func makeParsingData(input:String)throws -> Countable {
         
         if checkFormat(of: input, is: Array()) {
-            if checkFormat(of: input, is: Object()) {
-                let (parsedData,numbers) = try parsingObject(input: input)
-                return JSONObject(parsingData: parsedData, Numbers: numbers)
+            if iscontainObject(at: input) {
+                let (objectdatas, arraydata) = try convertArrayContainObject(input: input)
+                let parsedObjects = try objectdatas.map{try parsingObject(input: $0)}
+                let JSONObjects = parsedObjects.map{JSONObject(parsingData: $0.0, Numbers: $0.1)}
+                let (arrayDatas, numbers) = try parsingArray(input: arraydata)
+                return JSONArray(parsingData: JSONObjects + arrayDatas, Numbers: numbers, objectNumber: parsedObjects.count)
             }
-            throw InputError.formatError
-        }
-        if iscontainObject(at: input) {
             let (parsedData,numbers) = try parsingArray(input: input)
             return JSONArray(parsingData: parsedData, Numbers: numbers)
         }
-        
-        let (objectdatas, arraydata) = try convertArrayContainObject(input: input)
-        let parsedObjects = try objectdatas.map{try parsingObject(input: $0)}
-        let JSONObjects = parsedObjects.map{JSONObject(parsingData: $0.0, Numbers: $0.1)}
-        let (arrayDatas, numbers) = try parsingArray(input: arraydata)
-        return JSONArray(parsingData: JSONObjects + arrayDatas, Numbers: numbers, objectNumber: parsedObjects.count)
-        
+        if checkFormat(of: input, is: Object()) {
+            let (parsedData,numbers) = try parsingArray(input: input)
+            return JSONArray(parsingData: parsedData, Numbers: numbers)
+        }
+        throw InputError.formatError
     }
     
     private func checkFormat(of input:String, is formatItem:HasFormatItem) -> Bool {
@@ -69,7 +67,7 @@ struct Parser {
                 continue
             }
             
-            throw InputError.formatError
+            throw ConvertError.canNotCovertData
             
         }
         return (ParsedData,(countString, countInt, countBool))
