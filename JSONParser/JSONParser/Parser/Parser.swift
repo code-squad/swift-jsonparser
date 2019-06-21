@@ -10,19 +10,18 @@ import Foundation
 
 typealias CountNumbers = (string:Int, int:Int, bool: Int)
 
-struct DataParsingFactory {
+struct Parser {
     
-    mutating func makeParsingData(input:String)throws -> countable {
+    mutating func makeParsingData(input:String)throws -> Countable {
         
-        guard checkFormat(of: input, is: Array()) else{
-            guard checkFormat(of: input, is: Object()) else{
-                throw InputError.formatError
+        if checkFormat(of: input, is: Array()) {
+            if checkFormat(of: input, is: Object()) {
+                let (parsedData,numbers) = try parsingObject(input: input)
+                return JSONObject(parsingData: parsedData, Numbers: numbers)
             }
-            let (parsedData,numbers) = try parsingObject(input: input)
-            return JSONObject(parsingData: parsedData, Numbers: numbers)
+            throw InputError.formatError
         }
-        
-        guard iscontainObject(at: input) else{
+        if iscontainObject(at: input) {
             let (parsedData,numbers) = try parsingArray(input: input)
             return JSONArray(parsingData: parsedData, Numbers: numbers)
         }
@@ -46,26 +45,26 @@ struct DataParsingFactory {
     }
     
     private func parsingArray(input:String)throws -> ([JSONValue], CountNumbers) {
-        let datas = converter(data: input, to: Array())
-        var ParsedDatas:[JSONValue] = []
+        let canParseDataArray = converter(data: input, to: Array())
+        var ParsedData:[JSONValue] = []
         var countString = 0, countInt = 0, countBool = 0
         
-        for data in datas {
+        for element in canParseDataArray {
             
-            guard !data.isEmpty else{ continue }
+            guard !element.isEmpty else{ continue }
             
-            if isString(data: data) {
-                ParsedDatas.append(String(data))
+            if isString(data: element) {
+                ParsedData.append(String(element))
                 countString += 1
                 continue
             }
-            if isInt(data: data) {
-                ParsedDatas.append(Int(data)!)
+            if isInt(data: element) {
+                ParsedData.append(Int(element)!)
                 countInt += 1
                 continue
             }
-            if isBool(data: data) {
-                ParsedDatas.append(Bool(data)!)
+            if isBool(data: element) {
+                ParsedData.append(Bool(element)!)
                 countBool += 1
                 continue
             }
@@ -73,42 +72,42 @@ struct DataParsingFactory {
             throw InputError.formatError
             
         }
-        return (ParsedDatas,(countString, countInt, countBool))
+        return (ParsedData,(countString, countInt, countBool))
     }
     
     private func converter(data:String,to formatItem: HasFormatItem) -> [String] {
         var data = data.trimmingCharacters(in: formatItem.container)
         data = data.split(separator: formatItem.blank).joined()
-        return data.components(separatedBy: formatItem.elementSperator)
+        return data.components(separatedBy: formatItem.elementSeparator)
     }
     
     private func parsingObject(input:String)throws -> ([String:JSONValue],CountNumbers) {
-        let datas = converter(data: input, to:Object()).map{$0.components(separatedBy: ":")}
-        var ParsedDatas:[String:JSONValue] = [:]
+        let canParseDataArray = converter(data: input, to:Object()).map{$0.components(separatedBy: ":")}
+        var ParsedData:[String:JSONValue] = [:]
         var countString = 0, countInt = 0, countBool = 0
         
-        for data in datas {
+        for element in canParseDataArray {
             
-            guard isString(data: data[0]) else{
+            guard isString(data: element[0]) else{
                 throw InputError.formatError
             }
-            let key = data[0].trimmingCharacters(in: TypeCriterion.String)
+            let key = element[0].trimmingCharacters(in: TypeCriterion.String)
             
-            if isString(data: data[1]) {
-                let value = data[1].trimmingCharacters(in: TypeCriterion.String)
-                ParsedDatas.updateValue(value, forKey: key)
+            if isString(data: element[1]) {
+                let value = element[1].trimmingCharacters(in: TypeCriterion.String)
+                ParsedData.updateValue(value, forKey: key)
                 countString += 1
                 continue
             }
-            if isInt(data: data[1]) {
-                let value = Int(data[1])!
-                ParsedDatas.updateValue(value, forKey: key)
+            if isInt(data: element[1]) {
+                let value = Int(element[1])!
+                ParsedData.updateValue(value, forKey: key)
                 countInt += 1
                 continue
             }
-            if isBool(data: data[1]) {
-                let value = Bool(data[1])!
-                ParsedDatas.updateValue(value, forKey: key)
+            if isBool(data: element[1]) {
+                let value = Bool(element[1])!
+                ParsedData.updateValue(value, forKey: key)
                 countBool += 1
                 continue
             }
@@ -116,14 +115,14 @@ struct DataParsingFactory {
             throw ConvertError.canNotCovertData
             
         }
-        return (ParsedDatas, (countString, countInt, countBool))
+        return (ParsedData, (countString, countInt, countBool))
     }
     
     private func convertArrayContainObject(input: String)throws -> ([String], String) {
         let arrayFormat = Array(), objectFormat = Object()
         let data = input.trimmingCharacters(in: arrayFormat.container)
-        let (objectdatas, arraydata) = slice(data: data, to: objectFormat)
-        return (objectdatas, arraydata)
+        let (objects, arraydata) = slice(data: data, to: objectFormat)
+        return (objects, arraydata)
     }
     
     func slice(data: String, to formatItem: HasFormatItem) -> ([String],String) {

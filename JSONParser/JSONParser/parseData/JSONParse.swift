@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol countable:JSONValue {
+protocol Countable:JSONValue {
     var countNumbers:(string: Int, int: Int, bool: Int, allData: Int, object: Int) { get }
 }
 
-struct JSONObject:countable {
+struct JSONObject:Countable {
     init(parsingData:[String:JSONValue], Numbers:CountNumbers) {
         self.dictionary = parsingData
         (self.countString, self.countInt, self.countBool) = Numbers
@@ -26,7 +26,7 @@ struct JSONObject:countable {
     var typeDescription: String { return "JSONParseObject" }
 }
 
-struct JSONArray:countable {
+struct JSONArray:Countable {
     init(parsingData:[JSONValue], Numbers:CountNumbers, objectNumber:Int = 0) {
         self.array = parsingData
         (self.countString, self.countInt, self.countBool) = Numbers

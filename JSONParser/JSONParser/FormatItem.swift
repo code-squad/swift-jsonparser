@@ -13,7 +13,7 @@ protocol HasFormatItem {
     var containerOpen:Character { get }
     var containerClose:Character { get }
     var blank: Character { get }
-    var elementSperator: String { get }
+    var elementSeparator: String { get }
 }
 
 struct Array:HasFormatItem {
@@ -21,7 +21,7 @@ struct Array:HasFormatItem {
     var containerOpen:Character = "["
     var containerClose:Character = "]"
     var blank: Character = " "
-    var elementSperator = ","
+    var elementSeparator = ","
 }
 
 struct Object:HasFormatItem {
@@ -29,7 +29,7 @@ struct Object:HasFormatItem {
     var containerOpen:Character = "{"
     var containerClose:Character = "}"
     var blank: Character = " "
-    var elementSperator = ","
+    var elementSeparator = ","
 }
 
 struct TypeCriterion {

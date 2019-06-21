@@ -10,8 +10,8 @@ import Foundation
 
 do{
     let input = try InputView.readInput(massage: .requestJSON)
-    var factory = DataParsingFactory()
-    let parsedData = try factory.makeParsingData(input: input)
+    var parser = Parser()
+    let parsedData = try parser.makeParsingData(input: input)
     OutputView.printResult(data: parsedData)
 } catch let error as JSONError {
     print(error.message)
