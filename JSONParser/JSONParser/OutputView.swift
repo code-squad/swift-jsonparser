@@ -25,23 +25,13 @@ struct OutputView {
         print(unsupportedPatternMessage)
     }
     
-    static func printJSONDescription(of value: JSONValue) {
+    static func printTypeCountDescription(of value: JSONValue) {
         guard let typeCountableJSONValue = value as? JSONValue & TypeCountable else {
             noticeUnsupportedPattern()
             return
         }
-        printTypeCountDescription(of: typeCountableJSONValue)
+        print("\(typeCountDescription: typeCountableJSONValue)")
     }
     
-    static private func printTypeCountDescription(of value: JSONValue & TypeCountable) {
-        let prefixCountDescription = "총 \(value.elementCount)개의 \(value.typeDescription) 데이터 중에"
-        var typeCountDescription = String()
-        let totalTypeCountPair = TypeCounter.getTotalTypeCount(of: value)
-        for (typeDescription, count) in totalTypeCountPair {
-            typeCountDescription += " \(typeDescription) \(count)개,"
-        }
-        let range = typeCountDescription.startIndex..<typeCountDescription.index(before: typeCountDescription.endIndex)
-        let middleCountDescription = typeCountDescription[range]
-        print(prefixCountDescription, middleCountDescription, suffixCountDescription, separator: emptyString)
     }
 }
