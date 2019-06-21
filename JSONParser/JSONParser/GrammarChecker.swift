@@ -12,6 +12,12 @@ struct GrammarChecker {
     private let objectRegex = "^\\{ ?((|, ?)(\"[a-zA-Z0-9]+\" ?: ?)(\"[a-zA-Z0-9 ]+\"|[0-9]+|true|false))+ ?\\}$"
     private let arrayRegex = "^\\[ ?((|, ?)(\"[a-zA-Z0-9 ]+\"|[0-9]+|true|false|(\\{ ?((|, ?)(\"[a-zA-Z0-9]+\" ?: ?)(\"[a-zA-Z0-9 ]+\"|[0-9]+|true|false))+ ?\\})))+ ?\\]$"
     
+    func checkGrammar(input: String) throws {
+        if !matches(input) {
+            throw GrammarCheckError.noMatchesPattern
+        }
+    }
+    
     func matches(_ value: String) -> Bool {
         return value.range(of: objectRegex, options: .regularExpression) != nil
     }
