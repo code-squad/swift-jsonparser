@@ -65,7 +65,7 @@ class GrammerCheckerTests: XCTestCase {
         let invalidInput = "{ \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }"
         
         // then
-        XCTAssertFalse(GrammerChecker.isJSONFormat(of: invalidInput))
+        XCTAssertTrue(GrammerChecker.isJSONFormat(of: invalidInput))
     }
     
     func testObject_whenHasEmptyValue() {
