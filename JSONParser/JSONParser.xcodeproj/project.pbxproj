@@ -17,6 +17,7 @@
 		14694C2522979A1F00D62C7B /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14694C2422979A1F00D62C7B /* Parser.swift */; };
 		14694C272297C09900D62C7B /* JsonArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14694C262297C09900D62C7B /* JsonArray.swift */; };
 		146F595822BCB59E003518AA /* Countable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146F595722BCB59E003518AA /* Countable.swift */; };
+		146F595C22BCC8C9003518AA /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146F595B22BCC8C9003518AA /* GrammarChecker.swift */; };
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		14694C2422979A1F00D62C7B /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		14694C262297C09900D62C7B /* JsonArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonArray.swift; sourceTree = "<group>"; };
 		146F595722BCB59E003518AA /* Countable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countable.swift; sourceTree = "<group>"; };
+		146F595B22BCC8C9003518AA /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +98,7 @@
 				14694C2422979A1F00D62C7B /* Parser.swift */,
 				1463FC20229D0ED100FC1B75 /* ErrorCode.swift */,
 				1463FC24229FB05400FC1B75 /* JsonElement.swift */,
+				146F595B22BCC8C9003518AA /* GrammarChecker.swift */,
 			);
 			path = JSONParser;
 			sourceTree = "<group>";
@@ -162,6 +165,7 @@
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				14694C272297C09900D62C7B /* JsonArray.swift in Sources */,
 				14694C232293D4BD00D62C7B /* Tokenizer.swift in Sources */,
+				146F595C22BCC8C9003518AA /* GrammarChecker.swift in Sources */,
 				1463FC21229D0ED100FC1B75 /* ErrorCode.swift in Sources */,
 				146F595822BCB59E003518AA /* Countable.swift in Sources */,
 				14694C2522979A1F00D62C7B /* Parser.swift in Sources */,
