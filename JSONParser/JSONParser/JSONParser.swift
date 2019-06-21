@@ -28,16 +28,22 @@ struct JSONParser {
     }
     
     private mutating func parseArray() throws -> JSONDataType {
-        var token = try reader.getNextToken()
+        var token: String
         var result = [JSONDataType]()
-        while String(Token.endArray) != token {
-            if token == String(Token.valueSeparator){
-                token = try reader.getNextToken()
-            }
-            let value = try self.parseMultiValue(token)
-            result.append(value)
+        
+        repeat {
             token = try reader.getNextToken()
-        }
+            guard token != String(Token.endArray) else {
+                return result
+            }
+            guard token != String(Token.comma) else {
+                continue
+            }
+            
+            let value = try parseMultiValue(token)
+            result.append(value)
+        } while true
+        
         return result
     }
     
@@ -64,7 +70,7 @@ struct JSONParser {
         var objectData = Dictionary<String, JSONDataType>()
         var token = try reader.getNextToken()
         while String(Token.endObject) != token {
-            if String(Token.valueSeparator) == token {
+            if String(Token.comma) == token {
                 token = try reader.getNextToken()
             }
             if token.isString {
@@ -107,7 +113,7 @@ struct JSONParser {
             return try parseObject()
         case String(Token.beginArray):
             return try parseArray()
-        case String(Token.nameSeparator):
+        case String(Token.colon):
             return try parseMultiValue(try reader.getNextToken())
         default:
             return try parseSingleValue(data: token)
