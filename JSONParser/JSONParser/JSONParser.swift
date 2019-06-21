@@ -67,7 +67,7 @@ struct JSONParser {
             if String(Token.valueSeparator) == token {
                 token = try reader.getNextToken()
             }
-            if isString(token: token) {
+            if token.isString {
                 let key = token
                 token = try reader.getNextToken()
                 let value = try parseSingleValue(data: token)
@@ -115,3 +115,8 @@ struct JSONParser {
     }
 }
 
+extension String {
+    var isString: Bool {
+        return self.first == "\""
+    }
+}
