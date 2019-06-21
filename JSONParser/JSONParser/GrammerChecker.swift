@@ -15,16 +15,21 @@ struct GrammerChecker {
         static let string = "\"[^\"]+\""
         static let number = "[0-9]+"
         static let whiteSpace = "\\s*"
-        static let value = "(\(bool)|\(number)|\(string))"
-        static let keyValue = "\(whiteSpace)\(string)\(whiteSpace):\(whiteSpace)(\(number)|\(string)|\(bool))*\(whiteSpace),?"
-        static let object = "\\{((\(keyValue))?\(whiteSpace))*\\}"
-        static let valueWithObject = "(\(value)|\(object))"
-        static let array = "\\[(\(whiteSpace)\(valueWithObject)?\(whiteSpace),?)*\\]"
+        
+        static var value = "(\(bool)|\(number)|\(string))"
+        static let keyValue = "\(whiteSpace)\(string)\(whiteSpace):\(whiteSpace)\(value)*\(whiteSpace),?"
+        static let object = "(\\{((\(keyValue))?\(whiteSpace))*\\})"
+        static let array = "(\\[(\(whiteSpace)\(value)?\(whiteSpace),?)*\\])"
+        
+        static let valueWithContainer = "(\(value)|\(object)|\(array))"
+        static let keyValueWithContainer = "\(whiteSpace)\(string)\(whiteSpace):\(whiteSpace)\(valueWithContainer)*\(whiteSpace),?"
+        static let nestedObject = "\\{((\(keyValueWithContainer))?\(whiteSpace))*\\}"
+        static let nestedArray = "\\[(\(whiteSpace)\(valueWithContainer)?\(whiteSpace),?)*\\]"
     }
     
     static func isJSONFormat(of input: String) -> Bool {
-        guard containsMatch(of: Pattern.array, inString: input) else {
-            return containsMatch(of: Pattern.object, inString: input)
+        guard containsMatch(of: Pattern.nestedArray, inString: input) else {
+            return containsMatch(of: Pattern.nestedObject, inString: input)
         }
         return true
     }
