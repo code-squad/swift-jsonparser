@@ -28,43 +28,49 @@ struct RegexPattern {
     
     static var plainValueGroup: String {
         get {
-            return openParenthesis + bool + orOperator + string + orOperator + number + closedParenthesis
+            return "\(openParenthesis)\(bool)\(orOperator)\(string)\(orOperator)\(number)\(closedParenthesis)"
+            //openParenthesis + bool + orOperator + string + orOperator + number + closedParenthesis
         }
     }
     
     static var nestedValueGroup: String {
         get {
-            return openParenthesis + bool + orOperator + string + orOperator + number + orOperator + plainArray + orOperator + plainObject + closedParenthesis
+            return "\(openParenthesis)\(bool)\(orOperator)\(string)\(orOperator)\(number)\(orOperator)\(plainArray)\(orOperator)\(plainObject)\(closedParenthesis)"
+                //openParenthesis + bool + orOperator + string + orOperator + number + orOperator + plainArray + orOperator + plainObject + closedParenthesis
         }
     }
     
     static var plainArray: String {
         get {
-            return openBracket + whitespace + plainValueGroup + whitespace + getOptionalPattern(for: plainValueGroup) + whitespace + closedBracket
+            return "\(openBracket)\(whitespace)\(plainValueGroup)\(whitespace)\(getOptionalPattern(for: plainValueGroup))\(whitespace)\(closedBracket)"
+            // openBracket + whitespace + plainValueGroup + whitespace + getOptionalPattern(for: plainValueGroup) + whitespace + closedBracket
         }
     }
     
     static var plainObject: String {
         get {
-            let element = objectKey + whitespace + colon + whitespace + plainValueGroup
-            return openBrace + whitespace + element + whitespace + getOptionalPattern(for: element) + whitespace + closedBrace
+            let element = "\(objectKey)\(whitespace)\(colon)\(whitespace)\(plainValueGroup)"
+            return "\(openBrace)\(whitespace)\(element)\(whitespace)\(getOptionalPattern(for: element))\(whitespace)\(closedBrace)"
+            //openBrace + whitespace + element + whitespace + getOptionalPattern(for: element) + whitespace + closedBrace
         }
     }
     
     static var nestedArray: String {
         get {
-            return startWith + openBracket + whitespace + nestedValueGroup + whitespace + getOptionalPattern(for: nestedValueGroup) + whitespace + closedBracket + end
+            return "\(startWith)\(openBracket)\(whitespace)\(nestedValueGroup)\(whitespace)\(getOptionalPattern(for: nestedValueGroup))\(whitespace)\(closedBracket)\(end)"
+            // startWith + openBracket + whitespace + nestedValueGroup + whitespace + getOptionalPattern(for: nestedValueGroup) + whitespace + closedBracket + ends
         }
     }
     
     static var nestedObject: String {
         get {
-            let element = objectKey + whitespace + colon + whitespace + nestedValueGroup
-            return startWith + openBrace + whitespace + element + whitespace + getOptionalPattern(for: element) + whitespace + closedBrace + end
+            let element = "\(objectKey)\(whitespace)\(colon)\(whitespace)\(nestedValueGroup)"s
+            return "\(startWith)\(openBrace)\(whitespace)\(element)\(whitespace)\(getOptionalPattern(for: element))\(whitespace)\(closedBrace)\(end)"
+            //startWith + openBrace + whitespace + element + whitespace + getOptionalPattern(for: element) + whitespace + closedBrace + end
         }
     }
     
     static private func getOptionalPattern(for element: String) -> String {
-        return "((?:," + whitespace + element + ")*)"
+        return "((?:,\(whitespace)\(element))*)"
     }
 }
