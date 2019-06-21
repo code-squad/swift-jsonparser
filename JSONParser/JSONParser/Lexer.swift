@@ -38,14 +38,14 @@ struct Lexer {
     mutating func tokenize() throws -> [Token] {
         var tokens = [Token]()
         
-        while let token = try nextToken() {
+        while let token = nextToken() {
             tokens.append(token)
         }
         
         return tokens
     }
     
-    private mutating func nextToken() throws -> Token? {
+    private mutating func nextToken() -> Token? {
         guard let nextCharacter = stringReader.peek() else {
             return nil
         }
