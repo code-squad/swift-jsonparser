@@ -11,12 +11,10 @@ struct TokenReader {
     private var tokens: [String]
     private var currentIndex: Int = -1
     
-    
     init(tokens: [String], currentIndex: Int = -1) {
         self.tokens = tokens
         self.currentIndex = currentIndex
     }
-    
     
     mutating func getNextToken() throws -> String {
         let nextIndex = currentIndex + 1
