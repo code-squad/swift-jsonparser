@@ -28,10 +28,7 @@ struct GrammerChecker {
     }
     
     static func isJSONFormat(of input: String) -> Bool {
-        guard containsMatch(of: Pattern.nestedArray, inString: input) else {
-            return containsMatch(of: Pattern.nestedObject, inString: input)
-        }
-        return true
+        return containsMatch(of: Pattern.nestedArray, inString: input) || containsMatch(of: Pattern.nestedObject, inString: input)
     }
     
     static private func containsMatch(of pattern: String, inString string: String) -> Bool {
