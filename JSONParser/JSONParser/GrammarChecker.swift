@@ -10,24 +10,7 @@ import Foundation
 
 struct GrammarChecker {
     
-    enum Error: Swift.Error {
-        case invalidFormat
-        
-        var localizedDescription: String {
-            switch self {
-            case .invalidFormat:
-                return "지원하지 않는 형식입니다."
-            }
-        }
-    }
-    
-    private let pattern: String
-    
-    init(pattern: String) {
-        self.pattern = pattern
-    }
-    
-    func isValid(_ value: String) -> Bool {
-        return value.range(of: pattern, options: .regularExpression) != nil
+    static func checkRule(_ value: String, rule: ValidationRule) -> Bool {
+        return rule.isValid(value)
     }
 }
