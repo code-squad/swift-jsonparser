@@ -12,7 +12,7 @@ func main() {
     do {
         let input = InputView.readInput()
         
-        try GrammarChecker().checkGrammar(input: input)
+        try GrammarChecker.checkGrammar(input: input)
         
         let tokens = try Tokenizer.tokenize(input: input)
         let parseResult = try Parser.parse(tokens: tokens)
