@@ -32,3 +32,14 @@ enum ParseError: Error {
         }
     }
 }
+
+enum GrammarCheckError: Error {
+    case noMatchesPattern
+    
+    var description: String {
+        switch self {
+        case .noMatchesPattern:
+            return "지원하지 않는 형식을 포함하고 있습니다."
+        }
+    }
+}
