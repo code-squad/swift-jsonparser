@@ -23,7 +23,7 @@ struct TokenReader {
         }
         let nextToken = tokens[nextIndex]
         currentIndex = nextIndex
-        if nextToken == String(Token.nameSeparator) {
+        if nextToken == String(Token.colon) {
             return try getNextToken()
         }
         return nextToken
