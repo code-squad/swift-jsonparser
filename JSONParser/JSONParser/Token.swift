@@ -11,9 +11,9 @@ import Foundation
 struct Token {
     static let beginArray: Character = "["
     static let endArray: Character = "]"
-    static let valueSeparator: Character = ","
+    static let comma: Character = ","
     static let quatationMark: Character = "\""
-    static let nameSeparator: Character = ":"
+    static let colon: Character = ":"
     static let beginObject: Character = "{"
     static let endObject:Character = "}"
 }
