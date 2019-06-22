@@ -35,12 +35,12 @@ struct JSONFormatter {
         case let object as [String:JSONValue]:
             return generateObjectFormat(for: object)
         default:
-            return ""
+            return String()
         }
     }
     
     private mutating func generateArrayFormat(for jsonArray: [JSONValue]) -> String {
-        var arrayString = ""
+        var arrayString = String()
         var prefix = "\(JSONSymbols.openBracket)"
         for element in jsonArray {
             arrayString += "\(prefix)\(process(jsonValue: element))"
@@ -51,7 +51,7 @@ struct JSONFormatter {
     }
     
     private mutating func generateObjectFormat(for jsonObject: [String: JSONValue]) -> String {
-        var objectString = ""
+        var objectString = String()
         var prefix = "\(JSONSymbols.openBrace)\(JSONFormatter.newline)"
         let seperator = "\(JSONFormatter.seperator)\(JSONFormatter.newline)"
         indentationLevel += 1
