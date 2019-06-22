@@ -9,13 +9,13 @@
 import Foundation
 
 struct InputView {
+   
     private enum Question: String, CustomStringConvertible {
         var description: String { return self.rawValue }
-        
         case aboutJSON =
         """
         분석할 JSON 데이터를 입력하세요.
-        ex)[ 1, true, \"Hello, World!\",   false, { \"name\" : \"BLU" }   , { \"name\" : \"부엉이\" } ]
+        ex)[ 1, true, \"Hello, World!\", false, { \"name\" : \"BLU" }, { \"name\" : \"부엉이\" } ]
         """
     }
     

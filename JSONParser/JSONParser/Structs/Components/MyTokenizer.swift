@@ -9,29 +9,22 @@
 import Foundation
 
 struct MyTokenizer: Tokenizer {
-    private let factory = TokenFactory()
-    private var scanner: Scanner
-    private var string: String
     
-    init(_ string: String) {
-        self.string = string
-        self.scanner = MyScanner.init(string: string)
-    }
-    
-    mutating func tokenize() -> [Token] {
-        let units = self.split()
-        let tokens = units.compactMap {
-            self.factory.create(string: $0)
+    static func tokenize(string: String) throws -> [Token] {
+        let factory = TokenFactory()
+        let units = self.split(string)
+        let tokens = try units.map{
+            try factory.create(string: $0)
         }
         return tokens
     }
     
-    private func split() -> [String] {
+    private static func split(_ string: String) -> [String] {
         let pattern = Pattern.tokens
         let regex = try! NSRegularExpression(pattern: pattern, options: [])
-        let matches = regex.matches(in: self.string, options: [], range: self.string.range)
+        let matches = regex.matches(in: string, options: [], range: string.range)
         let units = matches.map {
-            NSString.init(string: self.string).substring(with: ($0.range))
+            NSString.init(string: string).substring(with: ($0.range))
         }
         return units
     }

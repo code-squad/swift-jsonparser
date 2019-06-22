@@ -15,10 +15,6 @@ struct OutputView {
         print(makeSentence(json: json))
     }
     
-    func run(_ message: String) {
-        print(message)
-    }
-    
     private func makeSentence(json: JsonValue) -> String {
         var result = ""
         var total = 0
