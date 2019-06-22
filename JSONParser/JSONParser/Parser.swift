@@ -17,9 +17,15 @@ enum ParsingError: Error {
 
 struct Parser {
     
-    private var tokens: [String]
+    private var tokens = [String]()
     
-    func parseValue(index: Int) throws -> (index: Int, value: JsonType) {
+    mutating func startParsing(tokens: [String]) throws -> JsonType {
+        self.tokens = tokens
+        let (_, result) = try parseValue(index: -1)
+        return result
+    }
+    
+    private func parseValue(index: Int) throws -> (index: Int, value: JsonType) {
         if let (index, string) = try parseString(index: index) {
             return (index, string)
         } else if let (index, number) = try parseNumber(index: index) {
@@ -34,12 +40,12 @@ struct Parser {
     
     
     //다음인덱스를 확인함(return에 있는 조건이 실패할경우 false반환함)
-    func hasNext(index: Int) -> Bool {
+    private func hasNext(index: Int) -> Bool {
         return index < tokens.endIndex - 1
     }
     
     //현재인덱스를 받아서 다음인덱스와 다음인덱스의 값을 반환함
-    func readToken(index: Int) throws -> (index: Int, token: String) {
+    private func readToken(index: Int) throws -> (index: Int, token: String) {
         guard hasNext(index: index) else {
             throw ParsingError.noMoreTokens
         }
@@ -48,7 +54,7 @@ struct Parser {
     }
     
     
-    func parseString(index: Int) throws -> (index: Int, value: String)? {
+    private func parseString(index: Int) throws -> (index: Int, value: String)? {
         let (index, token) = try readToken(index: index)
         
         guard token.first == Structure.quotationMark && token.last == Structure.quotationMark else {
@@ -61,7 +67,7 @@ struct Parser {
         return (index, stringToken)
     }
     
-    func parseNumber(index: Int) throws -> (index: Int, value: Double)? {
+    private func parseNumber(index: Int) throws -> (index: Int, value: Double)? {
         let (index, token) = try readToken(index: index)
 
         guard let number = Double(token) else {
@@ -70,7 +76,7 @@ struct Parser {
         return (index, number)
     }
     
-    func parseBool(index: Int) throws -> (index: Int, value: Bool)? {
+    private func parseBool(index: Int) throws -> (index: Int, value: Bool)? {
         let (index, token) = try readToken(index: index)
 
         guard let bool = Bool(token) else {
@@ -79,7 +85,7 @@ struct Parser {
         return (index, bool)
     }
     
-    func parseArray(index: Int) throws -> (index: Int, value: [JsonType])? {
+    private func parseArray(index: Int) throws -> (index: Int, value: [JsonType])? {
         //parseArray가 처리할수있는 값인지 확인해준다.
         let (startIndex, token) = try readToken(index: index)
         //배열이 시작되는 조건
