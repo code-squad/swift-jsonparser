@@ -7,3 +7,14 @@
 //
 
 import Foundation
+
+enum FactoryException: Exception {
+    case failure
+    
+    var description: String {
+        switch self {
+        case .failure:
+            return "생성 실패"
+        }
+    }
+}

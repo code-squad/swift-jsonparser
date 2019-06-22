@@ -20,7 +20,6 @@ struct ErrorHandler {
             try logic()
         }catch {
             handleAction(error)
-            exit(0)
         }
         
     }

@@ -7,3 +7,17 @@
 //
 
 import Foundation
+
+
+extension JSONAnalyer {
+    enum AnalyerException: Exception {
+        case grammerException
+        
+        var description: String {
+            switch self {
+            case .grammerException:
+                return "지원하지 않는 형식입니다."
+            }
+        }
+    }
+}
