@@ -30,7 +30,8 @@ func main() {
         OutputView.noticeUnsupportedPattern()
         return
     }
-    OutputView.printJSONDescription(of: jsonData)
+    OutputView.printTypeCountDescription(of: jsonValue)
+    OutputView.printInReadableFormat(jsonValue: jsonValue)
 }
 
 main()
