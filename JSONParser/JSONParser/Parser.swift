@@ -77,35 +77,33 @@ struct Parser {
     }
     
     func parseArray(index: Int) throws -> (index: Int, value: [JsonType])? {
-        var resultArray = [JsonType]()
         //parseArray가 처리할수있는 값인지 확인해준다.
-        let (index, token) = try readToken(index: index)
-
+        let (startIndex, token) = try readToken(index: index)
+        //배열이 시작되는 조건
         guard token == "[" else {
             return nil
         }
+        
+        //배열파싱
+        var resultArray = [JsonType]()
+        var currentIndex = startIndex
+
         while true {
-            let (index, value) = try parseValue(index: index)
+            
+            let (index, value) = try parseValue(index: currentIndex)
             resultArray.append(value)
             
-            guard let (index, token) = readToken(index: index) else {
-                return nil
+            let (nextIndex, token) = try readToken(index: index)
+            currentIndex = nextIndex
+            
+            guard token != "]" else {
+                break
             }
-            guard token == "]" else {
-                return (index, resultArray)
+            guard token == "," else {
+                throw ParsingError.error
             }
         }
-        
-        
-        
-        처음index값이 [ 인지 확인하고, 아니면 nil 반환
-        ]를 만날때까지 반복한다.
-        index + 1 으로 이동해서 parse 진행하고 배열에 append한다
-        ,면 index+1하고 계속 반복한다.
-
-        ]나오면, append한 배열을 반환한다.
-        
-        return (0, [])
+        return (currentIndex, resultArray)
     }
 
 
