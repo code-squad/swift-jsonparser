@@ -16,8 +16,7 @@ class MyTokenizerTests: XCTestCase {
     
     override func setUp() {
         //WHEN
-        self.tokenizer = MyTokenizer(input)
-        self.tokens = try! tokenizer.tokenize()
+        self.tokens = try! MyTokenizer.tokenize(string: input)
     }
     
     func testTokensCount() { 
