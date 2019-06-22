@@ -93,6 +93,12 @@ struct Parser {
             return nil
         }
         
+        // 빈배열 예외처리
+        let (finalIndex, final) = try readToken(index: index)
+        guard final != String(Structure.endArray) else {
+            return (finalIndex, [])
+        }
+        
         //배열파싱
         var resultArray = [JsonType]()
         var currentIndex = startIndex
