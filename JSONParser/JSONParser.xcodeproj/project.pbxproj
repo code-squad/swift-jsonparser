@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
+		E921663422BDD6FD00817EE8 /* TokenizerUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921663322BDD6FD00817EE8 /* TokenizerUnitTest.swift */; };
+		E921663922BDD73800817EE8 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E926BC4822ABC42900F1AE51 /* Tokenizer.swift */; };
+		E926BC4922ABC42900F1AE51 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E926BC4822ABC42900F1AE51 /* Tokenizer.swift */; };
+		E926BC4D22ABC65E00F1AE51 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E926BC4C22ABC65E00F1AE51 /* Parser.swift */; };
+		E926BC4F22ABC82400F1AE51 /* JsonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E926BC4E22ABC82400F1AE51 /* JsonType.swift */; };
+		E95191F422BE173000970941 /* ParserUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95191F322BE173000970941 /* ParserUnitTest.swift */; };
+		E95191F922BE174A00970941 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E926BC4C22ABC65E00F1AE51 /* Parser.swift */; };
+		E95191FA22BE174F00970941 /* JsonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E926BC4E22ABC82400F1AE51 /* JsonType.swift */; };
+		E95191FC22BE1FDC00970941 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95191FB22BE1FDC00970941 /* InputView.swift */; };
+		E95191FF22BE284A00970941 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95191FD22BE224400970941 /* OutputView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,10 +35,35 @@
 /* Begin PBXFileReference section */
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		E921663122BDD6FD00817EE8 /* TokenizerUnitTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TokenizerUnitTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E921663322BDD6FD00817EE8 /* TokenizerUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenizerUnitTest.swift; sourceTree = "<group>"; };
+		E921663522BDD6FD00817EE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E926BC4822ABC42900F1AE51 /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
+		E926BC4C22ABC65E00F1AE51 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		E926BC4E22ABC82400F1AE51 /* JsonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonType.swift; sourceTree = "<group>"; };
+		E95191F122BE173000970941 /* ParserUnitTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParserUnitTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E95191F322BE173000970941 /* ParserUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserUnitTest.swift; sourceTree = "<group>"; };
+		E95191F522BE173000970941 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E95191FB22BE1FDC00970941 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		E95191FD22BE224400970941 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		83AE2E091F8CAC2800F38CC9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E921662E22BDD6FD00817EE8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E95191EE22BE173000970941 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,6 +77,8 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0E1F8CAC2800F38CC9 /* JSONParser */,
+				E921663222BDD6FD00817EE8 /* TokenizerUnitTest */,
+				E95191F222BE173000970941 /* ParserUnitTest */,
 				83AE2E0D1F8CAC2800F38CC9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +87,8 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0C1F8CAC2800F38CC9 /* JSONParser */,
+				E921663122BDD6FD00817EE8 /* TokenizerUnitTest.xctest */,
+				E95191F122BE173000970941 /* ParserUnitTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -58,8 +97,31 @@
 			isa = PBXGroup;
 			children = (
 				83AE2E0F1F8CAC2800F38CC9 /* main.swift */,
+				E95191FB22BE1FDC00970941 /* InputView.swift */,
+				E95191FD22BE224400970941 /* OutputView.swift */,
+				E926BC4822ABC42900F1AE51 /* Tokenizer.swift */,
+				E926BC4C22ABC65E00F1AE51 /* Parser.swift */,
+				E926BC4E22ABC82400F1AE51 /* JsonType.swift */,
 			);
 			path = JSONParser;
+			sourceTree = "<group>";
+		};
+		E921663222BDD6FD00817EE8 /* TokenizerUnitTest */ = {
+			isa = PBXGroup;
+			children = (
+				E921663322BDD6FD00817EE8 /* TokenizerUnitTest.swift */,
+				E921663522BDD6FD00817EE8 /* Info.plist */,
+			);
+			path = TokenizerUnitTest;
+			sourceTree = "<group>";
+		};
+		E95191F222BE173000970941 /* ParserUnitTest */ = {
+			isa = PBXGroup;
+			children = (
+				E95191F322BE173000970941 /* ParserUnitTest.swift */,
+				E95191F522BE173000970941 /* Info.plist */,
+			);
+			path = ParserUnitTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,18 +144,60 @@
 			productReference = 83AE2E0C1F8CAC2800F38CC9 /* JSONParser */;
 			productType = "com.apple.product-type.tool";
 		};
+		E921663022BDD6FD00817EE8 /* TokenizerUnitTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E921663822BDD6FD00817EE8 /* Build configuration list for PBXNativeTarget "TokenizerUnitTest" */;
+			buildPhases = (
+				E921662D22BDD6FD00817EE8 /* Sources */,
+				E921662E22BDD6FD00817EE8 /* Frameworks */,
+				E921662F22BDD6FD00817EE8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TokenizerUnitTest;
+			productName = TokenizerUnitTest;
+			productReference = E921663122BDD6FD00817EE8 /* TokenizerUnitTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E95191F022BE173000970941 /* ParserUnitTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E95191F822BE173000970941 /* Build configuration list for PBXNativeTarget "ParserUnitTest" */;
+			buildPhases = (
+				E95191ED22BE173000970941 /* Sources */,
+				E95191EE22BE173000970941 /* Frameworks */,
+				E95191EF22BE173000970941 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ParserUnitTest;
+			productName = ParserUnitTest;
+			productReference = E95191F122BE173000970941 /* ParserUnitTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		83AE2E041F8CAC2800F38CC9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0900;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = JK;
 				TargetAttributes = {
 					83AE2E0B1F8CAC2800F38CC9 = {
 						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
+					E921663022BDD6FD00817EE8 = {
+						CreatedOnToolsVersion = 10.2.1;
+						ProvisioningStyle = Automatic;
+					};
+					E95191F022BE173000970941 = {
+						CreatedOnToolsVersion = 10.2.1;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -104,6 +208,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 83AE2E031F8CAC2800F38CC9;
 			productRefGroup = 83AE2E0D1F8CAC2800F38CC9 /* Products */;
@@ -111,16 +216,59 @@
 			projectRoot = "";
 			targets = (
 				83AE2E0B1F8CAC2800F38CC9 /* JSONParser */,
+				E921663022BDD6FD00817EE8 /* TokenizerUnitTest */,
+				E95191F022BE173000970941 /* ParserUnitTest */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E921662F22BDD6FD00817EE8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E95191EF22BE173000970941 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		83AE2E081F8CAC2800F38CC9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E926BC4D22ABC65E00F1AE51 /* Parser.swift in Sources */,
+				E926BC4F22ABC82400F1AE51 /* JsonType.swift in Sources */,
+				E95191FC22BE1FDC00970941 /* InputView.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
+				E926BC4922ABC42900F1AE51 /* Tokenizer.swift in Sources */,
+				E95191FF22BE284A00970941 /* OutputView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E921662D22BDD6FD00817EE8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E921663422BDD6FD00817EE8 /* TokenizerUnitTest.swift in Sources */,
+				E921663922BDD73800817EE8 /* Tokenizer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E95191ED22BE173000970941 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E95191F922BE174A00970941 /* Parser.swift in Sources */,
+				E95191F422BE173000970941 /* ParserUnitTest.swift in Sources */,
+				E95191FA22BE174F00970941 /* JsonType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +399,88 @@
 			};
 			name = Release;
 		};
+		E921663622BDD6FD00817EE8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = MTFUU8Y22C;
+				INFOPLIST_FILE = TokenizerUnitTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = JH.TokenizerUnitTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E921663722BDD6FD00817EE8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = MTFUU8Y22C;
+				INFOPLIST_FILE = TokenizerUnitTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = JH.TokenizerUnitTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		E95191F622BE173000970941 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = MTFUU8Y22C;
+				INFOPLIST_FILE = ParserUnitTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = JH.ParserUnitTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E95191F722BE173000970941 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = MTFUU8Y22C;
+				INFOPLIST_FILE = ParserUnitTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = JH.ParserUnitTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -268,6 +498,24 @@
 			buildConfigurations = (
 				83AE2E141F8CAC2800F38CC9 /* Debug */,
 				83AE2E151F8CAC2800F38CC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E921663822BDD6FD00817EE8 /* Build configuration list for PBXNativeTarget "TokenizerUnitTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E921663622BDD6FD00817EE8 /* Debug */,
+				E921663722BDD6FD00817EE8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E95191F822BE173000970941 /* Build configuration list for PBXNativeTarget "ParserUnitTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E95191F622BE173000970941 /* Debug */,
+				E95191F722BE173000970941 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
