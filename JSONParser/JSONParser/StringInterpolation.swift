@@ -24,5 +24,8 @@ extension String.StringInterpolation {
         appendInterpolation("\(prefixDescription)\(elementDescription)\(suffixDescription)")
     }
     
-
+    mutating func appendInterpolation(readableFormat jsonValue: JSONValue) {
+        var jsonFormatter = JSONFormatter()
+        appendLiteral(jsonFormatter.process(jsonValue: jsonValue))
+    }
 }
