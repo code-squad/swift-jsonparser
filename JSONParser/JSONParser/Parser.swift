@@ -8,45 +8,80 @@
 
 import Foundation
 
+enum ParsingError: Error {
+    case error
+}
+
 struct Parser {
     
-    ///입력받은 값을 타입확인하고 해당하는 타입으로 변환해서 반환
-    func parseValue(input: String) -> Any {
-        if let stringToken = parseString(input: input) {
-            return stringToken
-        } else if let boolToken = parseBool(input: input) {
-            return boolToken
-        } else if let intToken = parseInt(input: input) {
-            return intToken
+    var tokens: [String]
+    
+    func parseValue(index: Int) throws -> (index: Int, value: JsonType) {
+        if let (index, string) = try parseString(index: index) {
+            return (index, string)
+        } else if let (index, number) = try parseNumber(index: index) {
+            return (index, number)
+        } else if let (index, bool) = try parseBool(index: index) {
+            return (index, bool)
+        } else if let (index, array) = try parseArray(index: index) {
+            return (index, array)
         }
-        return "변환할수없는 값"
+        return (0,"")
     }
     
     
-    ///string타입 옵셔널 반환
-    func parseString(input: String) -> String? {
-        var input = input
-        guard input.first == "\"" else {
-            return nil
-        }
-        input.removeFirst()
-        input.removeLast()
-        return String(input)
-    }
-    ///Bool타입 옵셔널 반환
-    func parseBool(input: String) -> Bool? {
-        guard input == "true" || input == "false" else {
-            return nil
-        }
-        return Bool(input)
-    }
-    ///Int타입 옵셔널 반환
-    func parseInt(input: String) -> Int? {
-        guard let int = Int(input) else {
-            return nil
-        }
-        return int
+    //다음인덱스를 확인함(return에 있는 조건이 실패할경우 false반환함)
+    func hasNext(index: Int) -> Bool {
+        return index < tokens.endIndex
     }
     
+    //현재인덱스를 받아서 다음인덱스와 다음인덱스의 값을 반환함
+    func readToken(index: Int) -> (index: Int, token: String)? {
+        guard hasNext(index: index) else {
+            return nil
+        }
+        let nextIndex = index + 1
+        return (index: nextIndex, token: tokens[nextIndex])
+    }
+    
+    
+    func parseString(index: Int) throws -> (index: Int, value: String)? {
+        guard let (index, token) = readToken(index: index) else {
+            throw ParsingError.error
+        }
+        guard token.first == "\"" && token.last == "\"" else {
+            return nil
+        }
+        var stringToken = token
+        stringToken.removeFirst()
+        stringToken.removeLast()
         
+        return (index, stringToken)
+    }
+    
+    func parseNumber(index: Int) throws -> (index: Int, value: Double)? {
+        guard let (index, token) = readToken(index: index) else {
+            throw ParsingError.error
+        }
+        guard let number = Double(token) else {
+            return nil
+        }
+        return (index, number)
+    }
+    
+    func parseBool(index: Int) throws -> (index: Int, value: Bool)? {
+        guard let (index, token) = readToken(index: index) else {
+            throw ParsingError.error
+        }
+        guard let bool = Bool(token) else {
+            return nil
+        }
+        return (index, bool)
+    }
+    
+    func parseArray(index: Int) throws -> (index: Int, value: [JsonType])? {
+        return (0, [])
+    }
+
+
 }
