@@ -10,7 +10,22 @@ import Foundation
 
 protocol JsonType {
     var typeName: String { get }
+    
+    var countInfo: [String: Int] { get }
+    
+    var count: Int {get}
 }
+
+//기본구현함
+extension JsonType {
+    var countInfo: [String : Int] {
+        return [typeName: 1]
+    }
+    var count: Int {
+        return 1
+    }
+}
+
 
 
 extension Double: JsonType {
@@ -35,5 +50,12 @@ extension Bool: JsonType {
 extension Array: JsonType where Element == JsonType {
     var typeName: String {
         return "배열"
+    }
+    
+    var countInfo: [String : Int] {
+        
+        let byName = Dictionary(grouping: self, by: { $0.typeName })
+        return byName.compactMapValues({ $0.count })
+        
     }
 }
