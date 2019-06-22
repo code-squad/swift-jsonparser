@@ -11,5 +11,5 @@ import Foundation
 protocol Checker {
     associatedtype T
     
-    func check(format: T) -> Bool
+    static func check(format: T) -> Bool
 }
