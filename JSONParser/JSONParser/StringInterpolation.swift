@@ -21,7 +21,7 @@ extension String.StringInterpolation {
             elementDescription += "\(typeDescription) \(count)개"
             prefix = seperator
         }
-        appendLiteral("\(prefixDescription)\(elementDescription)\(suffixDescription)")
+        appendInterpolation("\(prefixDescription)\(elementDescription)\(suffixDescription)")
     }
     
 
