@@ -64,7 +64,7 @@ struct RegexPattern {
     
     static var nestedObject: String {
         get {
-            let element = "\(objectKey)\(whitespace)\(colon)\(whitespace)\(nestedValueGroup)"s
+            let element = "\(objectKey)\(whitespace)\(colon)\(whitespace)\(nestedValueGroup)"
             return "\(startWith)\(openBrace)\(whitespace)\(element)\(whitespace)\(getOptionalPattern(for: element))\(whitespace)\(closedBrace)\(end)"
             //startWith + openBrace + whitespace + element + whitespace + getOptionalPattern(for: element) + whitespace + closedBrace + end
         }
