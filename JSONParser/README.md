@@ -444,3 +444,78 @@ regex pattern 에 매치되는지 확인할 때 사용
 - string `\"[^\"]*\"` or `\"[^\"]+\"`
 - bool `true|false`
 - number `[\\d]+`
+
+
+
+## :pushpin: Step 7-5 JSON 문자열 생성
+
+- 중첩 구조 탐색 방법 - tree traversal
+
+  - DFS - stack
+    - 재귀 호출 - 메모리 내에서 stack 으로 관리됨 ✅
+
+- 출력 방식
+
+  - 배열 - 한 줄로 붙여서 표현
+  - 객체 - 다음 줄로 내려서 Key : value 형태로 표현
+
+- newline `\n`
+
+- tab `\t`
+
+- 예시
+
+  ```
+  [ "hana", "hayul", "haun", [ "swift", "javascript" ] ]
+  ```
+
+
+
+### String Interpolation
+
+- string interpolation
+
+  - string literal 안에 constant, variable, literal, expression 삽입해서 새로운 string 을 만드는 방법
+
+  -  `\()` 사용해서 값을 삽입
+
+- `String.StringInterpolation`
+
+  ```swift
+  typealias StringInterpolation: StringInterpolationProtocol = DefaultStringInterpolation ....
+  ```
+
+  - `DefaultStringInterpolation` 은 `StringInterpolationProtocol` 을 채택한 struct 타입이다.
+
+    ```swift
+    struct DefaultStringInterpolation : StringInterpolationProtocol
+    ```
+
+    ```swift
+    protocol StringInterpolationProtocol
+    ```
+
+  - `DefaultStringInterpolation` 는 `CustomStringConvertible` protocol도 채택했다.
+
+  - 단순한 `CustomStringConvertible` 과 거의 같은 기능을 하지만 추가적으로 interpolation 에 한개 이상의 파라미터를 전달할 수 있고, argument label 도 사용할 수 있다.
+
+- Custom Type 에서 string interpolation 사용 방법
+
+  1. `String.StringInterpolation` 확장해서 custom type 을 위한 로직 구현
+
+     ```swift
+     extension String.StringInterpolation {
+       mutating func appendInterpolation(value: CustomType) {
+         // string interpolation 사용시 나올 내용 구현
+       }
+     }
+     ```
+
+  2. Custom type 안에 interpolation 관련 로직 구현
+
+     - Protocol 2개 채택 : `ExpressibleByStringLiteral`, `ExpressibleByStringInterpolation`
+     - 내부에 `StringInterpolationProtocol` 을 준수하는 `StringInterpolation` 내부 구조체를 구현
+
+- :pushpin: Reference
+  - [how to use custom string interpolation](https://www.hackingwithswift.com/articles/163/how-to-use-custom-string-interpolation-in-swift)
+  - [super powered string interpolation in swift 5.0](https://www.hackingwithswift.com/articles/178/super-powered-string-interpolation-in-swift-5-0)
