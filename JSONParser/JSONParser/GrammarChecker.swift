@@ -10,7 +10,7 @@ import Foundation
 
 struct GrammarChecker {
     
-    static func check(_ value: String, rule: ValidationRule) -> Bool {
+    static func isValidFormat(_ value: String, rule: ValidationRule) -> Bool {
         return rule.isValid(value)
     }
 }
