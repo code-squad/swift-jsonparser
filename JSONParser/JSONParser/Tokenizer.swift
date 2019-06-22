@@ -57,7 +57,10 @@ struct Tokenizer {
             
         }
         tempToTokens()
-        return tokens
+        // 반환하기전에 tokens배열을 비워줌
+        let result = tokens
+        tokens.removeAll()
+        return result
     }
 }
 
