@@ -9,12 +9,15 @@
 import Foundation
 
 enum ParsingError: Error {
-    case error
+    case mustComma
+    case noMoreTokens
+    case unsupportedType
+    
 }
 
 struct Parser {
     
-    var tokens: [String]
+    private var tokens: [String]
     
     func parseValue(index: Int) throws -> (index: Int, value: JsonType) {
         if let (index, string) = try parseString(index: index) {
@@ -26,7 +29,7 @@ struct Parser {
         } else if let (index, array) = try parseArray(index: index) {
             return (index, array)
         }
-        return (0,"")
+        throw ParsingError.unsupportedType
     }
     
     
@@ -38,7 +41,7 @@ struct Parser {
     //현재인덱스를 받아서 다음인덱스와 다음인덱스의 값을 반환함
     func readToken(index: Int) throws -> (index: Int, token: String) {
         guard hasNext(index: index) else {
-            throw ParsingError.error
+            throw ParsingError.noMoreTokens
         }
         let nextIndex = index + 1
         return (index: nextIndex, token: tokens[nextIndex])
@@ -48,7 +51,7 @@ struct Parser {
     func parseString(index: Int) throws -> (index: Int, value: String)? {
         let (index, token) = try readToken(index: index)
         
-        guard token.first == "\"" && token.last == "\"" else {
+        guard token.first == Structure.quotationMark && token.last == Structure.quotationMark else {
             return nil
         }
         var stringToken = token
@@ -80,7 +83,7 @@ struct Parser {
         //parseArray가 처리할수있는 값인지 확인해준다.
         let (startIndex, token) = try readToken(index: index)
         //배열이 시작되는 조건
-        guard token == "[" else {
+        guard token == String(Structure.startArray) else {
             return nil
         }
         
@@ -96,11 +99,11 @@ struct Parser {
             let (nextIndex, token) = try readToken(index: index)
             currentIndex = nextIndex
             
-            guard token != "]" else {
+            guard token != String(Structure.endArray) else {
                 break
             }
-            guard token == "," else {
-                throw ParsingError.error
+            guard token == String(Structure.comma) else {
+                throw ParsingError.mustComma
             }
         }
         return (currentIndex, resultArray)
