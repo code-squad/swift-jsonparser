@@ -9,26 +9,19 @@
 import Foundation
 
 struct ErrorHandler {
-    static func handle<IN,OUT> (input: IN, logic: (IN) throws -> (OUT), occur:(_ error: Error) -> Void = ErrorHandler.handle) -> OUT? {
-        var result: OUT?
+    let handleAction: (_ error: Error) -> Void
+    
+    init (handleAction: @escaping (_ error: Error) -> Void) {
+        self.handleAction = handleAction
+    }
+    
+    func handle(logic: () throws -> Void ) {
         do {
-           result = try logic(input)
+            try logic()
         }catch {
-            handle(error)
+            handleAction(error)
+            exit(0)
         }
-        return result
-    }
-    
-    static private func handle(_ error: Error) {
-        let outputView = OutputView()
         
-        switch error {
-        case let error as GrammerChecker.Error:
-            outputView.output(error.localizedDescription)
-        default:
-            outputView.output(error.localizedDescription)
-        }
     }
-    
 }
-

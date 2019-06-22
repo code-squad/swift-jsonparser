@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+protocol Exception: Error {
+    var description: String { get }
+}
