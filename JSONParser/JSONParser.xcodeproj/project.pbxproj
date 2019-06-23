@@ -85,6 +85,8 @@
 		0EF1AA3622BE77E600AC4DF0 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E11A2A122BE676100CDF278 /* Exception.swift */; };
 		0EF1AA3822BE800800AC4DF0 /* FactoryException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF1AA3722BE800800AC4DF0 /* FactoryException.swift */; };
 		0EF1AA3A22BE803300AC4DF0 /* JSONAnalyzerException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF1AA3922BE803300AC4DF0 /* JSONAnalyzerException.swift */; };
+		0EF6B7F122BFC23100C03EDE /* FactoryException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF1AA3722BE800800AC4DF0 /* FactoryException.swift */; };
+		0EF6B7F222BFC23C00C03EDE /* JSONAnalyzerException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF1AA3922BE803300AC4DF0 /* JSONAnalyzerException.swift */; };
 		0EFE12B6229060080039AB95 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECEB7E9229046CB00D5ED9D /* Tokenizer.swift */; };
 		0EFE12B8229060130039AB95 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECEB7ED2290475600D5ED9D /* OutputView.swift */; };
 		0EFE12B9229060150039AB95 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECEB7EB2290474E00D5ED9D /* InputView.swift */; };
@@ -534,6 +536,7 @@
 				0E03CFB82285E59200B0FE2D /* main.swift in Sources */,
 				0E6E363022A11E9F0018F4D6 /* JsonParserTests.swift in Sources */,
 				0EB74590229FB22E0096072C /* String+JsonValue.swift in Sources */,
+				0EF6B7F222BFC23C00C03EDE /* JSONAnalyzerException.swift in Sources */,
 				0EBF307222B8129800198003 /* Pattern.swift in Sources */,
 				0EBF306B22B7A74900198003 /* GrammerChecker.swift in Sources */,
 				0EB7459E229FCC640096072C /* Int+JsonValue.swift in Sources */,
@@ -542,6 +545,7 @@
 				0EB7458F229FB22C0096072C /* Bool+JsonValue.swift in Sources */,
 				0EB74591229FB2300096072C /* JsonList+JsonValue.swift in Sources */,
 				0ECD2392229C19070036A5DF /* TokenFactory.swift in Sources */,
+				0EF6B7F122BFC23100C03EDE /* FactoryException.swift in Sources */,
 				0E9B9B38229928E5007637B6 /* JsonParsingStrategy.swift in Sources */,
 				0EB7458E229FB2260096072C /* Token+CustomStringConvertible.swift in Sources */,
 				0E801D70229DB407005C82FF /* MyStackTests.swift in Sources */,

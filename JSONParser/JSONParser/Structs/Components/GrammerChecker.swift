@@ -19,12 +19,12 @@ struct GrammerChecker: Checker {
     }
     
     private static func checkObject(format: String, depth: Int = 0) -> Bool {
-        let regex = Pattern.object
+        let regex = Pattern.getObject(depth: depth)
         return check(string: format, pattern: regex)
     }
     
     private static func checkList(format: String, depth: Int = 0) -> Bool {
-        let regex = Pattern.list
+        let regex = Pattern.getList(depth: depth)
         return check(string: format, pattern: regex)
     }
     
