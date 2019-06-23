@@ -9,7 +9,7 @@
 import Foundation
 
 struct JSONValidationRule: ValidationRule {
-    func isValid(_ value: String) -> Bool {
+    static func isValid(_ value: String) -> Bool {
         return value =~ Regex.jsonObject || value =~ Regex.jsonArray
     }
 }

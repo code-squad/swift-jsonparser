@@ -15,7 +15,7 @@ func run() {
     
     do {
         input = try InputView.readJSONData()
-        guard GrammarChecker.isValidFormat(input, rule: JSONValidationRule()) else {
+        guard GrammarChecker.isValidFormat(input, rule: JSONValidationRule.isValid) else {
             print(ErrorMessage.validationFailed)
             return
         }

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ValidationRule {
-    func isValid(_ value: String) -> Bool
+    static func isValid(_ value: String) -> Bool
 }
 
 extension String {
