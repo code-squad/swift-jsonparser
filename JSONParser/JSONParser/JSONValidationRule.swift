@@ -9,11 +9,9 @@
 import Foundation
 
 struct JSONValidationRule: ValidationRule {
-    private let arrayPattern = #"^\[ ?((|, ?)(\"[\w ]+\"|[\d]+|true|false|(\{ ?((|, ?)(\"[\w]+\" ?: ?)(\"[\w ]+\"|[\d]+|true|false))+ ?\})))+ ?\]$"#
-    private let objectPattern = #"^\{ ?((|, ?)(\"[\w]+\" ?: ?)(\"[\w ]+\"|[\d]+|true|false))+ ?\}$"#
     
     func isValid(_ value: String) -> Bool {
-        return value.matches(arrayPattern) || value.matches(objectPattern)
+        return value.matches(Regex.jsonObject) || value.matches(Regex.jsonArray)
     }
 }
 
