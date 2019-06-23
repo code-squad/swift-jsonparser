@@ -59,7 +59,7 @@ class GrammerCheckerTests: XCTestCase {
         let hasListObjectFormat = "{ \"list\" : \(listFormat)}"
         
         //Then
-        XCTAssertFalse(GrammerChecker.check(format:hasListObjectFormat))
+        XCTAssertTrue(GrammerChecker.check(format:hasListObjectFormat))
     }
     
     func testCheckHasObjectObjectFormat() {
@@ -67,6 +67,6 @@ class GrammerCheckerTests: XCTestCase {
         let hasObjectObjectFormat = "{ \"list\" : \(self.objectFormat)}"
         
         //Then
-        XCTAssertFalse(GrammerChecker.check(format:hasObjectObjectFormat))
+        XCTAssertTrue(GrammerChecker.check(format:hasObjectObjectFormat))
     }
 }
