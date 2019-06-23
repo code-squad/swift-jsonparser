@@ -51,7 +51,7 @@ class GrammerCheckerTests: XCTestCase {
         let nestedListFormat = "[\(listFormat), \(listFormat)]"
         
         //Then
-        XCTAssertFalse(GrammerChecker.check(format: nestedListFormat))
+        XCTAssertTrue(GrammerChecker.check(format: nestedListFormat))
     }
     
     func testCheckHasObjectListFormat() {
