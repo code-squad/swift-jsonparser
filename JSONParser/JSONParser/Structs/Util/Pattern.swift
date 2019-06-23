@@ -23,5 +23,25 @@ extension Pattern {
 extension Pattern {
     static let keyValue = "\(string)(\(ws))?:(\(ws))?(\(value))"
     static let object = "(\(ws))?\\{((\(ws))?\(keyValue)(\(ws))?(,)?)*\\}(\(ws))?"
-    static let list = "\\[((\(ws))?(\(value)|(\(object)))(\(ws))?(,)?(\(ws))?)*\\]"
+    static let list = "(\(ws))?\\[((\(ws))?(\(value)|(\(object)))(\(ws))?(,)?(\(ws))?)*\\](\(ws))?"
+}
+extension Pattern {
+    static func getValue(depth: Int) -> String {
+        var depth = depth
+        
+        if depth > 0 {
+            depth-=1
+            return "(\(list)|\(object)|\(getValue(depth: depth)))"
+        }
+        return "(\(list)|\(object)|\(value))"
+    }
+    static func getKeyValue(depth: Int) -> String {
+        return "\(string)(\(ws))?:(\(ws))?(\(getValue(depth: depth)))"
+    }
+    static func getObject(depth: Int) -> String {
+        return "(\(ws))?\\{((\(ws))?\(getKeyValue(depth: depth))(\(ws))?(,)?)*\\}(\(ws))?"
+    }
+    static func getList(depth: Int) -> String {
+        return "\\[((\(ws))?(\(value)|(\(getObject(depth: depth))|\(list)))(\(ws))?(,)?(\(ws))?)*\\]"
+    }
 }
