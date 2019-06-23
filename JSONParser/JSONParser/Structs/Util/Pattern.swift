@@ -28,12 +28,11 @@ extension Pattern {
 extension Pattern {
     static func getValue(depth: Int) -> String {
         var depth = depth
-        
         if depth > 0 {
             depth-=1
-            return "(\(list)|\(object)|\(getValue(depth: depth)))"
+            return "((\(getObject(depth: depth))|(\(getList(depth: depth)))|(\(value))))"
         }
-        return "(\(list)|\(object)|\(value))"
+    return "(\(value))"
     }
     static func getKeyValue(depth: Int) -> String {
         return "\(string)(\(ws))?:(\(ws))?(\(getValue(depth: depth)))"
@@ -42,6 +41,6 @@ extension Pattern {
         return "(\(ws))?\\{((\(ws))?\(getKeyValue(depth: depth))(\(ws))?(,)?)*\\}(\(ws))?"
     }
     static func getList(depth: Int) -> String {
-        return "\\[((\(ws))?(\(value)|(\(getObject(depth: depth))|\(list)))(\(ws))?(,)?(\(ws))?)*\\]"
+        return "(\(ws))?\\[((\(ws))?\(getValue(depth: depth))(\(ws))?(,)?(\(ws))?)*\\](\(ws))?"
     }
 }
