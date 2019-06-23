@@ -9,21 +9,12 @@
 import Foundation
 
 func run() {
-    let input: String
+    let input = InputView.readJSONData()
     let tokens: [Token]
     let jsonValue: JSONValue
     
-    do {
-        input = try InputView.readJSONData()
-        guard GrammarChecker.isValidFormat(input, rule: JSONValidationRule.isValid) else {
-            print(ErrorMessage.validationFailed)
-            return
-        }
-    } catch let error as InputView.Error {
-        print(error.localizedDescription)
-        return
-    } catch {
-        print("\(ErrorMessage.unexpectedError): \(error)")
+    guard GrammarChecker.isValidFormat(input, rule: JSONValidationRule.isValid) else {
+        print(ErrorMessage.validationFailed)
         return
     }
     
