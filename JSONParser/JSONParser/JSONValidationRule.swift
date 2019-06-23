@@ -13,12 +13,12 @@ struct JSONValidationRule: ValidationRule {
     private let objectPattern = #"^\{ ?((|, ?)(\"[\w]+\" ?: ?)(\"[\w ]+\"|[\d]+|true|false))+ ?\}$"#
     
     func isValid(_ value: String) -> Bool {
-        return value.matches(for: arrayPattern) || value.matches(for: objectPattern)
+        return value.matches(arrayPattern) || value.matches(objectPattern)
     }
 }
 
 extension String {
-    func matches(for regex: String) -> Bool {
-        return self.range(of: regex, options: .regularExpression) != nil
+    func matches(_ pattern: String) -> Bool {
+        return self.range(of: pattern, options: .regularExpression) != nil
     }
 }
