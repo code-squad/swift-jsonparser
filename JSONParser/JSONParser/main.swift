@@ -22,6 +22,7 @@ func main() {
     let parser = Parser(tokens: tokens, scanner: tokenScanner)
     if let jsonData = parser.parse() {
         OutputView.printDescription(of: jsonData)
+        OutputView.printPretty(of: jsonData, formatter: Formatter())
     }
 }
 

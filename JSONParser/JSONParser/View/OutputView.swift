@@ -15,6 +15,11 @@ struct OutputView {
         print(description)
     }
     
+    static func printPretty(of input: JSONContainerType, formatter: Formatter) {
+        let prettyJSONString = formatter.prettyJSON(data: input)
+        print(prettyJSONString)
+    }
+    
     static private func printTypesCount(of jsonValue: JSONContainerType) -> String {
         let typeDescription = jsonValue.typeDescription
         let totalCount = jsonValue.totalCount
