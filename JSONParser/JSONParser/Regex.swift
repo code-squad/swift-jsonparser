@@ -13,8 +13,9 @@ struct Regex {
     private static let number = #"[\d]+"#
     private static let bool = "(true|false)"
     private static let whitespaces = " ?"
-    private static let jsonValue = "(\(string)|\(number)|\(bool))"
-    private static let jsonKeyValue = "((|,\(whitespaces))(\(string)\(whitespaces):\(whitespaces))\(jsonValue))"
+    private static let jsonBasicValue = "(\(string)|\(number)|\(bool))"
+    private static let jsonArray = "\\[\(whitespaces)((|,\(whitespaces))(\(jsonBasicValue)|(\(whitespaces))))+\(whitespaces)\\]"
+    private static let jsonKeyValue = "((|,\(whitespaces))(\(string)\(whitespaces):\(whitespaces))(\(jsonBasicValue)|\(jsonArray)))"
     static let jsonObject = "\\{\(whitespaces)\(jsonKeyValue)+\(whitespaces)\\}"
-    static let jsonArray = "\\[\(whitespaces)((|,\(whitespaces))(\(jsonValue)|(\(whitespaces))))+\(whitespaces)\\]"
+    static let nestedJSONArray = "^\\[\(whitespaces)((|,\(whitespaces))((\(jsonBasicValue)\(jsonObject))|(\(whitespaces))))+\(whitespaces)\\]*$"
 }
