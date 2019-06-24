@@ -25,11 +25,15 @@ struct OutputView {
         print(unsupportedPatternMessage)
     }
     
-    static func printTypeCountDescription(of jsonValue: JSONValue & TypeCountable) {
-        print("\(typeCountDescription: jsonValue)")
+    static func printTypeCountDescription(of jsonValue: JSONValue) {
+        guard let typeCountableJSONValue = jsonValue as? JSONValue & TypeCountable else {
+            noticeUnsupportedPattern()
+            return
+        }
+        print("\(typeCountDescription: typeCountableJSONValue)")
     }
     
-    static func printFormatted(jsonValue: JSONValue & TypeCountable) {
+    static func printFormatted(jsonValue: JSONValue) {
         print(jsonValue.formatted(indentLevel: 0))
     }
 }
