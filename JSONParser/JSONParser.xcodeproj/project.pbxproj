@@ -23,7 +23,7 @@
 		FADB7DAA22B90462006E5AA5 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA43C77F228AE36000BAB081 /* Converter.swift */; };
 		FADB7DAB22B90465006E5AA5 /* JSONValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC4C5A2291998B00122FBE /* JSONValueType.swift */; };
 		FADB7DAC22B90467006E5AA5 /* JSONKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC4C5E22928DDA00122FBE /* JSONKeyword.swift */; };
-		FADDDC5C22BE716200969D5B /* PrettyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDDC5B22BE716200969D5B /* PrettyFormatter.swift */; };
+		FADDDC5C22BE716200969D5B /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDDC5B22BE716200969D5B /* Formatter.swift */; };
 		FAEC4C572291985700122FBE /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC4C562291985700122FBE /* Tokenizer.swift */; };
 		FAEC4C592291989200122FBE /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC4C582291989200122FBE /* Parser.swift */; };
 		FAEC4C5B2291998B00122FBE /* JSONValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC4C5A2291998B00122FBE /* JSONValueType.swift */; };
@@ -53,7 +53,7 @@
 		FADB7D9822B8DF79006E5AA5 /* JSONParserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONParserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FADB7D9C22B8DF79006E5AA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FADB7DA022B8DFA3006E5AA5 /* GrammerCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammerCheckerTests.swift; sourceTree = "<group>"; };
-		FADDDC5B22BE716200969D5B /* PrettyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrettyFormatter.swift; sourceTree = "<group>"; };
+		FADDDC5B22BE716200969D5B /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		FAEC4C562291985700122FBE /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
 		FAEC4C582291989200122FBE /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		FAEC4C5A2291998B00122FBE /* JSONValueType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValueType.swift; sourceTree = "<group>"; };
@@ -108,7 +108,7 @@
 				FADB7D9022B8CC1F006E5AA5 /* TokenScanner.swift */,
 				FA43C77F228AE36000BAB081 /* Converter.swift */,
 				FAEC4C5A2291998B00122FBE /* JSONValueType.swift */,
-				FADDDC5B22BE716200969D5B /* PrettyFormatter.swift */,
+				FADDDC5B22BE716200969D5B /* Formatter.swift */,
 				FAEC4C5E22928DDA00122FBE /* JSONKeyword.swift */,
 			);
 			path = JSONParser;
@@ -227,7 +227,7 @@
 				FAEC4C572291985700122FBE /* Tokenizer.swift in Sources */,
 				FAEC4C5F22928DDA00122FBE /* JSONKeyword.swift in Sources */,
 				FAEC4C592291989200122FBE /* Parser.swift in Sources */,
-				FADDDC5C22BE716200969D5B /* PrettyFormatter.swift in Sources */,
+				FADDDC5C22BE716200969D5B /* Formatter.swift in Sources */,
 				FADB7D9122B8CC1F006E5AA5 /* TokenScanner.swift in Sources */,
 				FAEC4C5B2291998B00122FBE /* JSONValueType.swift in Sources */,
 				FA43C780228AE36000BAB081 /* Converter.swift in Sources */,
