@@ -10,6 +10,7 @@
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		C22752E722B85FB50045DAC7 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22752E622B85FB50045DAC7 /* GrammarChecker.swift */; };
 		C25025F022C1040F00C31226 /* Compoundable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25025EF22C1040F00C31226 /* Compoundable.swift */; };
+		C25025F222C10B0800C31226 /* TypeCountable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25025F122C10B0800C31226 /* TypeCountable.swift */; };
 		C26B874522BCD58200A1FD09 /* StringInterpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26B874422BCD58200A1FD09 /* StringInterpolation.swift */; };
 		C27B06A922BB508B000B4F72 /* RegexPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27B06A822BB508B000B4F72 /* RegexPattern.swift */; };
 		C2DB9D6C229660E600E35FB8 /* TokenReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DB9D6B229660E600E35FB8 /* TokenReader.swift */; };
@@ -41,6 +42,7 @@
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C22752E622B85FB50045DAC7 /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
 		C25025EF22C1040F00C31226 /* Compoundable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compoundable.swift; sourceTree = "<group>"; };
+		C25025F122C10B0800C31226 /* TypeCountable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCountable.swift; sourceTree = "<group>"; };
 		C26B874422BCD58200A1FD09 /* StringInterpolation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringInterpolation.swift; sourceTree = "<group>"; };
 		C27B06A822BB508B000B4F72 /* RegexPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexPattern.swift; sourceTree = "<group>"; };
 		C2DB9D6B229660E600E35FB8 /* TokenReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReader.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				C2FAEDA7228EA2B10045F639 /* OutputView.swift */,
 				C26B874422BCD58200A1FD09 /* StringInterpolation.swift */,
 				C2FAEDA9228EAC500045F639 /* TypeCounter.swift */,
+				C25025F122C10B0800C31226 /* TypeCountable.swift */,
 				C25025EF22C1040F00C31226 /* Compoundable.swift */,
 				C2FAED9D228E99580045F639 /* Tokenizer.swift */,
 				C2DB9D6B229660E600E35FB8 /* TokenReader.swift */,
@@ -176,6 +179,7 @@
 				C2FAEDAC228EC9D60045F639 /* JSONValueFactory.swift in Sources */,
 				C2DB9D6C229660E600E35FB8 /* TokenReader.swift in Sources */,
 				C2FAEDAA228EAC500045F639 /* TypeCounter.swift in Sources */,
+				C25025F222C10B0800C31226 /* TypeCountable.swift in Sources */,
 				C2FAED9C228E98A00045F639 /* InputView.swift in Sources */,
 				C2FAEDAE228ED0A80045F639 /* JSONParserError.swift in Sources */,
 			);
