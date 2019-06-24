@@ -17,8 +17,8 @@ struct Regex {
     struct JSON {
         private static let basicValue = "(\(string)|\(number)|\(bool))"
         private static let array = "\\[\(whitespaces)((|,\(whitespaces))(\(basicValue)|(\(whitespaces))))+\(whitespaces)\\]"
-        private static let keyValue = "((|,\(whitespaces))(\(string)\(whitespaces):\(whitespaces))(\(basicValue)|\(array)))"
-        static let object = "\\{\(whitespaces)\(keyValue)+\(whitespaces)\\}"
+        private static let object = "\\{\(whitespaces)((|,\(whitespaces))(\(string)\(whitespaces):\(whitespaces))(\(basicValue)|\(array)))+\(whitespaces)\\}"
         static let nestedArray = "^\\[\(whitespaces)((|,\(whitespaces))((\(basicValue)|\(array))|(\(whitespaces))))+\(whitespaces)\\]*$"
+        static let nestedObject = "\\{\(whitespaces)((|,\(whitespaces))(\(string)\(whitespaces):\(whitespaces))(\(basicValue)|\(array)|\(object)))+\(whitespaces)\\}"
     }
 }
