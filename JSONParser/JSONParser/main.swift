@@ -26,12 +26,12 @@ func parseIntoJSON(from input: String) -> JSONValue? {
 func main() {
     InputView.printInstruction()
     let input = InputView.read()
-    guard GrammarChecker.check(input: input), let jsonValue = parseIntoJSON(from: input) else {
+    guard GrammarChecker.check(input: input), let jsonValue = parseIntoJSON(from: input) as? JSONValue & Compoundable else {
         OutputView.noticeUnsupportedPattern()
         return
     }
     OutputView.printTypeCountDescription(of: jsonValue)
-    OutputView.printInReadableFormat(jsonValue: jsonValue)
+    OutputView.printFormatted(jsonValue: jsonValue)
 }
 
 main()
