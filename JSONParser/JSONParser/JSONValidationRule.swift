@@ -10,6 +10,6 @@ import Foundation
 
 struct JSONValidationRule: ValidationRule {
     static func isValid(_ value: String) -> Bool {
-        return value =~ Regex.jsonObject || value =~ Regex.nestedJSONArray
+        return value =~ Regex.JSON.object || value =~ Regex.JSON.nestedArray
     }
 }

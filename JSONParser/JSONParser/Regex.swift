@@ -13,9 +13,12 @@ struct Regex {
     private static let number = #"[\d]+"#
     private static let bool = "(true|false)"
     private static let whitespaces = " ?"
-    private static let jsonBasicValue = "(\(string)|\(number)|\(bool))"
-    private static let jsonArray = "\\[\(whitespaces)((|,\(whitespaces))(\(jsonBasicValue)|(\(whitespaces))))+\(whitespaces)\\]"
-    private static let jsonKeyValue = "((|,\(whitespaces))(\(string)\(whitespaces):\(whitespaces))(\(jsonBasicValue)|\(jsonArray)))"
-    static let jsonObject = "\\{\(whitespaces)\(jsonKeyValue)+\(whitespaces)\\}"
-    static let nestedJSONArray = "^\\[\(whitespaces)((|,\(whitespaces))((\(jsonBasicValue)|\(jsonObject))|(\(whitespaces))))+\(whitespaces)\\]*$"
+    
+    struct JSON {
+        private static let basicValue = "(\(string)|\(number)|\(bool))"
+        private static let array = "\\[\(whitespaces)((|,\(whitespaces))(\(basicValue)|(\(whitespaces))))+\(whitespaces)\\]"
+        private static let keyValue = "((|,\(whitespaces))(\(string)\(whitespaces):\(whitespaces))(\(basicValue)|\(array)))"
+        static let object = "\\{\(whitespaces)\(keyValue)+\(whitespaces)\\}"
+        static let nestedArray = "^\\[\(whitespaces)((|,\(whitespaces))((\(basicValue)|\(object))|(\(whitespaces))))+\(whitespaces)\\]*$"
+    }
 }
