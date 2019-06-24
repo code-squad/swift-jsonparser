@@ -11,7 +11,10 @@ import Foundation
 protocol Compoundable {
     var elementCount: Int { get }
     var elements: [JSONValue] { get }
-    
+    func formatted(indentLevel: Int) -> String
+    func getFormatted(element: JSONValue, indent: Int) -> String
+}
+
 }
 
 extension Array: Compoundable where Element == JSONValue {
