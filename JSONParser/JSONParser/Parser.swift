@@ -20,18 +20,32 @@ struct Parser {
     }
     
     private static func parse(array: [String]) throws -> JsonArray {
-        var tokens = array
+        let arrayTokens = refine(tokens: array)
+        let data: [JsonType] = try makeData(arrayTokens: arrayTokens)
+        
+        return try JsonArray(array: data)
+    }
+    
+    private static func parse(object: [String]) throws -> JsonObject {
+        let objectTokens = refine(tokens: object)
+        let data = try makeData(objectTokens: objectTokens)
+        
+        return try JsonObject(object: data)
+    }
+    
+    private static func refine(tokens: [String]) -> [[String]] {
+        var tokens = tokens
         tokens.removeFirst()
         tokens.removeLast()
         
+        var refineResult: [[String]] = []
         var incompleteTypeTokens: [String] = []
-        var data: [JsonType] = []
         
         for token in tokens {
             incompleteTypeTokens.append(token)
             
             if isTypeComplete(incompleteTypeTokens) {
-                data.append(try convert(tokens: incompleteTypeTokens))
+                refineResult.append(incompleteTypeTokens)
                 incompleteTypeTokens.removeAll()
             }
             
@@ -40,29 +54,7 @@ struct Parser {
             }
         }
         
-        return try JsonArray(array: data)
-    }
-    
-    private static func parse(object: [String]) throws -> JsonObject {
-        var tokens = object
-        tokens.removeFirst()
-        tokens.removeLast()
-        
-        var data: [String : JsonType] = [:]
-        
-        let objectTokens = separateObject(tokens: tokens)
-        
-        for token in objectTokens {
-            let refineResult = try refine(object: token)
-            
-            guard let key = refineResult.first, let value = refineResult.last else {
-                throw ParseError.invalidValue
-            }
-            
-            data[key] = try convert(tokens: [value])
-        }
-        
-        return try JsonObject(object: data)
+        return refineResult
     }
     
     private static func isTypeComplete(_ incompleteTypeTokens: [String]) -> Bool {
@@ -79,44 +71,34 @@ struct Parser {
         return true
     }
     
-    private static func separateObject(tokens: [String]) -> [[String]] {
-        var objectTokens: [[String]] = []
-        var incompleteTypeTokens: [String] = []
+    private static func makeData(arrayTokens: [[String]]) throws -> [JsonType] {
+        var data: [JsonType] = []
         
-        for token in tokens {
-            if token == String(JsonElement.comma) {
-                objectTokens.append(incompleteTypeTokens)
-                incompleteTypeTokens.removeAll()
+        for tokens in arrayTokens {
+            data.append(try convert(tokens: tokens))
+        }
+        
+        return data
+    }
+    
+    private static func makeData(objectTokens: [[String]]) throws -> [String : JsonType] {
+        var data: [String : JsonType] = [:]
+        var key = ""
+        
+        for tokens in objectTokens {
+            if key.isEmpty {
+                key = tokens.joined()
                 
                 continue
             }
             
-            incompleteTypeTokens.append(token)
-        }
-        
-        objectTokens.append(incompleteTypeTokens)
-        
-        return objectTokens
-    }
-    
-    private static func refine(object: [String]) throws -> [String] {
-        var incompleteTypeTokens: [String] = []
-        var result: [String] = []
-        
-        for token in object {
-            incompleteTypeTokens.append(token)
-            
-            if isTypeComplete(incompleteTypeTokens) {
-                result.append(incompleteTypeTokens.joined())
-                incompleteTypeTokens.removeAll()
-            }
-            
-            if incompleteTypeTokens.first == String(JsonElement.whitespace) {
-                incompleteTypeTokens.removeAll()
+            if tokens.joined() != String(JsonElement.colon) {
+                data[key] = try convert(tokens: tokens)
+                key.removeAll()
             }
         }
         
-        return result
+        return data
     }
     
     private static func convert(tokens: [String]) throws -> JsonType {
