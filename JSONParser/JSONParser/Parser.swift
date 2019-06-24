@@ -59,16 +59,24 @@ struct Parser {
     
     
     private func parseString(index: Int) throws -> (index: Int, value: String)? {
-        let (index, token) = try readToken(index: index)
+        let (startIndex, firstToken) = try readToken(index: index)
         
-        guard token.first == Mark.quotationMark && token.last == Mark.quotationMark else {
+        guard  firstToken == String(Mark.quotationMark) else {
             return nil
         }
-        var stringToken = token
-        stringToken.removeFirst()
-        stringToken.removeLast()
+        var currentIndex = startIndex
+        var stringOutput = ""
         
-        return (index, stringToken)
+        while true {
+            let (index, token) = try readToken(index: currentIndex)
+            currentIndex = index
+            
+            guard token != String(Mark.quotationMark) else {
+                break
+            }
+            stringOutput.append(token)
+        }
+        return (currentIndex, stringOutput)
     }
     
     private func parseNumber(index: Int) throws -> (index: Int, value: Double)? {
