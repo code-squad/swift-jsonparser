@@ -10,6 +10,7 @@ import Foundation
 
 protocol JSONValue {
     var typeDescription: String { get }
+    func formatted(indentLevel: Int) -> String
 }
 
 extension Bool: JSONValue {
