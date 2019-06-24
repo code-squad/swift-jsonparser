@@ -79,4 +79,20 @@ struct Writer {
         handler("\n")
         handler("}")
     }
+    
+    private mutating func increaseIndent() {
+        indent += indentAmount
+        writeIndent()
+    }
+    
+    private mutating func decAndWriteIndent() {
+        indent -= indentAmount
+        writeIndent()
+    }
+    
+    private func writeIndent() {
+        for _ in 0..<indent {
+            handler(" ")
+        }
+    }
 }
