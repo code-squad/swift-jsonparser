@@ -11,6 +11,10 @@ import Foundation
 func main(){
     do {
         let input = try InputView.ask(for: .request)
+        guard GrammarChecker.isValid(input) else {
+            print("no")
+            return
+        }
         var jsonTokenizer =  JSONTokenizer.init()
         let tokens = try jsonTokenizer.tokenize(data: input)
         var parser = JSONParser(tokens: tokens)
