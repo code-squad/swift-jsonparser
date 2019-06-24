@@ -27,6 +27,9 @@ struct Writer {
         case let number as Int:
             handler(String(number))
             break
+        case let array as [JSONValue]:
+            serializeArray(array)
+            break
         default:
             break
         }
@@ -36,5 +39,20 @@ struct Writer {
         handler("\"")
         handler(value)
         handler("\"")
+    }
+    
+    mutating func serializeArray(_ array: [JSONValue]) {
+        handler("[")
+
+        var first = true
+        for value in array {
+            if first {
+                first = false
+            } else {
+                handler(", ")
+            }
+            serializeJSON(value)
+        }
+        handler("]")
     }
 }
