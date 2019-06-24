@@ -138,6 +138,10 @@ struct Parser {
             return try parse(object: tokens)
         }
         
+        if token.first == JsonElement.startOfArray, token.last == JsonElement.endOfArray {
+            return try parse(array: tokens)
+        }
+        
         throw ParseError.invalidValue
     }
 }
