@@ -46,8 +46,9 @@ struct Writer {
     }
     
     private mutating func serializeArray(_ array: [JSONValue]) {
+        writeIndent()
         handler("[")
-
+        
         var first = true
         for value in array {
             if first {
@@ -63,24 +64,26 @@ struct Writer {
     private mutating func serializeObject(_ object: [String: JSONValue]) {
         handler("{")
         var first = true
-        
+        handler("\n")
+        incAndWriteIndent()
         for (key, value) in object {
             if first {
                 first = false
             } else {
-                handler(",")
+                handler(",\n")
+                writeIndent()
             }
-            handler("\n")
             serializeString(key)
             handler(":")
             handler(" ")
             serializeJSON(value)
         }
         handler("\n")
+        decAndWriteIndent()
         handler("}")
     }
     
-    private mutating func increaseIndent() {
+    private mutating func incAndWriteIndent() {
         indent += indentAmount
         writeIndent()
     }
