@@ -19,6 +19,9 @@ struct JSONSymbols {
     static let colon: Character = ":"
     static let trueString = "true"
     static let falseString = "false"
+    static let newline = "\n"
+    static let tab = "\t"
+    static let seperator = ", "
 }
 
 extension Character {
