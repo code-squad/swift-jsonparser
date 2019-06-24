@@ -19,6 +19,6 @@ struct Regex {
         private static let array = "\\[\(whitespaces)((|,\(whitespaces))(\(basicValue)|(\(whitespaces))))+\(whitespaces)\\]"
         private static let keyValue = "((|,\(whitespaces))(\(string)\(whitespaces):\(whitespaces))(\(basicValue)|\(array)))"
         static let object = "\\{\(whitespaces)\(keyValue)+\(whitespaces)\\}"
-        static let nestedArray = "^\\[\(whitespaces)((|,\(whitespaces))((\(basicValue)|\(object))|(\(whitespaces))))+\(whitespaces)\\]*$"
+        static let nestedArray = "^\\[\(whitespaces)((|,\(whitespaces))((\(basicValue)|\(array))|(\(whitespaces))))+\(whitespaces)\\]*$"
     }
 }
