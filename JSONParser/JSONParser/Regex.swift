@@ -9,12 +9,11 @@
 import Foundation
 
 struct Regex {
-    private static let string = #"\"[\w ]+\""#
-    private static let number = #"[\d]+"#
-    private static let bool = "(true|false)"
-    private static let whitespaces = " ?"
-    
     struct JSON {
+        private static let string = #"\"[\w ]+\""#
+        private static let number = #"[\d]+"#
+        private static let bool = "(true|false)"
+        private static let whitespaces = " ?"
         private static let basicValue = "(\(string)|\(number)|\(bool))"
         private static let array = "\\[\(whitespaces)((|,\(whitespaces))(\(basicValue)|(\(whitespaces))))+\(whitespaces)\\]"
         private static let object = "\\{\(whitespaces)((|,\(whitespaces))(\(string)\(whitespaces):\(whitespaces))(\(basicValue)|\(array)))+\(whitespaces)\\}"
