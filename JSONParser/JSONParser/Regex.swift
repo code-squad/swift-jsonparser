@@ -17,5 +17,5 @@ struct Regex {
     private static let jsonArray = "\\[\(whitespaces)((|,\(whitespaces))(\(jsonBasicValue)|(\(whitespaces))))+\(whitespaces)\\]"
     private static let jsonKeyValue = "((|,\(whitespaces))(\(string)\(whitespaces):\(whitespaces))(\(jsonBasicValue)|\(jsonArray)))"
     static let jsonObject = "\\{\(whitespaces)\(jsonKeyValue)+\(whitespaces)\\}"
-    static let nestedJSONArray = "^\\[\(whitespaces)((|,\(whitespaces))((\(jsonBasicValue)\(jsonObject))|(\(whitespaces))))+\(whitespaces)\\]*$"
+    static let nestedJSONArray = "^\\[\(whitespaces)((|,\(whitespaces))((\(jsonBasicValue)|\(jsonObject))|(\(whitespaces))))+\(whitespaces)\\]*$"
 }
