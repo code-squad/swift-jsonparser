@@ -9,7 +9,7 @@
 import Foundation
 
 extension String.StringInterpolation {
-    mutating func appendInterpolation(typeCountDescription value: JSONValue & TypeCountable) {
+    mutating func appendInterpolation(typeCountDescription value: JSONValue & Compoundable) {
         let prefixDescription = "총 \(value.elementCount)개의 \(value.typeDescription) 데이터 중에 "
         let suffixDescription = "가 포함되어 있습니다."
         var elementDescription = String()
@@ -22,10 +22,5 @@ extension String.StringInterpolation {
             prefix = seperator
         }
         appendInterpolation("\(prefixDescription)\(elementDescription)\(suffixDescription)")
-    }
-    
-    mutating func appendInterpolation(readableFormat jsonValue: JSONValue) {
-        var jsonFormatter = JSONFormatter()
-        appendLiteral(jsonFormatter.process(jsonValue: jsonValue))
     }
 }
