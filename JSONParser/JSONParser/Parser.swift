@@ -12,7 +12,7 @@ enum ParsingError: Error {
     case mustComma
     case noMoreTokens
     case unsupportedType
-    
+    case endedWithRemainingTokens
 }
 
 struct Parser {
@@ -21,8 +21,12 @@ struct Parser {
     
     mutating func startParsing(tokens: [String]) throws -> JsonType {
         self.tokens = tokens
-        let (_, result) = try parseValue(index: -1)
-        return result
+        let (finalIndex, result) = try parseValue(index: -1)
+        if finalIndex == tokens.endIndex - 1 {
+            return result
+
+        }
+        throw ParsingError.endedWithRemainingTokens
     }
     
     private func parseValue(index: Int) throws -> (index: Int, value: JsonType) {
@@ -39,12 +43,12 @@ struct Parser {
     }
     
     
-    //다음인덱스를 확인함(return에 있는 조건이 실패할경우 false반환함)
+    ///다음인덱스를 확인함(return에 있는 조건이 실패할경우 false반환함)
     private func hasNext(index: Int) -> Bool {
         return index < tokens.endIndex - 1
     }
     
-    //현재인덱스를 받아서 다음인덱스와 다음인덱스의 값을 반환함
+    ///현재인덱스를 받아서 다음인덱스와 다음인덱스의 값을 반환함
     private func readToken(index: Int) throws -> (index: Int, token: String) {
         guard hasNext(index: index) else {
             throw ParsingError.noMoreTokens
@@ -57,7 +61,7 @@ struct Parser {
     private func parseString(index: Int) throws -> (index: Int, value: String)? {
         let (index, token) = try readToken(index: index)
         
-        guard token.first == Structure.quotationMark && token.last == Structure.quotationMark else {
+        guard token.first == Mark.quotationMark && token.last == Mark.quotationMark else {
             return nil
         }
         var stringToken = token
@@ -88,14 +92,14 @@ struct Parser {
     private func parseArray(index: Int) throws -> (index: Int, value: [JsonType])? {
         //parseArray가 처리할수있는 값인지 확인해준다.
         let (startIndex, token) = try readToken(index: index)
-        //배열이 시작되는 조건
-        guard token == String(Structure.startArray) else {
+        //parseArray가 시작되는 조건
+        guard token == String(Mark.startArray) else {
             return nil
         }
         
         // 빈배열 예외처리
-        let (finalIndex, final) = try readToken(index: index)
-        guard final != String(Structure.endArray) else {
+        let (finalIndex, final) = try readToken(index: startIndex)
+        guard final != String(Mark.endArray) else {
             return (finalIndex, [])
         }
         
@@ -110,11 +114,12 @@ struct Parser {
             
             let (nextIndex, token) = try readToken(index: index)
             currentIndex = nextIndex
+            //token이 ]면 while루프를 벗어나고, 최종인덱스와, 값이저장되어있는 배열을 반환함
             
-            guard token != String(Structure.endArray) else {
+            guard token != String(Mark.endArray) else {
                 break
             }
-            guard token == String(Structure.comma) else {
+            guard token == String(Mark.comma) else {
                 throw ParsingError.mustComma
             }
         }
