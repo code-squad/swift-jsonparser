@@ -14,6 +14,10 @@ struct OutputView {
         if let jsonContainerValue = jsonValue as? JSONContainerValue {
             printJSONContainerValue(jsonContainerValue)
         }
+        var writer = Writer { str in
+            print(str ?? "", terminator: "")
+        }
+        writer.serializeJSON(jsonValue)
     }
     
     private static func printJSONContainerValue(_ jsonContainerValue: JSONContainerValue) {

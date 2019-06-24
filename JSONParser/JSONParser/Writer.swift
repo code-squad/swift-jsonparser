@@ -30,6 +30,8 @@ struct Writer {
         case let array as [JSONValue]:
             serializeArray(array)
             break
+        case let object as [String: JSONValue]:
+            serializeObject(object)
         default:
             break
         }
@@ -54,5 +56,25 @@ struct Writer {
             serializeJSON(value)
         }
         handler("]")
+    }
+    
+    private mutating func serializeObject(_ object: [String: JSONValue]) {
+        handler("{")
+        var first = true
+        
+        for (key, value) in object {
+            if first {
+                first = false
+            } else {
+                handler(",")
+            }
+            handler("\n")
+            serializeString(key)
+            handler(":")
+            handler(" ")
+            serializeJSON(value)
+        }
+        handler("\n")
+        handler("}")
     }
 }
