@@ -16,6 +16,7 @@ enum JSONError: Error {
     case TokensError
     case parseJSONArrayFailed
     case parseJSONObjectFailed
+    case notObject
     
     var localizedDescription: String {
         switch self {
@@ -33,6 +34,8 @@ enum JSONError: Error {
             return "JSONArray 파싱에 실패하였습니다."
         case .parseJSONObjectFailed:
             return "JSONObject 파싱에 실패하였습니다."
+        case .notObject:
+            return "object 생성이 되지 않았습니다."
         }
     }
 }
