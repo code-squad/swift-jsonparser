@@ -20,7 +20,6 @@ struct Tokenizer {
     
     private var temp = ""
     private var tokens = [String]()
-
     
     private mutating func tempToTokens() {
         if !temp.isEmpty {
@@ -31,36 +30,25 @@ struct Tokenizer {
     
     mutating func tokenize(input: String) -> [String] {
         
-        let structures: [Character] = [Mark.startArray, Mark.endArray, Mark.comma]
-        var isString = false //"나와야 string이기때문에 그 전까지 기본값은 false
+        let marks: [Character] = [Mark.startArray, Mark.endArray, Mark.comma, Mark.quotationMark]
+        /// 현재 읽고있는 문자가 문자열인지에 대한 상태
+        var isString = false
         
         for character in input {
-            
-            if character == Mark.quotationMark { //""안에서는 문자를 나누지 않도록 조건을 설정함
-                if isString {
-                    tokens.append(String(Mark.quotationMark) + temp + String(Mark.quotationMark))
-                    temp.removeAll()
-                } else {
-                    tokens.append(temp)
-                    temp.removeAll()
-                }
-                
+            // 문자열이 아니면 공백을 무시하도록함
+            if character == Mark.quotationMark {
                 isString.toggle()
+            } else if !isString {
+                guard character != Mark.whitespace else { continue }
             }
-            else if isString {
-                temp.append(character)
-                
+            
+            if marks.contains(character) {
+                tempToTokens()
+                tokens.append(String(character))
             } else {
-                guard character != Mark.whitespace else { //공백은 무시하고 다음 루프로 이동함
-                    continue
-                }
-                if structures.contains(character) {
-                    tempToTokens()
-                    tokens.append(String(character))
-                } else {
-                    temp.append(character)
-                }
+                temp.append(character)
             }
+            
         }
         tempToTokens()
         // 반환하기전에 tokens배열을 비워줌
