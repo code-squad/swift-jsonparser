@@ -12,6 +12,7 @@ struct OutputView {
     let counter = JsonValueCounter()
     
     func output(_ json: JsonValue) {
+        print(JSONFormatter.stringfy(value: json))
         print(makeSentence(json: json))
     }
     

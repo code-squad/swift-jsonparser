@@ -10,6 +10,7 @@
 		0E03CFB82285E59200B0FE2D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		0E11A2A222BE676100CDF278 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E11A2A122BE676100CDF278 /* Exception.swift */; };
 		0E6E363022A11E9F0018F4D6 /* JsonParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6E362F22A11E9F0018F4D6 /* JsonParserTests.swift */; };
+		0E76954922C0C4D800721F5F /* JSONFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E76954822C0C4D800721F5F /* JSONFormatter.swift */; };
 		0E787F8022A0D6DD00B8A686 /* JsonListParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E787F7F22A0D6DD00B8A686 /* JsonListParsingStrategy.swift */; };
 		0E787F8222A0D71100B8A686 /* JsonObjectParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E787F8122A0D71100B8A686 /* JsonObjectParsingStrategy.swift */; };
 		0E787F8322A0D76B00B8A686 /* JsonListParsingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E787F7F22A0D6DD00B8A686 /* JsonListParsingStrategy.swift */; };
@@ -110,6 +111,7 @@
 		0E03CFB12285E0C300B0FE2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E11A2A122BE676100CDF278 /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		0E6E362F22A11E9F0018F4D6 /* JsonParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParserTests.swift; sourceTree = "<group>"; };
+		0E76954822C0C4D800721F5F /* JSONFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFormatter.swift; sourceTree = "<group>"; };
 		0E787F7F22A0D6DD00B8A686 /* JsonListParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonListParsingStrategy.swift; sourceTree = "<group>"; };
 		0E787F8122A0D71100B8A686 /* JsonObjectParsingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonObjectParsingStrategy.swift; sourceTree = "<group>"; };
 		0E787F8722A0D81600B8A686 /* JsonListParsingStrategyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonListParsingStrategyTests.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				0E801D64229DA884005C82FF /* JsonParser.swift */,
 				0EB74596229FB6310096072C /* TokenConverter.swift */,
 				0EB5D4E922A3BC0000CC4375 /* JsonValueCounter.swift */,
+				0E76954822C0C4D800721F5F /* JSONFormatter.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -588,6 +591,7 @@
 				0EF025D522BE57A40070F273 /* JSONAnalyzer.swift in Sources */,
 				0EF1AA3822BE800800AC4DF0 /* FactoryException.swift in Sources */,
 				0ECD2385229BFF380036A5DF /* MyScanner.swift in Sources */,
+				0E76954922C0C4D800721F5F /* JSONFormatter.swift in Sources */,
 				0EB5D4EA22A3BC0000CC4375 /* JsonValueCounter.swift in Sources */,
 				0E787F8022A0D6DD00B8A686 /* JsonListParsingStrategy.swift in Sources */,
 				0ECEB7EC2290474E00D5ED9D /* InputView.swift in Sources */,
