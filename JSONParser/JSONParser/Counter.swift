@@ -9,13 +9,19 @@
 import Foundation
 
 struct Counter {
-    static func count(jsonData: [JSONDataType]) throws -> [String: Int] {
+    static func count(jsonData: [JSONDataType]) -> [String: Int] {
         var counts: [String: Int] = [:]
         for item in jsonData {
             counts[item.typeDescription] = (counts[item.typeDescription] ?? 0) + 1
         }
         return counts
     }
+    
+    
+    static func objectCount(object: [String: JSONDataType]) -> [String: Int] {
+        var counts: [String: Int] = [:]
+        for value in object.values {            counts[value.typeDescription] = (counts[value.typeDescription] ?? 0) + 1
+        }
+        return counts
+    }
 }
-
-
