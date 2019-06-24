@@ -11,6 +11,7 @@ import Foundation
 class Formatter {
     var jsonString = ""
     private var indent = 0, depth = 0
+    let nestedDepth = 2
     
     init() { }
     
@@ -51,7 +52,7 @@ class Formatter {
         }
         jsonString += "\n"
         
-        if depth > 2 {
+        if depth > nestedDepth {
             writeIndent()
         }
         
@@ -60,7 +61,7 @@ class Formatter {
     }
     
     private func serializeArray(data: JSONArray) {
-        if depth > 2 {
+        if depth > nestedDepth {
             jsonString += "\n"
             incAndWriteIndent()
         }
@@ -77,7 +78,7 @@ class Formatter {
         }
         jsonString += "]"
         
-        if depth > 2 {
+        if depth > nestedDepth {
             jsonString += "\n"
         }
     }
