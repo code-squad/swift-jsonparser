@@ -35,13 +35,13 @@ struct Writer {
         }
     }
     
-    func serializeString(_ value: String) {
+    private func serializeString(_ value: String) {
         handler("\"")
         handler(value)
         handler("\"")
     }
     
-    mutating func serializeArray(_ array: [JSONValue]) {
+    private mutating func serializeArray(_ array: [JSONValue]) {
         handler("[")
 
         var first = true
