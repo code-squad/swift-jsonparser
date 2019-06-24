@@ -29,7 +29,7 @@ struct OutputView {
         print("\(typeCountDescription: jsonValue)")
     }
     
-    static func printInReadableFormat(jsonValue: JSONValue) {
-        print("\(readableFormat: jsonValue)")
+    static func printFormatted(jsonValue: JSONValue & Compoundable) {
+        print(jsonValue.formatted(indentLevel: 0))
     }
 }
