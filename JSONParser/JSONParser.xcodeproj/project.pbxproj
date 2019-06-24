@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE2E0F1F8CAC2800F38CC9 /* main.swift */; };
 		C22752E722B85FB50045DAC7 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22752E622B85FB50045DAC7 /* GrammarChecker.swift */; };
-		C25025F022C1040F00C31226 /* Compoundable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25025EF22C1040F00C31226 /* Compoundable.swift */; };
 		C25025F222C10B0800C31226 /* TypeCountable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25025F122C10B0800C31226 /* TypeCountable.swift */; };
 		C26B874522BCD58200A1FD09 /* StringInterpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26B874422BCD58200A1FD09 /* StringInterpolation.swift */; };
 		C27B06A922BB508B000B4F72 /* RegexPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27B06A822BB508B000B4F72 /* RegexPattern.swift */; };
@@ -41,7 +40,6 @@
 		83AE2E0C1F8CAC2800F38CC9 /* JSONParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		83AE2E0F1F8CAC2800F38CC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C22752E622B85FB50045DAC7 /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
-		C25025EF22C1040F00C31226 /* Compoundable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compoundable.swift; sourceTree = "<group>"; };
 		C25025F122C10B0800C31226 /* TypeCountable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCountable.swift; sourceTree = "<group>"; };
 		C26B874422BCD58200A1FD09 /* StringInterpolation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringInterpolation.swift; sourceTree = "<group>"; };
 		C27B06A822BB508B000B4F72 /* RegexPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexPattern.swift; sourceTree = "<group>"; };
@@ -95,7 +93,6 @@
 				C26B874422BCD58200A1FD09 /* StringInterpolation.swift */,
 				C2FAEDA9228EAC500045F639 /* TypeCounter.swift */,
 				C25025F122C10B0800C31226 /* TypeCountable.swift */,
-				C25025EF22C1040F00C31226 /* Compoundable.swift */,
 				C2FAED9D228E99580045F639 /* Tokenizer.swift */,
 				C2DB9D6B229660E600E35FB8 /* TokenReader.swift */,
 				C2FAEDA3228E9DBA0045F639 /* Parser.swift */,
@@ -169,7 +166,6 @@
 				C22752E722B85FB50045DAC7 /* GrammarChecker.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				C2FAEDA0228E9AD40045F639 /* JSONValue.swift in Sources */,
-				C25025F022C1040F00C31226 /* Compoundable.swift in Sources */,
 				C26B874522BCD58200A1FD09 /* StringInterpolation.swift in Sources */,
 				C2FAEDA8228EA2B10045F639 /* OutputView.swift in Sources */,
 				C2FAEDA4228E9DBA0045F639 /* Parser.swift in Sources */,
