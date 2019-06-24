@@ -26,7 +26,7 @@ func parseIntoJSON(from input: String) -> JSONValue? {
 func main() {
     InputView.printInstruction()
     let input = InputView.read()
-    guard GrammarChecker.check(input: input), let jsonValue = parseIntoJSON(from: input) as? JSONValue & Compoundable else {
+    guard GrammarChecker.check(input: input), let jsonValue = parseIntoJSON(from: input) as? JSONValue & TypeCountable else {
         OutputView.noticeUnsupportedPattern()
         return
     }

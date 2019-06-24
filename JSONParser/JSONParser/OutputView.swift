@@ -25,11 +25,11 @@ struct OutputView {
         print(unsupportedPatternMessage)
     }
     
-    static func printTypeCountDescription(of jsonValue: JSONValue & Compoundable) {
+    static func printTypeCountDescription(of jsonValue: JSONValue & TypeCountable) {
         print("\(typeCountDescription: jsonValue)")
     }
     
-    static func printFormatted(jsonValue: JSONValue & Compoundable) {
+    static func printFormatted(jsonValue: JSONValue & TypeCountable) {
         print(jsonValue.formatted(indentLevel: 0))
     }
 }

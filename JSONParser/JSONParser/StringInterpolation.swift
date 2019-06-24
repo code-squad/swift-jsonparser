@@ -9,7 +9,7 @@
 import Foundation
 
 extension String.StringInterpolation {
-    mutating func appendInterpolation(typeCountDescription value: JSONValue & Compoundable) {
+    mutating func appendInterpolation(typeCountDescription value: JSONValue & TypeCountable) {
         let prefixDescription = "총 \(value.elementCount)개의 \(value.typeDescription) 데이터 중에 "
         let suffixDescription = "가 포함되어 있습니다."
         var elementDescription = String()

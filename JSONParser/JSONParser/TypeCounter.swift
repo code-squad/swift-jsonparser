@@ -9,7 +9,7 @@
 import Foundation
 
 struct TypeCounter {
-    static func getTotalTypeCount(of value: JSONValue & Compoundable) -> [String : Int] {
+    static func getTotalTypeCount(of value: JSONValue & TypeCountable) -> [String : Int] {
         let elements = value.elements
         var typeCount = [String : Int]()
         for element in elements {
