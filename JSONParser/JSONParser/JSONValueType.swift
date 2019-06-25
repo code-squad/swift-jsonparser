@@ -65,6 +65,14 @@ extension Object: JSONContainerType {
         return counts
     }
     
+    func prettyFormat(with indent: Int = 0) -> String {
+        let object = self.map{ (key, value) in
+            let data = value as? JSONContainerType
+            let dataString = (data != nil) ? "\(key): \(data!.prettyFormat(with: indent + 1))" : "\(key): \(value)"
+            return dataString
+            }.joined(separator: ",\n\(insertTab(indent))")
+        
+        let jsonString = "{\n\(insertTab(indent))\(object)\n\(insertTab(indent-1))}"
         return jsonString
     }
 }
@@ -89,6 +97,21 @@ extension JSONArray: JSONContainerType {
         return counts
     }
     
-        
+    func prettyFormat(with indent: Int = 0) -> String {
+        if self.contains(where: { $0 is JSONContainerType }) {
+            let array = self.map { (element) in
+                let data = element as? JSONContainerType
+                let dataString = (data != nil) ? "\n\(insertTab(indent))\(data!.prettyFormat(with: indent + 1))" : "\(element)"
+                return dataString
+                }.joined(separator: ", ")
+            
+            let jsonString = "\n[\(array)\n]"
+            return jsonString
+        } else {
+            let array = self.map { "\($0)" }.joined(separator: ", ")
+            
+            let jsonString = "[\(array)]"
+            return jsonString
+        }
     }
 }
