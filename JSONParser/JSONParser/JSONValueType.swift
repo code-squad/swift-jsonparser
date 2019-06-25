@@ -74,6 +74,16 @@ extension Object: JSONContainerType, PreetyFormat {
         jsonString += "\n}"
         return jsonString
     }
+    
+    var nestedSerialized: String {
+        var jsonString = "{\n\t\t"
+        jsonString += self.map{ (key, value) in
+            "\(key.serialized): \(value.serialized)"
+        }.joined(separator: ",\n\t\t")
+
+        jsonString += "\n\t}"
+        return jsonString
+    }
 }
 
 typealias JSONArray = [JSONValueType]
@@ -106,5 +116,16 @@ extension JSONArray: JSONContainerType, PreetyFormat {
         return jsonString
     }
     
-   
+    var nestedSerialized: String {
+        var jsonString = "\n["
+        jsonString += self.map { (element) in
+            let data = element as? Object
+            let dataString = (data != nil) ? "\(data!.nestedSerialized)" : "\(element.serialized)"
+            return dataString
+        }.joined(separator: ", ")
+        
+        jsonString += "\n]"
+        
+        return jsonString
+    }
 }
