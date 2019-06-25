@@ -9,14 +9,22 @@
 import Foundation
 
 struct OutputView {
-    let counter = JsonValueCounter()
+    private let counter = JsonValueCounter()
+    private let json: JsonValue
     
-    func output(_ json: JsonValue) {
-        print(JSONFormatter.stringfy(value: json))
-        print(makeSentence(json: json))
+    init(json: JsonValue) {
+        self.json = json
     }
     
-    private func makeSentence(json: JsonValue) -> String {
+    func outputStatistics() {
+        print(makeStatistics(json: self.json))
+    }
+    
+    func outputSerialization() {
+        print(self.json.serialize(indent: 0))
+    }
+    
+    private func makeStatistics(json: JsonValue) -> String {
         var result = ""
         var total = 0
         let countOf = counter.count(target: json)

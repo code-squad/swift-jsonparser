@@ -15,7 +15,10 @@ struct InputView {
         case aboutJSON =
         """
         분석할 JSON 데이터를 입력하세요.
-        ex)[ 1, true, \"Hello, World!\", false, { \"name\" : \"BLU" }, { \"name\" : \"부엉이\" } ]
+        ex)
+        { \"name\" : \"KIM JUNG\", \"alias\" : \"JK\", \"level\" : 5, \"children\" : [\"hana\", \"hayul\", \"haun\"] }
+        
+        [ { \"name\" : \"master's course\", \"opened\" : true }, [ \"java\", \"javascript\", \"swift\" ] ]
         """
     }
     
