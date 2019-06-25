@@ -49,7 +49,7 @@ extension Bool: JSONValueType {
 typealias JSONContainerType = JSONValueType & TypeCountable
 
 typealias Object = [String: JSONValueType]
-extension Object: JSONContainerType {
+extension Object: JSONContainerType, PreetyFormat {
     var typeDescription: String {
         return "객체"
     }
@@ -65,10 +65,19 @@ extension Object: JSONContainerType {
         }
         return counts
     }
+    
+    var serialized: String {
+        var jsonString = "{\n\t"
+        jsonString += self.map{ (key, value) in
+            "\(key.serialized): \(value.serialized)"
+            }.joined(separator: ",\n\t")
+        jsonString += "\n}"
+        return jsonString
+    }
 }
 
 typealias JSONArray = [JSONValueType]
-extension JSONArray: JSONContainerType {
+extension JSONArray: JSONContainerType, PreetyFormat {
     var typeDescription: String {
         return "배열"
     }
@@ -84,4 +93,18 @@ extension JSONArray: JSONContainerType {
         }
         return counts
     }
+    
+    var serialized: String {
+        var jsonString = "["
+        jsonString += self.map { (element) in
+            let data = element as? Object
+            let dataString = (data != nil) ? "\(data!.nestedSerialized)" : "\(element.serialized)"
+            return dataString
+            }.joined(separator: ", ")
+        jsonString += "]"
+        
+        return jsonString
+    }
+    
+   
 }
