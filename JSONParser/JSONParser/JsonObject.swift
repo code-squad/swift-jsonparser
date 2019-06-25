@@ -32,13 +32,13 @@ struct JsonObject: Countable {
         var prefix = "\(JsonElement.startOfObject)\(JsonElement.newLine)"
         
         for (key, value) in object {
-            result += "\(prefix)\(String(repeating: "\(JsonElement.tab)", count: indent + 1))"
+            result += "\(prefix)\(String(repeating: JsonElement.tab, count: indent + 1))"
             result += "\(key) : \(value.formatting(indent: indent + 1))"
             
             prefix = "\(JsonElement.comma)\(JsonElement.newLine)"
         }
         
-        result += "\(JsonElement.newLine)\(String(repeating: "\(JsonElement.tab)", count: indent))\(JsonElement.endOfObject)"
+        result += "\(JsonElement.newLine)\(String(repeating: JsonElement.tab, count: indent))\(JsonElement.endOfObject)"
         
         return result
     }
