@@ -28,13 +28,21 @@ struct JsonArray: Countable {
     }
     
     func formatting(indent: Int) -> String {
-        var result = ""
+        var result = "\(String(repeating: JsonElement.tab, count: indent))"
         var prefix = String(JsonElement.startOfArray)
         
         for value in array {
-            result += "\(prefix)\(value.formatting(indent: indent))"
+            if value is JsonArray {
+                prefix += String(JsonElement.newLine)
+            }
+            
+            result += "\(prefix)\(value.formatting(indent: indent + 1))"
             
             prefix = "\(JsonElement.comma)\(JsonElement.whitespace)"
+        }
+        
+        if array.contains(where: { type(of: $0) == JsonArray.self }) {
+            result += String(JsonElement.newLine)
         }
         
         result += String(JsonElement.endOfArray)
