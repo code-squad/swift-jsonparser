@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonArray: JsonType, Countable {
+struct JsonArray: Countable {
     let array: [JsonType]
     
     var typeDescription: String {

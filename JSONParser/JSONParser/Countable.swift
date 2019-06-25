@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol Countable {
+protocol Countable: JsonType {
     var typeCount: [String : Int] { get }
 }
