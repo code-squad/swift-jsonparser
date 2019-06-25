@@ -10,14 +10,17 @@ import Foundation
 
 struct OutputView {
     
-    static func printJSONValue(_ jsonValue: JSONValue) {
-        if let jsonContainerValue = jsonValue as? JSONContainerValue {
-            printJSONContainerValue(jsonContainerValue)
-        }
+    static func printSerializeJSON(_ jsonValue: JSONValue) {
         var writer = Writer { str in
             print(str ?? "", terminator: "")
         }
         writer.serializeJSON(jsonValue)
+    }
+    
+    static func printJSONValue(_ jsonValue: JSONValue) {
+        if let jsonContainerValue = jsonValue as? JSONContainerValue {
+            printJSONContainerValue(jsonContainerValue)
+        }
     }
     
     private static func printJSONContainerValue(_ jsonContainerValue: JSONContainerValue) {
