@@ -22,4 +22,8 @@ struct OutputView {
         
         print(description)
     }
+    
+    static func printPretty(result: Countable) {
+        print(result.serialize(indent: 0))
+    }
 }

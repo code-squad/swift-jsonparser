@@ -21,6 +21,7 @@ func main() {
         let parseResult = try Parser.parse(tokens: tokens)
         
         OutputView.printParseResult(result: parseResult)
+        OutputView.printPretty(result: parseResult)
     } catch let error as TypeError {
         print(error.description)
     } catch let error as ParseError{
