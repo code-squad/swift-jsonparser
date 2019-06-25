@@ -8,23 +8,22 @@
 
 import Foundation
 
-protocol PreetyFormat {
-    var serialized: String { get }
+protocol JSONValueType {
+    var typeDescription: String { get }
 }
 
-extension PreetyFormat {
-    var serialized: String {
-        return "\(self)"
-    }
-}
-
-protocol JSONValueType: PreetyFormat {
-   var typeDescription: String { get }
-}
-
-protocol TypeCountable {
+protocol JSONContainerType: JSONValueType {
     var totalCount: Int { get }
     var typeCounts: [String: Int] { get }
+    func prettyFormat(with indent: Int) -> String
+    func insertTab(_ indent: Int) -> String
+}
+
+extension JSONContainerType {
+    func insertTab(_ indent: Int) -> String {
+        let tab = String.init(repeating: "\t", count: indent + 1)
+        return tab
+    }
 }
 
 extension String: JSONValueType {
@@ -46,14 +45,14 @@ extension Bool: JSONValueType {
     }
 }
 
-typealias JSONContainerType = JSONValueType & TypeCountable
-
 typealias Object = [String: JSONValueType]
-extension Object: JSONContainerType, PreetyFormat {
+extension Object: JSONValueType where Key == String, Value: JSONValueType {
     var typeDescription: String {
         return "객체"
     }
-    
+}
+
+extension Object: JSONContainerType {
     var totalCount: Int {
         return self.count
     }
@@ -87,11 +86,13 @@ extension Object: JSONContainerType, PreetyFormat {
 }
 
 typealias JSONArray = [JSONValueType]
-extension JSONArray: JSONContainerType, PreetyFormat {
+extension JSONArray: JSONValueType where Element == JSONValueType {
     var typeDescription: String {
         return "배열"
     }
-    
+}
+
+extension JSONArray: JSONContainerType {
     var totalCount: Int {
         return self.count
     }
