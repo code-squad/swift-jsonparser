@@ -28,17 +28,17 @@ struct JsonObject: Countable {
     }
     
     func serialize(indent: Int) -> String {
-        let indent = indent + 1
         var result = ""
-        var prefix = "\(JsonElement.startOfObject)\n"
+        var prefix = "\(JsonElement.startOfObject)\(JsonElement.newLine)"
         
         for (key, value) in object {
-            result += "\(prefix)\(String(repeating: "\t", count: indent))\(key) : \(value.serialize(indent: indent))"
+            result += "\(prefix)\(String(repeating: "\(JsonElement.tab)", count: indent + 1))"
+            result += "\(key) : \(value.serialize(indent: indent + 1))"
             
-            prefix = "\(JsonElement.comma)\n"
+            prefix = "\(JsonElement.comma)\(JsonElement.newLine)"
         }
         
-        result += "\n\(JsonElement.endOfObject)"
+        result += "\(JsonElement.newLine)\(String(repeating: "\(JsonElement.tab)", count: indent))\(JsonElement.endOfObject)"
         
         return result
     }

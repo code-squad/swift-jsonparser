@@ -17,6 +17,8 @@ struct JsonElement {
     static let startOfObject: Character = "{"
     static let endOfObject: Character = "}"
     static let colon: Character = ":"
+    static let newLine: Character = "\n"
+    static let tab: Character = "\t"
     
     static let `true` = "true"
     static let `false` = "false"
