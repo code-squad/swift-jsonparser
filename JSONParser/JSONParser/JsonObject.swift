@@ -28,7 +28,19 @@ struct JsonObject: Countable {
     }
     
     func serialize(indent: Int) -> String {
-        return ""
+        let indent = indent + 1
+        var result = ""
+        var prefix = "\(JsonElement.startOfObject)\n"
+        
+        for (key, value) in object {
+            result += "\(prefix)\(String(repeating: "\t", count: indent))\(key) : \(value.serialize(indent: indent))"
+            
+            prefix = "\(JsonElement.comma)\n"
+        }
+        
+        result += "\n\(JsonElement.endOfObject)"
+        
+        return result
     }
     
     init(object: [String : JsonType]) throws {
