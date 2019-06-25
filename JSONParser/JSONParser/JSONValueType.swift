@@ -65,22 +65,6 @@ extension Object: JSONContainerType {
         return counts
     }
     
-    var serialized: String {
-        var jsonString = "{\n\t"
-        jsonString += self.map{ (key, value) in
-            "\(key.serialized): \(value.serialized)"
-            }.joined(separator: ",\n\t")
-        jsonString += "\n}"
-        return jsonString
-    }
-    
-    var nestedSerialized: String {
-        var jsonString = "{\n\t\t"
-        jsonString += self.map{ (key, value) in
-            "\(key.serialized): \(value.serialized)"
-        }.joined(separator: ",\n\t\t")
-
-        jsonString += "\n\t}"
         return jsonString
     }
 }
@@ -105,28 +89,6 @@ extension JSONArray: JSONContainerType {
         return counts
     }
     
-    var serialized: String {
-        var jsonString = "["
-        jsonString += self.map { (element) in
-            let data = element as? Object
-            let dataString = (data != nil) ? "\(data!.nestedSerialized)" : "\(element.serialized)"
-            return dataString
-            }.joined(separator: ", ")
-        jsonString += "]"
         
-        return jsonString
-    }
-    
-    var nestedSerialized: String {
-        var jsonString = "\n["
-        jsonString += self.map { (element) in
-            let data = element as? Object
-            let dataString = (data != nil) ? "\(data!.nestedSerialized)" : "\(element.serialized)"
-            return dataString
-        }.joined(separator: ", ")
-        
-        jsonString += "\n]"
-        
-        return jsonString
     }
 }
