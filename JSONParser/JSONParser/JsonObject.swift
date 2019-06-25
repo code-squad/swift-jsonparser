@@ -30,7 +30,7 @@ struct JsonObject: Countable {
     func formatting(indent: Int) -> String {
         var result = ""
         var prefix = "\(JsonElement.startOfObject)\(JsonElement.newLine)"
-        let separator = "\(JsonElement.whitespace)\(JsonElement.comma)\(JsonElement.whitespace)"
+        let separator = "\(JsonElement.whitespace)\(JsonElement.colon)\(JsonElement.whitespace)"
         
         for (key, value) in object {
             result += "\(prefix)\(String(repeating: JsonElement.tab, count: indent + 1))"
