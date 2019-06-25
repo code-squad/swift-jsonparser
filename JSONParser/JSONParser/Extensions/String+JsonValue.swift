@@ -12,4 +12,8 @@ extension String: JsonValue {
     func describeType() -> String {
         return "문자열"
     }
+    
+    func serialize(indent: Int) -> String {
+        return "\"\(self)\""
+    }
 }
