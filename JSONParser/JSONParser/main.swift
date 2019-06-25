@@ -19,7 +19,10 @@ let tokens = tokenizer.tokenize(input: input)
 
 do {
     let jsonData = try parser.startParsing(tokens: tokens)
-    outputView.showCount(json: jsonData)
+    if let countableData = jsonData as? Countable {
+        outputView.showCount(countInfo: countableData.countInfo )
+    }
 } catch {
     outputView.show(string: "\(error)")
 }
+
