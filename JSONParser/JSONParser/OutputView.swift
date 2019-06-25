@@ -14,11 +14,15 @@ struct OutputView {
         print(string)
     }
     
-    func showCount(json: JsonType) {
-        
-        let countInfo = json.countInfo.map { "\($0.key) \($0.value)개" }
+    func showCount(countInfo: [String: Int]) {
+        let valueCountList = countInfo.values // 값들의 갯수 배열
+        let sumOfValueCounts = valueCountList.reduce(0) { (result: Int, value: Int) -> Int in
+            return result + value
+        }
+        let countInfo = countInfo.map { "\($0.key) \($0.value)개" }
         let output = countInfo.joined(separator: ", ")
         
-        print("총 \(json.count)개의 데이터 중에 \(output)가 포함되어 있습니다.")
+        print("총 \(sumOfValueCounts)개의 데이터 중에 \(output)가 포함되어 있습니다.")
+
     }
 }
