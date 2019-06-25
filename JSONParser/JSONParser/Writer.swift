@@ -46,7 +46,6 @@ struct Writer {
     }
     
     private mutating func serializeArray(_ array: [JSONValue]) {
-        writeIndent()
         handler("[")
         
         var first = true
