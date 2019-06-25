@@ -19,11 +19,11 @@ enum TypeName: String {
 protocol JsonType {
     var typeDescription: String { get }
     
-    func serialize(indent: Int) -> String
+    func formatting(indent: Int) -> String
 }
 
 extension Int: JsonType {
-    func serialize(indent: Int) -> String {
+    func formatting(indent: Int) -> String {
         return "\(self)"
     }
     
@@ -33,7 +33,7 @@ extension Int: JsonType {
 }
 
 extension String: JsonType {
-    func serialize(indent: Int) -> String {
+    func formatting(indent: Int) -> String {
         return self
     }
     
@@ -43,7 +43,7 @@ extension String: JsonType {
 }
 
 extension Bool: JsonType {
-    func serialize(indent: Int) -> String {
+    func formatting(indent: Int) -> String {
         return "\(self)"
     }
     

@@ -27,12 +27,12 @@ struct JsonArray: Countable {
         return typeCounter
     }
     
-    func serialize(indent: Int) -> String {
+    func formatting(indent: Int) -> String {
         var result = ""
         var prefix = String(JsonElement.startOfArray)
         
         for value in array {
-            result += "\(prefix)\(value.serialize(indent: indent))"
+            result += "\(prefix)\(value.formatting(indent: indent))"
             
             prefix = "\(JsonElement.comma)\(JsonElement.whitespace)"
         }

@@ -27,13 +27,13 @@ struct JsonObject: Countable {
         return typeCounter
     }
     
-    func serialize(indent: Int) -> String {
+    func formatting(indent: Int) -> String {
         var result = ""
         var prefix = "\(JsonElement.startOfObject)\(JsonElement.newLine)"
         
         for (key, value) in object {
             result += "\(prefix)\(String(repeating: "\(JsonElement.tab)", count: indent + 1))"
-            result += "\(key) : \(value.serialize(indent: indent + 1))"
+            result += "\(key) : \(value.formatting(indent: indent + 1))"
             
             prefix = "\(JsonElement.comma)\(JsonElement.newLine)"
         }
