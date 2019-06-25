@@ -29,8 +29,10 @@ struct JSONAnalyer {
         }
         let result = JsonParser.run(tokens: tokens)
         let jsonContainer = result.value
-        let outputView = OutputView.init()
-        outputView.output(jsonContainer)
+        let outputView = OutputView.init(json: jsonContainer)
+        outputView.outputStatistics()
+        outputView.outputSerialization()
+        
     }
     
 }

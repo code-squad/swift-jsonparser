@@ -13,11 +13,18 @@ protocol JsonValue {
     func describeType() -> String
     
     func getJsonValue() -> String
+    
+    func serialize(indent: Int) -> String
 }
+
 
 extension JsonValue {
     
     func getJsonValue() -> String {
+        return "\(self)"
+    }
+    
+    func serialize(indent: Int) -> String {
         return "\(self)"
     }
 }
