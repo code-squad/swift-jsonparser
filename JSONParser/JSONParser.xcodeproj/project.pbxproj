@@ -10,7 +10,6 @@
 		56324DEF22B7BFA9003209B0 /* TokenReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56324DEE22B7BFA9003209B0 /* TokenReader.swift */; };
 		56324DF022B7D841003209B0 /* TokenReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56324DEE22B7BFA9003209B0 /* TokenReader.swift */; };
 		5639B3B822A8E54100A8643D /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5639B3B722A8E54100A8643D /* OutputView.swift */; };
-		5639B3BA22A8F0AF00A8643D /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5639B3B922A8F0AF00A8643D /* Counter.swift */; };
 		563DD25022A7929300040C13 /* JSONTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563DD24F22A7929300040C13 /* JSONTokenizer.swift */; };
 		563DD25222A797D900040C13 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563DD25122A797D900040C13 /* JSONParser.swift */; };
 		563DD25622A7ACC600040C13 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563DD25522A7ACC600040C13 /* Token.swift */; };
@@ -19,7 +18,6 @@
 		5650BA9D229F076F00F5FFE2 /* JSONDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5650BA9C229F076F00F5FFE2 /* JSONDataType.swift */; };
 		56E09F8E22BCF06A00446DF5 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E09F8D22BCF06A00446DF5 /* GrammarChecker.swift */; };
 		56FEC0B422B791EC00522F75 /* JSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FEC0B322B791EC00522F75 /* JSONParserTests.swift */; };
-		56FEC0B922B7920300522F75 /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5639B3B922A8F0AF00A8643D /* Counter.swift */; };
 		56FEC0BA22B7920600522F75 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5639B3B722A8E54100A8643D /* OutputView.swift */; };
 		56FEC0BB22B7920900522F75 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563DD25122A797D900040C13 /* JSONParser.swift */; };
 		56FEC0BC22B7920E00522F75 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563DD25522A7ACC600040C13 /* Token.swift */; };
@@ -46,7 +44,6 @@
 /* Begin PBXFileReference section */
 		56324DEE22B7BFA9003209B0 /* TokenReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReader.swift; sourceTree = "<group>"; };
 		5639B3B722A8E54100A8643D /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
-		5639B3B922A8F0AF00A8643D /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
 		563DD24F22A7929300040C13 /* JSONTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTokenizer.swift; sourceTree = "<group>"; };
 		563DD25122A797D900040C13 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		563DD25522A7ACC600040C13 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -117,7 +114,6 @@
 				563DD25522A7ACC600040C13 /* Token.swift */,
 				563DD25122A797D900040C13 /* JSONParser.swift */,
 				5639B3B722A8E54100A8643D /* OutputView.swift */,
-				5639B3B922A8F0AF00A8643D /* Counter.swift */,
 				56324DEE22B7BFA9003209B0 /* TokenReader.swift */,
 				56E09F8D22BCF06A00446DF5 /* GrammarChecker.swift */,
 			);
@@ -218,7 +214,6 @@
 				56FEC0BF22B7921B00522F75 /* ErrorControl.swift in Sources */,
 				56FEC0B422B791EC00522F75 /* JSONParserTests.swift in Sources */,
 				56FEC0BC22B7920E00522F75 /* Token.swift in Sources */,
-				56FEC0B922B7920300522F75 /* Counter.swift in Sources */,
 				56FEC0BD22B7921400522F75 /* JSONTokenizer.swift in Sources */,
 				56324DF022B7D841003209B0 /* TokenReader.swift in Sources */,
 				56FEC0BB22B7920900522F75 /* JSONParser.swift in Sources */,
@@ -235,7 +230,6 @@
 			files = (
 				563DD25622A7ACC600040C13 /* Token.swift in Sources */,
 				56E09F8E22BCF06A00446DF5 /* GrammarChecker.swift in Sources */,
-				5639B3BA22A8F0AF00A8643D /* Counter.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
 				56324DEF22B7BFA9003209B0 /* TokenReader.swift in Sources */,
 				5650BA9D229F076F00F5FFE2 /* JSONDataType.swift in Sources */,
