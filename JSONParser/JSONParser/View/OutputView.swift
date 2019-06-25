@@ -15,9 +15,9 @@ struct OutputView {
         print(description)
     }
     
-    static func printPretty(of input: JSONContainerType, formatter: Formatter) {
-        let prettyJSONString = formatter.prettyJSON(data: input)
-        print(prettyJSONString)
+    static func printPretty(of input: JSONContainerType) {
+        let formatted = input.prettyFormat(with: 0)
+        print(formatted)
     }
     
     static private func printTypesCount(of jsonValue: JSONContainerType) -> String {
