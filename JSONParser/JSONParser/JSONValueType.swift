@@ -8,7 +8,17 @@
 
 import Foundation
 
-protocol JSONValueType {
+protocol PreetyFormat {
+    var serialized: String { get }
+}
+
+extension PreetyFormat {
+    var serialized: String {
+        return "\(self)"
+    }
+}
+
+protocol JSONValueType: PreetyFormat {
    var typeDescription: String { get }
 }
 
