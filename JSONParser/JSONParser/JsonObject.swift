@@ -27,6 +27,10 @@ struct JsonObject: Countable {
         return typeCounter
     }
     
+    func serialize(indent: Int) -> String {
+        return ""
+    }
+    
     init(object: [String : JsonType]) throws {
         if object.count == 0 {
             throw ParseError.noData

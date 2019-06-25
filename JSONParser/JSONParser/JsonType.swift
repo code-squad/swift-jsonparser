@@ -18,21 +18,35 @@ enum TypeName: String {
 
 protocol JsonType {
     var typeDescription: String { get }
+    
+    func serialize(indent: Int) -> String
 }
 
 extension Int: JsonType {
+    func serialize(indent: Int) -> String {
+        return "\(self)"
+    }
+    
     var typeDescription: String {
         return TypeName.number.rawValue
     }
 }
 
 extension String: JsonType {
+    func serialize(indent: Int) -> String {
+        return self
+    }
+    
     var typeDescription: String {
         return TypeName.string.rawValue
     }
 }
 
 extension Bool: JsonType {
+    func serialize(indent: Int) -> String {
+        return "\(self)"
+    }
+    
     var typeDescription: String {
         return TypeName.bool.rawValue
     }
