@@ -12,9 +12,10 @@ struct OutputView {
     
     static func printSerializeJSON(_ jsonValue: JSONValue) {
         var writer = Writer { str in
-            print(str ?? "", terminator: "")
+            print(str, terminator: "")
         }
         writer.serializeJSON(jsonValue)
+        print("\n", terminator: "")
     }
     
     static func printJSONValue(_ jsonValue: JSONValue) {

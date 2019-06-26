@@ -12,9 +12,9 @@ struct Writer {
     
     private let indentAmount = 2
     private var indent = 0
-    private let handler: (String?) -> Void
+    private let handler: (String) -> Void
     
-    init(handler: @escaping (String?) -> Void) {
+    init(handler: @escaping (String) -> Void) {
         self.handler = handler
     }
     
