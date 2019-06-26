@@ -10,7 +10,7 @@ import Foundation
 
 struct OutputView {
     
-    static func printSerializeJSON(_ jsonValue: JSONValue) {
+    static func printPrettyJSON(_ jsonValue: JSONValue) {
         var writer = Writer { str in
             print(str, terminator: "")
         }

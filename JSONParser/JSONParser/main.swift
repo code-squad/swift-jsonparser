@@ -42,7 +42,7 @@ func run() {
         print("\(ErrorMessage.unexpectedError): \(error)")
         return
     }
-    OutputView.printSerializeJSON(jsonValue)
+    OutputView.printPrettyJSON(jsonValue)
     OutputView.printJSONValue(jsonValue)
 }
 
