@@ -19,12 +19,12 @@ struct OutputView {
     }
     
     static func printJSONValue(_ jsonValue: JSONValue) {
-        if let jsonContainerValue = jsonValue as? JSONContainerValue {
+        if let jsonContainerValue = jsonValue as? JSONValue & TypeCountable {
             printJSONContainerValue(jsonContainerValue)
         }
     }
     
-    private static func printJSONContainerValue(_ jsonContainerValue: JSONContainerValue) {
-        print(jsonContainerValue.containerDescription)
+    private static func printJSONContainerValue(_ jsonContainerValue: JSONValue & TypeCountable) {
+        print(jsonContainerValue.typeDescription)
     }
 }
