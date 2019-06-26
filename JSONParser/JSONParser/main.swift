@@ -43,7 +43,7 @@ func run() {
         return
     }
     OutputView.printPrettyJSON(jsonValue)
-    OutputView.printJSONValue(jsonValue)
+    OutputView.printJSONDescription(jsonValue)
 }
 
 run()

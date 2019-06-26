@@ -18,7 +18,7 @@ struct OutputView {
         print("\n", terminator: "")
     }
     
-    static func printJSONValue(_ jsonValue: JSONValue) {
+    static func printJSONDescription(_ jsonValue: JSONValue) {
         if let json = jsonValue as? JSONValue & TypeCountable {
             printDataType(json)
         }
