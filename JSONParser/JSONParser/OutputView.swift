@@ -19,12 +19,18 @@ struct OutputView {
     }
     
     static func printJSONValue(_ jsonValue: JSONValue) {
-        if let jsonContainerValue = jsonValue as? JSONValue & TypeCountable {
-            printJSONContainerValue(jsonContainerValue)
+        if let json = jsonValue as? JSONValue & TypeCountable {
+            printDataType(json)
         }
     }
     
-    private static func printJSONContainerValue(_ jsonContainerValue: JSONValue & TypeCountable) {
-        print(jsonContainerValue.typeDescription)
+    private static func printDataType(_ json: JSONValue & TypeCountable) {
+        let type = json.typeDescription
+        let totalCount = json.dataTypes.values.reduce(0, +)
+        let containTypes = json.dataTypes.map { "\($0) \($1)개" }.joined(separator: ",")
+        let description: (Int, String, String) -> String = { (count: Int, type: String, containTypes: String) in
+            return "총 \(count)개의 \(type) 데이터 중에 \(containTypes)가 포함되어 있습니다."
+        }
+        print(description(totalCount, type, containTypes))
     }
 }
