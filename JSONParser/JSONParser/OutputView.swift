@@ -11,11 +11,9 @@ import Foundation
 struct OutputView {
     
     static func printPrettyJSON(_ jsonValue: JSONValue) {
-        var writer = Writer { str in
-            print(str, terminator: "")
+        if let json = jsonValue as? JSONSerializable {
+            print(json.serialize())
         }
-        writer.serializeJSON(jsonValue)
-        print("\n", terminator: "")
     }
     
     static func printJSONDescription(_ jsonValue: JSONValue) {
