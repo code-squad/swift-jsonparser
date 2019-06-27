@@ -56,4 +56,19 @@ extension Array: JsonType, Countable where Element == JsonType {
 }
 
 
-
+extension Dictionary: JsonType, Countable where Key == String, Value == JsonType {
+    var typeName: String {
+        return "오브젝트"
+    }
+    
+    var countInfo: [String : Int] {
+        
+        let values = self.map { $0.value }
+        
+        //typeName별로 그룹화해줌
+        let byName = Dictionary<String, [JsonType]>(grouping: values) { $0.typeName }
+        //그룹화된 갯수를 반환함
+        return byName.compactMapValues({ $0.count })
+    }
+    
+}
