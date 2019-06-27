@@ -14,6 +14,9 @@ struct Mark {
     static let comma: Character = ","
     static let quotationMark: Character = "\""
     static let whitespace: Character = " "
+    static let startObject: Character = "{"
+    static let endObject: Character = "}"
+    static let colon: Character = ":"
 }
 
 struct Tokenizer {
@@ -30,7 +33,7 @@ struct Tokenizer {
     
     mutating func tokenize(input: String) -> [String] {
         
-        let marks: [Character] = [Mark.startArray, Mark.endArray, Mark.comma, Mark.quotationMark]
+        let marks: [Character] = [Mark.startArray, Mark.endArray, Mark.comma, Mark.quotationMark,Mark.startObject, Mark.endObject,Mark.colon]
         /// 현재 읽고있는 문자가 문자열인지에 대한 상태
         var isString = false
         
