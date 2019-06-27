@@ -82,7 +82,6 @@ extension Dictionary: JSONValue, TypeCountable, JSONSerializable where Key == St
             }
         }
         jsonString.append("\n")
-//        jsonString.append(indent)
         jsonString.append("}")
         
         return jsonString
