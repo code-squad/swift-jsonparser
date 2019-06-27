@@ -24,7 +24,7 @@ struct Parser {
         let (finalIndex, result) = try parseValue(index: -1)
         if finalIndex == tokens.endIndex - 1 {
             return result
-
+            
         }
         throw ParsingError.endedWithRemainingTokens
     }
@@ -36,6 +36,8 @@ struct Parser {
             return (index, number)
         } else if let (index, bool) = try parseBool(index: index) {
             return (index, bool)
+        } else if let (index, object) = try parseObject(index: index) {
+            return (index, object)
         } else if let (index, array) = try parseArray(index: index) {
             return (index, array)
         }
@@ -81,7 +83,7 @@ struct Parser {
     
     private func parseNumber(index: Int) throws -> (index: Int, value: Double)? {
         let (index, token) = try readToken(index: index)
-
+        
         guard let number = Double(token) else {
             return nil
         }
@@ -90,7 +92,7 @@ struct Parser {
     
     private func parseBool(index: Int) throws -> (index: Int, value: Bool)? {
         let (index, token) = try readToken(index: index)
-
+        
         guard let bool = Bool(token) else {
             return nil
         }
@@ -114,7 +116,7 @@ struct Parser {
         //배열파싱
         var resultArray = [JsonType]()
         var currentIndex = startIndex
-
+        
         while true {
             
             let (index, value) = try parseValue(index: currentIndex)
@@ -133,6 +135,46 @@ struct Parser {
         }
         return (currentIndex, resultArray)
     }
-
-
+    
+    private func parseObject(index: Int) throws -> (index: Int, value: [String: JsonType])? {
+        //시작문자가 { 인지 확인함
+        let (startIndex, startToken) = try readToken(index: index)
+        guard startToken == String(Mark.startObject) else {
+            return nil
+        }
+        //빈오브젝트처리
+        let (finalIndex, finalToken) = try readToken(index: startIndex)
+        guard finalToken != String(Mark.endObject) else {
+            return (finalIndex, [:])
+        }
+        //오브젝트파싱
+        var outputObject = [String: JsonType]()
+        var index = startIndex
+        while true {
+            guard let (stringIndex, string) = try parseString(index: index) else {
+                return nil
+            }
+            let (colonIndex, colon) = try readToken(index: stringIndex)
+            guard colon == String(Mark.colon) else {
+                return nil
+            }
+            let (valueIndex, value) = try parseValue(index: colonIndex)
+            
+            outputObject[string] = value
+            
+            let (nextIndex, nextToken) = try readToken(index: valueIndex)
+            
+            index = nextIndex
+            
+            if nextToken == String(Mark.comma) {
+                continue
+            }
+            if nextToken == String(Mark.endObject) {
+                break
+            }
+            return nil // 콤마도아니고 }도 아니면 nil반환
+        }
+        return (index, outputObject)
+    }
+    
 }
