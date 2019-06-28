@@ -13,6 +13,7 @@ enum ParsingError: Error {
     case noMoreTokens
     case unsupportedType
     case endedWithRemainingTokens
+    case notObjectType
 }
 
 struct Parser {
@@ -156,7 +157,7 @@ struct Parser {
             }
             let (colonIndex, colon) = try readToken(index: stringIndex)
             guard colon == String(Mark.colon) else {
-                return nil
+                throw ParsingError.notObjectType
             }
             let (valueIndex, value) = try parseValue(index: colonIndex)
             
