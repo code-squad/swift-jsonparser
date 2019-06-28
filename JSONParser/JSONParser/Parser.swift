@@ -25,7 +25,6 @@ struct Parser {
         let (finalIndex, result) = try parseValue(index: -1)
         if finalIndex == tokens.endIndex - 1 {
             return result
-            
         }
         throw ParsingError.endedWithRemainingTokens
     }
@@ -44,7 +43,6 @@ struct Parser {
         }
         throw ParsingError.unsupportedType
     }
-    
     
     ///다음인덱스를 확인함(return에 있는 조건이 실패할경우 false반환함)
     private func hasNext(index: Int) -> Bool {
@@ -125,8 +123,8 @@ struct Parser {
             
             let (nextIndex, token) = try readToken(index: index)
             currentIndex = nextIndex
-            //token이 ]면 while루프를 벗어나고, 최종인덱스와, 값이저장되어있는 배열을 반환함
             
+            //token이 ]면 while루프를 벗어나고, 최종인덱스와, 값이저장되어있는 배열을 반환함
             guard token != String(Mark.endArray) else {
                 break
             }
@@ -160,11 +158,9 @@ struct Parser {
                 throw ParsingError.notObjectType
             }
             let (valueIndex, value) = try parseValue(index: colonIndex)
-            
             outputObject[string] = value
             
             let (nextIndex, nextToken) = try readToken(index: valueIndex)
-            
             index = nextIndex
             
             if nextToken == String(Mark.comma) {
