@@ -23,13 +23,16 @@ struct GrammarChecker {
 }
 
 struct Regex {
+    private static let string =  "\"[^\"]*\""
+    private static let number = "[0-9]*"
     private static let bool = "(true|false)"
     private static let ws = "\\s*"
-    private static let string = "\"[^\"]*\""
-    private static let number = "[0-9]*"
-    private static let key = "\(ws))\(string)\(ws)"
     private static let value = "\(string)|\(bool)|\(number)"
-    private static let keyValue = "\(key):(\(ws))(\(value))\(ws)"
-    static let object = "\\{((\(keyValue),?\(ws))*\\}"
-    static let array = "\\[(\(ws))?((\(object)|\(value))(\(ws))?(,)?(\(ws))?)*\\]"
+    
+    private static let nestedObject = "\\{\(ws)((|,\(ws))(\(string)\(ws):\(ws))(\(value)))+\(ws)\\}"
+    private static let nestedArray = "\\[\(ws)((|,\(ws))(\(value)))+\(ws)\\]"
+    
+    static let object = "^\\{\(ws)((|,\(ws))(\(string)\(ws):\(ws))(\(value)|(\(nestedArray))|(\(nestedObject))))+\(ws)\\}$"
+    static let array = "^\\[\(ws)((|,\(ws))(\(value)|(\(nestedObject))|(\(nestedArray))))+\(ws)\\]$"
+    
 }
