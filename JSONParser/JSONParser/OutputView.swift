@@ -15,6 +15,10 @@ struct OutputView {
     }
     
     func showCount(typeName: String, countInfo: [String: Int]) {
+        if countInfo.isEmpty {
+            print("빈 \(typeName)데이터 입니다.")
+            return
+        }
         let valueCountList = countInfo.values // 값들의 갯수 배열
         let sumOfValueCounts = valueCountList.reduce(0) { (result: Int, value: Int) -> Int in
             return result + value
