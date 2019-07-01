@@ -10,7 +10,7 @@ import Foundation
 
 struct GrammarChecker {
     static func isValidArray(input: String) -> Bool {
-       return input.range(of: Regex.array, options: .regularExpression) != nil
+        return input.range(of: Regex.array, options: .regularExpression) != nil
     }
     
     static func isValidObject(input: String) -> Bool {
