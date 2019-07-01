@@ -11,7 +11,6 @@ import XCTest
 class JSONParserTests: XCTestCase {
 
     func testParseArray() {
-        
         let tokens = ["[","1","true","\"name\"","]"]
         var parser =  JSONParser(tokens: tokens)
         let expected: [JSONDataType] = [1,true,"name"]
@@ -19,7 +18,8 @@ class JSONParserTests: XCTestCase {
         for (index,_) in result.enumerated() {
             XCTAssertEqual(result[index].typeDescription,                      expected[index].typeDescription)
         }
-    } 
+    }
+   
 }
     
 
