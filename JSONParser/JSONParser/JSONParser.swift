@@ -89,7 +89,7 @@ struct JSONParser {
         return Token.quatationMark == firstCharacter
     }
     
-    private mutating func scanToken(token: String?) throws -> (String,JSONDataType){
+    private mutating func scanToken(token: String?) throws -> (String, JSONDataType) {
         guard let key = token else { throw JSONError.TokensError }
         let token = try reader.getNextToken()
         let value = try parseSingleValue(data: token)
