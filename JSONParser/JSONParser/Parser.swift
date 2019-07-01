@@ -108,7 +108,7 @@ struct Parser {
         
         // 빈배열 예외처리
         let (finalIndex, final) = try readToken(index: startIndex)
-        guard final != String(Mark.endArray) else {
+        if final == String(Mark.endArray) {
             return (finalIndex, [])
         }
         
@@ -125,7 +125,7 @@ struct Parser {
             currentIndex = nextIndex
             
             //token이 ]면 while루프를 벗어나고, 최종인덱스와, 값이저장되어있는 배열을 반환함
-            guard token != String(Mark.endArray) else {
+            if token == String(Mark.endArray) {
                 break
             }
             guard token == String(Mark.comma) else {
@@ -143,7 +143,7 @@ struct Parser {
         }
         //빈오브젝트처리
         let (finalIndex, finalToken) = try readToken(index: startIndex)
-        guard finalToken != String(Mark.endObject) else {
+        if finalToken == String(Mark.endObject) {
             return (finalIndex, [:])
         }
         //오브젝트파싱
