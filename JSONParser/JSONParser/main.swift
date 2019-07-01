@@ -8,7 +8,7 @@
 
 import Foundation
 
-func main(){
+func main() {
     do {
         let input = try InputView.ask(for: .request)
         guard GrammarChecker.isValid(input) else {
