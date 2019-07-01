@@ -9,11 +9,11 @@
 import Foundation
 
 struct GrammarChecker {
-    static func isValidArray(input: String) -> Bool {
+    private static func isValidArray(input: String) -> Bool {
         return input.range(of: Regex.array, options: .regularExpression) != nil
     }
     
-    static func isValidObject(input: String) -> Bool {
+    private static func isValidObject(input: String) -> Bool {
         return input.range(of: Regex.object, options: .regularExpression) != nil
     }
     
@@ -34,5 +34,4 @@ struct Regex {
     
     static let object = "^\\{\(ws)((|,\(ws))(\(string)\(ws):\(ws))(\(value)|(\(nestedArray))|(\(nestedObject))))+\(ws)\\}$"
     static let array = "^\\[\(ws)((|,\(ws))(\(value)|(\(nestedObject))|(\(nestedArray))))+\(ws)\\]$"
-    
 }
