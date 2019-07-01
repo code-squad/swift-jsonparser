@@ -16,6 +16,7 @@
 		5650BA97229E8E0300F5FFE2 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5650BA96229E8E0300F5FFE2 /* InputView.swift */; };
 		5650BA9B229EA30300F5FFE2 /* ErrorControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5650BA9A229EA30300F5FFE2 /* ErrorControl.swift */; };
 		5650BA9D229F076F00F5FFE2 /* JSONDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5650BA9C229F076F00F5FFE2 /* JSONDataType.swift */; };
+		56C16A0B22CA08730029B14E /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E09F8D22BCF06A00446DF5 /* GrammarChecker.swift */; };
 		56E09F8E22BCF06A00446DF5 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E09F8D22BCF06A00446DF5 /* GrammarChecker.swift */; };
 		56FEC0B422B791EC00522F75 /* JSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FEC0B322B791EC00522F75 /* JSONParserTests.swift */; };
 		56FEC0BA22B7920600522F75 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5639B3B722A8E54100A8643D /* OutputView.swift */; };
@@ -212,6 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56FEC0BF22B7921B00522F75 /* ErrorControl.swift in Sources */,
+				56C16A0B22CA08730029B14E /* GrammarChecker.swift in Sources */,
 				56FEC0B422B791EC00522F75 /* JSONParserTests.swift in Sources */,
 				56FEC0BC22B7920E00522F75 /* Token.swift in Sources */,
 				56FEC0BD22B7921400522F75 /* JSONTokenizer.swift in Sources */,

@@ -117,7 +117,7 @@ extension Object: JSONDataType, TypeCountable, JSONSerializable where Key == Str
                 jsonString.append(",\n")
             }
             jsonString.append(indent)
-            jsonString.append("\"\(key)\"")
+            jsonString.append("\(key)")
             jsonString.append(":")
             jsonString.append(" ")
             if let value = value as? JSONSerializable {
