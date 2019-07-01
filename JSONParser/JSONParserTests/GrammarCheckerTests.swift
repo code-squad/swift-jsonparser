@@ -12,7 +12,7 @@ class GrammarCheckerTests: XCTestCase {
 
     func testWrongFormat() {
         //Given
-        let array = "[ Ogi is pretty¸ ]"
+        let array = "[ Ogi is ugly. ]"
         
         //Then
         XCTAssertFalse(GrammarChecker.isValid(array))
