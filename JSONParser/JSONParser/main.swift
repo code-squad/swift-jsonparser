@@ -12,7 +12,6 @@ func main(){
     do {
         let input = try InputView.ask(for: .request)
         guard GrammarChecker.isValid(input) else {
-            print("no")
             return
         }
         var jsonTokenizer =  JSONTokenizer.init()
@@ -20,6 +19,7 @@ func main(){
         var parser = JSONParser(tokens: tokens)
         let jsonDatas = try parser.parse()
         try OutputView.printOut(jsonDatas)
+        try OutputView.printJSON(jsonDatas)
     } catch {
         print(error.localizedDescription)
     }
