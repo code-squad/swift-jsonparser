@@ -17,9 +17,9 @@ func main() {
         var jsonTokenizer =  JSONTokenizer.init()
         let tokens = try jsonTokenizer.tokenize(data: input)
         var parser = JSONParser(tokens: tokens)
-        let jsonDatas = try parser.parse()
-        try OutputView.printOut(jsonDatas)
-        OutputView.printJSON(jsonDatas)
+        let jsonData = try parser.parse()
+        try OutputView.printOut(jsonData)
+        OutputView.printJSON(jsonData)
     } catch {
         print(error.localizedDescription)
     }
