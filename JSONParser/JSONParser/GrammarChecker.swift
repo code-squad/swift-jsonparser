@@ -27,10 +27,7 @@ struct GrammarChecker {
     
     
     func checkGrammar(input: String) -> Bool {
-        if regularExpression.numberOfMatches(in: input, range: NSRange(location: 0, length: input.count)) == 1 {
-            return true
-        }
-        return false
+        return regularExpression.numberOfMatches(in: input, range: NSRange(location: 0, length: input.count)) == 1
     }
     
     
