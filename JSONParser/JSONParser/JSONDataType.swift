@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol JSONDataType: JSONSerializable {
+protocol JSONDataType {
     var typeDescription: String { get }
 }
 
@@ -16,7 +16,7 @@ protocol JSONSerializable {
     func serialize() -> String
 }
 
-extension String: JSONDataType {
+extension String: JSONDataType, JSONSerializable {
     var typeDescription: String {
         return "문자열"
     }
@@ -27,7 +27,7 @@ extension String: JSONDataType {
 }
 
 typealias Number = Double
-extension Number: JSONDataType {
+extension Number: JSONDataType, JSONSerializable {
     var typeDescription: String {
         return "숫자"
     }
@@ -35,9 +35,10 @@ extension Number: JSONDataType {
     func serialize() -> String {
         return "\(self)"
     }
+    
 }
 
-extension Bool: JSONDataType {
+extension Bool: JSONDataType, JSONSerializable {
     var typeDescription: String {
         return "부울"
     }
@@ -51,13 +52,26 @@ protocol TypeCountable {
     var dataTypes: [String: Int] { get }
 }
 
-extension Array: JSONSerializable where Element == JSONDataType {
+extension Array: JSONDataType, TypeCountable, JSONSerializable where Element == JSONDataType {
+    
+    var typeDescription: String {
+        return "배열"
+    }
+    
+    var dataTypes: [String: Int] {
+        var dataTypes = [String: Int]()
+        for item in self {
+            dataTypes[item.typeDescription] = (dataTypes[item.typeDescription] ?? 0) + 1
+        }
+        return dataTypes
+    }
+    
     func serialize() -> String {
         var jsonString = ""
         var first = true
         let indent = String(repeating: " ", count: 2)
-        jsonString.append("[")
         
+        jsonString.append("[")
         for value in self {
             if first {
                 first = false
@@ -66,53 +80,18 @@ extension Array: JSONSerializable where Element == JSONDataType {
             }
             jsonString.append("\n")
             jsonString.append(indent)
-            jsonString.append(value.serialize().replacingOccurrences(of: "\n", with: "\n\(indent)"))
-            
+            if let value = value as? JSONSerializable {
+                jsonString.append(value.serialize().replacingOccurrences(of: "\n", with: "\n\(indent)"))
+            }
         }
-        jsonString.append("\n]")
+        jsonString.append("\n")
+        jsonString.append("]")
         return jsonString
-    }
-}
-
-extension Array: JSONDataType, TypeCountable where Element == JSONDataType {
-    
-    var typeDescription: String {
-        return "배열"
-    }
-    var dataTypes: [String: Int] {
-        var dataTypes = [String: Int]()
-        
-        for item in self {
-            dataTypes[item.typeDescription] = (dataTypes[item.typeDescription] ?? 0) + 1
-        }
-        return dataTypes
     }
 }
 
 typealias Object = Dictionary
-extension Dictionary: JSONSerializable where Key == String, Value == JSONDataType {
-    func serialize() -> String {
-        var jsonString = ""
-        var first = true
-        let indent = String(repeating: " ", count: 2)
-        jsonString.append("{\n")
-        
-        for (key, value) in self {
-            if first {
-                first = false
-            } else {
-                jsonString.append(",\n")
-            }
-            jsonString.append(indent)
-            jsonString.append("\(key):  ")
-            jsonString.append(value.serialize().replacingOccurrences(of: "\n", with: "\n\(indent)"))
-        }
-        jsonString.append("\n}")
-        return jsonString
-    }
-}
-
-extension Object: JSONDataType, TypeCountable where Key == String, Value == JSONDataType {
+extension Object: JSONDataType, TypeCountable, JSONSerializable where Key == String, Value == JSONDataType {
     var typeDescription: String {
         return "객체"
     }
@@ -122,5 +101,31 @@ extension Object: JSONDataType, TypeCountable where Key == String, Value == JSON
             dataTypes[item.typeDescription] = (dataTypes[item.typeDescription] ?? 0) + 1
         }
         return dataTypes
+    }
+    
+    func serialize() -> String {
+        var jsonString = ""
+        var first = true
+        let indent = String(repeating: " ", count: 2)
+        
+        jsonString.append("{")
+        jsonString.append("\n")
+        for (key, value) in self {
+            if first {
+                first = false
+            } else {
+                jsonString.append(",\n")
+            }
+            jsonString.append(indent)
+            jsonString.append("\"\(key)\"")
+            jsonString.append(":")
+            jsonString.append(" ")
+            if let value = value as? JSONSerializable {
+                jsonString.append(value.serialize().replacingOccurrences(of: "\n", with: "\n\(indent)"))
+            }
+        }
+        jsonString.append("\n")
+        jsonString.append("}")
+        return jsonString
     }
 }

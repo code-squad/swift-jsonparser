@@ -8,7 +8,7 @@
 
 import Foundation
 
-func main() {
+func main(){
     do {
         let input = try InputView.ask(for: .request)
         guard GrammarChecker.isValid(input) else {
@@ -19,7 +19,9 @@ func main() {
         var parser = JSONParser(tokens: tokens)
         let jsonData = try parser.parse()
         try OutputView.printOut(jsonData)
-        OutputView.printJSON(jsonData)
+        if let json = jsonData as? JSONSerializable & JSONDataType {
+        try OutputView.printJSON(json)
+        }
     } catch {
         print(error.localizedDescription)
     }
