@@ -15,10 +15,8 @@ struct OutputView {
         }
     }
     
-    static func printJSON(_ input: JSONDataType) throws {
-        if let json = input as? JSONSerializable {
-            print(json.serialize())
-        }
+    static func printJSON(_ input: JSONSerializable) {
+        print(input.serialize())
     }
     
     static func printCountable(_ dataTypes: [String: Int]) {
