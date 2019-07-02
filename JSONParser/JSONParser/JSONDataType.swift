@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol JSONDataType {
+protocol JSONDataType: JSONSerializable {
     var typeDescription: String { get }
 }
 
@@ -16,7 +16,7 @@ protocol JSONSerializable {
     func serialize() -> String
 }
 
-extension String: JSONDataType, JSONSerializable {
+extension String: JSONDataType {
     var typeDescription: String {
         return "문자열"
     }
@@ -27,7 +27,7 @@ extension String: JSONDataType, JSONSerializable {
 }
 
 typealias Number = Double
-extension Number: JSONDataType, JSONSerializable {
+extension Number: JSONDataType {
     var typeDescription: String {
         return "숫자"
     }
@@ -38,7 +38,7 @@ extension Number: JSONDataType, JSONSerializable {
     
 }
 
-extension Bool: JSONDataType, JSONSerializable {
+extension Bool: JSONDataType {
     var typeDescription: String {
         return "부울"
     }
@@ -52,20 +52,7 @@ protocol TypeCountable {
     var dataTypes: [String: Int] { get }
 }
 
-extension Array: JSONDataType, TypeCountable, JSONSerializable where Element == JSONDataType {
-    
-    var typeDescription: String {
-        return "배열"
-    }
-    
-    var dataTypes: [String: Int] {
-        var dataTypes = [String: Int]()
-        for item in self {
-            dataTypes[item.typeDescription] = (dataTypes[item.typeDescription] ?? 0) + 1
-        }
-        return dataTypes
-    }
-    
+extension Array: JSONSerializable where Element == JSONDataType {
     func serialize() -> String {
         var jsonString = ""
         var first = true
@@ -80,9 +67,8 @@ extension Array: JSONDataType, TypeCountable, JSONSerializable where Element == 
             }
             jsonString.append("\n")
             jsonString.append(indent)
-            if let value = value as? JSONSerializable {
-                jsonString.append(value.serialize().replacingOccurrences(of: "\n", with: "\n\(indent)"))
-            }
+            jsonString.append(value.serialize().replacingOccurrences(of: "\n", with: "\n\(indent)"))
+            
         }
         jsonString.append("\n")
         jsonString.append("]")
@@ -90,19 +76,23 @@ extension Array: JSONDataType, TypeCountable, JSONSerializable where Element == 
     }
 }
 
-typealias Object = Dictionary
-extension Object: JSONDataType, TypeCountable, JSONSerializable where Key == String, Value == JSONDataType {
+extension Array: JSONDataType, TypeCountable where Element == JSONDataType {
+    
     var typeDescription: String {
-        return "객체"
+        return "배열"
     }
+    
     var dataTypes: [String: Int] {
         var dataTypes = [String: Int]()
-        for item in self.values {
+        for item in self {
             dataTypes[item.typeDescription] = (dataTypes[item.typeDescription] ?? 0) + 1
         }
         return dataTypes
     }
-    
+}
+
+typealias Object = Dictionary
+extension Dictionary: JSONSerializable where Key == String, Value == JSONDataType {
     func serialize() -> String {
         var jsonString = ""
         var first = true
@@ -120,12 +110,26 @@ extension Object: JSONDataType, TypeCountable, JSONSerializable where Key == Str
             jsonString.append("\(key)")
             jsonString.append(":")
             jsonString.append(" ")
-            if let value = value as? JSONSerializable {
-                jsonString.append(value.serialize().replacingOccurrences(of: "\n", with: "\n\(indent)"))
-            }
+            
+            jsonString.append(value.serialize().replacingOccurrences(of: "\n", with: "\n\(indent)"))
         }
         jsonString.append("\n")
         jsonString.append("}")
         return jsonString
     }
+}
+
+extension Object: JSONDataType, TypeCountable where Key == String, Value == JSONDataType {
+    var typeDescription: String {
+        return "객체"
+    }
+    var dataTypes: [String: Int] {
+        var dataTypes = [String: Int]()
+        for item in self.values {
+            dataTypes[item.typeDescription] = (dataTypes[item.typeDescription] ?? 0) + 1
+        }
+        return dataTypes
+    }
+    
+    
 }
