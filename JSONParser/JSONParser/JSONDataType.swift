@@ -35,7 +35,6 @@ extension Number: JSONDataType {
     func serialize() -> String {
         return "\(self)"
     }
-    
 }
 
 extension Bool: JSONDataType {
@@ -57,8 +56,8 @@ extension Array: JSONSerializable where Element == JSONDataType {
         var jsonString = ""
         var first = true
         let indent = String(repeating: " ", count: 2)
-        
         jsonString.append("[")
+        
         for value in self {
             if first {
                 first = false
@@ -70,8 +69,7 @@ extension Array: JSONSerializable where Element == JSONDataType {
             jsonString.append(value.serialize().replacingOccurrences(of: "\n", with: "\n\(indent)"))
             
         }
-        jsonString.append("\n")
-        jsonString.append("]")
+        jsonString.append("\n]")
         return jsonString
     }
 }
@@ -81,9 +79,9 @@ extension Array: JSONDataType, TypeCountable where Element == JSONDataType {
     var typeDescription: String {
         return "배열"
     }
-    
     var dataTypes: [String: Int] {
         var dataTypes = [String: Int]()
+        
         for item in self {
             dataTypes[item.typeDescription] = (dataTypes[item.typeDescription] ?? 0) + 1
         }
@@ -97,9 +95,8 @@ extension Dictionary: JSONSerializable where Key == String, Value == JSONDataTyp
         var jsonString = ""
         var first = true
         let indent = String(repeating: " ", count: 2)
+        jsonString.append("{\n")
         
-        jsonString.append("{")
-        jsonString.append("\n")
         for (key, value) in self {
             if first {
                 first = false
@@ -107,14 +104,10 @@ extension Dictionary: JSONSerializable where Key == String, Value == JSONDataTyp
                 jsonString.append(",\n")
             }
             jsonString.append(indent)
-            jsonString.append("\(key)")
-            jsonString.append(":")
-            jsonString.append(" ")
-            
+            jsonString.append("\(key):  ")
             jsonString.append(value.serialize().replacingOccurrences(of: "\n", with: "\n\(indent)"))
         }
-        jsonString.append("\n")
-        jsonString.append("}")
+        jsonString.append("\n}")
         return jsonString
     }
 }
@@ -130,6 +123,4 @@ extension Object: JSONDataType, TypeCountable where Key == String, Value == JSON
         }
         return dataTypes
     }
-    
-    
 }
