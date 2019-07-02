@@ -53,7 +53,6 @@ protocol TypeCountable {
 }
 
 extension Array: JSONDataType, TypeCountable, JSONSerializable where Element == JSONDataType {
-    
     var typeDescription: String {
         return "배열"
     }
@@ -70,8 +69,8 @@ extension Array: JSONDataType, TypeCountable, JSONSerializable where Element == 
         var jsonString = ""
         var first = true
         let indent = String(repeating: " ", count: 2)
-        
         jsonString.append("[")
+        
         for value in self {
             if first {
                 first = false
@@ -96,6 +95,7 @@ extension Object: JSONDataType, TypeCountable, JSONSerializable where Key == Str
     }
     var dataTypes: [String: Int] {
         var dataTypes = [String: Int]()
+        
         for item in self.values {
             dataTypes[item.typeDescription] = (dataTypes[item.typeDescription] ?? 0) + 1
         }
@@ -106,8 +106,8 @@ extension Object: JSONDataType, TypeCountable, JSONSerializable where Key == Str
         var jsonString = ""
         var first = true
         let indent = String(repeating: " ", count: 2)
-        
         jsonString.append("{\n")
+        
         for (key, value) in self {
             if first {
                 first = false

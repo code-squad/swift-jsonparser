@@ -39,7 +39,6 @@ struct JSONParser {
             guard token != String(Token.comma) else {
                 continue
             }
-            
             let value = try parseMultiValue(token)
             result.append(value)
         } while true
