@@ -84,8 +84,7 @@ extension Array: JSONDataType, TypeCountable, JSONSerializable where Element == 
                 jsonString.append(value.serialize().replacingOccurrences(of: "\n", with: "\n\(indent)"))
             }
         }
-        jsonString.append("\n")
-        jsonString.append("]")
+        jsonString.append("\n]")
         return jsonString
     }
 }
@@ -108,8 +107,7 @@ extension Object: JSONDataType, TypeCountable, JSONSerializable where Key == Str
         var first = true
         let indent = String(repeating: " ", count: 2)
         
-        jsonString.append("{")
-        jsonString.append("\n")
+        jsonString.append("{\n")
         for (key, value) in self {
             if first {
                 first = false
@@ -117,15 +115,12 @@ extension Object: JSONDataType, TypeCountable, JSONSerializable where Key == Str
                 jsonString.append(",\n")
             }
             jsonString.append(indent)
-            jsonString.append("\"\(key)\"")
-            jsonString.append(":")
-            jsonString.append(" ")
+            jsonString.append("\"\(key)\":  ")
             if let value = value as? JSONSerializable {
                 jsonString.append(value.serialize().replacingOccurrences(of: "\n", with: "\n\(indent)"))
             }
         }
-        jsonString.append("\n")
-        jsonString.append("}")
+        jsonString.append("\n}")
         return jsonString
     }
 }
