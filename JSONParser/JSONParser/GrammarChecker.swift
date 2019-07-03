@@ -21,7 +21,15 @@ struct GrammarChecker {
     static let objectStringValue = "(?:\(stringPattern)\\s*:\\s*\(valuePattern)\\s*)"
     static let objectPattern = "\\{\\s*(?:\(objectStringValue)\\s*(?:,\\s*\(objectStringValue))*)?\\}"
     
-    static let jsonPattern = "\(stringPattern)|\(numberPattern)|\(boolPattern)|\(arrayPattern)|\(objectPattern)"
+    //중첩구조에관한 정규식
+    static let jsonValuePattern = "(?:\(valuePattern)|\(arrayPattern)|\(objectPattern))"
+    
+    static let newArrayPattern = "\\[\\s*(?:\(jsonValuePattern)\\s*(?:,\\s*\(jsonValuePattern)\\s*)*)?\\]"
+    
+    static let newObjectStringValue = "(?:\(stringPattern)\\s*:\\s*\(jsonValuePattern)\\s*)"
+    static let newObjectPattern = "\\{\\s*(?:\(newObjectStringValue)\\s*(?:,\\s*\(newObjectStringValue))*)?\\}"
+
+    static let jsonPattern = "\(stringPattern)|\(numberPattern)|\(boolPattern)|\(newArrayPattern)|\(newObjectPattern)"
     
     var regularExpression = try! NSRegularExpression(pattern: jsonPattern)
     
