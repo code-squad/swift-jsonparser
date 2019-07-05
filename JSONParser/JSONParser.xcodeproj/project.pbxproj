@@ -19,6 +19,7 @@
 		E95191FC22BE1FDC00970941 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95191FB22BE1FDC00970941 /* InputView.swift */; };
 		E95191FF22BE284A00970941 /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95191FD22BE224400970941 /* OutputView.swift */; };
 		E9821DF022C9FB48001682F4 /* GrammarChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9821DEF22C9FB48001682F4 /* GrammarChecker.swift */; };
+		E9E86B6722CEEB5800BCBAC1 /* Serialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E86B6622CEEB5800BCBAC1 /* Serialize.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +49,7 @@
 		E95191FB22BE1FDC00970941 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		E95191FD22BE224400970941 /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 		E9821DEF22C9FB48001682F4 /* GrammarChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarChecker.swift; sourceTree = "<group>"; };
+		E9E86B6622CEEB5800BCBAC1 /* Serialize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Serialize.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				E9821DEF22C9FB48001682F4 /* GrammarChecker.swift */,
 				E926BC4822ABC42900F1AE51 /* Tokenizer.swift */,
 				E926BC4C22ABC65E00F1AE51 /* Parser.swift */,
+				E9E86B6622CEEB5800BCBAC1 /* Serialize.swift */,
 				E926BC4E22ABC82400F1AE51 /* JsonType.swift */,
 			);
 			path = JSONParser;
@@ -249,6 +252,7 @@
 			files = (
 				E9821DF022C9FB48001682F4 /* GrammarChecker.swift in Sources */,
 				E926BC4D22ABC65E00F1AE51 /* Parser.swift in Sources */,
+				E9E86B6722CEEB5800BCBAC1 /* Serialize.swift in Sources */,
 				E926BC4F22ABC82400F1AE51 /* JsonType.swift in Sources */,
 				E95191FC22BE1FDC00970941 /* InputView.swift in Sources */,
 				83AE2E101F8CAC2800F38CC9 /* main.swift in Sources */,
