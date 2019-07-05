@@ -9,6 +9,19 @@
 import Foundation
 
 struct Serialize {
+    //indentCount에따라 공백이 추가되는 코드
+    private var indentCount = 0
+    private func makeIndent(count: Int) -> String {
+        var result = ""
+        for _ in 0 ..< count {
+            result.append("    ")
+        }
+        return result
+    }
+    private var indent: String {
+        return makeIndent(count: indentCount)
+    }
+    
     //jsonValue 직렬화하는 메소드
     func serializeValue(jsonData: JsonType) -> String {
         switch jsonData {
