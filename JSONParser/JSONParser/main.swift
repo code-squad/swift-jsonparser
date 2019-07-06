@@ -16,6 +16,8 @@ func main() {
     var tokenizer = Tokenizer()
     var parser = Parser()
     
+    var serializer = Serializer()
+    
     outputView.show(string: "Json데이터를 입력하세요")
     let input = inputView.ask(data: "Json데이터")
     guard grammarChecker.checkGrammar(input: input) else {
@@ -24,14 +26,17 @@ func main() {
     }
     let tokens = tokenizer.tokenize(input: input)
     
+    let jsonData: JsonType
     do {
-        let jsonData = try parser.startParsing(tokens: tokens)
-        if let countableData = jsonData as? Countable {
-            outputView.showCount(typeName: jsonData.typeName, countInfo: countableData.countInfo )
-        }
+        jsonData = try parser.startParsing(tokens: tokens)
     } catch {
         outputView.show(string: "\(error)")
+        return
     }
+    if let countableData = jsonData as? Countable {
+        outputView.showCount(typeName: jsonData.typeName, countInfo: countableData.countInfo )
+    }
+    outputView.show(string: serializer.serializeValue(jsonData))
 }
 
 main()
