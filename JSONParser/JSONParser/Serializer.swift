@@ -33,28 +33,25 @@ struct Serializer {
             return ("\(jsonData)")
         }
     }
+    
     //jsonType배열 직렬화하는 메소드
     mutating func serializeArray(_ array: [JsonType]) -> String {
         var result = ""
         var isFirst = true
         result.append("[")
-        indentCount += 1
         array.forEach { element in
             if isFirst {
                 isFirst = false
             } else {
-                result.append(",")
+                result.append(", ")
             }
-            result.append("\n")
-            result.append(indent)
             result.append(serializeValue(element))
         }
-        indentCount -= 1
-        result.append("\n")
-        result.append(indent)
         result.append("]")
+
         return result
     }
+    
     //jsonType오브젝트 직렬화하는 메소드
     mutating func serializeObject(_ object: [String: JsonType]) -> String {
         var result = ""
@@ -77,7 +74,4 @@ struct Serializer {
         result.append("}")
         return result
     }
-
-    
-    
 }
