@@ -25,6 +25,8 @@ struct Serializer {
     //jsonValue 직렬화하는 메소드
     mutating func serializeValue(_ jsonData: JsonType) -> String {
         switch jsonData {
+        case let object as [String: JsonType]:
+            return serializeObject(object)
         case let array as [JsonType]:
             return serializeArray(array)
         default:
