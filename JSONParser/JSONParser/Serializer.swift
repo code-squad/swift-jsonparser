@@ -54,8 +54,26 @@ struct Serialize {
         return result
     }
     //jsonType오브젝트 직렬화하는 메소드
-    func serializeObject(jsonData: [String:JsonType]) -> String {
-        
+    mutating func serializeObject(_ object: [String: JsonType]) -> String {
+        var result = ""
+        var isFirst = true
+        result.append("{")
+        indentCount += 1
+        object.forEach { (key, value) in
+            if isFirst {
+                isFirst = false
+            } else {
+                result.append(",")
+            }
+            result.append("\n")
+            result.append(indent)
+            result.append("\(key): \(serializeValue(value))")
+        }
+        indentCount -= 1
+        result.append("\n")
+        result.append(indent)
+        result.append("}")
+        return result
     }
 
     
