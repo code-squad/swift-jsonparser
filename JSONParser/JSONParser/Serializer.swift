@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Serialize {
+struct Serializer {
     //indentCount에따라 공백이 추가되는 코드
     private var indentCount = 0
     private func makeIndent(count: Int) -> String {
