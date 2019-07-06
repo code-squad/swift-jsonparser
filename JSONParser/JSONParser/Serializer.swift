@@ -39,21 +39,25 @@ struct Serialize {
         return ""
     }
     //jsonType배열 직렬화하는 메소드
-    func serializeArray(array: [JsonType]) -> String {
+    mutating func serializeArray(_ array: [JsonType]) -> String {
         var result = ""
         var isFirst = true
-        
         result.append("[")
-        array.forEach { number in
+        indentCount += 1
+        array.forEach { element in
             if isFirst {
                 isFirst = false
             } else {
                 result.append(",")
             }
-            result.append("\n    ")
-            result.append(String(number))
+            result.append("\n")
+            result.append(indent)
+            result.append(serializeValue(element))
         }
-        result.append("\n]")
+        indentCount -= 1
+        result.append("\n")
+        result.append(indent)
+        result.append("]")
         return result
     }
     //jsonType오브젝트 직렬화하는 메소드
