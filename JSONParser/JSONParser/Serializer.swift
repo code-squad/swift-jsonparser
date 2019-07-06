@@ -23,20 +23,13 @@ struct Serialize {
     }
     
     //jsonValue 직렬화하는 메소드
-    func serializeValue(jsonData: JsonType) -> String {
+    mutating func serializeValue(_ jsonData: JsonType) -> String {
         switch jsonData {
-            case let strjsonData as String :
-                return ("\(strjsonData)")
-            case let intjsonData as Int :
-                return ("\(intjsonData)")
-            case let booljsonData as Bool :
-                return ("\(booljsonData)")
-            case let arrayjsonData as [JsonType] :
-                return ("\(arrayjsonData)")
-            default:
-                return ("모른다")
-            }
-        return ""
+        case let array as [JsonType]:
+            return serializeArray(array)
+        default:
+            return ("\(jsonData)")
+        }
     }
     //jsonType배열 직렬화하는 메소드
     mutating func serializeArray(_ array: [JsonType]) -> String {
