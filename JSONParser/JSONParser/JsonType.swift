@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol JsonType {
+protocol JsonType: Serializable, Countable {
     var typeName: String { get }
 }
 
@@ -23,20 +23,24 @@ extension Countable where Self: JsonType {
     }
 }
 
-extension Double: JsonType, Countable {
+extension Double: JsonType {
     var typeName: String {
         return "숫자"
     }
 }
 
-extension String: JsonType, Countable {
+extension String: JsonType {
+    func serialized() -> String {
+        return "\"\(self)\""
+    }
+    
     var typeName: String {
         return "문자열"
     }
 }
 
 
-extension Bool: JsonType, Countable {
+extension Bool: JsonType {
     var typeName: String {
         return "부울"
     }
