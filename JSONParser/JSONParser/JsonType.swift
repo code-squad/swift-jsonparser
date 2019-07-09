@@ -46,11 +46,7 @@ extension Bool: JsonType {
     }
 }
 
-extension Array: JsonType, Countable where Element == JsonType {
-    var typeName: String {
-        return "배열"
-    }
-    //배열은 element갯수가 1개이상일 수 있기 때문에 따로 정의해줌.
+extension Array: Countable where Element == JsonType {
     var countInfo: [String : Int] {
         //typeName별로 그룹화해줌
         let byName = Dictionary(grouping: self, by: { $0.typeName })
@@ -59,10 +55,9 @@ extension Array: JsonType, Countable where Element == JsonType {
     }
 }
 
-
-extension Dictionary: JsonType, Countable where Key == String, Value == JsonType {
+extension Array: JsonType where Element == JsonType {
     var typeName: String {
-        return "오브젝트"
+        return "배열"
     }
     
     var countInfo: [String : Int] {
